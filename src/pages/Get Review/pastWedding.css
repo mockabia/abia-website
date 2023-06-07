@@ -1,0 +1,170 @@
+.register-past {
+   max-width: 100%;
+   padding: 20px;
+   display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: 220px repeat(6, 1fr);
+    grid-template-rows: auto;
+}
+
+.main-header {
+    grid-column: 1/16;
+}
+
+.main-lead {
+    font-weight: bolder;
+    font-size: 22px;
+    opacity: 90%;
+}
+
+.card {
+    background: #e2e8e8;
+    border-radius: 30px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    grid-column: 1/16;
+}
+
+/* list */
+.custom-ol {
+    list-style-type: decimal;
+}
+
+.custom-li {
+    margin-left: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+
+/* forms */
+.form-grid {
+    max-width: 100%;
+    background: #fff;
+    border-radius: 30px;
+    border: 1px solid #c3bebe;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    grid-column: 1/16;
+}
+
+.input-style {
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    background: #fafafa;
+    border: 1px solid #c3bebe;
+    padding: 10px;
+    grid-column: 2/15;
+}
+.input-style:focus {
+    border-color: #6cc2bc;
+}
+
+.user-icon {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background: url(../../icons/User-copy.svg) center center no-repeat;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+}
+
+.heart-icon {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background: url(../../icons/heart.svg) center center no-repeat;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+}
+
+
+/* calendar */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    right: 20px;
+    background: url(../../icons/date.svg) center center no-repeat;
+}
+
+.custom-inpt {
+    padding: 10px !important;
+}
+
+.downarrow-icon {
+    position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        background: url(../../icons/down-arrow.svg) center center no-repeat;
+        width: 20px;
+        height: 20px;
+        background-size: contain;
+}
+
+.email-icon {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background: url(../../icons/email.svg) center center no-repeat;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+}
+
+
+.phone-icon {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background: url(../../icons/Phone-14.svg) center center no-repeat;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+}
+
+
+/* button */
+.submit-button{
+    /* position: absolute; */
+    margin-top: 10px;
+    width: 150px;
+    height: 50px;
+    border-radius: 30px;
+    background-color: #6cc2bc;
+    color: white;
+    font-weight: 500;
+}
+
+.submit-button:hover {
+    background-color: #5ca49f;
+}
+
+
+
+/* media query */
+
+@media(min-width: 1000px){
+    .main-header {
+            grid-column: 1/13;
+        }
+    
+        .card {
+            grid-column: 9/15;
+        }
+        .form-grid {
+            grid-column: 1/8;
+            grid-row: 2/5;
+            
+        }
+}
