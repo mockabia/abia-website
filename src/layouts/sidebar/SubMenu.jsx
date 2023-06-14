@@ -39,7 +39,7 @@ const SubMenu = ({ data }) => {
             data.name === "" ? " active submenu-style" : ""
           }`}
         >
-          <div className="ml-[]">{menu}</div>
+          <div className="ml-[15px]">{menu}</div>
         </NavLink>
         {index !== menuList.length - 1 && <div className="submenu-line" />}
       </li>

@@ -8,20 +8,20 @@ const GetReviews = () => {
   const navigate = useNavigate();
 
   const pastWeddingLink = () => {
-    navigate("/get-review/past-wedding");
+    navigate("/get-reviews/past-wedding");
   };
 
   const futureWeddingLink = () => {
-    navigate("/get-review/future-wedding");
+    navigate("/get-reviews/future-wedding");
   };
 
   const copyreviewLink = () => {
-    navigate("/get-review/copy-link");
+    navigate("/get-reviews/copy-link");
   };
 
   return (
     <>
-      <TopBar className="mdb:hidden" title="Get Reviews" />
+      <TopBar className="md:hidden" title="Get Reviews" />
       <div className="md:hidden">
         <ContentHeader title="Get Reviews" />
       </div>
@@ -41,15 +41,20 @@ const GetReviews = () => {
         {/* Register Past Wedding */}
         <div className="card card-1 space-y-3">
           <p className="card-main-heading ">Register Past Weddings</p>
-          <div className="card-sub-heading space-y-3">
-            <p className="font-semibold ">
+          <div className="card-sub-heading">
+            <p className="font-semibold mb-[10px] lg:mb-[0px] ">
               Best For:{" "}
               <span className="text-[#6cc2bc]">
                 Automating reminders to increase conversion rates!
               </span>
             </p>
-            <div className="card-content-and-button ">
-              <p className="card-content ">
+            <div
+              className="card-content-and-button"
+              style={{
+                marginTop: window.innerWidth >= 1190 ? "-6px" : "initial",
+              }}
+            >
+              <p className="card-content">
                 The tried and tested . Simply log in to your ABIA Business
                 Portal and register any wedding client serviced in the past 12
                 months. ABIA automatically sends a personalised voting form and

@@ -26,10 +26,10 @@ const App = () => {
         <Route path="/" element={<Initial />} />
         <Route path="/home" element={<Home />} />
         {/* Get review */}
-        <Route path="/get-review" element={<GetReviews />} />
-        <Route path="/get-review/past-wedding" element={<PastWedding />} />
-        <Route path="/get-review/future-wedding" element={<FutureWedding />} />
-        <Route path="/get-review/copy-link" element={<CopyLink />} />
+        <Route path="/get-reviews" element={<GetReviews />} />
+        <Route path="/get-reviews/past-wedding" element={<PastWedding />} />
+        <Route path="/get-reviews/future-wedding" element={<FutureWedding />} />
+        <Route path="/get-reviews/copy-link" element={<CopyLink />} />
 
         <Route path="/showcase" element={<ShowCase />} />
         <Route path="/settings" element={<Settings />} />

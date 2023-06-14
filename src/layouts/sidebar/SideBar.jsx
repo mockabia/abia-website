@@ -141,7 +141,7 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink
-                to={"/get-review"}
+                to={"/get-reviews"}
                 className="link"
                 activeClassName="active"
               >

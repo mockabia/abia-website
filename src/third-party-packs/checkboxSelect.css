@@ -1,0 +1,19 @@
+.checkbox {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #888;
+    background-color: white;
+    margin-right: 8px;
+}
+
+.checked::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 15px;
+    height: 15px;
+    background-color: #6cc2bc;
+}

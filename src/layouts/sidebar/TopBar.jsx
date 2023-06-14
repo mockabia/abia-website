@@ -7,7 +7,7 @@ import { useMediaQuery } from "react-responsive";
 
 import "./TopBar.css";
 import Sidebar from "./SideBar";
-import { ReactComponent as UserIcons } from "../../icons/User.svg";
+import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
 import { ReactComponent as HomeIcon } from "../../icons/home.svg";
 import GetReview from "../../icons/getReview";
 import { ReactComponent as ManageReview } from "../../icons/manage-reviews.svg"; //Manage Reviews
@@ -86,8 +86,8 @@ const TopBar = ({ title, logo }) => {
       <div className=" flex mt-[14px] md:mt-0 ">
         <button className="mr-4 focus:outline-none" onClick={toggleProfile}>
           <div className="relative ">
-            <div className="absolute inset-0  bg-[#6cc2bc] w-[10px] h-[10px] md:w-[40px] md:h-[40px] mt-[-6px] rounded-full"></div>
-            <UserIcons className="w-[20px] relative z-10 text-white md:text-[#6cc2bc] ml-[10px]  md:mr-10 " />
+            <div className="absolute inset-0  bg-[#6cc2bc] w-[10px] h-[10px] md:w-[40px] md:h-[40px] mt-[-9px] rounded-full"></div>
+            <UserIcons className="w-[22px] relative z-10 md:text-[#6cc2bc] ml-[8.5px]  md:mr-10  " />
           </div>
         </button>
         {profileOpen && (
@@ -165,7 +165,7 @@ const TopBar = ({ title, logo }) => {
                     </NavLink>
                   </li>
                   <li className="mb-5 relative">
-                    <div className="flex -ml-[38px]" onClick={toggleSubMenu}>
+                    <div className="flex -ml-[21px]" onClick={toggleSubMenu}>
                       <NavLink className="flex gap-5">
                         <ShowCase className="w-5 h-5 fill-current text-[#fff]" />
                         Showcase
@@ -175,7 +175,7 @@ const TopBar = ({ title, logo }) => {
                     </div>
                     {showSubMenu && (
                       <div>
-                        <ul className="ml-[25px] mt-4 ">
+                        <ul className="ml-[41px] mt-4 ">
                           <motion.li
                             initial={{ opacity: 0, y: -20 }}
                             animate={{ opacity: 1, y: 0 }}
