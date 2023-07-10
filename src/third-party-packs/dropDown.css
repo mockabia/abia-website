@@ -1,8 +1,12 @@
 .dropDown-position{
-    margin-left: -32px;
-    width: 18px;
-    height: 18px;
+    position: absolute;
+        top: 50%;
+        right: 20px;
+        width: 20px;
+        height: 20px;
+        margin-top: -10px;
 }
+
 
 
 .custom-inputcheckbox {
@@ -12,8 +16,9 @@
 .label-checkbox {
     display: block;
         position: relative;
-        padding-left: 35px;
-        margin-bottom: 12px;
+        padding-left: 45px;
+        margin-top: 4px;
+        margin-bottom: 4px;
         cursor: pointer;
         font-size: 16px;
         font-weight: 600;
@@ -32,7 +37,7 @@
 }
 
 .checkbox-indicator {
-position: absolute;
+    position: absolute;
     top: 0;
     left: 0;
     height: 20px;
@@ -40,6 +45,7 @@ position: absolute;
     border-radius: 3px;
     background-color: #eee;
     border: 1px solid #c3bebe;
+    margin-left: 12px;
 }
 
 /* On mouse-over, add a grey background color */
@@ -75,4 +81,29 @@ position: absolute;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+
+/* Prevent Safari from zooming in on select inputs */
+@media only screen and (max-width: 1024px) {
+
+    select:focus,
+    select[multiple]:focus {
+        zoom: 1;
+        -webkit-text-size-adjust: none;
+    }
+}
+
+
+.css-1p3m7a8-multiValue {
+    max-width: 100px !important;
+}
+
+.css-wsp0cs-MultiValueGeneric {
+    font-size: 14px !important;
+}
+
+@media(min-width: 1000px) {
+    .css-1p3m7a8-multiValue {
+            max-width: 150px !important;
+        }
 }

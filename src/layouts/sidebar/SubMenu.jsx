@@ -39,7 +39,7 @@ const SubMenu = ({ data }) => {
             data.name === "" ? " active submenu-style" : ""
           }`}
         >
-          <div className="ml-[15px]">{menu}</div>
+          <div className="ml-[21px]">{menu}</div>
         </NavLink>
         {index !== menuList.length - 1 && <div className="submenu-line" />}
       </li>
@@ -55,13 +55,11 @@ const SubMenu = ({ data }) => {
         // ref={subMenuRef}
       >
         <data.icon
-          className={`w-[18px] h-[18px] fill-current text-${
+          className={`ml-[21px] w-[20px] h-[20px] fill-current text-${
             isActive ? "#6cc2bc" : "#fff"
           }`}
         />
-        <p className="flex-1 capitalize text-[15px] ">
-          {data.name}
-        </p>
+        <p className="flex-1 ml-[2px] capitalize text-[15px] ">{data.name}</p>
         <RxTriangleDown
           className={` ${subMenuOpen && "rotate-180"} duration-200 `}
           size={20}
@@ -78,7 +76,7 @@ const SubMenu = ({ data }) => {
                 height: 0,
               }
         }
-        className="flex h-0 flex-col pl-[56px] text-[0.8rem] font-nunito overflow-hidden submenu-list "
+        className="flex h-0 flex-col pl-[56px]  text-[0.8rem] font-nunito overflow-hidden submenu-list "
       >
         {renderSubMenu(data.menus)}
       </motion.ul>

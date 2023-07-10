@@ -1,140 +1,4 @@
-// import React, { useState } from "react";
-// import TopBar from "../../layouts/sidebar/TopBar";
-// import ContentHeader from "../../layouts/sidebar/ContentHeader";
-// import "./pastWedding.css";
-
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
-// import { BiSolidDownArrow } from "react-icons/bi";
-
-// import SelectDropdown from "../../third-party-packs/checkBoxSelect";
-// import Dropdown from "../../third-party-packs/dropDown";
-
-// const PastWedding = () => {
-//   const [clientName, setClientName] = useState("");
-//   const [partnerName, setPartnerName] = useState("");
-//   const [startDate, setStartDate] = useState(new Date());
-//   const [state, setState] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [phoneNumber, setPhoneNumber] = useState("");
-//   const [selectedOptions, setSelectedOptions] = useState([]);
-
-//   //Select option data
-//   const handleClientNameChange = (e) => {
-//     setClientName(e.target.value);
-//   };
-
-//   const handleSelectedOptions = (options) => {
-//     setSelectedOptions(options);
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     const formData = {
-//       selectedOptions: selectedOptions.map((option) => option.value),
-//     };
-//     console.log(formData);
-
-//     setSelectedOptions([]);
-//   };
-
-//   const options = [
-//     { value: "wedding-venue", label: "Wedding Venue" },
-//     { value: "ceremony-venue", label: "Ceremony Venue" },
-//     { value: "function-cordinator", label: "Function Cordinator" },
-//     { value: "firstnight-honeymoon", label: "1st Night Honeymoon" },
-//   ];
-
-//   return (
-//     <>
-//       <TopBar title="Register - Past Wedding" />
-//       <div className="md:hidden">
-//         <ContentHeader title="Register Past Weddings" />
-//       </div>
-//       <div className="register-past">
-//         <div className="main-header-past">
-//           <p className="main-lead-past">
-//             Send an online voting form to your wedding clients today
-//           </p>
-//           <p className="mt-[5px]">
-//             Your clients will receive a customised voting link delivered
-//             directly to their inbox/junk mail. We highly recommend you text or
-//             email your client advising{" "}
-//             <span className="text-[#3fa19a] ">vote@abia.com.au</span> has sent
-//             them an email.
-//           </p>
-//         </div>
-//         {/* Registration Guidelines */}
-//         <div className="card-past">
-//           <p className="text-[20px] font-bold">Registration Guide:</p>
-//           <ol className="custom-ol ">
-//             <li className="custom-li">
-//               ABIA will not release registered details to any third parties.
-//             </li>
-//             <li className="custom-li">
-//               Only register weddings that took place in the past 12 months from
-//               00-00-0000
-//             </li>
-//             <li className="custom-li">
-//               Your Wedding Client has 365 days from their wedding date to
-//               complete the form.
-//             </li>
-//             <li className="custom-li">
-//               You can{" "}
-//               <span>
-//                 <a
-//                   className="text-[#3fa19a]  underline underline-offset-4 "
-//                   href="www.abia.com.au/vendor/wedding-history"
-//                 >
-//                   resend the online voting forms
-//                 </a>{" "}
-//               </span>
-//               every 3 days.
-//             </li>
-//             <li className="custom-li">
-//               ABIA will send an automated reminder to your Wedding Client at
-//               least '2' times.
-//             </li>
-//           </ol>
-//         </div>
-//         {/* Register - Form */}
-//         <div className="form-grid">
-//           <div className="mt-[25px]">
-//             <form className="space-y-3">
-//               <label className="header-text-past">
-//                 Services Booked - sample*
-//               </label>
-//               <br />
-//               <div className="relative">
-//                 {/* <span className="downarrow-icon "></span> */}
-//                 <Dropdown
-//                   options={options}
-//                   handleSelectedOptions={handleSelectedOptions}
-//                 />
-//                 {/* <input type="text" required className="input-style" /> */}
-//               </div>
-//               <br />
-//             </form>
-//           </div>
-//           {/* Submit Button */}
-//           <div className="relative space-y-3">
-//             <button className="submit-button" onClick={handleSubmit}>
-//               submit
-//             </button>
-//             <p className="text-[12px] ">
-//               By clicking submit, you agree that all information provided is
-//               legitimate and correct.
-//             </p>
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default PastWedding;
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TopBar from "../../layouts/sidebar/TopBar";
 import ContentHeader from "../../layouts/sidebar/ContentHeader";
 import "./pastWedding.css";
@@ -143,10 +7,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { BiSolidDownArrow } from "react-icons/bi";
 
-import SelectDropdown from "../../third-party-packs/checkBoxSelect";
 import Dropdown from "../../third-party-packs/dropDown";
 import SingleSelect from "../../third-party-packs/singleSelect";
 import Calendar from "../../third-party-packs/Calendar";
+import { Dialog, DialogTitle } from "@mui/material";
 
 const PastWedding = () => {
   const [clientName, setClientName] = useState("");
@@ -154,8 +18,13 @@ const PastWedding = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [state, setState] = useState("");
   const [email, setEmail] = useState("");
+  const [confirmEmail, setConfirmEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [selectedOptions, setSelectedOptions] = useState([]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scrolls to the top of the page
+  }, []);
 
   //Select option data
   const handleClientNameChange = (e) => {
@@ -170,12 +39,16 @@ const PastWedding = () => {
     setState(e.target.value);
   };
 
-  const handleWeddingDate = (e) => {
-    setStartDate(e.target.value);
+  const handleWeddingDate = (date) => {
+    setStartDate(date);
   };
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
+  };
+
+  const handleconfirmEmailChange = (e) => {
+    setConfirmEmail(e.target.value);
   };
 
   const handlePhoneNumberChange = (e) => {
@@ -194,6 +67,7 @@ const PastWedding = () => {
       startDate,
       state,
       email,
+      confirmEmail,
       phoneNumber,
       selectedOptions,
     };
@@ -201,9 +75,10 @@ const PastWedding = () => {
 
     setClientName("");
     setPartnerName("");
-    setStartDate(new Date());
+    setStartDate(null);
     setState("");
     setEmail("");
+    setConfirmEmail("");
     setPhoneNumber("");
     setSelectedOptions([]);
   };
@@ -226,7 +101,7 @@ const PastWedding = () => {
 
   return (
     <>
-      <TopBar title="Register Past Wedding" />
+      <TopBar title="Register Past Weddings" />
       <div className="md:hidden">
         <ContentHeader title="Register Past Weddings" />
       </div>
@@ -264,7 +139,7 @@ const PastWedding = () => {
               4. You can{" "}
               <span>
                 <a
-                  className="text-[#3fa19a]  underline underline-offset-4 "
+                  className="text-[#3fa19a] font-semibold underline underline-offset-4 "
                   href="www.abia.com.au/vendor/wedding-history"
                 >
                   resend the online voting forms
@@ -310,33 +185,20 @@ const PastWedding = () => {
               <br />
               <label className="header-text-past">Wedding Date*</label>
               <div className=" relative">
-                <Calendar />
+                <Calendar
+                  onFormSubmit={handleSubmit}
+                  onChange={handleWeddingDate}
+                  tabIndex={0}
+                />
                 <p className="text-[12px] text-[#f20431] font-extrabold mt-[40px]">
                   Wedding Date must be before 00-00-0000.{" "}
                 </p>
               </div>
               <br />
-
-              {/* <label className="header-text-past">Wedding Date*</label>
-              <br />
-              <div className="relative">
-                <input
-                  type="date"
-                  required
-                  className="input-style"
-                  value={startDate}
-                  onChange={handleWeddingDate}
-                />
-                <p className="text-[12px] text-[#f20431] font-extrabold mt-[5px]">
-                  Wedding Date must be before 00-00-0000.{" "}
-                </p>
-              </div> */}
-              {/* <br /> */}
-
               <label className="header-text-past">Wedding State*</label>
               <br />
               <div className="relative" onChange={handleStateChange}>
-                <SingleSelect options={states} />
+                <SingleSelect options={states} onFormSubmit={handleSubmit} />
               </div>
               <br />
               <label className="header-text-past">Email*</label>
@@ -344,7 +206,7 @@ const PastWedding = () => {
               <div className="relative">
                 <span className="email-icon"></span>
                 <input
-                  type="text"
+                  type="email"
                   required
                   className="input-style"
                   value={email}
@@ -357,11 +219,11 @@ const PastWedding = () => {
               <div className="relative">
                 <span className="email-icon"></span>
                 <input
-                  type="text"
+                  type="email"
                   required
                   className="input-style"
-                  value={email}
-                  onChange={handleEmailChange}
+                  value={confirmEmail}
+                  onChange={handleconfirmEmailChange}
                 />
               </div>
               <br />
@@ -383,7 +245,7 @@ const PastWedding = () => {
               <label className="header-text-past">Services Booked*</label>
               <br />
               <div className="relative">
-                <Dropdown options={options} onChange={handleStateChange} />
+                <Dropdown options={options} onFormSubmit={handleSubmit} />
               </div>
               <br />
             </form>
@@ -393,7 +255,7 @@ const PastWedding = () => {
             <button className="submit-button" onClick={handleSubmit}>
               submit
             </button>
-            <p className="text-[12px] ">
+            <p className="disclaimer-button-text">
               By clicking submit, you agree that all information provided is
               legitimate and correct.
             </p>

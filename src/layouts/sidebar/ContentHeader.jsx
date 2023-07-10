@@ -5,7 +5,7 @@ const ContentHeader = ({ title }) => {
   return (
     <div className="w-full">
       <div className="header-box">
-        <div className="ml-[30px]">{title}</div>
+        <div className="ml-[15px]">{title}</div>
       </div>
     </div>
   );

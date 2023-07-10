@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TopBar from "../../layouts/sidebar/TopBar";
 import "./GetReviews.css";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import ContentHeader from "../../layouts/sidebar/ContentHeader";
 
 const GetReviews = () => {
   const navigate = useNavigate();
+
 
   const pastWeddingLink = () => {
     navigate("/get-reviews/past-wedding");
@@ -18,6 +19,10 @@ const GetReviews = () => {
   const copyreviewLink = () => {
     navigate("/get-reviews/copy-link");
   };
+
+  // useEffect(() => {
+  //   window.scrollTo(0, 0); // Scroll to top when component mounts or navigates
+  // }, []);
 
   return (
     <>

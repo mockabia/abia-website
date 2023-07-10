@@ -24,6 +24,8 @@ import { ReactComponent as Promotions } from "../../icons/promotions.svg";
 import { ReactComponent as ShopIcon } from "../../icons/shop.svg";
 import { ReactComponent as EnquiryIcon } from "../../icons/enquiries.svg";
 import { ReactComponent as SettingsIcons } from "../../icons/settings.svg";
+import { ReactComponent as MyProfileIcon } from "../../icons/my-profile.svg";
+
 // import { ReactComponent as AbiaLogo } from "../../ABIA-White-Logo-gold-crown (1).svg";
 
 import { Link, NavLink, useLocation, useRoutes } from "react-router-dom";
@@ -102,6 +104,11 @@ const Sidebar = () => {
       icon: ShowCase,
       menus: ["Review Widget", "Award Badges"],
     },
+    {
+      name: "settings",
+      icon: SettingsIcons,
+      menus: ["Business Settings", "Update Listing"],
+    },
   ];
 
   return (
@@ -117,7 +124,7 @@ const Sidebar = () => {
         variants={Nav_animation}
         initial={{ x: isTabletMid ? -250 : 0 }}
         animate={open ? "open" : "closed"}
-        className="fixed-sidebar bg-[#6cc2bc]  shadow-xl z-[9999] max-w-[16rem]  w-[16rem]  
+        className="fixed-sidebar bg-[#6cc2bc]  shadow-xl z-[9999] max-w-[16rem]  w-[16rem]
         overflow-hidden md:relative h-screen "
       >
         {/* <AbiaLogo /> */}
@@ -126,11 +133,10 @@ const Sidebar = () => {
             <div className="w-[86px]">
               <AbiaLogo alt="Abia-logo" />
             </div>
-            {/* <AbiaLogo width={85} alt="Abia-logo" className="logo-style" /> */}
           </div>
         </div>
         <div className="flex flex-col  h-full text-white relative">
-          <ul className=" pl-7  text-[0.9rem] py-8 flex flex-col gap-2  overflow-x-hidden scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100   md:h-[68%] h-[70%]  ">
+          <ul className="overflow-auto pl-[28px] text-[0.9rem] py-[32px] flex flex-col gap-2  overflow-x-hidden scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100   md:h-[68%] h-[70%]  ">
             <li>
               <NavLink to={"/home"} className="link" activeClassName="active">
                 <div className="flex gap-5 ml-5">
@@ -147,7 +153,7 @@ const Sidebar = () => {
               >
                 <div className="flex gap-5 ml-5">
                   <GetReview className="  w-[18px] h-[18px] mt-[2px] fill-current text-[#fff]" />
-                  <span className="font-semiboldd">Get review</span>
+                  <span className="font-semiboldd">Get reviews</span>
                 </div>
               </NavLink>
             </li>
@@ -166,13 +172,18 @@ const Sidebar = () => {
 
             {(open || isTabletMid) && (
               <div className="">
-                {subMenusList?.map((menu) => (
-                  <div key={menu.name} className="flex flex-col ">
-                    <SubMenu data={menu} />
-                  </div>
-                ))}
+                {subMenusList
+                  .filter(
+                    (menu) => menu.menus.length > 0 && menu.name === "showcase"
+                  )
+                  .map((menu) => (
+                    <div key={menu.name} className="flex flex-col ">
+                      <SubMenu data={menu} />
+                    </div>
+                  ))}
               </div>
             )}
+
             <li>
               <NavLink
                 to={"/promotions"}
@@ -205,12 +216,37 @@ const Sidebar = () => {
                 activeClassName="active"
               >
                 <div className="flex gap-5 ml-5">
-                  <EnquiryIcon className="mt-[2px] w-[18px] h-[18px]  fill-current text-[#fff] " />
+                  <EnquiryIcon className=" w-[20px]  fill-current text-[#fff] " />
                   Enquiries
                 </div>
               </NavLink>
             </li>
             <li>
+              <NavLink
+                to={"/my-profile "}
+                className="link"
+                activeClassName="active"
+              >
+                <div className="flex gap-5 ml-5">
+                  <MyProfileIcon className=" w-[22px] h-[22px] fill-current text-[#fff]" />
+                  <span className="font-semiboldd">My Profile</span>
+                </div>
+              </NavLink>
+            </li>
+            {(open || isTabletMid) && (
+              <div className="">
+                {subMenusList
+                  .filter(
+                    (menu) => menu.menus.length > 0 && menu.name === "settings"
+                  )
+                  .map((menu) => (
+                    <div key={menu.name} className="flex flex-col ">
+                      <SubMenu data={menu} />
+                    </div>
+                  ))}
+              </div>
+            )}
+            {/* <li>
               <NavLink
                 to={"/settings"}
                 className="link"
@@ -221,7 +257,7 @@ const Sidebar = () => {
                   Settings
                 </div>
               </NavLink>
-            </li>
+            </li> */}
           </ul>
           <div className="mt-[30px] ml-[30px]">
             <div className="space-y-3">

@@ -1,0 +1,52 @@
+.preview-listing-container {
+    max-width: 1100px;
+    grid-column: 1/16;
+}
+
+.profile-listing-header {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.myprofile-accordion {
+    grid-column: 2/15;
+    grid-row: 2/5;
+    border-bottom: 1px solid #b1b1b1;
+    background-color: #F4F5F6;
+}
+
+
+.myprofile-accordion-button {
+     position: relative;
+    cursor: pointer;
+    padding: 22px 0px 50px 0px;
+    width: 100%;
+    /* display: flex; */
+    align-items: flex-start;
+}
+
+.myprofile-edit-button {
+    position: absolute;
+    right: 0px;
+    border-bottom: 1px solid #b1b1b1;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.myprofile-accordion-item-header {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+
+.quickdesc-summary {
+    /* margin-top: 20px; */
+    overflow-wrap: break-word;
+}
+
+@media(min-width:1024px) {
+    .preview-listing-container {
+        max-width: 1100px;
+        grid-column: 1/14;
+    }
+}

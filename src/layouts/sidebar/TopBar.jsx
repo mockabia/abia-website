@@ -15,6 +15,7 @@ import { ReactComponent as ShowCase } from "../../icons/showcase.svg"; //Manage 
 import { ReactComponent as Promotions } from "../../icons/promotions.svg";
 import { ReactComponent as ShopIcon } from "../../icons/shop.svg";
 import { ReactComponent as EnquiryIcon } from "../../icons/enquiries.svg";
+import { ReactComponent as MyProfileICon } from "../../icons/my-profile.svg";
 import { ReactComponent as SettingsIcons } from "../../icons/settings.svg";
 import { RxTriangleDown } from "react-icons/rx";
 import { ReactComponent as MenuIcon } from "../../icons/menuIcon.svg";
@@ -45,11 +46,15 @@ const TopBar = ({ title, logo }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   //sidebar
   const [isActive, setIsActive] = useState(false);
-  //submenu
+  //submenu-showcase
   const [showSubMenu, setShowSubMenu] = useState(false);
+  const [showSeetingsSubmenu, setShowSettingsSubmenu] = useState(false);
 
   const toggleSubMenu = () => {
     setShowSubMenu(!showSubMenu);
+  };
+  const toggleSettingsSubMenu = () => {
+    setShowSettingsSubmenu(!showSeetingsSubmenu);
   };
 
   const toggleProfile = () => {
@@ -149,10 +154,10 @@ const TopBar = ({ title, logo }) => {
                     {/* <hr className="hr-line" /> */}
                   </li>
                   <li className="mb-5">
-                    <NavLink to={"/get-review"} onClick={closeMenu}>
+                    <NavLink to={"/get-reviews"} onClick={closeMenu}>
                       <div className="flex gap-5">
                         <GetReview className=" w-5 h-5 fill-current text-[#fff]" />
-                        Get review
+                        Get reviews
                       </div>
                     </NavLink>
                   </li>
@@ -165,7 +170,7 @@ const TopBar = ({ title, logo }) => {
                     </NavLink>
                   </li>
                   <li className="mb-5 relative">
-                    <div className="flex -ml-[21px]" onClick={toggleSubMenu}>
+                    <div className="flex  " onClick={toggleSubMenu}>
                       <NavLink className="flex gap-5">
                         <ShowCase className="w-5 h-5 fill-current text-[#fff]" />
                         Showcase
@@ -231,12 +236,54 @@ const TopBar = ({ title, logo }) => {
                     </NavLink>
                   </li>
                   <li className="mb-5">
-                    <NavLink to={"/settings"} onClick={closeMenu}>
+                    <NavLink to={"/my-profile"} onClick={closeMenu}>
                       <div className="flex gap-5 ">
-                        <SettingsIcons className="w-5 h-5 fill-current text-[#fff]" />
-                        Settings
+                        <MyProfileICon className="w-5 h-5 fill-current text-[#fff]" />
+                        My Profile
                       </div>
                     </NavLink>
+                  </li>
+                  <li className="mb-5 relative">
+                    <div className="flex  " onClick={toggleSettingsSubMenu}>
+                      <NavLink className="flex gap-5">
+                        <SettingsIcons className="w-5 h-5 fill-current text-[#fff]" />
+                        Settings
+                      </NavLink>
+
+                      <RxTriangleDown className="fixed ml-[79vw]" size={25} />
+                    </div>
+                    {showSeetingsSubmenu && (
+                      <div>
+                        <ul className="ml-[41px] mt-4 ">
+                          <motion.li
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 }}
+                            className="mb-4"
+                          >
+                            <NavLink
+                              to={"/settings/business-settings"}
+                              onClick={closeMenu}
+                            >
+                              Business Settings
+                            </NavLink>
+                          </motion.li>
+                          <motion.li
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            // className="mb-4"
+                          >
+                            <NavLink
+                              to={"/settings/update-listing"}
+                              onClick={closeMenu}
+                            >
+                              Update Listing
+                            </NavLink>
+                          </motion.li>
+                        </ul>
+                      </div>
+                    )}
                   </li>
                 </ul>
                 <div className="mt-[65px] space-y-2">

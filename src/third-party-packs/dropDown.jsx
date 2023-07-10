@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { components } from "react-select";
 import { default as ReactSelect } from "react-select";
 // import fontawesome from "@fortawesome/fontawesome";
@@ -7,13 +7,23 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import "./dropDown.css";
 // fontawesome.library.add(faCaretDown);
 
-const Dropdown = ({ options, onChange }) => {
+const Dropdown = ({ options, onFormSubmit }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [isClearable, setIsClearable] = useState(true);
 
   const handleSelectChange = (selected) => {
     setSelectedOptions(selected);
     console.log(selected);
+  };
+
+  useEffect(() => {
+    return () => {
+      setSelectedOptions([]);
+    };
+  }, [onFormSubmit]);
+
+  const inputProps = {
+    // inputMode: "none",
+    readOnly: true,
   };
 
   const Option = (props) => {
@@ -45,9 +55,12 @@ const Dropdown = ({ options, onChange }) => {
       },
       borderRadius: "10px",
       background: "#fafafa",
-      padding: "10px",
+      padding: "5px",
       width: "100%",
+      height: "55px",
       maxWidth: "100%",
+      fontSize: "12px",
+      inputMode: "none",
       "@media (min-width: 1190px)": {
         width: "96%",
         maxWidth: "96%",
@@ -58,7 +71,9 @@ const Dropdown = ({ options, onChange }) => {
       ...provided,
       marginTop: "10px",
       borderRadius: "20px",
-      padding: "15px",
+      width: "95%",
+      paddingTop: "10px",
+      padding: "5px",
       border: "1px solid #c3bebe",
       boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
     }),
@@ -70,7 +85,7 @@ const Dropdown = ({ options, onChange }) => {
         ? "#e7f5f4"
         : "white",
       color: state.isSelected ? "black" : "inherit",
-      padding: "12px",
+      // padding: "12px",
     }),
     indicatorSeparator: (defaultStyles: any) => {
       return {
@@ -78,6 +93,57 @@ const Dropdown = ({ options, onChange }) => {
         display: "none",
       };
     },
+    input: (provided) => ({
+      ...provided,
+      WebkitUserSelect: "none",
+      MozUserSelect: "none",
+      msUserSelect: "none",
+      userSelect: "none",
+      inputMode: "none",
+      tabIndex: "0",
+    }),
+    clearIndicator: () => ({
+      display: "none",
+    }),
+    multiValueRemove: (provided) => ({
+      ...provided,
+      // display: "none", // Set display to "none" to hide the default remove button
+    }),
+  };
+
+  //multi value
+  const MultiValue = ({ index, getValue, selectProps, data, ...props }) => {
+    const maxToShow = 2;
+    const overflow = getValue()
+      .slice(maxToShow)
+      .map((x) => x.label);
+
+    if (index < maxToShow) {
+      return <components.MultiValue {...props} />;
+    } else if (index === maxToShow) {
+      return <MoreSelectedBadge items={overflow} />;
+    } else {
+      return null;
+    }
+  };
+
+  const MoreSelectedBadge = ({ items }) => {
+    const style = {
+      marginLeft: "auto",
+      fontSize: "14px",
+      fontWeight: "500",
+      padding: "5px",
+    };
+
+    const title = items.join(", ");
+    const length = items.length;
+    const label = `+ ${length}  `;
+
+    return (
+      <div style={style} title={title}>
+        {label}
+      </div>
+    );
   };
 
   return (
@@ -93,24 +159,30 @@ const Dropdown = ({ options, onChange }) => {
           options={options}
           placeholder
           isMulti
-          isClearable={false}
+          tabIndex={0}
+          inputProps={inputProps}
           closeMenuOnSelect={false}
+          blurInputOnSelect={false} //bug fixed
           hideSelectedOptions={false}
-          allowSelectAll={true}
+          // allowSelectAll={true}
           value={selectedOptions}
           onChange={handleSelectChange}
           styles={customStyles}
           components={{
+            MultiValue,
             DropdownIndicator: () => (
               <div>
-                <FontAwesomeIcon
-                  icon={faCaretDown}
-                  className="dropDown-position"
-                  style={{ color: "#7c7c7c" }}
-                />
+                {!selectedOptions.length && (
+                  <FontAwesomeIcon
+                    icon={faCaretDown}
+                    className="dropDown-position"
+                    style={{ color: "#7c7c7c" }}
+                  />
+                )}
               </div>
             ),
             Option,
+            ClearIndicator: null,
           }}
         />
       </span>

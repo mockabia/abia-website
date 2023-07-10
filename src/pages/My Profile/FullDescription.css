@@ -1,0 +1,15 @@
+.fulldescription-down-aroww {
+    /* position: absolute; */
+    color: #6cc2bc;
+    margin-left: 63vw;
+    margin-top: -23px;
+}
+
+@media(min-width:1024px) {
+    .fulldescription-down-aroww {
+        /* position: absolute; */
+        color: #6cc2bc;
+        margin-left: 49vw;
+        margin-top: -20px;
+    }
+}

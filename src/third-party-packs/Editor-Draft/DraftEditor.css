@@ -1,0 +1,133 @@
+/* * {
+    margin: 0px;
+    box-sizing: border-box;
+} */
+
+.draft-editor-wrapper {
+    width: 100%;
+    margin-top: 20px;
+    border: 1px solid #b1b1b1;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.editor-container {
+    width: 100%;
+    border: 1px solid #b1b1b1;
+    border-radius: 10px;
+    background-color:#F4F5F6 ;
+    padding: 5px;
+    min-height: 180px;
+}
+
+.toolbar-grid {
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: 1fr 1fr;
+}
+
+.draft-editor-toolbar-buttons {
+    margin-right: 8px;
+    font-size: 1rem;
+    padding: 10px;
+    border: none;
+    background: #fff;
+    cursor: pointer;
+}
+
+.superFancyBlockquote {
+    color: #999;
+    background: #fff;
+    font-family: "Hoefler Text", Georgia, serif;
+    font-style: italic;
+    border-left: 2px solid #999;
+    padding-left: 10px;
+}
+
+.codeBlock {
+    font-family: fira-code, monospace;
+    font-size: inherit;
+    background: #ffeff0;
+    font-style: italic;
+    word-wrap: normal;
+    word-wrap: break-word;
+    box-decoration-break: slice;
+    padding: 0.3rem 2rem;
+    border-radius: 0.2rem;
+}
+
+.leftAlign {
+    text-align: left;
+}
+
+.rightAlign {
+    text-align: right;
+}
+
+.centerAlign {
+    text-align: center;
+}
+
+.justifyAlign {
+    text-align: justify;
+}
+
+/* .unordered-list-item {
+    list-style-type: disc;
+    padding-left: 1.25rem;
+}
+
+.ordered-list-item {
+    list-style-type: decimal;
+    padding-left: 1.25rem;
+} */
+
+/* ul */
+.public-DraftStyleDefault-ul {
+    list-style-type: disc;
+    padding-left: 1.25rem !important;
+}
+/* ol */
+.public-DraftStyleDefault-ol {
+    list-style-type: decimal;
+    padding-left: 1.25rem !important;
+}
+
+/* Button groups */
+.draft-button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.draft-editor-save-button {
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 40px;
+    border-radius: 30px;
+    background-color: #6cc2bc;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.draft-editor-cancel-button {
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 40px;
+    border-radius: 30px;
+    border: 1px solid #000;
+    background-color: #fff;
+    /* color: white; */
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}

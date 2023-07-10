@@ -1,0 +1,237 @@
+/* 
+ .business-container {
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: 220px repeat(4, 1fr);
+    grid-template-rows: auto;
+} 
+
+.business-accordion{
+    grid-column: 2/15;
+}
+.business-accordion-visible {
+        background: #fff;
+        cursor: pointer;
+        padding: 15px;
+        padding-top: 22px;
+        padding-bottom: 22px;
+        border: 2px solid #dad6d6;
+        border-radius: 10px;
+}
+
+.business-accordion button {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.arrow-down-icon {
+    position: absolute;
+    margin-left: 68vw;
+    color: #6cc2bc
+}
+
+.business-header {
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.business-accordian-toggle {
+    height: 0px;
+    font-size: 18px;
+    opacity: 0;
+    transition:  
+    opacity 0.3s ease-in-out,
+    height 0.3s 0.3s ease-in-out;
+    color: #333;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.business-animated {
+    opacity: 1;
+    transition:  
+    height 0.3s ease-in-out,
+    opacity 0.3s 0.3s ease-in-out;
+}
+
+
+ */
+
+ /**
+* ----------------------------------------------
+* Demo styles
+* ----------------------------------------------
+**/
+
+
+.business-acordion-container {
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: repeat(15, 1fr);
+    grid-template-rows: 90px repeat(4, 1fr);
+    /* grid-template-rows: auto; */
+}
+
+.business-header-largescreen {
+    grid-column: 2/15;
+}
+
+
+ .accordion {
+    grid-column: 2/15;
+    grid-row: 2/5;
+    border: 1px solid #dad6d6;
+    border-radius: 20px;
+    background-color: #fff;
+ }
+
+
+ .business-header {
+    grid-column: 2/15;
+ }
+
+ .accordion-item-header {
+    margin-left: 10px;
+    font-weight: 600;
+
+ }
+
+ .accordion__item+.accordion__item {
+     border-top: 1px solid #dad6d6;
+ }
+
+
+
+ .accordion__button {
+    position: relative;
+    /* border-radius: 20px; */
+    cursor: pointer;
+    padding: 22px 15px 22px 22px;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+ }
+
+
+ .business-down-aroww {
+    position: absolute;
+    color: #6cc2bc;
+    margin-left: 68vw;
+    transform: rotate(0deg);
+    transition: transform 0.3s;
+ }
+
+.business-basicinfo-icon {
+    width: 28px;
+    margin-left: -3px;
+}
+.icon-transition {
+    width: 22px;
+}
+
+/*Accordion after expnasion  */
+.accordion__button[aria-expanded="true"] .business-down-aroww {
+    transform: rotate(180deg);
+}
+.accordion__button[aria-expanded="true"]  .accordion-item-header {
+    font-size: 20px;
+    margin-left: 4px
+}
+
+.accordion__button[aria-expanded="true"] .icon-transition {
+    width: 26px;
+}
+
+.accordion__button[aria-expanded="true"] .business-basicinfo-icon {
+    width: 30px;
+}
+/*  */
+ [hidden] {
+     display: none;
+ }
+
+ .accordion__panel {
+    padding: 20px;
+    padding-top: 5px;
+    margin-top: -20px;
+    animation: fadein 0.35s ease-in;
+    background-color: #fff;
+    border-radius: 20px;
+ }
+
+ /* -------------------------------------------------- */
+ /* ---------------- Animation part ------------------ */
+ /* -------------------------------------------------- */
+/* 
+ @keyframes fadein {
+     0% {
+         opacity: 0;
+     }
+
+     100% {
+         opacity: 1;
+     }
+ } */
+
+ /* media query */
+
+ @media (min-width: 769px) {
+     .business-down-aroww {
+        margin-left: 44vw;
+    }
+ }
+
+ @media (min-width: 900px) {
+     .business-down-aroww {
+         margin-left: 50vw;
+     }
+ }
+
+
+  @media (min-width: 1000px) {
+      .business-down-aroww {
+          margin-left: 40vw;
+      }
+    .business-acordion-container {
+        max-width: 1250px;
+        display: grid;
+        grid-template-columns: repeat(80, 1fr);
+    }
+     .accordion {
+        grid-column: 3/59;
+        grid-row: 2/5;
+        border: 2px solid #dad6d6;
+        border-radius: 20px;
+        background-color: #fff;
+        }
+
+    .accordion__button {
+        padding: 22px 15px 22px 35px;
+    }
+
+    .accordion__panel {
+        padding: 35px;
+        padding-top: 5px;
+    }
+    .business-header-largescreen {
+        grid-column: 3/62;
+    }
+  }
+
+  @media (min-width: 1200px) {
+      .business-down-aroww {
+          margin-left: 44vw;
+      }
+  }
+
+  @media (min-width: 1350px) {
+      .business-down-aroww {
+          margin-left: 48vw;
+      }
+  }
+
+
