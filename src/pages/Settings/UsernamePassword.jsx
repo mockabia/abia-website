@@ -22,17 +22,33 @@ const UsernamePassword = () => {
     setInputConfirmPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = {
       inputUsername,
       inputPassword,
       inputConfirmPasssword,
     };
-    console.log(formData);
-    setInputUsername("");
-    setInputPasswrd("");
-    setInputConfirmPassword("");
+    const vendorId = "<Vendor_id>";
+    const apiEndpoint = `https://abia.abia-test.com/web/WebBusinessVendor/${vendorId}`;
+    try {
+      const response = await fetch(apiEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("API Response:", data);
+      } else {
+        console.error("API Error:", response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error("API Request Error:", error);
+    }
   };
 
   return (

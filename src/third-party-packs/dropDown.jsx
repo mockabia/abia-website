@@ -5,14 +5,13 @@ import { default as ReactSelect } from "react-select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import "./dropDown.css";
-// fontawesome.library.add(faCaretDown);
 
 const Dropdown = ({ options, onFormSubmit }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   const handleSelectChange = (selected) => {
     setSelectedOptions(selected);
-    console.log(selected);
+    onFormSubmit(selected);
   };
 
   useEffect(() => {
@@ -22,7 +21,6 @@ const Dropdown = ({ options, onFormSubmit }) => {
   }, [onFormSubmit]);
 
   const inputProps = {
-    // inputMode: "none",
     readOnly: true,
   };
 
@@ -130,8 +128,8 @@ const Dropdown = ({ options, onFormSubmit }) => {
   const MoreSelectedBadge = ({ items }) => {
     const style = {
       marginLeft: "auto",
-      fontSize: "14px",
-      fontWeight: "500",
+      fontSize: "12px",
+      fontWeight: "400",
       padding: "5px",
     };
 
@@ -158,7 +156,7 @@ const Dropdown = ({ options, onFormSubmit }) => {
         <ReactSelect
           options={options}
           placeholder
-          isMulti
+          isMulti={true}
           tabIndex={0}
           inputProps={inputProps}
           closeMenuOnSelect={false}

@@ -1,0 +1,180 @@
+.video-gallery-container {
+    /* margin: 10px auto; */
+    /* margin: 10px; */
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+
+.video-input-style {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 370px;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    outline: none;
+}
+
+
+
+.video-upload-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto;
+    width: 125px;
+    height: 125px;
+    border: 2px dashed #8e8e8e;
+    border-radius: 12px;
+    object-fit: cover;
+    background: url(../icons/video.svg) center no-repeat;
+    background-size: 50px;
+    cursor: pointer;
+    position: relative;
+}
+.video-upload-preview {
+    position: relative;
+    display: flex;
+    width: 125px;
+    height: 125px;
+    border: 1px solid #fff;
+    border-radius: 12px;
+    object-fit: cover;
+    overflow: hidden;
+    margin-top: 10px;
+}
+.video-upload-text {
+    color: #8e8e8e;
+    margin-top: 70px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.video-save-button {
+    /* display: inline-block; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    margin-right: 8px;
+    width: 100px;
+    height: 40px;
+    border-radius: 30px;
+    background-color: #6cc2bc;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+.video-preview {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    /* border-radius: 12px; */
+}
+
+.modal-close {
+        font-size: 20px;
+        display: flex;
+        justify-content: end;
+}
+
+.modal-input-topmargin {
+    margin-top: 10px !important;
+}
+
+/* .MuiInputBase-input {
+    height: 100px;
+} */
+
+.myprofile-videos-close {
+    position: absolute;
+    cursor: pointer;
+    width: 14px;
+    fill: #FFF;
+    margin-top: 8px;
+    margin-left: -22px;
+}
+
+@media(max-width:550px) {
+    .video-input-style {
+        width: 300px;
+        height: 370px;
+    }
+}
+
+
+
+@media(min-width:1023px) {
+
+    .video-gallery-container {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 15px;
+   
+
+    }
+    .video-upload-button {
+        width: 190px;
+        height: 190px;
+    }
+
+    .video-upload-box {
+        width: 220px;
+        height: 220px;
+    }
+
+   .video-upload-text {
+       position: absolute;
+   }
+
+    .video-upload-preview {
+        /* margin-top: 10px; */
+        position: relative;
+        display: flex;
+        width: 190px;
+        height: 190px;
+        border: 1px solid #fff;
+        border-radius: 12px;
+        object-fit: cover;
+        margin-top: 0px;
+    }
+    .video-input-style {
+        height: 350px;
+    }
+    
+    .myprofile-videos-close {
+        position: absolute;
+        cursor: pointer;
+        width: 14px;
+        fill: #FFF;
+        margin-top: 12px;
+        margin-left: -24px;
+    }
+}
+
+@media (min-width: 770px) and (max-width: 900px) {
+     .video-input-style {
+        width: 250px;
+        height: 380px;
+    }
+}
+
+/* @media (min-width: 770px) and (max-width: 851px) {
+      .video-input-style {
+        width: 300px;
+        height: 300px;
+    }
+} */

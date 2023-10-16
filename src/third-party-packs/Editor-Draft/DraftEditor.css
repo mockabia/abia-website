@@ -2,19 +2,21 @@
     margin: 0px;
     box-sizing: border-box;
 } */
-
+.draftEditor-container {
+    padding: 1px 25px 30px 1px;
+}
 .draft-editor-wrapper {
     width: 100%;
     margin-top: 20px;
     border: 1px solid #b1b1b1;
     background-color: #fff;
     border-radius: 10px;
-    padding: 1rem;
+    /* padding: 1rem; */
 }
 
 .editor-container {
     width: 100%;
-    border: 1px solid #b1b1b1;
+    /* border: 1px solid #b1b1b1; */
     border-radius: 10px;
     background-color:#F4F5F6 ;
     padding: 5px;
@@ -130,4 +132,21 @@
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
+}
+
+@media(min-width:1023px) {
+    .draft-editor-wrapper {
+        width: 90%;
+    }
+    .draftEditor-container {
+        padding: 1px 25px 30px 1px;
+    }
+}
+
+
+@media(min-width:1350px) {
+    .draft-editor-save-button {
+        position: absolute;
+        right: 90px;
+    }
 }

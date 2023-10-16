@@ -1,0 +1,125 @@
+.cropper-container {
+    margin-top: 20px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.cropper-container .add-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.cropper-container input {
+    display: none;
+}
+
+.cropper-container .cropper-img-container {
+    margin: 10px auto;
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #dad6d6;
+    background: #fafafa;
+    cursor: pointer;
+}
+
+.cropper-container .cropper-img-container img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cropper-upload-button {
+    display: inline-block;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 10px;
+    /* width: 150px; */
+    width: 250px;
+    background-color: #e8cf82;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.cropper-upload-icon {
+    font-size: 22px;
+    margin-left: 7px;
+}
+
+
+.cropper-upload-recommendation {
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #c3bebe;
+    font-size: 14px;
+    margin-left: calc((100vw - 375px) / 2);
+}
+
+
+@media(min-width: 769px) {
+    .cropper-upload-recommendation {
+        margin-left: calc((100vw - 760px) / 2);
+    }
+}
+
+@media(width: 820px) {
+    .cropper-upload-recommendation {
+        margin-left: calc((100vw - 800px) / 2);
+    }
+}
+
+@media(min-width:1023px) {
+    .cropper-upload-recommendation {
+        margin-left: calc((100vw - 1100px) / 2);
+    }
+
+}
+
+@media(min-width:1100px) {
+    .cropper-container {
+        margin: 10px;
+        margin-left: -10px;
+        width: 150px;
+        height: 150px;
+        position: relative;
+    }
+
+    .cropper-upload-button {
+        display: inline-block;
+        position: absolute;
+        margin-top: -125px;
+        margin-left: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        padding: 10px;
+        /* width: 150px; */
+        width: 120px;
+        height: 40px;
+        background-color: #e8cf82;
+        border: 1px solid #ccc;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: 800;
+    }
+
+    .cropper-upload-recommendation {
+        font-size: 13px;
+        position: absolute;
+        margin-top: 70px;
+        /* margin-top: -73px; */
+        margin-left: 370px;
+        text-wrap: nowrap;
+   }
+
+
+}
+

@@ -138,7 +138,11 @@ const Sidebar = () => {
         <div className="flex flex-col  h-full text-white relative">
           <ul className="overflow-auto pl-[28px] text-[0.9rem] py-[32px] flex flex-col gap-2  overflow-x-hidden scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100   md:h-[68%] h-[70%]  ">
             <li>
-              <NavLink to={"/home"} className="link" activeClassName="active">
+              <NavLink
+                to={"/home"}
+                className="link sidebarMenuItem"
+                activeClassName="active"
+              >
                 <div className="flex gap-5 ml-5">
                   <HomeIcon className=" w-[18px] h-[18px] fill-current text-[#fff]" />
                   <span className="font-semiboldd">Home</span>
@@ -148,7 +152,7 @@ const Sidebar = () => {
             <li>
               <NavLink
                 to={"/get-reviews"}
-                className="link"
+                className="link sidebarMenuItem"
                 activeClassName="active"
               >
                 <div className="flex gap-5 ml-5">
@@ -160,7 +164,7 @@ const Sidebar = () => {
             <li>
               <NavLink
                 to={"/manage-review"}
-                className="link "
+                className="link sidebarMenuItem "
                 activeClassName="active"
               >
                 <div className="flex gap-5 ml-5">
@@ -187,7 +191,7 @@ const Sidebar = () => {
             <li>
               <NavLink
                 to={"/promotions"}
-                className="link -mt-2 "
+                className="link sidebarMenuItem -mt-2 "
                 activeClassName="active"
               >
                 <div className="flex gap-5 ml-5">
@@ -202,7 +206,11 @@ const Sidebar = () => {
             </li>
 
             <li>
-              <NavLink to={"/shop"} className="link" activeClassName="active">
+              <NavLink
+                to={"/shop"}
+                className="link sidebarMenuItem"
+                activeClassName="active"
+              >
                 <div className="flex gap-5 ml-5">
                   <ShopIcon className="mt-[2px] w-[18px] h-[18px] fill-current text-[#fff] " />
                   Shop
@@ -212,7 +220,7 @@ const Sidebar = () => {
             <li>
               <NavLink
                 to={"/enquiries"}
-                className="link "
+                className="link sidebarMenuItem "
                 activeClassName="active"
               >
                 <div className="flex gap-5 ml-5">
@@ -224,7 +232,7 @@ const Sidebar = () => {
             <li>
               <NavLink
                 to={"/my-profile "}
-                className="link"
+                className="link sidebarMenuItem"
                 activeClassName="active"
               >
                 <div className="flex gap-5 ml-5">
@@ -233,7 +241,7 @@ const Sidebar = () => {
                 </div>
               </NavLink>
             </li>
-            {(open || isTabletMid) && (
+            {/* {(open || isTabletMid) && (
               <div className="">
                 {subMenusList
                   .filter(
@@ -245,11 +253,11 @@ const Sidebar = () => {
                     </div>
                   ))}
               </div>
-            )}
-            {/* <li>
+            )} */}
+            <li>
               <NavLink
                 to={"/settings"}
-                className="link"
+                className="link sidebarMenuItem"
                 activeClassName="active"
               >
                 <div className="flex gap-5 ml-5">
@@ -257,7 +265,7 @@ const Sidebar = () => {
                   Settings
                 </div>
               </NavLink>
-            </li> */}
+            </li>
           </ul>
           <div className="mt-[30px] ml-[30px]">
             <div className="space-y-3">
@@ -270,7 +278,7 @@ const Sidebar = () => {
                 to="/upgrade"
                 className=" rounded-3xl bg-[#e8cf82] px-5 py-2 mb-2 "
               >
-                <span className="text-black text-sm font-bold">
+                <span className="text-black text-[14px] font-bold">
                   {" "}
                   Upgrade Now
                 </span>

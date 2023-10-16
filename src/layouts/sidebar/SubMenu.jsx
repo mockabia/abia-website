@@ -49,7 +49,7 @@ const SubMenu = ({ data }) => {
   return (
     <>
       <li
-        className="link"
+        className="link sidebarMenuItem"
         activeClassName="active"
         onClick={() => setSubMenuOpen(!subMenuOpen)}
         // ref={subMenuRef}
@@ -59,7 +59,7 @@ const SubMenu = ({ data }) => {
             isActive ? "#6cc2bc" : "#fff"
           }`}
         />
-        <p className="flex-1 ml-[2px] capitalize text-[15px] ">{data.name}</p>
+        <div className="flex-1 ml-[2px] capitalize text-[15px] ">{data.name}</div>
         <RxTriangleDown
           className={` ${subMenuOpen && "rotate-180"} duration-200 `}
           size={20}
@@ -76,7 +76,7 @@ const SubMenu = ({ data }) => {
                 height: 0,
               }
         }
-        className="flex h-0 flex-col pl-[56px]  text-[0.8rem] font-nunito overflow-hidden submenu-list "
+        className="flex h-0 flex-col pl-[56px]  sidebarSubMenuItem font-nunito overflow-hidden submenu-list "
       >
         {renderSubMenu(data.menus)}
       </motion.ul>

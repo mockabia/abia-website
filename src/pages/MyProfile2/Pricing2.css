@@ -1,0 +1,112 @@
+.pricing-panel-container {
+    padding: 1px 25px 25px 0px;
+}
+
+.dollar-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    background: url(../../icons/dollar-sign-symbol-bold-text-svgrepo-com.svg) center center no-repeat;
+    width: 16px;
+    height: 16px;
+    background-size: contain;
+}
+
+.myprofile-accordion-button[aria-expanded="true"] .myprofile-pricing-subheading {
+    display: none;
+}
+
+.pricing-input-style {
+    width: 80%;
+    height: 50px;
+    border-radius: 10px;
+    background: #F4F5F6;
+    border: 1px solid #c3bebe;
+    padding: 10px;
+    padding-left: 27px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+
+
+.yes-button {
+    width: 85px;
+    height: 40px;
+    border-radius: 10px;
+    /* background-color: #15a75c;
+    color: white; */
+    background-color: #ced6d2;
+    color: #000;
+    font-weight: 500;
+    outline: none;
+}
+
+.yes-button:focus {
+    background-color: #56b379;
+    color: white;
+}
+
+.no-button {
+    width: 85px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #ced6d2;
+    color: #000;
+    font-weight: 500;
+    outline: none;
+}
+
+.no-button:focus {
+    background-color: #ff0000;
+    color: #fff;
+}
+
+
+.pricing-save-button {
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 90px; */
+    width: 90px;
+    margin-top: 55px;
+    height: 40px;
+    border-radius: 30px;
+    background-color: #6cc2bc;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+@media(min-width:437px) {
+
+    /* .pricing-save-button {
+        width: 90px;
+        margin-top: 50px;
+    } */
+    .pricing-button-group {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+@media(min-width:1023px) {
+    .pricing-input-style {
+        width: 50%;
+    }
+
+    .pricing-save-button {
+        margin-top: 51px;
+        width: 120px;
+    }
+}
+
+@media(min-width:1350px) {
+    .pricing-save-button {
+        position: absolute;
+        right: 90px;
+    }
+}

@@ -1,0 +1,42 @@
+.meetOwner-panel-container {
+    padding: 1px 25px 30px 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.display-showmore {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+
+}
+
+
+
+@media(min-width:1023px) {
+    .myprofile-radio-group {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+    }
+
+    .myprofile-radio-group .owner-radio-inputs .owner-avatar-cropper {
+        position: absolute;
+        /* margin-right: 80px; */
+    }
+
+    .meetOwner-panel-container {
+        padding: 1px 25px 30px 0PX;
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+@media(min-width:1256px) {
+    .owner-radio-inputs {
+        /* position: absolute; */
+        margin-right: 82px;
+    }
+}

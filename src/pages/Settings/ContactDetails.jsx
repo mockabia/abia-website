@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./ContactDetails.css";
-import SingleSelect from "../../third-party-packs/singleSelect";
 
 const ContactDetails = () => {
   const [inputContactName, setInputContactName] = useState("");
@@ -43,29 +42,63 @@ const ContactDetails = () => {
     setInputState(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = {
-      inputContactName,
-      inputEmail,
-      inputPhone,
-      inputAddress,
-      inputPostcode,
-      inputCity,
-      inputState,
-      // selectedOptions,
-    };
-    console.log(formData);
 
-    setInputContactName("");
-    setInputEmail("");
-    setInputPhone(null);
-    setInputAddress("");
-    setInputPostCode("");
-    setInputCity("");
-    setInputState("");
-    // setSelectedOptions([]);
+    const formData = {
+      contactName: inputContactName,
+      email: inputEmail,
+      phone: inputPhone,
+      address: inputAddress,
+      postcode: inputPostcode,
+      city: inputCity,
+      state: inputState,
+    };
+    const vendorId = "<Vendor_id>";
+    const apiEndpoint = `https://abia.abia-test.com/web/WebBusinessVendor/${vendorId}`;
+    try {
+      const response = await fetch(apiEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("API Response:", data);
+      } else {
+        console.error("API Error:", response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error("API Request Error:", error);
+    }
   };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   const formData = {
+  //     inputContactName,
+  //     inputEmail,
+  //     inputPhone,
+  //     inputAddress,
+  //     inputPostcode,
+  //     inputCity,
+  //     // inputState,
+  //     // selectedOptions,
+  //   };
+  //   console.log(formData);
+
+  //   setInputContactName("");
+  //   setInputEmail("");
+  //   setInputPhone(null);
+  //   setInputAddress("");
+  //   setInputPostCode("");
+  //   setInputCity("");
+  //   setInputState("");
+  //   // setSelectedOptions([]);
+  // };
 
   const states = [
     { value: "ACT", label: "ACT" },
@@ -155,14 +188,16 @@ const ContactDetails = () => {
               />
             </div>
           </div>
-          <div>
+          {/* <div>
             <label className="font-semibold">State*</label>
             <div className="relative contact-detail-singleselect">
               <SingleSelect options={states} />
             </div>
-          </div>
+          </div> */}
           <div className="relative space-y-3">
-            <button className="submit-button">Save</button>
+            <button className="submit-button" onClick={handleSubmit}>
+              Save
+            </button>
           </div>
         </form>
       </div>

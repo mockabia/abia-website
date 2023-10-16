@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500&family=Playfair+Display:wght@500&display=swap');
+
+.bm-item {
+    display: inline-block;
+    text-decoration: none;
+    /* margin-bottom: 10px; */
+    color: #000;
+    transition: color 0.2s;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+}
+
+.bm-item:hover {
+    color: #373a47;
+}
+
+.bm-burger-button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    width: 30px;
+    height: 20px;
+    margin-top: -6px;
+    /* left: 20px;
+    margin-top: 25px; */
+    /* top: 36px; */
+}
+
+.bm-burger-bars {
+    background: #fff;
+}
+.bm-cross-button {
+    height: 24px;
+    width: 24px;
+}
+
+.bm-cross {
+    background: #000;
+}
+
+.bm-menu-wrap {
+    position: absolute;
+    height: 100vh !important;
+    width: 280px !important;
+    left: 0%;
+    top: 0%;
+}
+
+.bm-menu {
+    background: #fff;
+    padding: 25px 15px 25px 15px ;
+    font-size: 18px;
+}
+
+.bm-morph-shape {
+    fill: #373a47;
+}
+
+.bm-item-list {
+    color: #b8b7ad;
+}
+
+.bm-overlay {
+    
+    background: rgba(0, 0, 0, 0.3);
+    top: 0%;
+}
+
+.mobile-menu-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mobile-menu-item {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+
+.mobile-menu-login {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+    width: 150px;
+    height: 35px;
+    background-color: #c3e7e4;
+    border-radius: 20px;
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding-left: 0px;
+}
+
+.mobile-menu-signup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 35px;
+    background-color: #000;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.mobile-menu-option {
+    display: block;
+    border-bottom: 1px solid #DAD6D6;
+    padding: 10px
+}
+
+
+.mobile-menu-accordionPanel {
+    /* padding: 14px; */
+    font-size: 14px;
+    font-weight: 600;
+
+}
+/* .mobile-navbar-acordionButton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+} */
+
+
+
+@media(min-width:1023px) {
+.bm-burger-button {
+    display: none;
+        /* top: 36px; */
+    }
+
+.bm-menu {
+    display: none;
+}
+
+.bm-overlay {
+    display: none;
+}
+}

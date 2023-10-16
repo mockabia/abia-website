@@ -1,0 +1,35 @@
+.package-panel-container {
+    padding: 1px 25px 25px 0px;
+    font-family: 'Raleway', sans-serif;
+}
+
+
+.packages-upload-button {
+    display: inline-block;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 120px;
+    height: 40px;
+    background-color: #e8cf82;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 800;
+}
+
+.package-upload-icons {
+    font-size: 21px;
+    margin-left: 5px;
+}
+
+
+
+
+@media(min-width:10223px) {
+    .package-panel-container {
+        padding: 1px 25px 25px 0px;
+    }
+}

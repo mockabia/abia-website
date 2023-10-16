@@ -1,0 +1,11 @@
+.myprofile-photogallerytest {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    /* float: left; */
+}
+
+.myprofile-photogallerytest>* {
+    /* flex: 1;  */
+    /* Allow each child element to grow equally */
+}

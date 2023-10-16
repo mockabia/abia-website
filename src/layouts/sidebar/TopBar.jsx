@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 // import { GrMenu } from "react-icons/gr";
 import { AiOutlineClose } from "react-icons/ai";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 
@@ -21,10 +21,12 @@ import { RxTriangleDown } from "react-icons/rx";
 import { ReactComponent as MenuIcon } from "../../icons/menuIcon.svg";
 import { ReactComponent as AbiaLogo } from "../../ABIA-White-Logo-gold-crown(1).svg";
 import AbiaLogo1 from "../../abiaLogo";
-
+import { useAuth } from "../../context/AuthProvider";
 //components
 
 const TopBar = ({ title, logo }) => {
+  const auth = useAuth();
+  const navigate = useNavigate();
   // profileOpen
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef(null);
@@ -69,6 +71,10 @@ const TopBar = ({ title, logo }) => {
     setMenuOpen(false);
   };
 
+  const handleLogout = () => {
+    auth.logout();
+    navigate("/login");
+  };
   return (
     <div
       ref={profileRef}
@@ -78,7 +84,7 @@ const TopBar = ({ title, logo }) => {
         <div className="">
           <div className="md:ml-[30px] md:mt-[12px] relative">
             <div className="md:text-[25px] font-bold md:ml-[256px]">
-              {title}
+              <h1>{title}</h1>
             </div>
           </div>
         </div>
@@ -92,25 +98,33 @@ const TopBar = ({ title, logo }) => {
         <button className="mr-4 focus:outline-none" onClick={toggleProfile}>
           <div className="relative ">
             <div className="absolute inset-0  bg-[#6cc2bc] w-[10px] h-[10px] md:w-[40px] md:h-[40px] mt-[-9px] rounded-full"></div>
-            <UserIcons className="w-[22px] relative z-10 md:text-[#6cc2bc] ml-[8.5px]  md:mr-10  " />
+            <UserIcons fill="#fff" className="w-[22px] relative z-10 md:text-[#6cc2bc] ml-[8.5px]  md:mr-10  " />
           </div>
         </button>
         {profileOpen && (
-          <div className="dropdown arrow-top">
+          <div className="dash-dropdown arrow-top">
             <ul className="">
               <li className="px-4 cursor-pointer">
-                <span className="font-nunito text-[17px] font-bold">
-                  ABC Cakes at...
+                <span className=" text-[17px] font-bold">
+                  {/* ABC Cakes at... */}
+                  {auth.userEmail}
                 </span>
                 <br></br>
-                <span className="text-[15px]">info@abccakesmel.co</span>
+                <span className="text-[15px]">
+                  {/* info@abccakesmel.co */}
+                  {auth.userEmail}
+                </span>
               </li>
               <li className="px-4  text-[15px] cursor-pointer">
                 Account Details
               </li>
 
-              <li className="px-4 text-[15px] cursor-pointer flex items-center font-semibold">
-                Log out
+              <li
+                className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
+                onClick={handleLogout}
+              >
+                {/* <Link to={"/login"}>Log Out</Link> */}
+                <button>Log Out</button>
               </li>
             </ul>
           </div>
@@ -145,7 +159,7 @@ const TopBar = ({ title, logo }) => {
                 <ul className="mt-[100px] flex flex-col sm:justify-center  sm:mr-[85px] ">
                   {/* sm:items-center */}
                   <li className="mb-5 ">
-                    <NavLink to={"/"} onClick={closeMenu}>
+                    <NavLink to={"/home"} onClick={closeMenu}>
                       <div className="flex gap-5">
                         <HomeIcon className=" w-5 h-5 fill-current text-[#fff]" />
                         Home
@@ -243,7 +257,15 @@ const TopBar = ({ title, logo }) => {
                       </div>
                     </NavLink>
                   </li>
-                  <li className="mb-5 relative">
+                  <li className="mb-5">
+                    <NavLink to={"/settings"} onClick={closeMenu}>
+                      <div className="flex gap-5 ">
+                        <SettingsIcons className="w-5 h-5 fill-current text-[#fff]" />
+                        Settings
+                      </div>
+                    </NavLink>
+                  </li>
+                  {/* <li className="mb-5 relative">
                     <div className="flex  " onClick={toggleSettingsSubMenu}>
                       <NavLink className="flex gap-5">
                         <SettingsIcons className="w-5 h-5 fill-current text-[#fff]" />
@@ -284,7 +306,7 @@ const TopBar = ({ title, logo }) => {
                         </ul>
                       </div>
                     )}
-                  </li>
+                  </li> */}
                 </ul>
                 <div className="mt-[65px] space-y-2">
                   <div className="mb-[10px]">

@@ -24,24 +24,45 @@ const BasicInfo = () => {
     setInputWebsite(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = {
-      inputBusinessName,
-      inputWebsite,
-      image,
-    };
-    console.log(formData);
 
-    setInputBusinessName("");
-    setInputWebsite("");
-    setImage(null);
+    const formData = {
+      businessName: inputBusinessName,
+      website: inputWebsite,
+      logo: image,
+    };
+
+    const vendorId = "<Vendor_id>";
+
+    const apiEndpoint = `https://abia.abia-test.com/web/WebBusinessVendor/${vendorId}`;
+
+    try {
+      const response = await fetch(apiEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("API Response:", data);
+      } else {
+        console.error("API Error:", response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error("API Request Error:", error);
+    }
   };
 
   return (
     <div className="basic-info-container">
       <div className="basic-sub-header">
-        <p>Add your logo, business name and website to your ABIA Profile. </p>
+        <p className="whitespace-break-spaces">
+          Add your logo, business name and website to your ABIA Profile.{" "}
+        </p>
       </div>
       <div className="mt-[20px]">
         <form className="space-y-7">
@@ -51,6 +72,7 @@ const BasicInfo = () => {
               <input
                 type="text"
                 required
+                name="bname"
                 className="basicinfo-input-style"
                 value={inputBusinessName}
                 onChange={handleBusinessNameChange}
@@ -64,6 +86,7 @@ const BasicInfo = () => {
               <input
                 type="text"
                 required
+                name="website"
                 className="basicinfo-input-style"
                 value={inputWebsite}
                 onChange={handleWebsiteChange}

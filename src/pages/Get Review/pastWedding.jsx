@@ -107,58 +107,70 @@ const PastWedding = () => {
       </div>
       <div className="register-past">
         <div className="main-header-past">
-          <p className="main-lead-past">
+          <h2 className="">
             Send an online voting form to your wedding clients today
-          </p>
-          <p className="mt-[5px]">
+          </h2>
+          <p className="mt-[10px] whitespace-adjust">
             Your clients will receive a customised voting link delivered
             directly to their inbox/junk mail. We highly recommend you text or
             email your client advising{" "}
-            <span className="text-[#3fa19a] ">vote@abia.com.au</span> has sent
-            them an email.
+            <span className="text-[#3fa19a] font-[600] cursor-pointer ">
+              vote@abia.com.au
+            </span>{" "}
+            has sent them an email.
           </p>
         </div>
         {/* Registration Guidelines */}
         <div className="card-past">
-          <p className="text-[20px] font-bold lg:ml-[11px]">
-            Registration Guide:
-          </p>
+          <h3 className=" lg:ml-[11px]">Registration Guide:</h3>
           <ul className="custom-ol ">
-            <li className="custom-li">
-              1. ABIA will not release registered details to any third parties.
+            <li className="mt-[10px] custom-li ">
+              <p className="whitespace-adjust">
+                1. ABIA will not release registered details to any third
+                parties.
+              </p>
             </li>
-            <li className="custom-li">
-              2. Only register weddings that took place in the past 12 months
-              from 00-00-0000
+            <li className="mt-[10px] custom-li  ">
+              <p className="whitespace-adjust">
+                2. Only register weddings that took place in the past 12 months
+                from 00-00-0000
+              </p>
             </li>
-            <li className="custom-li">
-              3. Your Wedding Client has 365 days from their wedding date to
-              complete the form.
+            <li className="mt-[10px] custom-li">
+              <p className="whitespace-adjust">
+                3. Your Wedding Client has 365 days from their wedding date to
+                complete the form.
+              </p>
             </li>
-            <li className="custom-li">
-              4. You can{" "}
-              <span>
-                <a
-                  className="text-[#3fa19a] font-semibold underline underline-offset-4 "
-                  href="www.abia.com.au/vendor/wedding-history"
-                >
-                  resend the online voting forms
-                </a>{" "}
-              </span>
-              every 3 days.
+            <li className="custom-li mt-[10px]">
+              <p className="whitespace-adjust">
+                4. You can{" "}
+                <span>
+                  <a
+                    className="text-[#3fa19a] font-semibold underline underline-offset-4 "
+                    href="www.abia.com.au/vendor/wedding-history"
+                  >
+                    resend the online voting forms
+                  </a>{" "}
+                </span>
+                every 3 days.
+              </p>
             </li>
-            <li className="custom-li">
-              5. ABIA will send an automated reminder to your Wedding Client at
-              least '2' times.
+            <li className="mt-[10px] custom-li">
+              <p className="whitespace-adjust">
+                {" "}
+                5. ABIA will send an automated reminder to your Wedding Client
+                at least '2' times.
+              </p>
             </li>
           </ul>
         </div>
         {/* Register - Form */}
         <div className="form-grid">
           <div className="mt-[25px]">
-            <form className="space-y-3">
-              <label className="header-text-past">Client's Full Name*</label>
-              <br />
+            <form className="space-y-0 font-semibold">
+              <label className="t">Client's Full Name*</label>
+              {/* <br /> */}
               <div className="relative">
                 <span className="user-icon"></span>
                 <input
@@ -183,17 +195,20 @@ const PastWedding = () => {
                 />
               </div>
               <br />
-              <label className="header-text-past">Wedding Date*</label>
-              <div className=" relative">
-                <Calendar
-                  onFormSubmit={handleSubmit}
-                  onChange={handleWeddingDate}
-                  tabIndex={0}
-                />
+              <div className="mt-[0px]">
+                <label>Wedding Date*</label>
+                <div className="relative">
+                  <Calendar
+                    onFormSubmit={handleSubmit}
+                    onChange={handleWeddingDate}
+                    tabIndex={0}
+                  />
+                </div>
                 <p className="text-[12px] text-[#f20431] font-extrabold mt-[40px]">
                   Wedding Date must be before 00-00-0000.{" "}
                 </p>
               </div>
+
               <br />
               <label className="header-text-past">Wedding State*</label>
               <br />
@@ -255,7 +270,7 @@ const PastWedding = () => {
             <button className="submit-button" onClick={handleSubmit}>
               submit
             </button>
-            <p className="disclaimer-button-text">
+            <p className="disclaimer-button-text whitespace-adjust ">
               By clicking submit, you agree that all information provided is
               legitimate and correct.
             </p>

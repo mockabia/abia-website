@@ -1,10 +1,12 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,svg  }"],
   theme: {
     extend: {
       fontFamily: {
-        nunito: ["Nunito", "sans-serif"],
+        raleway: ["Raleway", "sans-serif"],
+        source: ["Source Sans 3", "sans-serif"],
       },
     },
     screens: {

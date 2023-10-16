@@ -107,10 +107,10 @@ const FutureWedding = () => {
       </div>
       <div className="register-past">
         <div className="main-header-past">
-          <p className="main-lead-past">
+          <h2>
             Schedule an online voting form to be sent 3 days after wedding date.
-          </p>
-          <p className="mt-[5px]">
+          </h2>
+          <p className="mt-[10px] whitespace-adjust ">
             Register your clients below, and they will receive a customised
             voting link 3 days after their wedding date. Furthermore, ABIA will
             send '1' email asking if they need further help planning their
@@ -119,11 +119,9 @@ const FutureWedding = () => {
         </div>
         {/* Registration Guidelines */}
         <div className="card-past">
-          <p className="text-[20px] font-bold lg:ml-[11px]">
-            Registration Guide:
-          </p>
+          <h3 className=" lg:ml-[11px]">Registration Guide:</h3>
           <ul className="custom-ol ">
-            <li className="custom-li">
+            <li className="custom-li ">
               1. ABIA will not release registered details to any third parties.
             </li>
             <li className="custom-li">
@@ -151,7 +149,7 @@ const FutureWedding = () => {
         {/* Register - Form */}
         <div className="form-grid">
           <div className="mt-[25px]">
-            <form className="space-y-3">
+            <form className="space-y-0  bodyContent font-semibold">
               <label className="header-text-past">Client's Full Name*</label>
               <br />
               <div className="relative">
@@ -257,7 +255,7 @@ const FutureWedding = () => {
             <button className="submit-button" onClick={handleSubmit}>
               submit
             </button>
-            <p className="disclaimer-button-text ">
+            <p className="disclaimer-button-text whitespace-adjust  ">
               By clicking submit, you agree that all information provided is
               legitimate and correct.
             </p>

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { createObjectURL } from "file-saver";
 import "./ImageUploader.css";
-import profile from "../icons/profile-upload-3.png";
+import profile from "../icons/profiel-bg-latest.svg";
 import { BiUpload } from "react-icons/bi";
 import { Url } from "url";
 
@@ -44,6 +44,7 @@ const ImageUploader = ({ image, setImage, onUpload }) => {
         <input
           type="file"
           id="file-input"
+          name="blogo"
           accept="image/*"
           onChange={handleChange}
           className="hidden"
@@ -54,7 +55,7 @@ const ImageUploader = ({ image, setImage, onUpload }) => {
             <label
               htmlFor="file-input"
               id="file-label"
-              className="text-[17px] cursor-pointer"
+              className="text-[14px] cursor-pointer"
             >
               Upload
             </label>

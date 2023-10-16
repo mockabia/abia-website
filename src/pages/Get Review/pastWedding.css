@@ -36,7 +36,7 @@
     margin-left: 15px;
     margin-top: 10px;
     /* margin-bottom: 5px; */
-    font-size: 15px;
+    font-size: 14px;
 }
 
 
@@ -53,10 +53,10 @@
     grid-column: 1/16;
 }
 
-.header-text-past{
+/* .header-text-past{
     font-weight: 600;
-    font-size: 15px;
-}
+    font-size: 14px;
+} */
 
 
 .input-style {
@@ -154,12 +154,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .submit-button{
     /* position: absolute; */
     margin-top: 10px;
-    width: 150px;
-    height: 50px;
+    width: 120px;
+    height: 40px;
     border-radius: 30px;
     background-color: #6cc2bc;
     color: white;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 14px;
 }
 
 .submit-button:hover {
@@ -203,11 +204,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
             grid-column: 34/60;
             /* text-align: left; */
         }
-        .custom-li {
-            margin-top: 20px;
-            /* margin-bottom: 5px; */
-            font-size: 15px;
-        }
+        
 
         .input-style {
             width: 96%;

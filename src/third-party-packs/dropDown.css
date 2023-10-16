@@ -51,6 +51,7 @@
 /* On mouse-over, add a grey background color */
 .label-checkbox:hover input~.checkbox-indicator {
     background-color: #ccc;
+    font-weight: 400;
 }
 
 /* When the checkbox is checked, add a 6cc2bc background */

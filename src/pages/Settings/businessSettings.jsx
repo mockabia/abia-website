@@ -1,9 +1,5 @@
 import React, { useState } from "react";
 import "./businessSettings.css";
-
-import BasicInfo from "./BasicInfo";
-import ContactDetails from "./ContactDetails";
-
 import { ReactComponent as BusinessUserIcon } from "../../icons/ic-user-interface-info (1).svg";
 import { ReactComponent as BusinessEmail } from "../../icons/business-email (1).svg";
 import { ReactComponent as USernamePasswordIcon } from "../../icons/ic-user-interface-password (1).svg";
@@ -21,6 +17,8 @@ import {
   AccordionItemPanel,
 } from "react-accessible-accordion";
 import ContentHeader from "../../layouts/sidebar/ContentHeader";
+import BasicInfo from "./BasicInfo";
+import ContactDetails from "./ContactDetails";
 import UsernamePassword from "./UsernamePassword";
 import Category from "./Category";
 import MyLocation from "./MyLocation";
@@ -30,7 +28,7 @@ const BusinessSettings = () => {
   const accordionItems = [
     {
       id: 1,
-      icon: <BusinessUserIcon  className="business-basicinfo-icon"/>,
+      icon: <BusinessUserIcon className="business-basicinfo-icon" />,
       heading: "Basic Information",
       content: <BasicInfo />,
     },
@@ -48,13 +46,13 @@ const BusinessSettings = () => {
     },
     {
       id: 4,
-      icon: <CategoryIcon/>,
+      icon: <CategoryIcon />,
       heading: "Categories",
       content: <Category />,
     },
     {
       id: 5,
-      icon: <LocationIcon/>,
+      icon: <LocationIcon />,
       heading: "My Locations",
       content: <MyLocation />,
     },
@@ -64,19 +62,19 @@ const BusinessSettings = () => {
     <>
       <TopBar title="Settings" />
       <div className="business-acordion-container">
-        <div className="business-header md:hidden ">
+        <div className="business-header ">
           {/* <ContentHeader title="Business Settings" /> */}
-          <h1 className="font-bold text-[22px] ">Business Settings</h1>
-          <p className="text-[14px] mt-[5px]">
+          <h2>Business Settings</h2>
+          <p className="mt-[10px] whitespace-break-spaces">
             Keep ABIA up-to-date by updating your business settings below.
           </p>
         </div>
-        <div className="business-header-largescreen hidden md:block space-y-2 mt-[10px]">
-          <h1 className="font-bold text-[22px]">Business Settings</h1>
-          <p className="text-[16px]">
+        {/* <div className="business-header-largescreen  space-y-2 mt-[10px] hidden lg:visible">
+          <h2 className="">Business Settings</h2>
+          <p className="text-[14px]">
             Keep ABIA up-to-date by updating your business settings below.
           </p>
-        </div>
+        </div> */}
 
         <Accordion allowZeroExpanded>
           {accordionItems.map((item) => (
@@ -84,7 +82,7 @@ const BusinessSettings = () => {
               <AccordionItemHeading>
                 <AccordionItemButton>
                   <span className="icon-transition">{item.icon}</span>
-                  <span className="accordion-item-header">{item.heading}</span>
+                  <h4 className="accordion-item-header">{item.heading}</h4>
                   <RxTriangleDown size={30} className="business-down-aroww" />
                 </AccordionItemButton>
               </AccordionItemHeading>

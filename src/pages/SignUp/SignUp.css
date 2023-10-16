@@ -1,0 +1,267 @@
+
+@media(max-width:1023px) {
+    .register-container-1 {
+        height: 100%;
+        width: 100%;
+        background-image: url(../../images/register-wedding-vendor.webp);
+        background-position-x: right;
+        display: grid;
+        grid-template-columns: (15, 1fr);
+    }
+    .register-container-2 {
+        height: 100%;
+        width: 100%;
+        background-image: url(../../images/register-wedding-vendor2.webp);
+        background-position-x: center;
+        display: grid;
+        grid-template-columns: (15, 1fr);
+    }
+
+    .register-container-3 {
+        height: 100%;
+        width: 100%;
+        background-image: url(../../images/register-wedding-vendor3-1.webp);
+        background-position-x: center;
+        display: grid;
+        grid-template-columns: (15, 1fr);
+    }
+
+.register-page1-div1{
+    width:300px;
+    border: 1px solid #b8b8b8;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    grid-column: 2/12;
+    margin: 50px auto;
+    padding: 15px;
+}
+.register-page2-div1 {
+    width: 300px;
+    border: 1px solid #b8b8b8;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    grid-column: 2/12;
+    margin: 50px auto;
+    padding: 15px;
+}
+.register-page3-div1 {
+    width: 300px;
+    border: 1px solid #b8b8b8;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    grid-column: 2/12;
+    margin: 50px auto;
+    padding: 15px;
+}
+
+.register-mobile-input-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-position-adjust {
+    visibility: hidden;
+}
+
+.register-signup-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 500;
+    text-align: left;
+    padding-left: 10px;
+    white-space: nowrap;
+}
+
+.signup-input-style {
+        width: 100% !important;
+        height: 50px !important;
+        border-radius: 10px;
+        background: #fafafa;
+        border: 1px solid #c3bebe;
+        cursor: pointer;
+        /* margin-bottom: 15px; */
+        padding-left: 10px;
+        text-align: left;
+}
+
+.signup-dropdown-style {
+    width: 100% !important;
+    height: 50px !important;
+    border-radius: 10px;
+    background: #fafafa;
+    border: 1px solid #c3bebe;
+    cursor: pointer;
+    /* margin-bottom: 15px; */
+    /* padding-left: 10px; */
+    text-align: left;
+}
+
+.signup-error-border {
+    border: 1px solid red;
+}
+
+.register-next-button {
+       display: inline-block;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       margin: 0 auto;
+       width: 100px;
+       /* width: 150px; */
+       height: 40px;
+       border-radius: 30px;
+       background-color: #6cc2bc;
+       color: white;
+       font-size: 14px;
+       font-weight: 700;
+       cursor: pointer;
+}
+
+.blank-div {
+    visibility: hidden;
+}
+
+.hide-on-small-screen {
+    display: none;
+}
+
+.display-on-small-screen {
+    visibility: visible;
+}
+ }
+.desktop-form {
+    display: none;
+}
+@media(min-width:1024px) {
+
+.desktop-form {
+    display: block;
+}
+
+.register-container {
+        display: grid;
+        grid-template-columns: (30, 1fr);
+        height: 100vh;
+        /* Take up the full viewport height */
+    }
+
+    .register-page1-div1,
+    .register-page3-div1,
+    .register-page2-div1 {
+        margin: 50px auto;
+        top: 20%;
+        /* padding-left: 180px;
+    padding-right: 200px !important; */
+        /* border: 1px solid #ccc; */
+        grid-column: 1/10;
+    }
+
+
+
+
+    .register-page1-div2 {
+        position: relative;
+        border-left: none;
+        border-top-left-radius: 300px;
+        border-bottom-left-radius: 350px;
+        /* background-color: #6cc2bc; */
+        background-image: url(../../images/register-wedding-vendor.webp);
+        background-size: cover;
+        background-position: right;
+        background-position-x: right 20%;
+        background-repeat: no-repeat;
+        grid-column: 11/30;
+    }
+
+
+    .register-page2-div2 {
+        position: relative;
+        border-left: none;
+        border-top-left-radius: 300px;
+        border-bottom-left-radius: 350px;
+        /* background-color: #6cc2bc; */
+        background-image: url(../../images/register-wedding-vendor2.webp);
+        background-size: cover;
+        background-position: right;
+        background-position-x: right 20%;
+        background-repeat: no-repeat;
+        grid-column: 11/30;
+    }
+
+
+
+    .register-page3-div2 {
+        position: relative;
+        border-left: none;
+        border-top-left-radius: 300px;
+        border-bottom-left-radius: 350px;
+        /* background-color: #6cc2bc; */
+        background-image: url(../../images/register-wedding-vendor3-1.webp);
+        background-size: cover;
+        background-position: right;
+        background-position-x: right 20%;
+        background-repeat: no-repeat;
+        grid-column: 11/30;
+    }
+
+    .signup-input-style {
+        width: 400px !important;
+        max-width: 96%;
+        height: 50px !important;
+        border-radius: 10px;
+        background: #fafafa;
+        border: 1px solid #c3bebe;
+        cursor: pointer;
+        /* margin-bottom: 15px; */
+        padding-left: 10px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .register-position-adjust {
+        visibility: hidden;
+    }
+
+    .register-signup-header {
+        font-family: 'Playfair Display', serif;
+        font-size: 38px;
+        font-weight: 500;
+        margin-top: 10px;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .register-counter {
+        text-align: left;
+        display: flex;
+        justify-content: start;
+    }
+
+    .register-next-button {
+        display: inline-block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        width: 120px;
+        /* width: 150px; */
+        height: 50px;
+        border-radius: 30px;
+        background-color: #6cc2bc;
+        color: white;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .blank-div {
+        visibility: hidden;
+    }
+
+
+
+}
+
