@@ -34,61 +34,14 @@ const CouplesLogin = () => {
             </IconButton>
           </Box>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-              name="username"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: "Username is required",
-                minLength: {
-                  value: 6,
-                  message: "Username must be at least 6 characters",
-                },
-              }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Username"
-                  variant="outlined"
-                  fullWidth
-                  error={Boolean(errors.username)}
-                  helperText={errors.username && errors.username.message}
-                />
-              )}
-            />
+            <div>
+              <TextField />
+              <TextField />
+            </div>
 
-            <Controller
-              name="password"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: "Password is required",
-                minLength: {
-                  value: 8,
-                  message: "Password must be at least 8 characters",
-                },
-              }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Password"
-                  variant="outlined"
-                  fullWidth
-                  type="password"
-                  error={Boolean(errors.password)}
-                  helperText={errors.password && errors.password.message}
-                  InputProps={{
-                    startAdornment: (
-                      <LockIcon color="disabled" position="end" />
-                    ),
-                  }}
-                />
-              )}
-            />
-
-            <Button type="submit" variant="contained" color="primary">
+            {/* <Button type="submit" variant="contained" color="primary">
               Submit
-            </Button>
+            </Button> */}
           </form>
         </Box>
       </div>
