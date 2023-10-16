@@ -94,6 +94,23 @@ export const ForgetBox = {
     width: "18rem",
   },
 };
+
+export const CouplesLoginBox = {
+  // position: "absolute",
+  // top: "50%",
+  // left: "50%",
+  // transform: "translate(-50%, -50%)",
+  width: "100%",
+  maxWidth: "27rem",
+  height: "auto",
+  bgcolor: "#fff",
+  border: "1px solid #949494",
+  borderRadius: "1rem",
+  p: 4,
+  "@media (max-width: 600px)": {
+    width: "18rem",
+  },
+};
 export const RedditTextField = styled(TextField)(({ theme }) => ({
   "& .MuiInputBase-root": {
     height: "50px",
