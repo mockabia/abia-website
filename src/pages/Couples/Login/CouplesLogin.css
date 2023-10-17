@@ -17,15 +17,26 @@
     gap: 0.5rem;
 }
 
-.cl-label {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: 0.5rem;
-    margin-bottom: 0.25rem;
-   
-}
+
 
 .cl-gap {
     visibility: hidden;
 }
+
+.cl-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 0.25rem;
+}
+
+@media screen and (min-width:400px) {
+.cl-label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 0.5rem;
+        margin-bottom: 0.25rem;
+    }
+}
+    

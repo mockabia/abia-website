@@ -85,7 +85,9 @@ const MenuItems = () => {
                   <Link to={"/login"} className="mobile-menu-option">
                     Vendor
                   </Link>
-                  <div className="mobile-menu-option">Couple</div>
+                  <Link to={"/wedding-login"} className="mobile-menu-option">
+                    Couple
+                  </Link>
                 </AccordionItemPanel>
               </AccordionItem>
               <AccordionItem>
@@ -109,21 +111,6 @@ const MenuItems = () => {
             </Accordion>
           </div>
         </div>
-
-        {/* <div className="">
-          <div className="mobile-menu-login">
-            <span>Login</span>
-          </div>
-          <div className="mobile-menu-signup">
-            <span>Sign Up</span>
-          </div>
-        </div> */}
-        {/* <Link onClick={closeMenu} className="menu-item menu-seperator" to="">
-          Login
-        </Link>
-        <Link onClick={closeMenu} className="menu-item" to="">
-          Sign Up
-        </Link> */}
       </Menu>
     </div>
   );

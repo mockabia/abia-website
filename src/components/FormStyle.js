@@ -95,22 +95,6 @@ export const ForgetBox = {
   },
 };
 
-export const CouplesLoginBox = {
-  // position: "absolute",
-  // top: "50%",
-  // left: "50%",
-  // transform: "translate(-50%, -50%)",
-  width: "100%",
-  maxWidth: "27rem",
-  height: "auto",
-  bgcolor: "#fff",
-  border: "1px solid #949494",
-  borderRadius: "1rem",
-  p: 4,
-  "@media (max-width: 600px)": {
-    width: "18rem",
-  },
-};
 export const RedditTextField = styled(TextField)(({ theme }) => ({
   "& .MuiInputBase-root": {
     height: "50px",
@@ -383,7 +367,7 @@ export const CustomDropdownSelectStyles = {
 };
 
 /**============================================================ */
-// COUPLES SIGNUP FORM
+// COUPLES SIGNUP FORM  AND LOGIN FORM
 
 export const StepperStyle = styled(Stepper)(({ theme }) => ({
   "& .MuiSvgIcon-root": {
@@ -480,3 +464,41 @@ export const CSTextfield = styled(TextField)({
     fontFamily: "Raleway",
   },
 });
+
+export const CouplesLoginBox = {
+  width: "100%",
+  maxWidth: "27rem",
+  height: "auto",
+  bgcolor: "#fff",
+  border: "1px solid #949494",
+  borderRadius: "1rem",
+  p: 4,
+  "@media (max-width: 600px)": {
+    width: "100%",
+  },
+};
+
+export const CLLoginStyle = styled(Button)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  borderRadius: "2rem",
+  width: "100%",
+  height: "3.5rem",
+  backgroundColor: "#000",
+  border: "none",
+  "&:hover": {
+    backgroundColor: "#000",
+    border: "none",
+  },
+  "&:active": {
+    backgroundColor: "#red",
+    border: "1px solid black",
+  },
+  "&:focus": {
+    backgroundColor: "#6cc2bc",
+    border: "none",
+  },
+  "&. MuiSvgIcon": {
+    fill: "black",
+  },
+}));

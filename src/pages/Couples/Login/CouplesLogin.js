@@ -2,16 +2,15 @@ import React from "react";
 import "./CouplesLogin.css";
 import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
 import {
+  CLLoginStyle,
   CouplesLoginBox,
   ForgetBox,
   NextButtonStyle,
 } from "../../../components/FormStyle";
 import { AiOutlineClose } from "react-icons/ai";
-import { Controller, useForm } from "react-hook-form";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { useState } from "react";
-import ForgetPassword from "../../../components/ForgetPassword";
 import CoupleForgotPwd from "../CoupleForgotPwd";
 import { Link } from "react-router-dom";
 
@@ -23,6 +22,10 @@ const CouplesLogin = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleClosePage = () => {
+    window.history.back();
+  };
+
   const onSubmit = (data) => {
     console.log(data);
   };
@@ -30,13 +33,18 @@ const CouplesLogin = () => {
   return (
     <div className="cl-container">
       <Box component="form" sx={CouplesLoginBox} noValidate autoComplete="off">
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "end",
+          }}
+          onClick={handleClosePage}
+        >
           <IconButton
             type="button"
+            className="cl-iconsbutton"
             style={{
               position: "absolute",
-              top: "10px",
-              right: "10px",
             }}
           >
             <AiOutlineClose />
@@ -55,7 +63,13 @@ const CouplesLogin = () => {
               type="text"
               placeholder="Email"
               variant="outlined"
-              sx={{ width: "100%", maxWidth: "22rem" }}
+              sx={{
+                width: "100%",
+                maxWidth: "22rem",
+                "& .MuiInputBase-root": {
+                  fontFamily: "Raleway",
+                },
+              }}
             />
           </div>
           <br />
@@ -67,7 +81,13 @@ const CouplesLogin = () => {
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               variant="outlined"
-              sx={{ width: "100%", maxWidth: "22rem" }}
+              sx={{
+                width: "100%",
+                maxWidth: "22rem",
+                "& .MuiInputBase-root": {
+                  fontFamily: "Raleway",
+                },
+              }}
               InputProps={{
                 endAdornment: (
                   <IconButton onClick={togglePasswordVisibility}>
@@ -90,10 +110,10 @@ const CouplesLogin = () => {
               marginTop: "2rem",
             }}
           ></Box>
-          <NextButtonStyle>
+          <CLLoginStyle>
             {" "}
             <span className="cs-next-button">Log in</span>
-          </NextButtonStyle>
+          </CLLoginStyle>
           {/* FORGOT PASSWORD */}
           <Box
             sx={{
@@ -105,6 +125,8 @@ const CouplesLogin = () => {
           >
             <CoupleForgotPwd />
           </Box>
+
+          {/* SIGN UP NOW AND SIGN IN VENDOR */}
           <Box
             sx={{
               display: "flex",
@@ -125,7 +147,7 @@ const CouplesLogin = () => {
               }}
             >
               Don't have an account?{" "}
-              <Link className="font-[900] underline">
+              <Link to="/wedding-signup" className="font-[900] underline">
                 {" "}
                 <span className="cl-gap">q</span>Sign Up Now
               </Link>
@@ -140,7 +162,7 @@ const CouplesLogin = () => {
               }}
             >
               Are you a Abia vendor?{" "}
-              <Link className="font-[900] underline">
+              <Link to="/login" className="font-[900] underline">
                 {" "}
                 <span className="cl-gap">q</span> Sign In Here
               </Link>
