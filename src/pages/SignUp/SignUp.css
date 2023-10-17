@@ -132,7 +132,7 @@
 }
  }
 .desktop-form {
-    display: none;
+    display: block;
 }
 @media(min-width:1024px) {
 

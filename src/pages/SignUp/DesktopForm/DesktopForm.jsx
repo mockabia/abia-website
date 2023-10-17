@@ -138,7 +138,7 @@ const DesktopForm = () => {
 
                 <div>
                   <label className="text-[14px] font-bold">
-                    Business Name *
+                    Business Name*
                   </label>
                   <input
                     type="text"
@@ -210,7 +210,6 @@ const DesktopForm = () => {
               <br />
               <br />
               <br />
-              <br />
             </div>
 
             {/* image */}
@@ -244,7 +243,7 @@ const DesktopForm = () => {
                 </div>
                 {/* lcoation */}
                 <div className="mt-2">
-                  <label className="text-[14px] font-bold">
+                  <label className="text-[14px] font-bold whitespace-nowrap">
                     Where are you based?*
                     <span className="register-position-adjust">
                       fefeefefedededdd
@@ -293,7 +292,7 @@ const DesktopForm = () => {
                 </div>
                 {/* services */}
                 <div className="mt-2">
-                  <label className="text-[14px] font-bold">
+                  <label className="text-[14px] font-bold whitespace-nowrap">
                     Primary Services*
                     <span className="register-position-adjust">
                       fefeefefedededdeeded
@@ -365,7 +364,6 @@ const DesktopForm = () => {
               <br />
               <br />
               <br />
-              <br />
             </div>
 
             {/* image */}
@@ -389,7 +387,7 @@ const DesktopForm = () => {
                   <label className="text-[14px] font-bold">
                     Website*
                     <span className="register-position-adjust">
-                      fefeefe
+                      fefeef
                     </span>{" "}
                   </label>
                   <input
@@ -405,7 +403,7 @@ const DesktopForm = () => {
                   <label className="text-[14px] font-bold">
                     # of weddings booked this year?
                     <span className="register-position-adjust">
-                      fefeefefde
+                      fefeedl
                     </span>{" "}
                   </label>
                   <div className="text-[14px]">
@@ -442,11 +440,6 @@ const DesktopForm = () => {
                         />
                       )}
                     />
-                    {/* {errors.bookingcount && (
-                      <p className="text-[12px] text-red-500 font-semibold mt-1">
-                        {errors.bookingcount.message}
-                      </p>
-                    )} */}
                   </div>
                 </div>
 
@@ -455,7 +448,7 @@ const DesktopForm = () => {
                   <label className="text-[14px] font-bold">
                     How did you find us?
                     <span className="register-position-adjust">
-                      fefeefefefedededded
+                      fefeefefefefelelee
                     </span>{" "}
                   </label>
                   <div className="text-[14px]">
@@ -492,13 +485,7 @@ const DesktopForm = () => {
                         />
                       )}
                     />
-                    {/* {errors.bookingcount && (
-                      <p className="text-[12px] text-red-500 font-semibold mt-1">
-                        {errors.bookingcount.message}
-                      </p>
-                    )} */}
                   </div>
-                  {/* <input id="number" type="tel" className="signup-input-style" /> */}
                 </div>
                 <br />
                 <div className="flex items-center gap-3">
@@ -515,7 +502,6 @@ const DesktopForm = () => {
                 </div>
               </div>
 
-              <br />
               <br />
               <br />
               <br />
