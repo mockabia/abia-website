@@ -7,17 +7,18 @@ import {
   TextField,
 } from "@mui/material";
 import React from "react";
-import { ForgetBox } from "./FormStyle";
+import { ForgetBox } from "../../components/FormStyle";
 import { AiOutlineClose } from "react-icons/ai";
-import { ReactComponent as UserIcons } from "../icons/contact topbar.svg";
+import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
 import { Stack } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
-import * as apiurls from "../api/apiUrls";
+import * as apiurls from "../../api/apiUrls";
 
 const ForgetPassword = () => {
   const [open, setOpen] = React.useState(false);
-  const [username, setUsername] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [errors, setErrors] = useState({ userEmail: "" });
 
   const handleOpen = () => setOpen(true);
 
@@ -26,18 +27,33 @@ const ForgetPassword = () => {
     setOpen(false);
   };
 
+  const validateForgotEmail = (userEmail) => {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(userEmail).toLowerCase());
+  };
+
   const handleSubmit = async () => {
-    try {
-      const response = await axios.post(apiurls.BUSINESS_FORGOT, {
-        username: username,
-      });
-      if (response.status === 200) {
-        console.log("Password reset successful:", response.data);
-      } else {
-        console.log("Failed to reset password. Status code:", response.status);
+    if (!userEmail) {
+      setErrors({ userEmail: "Email is Required" });
+    } else if (!validateForgotEmail(userEmail)) {
+      setErrors({ userEmail: "Invalid Email address" });
+    } else {
+      try {
+        const response = await axios.post(apiurls.BUSINESS_FORGOT, {
+          useremail: userEmail,
+        });
+        if (response.status === 200) {
+          console.log("Password reset successful:", response.data);
+        } else {
+          console.log(
+            "Failed to reset password. Status code:",
+            response.status
+          );
+        }
+      } catch (error) {
+        console.error("Error resetting password:", error);
       }
-    } catch (error) {
-      console.error("Error resetting password:", error);
     }
   };
 
@@ -82,8 +98,9 @@ const ForgetPassword = () => {
             </p>
             <div className="mt-[1rem]">
               <TextField
-                label="Enter your Username"
-                id="username"
+                label="Enter your Email"
+                id="email"
+                name="email"
                 sx={{ width: "100%" }}
                 InputProps={{
                   startAdornment: (
@@ -98,8 +115,13 @@ const ForgetPassword = () => {
                     </InputAdornment>
                   ),
                 }}
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={userEmail}
+                onChange={(e) => {
+                  setUserEmail(e.target.value);
+                  setErrors({ userEmail: "" }); // Clear the error when the input changes
+                }}
+                error={!!errors.userEmail} // Set error state to display the helper text
+                helperText={errors.userEmail} // Display the helper text
               />
               <Button
                 // type="submit"

@@ -41,7 +41,7 @@ const BusinessSettings = () => {
     {
       id: 3,
       icon: <USernamePasswordIcon />,
-      heading: "Username + Password",
+      heading: "Email + Password",
       content: <UsernamePassword />,
     },
     {
@@ -69,12 +69,6 @@ const BusinessSettings = () => {
             Keep ABIA up-to-date by updating your business settings below.
           </p>
         </div>
-        {/* <div className="business-header-largescreen  space-y-2 mt-[10px] hidden lg:visible">
-          <h2 className="">Business Settings</h2>
-          <p className="text-[14px]">
-            Keep ABIA up-to-date by updating your business settings below.
-          </p>
-        </div> */}
 
         <Accordion allowZeroExpanded>
           {accordionItems.map((item) => (

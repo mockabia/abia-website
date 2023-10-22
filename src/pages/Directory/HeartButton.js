@@ -27,30 +27,15 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import { ReactComponent as PhoneIcon } from "../../icons/Phone-14.svg";
 import * as servicesPage from "../../services/vendor/signupPageService";
 
-const HeartButton = () => {
+const HeartButton = ({ locationOptions }) => {
   const [open, setOpen] = React.useState(false);
-  const [location, setLocation] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 550);
 
   const handleOpen = () => setOpen(true);
 
   const handleClose = () => {
-    // console.log("Modal closed");
     setOpen(false);
   };
-
-  //api
-  const fetchState = async () => {
-    await servicesPage.stateDropdown().then(function (response) {
-      if (response.statuscode == 200) {
-        setLocation(response.result);
-      }
-    });
-  };
-
-  useEffect(() => {
-    fetchState();
-  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -191,7 +176,7 @@ const HeartButton = () => {
                     variant="filled"
                     SelectProps={{ IconComponent: () => null }}
                   >
-                    {location.map((option) => (
+                    {locationOptions.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>

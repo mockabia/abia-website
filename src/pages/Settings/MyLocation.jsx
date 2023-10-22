@@ -70,7 +70,7 @@ const MyLocation = () => {
             <label className="font-semibold">State*</label>
             <br />
             <div className="relative lg:w-[52%] mylocation-select">
-              <Dropdown options={states} onFormSubmit={handleStateChange} />
+              <SingleSelect options={states} onFormSubmit={handleStateChange} />
             </div>
             <br />
           </div>
@@ -83,7 +83,7 @@ const MyLocation = () => {
             <br />
           </div>
           <div className="space-y-2">
-            <label className="font-semibold">Primary Locations*</label>
+            <label className="font-semibold">Primary Location*</label>
             <br />
             <div className="relative lg:w-[52%] mylocation-primarylocaion-multiselect">
               <SingleSelect

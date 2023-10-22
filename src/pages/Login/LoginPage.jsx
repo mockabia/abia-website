@@ -4,78 +4,72 @@ import Footer from "./Footer";
 import "./LoginPage.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
-import ForgetPassword from "../../components/ForgetPassword";
+import ForgetPassword from "./ForgetPassword";
 import * as apiurls from "../../api/apiUrls";
 import axios from "axios";
-
-const USER_REGEX = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
-const PWD_REGEX = /^.{6,}$/;
+import LoginUseForm from "./useForm";
+import {
+  Box,
+  Button,
+  ButtonBase,
+  IconButton,
+  Stack,
+  TextField,
+  styled,
+} from "@mui/material";
+import { VLTextField, VendorLoginButton } from "../../components/FormStyle";
+import { validateEmail, validatePassword, validator } from "./LoginValidator";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 const LoginPage = () => {
-  const userRef = useRef();
-  const errRef = useRef(); //
-  const navigate = useNavigate();
-
-  const [userEmail, setUserEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [validEmail, setValidEmail] = useState(false);
-
-  const [userPwd, setUserPwd] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [validPwd, setValidPwd] = useState(false);
-  const [passwordShown, setPasswordShown] = useState(false);
-
+  const initState = {
+    email: "",
+    password: "",
+  };
   const auth = useAuth();
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
-  //to set the focus when the component loads
-  useEffect(() => {
-    userRef.current.focus();
-  }, []);
-
-  useEffect(() => {
-    const result = USER_REGEX.test(userEmail);
-    setValidEmail(result);
-  }, [userEmail]);
-
-  useEffect(() => {
-    setValidPwd(PWD_REGEX.test(userPwd));
-  }, [userPwd]);
-
-  useEffect(() => {
-    setEmailError("");
-    setPasswordError("");
-  }, [userEmail, userPwd]);
-
-  const handleSubmit = async (e) => {
+  const togglePasswordVisibility = (e) => {
     e.preventDefault();
+    setShowPassword(!showPassword);
+  };
 
-    // Validation Logic
-    if (validEmail && validPwd) {
+  const submit = async () => {
+    const { email, password } = state;
+    if (validateEmail && validatePassword) {
       try {
+        // Set the CSRF token in the headers before making the POST request
+        axios.defaults.headers.common["X-CSRF-TOKEN"] = document
+          .querySelector('meta[name="csrf-token"]')
+          .getAttribute("content");
+
         const response = await axios.post(apiurls.BUSINESS_LOGIN, {
-          email: userEmail,
-          password: userPwd,
+          email: email,
+          password: password,
         });
+        console.log("Response from clientside:", response.data);
         if (response.status === 200) {
-          auth.login(userEmail);
-          setUserEmail("");
-          setUserPwd("");
-          navigate("/home");
-        } else {
+          auth.login(email);
+          navigate("/settings");
         }
       } catch (error) {
         console.error("API error:", error);
       }
-    } else {
-      setEmailError(validEmail ? "" : "Invalid email");
-      setPasswordError(validPwd ? "" : "Invalid password");
     }
   };
 
-  const togglePassword = (e) => {
-    e.preventDefault();
-    setPasswordShown(!passwordShown);
-  };
+  const { handleChange, handleSubmit, handleBlur, state, errors } =
+    LoginUseForm({
+      initState,
+      callback: submit,
+      validator,
+    });
+
+  let isValidForm =
+    Object.values(errors).filter((error) => typeof error !== "undefined")
+      .length === 0;
 
   return (
     <>
@@ -89,80 +83,65 @@ const LoginPage = () => {
               <div className="flex flex-col justify-center items-center p-[20px] relative">
                 {/* error message */}
                 <h1 className="login-loginbox-header">Vendor Login</h1>
-                <form
-                  noValidate
-                  onSubmit={handleSubmit}
-                  className="lg:mt-[20px] "
-                >
-                  <div className="mb-[15px]">
-                    <label htmlFor="email" className=" text-[14px] font-bold">
-                      Email
-                    </label>
-                    <br />
-                    <input
-                      type="text"
-                      id="email"
-                      name="email"
-                      ref={userRef}
-                      onChange={(e) => setUserEmail(e.target.value)}
-                      value={userEmail}
-                      required
-                      className={`login-input-style ${
-                        validEmail ? "" : "error-input"
-                      }`}
-                    />
-                    {emailError && (
-                      <span
-                        style={{
-                          fontSize: "10px",
-                          fontWeight: "bold",
-                          color: "red",
-                        }}
+                <form onSubmit={handleSubmit} className="lg:mt-[20px] ">
+                  <Stack spacing={2}>
+                    {/* email */}
+                    <div className="flex flex-col ">
+                      <label htmlFor="email" className=" text-[14px] font-bold">
+                        Email
+                      </label>
+                      <VLTextField
+                        required
+                        name="email"
+                        variant="outlined"
+                        defaultValue={state.email}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={errors.email ? true : false}
+                        helperText={errors.email}
+                      />
+                    </div>
+                    {/* Password */}
+                    <div className="flex flex-col ">
+                      <label
+                        htmlFor="password"
+                        className=" text-[14px] font-bold"
                       >
-                        {emailError}
-                      </span>
-                    )}
-                    <br />
-
-                    <label
-                      htmlFor="password"
-                      className=" text-[14px] font-bold"
-                    >
-                      Password
-                    </label>
-                    <br />
-                    <input
-                      type={passwordShown ? "text" : "password"}
-                      id="password"
-                      name="password"
-                      onChange={(e) => setUserPwd(e.target.value)}
-                      required
-                      value={userPwd}
-                      className={`login-input-style ${
-                        validPwd ? "" : "error-input"
-                      }`}
-                    />
-                    <span
-                      onClick={togglePassword}
-                      className="text-[11px] font-[800] underline cursor-pointer"
-                    >
-                      {passwordShown ? "Hide Password" : "Show Password"}
-                    </span>
-                    <br />
-                    {passwordError && (
-                      <span
-                        style={{
-                          fontSize: "10px",
-                          fontWeight: "bold",
-                          color: "red",
+                        Password
+                      </label>
+                      <VLTextField
+                        required
+                        name="password"
+                        type={showPassword ? "text" : "password"}
+                        variant="outlined"
+                        defaultValue={state.password}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={errors.password ? true : false}
+                        helperText={errors.password}
+                        InputProps={{
+                          endAdornment: (
+                            <IconButton onClick={togglePasswordVisibility}>
+                              {showPassword ? (
+                                <VisibilityOffOutlinedIcon />
+                              ) : (
+                                <VisibilityOutlinedIcon />
+                              )}
+                            </IconButton>
+                          ),
                         }}
-                      >
-                        {passwordError}
-                      </span>
-                    )}
-                  </div>
+                      />
+                    </div>
 
-                  <button className="login-login-button">Login</button>
+                    <div className="flex flex-col ">
+                      {" "}
+                      <VendorLoginButton disabled={!isValidForm} type="submit">
+                        Login
+                      </VendorLoginButton>
+                    </div>
+                  </Stack>
+
+                  {/* Password */}
                 </form>
                 <div className="cursor-pointer text-[#6cc2bc] text-[14px] font-semibold flex justify-center items-center mb-[10px]">
                   <ForgetPassword />

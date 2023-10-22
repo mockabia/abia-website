@@ -35,11 +35,11 @@
 }
 
 .login-input-style {
-    position: relative;
+    position: absolute;
     width: 100% !important;
+    max-width: 16rem;
     height: 40px;
-    border-radius: 10px;
-    background: #fafafa;
+    border-radius: 10px; 
     border: 1px solid #c3bebe;
     cursor: pointer;
     padding-left: 10px;
@@ -60,7 +60,8 @@
         font-size: 14px;
         font-weight: 700;
         cursor: pointer;
-        margin-bottom: 10px;
+        margin-bottom: 2rem;
+        margin-top: 4rem;
         outline: none;
 }
 

@@ -7,6 +7,22 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Stepper from "@mui/material/Stepper";
 import Typography from "@mui/material/Typography";
+import { createTheme } from "@mui/material/styles";
+
+export const RatingComponent = createTheme({
+  components: {
+    MuiRating: {
+      styleOverrides: {
+        iconFilled: {
+          color: "#eaad36",
+        },
+        iconEmpty: {
+          color: "#ccc",
+        },
+      },
+    },
+  },
+});
 
 export const BpIcon = styled("span")(({ theme }) => ({
   borderRadius: 3,
@@ -500,5 +516,78 @@ export const CLLoginStyle = styled(Button)(({ theme }) => ({
   },
   "&. MuiSvgIcon": {
     fill: "black",
+  },
+}));
+
+// Vendor Login
+export const VLTextField = styled(TextField)(({ theme }) => ({
+  "& .MuiFormControl-root ": {
+    position: "absolute",
+    width: " 100% ",
+    maxWidth: "17rem",
+    height: "45px",
+    borderRadius: "10px",
+    border: "1px solid #c3bebe",
+    background: "#fafafa",
+    cursor: "pointer",
+    fontSize: "14px",
+    fontFamily: "Raleway",
+  },
+
+  "& .MuiFormHelperText-root": {
+    color: "red",
+    marginLeft: "0rem",
+  },
+}));
+
+// .login-login-button {
+//         display: inline-block;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         margin: 0 auto;
+//         width: 260px;
+//         height: 35px;
+//         border-radius: 30px;
+//         background-color: #6cc2bc;
+//         color: white;
+//         font-size: 14px;
+//         font-weight: 700;
+//         cursor: pointer;
+//         margin-bottom: 2rem;
+//         margin-top: 4rem;
+//         outline: none;
+// }
+export const VendorLoginButton = styled(Button)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  margin: "auto",
+  fontFamily: "Raleway",
+  textTransform: "initial",
+  color: "#fff", // Set text color to black
+  backgroundColor: "#6cc2bc", // Set background color to white
+  borderRadius: "50px",
+  border: "1px solid #515151",
+  maxWidth: "250px",
+  width: "250px",
+  height: "40px",
+  fontSize: "12px",
+  fontWeight: "600",
+  boxShadow: "none",
+  marginBottom: "1rem",
+  "&:hover": {
+    backgroundColor: "#000",
+    boxShadow: "none",
+    color: "white",
+  },
+  // "&.Mui-selected": {
+  //   backgroundColor: "#000",
+  //   boxShadow: "none",
+  //   color: "white",
+  // },
+  "&.Mui-disabled": {
+    backgroundColor: "grey", // Background color when disabled
+    color: "white",
   },
 }));

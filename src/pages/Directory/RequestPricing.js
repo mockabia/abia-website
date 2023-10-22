@@ -24,40 +24,17 @@ import { ReactComponent as PhoneIcon } from "../../icons/Phone-14.svg";
 import { ReactComponent as EmailIcon } from "../../icons/email copy.svg";
 import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
 import { DatePickerPublic } from "../../components/DatepickerPublic";
-import * as servicesPage from "../../services/vendor/signupPageService";
 
-const RequestPricing = () => {
+const RequestPricing = ({ business, locationOptions, servicesOptions }) => {
   const [open, setOpen] = React.useState(false);
-  const [location, setLocation] = useState([]);
-  const [services, setServices] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 550);
 
+  const businessCaps = business.toUpperCase();
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     console.log("Modal closed");
     setOpen(!open);
   };
-
-  //api
-  const fetchState = async () => {
-    await servicesPage.stateDropdown().then(function (response) {
-      if (response.statuscode == 200) {
-        setLocation(response.result);
-      }
-    });
-  };
-  const fetchCategory = async () => {
-    await servicesPage.categoryDropdwon().then(function (response) {
-      if (response.statuscode == 200) {
-        setServices(response.result);
-      }
-    });
-  };
-
-  useEffect(() => {
-    fetchState();
-    fetchCategory();
-  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -123,7 +100,7 @@ const RequestPricing = () => {
           <form noValidate>
             <Stack>
               <Stack spacing={1}>
-                <h5>SUMMERGROVE ESTATE</h5>
+                <h5>{businessCaps}</h5>
                 <h3 className="r">Send Enquriy on Request Pricing</h3>
 
                 <MultiTLinedTextField
@@ -202,7 +179,7 @@ const RequestPricing = () => {
                     variant="filled"
                     SelectProps={{ IconComponent: () => null }}
                   >
-                    {location.map((option) => (
+                    {locationOptions.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -221,7 +198,7 @@ const RequestPricing = () => {
                     variant="filled"
                     SelectProps={{ IconComponent: () => null }}
                   >
-                    {services.map((option) => (
+                    {servicesOptions.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>

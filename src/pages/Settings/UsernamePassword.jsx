@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./UsernamePassword.css";
 
 const UsernamePassword = () => {
-  const [inputUsername, setInputUsername] = useState("");
+  const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPasswrd] = useState("");
   const [inputConfirmPasssword, setInputConfirmPassword] = useState("");
 
@@ -10,8 +10,8 @@ const UsernamePassword = () => {
     window.scrollTo(0, 0); // Scrolls to the top of the page
   }, []);
 
-  const handleInputUsernameChange = (e) => {
-    setInputUsername(e.target.value);
+  const handleInputEmailChange = (e) => {
+    setInputEmail(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -26,7 +26,7 @@ const UsernamePassword = () => {
     e.preventDefault();
 
     const formData = {
-      inputUsername,
+      inputEmail,
       inputPassword,
       inputConfirmPasssword,
     };
@@ -56,15 +56,15 @@ const UsernamePassword = () => {
       <div className="mt-[20px]">
         <form className="space-y-7">
           <div className="space-y-2">
-            <label className="font-semibold">Username*</label>
+            <label className="font-semibold">Email*</label>
             <br />
             <div>
               <input
                 type="text"
                 required
                 className="usernamepassword-input-style"
-                value={inputUsername}
-                onChange={handleInputUsernameChange}
+                value={inputEmail}
+                onChange={handleInputEmailChange}
               />
             </div>
           </div>
