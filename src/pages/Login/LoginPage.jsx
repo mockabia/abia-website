@@ -13,14 +13,24 @@ import {
   Button,
   ButtonBase,
   IconButton,
+  InputAdornment,
+  Modal,
   Stack,
   TextField,
   styled,
 } from "@mui/material";
-import { VLTextField, VendorLoginButton } from "../../components/FormStyle";
+import {
+  ForgetBox,
+  VLTextField,
+  VendorLoginButton,
+} from "../../components/FormStyle";
 import { validateEmail, validatePassword, validator } from "./LoginValidator";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import { AiOutlineClose } from "react-icons/ai";
+import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
+import Dropdown from "../../third-party-packs/dropDown";
+import { states } from "../../data/CategoryItems";
 
 const LoginPage = () => {
   const initState = {
@@ -30,17 +40,32 @@ const LoginPage = () => {
   const auth = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [apiRequestSuccess, setApiRequestSuccess] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  let location = [];
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const togglePasswordVisibility = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword);
   };
 
+  const handleLocationChange = (selectedOptions) => {
+    // console.log("Selected Options:", selectedOptions);
+    location = selectedOptions;
+    console.log("Location select:", location);
+  };
+
   const submit = async () => {
     const { email, password } = state;
     if (validateEmail && validatePassword) {
       try {
-        // Set the CSRF token in the headers before making the POST request
         axios.defaults.headers.common["X-CSRF-TOKEN"] = document
           .querySelector('meta[name="csrf-token"]')
           .getAttribute("content");
@@ -52,7 +77,9 @@ const LoginPage = () => {
         console.log("Response from clientside:", response.data);
         if (response.status === 200) {
           auth.login(email);
-          navigate("/settings");
+          setApiRequestSuccess(true);
+          handleOpen();
+          // navigate("/settings");
         }
       } catch (error) {
         console.error("API error:", error);
@@ -91,7 +118,6 @@ const LoginPage = () => {
                         Email
                       </label>
                       <VLTextField
-                        required
                         name="email"
                         variant="outlined"
                         defaultValue={state.email}
@@ -134,9 +160,75 @@ const LoginPage = () => {
                     </div>
 
                     <div className="flex flex-col ">
-                      {" "}
                       <VendorLoginButton disabled={!isValidForm} type="submit">
-                        Login
+                        {apiRequestSuccess && (
+                          <div>
+                            <div>
+                              <span>Login</span>
+                            </div>
+                            <Modal
+                              open={open}
+                              onClose={handleClose}
+                              aria-labelledby="modal-modal-title"
+                              aria-describedby="modal-modal-description"
+                            >
+                              <Box
+                                component="form"
+                                sx={ForgetBox}
+                                noValidate
+                                autoComplete="off"
+                                className="request-box-style"
+                              >
+                                <Box>
+                                  <IconButton
+                                    type="button"
+                                    style={{
+                                      position: "absolute",
+                                      top: "10px",
+                                      right: "10px",
+                                    }}
+                                    onClick={(e) => {
+                                      e.stopPropagation(); // Stop the event propagation
+                                      handleClose();
+                                    }}
+                                  >
+                                    <AiOutlineClose />
+                                  </IconButton>
+                                </Box>
+                                <form>
+                                  <h3 className="form-header">Welcome</h3>
+                                  <p className="flex justify-center">
+                                    If you have Business in more than 1 state.
+                                    Select the states below. Else proceed
+                                  </p>
+
+                                  <div className="mt-[1rem]">
+                                    <Dropdown
+                                      options={states}
+                                      onFormSubmit={handleLocationChange}
+                                    />
+                                    <Button
+                                      // type="submit"
+                                      variant="contained"
+                                      style={{
+                                        backgroundColor: "#6cc2bc",
+                                        color: "#ffffff",
+                                        height: "40px",
+                                        textTransform: "capitalize",
+                                        width: "100%",
+                                        marginTop: "1rem",
+                                      }}
+                                      onClick={handleSubmit}
+                                    >
+                                      Submit
+                                    </Button>
+                                  </div>
+                                </form>
+                              </Box>
+                            </Modal>
+                          </div>
+                        )}
+                        {!apiRequestSuccess && <span>Login</span>}
                       </VendorLoginButton>
                     </div>
                   </Stack>

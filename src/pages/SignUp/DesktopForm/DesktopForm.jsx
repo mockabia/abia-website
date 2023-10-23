@@ -32,6 +32,21 @@ const DesktopForm = () => {
   const [registerService, setRegisterService] = useState([]);
   const [registerBooking, setRegisterBooking] = useState([]);
   const [registerFindUs, setRegisterFindUs] = useState([]);
+  const [formValues, setFormValues] = useState({
+    name: "",
+    email: "",
+    contact_person: "",
+    mobile_phone: "",
+    website: "",
+    state: "",
+    first_category: "",
+    avgperyear: "",
+    findus: "",
+  });
+  const [selectedState, setSelectedState] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [selectedFindUs, setSelectedFindUs] = useState(null);
 
   const navigate = useNavigate();
 
@@ -42,24 +57,16 @@ const DesktopForm = () => {
     formState: { errors, isDirty, isValid, isSubmitting, submitCount },
     control,
     setValue,
+    reset,
   } = useForm({
     mode: "onChange", //isValid works on mode=onChange
-    defaultValues: {
-      bname: "",
-      email: "",
-      cname: "",
-      phone: "",
-      website: "",
-      location: "",
-      services: "",
-      bookingcount: "",
-      findus: "",
-    },
+
     resolver: yupResolver(schema),
   });
 
   // next page
-  const compleTeFormStep = () => {
+  const compleTeFormStep = (data) => {
+    setFormValues({ ...formValues, ...data });
     setFormStep((current) => current + 1);
   };
   // previous page
@@ -117,7 +124,6 @@ const DesktopForm = () => {
     fetchCategory();
     fetchBookingsPerYear();
     fetchFindUS();
-    // onSubmit();
   }, []);
 
   return (
@@ -255,12 +261,13 @@ const DesktopForm = () => {
                       control={control}
                       render={({ field }) => (
                         <Select
-                          id="location"
+                          id="state"
                           name="state"
                           options={registerLocation}
                           {...field}
-                          value={field.label}
+                          value={selectedState}
                           onChange={(selectedLocation) => {
+                            setSelectedState(selectedLocation);
                             field.onChange(
                               selectedLocation ? selectedLocation.label : ""
                             );
@@ -283,9 +290,9 @@ const DesktopForm = () => {
                         />
                       )}
                     />
-                    {errors.location && (
+                    {errors.state && (
                       <p className="text-[12px] text-red-500 font-semibold mt-1">
-                        {errors.location.message}
+                        {errors.state.message}
                       </p>
                     )}
                   </div>
@@ -304,12 +311,13 @@ const DesktopForm = () => {
                       control={control}
                       render={({ field }) => (
                         <Select
-                          id="services"
+                          id="first_category"
                           name="first_category"
                           options={registerService}
                           {...field}
-                          value={field.label}
+                          value={selectedCategory}
                           onChange={(selectedOption) => {
+                            setSelectedCategory(selectedOption);
                             field.onChange(
                               selectedOption ? selectedOption.label : ""
                             );
@@ -412,14 +420,15 @@ const DesktopForm = () => {
                       control={control}
                       render={({ field }) => (
                         <Select
-                          id="bookingcount"
+                          id="avgperyear"
                           name="avgperyear"
                           options={registerBooking}
                           {...field}
-                          value={field.label}
-                          onChange={(selectedOption) => {
+                          value={selectedBooking}
+                          onChange={(selectedLocation) => {
+                            setSelectedBooking(selectedLocation);
                             field.onChange(
-                              selectedOption ? selectedOption.label : ""
+                              selectedLocation ? selectedLocation.label : ""
                             );
                           }}
                           className={`signup-input-style ${
@@ -461,11 +470,12 @@ const DesktopForm = () => {
                           name="findus"
                           options={registerFindUs}
                           {...field} // This spreads the field object to control the input
-                          value={field.label}
-                          onChange={(selectedOption) => {
+                          value={selectedFindUs}
+                          onChange={(selectedLocation) => {
+                            setSelectedFindUs(selectedLocation);
                             field.onChange(
-                              selectedOption ? selectedOption.label : ""
-                            ); // Use field.onChange
+                              selectedLocation ? selectedLocation.label : ""
+                            );
                           }}
                           className={`signup-input-style ${
                             errors.findus ? "signup-error-border" : ""

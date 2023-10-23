@@ -27,8 +27,8 @@ export function validatePassword(pass, errors) {
     var lower = /(?=.*[a-z])/;
     result = lower.test(pass);
 
-    if (pass.length < 8) {
-      errors.password = "Your password has less than 8 characters.";
+    if (pass.length < 6) {
+      errors.password = "Your password has less than 6 characters.";
       result = false;
     }
   }

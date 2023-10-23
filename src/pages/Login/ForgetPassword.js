@@ -23,7 +23,6 @@ const ForgetPassword = () => {
   const handleOpen = () => setOpen(true);
 
   const handleClose = () => {
-    // console.log("Modal closed");
     setOpen(false);
   };
 
@@ -45,6 +44,7 @@ const ForgetPassword = () => {
         });
         if (response.status === 200) {
           console.log("Password reset successful:", response.data);
+          setOpen(false);
         } else {
           console.log(
             "Failed to reset password. Status code:",
