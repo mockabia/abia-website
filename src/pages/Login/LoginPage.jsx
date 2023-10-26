@@ -1,24 +1,14 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import AuthContext from "../../context/AuthProvider";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 import "./LoginPage.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthProvider";
 import ForgetPassword from "./ForgetPassword";
 import * as apiurls from "../../api/apiUrls";
 import axios from "axios";
 import LoginUseForm from "./useForm";
-import {
-  Box,
-  Button,
-  ButtonBase,
-  IconButton,
-  InputAdornment,
-  Modal,
-  Stack,
-  TextField,
-  styled,
-} from "@mui/material";
+import { IconButton, Stack } from "@mui/material";
 import {
   ForgetBox,
   VLTextField,
@@ -27,40 +17,30 @@ import {
 import { validateEmail, validatePassword, validator } from "./LoginValidator";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import { AiOutlineClose } from "react-icons/ai";
-import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
-import Dropdown from "../../third-party-packs/dropDown";
-import { states } from "../../data/CategoryItems";
 
 const LoginPage = () => {
+  const { setAuth } = useContext(AuthContext);
+
   const initState = {
     email: "",
     password: "",
   };
-  const auth = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [apiRequestSuccess, setApiRequestSuccess] = useState(false);
-  const [open, setOpen] = React.useState(false);
-  let location = [];
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  const [userStates, setUserStates] = useState([]);
+  const [errMsg, setErrMsg] = useState("");
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  let location = [];
 
   const togglePasswordVisibility = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword);
   };
 
-  const handleLocationChange = (selectedOptions) => {
-    // console.log("Selected Options:", selectedOptions);
-    location = selectedOptions;
-    console.log("Location select:", location);
-  };
+  useEffect(() => {
+    setErrMsg("");
+  }, [initState]);
 
   const submit = async () => {
     const { email, password } = state;
@@ -74,15 +54,35 @@ const LoginPage = () => {
           email: email,
           password: password,
         });
-        console.log("Response from clientside:", response.data);
+        const accessToken = response?.data?.token;
+        const states = response?.data.result;
+        setAuth(email, states, accessToken);
+        // console.log("Response from clientside:", response.data);
+        // console.log("Resposne of the User States:", response.data.result);
+        // console.log("AccessToekn is", response.data.token);
+
         if (response.status === 200) {
-          auth.login(email);
+          const userStatesData = response.data.result;
+          const statesLegnth = response.data.result.length;
+          console.log("State length:", statesLegnth);
+          console.log("State Listed:", userStatesData);
+
+          setUserStates(userStatesData);
           setApiRequestSuccess(true);
-          handleOpen();
-          // navigate("/settings");
+          navigate(statesLegnth <= 1 ? "/home" : "/user-state", {
+            state: { userStatesData },
+          });
         }
       } catch (error) {
-        console.error("API error:", error);
+        if (!error.response) {
+          setErrMsg("No server reposne");
+        } else if (error.response?.status === 400) {
+          setErrMsg("Missing Username or Psssword");
+        } else if (error.response?.status === 401) {
+          setErrMsg("Unauthorized");
+        } else {
+          setErrMsg("Login in Failed");
+        }
       }
     }
   };
@@ -101,7 +101,6 @@ const LoginPage = () => {
   return (
     <>
       {/* <TopBar /> */}
-      {/* h-[100vh] overflow-y-auto */}
       <main className="h-[100%] flex flex-col overflow-y-auto">
         <NavBar className="" />
         <section className="login-main-container">
@@ -125,6 +124,7 @@ const LoginPage = () => {
                         onBlur={handleBlur}
                         error={errors.email ? true : false}
                         helperText={errors.email}
+                        autoCapitalize="off"
                       />
                     </div>
                     {/* Password */}
@@ -136,7 +136,6 @@ const LoginPage = () => {
                         Password
                       </label>
                       <VLTextField
-                        required
                         name="password"
                         type={showPassword ? "text" : "password"}
                         variant="outlined"
@@ -145,6 +144,7 @@ const LoginPage = () => {
                         onBlur={handleBlur}
                         error={errors.password ? true : false}
                         helperText={errors.password}
+                        autoCapitalize="off"
                         InputProps={{
                           endAdornment: (
                             <IconButton onClick={togglePasswordVisibility}>
@@ -161,74 +161,7 @@ const LoginPage = () => {
 
                     <div className="flex flex-col ">
                       <VendorLoginButton disabled={!isValidForm} type="submit">
-                        {apiRequestSuccess && (
-                          <div>
-                            <div>
-                              <span>Login</span>
-                            </div>
-                            <Modal
-                              open={open}
-                              onClose={handleClose}
-                              aria-labelledby="modal-modal-title"
-                              aria-describedby="modal-modal-description"
-                            >
-                              <Box
-                                component="form"
-                                sx={ForgetBox}
-                                noValidate
-                                autoComplete="off"
-                                className="request-box-style"
-                              >
-                                <Box>
-                                  <IconButton
-                                    type="button"
-                                    style={{
-                                      position: "absolute",
-                                      top: "10px",
-                                      right: "10px",
-                                    }}
-                                    onClick={(e) => {
-                                      e.stopPropagation(); // Stop the event propagation
-                                      handleClose();
-                                    }}
-                                  >
-                                    <AiOutlineClose />
-                                  </IconButton>
-                                </Box>
-                                <form>
-                                  <h3 className="form-header">Welcome</h3>
-                                  <p className="flex justify-center">
-                                    If you have Business in more than 1 state.
-                                    Select the states below. Else proceed
-                                  </p>
-
-                                  <div className="mt-[1rem]">
-                                    <Dropdown
-                                      options={states}
-                                      onFormSubmit={handleLocationChange}
-                                    />
-                                    <Button
-                                      // type="submit"
-                                      variant="contained"
-                                      style={{
-                                        backgroundColor: "#6cc2bc",
-                                        color: "#ffffff",
-                                        height: "40px",
-                                        textTransform: "capitalize",
-                                        width: "100%",
-                                        marginTop: "1rem",
-                                      }}
-                                      onClick={handleSubmit}
-                                    >
-                                      Submit
-                                    </Button>
-                                  </div>
-                                </form>
-                              </Box>
-                            </Modal>
-                          </div>
-                        )}
-                        {!apiRequestSuccess && <span>Login</span>}
+                        <span>Login</span>
                       </VendorLoginButton>
                     </div>
                   </Stack>

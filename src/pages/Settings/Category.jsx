@@ -4,10 +4,11 @@ import SingleSelect from "../../third-party-packs/singleSelect";
 import Dropdown from "../../third-party-packs/dropDown";
 
 import { primaryCategory } from "../../data/CategoryItems";
+import { BUSINESS_SETTINGS4 } from "../../api/apiUrls";
 
 const Category = () => {
-  let primarySelect = "";
-  let multiCategory = [];
+  let first_category = "";
+  let other_category = [];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -15,27 +16,25 @@ const Category = () => {
 
   // for Multi select
   const handleDropdownChange = (selectedOptions) => {
-    // console.log("Selected Options:", selectedOptions);
-    multiCategory = selectedOptions;
-    console.log("Multi select:", multiCategory);
+    other_category = selectedOptions;
+    console.log("Multi select:", other_category);
   };
 
   const handleSingleSelectChange = (selectedOptions) => {
-    primarySelect = selectedOptions;
-    console.log("SingleSelect:", selectedOptions);
+    first_category = selectedOptions;
+    console.log("SingleSelect:", first_category);
   };
 
-const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = {
-      primarySelect,
-      multiCategory,
+      first_category,
+      other_category,
     };
-    const vendorId = "<Vendor_id>";
-    const apiEndpoint = `https://abia.abia-test.com/web/WebBusinessVendor/${vendorId}`;
+
     try {
-      const response = await fetch(apiEndpoint, {
+      const response = await fetch(BUSINESS_SETTINGS4, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +51,7 @@ const handleSubmit = async (e) => {
       console.error("API Request Error:", error);
     }
   };
-  
+
   return (
     <div className="category-container">
       <div>

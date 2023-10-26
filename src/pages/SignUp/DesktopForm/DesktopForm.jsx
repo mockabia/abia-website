@@ -16,7 +16,10 @@ import { useNavigate } from "react-router-dom";
 
 const schema = yup.object().shape({
   name: yup.string().required("Business name is required"),
-  email: yup.string().required("Email is required"),
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Invalid email address"),
   mobile_phone: yup.string().required("Phone no: is required"),
   website: yup.string().required("Website is required"),
   contact_person: yup.string().required("Contact name is required"),
@@ -205,7 +208,9 @@ const DesktopForm = () => {
                 <div>
                   <button
                     type="button"
-                    className="register-next-button"
+                    className={`register-next-button ${
+                      !isValid ? "disabled" : ""
+                    }`}
                     onClick={compleTeFormStep}
                   >
                     Next
@@ -235,7 +240,7 @@ const DesktopForm = () => {
                 <div>
                   <label className="text-[14px] font-bold">Contact Name*</label>
                   <input
-                    id="cname"
+                    id="contact_person"
                     type="text"
                     name="contact_person"
                     className={`signup-input-style ${
@@ -269,7 +274,7 @@ const DesktopForm = () => {
                           onChange={(selectedLocation) => {
                             setSelectedState(selectedLocation);
                             field.onChange(
-                              selectedLocation ? selectedLocation.label : ""
+                              selectedLocation ? selectedLocation.url : ""
                             );
                           }}
                           className={`signup-input-style ${
@@ -319,7 +324,7 @@ const DesktopForm = () => {
                           onChange={(selectedOption) => {
                             setSelectedCategory(selectedOption);
                             field.onChange(
-                              selectedOption ? selectedOption.label : ""
+                              selectedOption ? selectedOption.value : ""
                             );
                           }}
                           className={`signup-input-style ${
@@ -428,7 +433,7 @@ const DesktopForm = () => {
                           onChange={(selectedLocation) => {
                             setSelectedBooking(selectedLocation);
                             field.onChange(
-                              selectedLocation ? selectedLocation.label : ""
+                              selectedLocation ? selectedLocation.value : ""
                             );
                           }}
                           className={`signup-input-style ${
@@ -474,7 +479,7 @@ const DesktopForm = () => {
                           onChange={(selectedLocation) => {
                             setSelectedFindUs(selectedLocation);
                             field.onChange(
-                              selectedLocation ? selectedLocation.label : ""
+                              selectedLocation ? selectedLocation.value : ""
                             );
                           }}
                           className={`signup-input-style ${
@@ -498,6 +503,13 @@ const DesktopForm = () => {
                   </div>
                 </div>
                 <br />
+                {submitCount > 0 && !isValid && (
+                  <p className="text-red-500 font-semibold">
+                    ! Please enter the valid details.
+                  </p>
+                )}
+                <br />
+
                 <div className="flex items-center gap-3">
                   <AiOutlineArrowLeft
                     size={34}
@@ -505,6 +517,7 @@ const DesktopForm = () => {
                     className="cursor-pointer"
                     onClick={prevStep}
                   />
+
                   <button type="submit" className="register-next-button">
                     Submit
                   </button>

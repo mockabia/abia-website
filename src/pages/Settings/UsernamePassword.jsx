@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./UsernamePassword.css";
+import { BUSINESS_SETTINGS3 } from "../../api/apiUrls";
 
 const UsernamePassword = () => {
   const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPasswrd] = useState("");
   const [inputConfirmPasssword, setInputConfirmPassword] = useState("");
+  const [passwordMatchError, setPasswordMatchError] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0); // Scrolls to the top of the page
@@ -24,16 +26,20 @@ const UsernamePassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (inputPassword !== inputConfirmPasssword) {
+      setPasswordMatchError("Please repeat the password");
+      return;
+    } else {
+      setPasswordMatchError("");
+    }
     const formData = {
-      inputEmail,
-      inputPassword,
-      inputConfirmPasssword,
+      emaiil: inputEmail,
+      password: inputPassword,
+      re_password: inputConfirmPasssword,
     };
-    const vendorId = "<Vendor_id>";
-    const apiEndpoint = `https://abia.abia-test.com/web/WebBusinessVendor/${vendorId}`;
+
     try {
-      const response = await fetch(apiEndpoint, {
+      const response = await fetch(BUSINESS_SETTINGS3, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -60,7 +66,8 @@ const UsernamePassword = () => {
             <br />
             <div>
               <input
-                type="text"
+                type="email"
+                name="email"
                 required
                 className="usernamepassword-input-style"
                 value={inputEmail}
@@ -74,6 +81,7 @@ const UsernamePassword = () => {
             <div>
               <input
                 type="password"
+                name="password"
                 required
                 className="usernamepassword-input-style"
                 value={inputPassword}
@@ -87,12 +95,16 @@ const UsernamePassword = () => {
             <div>
               <input
                 type="password"
+                name="re_password"
                 required
                 className="usernamepassword-input-style"
                 value={inputConfirmPasssword}
                 onChange={handleConfirmPasswordChange}
               />
             </div>
+            {passwordMatchError && (
+              <div className="error-message">{passwordMatchError}</div>
+            )}
           </div>
           <div className="usernamepassword-submit-button">
             <button onClick={handleSubmit}>Update</button>

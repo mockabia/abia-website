@@ -1,45 +1,71 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Dropdown from "../../third-party-packs/dropDown";
 import SingleSelect from "../../third-party-packs/singleSelect";
 import { states } from "../../data/CategoryItems";
+import { BUSINESS_SETTINGS5 } from "../../api/apiUrls";
+import * as apiUrls from "../../api/apiUrls";
+import * as servicesPage from "../../services/vendor/regionService";
+import axios from "axios";
+import { MenuItem, Select, styled } from "@mui/material";
+
+const MenuItemStyle = styled(MenuItem)(({ theme }) => ({
+  fontSize: "14px",
+  fontFamily: "Raleway",
+  fontWeight: "600",
+  backgroundColor: "transparent",
+}));
 
 const MyLocation = () => {
-  let state = [];
-  let location = [];
-  let primarylocation = "";
+  let target_region = [];
+  const [primaryLocation, setPrimaryLocation] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0); // Scrolls to the top of the page
   }, []);
 
   const handleStateChange = (selectedOptions) => {
-    // console.log("Selected Options:", selectedOptions);
-    state = selectedOptions;
-    console.log("State select:", state);
+    target_region = selectedOptions;
+    console.log("State select:", target_region);
   };
   const handleLocationChange = (selectedOptions) => {
-    // console.log("Selected Options:", selectedOptions);
-    location = selectedOptions;
-    console.log("Location select:", location);
+    target_region = selectedOptions;
+    console.log("Location select:", target_region);
   };
   const handlePrimaryLocation = (selectedOptions) => {
     // console.log("Selected Options:", selectedOptions);
-    primarylocation = selectedOptions;
-    console.log("Primary Location:", primarylocation);
+    primaryLocation = selectedOptions.value;
+    console.log("Primary Location:", primaryLocation);
   };
+  //api
+  const fetchRegion = async () => {
+    try {
+      const response = await axios.get(apiUrls.REGION_FETCH_API);
+      if (response.status === 200) {
+        const locationTitles = response.data.result;
+        setPrimaryLocation(locationTitles);
+        console.log("List Response", response);
+        console.log("List Regions", primaryLocation);
+      } else {
+        console.error("API Error:", response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error("API Request Error:", error);
+    }
+  };
+  useEffect(() => {
+    fetchRegion();
+  }, []);
 
   // submit api
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
-      state,
-      location,
-      primarylocation,
+      target_region,
+      primaryLocation,
     };
-    const vendorId = "<Vendor_id>";
-    const apiEndpoint = `https://abia.abia-test.com/web/WebBusinessVendor/${vendorId}`;
+
     try {
-      const response = await fetch(apiEndpoint, {
+      const response = await fetch(BUSINESS_SETTINGS5, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,10 +112,13 @@ const MyLocation = () => {
             <label className="font-semibold">Primary Location*</label>
             <br />
             <div className="relative lg:w-[52%] mylocation-primarylocaion-multiselect">
-              <SingleSelect
-                options={states}
-                onFormSubmit={handlePrimaryLocation}
-              />
+              <Select sx={{ width: "100%" }}>
+                {primaryLocation.map((region) => (
+                  <MenuItemStyle key={region.rid} value={region.rid}>
+                    {region.title}
+                  </MenuItemStyle>
+                ))}
+              </Select>
             </div>
             <br />
           </div>

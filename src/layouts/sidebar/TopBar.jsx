@@ -21,13 +21,10 @@ import { RxTriangleDown } from "react-icons/rx";
 import { ReactComponent as MenuIcon } from "../../icons/menuIcon.svg";
 import { ReactComponent as AbiaLogo } from "../../ABIA-White-Logo-gold-crown(1).svg";
 import AbiaLogo1 from "../../abiaLogo";
-import { useAuth } from "../../context/AuthProvider";
 //components
 
 const TopBar = ({ title, logo }) => {
-  const auth = useAuth();
   const navigate = useNavigate();
-  // profileOpen
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 769 });
@@ -71,10 +68,10 @@ const TopBar = ({ title, logo }) => {
     setMenuOpen(false);
   };
 
-  const handleLogout = () => {
-    auth.logout();
-    navigate("/login");
-  };
+  // const handleLogout = () => {
+  //   // auth.logout();
+  //   navigate("/user-state");
+  // };
   return (
     <div
       ref={profileRef}
@@ -89,8 +86,11 @@ const TopBar = ({ title, logo }) => {
           </div>
         </div>
       )}
+      <div className="relative  ">
+        <h1>test</h1>
+      </div>
+
       <div className="relative w-[85px]  ml-[20px] md:hidden">
-        {/* <AbiaLogo className="fixed w-[85px] ml-[20px] md:hidden" /> */}
         <AbiaLogo1 />
       </div>
 
@@ -98,7 +98,10 @@ const TopBar = ({ title, logo }) => {
         <button className="mr-4 focus:outline-none" onClick={toggleProfile}>
           <div className="relative ">
             <div className="absolute inset-0  bg-[#6cc2bc] w-[10px] h-[10px] md:w-[40px] md:h-[40px] mt-[-9px] rounded-full"></div>
-            <UserIcons fill="#fff" className="w-[22px] relative z-10 md:text-[#6cc2bc] ml-[8.5px]  md:mr-10  " />
+            <UserIcons
+              fill="#fff"
+              className="w-[22px] relative z-10 md:text-[#6cc2bc] ml-[8.5px]  md:mr-10  "
+            />
           </div>
         </button>
         {profileOpen && (
@@ -106,26 +109,25 @@ const TopBar = ({ title, logo }) => {
             <ul className="">
               <li className="px-4 cursor-pointer">
                 <span className=" text-[17px] font-bold">
-                  {/* ABC Cakes at... */}
-                  {auth.userEmail}
+                  ABC Cakes at...
+                  {/* {auth.email} */}
                 </span>
                 <br></br>
                 <span className="text-[15px]">
-                  {/* info@abccakesmel.co */}
-                  {auth.userEmail}
+                  info@abccakesmel.co
+                  {/* {auth.email} */}
                 </span>
               </li>
               <li className="px-4  text-[15px] cursor-pointer">
                 Account Details
               </li>
 
-              <li
+              <Link
+                to="/user-state"
                 className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
-                onClick={handleLogout}
               >
-                {/* <Link to={"/login"}>Log Out</Link> */}
                 <button>Log Out</button>
-              </li>
+              </Link>
             </ul>
           </div>
         )}

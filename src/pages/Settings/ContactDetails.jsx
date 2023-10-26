@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ContactDetails.css";
+import { BUSINESS_SETTINGS2 } from "../../api/apiUrls";
 
 const ContactDetails = () => {
   const [inputContactName, setInputContactName] = useState("");
@@ -8,7 +9,6 @@ const ContactDetails = () => {
   const [inputAddress, setInputAddress] = useState("");
   const [inputPostcode, setInputPostCode] = useState("");
   const [inputCity, setInputCity] = useState("");
-  const [inputState, setInputState] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0); // Scrolls to the top of the page
@@ -38,26 +38,19 @@ const ContactDetails = () => {
     setInputCity(e.target.value);
   };
 
-  const handleStateChange = (e) => {
-    setInputState(e.target.value);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = {
-      contactName: inputContactName,
+      contact_person: inputContactName,
       email: inputEmail,
-      phone: inputPhone,
+      mobile_phone: inputPhone,
       address: inputAddress,
       postcode: inputPostcode,
-      city: inputCity,
-      state: inputState,
+      suburb: inputCity,
     };
-    const vendorId = "<Vendor_id>";
-    const apiEndpoint = `https://abia.abia-test.com/web/WebBusinessVendor/${vendorId}`;
     try {
-      const response = await fetch(apiEndpoint, {
+      // fetch method is used
+      const response = await fetch(BUSINESS_SETTINGS2, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,39 +68,6 @@ const ContactDetails = () => {
     }
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   const formData = {
-  //     inputContactName,
-  //     inputEmail,
-  //     inputPhone,
-  //     inputAddress,
-  //     inputPostcode,
-  //     inputCity,
-  //     // inputState,
-  //     // selectedOptions,
-  //   };
-  //   console.log(formData);
-
-  //   setInputContactName("");
-  //   setInputEmail("");
-  //   setInputPhone(null);
-  //   setInputAddress("");
-  //   setInputPostCode("");
-  //   setInputCity("");
-  //   setInputState("");
-  //   // setSelectedOptions([]);
-  // };
-
-  const states = [
-    { value: "ACT", label: "ACT" },
-    { value: "NSW", label: "NSW" },
-    { value: "QLD", label: "QLD" },
-    { value: "SA", label: "SA" },
-    { value: "VIC", label: "VIC" },
-    { value: "WA", label: "WA" },
-  ];
   return (
     <div className="contact-details-container">
       <div className="mt-[20px]">
@@ -118,6 +78,7 @@ const ContactDetails = () => {
             <div>
               <input
                 type="text"
+                name="contact_person"
                 required
                 className="contactdetails-input-style"
                 value={inputContactName}
@@ -131,6 +92,7 @@ const ContactDetails = () => {
             <div>
               <input
                 type="text"
+                name="email"
                 required
                 className="contactdetails-input-style"
                 value={inputEmail}
@@ -142,8 +104,9 @@ const ContactDetails = () => {
             <label className="font-semibold">Phone/Mobile*</label>
             <div>
               <input
-                type="text"
+                type="number"
                 inputMode="tel"
+                name="mobile_phone"
                 required
                 className="contactdetails-input-style"
                 value={inputPhone}
@@ -156,6 +119,7 @@ const ContactDetails = () => {
             <div>
               <input
                 type="text"
+                name="address"
                 required
                 className="contactdetails-input-style"
                 value={inputAddress}
@@ -169,6 +133,7 @@ const ContactDetails = () => {
             <div>
               <input
                 type="text"
+                name="postcode"
                 required
                 className="contactdetails-input-style"
                 value={inputPostcode}
@@ -181,6 +146,7 @@ const ContactDetails = () => {
             <div>
               <input
                 type="text"
+                name="suburb"
                 required
                 className="contactdetails-input-style"
                 value={inputCity}

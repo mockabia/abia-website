@@ -45,6 +45,8 @@ export async function apiCall(url, method, data) {
     throw err;
   }
 }
+
+
 export async function refreshToken() {
   var requestData = {
     username: localStorage.username,
@@ -80,8 +82,10 @@ export async function refreshToken() {
 export async function imageUploadApi(url, method, data, userId = null) {
   const userData = null;
   let userSession = userData ? userData : null;
-  // let accessToken = (userSession.user && userSession.user.accessToken) ? userSession.user.accessToken  : null;
-  let accessToken = null;
+  let accessToken =
+    userSession.user && userSession.user.accessToken
+      ? userSession.user.accessToken
+      : null;
   const headers = userId
     ? {
         "Content-Type": "multipart/form-data",

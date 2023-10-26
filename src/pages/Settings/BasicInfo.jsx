@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./BasicInfo.css";
 import ImageUploader from "../../components/ImageUploader";
+import { BUSINESS_SETTINGS1 } from "../../api/apiUrls";
 
 const BasicInfo = () => {
   const [inputBusinessName, setInputBusinessName] = useState("");
@@ -28,17 +29,13 @@ const BasicInfo = () => {
     e.preventDefault();
 
     const formData = {
-      businessName: inputBusinessName,
+      name: inputBusinessName,
       website: inputWebsite,
-      logo: image,
+      photo: image,
     };
 
-    const vendorId = "<Vendor_id>";
-
-    const apiEndpoint = `https://abia.abia-test.com/web/WebBusinessVendor/${vendorId}`;
-
     try {
-      const response = await fetch(apiEndpoint, {
+      const response = await fetch(BUSINESS_SETTINGS1, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +69,7 @@ const BasicInfo = () => {
               <input
                 type="text"
                 required
-                name="bname"
+                name="name"
                 className="basicinfo-input-style"
                 value={inputBusinessName}
                 onChange={handleBusinessNameChange}

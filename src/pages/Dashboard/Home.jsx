@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import TopBar from "../../layouts/sidebar/TopBar";
-import { useAuth } from "../../context/AuthProvider";
+import AuthContext from "../../context/AuthProvider";
 
 const Home = () => {
-  const auth = useAuth();
+  const { auth } = useContext(AuthContext);
+
   return (
     <>
-      <TopBar title={`Welcome ${auth.userEmail}`} />
+      <TopBar title={`Welcome ${auth.email}`} />
 
-      <div>Vendor Home Page</div>
+      <div>Vendor Home Page </div>
     </>
   );
 };
