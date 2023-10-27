@@ -68,10 +68,9 @@ const TopBar = ({ title, logo }) => {
     setMenuOpen(false);
   };
 
-  // const handleLogout = () => {
-  //   // auth.logout();
-  //   navigate("/user-state");
-  // };
+  const handleLogout = () => {
+    navigate("/login");
+  };
   return (
     <div
       ref={profileRef}
@@ -122,12 +121,12 @@ const TopBar = ({ title, logo }) => {
                 Account Details
               </li>
 
-              <Link
-                to="/user-state"
+              <li
                 className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
+                onClick={handleLogout}
               >
                 <button>Log Out</button>
-              </Link>
+              </li>
             </ul>
           </div>
         )}

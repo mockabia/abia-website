@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import AuthContext from "../../context/AuthProvider";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 import "./LoginPage.css";
 import { Link, useNavigate } from "react-router-dom";
 import ForgetPassword from "./ForgetPassword";
 import * as apiurls from "../../api/apiUrls";
+import * as apiService from "../../api/apiServices";
 import axios from "axios";
 import LoginUseForm from "./useForm";
 import { IconButton, Stack } from "@mui/material";
@@ -17,15 +17,16 @@ import {
 import { validateEmail, validatePassword, validator } from "./LoginValidator";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import AuthContext, { useAuth } from "../../context/AuthProvider";
 
 const LoginPage = () => {
-  const { setAuth } = useContext(AuthContext);
-
+  const { setToken } = useAuth();
   const initState = {
     email: "",
     password: "",
   };
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [apiRequestSuccess, setApiRequestSuccess] = useState(false);
   const [userStates, setUserStates] = useState([]);
@@ -54,14 +55,15 @@ const LoginPage = () => {
           email: email,
           password: password,
         });
-        const accessToken = response?.data?.token;
-        const states = response?.data.result;
-        setAuth(email, states, accessToken);
+        setUser(response.data);
+
         // console.log("Response from clientside:", response.data);
         // console.log("Resposne of the User States:", response.data.result);
-        // console.log("AccessToekn is", response.data.token);
+        console.log("AccessToekn is", response.data.token);
 
         if (response.status === 200) {
+          const token = response?.data?.token;
+          const states = response?.data.result;
           const userStatesData = response.data.result;
           const statesLegnth = response.data.result.length;
           console.log("State length:", statesLegnth);
@@ -69,9 +71,12 @@ const LoginPage = () => {
 
           setUserStates(userStatesData);
           setApiRequestSuccess(true);
-          navigate(statesLegnth <= 1 ? "/home" : "/user-state", {
-            state: { userStatesData },
-          });
+          setToken(email, states, token);
+          if (token) {
+            navigate(statesLegnth <= 1 ? "/home" : "/user-state", {
+              state: { userStatesData },
+            });
+          }
         }
       } catch (error) {
         if (!error.response) {
