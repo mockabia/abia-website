@@ -4,9 +4,10 @@ import SingleSelect from "../../third-party-packs/singleSelect";
 import Dropdown from "../../third-party-packs/dropDown";
 
 import { primaryCategory } from "../../data/CategoryItems";
-import { CATEGORY_DROPDOWN_API, BUSINESS_SETTINGS4 } from "../../api/apiUrls";
 import Select, { components } from "react-select";
 import axios from "axios";
+import * as apiurls from "../../api/apiUrls";
+export const MAIN_API       = apiurls.BUSINESS_API;
 
 const Category = ({ vendorDetails }) => {
   const [primaryCatSelect, setPrimaryCatSelect] = useState(
@@ -33,7 +34,7 @@ const Category = ({ vendorDetails }) => {
 
   const fetchCategory = async () => {
     try {
-      const response = await axios.get(CATEGORY_DROPDOWN_API);
+      const response = await axios.get(apiurls.CATEGORY_DROPDOWN_API);
       if (response.status === 200) {
         setCategoryOptions(response.data.result);
       }
@@ -66,7 +67,7 @@ const Category = ({ vendorDetails }) => {
     };
 
     try {
-      const response = await fetch(BUSINESS_SETTINGS4, {
+      const response = await fetch(MAIN_API['SETTINGS4'], {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

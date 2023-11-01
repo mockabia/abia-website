@@ -9,12 +9,8 @@ import "./ContactDetails.css";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
-import {
-  BUSINESS_VENDOR,
-  STATE_DROPDOWN,
-  STATE_VS_REGION_API,
-  BUSINESS_SETTINGS2,
-} from "../../api/apiUrls";
+import * as apiurls from "../../api/apiUrls";
+export const MAIN_API       = apiurls.BUSINESS_API;
 
 const phoneRegExp = /^\d{10,}$/;
 
@@ -167,7 +163,7 @@ const ContactDetails = ({ vendorDetails }) => {
 
   const fetchState = async () => {
     try {
-      const response = await axios.get(STATE_DROPDOWN);
+      const response = await axios.get(apiurls.STATE_DROPDOWN);
       if (response.status === 200) {
         setStateOptions(response.data.result);
       }
@@ -187,7 +183,7 @@ const ContactDetails = ({ vendorDetails }) => {
 
   const fetchRegion = async () => {
     try {
-      const response = await axios.get(STATE_VS_REGION_API);
+      const response = await axios.get(apiurls.REGIONS_BY_STATE);
       if (response.status === 200) {
         setRegionOptions(response.data.result);
         // console.log("Region resposne:", regionOptions);
@@ -199,7 +195,7 @@ const ContactDetails = ({ vendorDetails }) => {
 
   const onSubmit = async (formData) => {
     try {
-      const response = await fetch(BUSINESS_SETTINGS2, formData);
+      const response = await fetch(MAIN_API['SETTINGS2'], formData);
       if (response.status == 200) {
         console.log("API Response:", response.data);
       } else {

@@ -14,6 +14,7 @@ import { Stack } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 import * as apiurls from "../../api/apiUrls";
+export const MAIN_API       = apiurls.BUSINESS_API;
 
 const CoupleForgotPwd = () => {
   const [open, setOpen] = React.useState(false);
@@ -28,7 +29,7 @@ const CoupleForgotPwd = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(apiurls.BUSINESS_FORGOT, {
+      const response = await axios.post(MAIN_API['FORGOT'], {
         username: username,
       });
       if (response.status === 200) {

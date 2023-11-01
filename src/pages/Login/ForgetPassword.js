@@ -13,7 +13,7 @@ import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
 import { Stack } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
-import * as apiurls from "../../api/apiUrls";
+import * as apiurls from "../../api/apiUrls_old";
 
 const ForgetPassword = () => {
   const [open, setOpen] = React.useState(false);

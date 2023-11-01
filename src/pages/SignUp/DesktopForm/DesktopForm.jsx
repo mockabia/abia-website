@@ -13,6 +13,7 @@ import { CustomDropdownSelectStyles } from "../../../components/FormStyle";
 import axios from "axios";
 import * as apiurls from "../../../api/apiUrls";
 import { useNavigate } from "react-router-dom";
+export const MAIN_API       = apiurls.BUSINESS_API;
 
 const schema = yup.object().shape({
   name: yup.string().required("Business name is required"),
@@ -110,7 +111,7 @@ const DesktopForm = () => {
 
   const onSubmit = async (formData) => {
     try {
-      const response = await axios.post(apiurls.BUSINESS_STORE, formData);
+      const response = await axios.post(MAIN_API['STORE'], formData);
       if (response.status === 200) {
         navigate("/my-profile");
         console.log("Data Successfully Submitted:", response.data);
