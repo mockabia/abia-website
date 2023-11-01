@@ -46,7 +46,6 @@ export async function apiCall(url, method, data) {
   }
 }
 
-
 export async function refreshToken() {
   var requestData = {
     username: localStorage.username,

@@ -5,7 +5,7 @@ import profile from "../icons/profiel-bg-latest.svg";
 import { BiUpload } from "react-icons/bi";
 import { Url } from "url";
 
-const ImageUploader = ({ image, setImage, onUpload }) => {
+const ImageUploader = ({ image, onUpload }) => {
   // const [image, setImage] = useState(null);
 
   const fileInputRef = useRef(null);
@@ -17,9 +17,9 @@ const ImageUploader = ({ image, setImage, onUpload }) => {
   const handleChange = (e) => {
     const file = e.target.files[0];
     if (file && file.type.substring(0, 5) === "image") {
-      setImage(URL.createObjectURL(file));
+      onUpload(URL.createObjectURL(file));
     } else {
-      setImage(null);
+      onUpload(null);
     }
   };
 

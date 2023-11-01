@@ -5,15 +5,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import "./dropDown.css";
 
-const SingleSelect = ({ options, onFormSubmit }) => {
-  const [selectedOptions, setSelectedOptions] = useState([]);
+const SingleSelect = ({ options, onFormSubmit, name, defaultValue }) => {
+  const [selectedOptions, setSelectedOptions] = useState(defaultValue || []);
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleSelectChange = (selected) => {
     setSelectedOptions(selected);
-    // console.log(selected.label);
     onFormSubmit(selected);
   };
+
+  useEffect(() => {
+    setSelectedOptions(defaultValue || []); 
+  }, [defaultValue]);
 
   useEffect(() => {
     return () => {
@@ -33,6 +36,7 @@ const SingleSelect = ({ options, onFormSubmit }) => {
       background: "#fafafa",
       padding: "5px",
       width: "100%",
+      height: "50px",
       // maxHeight: "50px",
       maxWidth: "100%",
       "@media (min-width: 1190px)": {
@@ -78,6 +82,7 @@ const SingleSelect = ({ options, onFormSubmit }) => {
 
   const inputProps = {
     inputMode: "none",
+    name: name || "defaultName",
   };
 
   const formatOptionLabel = ({ label }) => {
@@ -137,6 +142,7 @@ const SingleSelect = ({ options, onFormSubmit }) => {
           hideSelectedOptions={false}
           allowSelectAll={true}
           value={selectedOptions}
+          // value={defaultValue}
           onChange={handleSelectChange}
           styles={customStyles}
           components={{

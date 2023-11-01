@@ -1,41 +1,51 @@
 import React, { useEffect, useState } from "react";
 import "./UsernamePassword.css";
 import { BUSINESS_SETTINGS3 } from "../../api/apiUrls";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
-const UsernamePassword = () => {
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputPassword, setInputPasswrd] = useState("");
-  const [inputConfirmPasssword, setInputConfirmPassword] = useState("");
-  const [passwordMatchError, setPasswordMatchError] = useState("");
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Invalid email address"),
+  password: yup
+    .string()
+    .required("No password provided.")
+    .min(6, "Password ishould be 6 chars minimum."),
+});
+
+const UsernamePassword = ({ vendorDetails }) => {
+  const [formValues, setFormValues] = useState({
+    email: "",
+    password: "",
+    re_password: "",
+  });
+
+  const {
+    register,
+    //  handleSubmit,
+    formState: { errors, isDirty, isValid, isSubmitting, submitCount },
+    control,
+    setValue,
+    reset,
+  } = useForm({
+    mode: "onChange", //isValid works on mode=onChange
+    resolver: yupResolver(schema),
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0); // Scrolls to the top of the page
   }, []);
 
-  const handleInputEmailChange = (e) => {
-    setInputEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setInputPasswrd(e.target.value);
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    setInputConfirmPassword(e.target.value);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (inputPassword !== inputConfirmPasssword) {
-      setPasswordMatchError("Please repeat the password");
-      return;
-    } else {
-      setPasswordMatchError("");
-    }
+
     const formData = {
-      emaiil: inputEmail,
-      password: inputPassword,
-      re_password: inputConfirmPasssword,
+      email: "",
+      password: "",
+      re_password: "",
     };
 
     try {
@@ -70,9 +80,12 @@ const UsernamePassword = () => {
                 name="email"
                 required
                 className="usernamepassword-input-style"
-                value={inputEmail}
-                onChange={handleInputEmailChange}
+                value={vendorDetails.email}
+                {...register("email")}
               />
+              <p className="text-[12px] text-red-500 font-semibold mt-1">
+                {errors.email?.message}
+              </p>
             </div>
           </div>
           <div className="space-y-2">
@@ -84,9 +97,14 @@ const UsernamePassword = () => {
                 name="password"
                 required
                 className="usernamepassword-input-style"
-                value={inputPassword}
-                onChange={handlePasswordChange}
+                value={vendorDetails.password}
+                {...register("password")}
+                // value={inputPassword}
+                // onChange={handlePasswordChange}
               />
+              <p className="text-[12px] text-red-500 font-semibold mt-1">
+                {errors.password?.message}
+              </p>
             </div>
           </div>
           <div className="space-y-2">
@@ -98,13 +116,10 @@ const UsernamePassword = () => {
                 name="re_password"
                 required
                 className="usernamepassword-input-style"
-                value={inputConfirmPasssword}
-                onChange={handleConfirmPasswordChange}
+                // value={inputConfirmPasssword}
+                // onChange={handleConfirmPasswordChange}
               />
             </div>
-            {passwordMatchError && (
-              <div className="error-message">{passwordMatchError}</div>
-            )}
           </div>
           <div className="usernamepassword-submit-button">
             <button onClick={handleSubmit}>Update</button>

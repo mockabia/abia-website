@@ -28,8 +28,7 @@ const LoginUserState = () => {
     navigate("/home");
   };
 
-  const isButtonDisabled = selectedState === "";
-  console.log("Selected state:", selectedState);
+  // console.log("Selected state:", selectedState);
 
   return (
     <main className="h-[100%] flex flex-col overflow-y-auto">
@@ -39,21 +38,11 @@ const LoginUserState = () => {
           <div className="login-vendorlogin-box">
             <div className="flex flex-col justify-center items-center p-[20px] relative">
               <h1 className="login-loginbox-header">Welcome</h1>
-              {/* <form onSubmit={handleSubmit} className="lg:mt-[20px] "> */}
               <Stack spacing={2}>
-                {/* Password */}
-
                 <div className="flex flex-col justify-center items-center ">
-                  <Box
-                    component="form"
-                    // sx={ForgetBox}
-                    noValidate
-                    autoComplete="off"
-                  >
-                    {/* <h3 className="form-header">{auth.email}</h3> */}
-
+                  <Box component="form" noValidate autoComplete="off">
                     <p className="flex justify-center">
-                      Select your respective State details
+                      Select your respective State.
                     </p>
                     <div className="mt-[1rem]">
                       <ul>

@@ -4,7 +4,7 @@ import SingleSelect from "../../third-party-packs/singleSelect";
 import { states } from "../../data/CategoryItems";
 import { BUSINESS_SETTINGS5 } from "../../api/apiUrls";
 import * as apiUrls from "../../api/apiUrls";
-import * as servicesPage from "../../services/vendor/regionService";
+import * as servicesPage from "../../services/vendor/settingsService";
 import axios from "axios";
 import { MenuItem, Select, styled } from "@mui/material";
 
@@ -18,6 +18,7 @@ const MenuItemStyle = styled(MenuItem)(({ theme }) => ({
 const MyLocation = () => {
   let target_region = [];
   const [primaryLocation, setPrimaryLocation] = useState([]);
+  const [primarySelect, setPrimarySelect] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0); // Scrolls to the top of the page
@@ -32,10 +33,10 @@ const MyLocation = () => {
     console.log("Location select:", target_region);
   };
   const handlePrimaryLocation = (selectedOptions) => {
-    // console.log("Selected Options:", selectedOptions);
     primaryLocation = selectedOptions.value;
     console.log("Primary Location:", primaryLocation);
   };
+
   //api
   const fetchRegion = async () => {
     try {
@@ -83,6 +84,11 @@ const MyLocation = () => {
     }
   };
 
+  const options = primaryLocation.map((region) => ({
+    value: region.rid,
+    label: region.title,
+  }));
+
   return (
     <div className="mylocation-container">
       <div>
@@ -93,32 +99,23 @@ const MyLocation = () => {
       <div className="mt-[20px]">
         <form className="">
           <div className="space-y-2">
-            <label className="font-semibold">State*</label>
-            <br />
-            <div className="relative lg:w-[52%] mylocation-select">
-              <SingleSelect options={states} onFormSubmit={handleStateChange} />
-            </div>
-            <br />
-          </div>
-          <div className="space-y-2">
+            {/* Locations */}
             <label className="font-semibold">Locations*</label>
             <br />
             <div className="relative lg:w-[52%] mylocation-location-multiselect">
-              <Dropdown options={states} onFormSubmit={handleLocationChange} />
+              <Dropdown options={options} onFormSubmit={handleLocationChange} />
             </div>
             <br />
           </div>
+          {/* Primary Location */}
           <div className="space-y-2">
             <label className="font-semibold">Primary Location*</label>
             <br />
             <div className="relative lg:w-[52%] mylocation-primarylocaion-multiselect">
-              <Select sx={{ width: "100%" }}>
-                {primaryLocation.map((region) => (
-                  <MenuItemStyle key={region.rid} value={region.rid}>
-                    {region.title}
-                  </MenuItemStyle>
-                ))}
-              </Select>
+              <SingleSelect
+                options={options}
+                onFormSubmit={handlePrimaryLocation}
+              />
             </div>
             <br />
           </div>

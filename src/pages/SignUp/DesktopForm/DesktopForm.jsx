@@ -31,10 +31,6 @@ const schema = yup.object().shape({
 
 const DesktopForm = () => {
   const [formStep, setFormStep] = useState(0);
-  const [registerLocation, setRegisterLocation] = useState([]);
-  const [registerService, setRegisterService] = useState([]);
-  const [registerBooking, setRegisterBooking] = useState([]);
-  const [registerFindUs, setRegisterFindUs] = useState([]);
   const [formValues, setFormValues] = useState({
     name: "",
     email: "",
@@ -46,6 +42,10 @@ const DesktopForm = () => {
     avgperyear: "",
     findus: "",
   });
+  const [registerLocation, setRegisterLocation] = useState([]);
+  const [registerService, setRegisterService] = useState([]);
+  const [registerBooking, setRegisterBooking] = useState([]);
+  const [registerFindUs, setRegisterFindUs] = useState([]);
   const [selectedState, setSelectedState] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedBooking, setSelectedBooking] = useState(null);

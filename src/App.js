@@ -28,7 +28,7 @@ import LoginUserState from "./pages/Login/LoginUserState";
 import { useAuth } from "./context/AuthProvider";
 
 const App = () => {
-  const { token } = useAuth();
+  // const { token } = useAuth();
   return (
     <Routes>
       <Route path="/" element={<Public />} />
@@ -41,49 +41,46 @@ const App = () => {
 
       {/* Protected */}
       {/* The links of the Dashboard which has common Rootlayout */}
-      {token && (
-        <Route
-          path="/*"
-          element={
-            <RootLayout>
-              <Routes>
-                <Route path="/home" element={<Home />} />
-                {/* Get review */}
-                <Route path="/get-reviews" element={<GetReviews />} />
-                <Route
-                  path="/get-reviews/past-wedding"
-                  element={<PastWedding />}
-                />
-                <Route
-                  path="/get-reviews/future-wedding"
-                  element={<FutureWedding />}
-                />
-                <Route path="/get-reviews/copy-link" element={<CopyLink />} />
-                <Route path="/manage-review" element={<ManageReview />} />
-                <Route
-                  path="/showcase/review-widget"
-                  element={<ReviewWidget />}
-                />
-                <Route
-                  path="/showcase/award-badges"
-                  element={<AwardBadges />}
-                />
-                <Route path="/settings" element={<BusinessSetting />} />
-                <Route
-                  path="/settings/update-listing"
-                  element={<UpdateListing />}
-                />
-                <Route path="/promotions" element={<Promotions />} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="/enquiries" element={<Enquiries />} />
-                <Route path="/my-profile" element={<Profile />} />
-                <Route path="/upgrade" element={<upgradeNow />} />
-                {/* <Route path="/test" element={<Profile />} /> */}
-              </Routes>
-            </RootLayout>
-          }
-        />
-      )}
+      {/* {token && ( */}
+      <Route
+        path="/*"
+        element={
+          <RootLayout>
+            <Routes>
+              <Route path="/home" element={<Home />} />
+              {/* Get review */}
+              <Route path="/get-reviews" element={<GetReviews />} />
+              <Route
+                path="/get-reviews/past-wedding"
+                element={<PastWedding />}
+              />
+              <Route
+                path="/get-reviews/future-wedding"
+                element={<FutureWedding />}
+              />
+              <Route path="/get-reviews/copy-link" element={<CopyLink />} />
+              <Route path="/manage-review" element={<ManageReview />} />
+              <Route
+                path="/showcase/review-widget"
+                element={<ReviewWidget />}
+              />
+              <Route path="/showcase/award-badges" element={<AwardBadges />} />
+              <Route path="/settings" element={<BusinessSetting />} />
+              <Route
+                path="/settings/update-listing"
+                element={<UpdateListing />}
+              />
+              <Route path="/promotions" element={<Promotions />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/enquiries" element={<Enquiries />} />
+              <Route path="/my-profile" element={<Profile />} />
+              <Route path="/upgrade" element={<upgradeNow />} />
+              {/* <Route path="/test" element={<Profile />} /> */}
+            </Routes>
+          </RootLayout>
+        }
+      />
+      {/* )} */}
     </Routes>
   );
 };

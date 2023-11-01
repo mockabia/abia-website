@@ -4,33 +4,65 @@ import SingleSelect from "../../third-party-packs/singleSelect";
 import Dropdown from "../../third-party-packs/dropDown";
 
 import { primaryCategory } from "../../data/CategoryItems";
-import { BUSINESS_SETTINGS4 } from "../../api/apiUrls";
+import { CATEGORY_DROPDOWN_API, BUSINESS_SETTINGS4 } from "../../api/apiUrls";
+import Select, { components } from "react-select";
+import axios from "axios";
 
-const Category = () => {
-  let first_category = "";
-  let other_category = [];
+const Category = ({ vendorDetails }) => {
+  const [primaryCatSelect, setPrimaryCatSelect] = useState(
+    vendorDetails.first_category
+  );
+  const [addcategory, setAddCategory] = useState(vendorDetails.other_category);
+  const [categoryOptions, setCategoryOptions] = useState([]);
+
+  const [formValues, setFormValues] = useState({
+    first_category: primaryCatSelect,
+    other_category: [addcategory],
+  });
+
+  useEffect(() => {
+    setPrimaryCatSelect(vendorDetails.first_category); // Update primaryCatSelect when vendorDetails changes
+  }, [vendorDetails.first_category]);
+  useEffect(() => {
+    setAddCategory(vendorDetails.other_category); // Update setAddCategory when vendorDetails changes
+  }, [vendorDetails.other_category]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const fetchCategory = async () => {
+    try {
+      const response = await axios.get(CATEGORY_DROPDOWN_API);
+      if (response.status === 200) {
+        setCategoryOptions(response.data.result);
+      }
+    } catch (error) {
+      console.error("Error while fetching states:", error);
+    }
+  };
+  useEffect(() => {
+    fetchCategory();
+  }, []);
   // for Multi select
-  const handleDropdownChange = (selectedOptions) => {
-    other_category = selectedOptions;
-    console.log("Multi select:", other_category);
-  };
+  // const handleDropdownChange = (selectedOptions) => {
+  //   other_category = selectedOptions;
+  //   console.log("Multi select:", other_category);
+  // };
 
-  const handleSingleSelectChange = (selectedOptions) => {
-    first_category = selectedOptions;
-    console.log("SingleSelect:", first_category);
-  };
+  // const handleSingleSelectChange = (selectedOptions) => {
+  //   first_category = selectedOptions;
+  //   console.log("SingleSelect:", first_category);
+  // };
+
+  console.log("Category resposne:", categoryOptions);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = {
-      first_category,
-      other_category,
+      first_category: primaryCatSelect,
+      other_category: addcategory,
     };
 
     try {
@@ -52,6 +84,10 @@ const Category = () => {
     }
   };
 
+  console.log("Primary select in api :", vendorDetails.first_category);
+  console.log("Primary2 select in api :", primaryCatSelect);
+  console.log("Add category select in api :", addcategory);
+
   return (
     <div className="category-container">
       <div>
@@ -65,9 +101,23 @@ const Category = () => {
             <label className="font-semibold">Primary Category</label>
             <br />
             <div className="relative lg:w-[52%] category-single-select">
-              <SingleSelect
-                options={primaryCategory}
-                onFormSubmit={handleSingleSelectChange}
+              {/* <SingleSelect options={primaryCategory} /> */}
+              <Select
+                name="first_category"
+                placeholder={primaryCatSelect}
+                options={categoryOptions.map((category) => ({
+                  value: category.value,
+                  label: category.label,
+                }))}
+                value={categoryOptions.find(
+                  (option) => option.value === primaryCatSelect
+                )}
+                onChange={(selectedOption) => {
+                  const categoryValue = selectedOption
+                    ? selectedOption.value
+                    : "";
+                  setPrimaryCatSelect(categoryValue);
+                }}
               />
             </div>
             <br />
@@ -76,10 +126,28 @@ const Category = () => {
             <label className="font-semibold">Additional Categories</label>
             <br />
             <div className="relative lg:w-[52%] category-multi-select">
-              <Dropdown
-                options={primaryCategory}
-                onFormSubmit={handleDropdownChange}
+              <Select
+                name="other_category"
+                isMulti={true}
+                placeholder={addcategory}
+                options={categoryOptions.map((category) => ({
+                  value: category.value,
+                  label: category.label,
+                }))}
+                value={categoryOptions.find(
+                  (option) => option.value === setAddCategory
+                )}
+                onChange={(selectedOption) => {
+                  const categoryValue = selectedOption
+                    ? selectedOption.value
+                    : "";
+                  setAddCategory(categoryValue);
+                }}
               />
+              {/* <Dropdown
+                options={primaryCategory}
+                defaultValue={vendorDetails.other_category}
+              /> */}
             </div>
             <br />
           </div>

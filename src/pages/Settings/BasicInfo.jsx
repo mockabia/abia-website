@@ -2,58 +2,80 @@ import React, { useEffect, useState } from "react";
 import "./BasicInfo.css";
 import ImageUploader from "../../components/ImageUploader";
 import { BUSINESS_SETTINGS1 } from "../../api/apiUrls";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import * as servicePage from "../../services/vendor/signupPageService";
 
-const BasicInfo = () => {
-  const [inputBusinessName, setInputBusinessName] = useState("");
-  const [inputWebsite, setInputWebsite] = useState("");
+const schema = yup.object().shape({
+  name: yup.string().required("Business name is required"),
+});
+
+const BasicInfo = ({ vendorDetails }) => {
+  const [formValues, setFormValues] = useState({
+    name: "",
+    website: "",
+    photo: "",
+  });
+
+  // const [inputWebsite, setInputWebsite] = useState(vendorDetails.website || "");
   const [image, setImage] = useState(null);
 
   useEffect(() => {
-    window.scrollTo(0, 0); // Scrolls to the top of the page
+    window.scrollTo(0, 0);
   }, []);
+
+  const {
+    watch,
+    register,
+    formState: { errors, isValid, isSubmitted },
+    control,
+  } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
 
   const onUpload = (imageUrl) => {
     console.log("Image uploaded:", imageUrl);
     setImage(imageUrl);
   };
 
-  const handleBusinessNameChange = (e) => {
-    setInputBusinessName(e.target.value);
-  };
-
-  const handleWebsiteChange = (e) => {
-    setInputWebsite(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
+    const updatedName = watch("name");
+    const updatedWebsite = watch("website");
     const formData = {
-      name: inputBusinessName,
-      website: inputWebsite,
+      name: updatedName,
+      website: updatedWebsite,
       photo: image,
     };
 
+    console.log("Updated Form Data:", formData);
     try {
-      const response = await fetch(BUSINESS_SETTINGS1, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("API Response:", data);
+      const response = await servicePage.businessStoreData(formData); // Call the storeData function with the form data
+      if (response.statuscode === 200) {
+        console.log("API Response:", response.data.result);
       } else {
-        console.error("API Error:", response.status, response.statusText);
+        console.error("API Error:", response.statuscode);
       }
     } catch (error) {
       console.error("API Request Error:", error);
     }
-  };
+    // try {
+    //   const response = await fetch(BUSINESS_SETTINGS1, {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(formData),
+    //   });
 
+    //   if (response.ok) {
+    //     const data = await response.json();
+    //     console.log("API Response:", data);
+    //   } else {
+    //     console.error("API Error:", response.status, response.statusText);
+    //   }
+    // } catch (error) {
+    //   console.error("API Request Error:", error);
+    // }
+  };
   return (
     <div className="basic-info-container">
       <div className="basic-sub-header">
@@ -71,8 +93,8 @@ const BasicInfo = () => {
                 required
                 name="name"
                 className="basicinfo-input-style"
-                value={inputBusinessName}
-                onChange={handleBusinessNameChange}
+                defaultValue={vendorDetails.name}
+                {...register("name")}
               />
             </div>
           </div>
@@ -85,8 +107,8 @@ const BasicInfo = () => {
                 required
                 name="website"
                 className="basicinfo-input-style"
-                value={inputWebsite}
-                onChange={handleWebsiteChange}
+                defaultValue={vendorDetails.website}
+                {...register("website")}
               />
             </div>
           </div>
@@ -94,11 +116,7 @@ const BasicInfo = () => {
             <div>
               <label className="font-semibold">Upload Business Logo</label>
             </div>
-            <ImageUploader
-              image={image}
-              setImage={setImage}
-              onUpload={onUpload}
-            />
+            <ImageUploader image={image} onUpload={onUpload} />
             <div className="upload-recommendation">
               <span>Recommended Size: 400px x 300px</span>
               <br />

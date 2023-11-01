@@ -17,10 +17,8 @@ import {
 import { validateEmail, validatePassword, validator } from "./LoginValidator";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import AuthContext, { useAuth } from "../../context/AuthProvider";
 
 const LoginPage = () => {
-  const { setToken } = useAuth();
   const initState = {
     email: "",
     password: "",
@@ -31,7 +29,7 @@ const LoginPage = () => {
   const [apiRequestSuccess, setApiRequestSuccess] = useState(false);
   const [userStates, setUserStates] = useState([]);
   const [errMsg, setErrMsg] = useState("");
-
+  const [token, setToken] = useState(null);
   let location = [];
 
   const togglePasswordVisibility = (e) => {
@@ -57,26 +55,22 @@ const LoginPage = () => {
         });
         setUser(response.data);
 
-        // console.log("Response from clientside:", response.data);
-        // console.log("Resposne of the User States:", response.data.result);
         console.log("AccessToekn is", response.data.token);
 
         if (response.status === 200) {
-          const token = response?.data?.token;
+          const jwttoken = response?.data?.token;
           const states = response?.data.result;
           const userStatesData = response.data.result;
           const statesLegnth = response.data.result.length;
           console.log("State length:", statesLegnth);
           console.log("State Listed:", userStatesData);
-
+          setToken(jwttoken);
+          console.log(jwttoken);
           setUserStates(userStatesData);
           setApiRequestSuccess(true);
-          setToken(email, states, token);
-          if (token) {
-            navigate(statesLegnth <= 1 ? "/home" : "/user-state", {
-              state: { userStatesData },
-            });
-          }
+          navigate(statesLegnth <= 1 ? "/home" : "/user-state", {
+            state: { userStatesData },
+          });
         }
       } catch (error) {
         if (!error.response) {
@@ -91,7 +85,7 @@ const LoginPage = () => {
       }
     }
   };
-
+  console.log("Toekn generated:", token);
   const { handleChange, handleSubmit, handleBlur, state, errors } =
     LoginUseForm({
       initState,

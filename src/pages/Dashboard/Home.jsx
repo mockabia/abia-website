@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import TopBar from "../../layouts/sidebar/TopBar";
 import AuthContext from "../../context/AuthProvider";
+import LoginPage from "../Login/LoginPage";
 
 const Home = () => {
-  // const { auth } = useContext(AuthContext);
-
   return (
     <>
       <TopBar title={`Welcome `} />
