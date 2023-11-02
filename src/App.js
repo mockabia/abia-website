@@ -65,7 +65,7 @@ const App = () => {
                 element={<ReviewWidget />}
               />
               <Route path="/showcase/award-badges" element={<AwardBadges />} />
-              <Route path="/settings" element={<BusinessSetting />} />
+              <Route path="/settings" element={<git ini />} />
               <Route
                 path="/settings/update-listing"
                 element={<UpdateListing />}
@@ -75,7 +75,6 @@ const App = () => {
               <Route path="/enquiries" element={<Enquiries />} />
               <Route path="/my-profile" element={<Profile />} />
               <Route path="/upgrade" element={<upgradeNow />} />
-              {/* <Route path="/test" element={<Profile />} /> */}
             </Routes>
           </RootLayout>
         }
@@ -86,3 +85,4 @@ const App = () => {
 };
 
 export default App;
+      
