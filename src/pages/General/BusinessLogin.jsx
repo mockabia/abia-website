@@ -54,7 +54,7 @@ const LoginPage = () => {
   }
 
   const handleSubmit = async (e) => {
-    GeneralJS.vendorLoginForm(e)
+    GeneralJS.vendorLoginForm(e,inputs,setInputsErrors,navigate)
   };
 
   let isValidForm =
