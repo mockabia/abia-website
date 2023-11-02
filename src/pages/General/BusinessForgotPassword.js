@@ -120,7 +120,7 @@ const ForgetPassword = () => {
                   setUserEmail(e.target.value);
                   setErrors({ userEmail: "" }); // Clear the error when the input changes
                 }}
-                error={!!errors.userEmail} // Set error state to display the helper text
+                error={!!errors.userEmail} 
                 helperText={errors.userEmail} // Display the helper text
               />
               <Button

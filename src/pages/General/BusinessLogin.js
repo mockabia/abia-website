@@ -6,7 +6,6 @@ import BusinessForgotPassword from "./BusinessForgotPassword";
 import * as servicesPage from "../../services/vendor/businessServices";
 
 import * as apiService from "../../api/apiServices";
-import LoginUseForm from "../Business/useForm";
 import * as GeneralJS from "./General";
 import { IconButton, Stack } from "@mui/material";
 import {
@@ -29,7 +28,10 @@ const LoginPage = () => {
   const [userStates, setUserStates] = useState([]);
   const [errMsg, setErrMsg] = useState("");
   const [token, setToken] = useState(null);
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState({
+    email: "",
+    password: "",
+  });
   const [inputsErrors, setInputsErrors] = useState({});
   const dashboard = "/home";
   const statelistPage = "/user-state";
@@ -53,8 +55,17 @@ const LoginPage = () => {
     GeneralJS.handleChange(e, setInputs, setInputsErrors);
   };
 
+  // const handleSubmit = async (e) => {
+  //   GeneralJS.vendorLoginForm(e, inputs, setInputsErrors, navigate);
+  // };
   const handleSubmit = async (e) => {
-    GeneralJS.vendorLoginForm(e, inputs, setInputsErrors, navigate);
+    e.preventDefault();
+    const errors = GeneralJS.validateForm(inputs); // Validate the form inputs
+    if (Object.values(errors).some((error) => error !== "")) {
+      setInputsErrors(errors);
+    } else {
+      GeneralJS.vendorLoginForm(e, inputs, setInputsErrors, navigate);
+    }
   };
 
   let isValidForm =

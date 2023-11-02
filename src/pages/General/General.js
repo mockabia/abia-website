@@ -23,9 +23,16 @@ export const checkRememberMe = (setInputs) => {
 export const handleChange = (e, setInputs, setInputsErrors) => {
   const name = e.target.name;
   const value = e.target.value;
-  setInputsErrors({});
+  const formData = { [name]: value };
+  const fieldErrors = customValidator.validator(formData, name);
   setInputs((values) => ({ ...values, [name]: value }));
+  setInputsErrors({});
+
+  if (Object.values(fieldErrors).length > 0) {
+    setInputsErrors((prevErrors) => ({ ...prevErrors, ...fieldErrors }));
+  }
 };
+
 export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
   e.preventDefault();
   let requestData = inputs;
@@ -82,3 +89,13 @@ export const logout = async (navigate) => {
     }
   });
 };
+
+// validateForm
+export const validateForm = (values) => {
+  let errors = {};
+  errors.email = customValidator.validateEmail(values.email);
+  errors.password = customValidator.validatePassword(values.password);
+  return errors;
+};
+
+

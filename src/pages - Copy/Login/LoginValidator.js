@@ -5,7 +5,6 @@ export function validateEmail(email, errors) {
   let result = true;
 
   if (!email) {
-    errors.email = "Email is Required";
     result = false;
   } else {
     const re =
