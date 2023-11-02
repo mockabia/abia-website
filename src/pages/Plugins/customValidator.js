@@ -1,11 +1,6 @@
 import { get } from "lodash";
 
 //*******************************
-
-export const handleChange = (name,data,setInputsErrors,setInputs) => {
-  setInputsErrors({})
-  setInputs(values => ({ ...values, [name]: data }))
-}
 export function validateEmail(email, errors) {
   let result = true;
 

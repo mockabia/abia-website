@@ -22,7 +22,8 @@ export const checkRememberMe = (setInputs) => {
 export const handleChange = (e,setInputs,setInputsErrors) => {
     const name = e.target.name;
     const value = e.target.value;
-    customValidator.handleChange(name, value,setInputsErrors, setInputs)
+    setInputsErrors({})
+    setInputs(values => ({ ...values, [name]: value }))
   }
 export const vendorLoginForm = async(e,inputs,setInputsErrors,navigate) => {
     e.preventDefault();
