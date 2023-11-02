@@ -6,7 +6,6 @@ import Login from "./pages/Login/LoginPage";
 import LoginUserState from "./pages/Login/LoginUserState";
 
 const App = () => {
-  // const { token } = useAuth();
   return (
     <Routes>
       {/* <Route path="/" element={<Public />} />
@@ -23,13 +22,18 @@ const App = () => {
       <Route
         path="/*"
         element={
-            <Routes>
-              <Route path="/login" element={<Login/>} />
-              <Route path="/user-state" element={<LoginUserState />} />
-              <Route path="/*" element={
-                <RootLayout><RoutePath /></RootLayout>
-              }/>
-            </Routes>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/user-state" element={<LoginUserState />} />
+            <Route
+              path="/*"
+              element={
+                <RootLayout>
+                  <RoutePath />
+                </RootLayout>
+              }
+            />
+          </Routes>
         }
       />
       {/* )} */}
@@ -38,4 +42,3 @@ const App = () => {
 };
 
 export default App;
-      
