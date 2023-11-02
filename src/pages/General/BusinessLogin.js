@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import LayoutGeneral from "../Common/LayoutGeneral";
 import BusinessForgotPassword from "./BusinessForgotPassword";
 import * as servicesPage from "../../services/vendor/businessServices";
- 
+
 import * as apiService from "../../api/apiServices";
 import LoginUseForm from "../Business/useForm";
 import * as GeneralJS from "./General";
@@ -45,16 +45,16 @@ const LoginPage = () => {
   }, [initState]);
 
   useEffect(() => {
-    GeneralJS.hasJWT(navigate)
+    GeneralJS.hasJWT(navigate);
     GeneralJS.checkRememberMe(setInputs);
   }, []);
 
   const handleChange = (e) => {
-    GeneralJS.handleChange(e,setInputs,setInputsErrors);
-  }
+    GeneralJS.handleChange(e, setInputs, setInputsErrors);
+  };
 
   const handleSubmit = async (e) => {
-    GeneralJS.vendorLoginForm(e,inputs,setInputsErrors,navigate)
+    GeneralJS.vendorLoginForm(e, inputs, setInputsErrors, navigate);
   };
 
   let isValidForm =
@@ -81,7 +81,6 @@ const LoginPage = () => {
                       variant="outlined"
                       defaultValue={inputs.email}
                       onChange={handleChange}
-                      //onBlur={handleBlur}
                       error={inputsErrors.email ? true : false}
                       helperText={inputsErrors.email}
                       autoCapitalize="off"
