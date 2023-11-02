@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500&family=Playfair+Display:wght@500&display=swap');
+
+
+
+.login-main-container {
+    height: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-vendorlogin-content {
+    height: 500px;
+    width: 100%;
+    background-image: url(../../images/abia-vendor-login.webp) ;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.login-vendorlogin-box {
+    position: relative;
+    width: 300px;
+    height: 335px;
+    background-color: #fff;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.login-input-style {
+    position: absolute;
+    width: 100% !important;
+    max-width: 16rem;
+    height: 40px;
+    border-radius: 10px; 
+    border: 1px solid #c3bebe;
+    cursor: pointer;
+    padding-left: 10px;
+    font-size: 14px;
+}
+
+.login-login-button {
+        display: inline-block;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        width: 260px;
+        height: 35px;
+        border-radius: 30px;
+        background-color: #6cc2bc;
+        color: white;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-bottom: 2rem;
+        margin-top: 4rem;
+        outline: none;
+}
+
+.login-community-content {
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-loginbox-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+.login-community-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+
+.login-community-subcontent {
+    font-size: 14px;
+    margin-top: 15px;
+    padding: 1px 15px 1px 30px;
+    text-wrap: wrap;
+    white-space:break-spaces ;
+    align-content: center;
+    text-align-last: center;
+    text-align: center;
+}
+
+.login-apply-button {
+    position: absolute;
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 150px;
+    height: 35px;
+    border-radius: 30px;
+    background-color: #6cc2bc;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    /* margin: 0 auto; */
+}
+
+.login-content-adjust {
+    display: none;
+}
+
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: #000;
+    color: #fff;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+}
+
+.instructions>svg {
+    margin-right: 0.25rem;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+
+@media(width:768px) {
+    .login-community-content {
+        height: 230px;
+    }
+}
+
+@media(width:820px) {
+    .login-community-content {
+        height: 230px;
+    }
+}
+
+@media(min-width:768px) {
+    .login-content-adjust {
+        display: inline-block;
+    }
+
+
+}
+
+@media(min-width:1024px) {
+
+    .login-vendorlogin-content {
+            height: 500px
+        }
+
+    .login-vendorlogin-box {
+            position: relative;
+            margin: auto;
+            width: 450px;
+            height: 400px;
+            background-color: #fff;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* flex-direction: column; */
+            padding: 15px;
+            /* z-index:2; */
+        }
+    .login-community-content {
+        height: 230px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .login-loginbox-header {
+        font-family: 'Playfair Display', serif;
+        font-size: 30px;
+        font-weight: 500;
+        margin-top: 10px;
+    }
+    .login-community-header {
+        font-family: 'Playfair Display', serif;
+        font-size: 26px;
+        font-weight: 500;
+        margin-top: 10px;
+    }
+
+.login-apply-button {
+    position: absolute;
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 150px;
+    height: 35px;
+    border-radius: 30px;
+    background-color: #6cc2bc;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+
+}
+.login-content-adjust {
+    display: inline-block;
+}
+
+
+
+} 
+

@@ -1,0 +1,42 @@
+.cl-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../../../images/register-wedding-vendor3-1.webp);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+.cl-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+
+
+.cl-gap {
+    visibility: hidden;
+}
+
+.cl-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 0.25rem;
+}
+
+@media screen and (min-width:400px) {
+.cl-label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 0.5rem;
+        margin-bottom: 0.25rem;
+    }
+}
+    
