@@ -22,17 +22,17 @@ const LoginPage = () => {
     email: "",
     password: "",
   };
-  const navigate                               = useNavigate();
-  const [user, setUser]                        = useState(null);
-  const [showPassword, setShowPassword]        = useState(false);
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const [apiRequestSuccess, setApiRequestSuccess] = useState(false);
-  const [userStates, setUserStates]            = useState([]);
-  const [errMsg, setErrMsg]                    = useState("");
-  const [token, setToken]                      = useState(null);
-  const [inputs, setInputs]                    = useState({});
-  const [inputsErrors, setInputsErrors]        = useState({});
-  const dashboard                              = "/home";
-  const statelistPage                          = "/user-state";
+  const [userStates, setUserStates] = useState([]);
+  const [errMsg, setErrMsg] = useState("");
+  const [token, setToken] = useState(null);
+  const [inputs, setInputs] = useState({});
+  const [inputsErrors, setInputsErrors] = useState({});
+  const dashboard = "/home";
+  const statelistPage = "/user-state";
   let location = [];
 
   const togglePasswordVisibility = (e) => {
@@ -132,27 +132,27 @@ const LoginPage = () => {
                 <BusinessForgotPassword />
               </div>
             </div>
-            <div className="login-community-content">
-              <h1 className="login-community-header">Join the ABIA Community </h1>
-              <span className="login-community-subcontent">
-                Elevate & promote your wedding brand by joining Australia's{" "}
-                <br className="login-content-adjust" />
-                Largest Wedding Review Platform & Industry Awards.{" "}
-              </span>
-              <div className="lg:block mt-[15px]"></div>
-              <div className="space-y-[35px]">
-                <p className="font-[700] text-[#222222] text-[14px]">
-                  Don't have an ABIA's Vendor Account?
-                </p>
-                <div className="flex justify-center items-center">
-                  <span></span>
-                  <Link className="login-apply-button ">apply here</Link>
-                  <span></span>
-                </div>
-              </div>
-              <br />
+          </div>
+        </div>
+        <div className="login-community-content">
+          <h1 className="login-community-header">Join the ABIA Community </h1>
+          <span className="login-community-subcontent">
+            Elevate & promote your wedding brand by joining Australia's{" "}
+            <br className="login-content-adjust" />
+            Largest Wedding Review Platform & Industry Awards.{" "}
+          </span>
+          <div className="lg:block mt-[15px]"></div>
+          <div className="space-y-[35px]">
+            <p className="font-[700] text-[#222222] text-[14px]">
+              Don't have an ABIA's Vendor Account?
+            </p>
+            <div className="flex justify-center items-center">
+              <span></span>
+              <Link className="login-apply-button ">apply here</Link>
+              <span></span>
             </div>
           </div>
+          <br />
         </div>
       </LayoutGeneral>
     </>
