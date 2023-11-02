@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import "./LoginPage.css";
 import { Link, useNavigate } from "react-router-dom";
 import ForgetPassword from "./ForgetPassword";
+import * as servicesPage from "../../services/vendor/businessServices";
 import * as apiurls from "../../api/apiUrls";
 import * as apiService from "../../api/apiServices";
 import axios from "axios";
@@ -41,7 +42,7 @@ const LoginPage = () => {
     setErrMsg("");
   }, [initState]);
 
-  const submit = async () => {
+  /* const submit = async () => {
     const { email, password } = state;
     if (validateEmail && validatePassword) {
       try {
@@ -84,6 +85,50 @@ const LoginPage = () => {
         }
       }
     }
+  }; */
+  const submit = async () => {
+    const { email, password } = state;
+    let requestData = {
+      email: email,
+      password: password,
+    };
+    if (validateEmail && validatePassword) {
+      await servicesPage.login(requestData).then(function (response) {
+        if (response.statuscode == 200) {
+          const token  =  response.token;
+            localStorage.setItem("vendorToken", JSON.stringify(token));
+            let expiresInMS = token.expires_in;
+            let currentTime = new Date();
+            let expireTime = new Date(currentTime.getTime() + expiresInMS);
+
+            const userStatesData = response.result;
+            const statesLegnth = response.result.length;
+            console.log("State length:", statesLegnth);
+            console.log("State Listed:", userStatesData);
+            setToken(token);
+            console.log(token);
+            setUserStates(userStatesData);
+            setApiRequestSuccess(true);
+
+            localStorage.setItem("vexpireTime", expireTime);
+            localStorage.removeItem("vusername");
+            localStorage.removeItem("vpassword");
+            localStorage.removeItem("vremember_me");
+            /* if (inputs.remember_me && inputs.remember_me !== "") {
+              localStorage.username     = inputs.username;
+              localStorage.password     = inputs.password;
+              localStorage.remember_me  = inputs.remember_me;
+            } */
+            apiService.setAuthToken(token);
+            navigate(statesLegnth <= 1 ? "/home" : "/user-state", {
+              state: { userStatesData },
+            });
+        }else {
+          console.log('error')
+        }
+      });
+    }
+    
   };
   console.log("Toekn generated:", token);
   const { handleChange, handleSubmit, handleBlur, state, errors } =

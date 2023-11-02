@@ -1,5 +1,5 @@
-import * as apiServices from "../../api/apiServices";
-import * as apiUrls from "../../api/apiUrls";
+import * as apiServices from "../../api/apiServices_old";
+import * as apiUrls from "../../api/apiUrls_old";
 
 export async function loginBusiness(postData) {
   return await apiServices.apiCall(apiUrls.BUSINESS_LOGIN, "POST", postData);
