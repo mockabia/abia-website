@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import Dropdown from "../../third-party-packs/dropDown";
 import SingleSelect from "../../third-party-packs/singleSelect";
 import { states } from "../../data/CategoryItems";
-import { BUSINESS_SETTINGS5 } from "../../api/apiUrls";
-import * as apiUrls from "../../api/apiUrls";
+import * as apiurls from "../../api/apiUrls";
 import * as servicesPage from "../../services/vendor/settingsService";
 import axios from "axios";
 import { MenuItem, Select, styled } from "@mui/material";
+export const MAIN_API       = apiurls.BUSINESS_API;
 
 const MenuItemStyle = styled(MenuItem)(({ theme }) => ({
   fontSize: "14px",
@@ -40,7 +40,7 @@ const MyLocation = () => {
   //api
   const fetchRegion = async () => {
     try {
-      const response = await axios.get(apiUrls.REGION_FETCH_API);
+      const response = await axios.get(apiurls.REGION_DROPDOWN);
       if (response.status === 200) {
         const locationTitles = response.data.result;
         setPrimaryLocation(locationTitles);
@@ -66,7 +66,7 @@ const MyLocation = () => {
     };
 
     try {
-      const response = await fetch(BUSINESS_SETTINGS5, {
+      const response = await fetch(MAIN_API['SETTINGS5'], {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

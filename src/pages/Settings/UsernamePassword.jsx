@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./UsernamePassword.css";
-import { BUSINESS_SETTINGS3 } from "../../api/apiUrls";
+import * as apiurls from "../../api/apiUrls";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+export const MAIN_API       = apiurls.BUSINESS_API;
 
 const schema = yup.object().shape({
   email: yup
@@ -49,7 +50,7 @@ const UsernamePassword = ({ vendorDetails }) => {
     };
 
     try {
-      const response = await fetch(BUSINESS_SETTINGS3, {
+      const response = await fetch(MAIN_API['SETTINGS3'], {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
