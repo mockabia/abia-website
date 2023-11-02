@@ -50,7 +50,7 @@ const LoginPage = () => {
   }, []);
 
   const handleChange = (e) => {
-    GeneralJS.handleChange(e);
+    GeneralJS.handleChange(e,setInputs,setInputsErrors);
   }
 
   const handleSubmit = async (e) => {
