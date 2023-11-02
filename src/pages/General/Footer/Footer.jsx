@@ -1,11 +1,12 @@
 import React from "react";
 import "./Footer.css";
 
-import { ReactComponent as FBIcon } from "../../icons/facebook.svg";
-import { ReactComponent as InstaIcon } from "../../icons/instagram.svg";
-import { ReactComponent as PinterestIcon } from "../../icons/pinterest.svg";
+import { ReactComponent as FBIcon } from "../../../icons/facebook.svg";
+import { ReactComponent as InstaIcon } from "../../../icons/instagram.svg";
+import { ReactComponent as PinterestIcon } from "../../../icons/pinterest.svg";
 // import { ReactComponent as AbiaLogo } from "../../abialogo.svg";
-import AbiaLogo from "../../abiaLogo";
+import AbiaLogo from "../../../abiaLogo";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -19,29 +20,45 @@ const Footer = () => {
         <div className="flex justify-between gap-[20px] lg:gap-[35px]">
           <div className="footer-content-1">
             <ul>
-              <div className="footer-text">Wedding Directory</div>
-              <div className="footer-text">Wedding Awards</div>
-              <div className="footer-text">Wedding Reviews</div>
+              <div className="footer-text">
+                <Link to={"/directory"}>Wedding Directory</Link>
+              </div>
+              <div className="footer-text">
+                <Link to={"/awards"}> Wedding Awards</Link>
+              </div>
+              <div className="footer-text">
+                <Link to={"/reviews"}> Wedding Reviews</Link>
+              </div>
             </ul>
           </div>
           <div className="lg:block"></div>
           <div className="lg:block"></div>
           <div className="footer-content-2">
             <ul>
-              <div className="footer-text">About ABIA</div>
-              <div className="footer-text">Contact ABIA</div>
+              <div className="footer-text">
+                <Link to={"/aboutus"}> About ABIA</Link>
+              </div>
+              <div className="footer-text">
+                <Link to={"/contactus"}> Contact ABIA</Link>
+              </div>
             </ul>
           </div>
         </div>
 
         <div className="footer-content-3 ">
-          <div className="footer-text">Terms & Conditions</div>
+          <Link to="/terms-and-conditions" className="footer-text">
+            Terms & Conditions
+          </Link>
           <div className="border h-[20px] text-[#fff]"></div>
           <div className="footer-text">Privacy Policy</div>
         </div>
         <div className="footer-content-3-desktop ">
-          <div className="footer-text">Terms & Conditions</div>
-          <div className="footer-text">Privacy Policy</div>
+          <div className="footer-text">
+            <Link to={"/terms-and-conditions"}>Terms & Conditions</Link>
+          </div>
+          <div className="footer-text">
+            <Link to={"/privacy-policy"}>Privacy Policy</Link>
+          </div>
         </div>
         <div className="footer-social-icon">
           <a href="https://www.facebook.com/" alt="">

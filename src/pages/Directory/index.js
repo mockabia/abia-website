@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import NavBar from "../Login/NavBar";
-import Footer from "../Login/Footer";
 import BreadCrumbs from "./BreadCrumbs";
 import "./style.css";
 import Main from "./Main";
@@ -9,6 +8,7 @@ import CardGrid from "./Cards";
 import { useState } from "react";
 import BottomFilter from "../../components/layouts/BottomFilter";
 import * as servicesPage from "../../services/vendor/signupPageService";
+import Footer from "../General/Footer/Footer";
 
 const Directory = () => {
   const [mainCity, setMainCity] = useState(null);

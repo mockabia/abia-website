@@ -77,18 +77,7 @@
         flex-basis: 250px;
     }
 
-       .login-search-field {
-        /* position: absolute; */
-        /* margin-left: 90vw; */
-    }
-
-    /* .login-logo {
-        position: absolute;
-        width: 90px;
-        margin-left: 5vw;
-        margin-top: 10px;
-    } */
-
+      
     .login-button-group{
         margin-right: 1vw;
         justify-self: end;

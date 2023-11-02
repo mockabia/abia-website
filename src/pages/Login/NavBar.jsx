@@ -91,6 +91,18 @@ const NavBar = () => {
     option.toLowerCase().includes(searchValue.toLowerCase())
   );
 
+  const menuItems = [
+    { to: "/directory", label: "DIRECTORY" },
+    { to: "/wedding-blogs", label: "IDEAS & TOP LISTS" },
+    { to: "/registry", label: "REGISTRY" },
+    { to: "/specials", label: "SPECIALS" },
+    {
+      label: "FEATURED",
+      dropdownItems: ["A", "B", "C", "D", "E"],
+    },
+    { to: "/directory", label: "AWARDS" },
+  ];
+
   return (
     <div>
       <div className="login-navbar-style relative">
@@ -152,15 +164,22 @@ const NavBar = () => {
       {/* Subheaders */}
       <div className="navbar-subhead-large relative">
         <ul className="login-subheaders absolute ">
-          <li className="nav-menu-list ">
-            <Link to={"/directory"}>DIRECTORY</Link>
-          </li>
-          <li className="nav-menu-list ">IDEAS & TOP LISTS</li>
-          <li className="nav-menu-list ">REGISTRY</li>
-          <li className="nav-menu-list ">SPECIALS</li>
-          <li className="nav-menu-list ">FEATURED</li>
-          <li className="nav-menu-list ">AWARDS</li>
-          {/* <div className="subheaders-empty-div"></div> */}
+          {menuItems.map((menuItem, index) => (
+            <li className="nav-menu-list" key={index}>
+              {menuItem.to ? (
+                <Link to={menuItem.to}>{menuItem.label}</Link>
+              ) : (
+                menuItem.label
+              )}
+              {menuItem.dropdownItems && (
+                <ul className="dropdown">
+                  {menuItem.dropdownItems.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
         </ul>
         <div className="login-signup-group">
           <LoginDropdown />
