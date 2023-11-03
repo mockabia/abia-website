@@ -2,38 +2,42 @@ import { get } from "lodash";
 
 //*******************************
 export function validateEmail(email, errors) {
-  let result = true;
+  var result = [];
+  var obj = {};
+  obj["valid"] = true;
 
   if (!email) {
-    errors.email = "Email is Required";
-    result = false;
+    obj["error"] = "Email is Required";
+    obj["valid"] = false;
   } else {
     const re =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    result = re.test(String(email).toLowerCase());
-    if (!result) errors.email = "Invalid Email address";
+    var results = re.test(String(email).toLowerCase());
+    if (!results) {
+      obj["error"] = "Invalid Email address";
+      obj["valid"] = false;
+    }
   }
-  return result;
+  return obj;
 }
 
 // valdate password
-export function validatePassword(pass, errors) {
-  let result = true;
+export function validatePassword(password, errors) {
+  let result = [];
+  var obj = {};
+  obj["valid"] = true;
 
-  if (!pass) {
-    errors.password = "Password is Required";
-    result = false;
+  if (!password) {
+    obj["error"] = "Password is Required";
+    obj["valid"] = false;
   } else {
-    var lower = /(?=.*[a-z])/;
-    result = lower.test(pass);
-
-    if (pass.length < 6) {
-      errors.password = "Your password has less than 6 characters.";
-      result = false;
+    let results = password.length > 6;
+    if (!results) {
+      obj["error"] = "Your password has less than 6 characters.";
+      obj["valid"] = false;
     }
   }
-
-  return result;
+  return obj;
 }
 
 // ******************************
@@ -51,5 +55,33 @@ export const validator = (values, fieldName) => {
   }
   return errors;
 };
-
+export const validateVendorLoginForm = (inputs, setInputsErrors) => {
+  setInputsErrors({});
+  let validate = true;
+  let vaildEmail = validateEmail(inputs["email"], setInputsErrors);
+  if (vaildEmail.valid === false) {
+    validate = false;
+    setInputsErrors((values) => ({
+      ...values,
+      ["email"]: vaildEmail.error,
+    }));
+    const emailInput = document.querySelector('input[name="email"]');
+    if (emailInput) {
+      emailInput.focus();
+    }
+  }
+  let validPassword = validatePassword(inputs["password"], setInputsErrors);
+  if (validPassword.valid === false) {
+    validate = false;
+    setInputsErrors((values) => ({
+      ...values,
+      ["password"]: validPassword.error,
+    }));
+    const passwordInput = document.querySelector('input[name="password"]');
+    if (passwordInput) {
+      passwordInput.focus();
+    }
+  }
+  return validate;
+};
 //**********************************

@@ -23,20 +23,21 @@ export const checkRememberMe = (setInputs) => {
 export const handleChange = (e, setInputs, setInputsErrors) => {
   const name = e.target.name;
   const value = e.target.value;
-  const formData = { [name]: value };
-  const fieldErrors = customValidator.validator(formData, name);
+  // const formData = { [name]: value };
+  // const fieldErrors = customValidator.validator(formData, name);
   setInputs((values) => ({ ...values, [name]: value }));
   setInputsErrors({});
 
-  if (Object.values(fieldErrors).length > 0) {
-    setInputsErrors((prevErrors) => ({ ...prevErrors, ...fieldErrors }));
-  }
+  // if (Object.values(fieldErrors).length > 0) {
+  //   setInputsErrors((prevErrors) => ({ ...prevErrors, ...fieldErrors }));
+  // }
 };
 
 export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
   e.preventDefault();
   let requestData = inputs;
-  if (customValidator.validateEmail && customValidator.validatePassword) {
+  //if (customValidator.validateEmail && customValidator.validatePassword) {
+  if (customValidator.validateVendorLoginForm(inputs, setInputsErrors)) {
     await servicesPage.login(requestData).then(function (response) {
       if (response.statuscode == 200) {
         const token = response.token;

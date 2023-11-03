@@ -12,10 +12,7 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 const LoginPage = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [inputs, setInputs] = useState({
-    email: "",
-    password: "",
-  });
+  const [inputs, setInputs] = useState({});
   const [inputsErrors, setInputsErrors] = useState({});
   const dashboard = "/home";
   const statelistPage = "/user-state";
@@ -37,12 +34,7 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const errors = GeneralJS.validateForm(inputs); // Validate the form inputs
-    if (Object.values(errors).some((error) => error !== "")) {
-      setInputsErrors(errors);
-    } else {
-      GeneralJS.vendorLoginForm(e, inputs, setInputsErrors, navigate);
-    }
+    GeneralJS.vendorLoginForm(e, inputs, setInputsErrors, navigate);
   };
 
   let isValidForm =
