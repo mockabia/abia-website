@@ -26,3 +26,7 @@ export async function logout() {
 export async function refresh() {
   return await apiService.apiCall(MAIN_API['REFRESH'], "POST");
 }
+
+export async function forgot(postData) {
+  return await apiService.apiCall(MAIN_API["FORGOT"], "POST", postData);
+}

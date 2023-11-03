@@ -3,31 +3,15 @@ import "../Style/BusinessLogin.css";
 import { Link, useNavigate } from "react-router-dom";
 import LayoutGeneral from "../Common/LayoutGeneral";
 import BusinessForgotPassword from "./BusinessForgotPassword";
-import * as servicesPage from "../../services/vendor/businessServices";
-
-import * as apiService from "../../api/apiServices";
 import * as GeneralJS from "./General";
 import { IconButton, Stack } from "@mui/material";
-import {
-  ForgetBox,
-  VLTextField,
-  VendorLoginButton,
-} from "../../components/FormStyle";
+import { VLTextField, VendorLoginButton } from "../../components/FormStyle";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 const LoginPage = () => {
-  const initState = {
-    email: "",
-    password: "",
-  };
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
-  const [apiRequestSuccess, setApiRequestSuccess] = useState(false);
-  const [userStates, setUserStates] = useState([]);
-  const [errMsg, setErrMsg] = useState("");
-  const [token, setToken] = useState(null);
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
@@ -43,10 +27,6 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    setErrMsg("");
-  }, [initState]);
-
-  useEffect(() => {
     GeneralJS.hasJWT(navigate);
     GeneralJS.checkRememberMe(setInputs);
   }, []);
@@ -55,9 +35,6 @@ const LoginPage = () => {
     GeneralJS.handleChange(e, setInputs, setInputsErrors);
   };
 
-  // const handleSubmit = async (e) => {
-  //   GeneralJS.vendorLoginForm(e, inputs, setInputsErrors, navigate);
-  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = GeneralJS.validateForm(inputs); // Validate the form inputs
@@ -128,7 +105,6 @@ const LoginPage = () => {
                       }}
                     />
                   </div>
-
                   <div className="flex flex-col ">
                     <VendorLoginButton disabled={!isValidForm} type="submit">
                       <span>Login</span>

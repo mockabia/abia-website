@@ -14,48 +14,65 @@ import { Stack } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 import * as apiurls from "../../api/apiUrls_old";
+import * as GeneralJS from "./General";
 
 const ForgetPassword = () => {
   const [open, setOpen] = React.useState(false);
-  const [userEmail, setUserEmail] = useState("");
-  const [errors, setErrors] = useState({ userEmail: "" });
+  const [inputs, setInputs] = useState({});
+  const [inputsErrors, setInputsErrors] = useState({});
 
   const handleOpen = () => setOpen(true);
 
   const handleClose = () => {
     setOpen(false);
+    setInputs({});
+    setInputsErrors({});
   };
 
-  const validateForgotEmail = (userEmail) => {
-    const re =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(userEmail).toLowerCase());
+  const handleChange = (e) => {
+    GeneralJS.handleChange(e, setInputs, setInputsErrors);
   };
 
-  const handleSubmit = async () => {
-    if (!userEmail) {
-      setErrors({ userEmail: "Email is Required" });
-    } else if (!validateForgotEmail(userEmail)) {
-      setErrors({ userEmail: "Invalid Email address" });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const errors = GeneralJS.validateForm(inputs); // Validate the form inputs
+    if (Object.values(errors).some((error) => error !== "")) {
+      setInputsErrors(errors);
     } else {
-      try {
-        const response = await axios.post(apiurls.BUSINESS_FORGOT, {
-          useremail: userEmail,
-        });
-        if (response.status === 200) {
-          console.log("Password reset successful:", response.data);
-          setOpen(false);
-        } else {
-          console.log(
-            "Failed to reset password. Status code:",
-            response.status
-          );
-        }
-      } catch (error) {
-        console.error("Error resetting password:", error);
-      }
+      GeneralJS.vendorLoginForm(e, inputs, setInputsErrors);
     }
   };
+
+  // const validateForgotEmail = (userEmail) => {
+  //   const re =
+  //     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  //   return re.test(String(userEmail).toLowerCase());
+  // };
+
+  // const handleSubmit = async () => {
+  //   if (!userEmail) {
+  //     setErrors({ userEmail: "Email is Required" });
+  //   } else if (!validateForgotEmail(userEmail)) {
+  //     setErrors({ userEmail: "Invalid Email address" });
+  //   } else {
+  //     try {
+  //       const response = await axios.post(apiurls.BUSINESS_FORGOT, {
+  //         useremail: userEmail,
+  //       });
+  //       if (response.status === 200) {
+  //         console.log("Password reset successful:", response.data);
+  //         setOpen(false);
+  //       } else {
+  //         console.log(
+  //           "Failed to reset password. Status code:",
+  //           response.status
+  //         );
+  //       }
+  //     } catch (error) {
+  //       console.error("Error resetting password:", error);
+  //     }
+  //   }
+  // };
 
   return (
     <div>
@@ -92,7 +109,7 @@ const ForgetPassword = () => {
             </IconButton>
           </Box>
           <form>
-            <h3 className="form-header">Forgot Password. ?</h3>
+            <h3 className="flex justify-center">Forgot Password. ?</h3>
             <p className="flex justify-center">
               You can reset your password here.
             </p>
@@ -101,6 +118,10 @@ const ForgetPassword = () => {
                 label="Enter your Email"
                 id="email"
                 name="email"
+                value={inputs.email}
+                onChange={handleChange}
+                error={inputsErrors.email ? true : false}
+                helperText={inputsErrors.password}
                 sx={{ width: "100%" }}
                 InputProps={{
                   startAdornment: (
@@ -115,13 +136,12 @@ const ForgetPassword = () => {
                     </InputAdornment>
                   ),
                 }}
-                value={userEmail}
-                onChange={(e) => {
-                  setUserEmail(e.target.value);
-                  setErrors({ userEmail: "" }); // Clear the error when the input changes
-                }}
-                error={!!errors.userEmail} 
-                helperText={errors.userEmail} // Display the helper text
+                // onChange={(e) => {
+                //   setUserEmail(e.target.value);
+                //   setErrors({ userEmail: "" }); // Clear the error when the input changes
+                // }}
+                // error={!!errors.userEmail}
+                // helperText={errors.userEmail} // Display the helper text
               />
               <Button
                 // type="submit"

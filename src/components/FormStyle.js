@@ -100,14 +100,14 @@ export const ForgetBox = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "100%",
-  maxWidth: "27rem",
+  maxWidth: "29rem",
   height: "auto",
   bgcolor: "#fff",
   border: "1px solid #949494",
   borderRadius: "1rem",
-  p: 4,
-  "@media (max-width: 600px)": {
-    width: "18rem",
+  padding:"3rem",
+  "@media (max-width: 1024px)": {
+    width: "20rem",
   },
 };
 
@@ -521,8 +521,7 @@ export const CLLoginStyle = styled(Button)(({ theme }) => ({
 
 // Vendor Login
 export const VLTextField = styled(TextField)(({ theme }) => ({
-  "& .MuiFormControl-root ": {
-    position: "absolute",
+  "& .MuiOutlinedInput-root ": {
     width: " 100% ",
     maxWidth: "17rem",
     height: "45px",
@@ -536,7 +535,7 @@ export const VLTextField = styled(TextField)(({ theme }) => ({
 
   "& .MuiFormHelperText-root": {
     color: "red",
-    marginLeft: "0rem",
+    marginLeft: "0rem ",
   },
 }));
 
