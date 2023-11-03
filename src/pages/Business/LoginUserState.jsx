@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "./NavBar";
-import Footer from "./Footer";
 
 import {
   Box,
@@ -12,6 +10,7 @@ import {
 } from "@mui/material";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import "../Style/LoginUserState.css";
+import LayoutGeneral from "../Common/LayoutGeneral";
 
 const LoginUserState = () => {
   const location = useLocation();
@@ -28,44 +27,46 @@ const LoginUserState = () => {
     navigate("/home");
   };
 
-  // console.log("Selected state:", selectedState);
+  console.log("User states:", userStatesData);
 
   return (
-    <main className="h-[100%] flex flex-col overflow-y-auto">
-      <NavBar className="" />
-      <section className="login-main-container">
-        <div className="login-vendorlogin-content relative">
-          <div className="login-vendorlogin-box">
-            <div className="flex flex-col justify-center items-center p-[20px] relative">
-              <h1 className="login-loginbox-header">Welcome</h1>
-              <Stack spacing={2}>
-                <div className="flex flex-col justify-center items-center ">
-                  <Box component="form" noValidate autoComplete="off">
-                    <p className="flex justify-center">
-                      Select your respective State.
-                    </p>
-                    <div className="mt-[1rem]">
-                      <ul>
-                        {userStatesData.map((state) => (
-                          <li
-                            key={state.stateid}
-                            onClick={() => handleStateSubmit(state.stateid)}
-                            className="selectedStyled"
-                          >
-                            {state.statetitle}
-                          </li>
-                        ))}
-                      </ul>
+    <>
+      <LayoutGeneral>
+        <main className="h-[100%] flex flex-col overflow-y-auto">
+          <section className="login-main-container">
+            <div className="login-vendorlogin-content relative">
+              <div className="login-vendorlogin-box">
+                <div className="flex flex-col justify-center items-center p-[20px] relative">
+                  <h1 className="login-loginbox-header">Welcome</h1>
+                  <Stack spacing={2}>
+                    <div className="flex flex-col justify-center items-center ">
+                      <Box component="form" noValidate autoComplete="off">
+                        <p className="flex justify-center">
+                          Select your respective State.
+                        </p>
+                        <div className="mt-[1rem]">
+                          <ul>
+                            {userStatesData.map((state) => (
+                              <li
+                                key={state.stateid}
+                                onClick={() => handleStateSubmit(state.stateid)}
+                                className="selectedStyled"
+                              >
+                                {state.statetitle}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </Box>
                     </div>
-                  </Box>
+                  </Stack>
                 </div>
-              </Stack>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
-      <Footer />
-    </main>
+          </section>
+        </main>
+      </LayoutGeneral>
+    </>
   );
 };
 

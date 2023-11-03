@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import RouteGuard from "./RouteGuard"
+import RouteGuard from "./RouteGuard";
 //history
 //import { history } from '../helpers/history';
 
 import BusinessProfile from "../pages/Business/BusinessProfile";
+import LoginUserState from "../pages/Business/LoginUserState";
 
 /*import Login from "./pages/Login/LoginPage";
 import Public from "./pages/Public";
@@ -29,24 +30,28 @@ import Home from "./pages/Dashboard/Home";
 import Directory from "./pages/Directory/index";
 import CoupleSignUp from "./pages/Couples/Signup/index";
 import CouplesLogin from "./pages/Couples/Login/index";
-import LoginUserState from "./pages/Login/LoginUserState";
 import { useAuth } from "./context/AuthProvider";*/
 
 function hasJWT() {
   let flag = false;
   //check user has JWT token
-  localStorage.getItem("vendorToken") ? flag=true : flag=false
-  return flag
+  localStorage.getItem("vendorToken") ? (flag = true) : (flag = false);
+  return flag;
 }
 const RoutePaths = (props) => {
-
-    return (
-      <>
-        <Routes>
-
-          <Route path="/my-profile" element={<RouteGuard {...props}  Component={BusinessProfile}/>} />
-        </Routes>
-      </>
-    );
-  }
-export default RoutePaths
+  return (
+    <>
+      <Routes>
+        <Route
+          path="/my-profile"
+          element={<RouteGuard {...props} Component={BusinessProfile} />}
+        />
+        <Route
+          path="/user-state"
+          element={<RouteGuard {...props} Component={LoginUserState} />}
+        />
+      </Routes>
+    </>
+  );
+};
+export default RoutePaths;

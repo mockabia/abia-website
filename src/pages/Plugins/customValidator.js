@@ -31,7 +31,7 @@ export function validatePassword(password, errors) {
     obj["error"] = "Password is Required";
     obj["valid"] = false;
   } else {
-    let results = password.length > 6;
+    let results = password.length >= 6;
     if (!results) {
       obj["error"] = "Your password has less than 6 characters.";
       obj["valid"] = false;

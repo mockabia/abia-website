@@ -66,11 +66,9 @@ export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
               localStorage.vremember_me  = inputs.remember_me;
             } */
           apiService.setAuthToken(token);
-          navigate(vendordashboard);
+          navigate("/home");
         } else {
-          navigate(vendorstatelistPage, {
-            state: { userStatesData },
-          });
+          navigate("/user-state");
         }
       } else {
         setInputsErrors(response.errors);
@@ -107,7 +105,7 @@ export const vendorForgot = async (e, inputs, setInputsErrors, navigate) => {
         //setUserStates(userStatesData);
         //setApiRequestSuccess(true);
 
-        if (statesLegnth <= 1) {
+        if (statesLegnth) {
           localStorage.setItem("vendorToken", JSON.stringify(token));
           let expiresInMS = token.expires_in;
           let currentTime = new Date();
@@ -123,9 +121,7 @@ export const vendorForgot = async (e, inputs, setInputsErrors, navigate) => {
               localStorage.vremember_me  = inputs.remember_me;
             } */
           apiService.setAuthToken(token);
-          navigate(vendordashboard);
-        } else {
-          navigate(vendorstatelistPage, {
+          navigate(statesLegnth <= 1 ? "/home" : "/user-state", {
             state: { userStatesData },
           });
         }
