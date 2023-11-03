@@ -105,7 +105,7 @@ export const vendorForgot = async (e, inputs, setInputsErrors, navigate) => {
         //setUserStates(userStatesData);
         //setApiRequestSuccess(true);
 
-        if (statesLegnth >= 1) {
+        if (statesLegnth == 1) {
           localStorage.setItem("vendorToken", JSON.stringify(token));
           let expiresInMS = token.expires_in;
           let currentTime = new Date();
