@@ -105,7 +105,7 @@ export const vendorForgot = async (e, inputs, setInputsErrors, navigate) => {
         //setUserStates(userStatesData);
         //setApiRequestSuccess(true);
 
-        if (statesLegnth) {
+        if (statesLegnth >= 1) {
           localStorage.setItem("vendorToken", JSON.stringify(token));
           let expiresInMS = token.expires_in;
           let currentTime = new Date();
@@ -121,7 +121,9 @@ export const vendorForgot = async (e, inputs, setInputsErrors, navigate) => {
               localStorage.vremember_me  = inputs.remember_me;
             } */
           apiService.setAuthToken(token);
-          navigate(statesLegnth <= 1 ? "/home" : "/user-state", {
+          navigate(vendordashboard);
+        } else {
+          navigate(vendorstatelistPage, {
             state: { userStatesData },
           });
         }
