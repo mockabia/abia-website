@@ -10,13 +10,10 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
+  const navigate                        = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs]             = useState({});
   const [inputsErrors, setInputsErrors] = useState({});
-  const dashboard = "/home";
-  const statelistPage = "/user-state";
-  let location = [];
 
   const togglePasswordVisibility = (e) => {
     e.preventDefault();
