@@ -43,19 +43,12 @@ const RoutePaths = (props) => {
     <>
       <Routes>
         <Route
-          path="/business*"
-          element={
-            <Routes>
-              <Route
-                path="/home"
-                element={<RouteGuard {...props} Component={Dashboard} />}
-              />
-              <Route
-                path="/my-profile"
-                element={<RouteGuard {...props} Component={BusinessProfile} />}
-              />
-            </Routes>
-          }
+          path="/home"
+          element={<RouteGuard {...props} Component={Dashboard} />}
+        />
+        <Route
+          path="/my-profile"
+          element={<RouteGuard {...props} Component={BusinessProfile} />}
         />
       </Routes>
     </>
