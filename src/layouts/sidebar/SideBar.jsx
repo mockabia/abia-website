@@ -3,15 +3,6 @@ import { useRef } from "react";
 import SubMenu from "./SubMenu";
 import { motion } from "framer-motion";
 
-// * React icons
-import { IoIosArrowBack } from "react-icons/io";
-import { SlSettings } from "react-icons/sl";
-import { AiOutlineAppstore } from "react-icons/ai";
-import { BsPerson } from "react-icons/bs";
-import { HiOutlineDatabase } from "react-icons/hi";
-import { TbReportAnalytics } from "react-icons/tb";
-import { FaCrown } from "react-icons/fa";
-import { MdOutlineMail } from "react-icons/md";
 import { useMediaQuery } from "react-responsive";
 import { MdMenu } from "react-icons/md";
 import GetReview from "../../icons/getReview"; //get review
@@ -26,11 +17,7 @@ import { ReactComponent as EnquiryIcon } from "../../icons/enquiries.svg";
 import { ReactComponent as SettingsIcons } from "../../icons/settings.svg";
 import { ReactComponent as MyProfileIcon } from "../../icons/my-profile.svg";
 
-// import { ReactComponent as AbiaLogo } from "../../ABIA-White-Logo-gold-crown (1).svg";
-
 import { Link, NavLink, useLocation, useRoutes } from "react-router-dom";
-
-//import upgradeNow from "../../pages/upgradeNow";
 
 //css
 import "./sideBar.css";

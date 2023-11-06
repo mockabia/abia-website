@@ -9,7 +9,7 @@ function RootLayout({ children, title }) {
       <div className="flex flex-1">
         <SideBar />
         <main className="rootLayout">
-          {/* ax-w-full flex-1 mt-[7rem] ml-[300px] */}
+      
           
           {children}
         </main>
