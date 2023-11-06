@@ -5,7 +5,7 @@ import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import "../Style/GeneralDirectory.css";
+import "../../Style/GeneralDirectory.css";
 
 function handleClick(event) {
   event.preventDefault();

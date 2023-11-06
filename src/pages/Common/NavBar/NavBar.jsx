@@ -1,16 +1,16 @@
 import React from "react";
 import { useState } from "react";
-import "../Style/NavBar.css";
+import "../../Style/NavBar.css";
 
-import AbiaLogo from "../../abiaLogo";
+import AbiaLogo from "../../../abiaLogo";
 
-import SingleSelect from "../../third-party-packs/singleSelect";
-import LoginDropdown from "../../components/Login and Signup/LoginDropdown";
-import SignUpDropDown from "../../components/Login and Signup/SignUpDropDown";
-import SearchBarLogin from "../../components/SearchBarLogin";
-import MenuItems from "../../components/Login and Signup/MenuItems";
+import SingleSelect from "../../../third-party-packs/singleSelect";
+import LoginDropdown from "../../../components/Login and Signup/LoginDropdown";
+import SignUpDropDown from "../../../components/Login and Signup/SignUpDropDown";
+import SearchBarLogin from "../../../components/SearchBarLogin";
+import MenuItems from "../../../components/Login and Signup/MenuItems";
 import { FiSearch } from "react-icons/fi";
-import Asynchronous, { AsyncSearch } from "../../components/AsyncSearch";
+import Asynchronous, { AsyncSearch } from "../../../components/AsyncSearch";
 import {
   TextField,
   Popper,
@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 
 import { Link } from "react-router-dom";
-import UseAutocomplete from "../../components/AsyncSearch";
+import UseAutocomplete from "../../../components/AsyncSearch";
 import styled from "@emotion/styled";
 
 const NavBar = () => {
@@ -91,6 +91,16 @@ const NavBar = () => {
     option.toLowerCase().includes(searchValue.toLowerCase())
   );
 
+  const menuItems = [
+    { to: "/directory", label: "DIRECTORY" },
+    { to: "/wedding-blogs", label: "IDEAS & TOP LISTS" },
+    { to: "/registry", label: "REGISTRY" },
+    { to: "/specials", label: "SPECIALS" },
+    { to: "/featured", label: "FEATURED" },
+
+    { to: "/directory", label: "AWARDS" },
+  ];
+
   return (
     <div>
       <div className="login-navbar-style relative">
@@ -152,15 +162,11 @@ const NavBar = () => {
       {/* Subheaders */}
       <div className="navbar-subhead-large relative">
         <ul className="login-subheaders absolute ">
-          <li className="nav-menu-list ">
-            <Link to={"/directory"}>DIRECTORY</Link>
-          </li>
-          <li className="nav-menu-list ">IDEAS & TOP LISTS</li>
-          <li className="nav-menu-list ">REGISTRY</li>
-          <li className="nav-menu-list ">SPECIALS</li>
-          <li className="nav-menu-list ">FEATURED</li>
-          <li className="nav-menu-list ">AWARDS</li>
-          {/* <div className="subheaders-empty-div"></div> */}
+          {menuItems.map((menuItem, index) => (
+            <li className="nav-menu-list" key={index}>
+              <Link to={menuItem.to}>{menuItem.label}</Link>
+            </li>
+          ))}
         </ul>
         <div className="login-signup-group">
           <LoginDropdown />
