@@ -66,16 +66,45 @@ export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
               localStorage.vpassword     = inputs.password;
               localStorage.vremember_me  = inputs.remember_me;
             } */
-          apiService.setAuthToken(token);
-          navigate("/home");
-        } else {
-          navigate("/user-state");
-        }
+            apiService.setAuthToken(token);
+            navigate(vendordashboard);
+          } else {
+            navigate(vendorstatelistPage, {
+              state: { userStatesData, token: token , email: inputs.email ,}
+            });
+          }
       } else {
         setInputsErrors(response.errors);
       }
     });
   }
+};
+
+export const vendorLoginStateForm = async (e, inputs, navigate) => {
+  e.preventDefault();
+  let requestData = inputs;
+    await servicesPage.loginStates(requestData).then(function (response) {
+      if (response.statuscode == 200) {
+        const token = response.token;
+
+        localStorage.setItem("vendorToken", JSON.stringify(token));
+        let expiresInMS = token.expires_in;
+        let currentTime = new Date();
+        let expireTime = new Date(currentTime.getTime() + expiresInMS);
+
+        localStorage.setItem("vexpireTime", expireTime);
+        localStorage.removeItem("vusername");
+        localStorage.removeItem("vpassword");
+        localStorage.removeItem("vremember_me");
+        /* if (inputs.remember_me && inputs.remember_me !== "") {
+            localStorage.vusername     = inputs.username;
+            localStorage.vpassword     = inputs.password;
+            localStorage.vremember_me  = inputs.remember_me;
+          } */
+          apiService.setAuthToken(token);
+          navigate(vendordashboard);
+        }
+    });
 };
 export const logout = async (navigate) => {
   await servicesPage.logout().then(function (response) {
