@@ -69,36 +69,36 @@ const Sidebar = () => {
 
   const Nav_animation = isTabletMid
     ? {
-        open: {
-          x: 0,
-          width: "16rem",
-          transition: {
-            damping: 40,
-          },
+      open: {
+        x: 0,
+        width: "16rem",
+        transition: {
+          damping: 40,
         },
-        closed: {
-          x: -250,
-          width: 0,
-          transition: {
-            damping: 40,
-            delay: 0.15,
-          },
+      },
+      closed: {
+        x: -250,
+        width: 0,
+        transition: {
+          damping: 40,
+          delay: 0.15,
         },
-      }
+      },
+    }
     : {
-        open: {
-          width: "16rem",
-          transition: {
-            damping: 40,
-          },
+      open: {
+        width: "16rem",
+        transition: {
+          damping: 40,
         },
-        closed: {
-          width: "4rem",
-          transition: {
-            damping: 40,
-          },
+      },
+      closed: {
+        width: "4rem",
+        transition: {
+          damping: 40,
         },
-      };
+      },
+    };
 
   const subMenusList = [
     {
@@ -117,9 +117,8 @@ const Sidebar = () => {
     <div>
       <div
         onClick={() => setOpen(false)}
-        className={`md:hidden fixed inset-0 max-h-screen z-60 bg-black/50 ${
-          open ? "block" : "hidden"
-        } `}
+        className={`md:hidden fixed inset-0 max-h-screen z-60 bg-black/50 ${open ? "block" : "hidden"
+          } `}
       ></div>
       <motion.div
         ref={sidebarRef}
@@ -198,9 +197,8 @@ const Sidebar = () => {
               >
                 <div className="flex gap-5 ml-5">
                   <Promotions
-                    className={`mt-[1px] w-[18px] h-[18px] fill-current ${
-                      isActive ? "text-[#000]" : "text-[#fff]"
-                    } `}
+                    className={`mt-[1px] w-[18px] h-[18px] fill-current ${isActive ? "text-[#000]" : "text-[#fff]"
+                      } `}
                   />
                   Promotions
                 </div>
@@ -269,6 +267,24 @@ const Sidebar = () => {
               </NavLink>
             </li>
           </ul>
+
+          <ul>
+            {Object.values(reactUrls.BUSINESS_MENU).map((MainMenu, i) =>
+              <>
+              {MainMenu.menu!==false ? <li><NavLink
+                to={MainMenu.path}
+                className="link sidebarMenuItem"
+                activeClassName="active"
+              >
+                <div className="flex gap-5 ml-5">
+                  <SettingsIcons className="mt-[2px] w-[18px] h-[18px] fill-current text-[#fff]" />
+                  {MainMenu.text}
+                </div>
+              </NavLink></li> : ''}
+              </>
+            )}
+          </ul>
+
           <div className="mt-[30px] ml-[30px]">
             <div className="space-y-3">
               <div className="mb-2">

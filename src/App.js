@@ -6,27 +6,27 @@ import BusinessLogin from "./pages/General/BusinessLogin";
 import BusinessSignup from "./pages/General/BusinessSignup";
 import BusinessLoginState from "./pages/General/BusinessLoginState";
 import Public from "./pages/General/Public";
-import Directory from "./pages/General/GeneralDirecttory/Directory.js";
+import Directory from "./pages/General/GeneralDirectory/Directory.js";
 import Registry from "./pages/Common/NavBar/Registry.js";
 const App = () => {
   // const { token } = useAuth();
   return (
     <Routes>
-      {/* <Route path="/" element={<Public />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Public />} />
+      {/* <Route path="/login" element={<Login />} />
       <Route path="/user-state" element={<LoginUserState />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/directory" element={<Directory />} />
       <Route path="/wedding-signup" element={<CoupleSignUp />} />
-      <Route path="/wedding-login" element={<CouplesLogin />} /> */}
+      <Route path="/wedding-login" element={<CouplesLogin />} />
 
       <Route path="/" element={<Public />} />
       <Route path="/directory" element={<Directory />} />
-      <Route path="/registry" element={<Registry />} />
+      <Route path="/registry" element={<Registry />} /> */}
 
       {/* BUSINESS */}
       <Route
-        path="/business*"
+        path="/business/*"
         element={
           <Routes>
             <Route path="/login" element={<BusinessLogin />} />
@@ -36,9 +36,7 @@ const App = () => {
             <Route
               path="/*"
               element={
-                <RootLayout>
                   <RoutePath />
-                </RootLayout>
               }
             />
           </Routes>

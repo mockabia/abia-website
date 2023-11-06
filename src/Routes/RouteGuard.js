@@ -14,7 +14,7 @@ const RouteGuard = (props) => {
         {hasJWT() ?
             <props.Component {...props} />
         :
-            <Navigate to='/login' />
+            <Navigate to='/business/login' />
         }
         </>
    );
