@@ -6,7 +6,6 @@ import BusinessLogin from "./pages/General/BusinessLogin";
 import BusinessSignup from "./pages/General/BusinessSignup";
 import BusinessLoginState from "./pages/General/BusinessLoginState";
 import Public from "./pages/General/Public";
-import Dashboard from "./pages/Business/Dashboard";
 const App = () => {
   // const { token } = useAuth();
   return (
@@ -19,19 +18,17 @@ const App = () => {
       <Route path="/wedding-signup" element={<CoupleSignUp />} />
       <Route path="/wedding-login" element={<CouplesLogin />} /> */}
 
-      {/* Protected */}
-      {/* The links of the Dashboard which has common Rootlayout */}
-      {/* {token && ( */}
       <Route path="/" element={<Public />} />
-      <Route path="/signup" element={<BusinessSignup />} />
+      {/* BUSINESS */}
       <Route
-        path="/*"
+        path="/business*"
         element={
           <Routes>
             <Route path="/login" element={<BusinessLogin />} />
+            <Route path="/signup" element={<BusinessSignup />} />
+
             <Route path="/user-state" element={<BusinessLoginState />} />
-            <Route path="/home" element={<Dashboard />} />
-            {/* <Route path="/user-state" element={<BusinessLoginState />} /> */}
+
             <Route
               path="/*"
               element={
@@ -43,7 +40,6 @@ const App = () => {
           </Routes>
         }
       />
-      {/* )} */}
     </Routes>
   );
 };

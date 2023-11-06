@@ -16,7 +16,7 @@ const SignUpDropDown = () => {
     },
     {
       title: "Vendor",
-      path: "/signup",
+      path: "/business/signup",
     },
   ];
 
