@@ -1,16 +1,14 @@
 import * as apiService from "../../api/apiServices";
+import * as reactUrls from "../../api/reactUrls";
 import * as servicesPage from "../../services/vendor/businessServices";
 import * as customValidator from "../Plugins/customValidator";
 
-const vendordashboard = "/business/home";
-const vendorstatelistPage = "/business/user-state";
-const vendorLogin = "/login";
 
 export const hasJWT = async (navigate) => {
   let flag = false;
   localStorage.getItem("vendorToken") ? (flag = true) : (flag = false);
   if (flag == true) {
-    navigate(vendordashboard);
+    navigate(reactUrls.BUSINESS_MENU['DASHBOARD'].path);
   }
 };
 
@@ -66,13 +64,13 @@ export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
               localStorage.vpassword     = inputs.password;
               localStorage.vremember_me  = inputs.remember_me;
             } */
-          apiService.setAuthToken(token);
-          navigate(vendordashboard);
-        } else {
-          navigate(vendorstatelistPage, {
-            state: { userStatesData, token: token, email: inputs.email },
-          });
-        }
+            apiService.setAuthToken(token);
+            navigate(reactUrls.BUSINESS_MENU['DASHBOARD'].path);
+          } else {
+            navigate(reactUrls.BUSINESS_MENU['USER_STATE'].path, {
+              state: { userStatesData, token: token , email: inputs.email ,}
+            });
+          }
       } else {
         setInputsErrors(response.errors);
       }
@@ -101,10 +99,10 @@ export const vendorLoginStateForm = async (e, inputs, navigate) => {
             localStorage.vpassword     = inputs.password;
             localStorage.vremember_me  = inputs.remember_me;
           } */
-      apiService.setAuthToken(token);
-      navigate(vendordashboard);
-    }
-  });
+          apiService.setAuthToken(token);
+          navigate(reactUrls.BUSINESS_MENU['DASHBOARD'].path);
+        }
+    });
 };
 export const logout = async (navigate) => {
   await servicesPage.logout().then(function (response) {
@@ -113,7 +111,7 @@ export const logout = async (navigate) => {
         apiService.setAuthToken(null);
         localStorage.removeItem("vendorToken");
         localStorage.removeItem("user");
-        navigate(vendorLogin);
+        navigate(reactUrls.BUSINESS_MENU['LOGIN'].path);
       }
     }
   });
@@ -151,9 +149,9 @@ export const vendorForgot = async (e, inputs, setInputsErrors, navigate) => {
               localStorage.vremember_me  = inputs.remember_me;
             } */
           apiService.setAuthToken(token);
-          navigate(vendordashboard);
+          navigate(reactUrls.BUSINESS_MENU['DASHBOARD'].path);
         } else {
-          navigate(vendorstatelistPage, {
+          navigate(reactUrls.BUSINESS_MENU['USER_STATE'].path, {
             state: { userStatesData },
           });
         }

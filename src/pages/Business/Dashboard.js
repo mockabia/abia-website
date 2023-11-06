@@ -1,13 +1,11 @@
 import React, { useContext, useState } from "react";
-import TopBar from "../../layouts/sidebar/TopBar";
+import LayoutVendor from "../Common/LayoutVendor";
 
 const Home = () => {
-  return (
-    <>
-      <TopBar title={`Welcome `} />
-      {/* ${auth.email} */}
-
+  return (<>
+      <LayoutVendor>
       <div>Vendor Home Page </div>
+      </LayoutVendor>
     </>
   );
 };

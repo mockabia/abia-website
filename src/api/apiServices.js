@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as loginServices from "../services/vendor/businessServices";
+import * as reactUrls from "../api/reactUrls";
 
 //import {store} from '../appState/store';
 export const setAuthToken = token => {
@@ -15,19 +16,19 @@ export async function apiCall(url, method, data) {
   if(token!== undefined && token!== 'undefined'){
     token           = JSON.parse(token);
     let userSession = (token && token.user) ? token.user : null;
-    let userId      = (userSession && userSession.admin_id) ? userSession.admin_id : null;
+    let userId      = (userSession && userSession.id) ? userSession.id : null;
     let accessToken = (userSession && token) ? token.access_token  : null;
     const headers = userId
       ? {
           "Content-Type": "application/json",
           api_key: process.env.REACT_APP_API_KEY,
-          authorization: `Bearer ${accessToken}`,
+          //authorization: `Bearer ${accessToken}`,
           "X-Request-ID": userId,
         }
       : {
           "Content-Type": "application/json",
           api_key: process.env.REACT_APP_API_KEY,
-          authorization: `Bearer ${accessToken}`,
+          //authorization: `Bearer ${accessToken}`,
         };
     
 
@@ -49,7 +50,7 @@ export async function apiCall(url, method, data) {
     setAuthToken(null);
     localStorage.removeItem("vendorToken");
     localStorage.removeItem("vuser");
-    window.location = process.env.REACT_APP_URL+'/login';
+    window.location = reactUrls.BUSINESS_MENU['LOGIN'].path;
   }
 }
 export async function refreshToken() {
