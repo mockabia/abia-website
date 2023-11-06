@@ -13,6 +13,7 @@ export const hasJWT = async (navigate) => {
     navigate(vendordashboard);
   }
 };
+
 export const checkRememberMe = (setInputs) => {
   setInputs({
     ["username"]: localStorage.vusername,
