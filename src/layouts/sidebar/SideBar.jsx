@@ -139,7 +139,7 @@ const Sidebar = () => {
           <ul className="overflow-auto pl-[28px] text-[0.9rem] py-[32px] flex flex-col gap-2  overflow-x-hidden scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100   md:h-[68%] h-[70%]  ">
             <li>
               <NavLink
-                to={"/home"}
+                to={"/business/home"}
                 className="link sidebarMenuItem"
                 activeClassName="active"
               >

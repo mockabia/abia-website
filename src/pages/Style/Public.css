@@ -1,0 +1,27 @@
+.public-content {
+    height: 90vh;
+    width: 100%;
+    background-image: url(../../images/abia-vendor-login.webp);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.public-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+.public-box {
+    position: relative;
+    width: 300px;
+    background-color: #fff;
+    border-radius: 30px;
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    flex-direction: column;
+    padding: 15px;
+}

@@ -14,7 +14,7 @@ const LoginDropdown = () => {
     },
     {
       title: "Vendor",
-      path: "/login",
+      path: "/business/login",
     },
   ];
   const dropdownRef = useRef(null);

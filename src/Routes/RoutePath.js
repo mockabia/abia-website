@@ -6,7 +6,7 @@ import RouteGuard from "./RouteGuard";
 //import { history } from '../helpers/history';
 
 import BusinessProfile from "../pages/Business/BusinessProfile";
-import BusinessSettings from "../pages/Business/BusinessSettings";
+import Dashboard from "../pages/Business/Dashboard";
 
 /*import Login from "./pages/Login/LoginPage";
 import Public from "./pages/Public";
@@ -43,12 +43,12 @@ const RoutePaths = (props) => {
     <>
       <Routes>
         <Route
-          path="/my-profile"
-          element={<RouteGuard {...props} Component={BusinessProfile} />}
+          path="/home"
+          element={<RouteGuard {...props} Component={Dashboard} />}
         />
         <Route
-          path="/settings"
-          element={<RouteGuard {...props} Component={BusinessSettings} />}
+          path="/my-profile"
+          element={<RouteGuard {...props} Component={BusinessProfile} />}
         />
       </Routes>
     </>
