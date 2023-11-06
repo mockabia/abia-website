@@ -3,8 +3,10 @@ import RootLayout from "./layouts/RootLayout";
 
 import RoutePath from "./Routes/RoutePath";
 import BusinessLogin from "./pages/General/BusinessLogin";
+import BusinessSignup from "./pages/General/BusinessSignup";
 import BusinessLoginState from "./pages/General/BusinessLoginState";
-
+import Public from "./pages/General/Public";
+import Dashboard from "./pages/Business/Dashboard";
 const App = () => {
   // const { token } = useAuth();
   return (
@@ -20,17 +22,25 @@ const App = () => {
       {/* Protected */}
       {/* The links of the Dashboard which has common Rootlayout */}
       {/* {token && ( */}
+      <Route path="/" element={<Public />} />
+      <Route path="/signup" element={<BusinessSignup />} />
       <Route
         path="/*"
         element={
-            <Routes>
-              <Route path="/login" element={<BusinessLogin/>} />
-              <Route path="/user-state" element={<BusinessLoginState/>} />
-              {/* <Route path="/user-state" element={<BusinessLoginState />} /> */}
-              <Route path="/*" element={
-                <RootLayout><RoutePath /></RootLayout>
-              }/>
-            </Routes>
+          <Routes>
+            <Route path="/login" element={<BusinessLogin />} />
+            <Route path="/user-state" element={<BusinessLoginState />} />
+            <Route path="/home" element={<Dashboard />} />
+            {/* <Route path="/user-state" element={<BusinessLoginState />} /> */}
+            <Route
+              path="/*"
+              element={
+                <RootLayout>
+                  <RoutePath />
+                </RootLayout>
+              }
+            />
+          </Routes>
         }
       />
       {/* )} */}
