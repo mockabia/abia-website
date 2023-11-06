@@ -6,7 +6,6 @@ import RouteGuard from "./RouteGuard";
 //import { history } from '../helpers/history';
 
 import BusinessProfile from "../pages/Business/BusinessProfile";
-import LoginUserState from "../pages/Business/LoginUserState";
 
 /*import Login from "./pages/Login/LoginPage";
 import Public from "./pages/Public";
@@ -45,10 +44,6 @@ const RoutePaths = (props) => {
         <Route
           path="/my-profile"
           element={<RouteGuard {...props} Component={BusinessProfile} />}
-        />
-        <Route
-          path="/user-state"
-          element={<RouteGuard {...props} Component={LoginUserState} />}
         />
       </Routes>
     </>

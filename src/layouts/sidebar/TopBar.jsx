@@ -21,6 +21,7 @@ import { RxTriangleDown } from "react-icons/rx";
 import { ReactComponent as MenuIcon } from "../../icons/menuIcon.svg";
 import { ReactComponent as AbiaLogo } from "../../ABIA-White-Logo-gold-crown(1).svg";
 import AbiaLogo1 from "../../abiaLogo";
+import * as GeneralJS from "../../pages/General/General";
 //components
 
 const TopBar = ({ title, logo }) => {
@@ -69,7 +70,7 @@ const TopBar = ({ title, logo }) => {
   };
 
   const handleLogout = () => {
-    navigate("/login");
+    GeneralJS.logout(navigate)
   };
   return (
     <div

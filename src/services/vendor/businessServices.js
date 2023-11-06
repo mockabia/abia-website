@@ -24,8 +24,8 @@ export async function updateData(id, postData) {
 export async function login(postData) {
   return await apiService.apiCall(MAIN_API["LOGIN"], "POST", postData);
 }
-export async function loginStates(id) {
-  return await apiService.apiCall(MAIN_API["LOGIN_STATE"] + "/" + id, "GET");
+export async function loginStates(postData) {
+  return await apiService.apiCall(MAIN_API["LOGIN_STATE"], "POST", postData);
 }
 export async function logout() {
   return await apiService.apiCall(MAIN_API["LOGOUT"], "POST");

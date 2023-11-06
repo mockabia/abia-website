@@ -1,111 +1,72 @@
-import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  Modal,
-  TextField,
-} from "@mui/material";
-import React from "react";
-import { ForgetBox } from "../../components/FormStyle";
-import { AiOutlineClose } from "react-icons/ai";
-import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
+import React, { useEffect, useState } from "react";
 
-const LoginStateDetail = () => {
-  const [open, setOpen] = React.useState(false);
+import { Box, Stack } from "@mui/material";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import LayoutGeneral from "../Common/LayoutGeneral";
+import * as GeneralJS from "./General";
+import "../Style/BusinessLoginState.css";
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+const BusinessLoginState = () => {
+  const location                = useLocation();
+  const navigate                = useNavigate();
+  const { userStatesData }      = location.state;
+  const email                   = location.state.email;
+  const token                   = location.state.token;
 
-  const handleClose = () => {
-    setOpen(false);
-  };
 
-  const handleSubmit = async (e) => {
-    // preventDefault(e);
+  useEffect(() => {
+
+  }, []);
+
+  const handleStateSubmit = (e) => {
+    e.preventDefault();
+    let vid                 = e.target.getAttribute('vid');
+    let state               = e.target.getAttribute('state');
+    var inputs              = {};
+    inputs["email"]         = email;
+    inputs["currenttocken"] = token;
+    inputs["currentvid"]    = vid;
+    inputs["currentstate"]  = state;
+    GeneralJS.vendorLoginStateForm(e, inputs, navigate);
   };
 
   return (
-    <div>
-      <div onClick={handleOpen}>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box
-            component="form"
-            sx={ForgetBox}
-            noValidate
-            autoComplete="off"
-            className="request-box-style"
-          >
-            <Box>
-              <IconButton
-                type="button"
-                style={{
-                  position: "absolute",
-                  top: "10px",
-                  right: "10px",
-                }}
-                onClick={(e) => {
-                  e.stopPropagation(); // Stop the event propagation
-                  handleClose();
-                }}
-              >
-                <AiOutlineClose />
-              </IconButton>
-            </Box>
-            <form>
-              <h3 className="form-header">Welcome ?</h3>
-              <p className="flex justify-center">
-                If you have Business in more than 1 state. Select the states
-                below. Else proceed
-              </p>
-              <div className="mt-[1rem]">
-                <TextField
-                  label="Enter your Email"
-                  id="email"
-                  name="email"
-                  sx={{ width: "100%" }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <UserIcons
-                          fill="#949494"
-                          style={{
-                            width: "18px",
-                            height: "18px",
-                          }}
-                        />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <Button
-                  // type="submit"
-                  variant="contained"
-                  style={{
-                    backgroundColor: "#6cc2bc",
-                    color: "#ffffff",
-                    height: "40px",
-                    textTransform: "capitalize",
-                    width: "100%",
-                    marginTop: "1rem",
-                  }}
-                  onClick={handleSubmit}
-                >
-                  Submit
-                </Button>
-              </div>
-            </form>
-          </Box>
-        </Modal>
-      </div>
-    </div>
+    <>
+      <LayoutGeneral>
+        <div className="login-vendorlogin-content relative">
+          <div className="login-vendorlogin-box">
+            <div className="flex flex-col justify-center items-center p-[20px] relative">
+              <h1 className="login-loginbox-header">Welcome</h1>
+              <Stack spacing={2}>
+                <div className="flex flex-col justify-center items-center ">
+                  <Box component="form" noValidate autoComplete="off">
+                    <p className="flex justify-center">
+                      Select your respective State.
+                    </p>
+                    <div className="mt-[1rem]">
+                      <ul>
+                        {userStatesData.map((state) => (
+                          <li
+                            state={state.stateid}
+                            vid={state.vid}
+                            onClick={handleStateSubmit}
+                            className="selectedStyled"
+                          >
+                            {state.statetitle}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </Box>
+                </div>
+              </Stack>
+            </div>
+          </div>
+        </div>
+      </LayoutGeneral>
+    </>
   );
 };
+export default BusinessLoginState;
 
-export default LoginStateDetail;
+
