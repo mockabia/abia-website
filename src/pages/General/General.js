@@ -11,6 +11,7 @@ export const hasJWT = async (navigate) => {
     navigate(reactUrls.BUSINESS_MENU['DASHBOARD'].path);
   }
 };
+
 export const checkRememberMe = (setInputs) => {
   setInputs({
     ["username"]: localStorage.vusername,
