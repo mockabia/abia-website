@@ -1,0 +1,135 @@
+/* BASIC INFO */
+.basic-info-container {
+    margin: 0;
+    padding: 0px 15px 22px 9px;
+    line-height: 1.3;
+    background-color: #fff;
+
+}
+
+
+.basic-sub-header {
+    font-size: 14px;
+}
+
+.basicinfo-input-style {
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    background: #fafafa;
+    border: 1px solid #c3bebe;
+    padding: 10px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.upload-recommendation {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #c3bebe;
+    font-size: 14px;
+    /* This is the important part */
+    /* margin-right: calc(10px - (768px - 100vw) / 2);
+    margin-left: calc(10px - (768px - 100vw) / 2); */
+    /* margin-right: calc((100vw - 768px) / 2); */
+    margin-left: calc((100vw - 375px) / 2);
+}
+
+.basicinfo-submit-button {
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 250px;
+    /* width: 150px; */
+    height: 50px;
+    border-radius: 30px;
+    background-color: #6cc2bc;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+
+@media(min-width: 769px) {
+    .upload-recommendation {
+        margin-left: calc((100vw - 700px) / 2);
+    }
+}
+
+@media(width: 820px) {
+    .upload-recommendation {
+        margin-left: calc((100vw - 665px) / 2);
+    }
+}
+
+@media(min-width:1023px) {
+    .basicinfo-input-style {
+        width: 50%;
+    }
+
+    .upload-recommendation {
+        margin-left: 200px;
+    }
+
+    .basicinfo-submit-button {
+
+        margin-left: 1px;
+        margin-top: 40px;
+        width: 150px;
+        /* width: 150px; */
+    }
+}
+
+/* *****CONTACT DETAILS ******** */
+.contact-details-container {
+    margin: 0;
+    padding: 0px 15px 22px 9px;
+    line-height: 1.3;
+    background-color: #fff;
+}
+
+.contactdetails-error-border {
+    border: 1px solid red;
+}
+
+
+.contactdetails-input-style {
+    width: 100% !important;
+    height: 50px !important;
+    border-radius: 10px;
+    background: #fafafa;
+    border: 1px solid #c3bebe;
+    cursor: pointer;
+    padding-left: 10px;
+    text-align: left;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+@media(min-width:1023px) {
+
+    /* .contactdetails-input-style {
+        width: 50%;
+    } */
+    .contactdetails-input-style {
+        width: 400px !important;
+        max-width: 96%;
+        height: 50px !important;
+        border-radius: 10px;
+        background: #fafafa;
+        border: 1px solid #c3bebe;
+        cursor: pointer;
+        padding-left: 10px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .contact-detail-singleselect {
+        width: 52%;
+    }
+}

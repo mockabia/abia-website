@@ -8,22 +8,9 @@ const SubMenu = ({ data }) => {
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
-  // const subMenuRef = useRef(null);
   const location = useLocation();
   const isSubmenuActive = location.pathname.includes(data.name.toLowerCase());
 
-  //Click outside
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (subMenuRef.current && !subMenuRef.current.contains(event.target)) {
-  //       setSubMenuOpen(false);
-  //     }
-  //   };
-  //   window.addEventListener("click", handleClickOutside);
-  //   return () => {
-  //     window.removeEventListener("click", handleClickOutside);
-  //   };
-  // }, []);
   useEffect(() => {
     if (!isSubmenuActive) {
       setSubMenuOpen(false);
@@ -59,7 +46,9 @@ const SubMenu = ({ data }) => {
             isActive ? "#6cc2bc" : "#fff"
           }`}
         />
-        <div className="flex-1 ml-[2px] capitalize text-[15px] ">{data.name}</div>
+        <div className="flex-1 ml-[2px] capitalize text-[15px] ">
+          {data.name}
+        </div>
         <RxTriangleDown
           className={` ${subMenuOpen && "rotate-180"} duration-200 `}
           size={20}

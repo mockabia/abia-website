@@ -8,6 +8,7 @@ import BusinessLoginState from "./pages/General/BusinessLoginState";
 import Public from "./pages/General/Public";
 import Directory from "./pages/General/GeneralDirectory/Directory.js";
 import Registry from "./pages/Common/NavBar/Registry.js";
+import BusinessSetting from "./pages - Copy/Settings/businessSettings.jsx";
 // import CoupleSignUp from "./pages - Copy/Couples/Signup/index.js";
 import CSideBar from "./components/Couple-Layout/CSideBar.js";
 const App = () => {
@@ -35,12 +36,7 @@ const App = () => {
             <Route path="/signup" element={<BusinessSignup />} />
             <Route path="/user-state" element={<BusinessLoginState />} />
             <Route path="/wedding-profile" element={<CSideBar />} />
-            <Route
-              path="/*"
-              element={
-                  <RoutePath />
-              }
-            />
+            <Route path="/*" element={<RoutePath />} />
           </Routes>
         }
       />

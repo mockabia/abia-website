@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import SubMenu from "./SubMenu";
 import { motion } from "framer-motion";
@@ -25,7 +25,7 @@ import { ReactComponent as ShopIcon } from "../../icons/shop.svg";
 import { ReactComponent as EnquiryIcon } from "../../icons/enquiries.svg";
 import { ReactComponent as SettingsIcons } from "../../icons/settings.svg";
 import { ReactComponent as MyProfileIcon } from "../../icons/my-profile.svg";
-
+import { ReactComponent as GetREviewIcon } from "../../icons/getReview-2.svg";
 // import { ReactComponent as AbiaLogo } from "../../ABIA-White-Logo-gold-crown (1).svg";
 
 import { Link, NavLink, useLocation, useRoutes } from "react-router-dom";
@@ -36,7 +36,6 @@ import * as reactUrls from "../../api/reactUrls";
 
 //css
 import "./sideBar.css";
-import TopBar from "./TopBar";
 import AbiaLogo from "../../abiaLogo";
 
 const Sidebar = () => {
@@ -69,56 +68,58 @@ const Sidebar = () => {
 
   const Nav_animation = isTabletMid
     ? {
-      open: {
-        x: 0,
-        width: "16rem",
-        transition: {
-          damping: 40,
+        open: {
+          x: 0,
+          width: "16rem",
+          transition: {
+            damping: 40,
+          },
         },
-      },
-      closed: {
-        x: -250,
-        width: 0,
-        transition: {
-          damping: 40,
-          delay: 0.15,
+        closed: {
+          x: -250,
+          width: 0,
+          transition: {
+            damping: 40,
+            delay: 0.15,
+          },
         },
-      },
-    }
+      }
     : {
-      open: {
-        width: "16rem",
-        transition: {
-          damping: 40,
+        open: {
+          width: "16rem",
+          transition: {
+            damping: 40,
+          },
         },
-      },
-      closed: {
-        width: "4rem",
-        transition: {
-          damping: 40,
+        closed: {
+          width: "4rem",
+          transition: {
+            damping: 40,
+          },
         },
-      },
-    };
+      };
 
-  const subMenusList = [
-    {
-      name: "showcase",
-      icon: ShowCase,
-      menus: ["Review Widget", "Award Badges"],
-    },
-    {
-      name: "settings",
-      icon: SettingsIcons,
-      menus: ["Business Settings", "Update Listing"],
-    },
-  ];
+  const menuIcons = {
+    Home: HomeIcon,
+    "Get Reviews": GetREviewIcon,
+    "Manage Reviews": ManageReview,
+    Showcase: ShowCase,
+    Promotions: Promotions,
+    Shop: ShopIcon,
+    Enquiries: EnquiryIcon,
+    "My Profile": MyProfileIcon,
+    Settings: SettingsIcons,
+  };
+
+  const subMenusList = reactUrls.BUSINESS_MENU["SHOWCASE"].secondaryMenu;
 
   return (
     <div>
       <div
         onClick={() => setOpen(false)}
-        className={`md:hidden fixed inset-0 max-h-screen z-60 bg-black/50 ${open ? "block" : "hidden"
-          } `}
+        className={`md:hidden fixed inset-0 max-h-screen z-60 bg-black/50 ${
+          open ? "block" : "hidden"
+        } `}
       ></div>
       <motion.div
         ref={sidebarRef}
@@ -137,152 +138,31 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="flex flex-col  h-full text-white relative">
-          <ul className="overflow-auto pl-[28px] text-[0.9rem] py-[32px] flex flex-col gap-2  overflow-x-hidden scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100   md:h-[68%] h-[70%]  ">
-            <li>
-              <NavLink
-                to={"/business/home"}
-                className="link sidebarMenuItem"
-                activeClassName="active"
-              >
-                <div className="flex gap-5 ml-5">
-                  <HomeIcon className=" w-[18px] h-[18px] fill-current text-[#fff]" />
-                  <span className="font-semiboldd">Home</span>
-                </div>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to={"/get-reviews"}
-                className="link sidebarMenuItem"
-                activeClassName="active"
-              >
-                <div className="flex gap-5 ml-5">
-                  <GetReview className="  w-[18px] h-[18px] mt-[2px] fill-current text-[#fff]" />
-                  <span className="font-semiboldd">Get reviews</span>
-                </div>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to={"/manage-review"}
-                className="link sidebarMenuItem "
-                activeClassName="active"
-              >
-                <div className="flex gap-5 ml-5">
-                  <ManageReview className="mt-[2px] w-[18px] h-[18px] fill-current text-[#fff] " />
-                  Manage reviews
-                </div>
-              </NavLink>
-            </li>
-
-            {(open || isTabletMid) && (
-              <div className="">
-                {subMenusList
-                  .filter(
-                    (menu) => menu.menus.length > 0 && menu.name === "showcase"
-                  )
-                  .map((menu) => (
-                    <div key={menu.name} className="flex flex-col ">
-                      <SubMenu data={menu} />
-                    </div>
-                  ))}
-              </div>
-            )}
-
-            <li>
-              <NavLink
-                to={"/promotions"}
-                className="link sidebarMenuItem -mt-2 "
-                activeClassName="active"
-              >
-                <div className="flex gap-5 ml-5">
-                  <Promotions
-                    className={`mt-[1px] w-[18px] h-[18px] fill-current ${isActive ? "text-[#000]" : "text-[#fff]"
-                      } `}
-                  />
-                  Promotions
-                </div>
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to={"/shop"}
-                className="link sidebarMenuItem"
-                activeClassName="active"
-              >
-                <div className="flex gap-5 ml-5">
-                  <ShopIcon className="mt-[2px] w-[18px] h-[18px] fill-current text-[#fff] " />
-                  Shop
-                </div>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to={"/enquiries"}
-                className="link sidebarMenuItem "
-                activeClassName="active"
-              >
-                <div className="flex gap-5 ml-5">
-                  <EnquiryIcon className=" w-[20px]  fill-current text-[#fff] " />
-                  Enquiries
-                </div>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to={reactUrls.BUSINESS_MENU['PROFILE']}
-                className="link sidebarMenuItem"
-                activeClassName="active"
-              >
-                <div className="flex gap-5 ml-5">
-                  <MyProfileIcon className=" w-[22px] h-[22px] fill-current text-[#fff]" />
-                  <span className="font-semiboldd">My Profile</span>
-                </div>
-              </NavLink>
-            </li>
-            {/* {(open || isTabletMid) && (
-              <div className="">
-                {subMenusList
-                  .filter(
-                    (menu) => menu.menus.length > 0 && menu.name === "settings"
-                  )
-                  .map((menu) => (
-                    <div key={menu.name} className="flex flex-col ">
-                      <SubMenu data={menu} />
-                    </div>
-                  ))}
-              </div>
-            )} */}
-            <li>
-              <NavLink
-                to={reactUrls.BUSINESS_MENU['SETTINGS']}
-                className="link sidebarMenuItem"
-                activeClassName="active"
-              >
-                <div className="flex gap-5 ml-5">
-                  <SettingsIcons className="mt-[2px] w-[18px] h-[18px] fill-current text-[#fff]" />
-                  Settings
-                </div>
-              </NavLink>
-            </li>
-          </ul>
-
           <ul>
-            {Object.values(reactUrls.BUSINESS_MENU).map((MainMenu, i) =>
+            {Object.values(reactUrls.BUSINESS_MENU).map((MainMenu, i) => (
               <>
-              {MainMenu.menu!==false ? <li><NavLink
-                to={MainMenu.path}
-                className="link sidebarMenuItem"
-                activeClassName="active"
-              >
-                <div className="flex gap-5 ml-5">
-                  <SettingsIcons className="mt-[2px] w-[18px] h-[18px] fill-current text-[#fff]" />
-                  {MainMenu.text}
-                </div>
-              </NavLink></li> : ''}
+                {MainMenu.menu !== false ? (
+                  <li>
+                    <NavLink
+                      to={MainMenu.path}
+                      className="link sidebarMenuItem"
+                      activeClassName="active"
+                    >
+                      <div className="flex gap-5 ml-5">
+                        {menuIcons[MainMenu.text] &&
+                          React.createElement(menuIcons[MainMenu.text], {
+                            className:
+                              "mt-[2px] w-[18px] h-[18px] fill-current text-[#fff]",
+                          })}
+                        {MainMenu.text}
+                      </div>
+                    </NavLink>
+                  </li>
+                ) : (
+                  ""
+                )}
               </>
-            )}
+            ))}
           </ul>
 
           <div className="mt-[30px] ml-[30px]">

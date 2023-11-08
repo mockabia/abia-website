@@ -57,24 +57,6 @@ const BasicInfo = ({ vendorDetails }) => {
     } catch (error) {
       console.error("API Request Error:", error);
     }
-    // try {
-    //   const response = await fetch(BUSINESS_SETTINGS1, {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(formData),
-    //   });
-
-    //   if (response.ok) {
-    //     const data = await response.json();
-    //     console.log("API Response:", data);
-    //   } else {
-    //     console.error("API Error:", response.status, response.statusText);
-    //   }
-    // } catch (error) {
-    //   console.error("API Request Error:", error);
-    // }
   };
   return (
     <div className="basic-info-container">

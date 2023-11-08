@@ -3,6 +3,15 @@ import { useRef } from "react";
 import SubMenu from "./SubMenu";
 import { motion } from "framer-motion";
 
+// * React icons
+import { IoIosArrowBack } from "react-icons/io";
+import { SlSettings } from "react-icons/sl";
+import { AiOutlineAppstore } from "react-icons/ai";
+import { BsPerson } from "react-icons/bs";
+import { HiOutlineDatabase } from "react-icons/hi";
+import { TbReportAnalytics } from "react-icons/tb";
+import { FaCrown } from "react-icons/fa";
+import { MdOutlineMail } from "react-icons/md";
 import { useMediaQuery } from "react-responsive";
 import { MdMenu } from "react-icons/md";
 import GetReview from "../../icons/getReview"; //get review
@@ -17,11 +26,11 @@ import { ReactComponent as EnquiryIcon } from "../../icons/enquiries.svg";
 import { ReactComponent as SettingsIcons } from "../../icons/settings.svg";
 import { ReactComponent as MyProfileIcon } from "../../icons/my-profile.svg";
 
+// import { ReactComponent as AbiaLogo } from "../../ABIA-White-Logo-gold-crown (1).svg";
+
 import { Link, NavLink, useLocation, useRoutes } from "react-router-dom";
 
 //import upgradeNow from "../../pages/upgradeNow";
-
-import * as reactUrls from "../../api/reactUrls";
 
 //css
 import "./sideBar.css";
@@ -130,7 +139,7 @@ const Sidebar = () => {
           <ul className="overflow-auto pl-[28px] text-[0.9rem] py-[32px] flex flex-col gap-2  overflow-x-hidden scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100   md:h-[68%] h-[70%]  ">
             <li>
               <NavLink
-                to={"/business/home"}
+                to={"/home"}
                 className="link sidebarMenuItem"
                 activeClassName="active"
               >
@@ -222,7 +231,7 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink
-                to={reactUrls.BUSINESS_MENU['PROFILE']}
+                to={"/my-profile "}
                 className="link sidebarMenuItem"
                 activeClassName="active"
               >
@@ -247,7 +256,7 @@ const Sidebar = () => {
             )} */}
             <li>
               <NavLink
-                to={reactUrls.BUSINESS_MENU['SETTINGS']}
+                to={"/settings"}
                 className="link sidebarMenuItem"
                 activeClassName="active"
               >

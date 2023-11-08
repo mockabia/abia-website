@@ -15,7 +15,11 @@ export async function showData(id) {
   return await apiService.apiCall(MAIN_API["SHOW"] + "/" + id, "GET");
 }
 export async function updateData(id, postData) {
-  return await apiService.apiCall(MAIN_API["UPDATE"] + "/" + id,"POST",postData );
+  return await apiService.apiCall(
+    MAIN_API["UPDATE"] + "/" + id,
+    "POST",
+    postData
+  );
 }
 export async function login(postData) {
   return await apiService.apiCall(MAIN_API["LOGIN"], "POST", postData);
@@ -32,4 +36,12 @@ export async function refresh() {
 
 export async function forgot(postData) {
   return await apiService.apiCall(MAIN_API["FORGOT"], "POST", postData);
+}
+
+export async function update_settings(id, settings, postData) {
+  return await apiService.apiCall(
+    MAIN_API["SETTINGS"] + "/" + id + "/" + settings,
+    "POST",
+    postData
+  );
 }
