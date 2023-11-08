@@ -26,6 +26,12 @@ export const INCLUSIONS_DROPDOWN = `${baseUrl}InclusionsDropdown`;
 export const VENDOR_DROPDOWN = `${baseUrl}BusinessDropdown`;
 export const STATE_VS_REGION_API = `${baseUrl}WebStateVsRegionDropdown/ACT`;
 
+export const CONTENT_API = {
+  HEADER_MENUS      : `${baseUrl}WebCommonHeader`,
+  FOOTER_MENUS      : `${baseUrl}WebCommonFooter`,
+  CONTENT_DETAILS   : `${baseUrl}WebViewContentRecord`,
+};
+
 export const BUSINESS_API = {
   SEARCH: `${baseUrl}search-business`,
   STORE: `${baseUrl}WebBusinessStore`,

@@ -1,10 +1,13 @@
 import { Route, Routes } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import * as servicesPage from "./services/contentServices";
 import RootLayout from "./layouts/RootLayout";
 
 import RoutePath from "./Routes/RoutePath";
 import BusinessLogin from "./pages/General/BusinessLogin";
 import BusinessSignup from "./pages/General/BusinessSignup";
 import BusinessLoginState from "./pages/General/BusinessLoginState";
+import MainContent from "./pages/General/MainContent";
 import Public from "./pages/General/Public";
 import Directory from "./pages/General/GeneralDirectory/Directory.js";
 import Registry from "./pages/Common/NavBar/Registry.js";
@@ -12,6 +15,19 @@ import BusinessSetting from "./pages - Copy/Settings/businessSettings.jsx";
 // import CoupleSignUp from "./pages - Copy/Couples/Signup/index.js";
 import CSideBar from "./components/Couple-Layout/CSideBar.js";
 const App = () => {
+  
+  const [commonMenu, setCommonMenu] = useState({});
+
+  useEffect(() => {
+    fetchCommonPageMenu();
+  }, []);
+  const fetchCommonPageMenu = async () => {
+    await servicesPage.fetchMenu().then(function (response) {
+        if (response.statuscode == 200) {
+          setCommonMenu(response.result)
+        }
+    });
+  };
   // const { token } = useAuth();
   return (
     <Routes>
@@ -26,7 +42,9 @@ const App = () => {
       <Route path="/" element={<Public />} />
       <Route path="/directory" element={<Directory />} />
       <Route path="/registry" element={<Registry />} /> */}
-
+      {Object.values(commonMenu).map((MainMenu, i) =>
+        <Route path={`/${MainMenu.url}`} element={<MainContent />} />
+      )}
       {/* BUSINESS */}
       <Route
         path="/business/*"

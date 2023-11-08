@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import * as servicesPage from "../../../services/contentServices";
 import "../../Style/Footer.css";
 
 import { ReactComponent as FBIcon } from "../../../icons/facebook.svg";
@@ -6,9 +8,21 @@ import { ReactComponent as InstaIcon } from "../../../icons/instagram.svg";
 import { ReactComponent as PinterestIcon } from "../../../icons/pinterest.svg";
 // import { ReactComponent as AbiaLogo } from "../../abialogo.svg";
 import AbiaLogo from "../../../abiaLogo";
-import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const [footerMenu, setFooterMenu] = useState({});
+
+  useEffect(() => {
+    fetchCommonPageMenu();
+  }, []);
+  const fetchCommonPageMenu = async () => {
+    await servicesPage.fetchFooterMenus().then(function (response) {
+      if (response.statuscode == 200) {
+        setFooterMenu(response.result)
+      }
+    });
+  };
+
   return (
     <div className="bg-[#000]">
       <div className="footer-container">
@@ -16,6 +30,15 @@ const Footer = () => {
           <div className="logo-adjust cursor-pointer">
             <AbiaLogo />
           </div>
+        </div>
+        <div className="footerMenus">
+          <ul>
+            {Object.values(footerMenu).map((FooterMenu, i) =>
+              <li className="footer-text">
+                  <NavLink to={`/${FooterMenu.url}`} >{FooterMenu.title} </NavLink>
+              </li>
+            )}
+          </ul>
         </div>
         <div className="flex justify-between gap-[20px] lg:gap-[35px]">
           <div className="footer-content-1">
