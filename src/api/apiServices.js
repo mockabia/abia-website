@@ -20,13 +20,13 @@ export async function apiCall(url, method, data) {
       ? {
           "Content-Type": "application/json",
           api_key: process.env.REACT_APP_API_KEY,
-          // authorization: `Bearer ${accessToken}`,
+          authorization: `Bearer ${accessToken}`,
           "X-Request-ID": userId,
         }
       : {
           "Content-Type": "application/json",
           api_key: process.env.REACT_APP_API_KEY,
-          // authorization: `Bearer ${accessToken}`,
+          authorization: `Bearer ${accessToken}`,
         };
 
     try {
