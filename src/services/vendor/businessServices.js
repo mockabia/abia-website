@@ -8,13 +8,13 @@ export const MAIN_API = apiUrls.BUSINESS_API;
 export async function storeData(postData) {
   return await apiService.apiCall(MAIN_API["STORE"], "POST", postData);
 }
-export async function editData(id) {
+export async function editData() {
   return await apiService.apiCall(MAIN_API["EDIT"], "GET");
 }
-export async function showData(id) {
+export async function showData() {
   return await apiService.apiCall(MAIN_API["SHOW"], "GET");
 }
-export async function updateData(id, postData) {
+export async function updateData(postData) {
   return await apiService.apiCall(MAIN_API["UPDATE"],"POST",postData );
 }
 export async function login(postData) {
