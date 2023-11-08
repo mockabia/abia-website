@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import "../Style/BusinessSettings.css";
 import ImageUploader from "../../components/ImageUploader";
 import * as Business from "./Business";
-import ImageUpload from "../../third-party-packs/ImageUploadCrop";
+
+//
+import { useNavigate } from "react-router-dom";
+import Select from "react-select";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 // BASIC INFO
-export const BasicInfo = ({ vendorDetails, props }) => {
+export const BasicInfo = ({ vendorDetails }) => {
   const [inputs, setInputs] = useState({});
   const [inputsErrors, setInputsErrors] = useState({});
 
@@ -16,7 +21,7 @@ export const BasicInfo = ({ vendorDetails, props }) => {
   };
 
   const handleImageChange = (imageUrl) => {
-    setInputs((values) => ({ ...values, ["image"]: imageUrl }));
+    setInputs((values) => ({ ...values, ["photo"]: imageUrl }));
   };
 
   const handleChange = (e) => {
@@ -25,13 +30,21 @@ export const BasicInfo = ({ vendorDetails, props }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setInputs((values) => ({
+      ...values,
+      ["name"]: vendorDetails.name,
+      ["website"]: vendorDetails.website,
+      ["photo"]: vendorDetails.photo,
+    }));
   }, []);
 
   const updateSettings_1 = async (e) => {
     e.preventDefault();
     Business.updateBusiness(1, inputs, setInputsErrors);
   };
-
+  let isValidForm =
+    Object.values(inputsErrors).filter((error) => typeof error !== "undefined")
+      .length === 0;
   return (
     <div className="basic-info-container">
       <div className="basic-sub-header">
@@ -49,9 +62,14 @@ export const BasicInfo = ({ vendorDetails, props }) => {
                 required
                 name="name"
                 className="basicinfo-input-style"
-                defaultValue={vendorDetails.name}
+                defaultValue={inputs.name}
                 onChange={handleChange}
               />
+              {inputsErrors.name && (
+                <div className="text-[12px] text-red-500 font-semibold mt-1">
+                  {inputsErrors.name}
+                </div>
+              )}
             </div>
           </div>
           {/* Wesbite */}
@@ -63,7 +81,7 @@ export const BasicInfo = ({ vendorDetails, props }) => {
                 required
                 name="website"
                 className="basicinfo-input-style"
-                defaultValue={vendorDetails.website}
+                value={inputs.website}
                 onChange={handleChange}
               />
             </div>
@@ -76,23 +94,20 @@ export const BasicInfo = ({ vendorDetails, props }) => {
               onImageCrop={handleImageCrop}
               onChangeCrop={handleImageChange}
             />
-            {/* <ImageUpload
-              onImageCrop={handleImageCrop}
-              onChangeCrop={handleImageChange}
-            /> */}
-            {/* <ImageUploader
-              // onImageCrop={}
-              // onChangeCrop={}
-              // image={image}
-              // onUpload={onUpload}
-            /> */}
+
             <div className="upload-recommendation">
               <span>Recommended Size: 400px x 300px</span>
               <br />
               <span>Maximum file size 1MB</span>
             </div>
-            <div className="basicinfo-submit-button" onClick={updateSettings_1}>
-              <button>Save</button>
+            <div>
+              <button
+                className="basicinfo-submit-button"
+                onClick={updateSettings_1}
+                disabled={!isValidForm}
+              >
+                Save
+              </button>
             </div>
           </div>
         </form>
@@ -101,225 +116,132 @@ export const BasicInfo = ({ vendorDetails, props }) => {
   );
 };
 
-//CONTACT DETAILS
-// const phoneRegExp = /^\d{10,}$/;
+/**CONTACT DETAILS*/
 
-// const schema = yup.object().shape({
-//   contact_person: yup.string().required("Contact name is required"),
-//   email: yup
-//     .string()
-//     .required("Email is required")
-//     .email("Invalid email address"),
-//   mobile_phone: yup
-//     .string()
-//     .required("Phone no: is required")
-//     .matches(phoneRegExp, "Phone number is not valid"),
-//   state: yup.string().required("Please select an option"),
-//   postcode: yup.string().required("Postcode is required"),
-//   suburb: yup.string().required("Suburb is required"),
-// });
-// export const ContactDetails = ({ vendorDetails }) => {
-//   const [selectedState, setSelectedState] = useState(vendorDetails.state);
-//   const [stateOptions, setStateOptions] = useState([]);
-//   const [regionOptions, setRegionOptions] = useState([]);
-//   const [selectedRegion, setSelectedRegion] = useState();
+export const ContactDetails = ({ vendorDetails }) => {
+  const [selectedState, setSelectedState] = useState(null);
+  const [stateOptions, setStateOptions] = useState([]);
 
-//   const [formValues, setFormValues] = useState({
-//     contact_person: "",
-//     email: "",
-//     mobile_phone: "",
-//     address: "",
-//     state: selectedState,
-//     suburb: "",
-//     postcode: "",
-//   });
+  const [inputs, setInputs] = useState({});
+  const [inputsErrors, setInputsErrors] = useState({});
 
-//   const navigate = useNavigate();
+  console.log(vendorDetails.state);
 
-//   // userForm from rect-hook-form
-//   const {
-//     watch,
-//     register,
-//     handleSubmit,
-//     formState: { errors, isValid, isSubmitted },
-//     control,
-//   } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
+  const handleChange = (e) => {
+    Business.handleChange(e, setInputs, setInputsErrors);
+  };
 
-//   useEffect(() => {
-//     setSelectedState(vendorDetails.state); // Set the default value
-//   }, [vendorDetails.state]);
+  const handleSelectChange = (selectedOption) => {
+    setSelectedState(selectedOption);
+  };
 
-//   // common handleChange
-//   const handleChange = (event) => {
-//     if (event && event.target) {
-//       setFormValues({ ...formValues, [event.target.name]: event.target.value });
-//     }
-//   };
+  useEffect(() => {
+    Business.fetchState(setStateOptions);
+    setInputs((values) => ({
+      ...values,
+      ["contact_person"]: vendorDetails.contact_person,
+      ["email"]: vendorDetails.email,
+      ["mobile_phone"]: vendorDetails.mobile_phone,
+      ["address"]: vendorDetails.address,
+      ["postcode"]: vendorDetails.postcode,
+      ["suburb"]: vendorDetails.suburb,
+      ["state"]: vendorDetails.state,
+    }));
+  }, []);
 
-//   const fieldConfig = [
-//     {
-//       name: "contact_person",
-//       label: "Contact Name*",
-//       type: "text",
-//       defaultValue: vendorDetails.contact_person,
-//     },
-//     {
-//       name: "email",
-//       label: "Email*",
-//       type: "text",
-//       defaultValue: vendorDetails.email,
-//     },
-//     {
-//       name: "mobile_phone",
-//       label: "Phone/Mobile*",
-//       type: "number",
-//       defaultValue: vendorDetails.mobile_phone,
-//     },
-//     {
-//       name: "address",
-//       label: "Address",
-//       type: "text",
-//       defaultValue: vendorDetails.address,
-//     },
+  const updateSettings_2 = async (e) => {
+    e.preventDefault();
+    Business.updateBusiness(2, inputs, setInputsErrors);
+  };
 
-//     {
-//       name: "postcode",
-//       label: "Postcode*",
-//       type: "text",
-//       defaultValue: vendorDetails.postcode,
-//     },
-//     {
-//       name: "suburb",
-//       label: "City/Region*",
-//       type: "text",
-//       defaultValue: vendorDetails.suburb,
-//     },
-//   ];
+  const fieldConfig = [
+    {
+      name: "contact_person",
+      label: "Contact Name*",
+      type: "text",
+      defaultValue: inputs.contact_person,
+    },
+    {
+      name: "email",
+      label: "Email*",
+      type: "text",
+      defaultValue: inputs.email,
+    },
+    {
+      name: "mobile_phone",
+      label: "Phone/Mobile*",
+      type: "number",
+      defaultValue: inputs.mobile_phone,
+    },
+    {
+      name: "address",
+      label: "Address",
+      type: "text",
+      defaultValue: inputs.address,
+    },
 
-//   const fetchState = async () => {
-//     try {
-//       const response = await axios.get(apiurls.STATE_DROPDOWN);
-//       if (response.status === 200) {
-//         setStateOptions(response.data.result);
-//       }
-//     } catch (error) {
-//       console.error("Error while fetching states:", error);
-//     }
-//   };
+    {
+      name: "postcode",
+      label: "Postcode*",
+      type: "text",
+      defaultValue: inputs.postcode,
+    },
+    {
+      name: "suburb",
+      label: "City/Region*",
+      type: "text",
+      defaultValue: inputs.suburb,
+    },
+  ];
 
-//   useEffect(() => {
-//     fetchState();
-//     if (selectedState) {
-//       fetchRegion(selectedState);
-//     } else {
-//       setRegionOptions([]);
-//     }
-//   }, [selectedState]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-//   const fetchRegion = async () => {
-//     try {
-//       const response = await axios.get(apiurls.REGIONS_BY_STATE);
-//       if (response.status === 200) {
-//         setRegionOptions(response.data.result);
-//         // console.log("Region resposne:", regionOptions);
-//       }
-//     } catch (error) {
-//       console.error("Error while fetching states:", error);
-//     }
-//   };
-
-//   const onSubmit = async (formData) => {
-//     try {
-//       const response = await fetch(MAIN_API["SETTINGS2"], formData);
-//       if (response.status == 200) {
-//         console.log("API Response:", response.data);
-//       } else {
-//         console.error("API Error:", response.status, response.statusText);
-//       }
-//     } catch (error) {
-//       console.error("API Request Error:", error);
-//     }
-//   };
-//   useEffect(() => {
-//     window.scrollTo(0, 0);
-//   }, []);
-
-//   return (
-//     <div className="contact-details-container">
-//       <div className="mt-[20px]">
-//         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-//           {fieldConfig.map((field) => (
-//             <div key={field.name}>
-//               <label className="font-semibold">{field.label}</label>
-//               <div>
-//                 <input
-//                   type={field.type}
-//                   name={field.name}
-//                   defaultValue={field.defaultValue}
-//                   className={`contactdetails-input-style ${
-//                     errors[field.name] ? "contactdetails-error-border" : ""
-//                   }`}
-//                   {...register(field.name)}
-//                 />
-
-//                 {errors[field.name] && (
-//                   <p className="text-[12px] text-red-500 font-semibold mt-1">
-//                     {errors[field.name].message}
-//                   </p>
-//                 )}
-//               </div>
-//             </div>
-//           ))}
-//           {/* state */}
-//           <div>
-//             <label className="font-semibold">State*</label>{" "}
-//             <div className="relative lg:w-[52%] mylocation-primarylocaion-multiselect">
-//               <Controller
-//                 name="state"
-//                 control={control}
-//                 render={({ field }) => (
-//                   <Select
-//                     name="state"
-//                     placeholder={selectedState}
-//                     options={stateOptions.map((state) => ({
-//                       value: state.value,
-//                       label: state.label,
-//                     }))}
-//                     {...field}
-//                     onChange={(selectedOption) => {
-//                       const stateValue = selectedOption
-//                         ? selectedOption.label
-//                         : "";
-//                       setSelectedState(stateValue);
-//                       field.onChange(stateValue);
-//                     }}
-//                   />
-//                 )}
-//               />
-//             </div>
-//           </div>
-
-//           <div className="relative space-y-3">
-//             <button
-//               className="submit-button"
-//               disabled={!isValid || isSubmitted}
-//               components={{
-//                 DropdownIndicator: () => (
-//                   <div>
-//                     <FontAwesomeIcon
-//                       icon={faCaretDown}
-//                       className="dropDown-position"
-//                       style={{ color: "#7c7c7c" }}
-//                     />
-//                   </div>
-//                 ),
-//               }}
-//             >
-//               Save
-//             </button>
-//           </div>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
+  return (
+    <div className="contact-details-container">
+      <div className="mt-[20px]">
+        <form className="space-y-5">
+          {fieldConfig.map((field) => (
+            <div key={field.name}>
+              <label className="font-semibold">{field.label}</label>
+              <div>
+                <input
+                  type={field.type}
+                  name={field.name}
+                  defaultValue={field.defaultValue}
+                  onChange={handleChange}
+                  className="contactdetails-input-style"
+                />
+              </div>
+            </div>
+          ))}
+          {inputsErrors.contact_person && (
+            <div className="text-[12px] text-red-500 font-semibold mt-1">
+              {inputsErrors.contact_person}
+            </div>
+          )}
+          {/* state */}
+          <div>
+            <label className="font-semibold">State*</label>{" "}
+            <div className="relative lg:w-[52%] mylocation-primarylocaion-multiselect">
+              <Select
+                name="state"
+                placeholder={inputs.state}
+                onChange={handleSelectChange}
+                options={stateOptions.map((state) => ({
+                  value: state.value,
+                  label: state.label,
+                }))}
+              />
+            </div>
+          </div>
+          {/* save */}
+          <div className="relative space-y-3" onClick={updateSettings_2}>
+            <button className="basicinfo-submit-button">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};

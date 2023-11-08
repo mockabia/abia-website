@@ -1,6 +1,8 @@
 import { get } from "lodash";
 
 //*******************************
+
+//Email
 export function validateEmail(email, errors) {
   var result = [];
   var obj = {};
@@ -50,14 +52,30 @@ export const validator = (values, fieldName) => {
     case "password":
       validatePassword(values.password, errors);
       break;
+    case "name":
+      validateName(values.name, errors);
+      break;
 
     default:
   }
   return errors;
 };
+
 export const validateVendorLoginForm = (inputs, setInputsErrors) => {
   setInputsErrors({});
   let validate = true;
+  let validName = validateName(inputs["name"], setInputsErrors);
+  if (validName.valid === false) {
+    validate = false;
+    setInputsErrors((values) => ({
+      ...values,
+      ["name"]: validName.error,
+    }));
+    const nameInput = document.querySelector('input[name="email"]');
+    if (nameInput) {
+      nameInput.focus();
+    }
+  }
   let vaildEmail = validateEmail(inputs["email"], setInputsErrors);
   if (vaildEmail.valid === false) {
     validate = false;
@@ -85,3 +103,57 @@ export const validateVendorLoginForm = (inputs, setInputsErrors) => {
   return validate;
 };
 //**********************************
+export const validateteBasicInfo = (inputs, setInputsErrors) => {
+  setInputsErrors({});
+  let validate = true;
+  let validName = validateName(inputs["name"], setInputsErrors);
+  if (validName.valid === false) {
+    validate = false;
+    setInputsErrors((values) => ({
+      ...values,
+      ["name"]: validName.error,
+    }));
+    const nameInput = document.querySelector('input[name="email"]');
+    if (nameInput) {
+      nameInput.focus();
+    }
+  }
+   let validContact = validateName(inputs["name"], setInputsErrors);
+   if (validName.valid === false) {
+     validate = false;
+     setInputsErrors((values) => ({
+       ...values,
+       ["name"]: validName.error,
+     }));
+     const nameInput = document.querySelector('input[name="email"]');
+     if (nameInput) {
+       nameInput.focus();
+     }
+   }
+
+  return validate;
+};
+
+export function validateName(name, errors) {
+  var result = [];
+  var obj = {};
+  obj["valid"] = true;
+
+  if (!name) {
+    obj["error"] = "Name is Required";
+    obj["valid"] = false;
+  }
+  return obj;
+}
+
+// export function validateContact(contact_person, errors) {
+//   var result = [];
+//   var obj = {};
+//   obj["valid"] = true;
+
+//   if (!contact_person) {
+//     obj["error"] = "Contact Name is Required";
+//     obj["valid"] = false;
+//   }
+//   return obj;
+// }

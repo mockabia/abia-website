@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./BasicInfo.css";
 import ImageUploader from "../../components/ImageUploader";
-import { BUSINESS_SETTINGS1 } from "../../api/apiUrls";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import * as servicePage from "../../services/vendor/signupPageService";
+import * as Business from "../../pages/Business/Business";
 
 const schema = yup.object().shape({
   name: yup.string().required("Business name is required"),
@@ -17,8 +16,8 @@ const BasicInfo = ({ vendorDetails }) => {
     website: "",
     photo: "",
   });
+  const [inputsErrors, setInputsErrors] = useState({});
 
-  // const [inputWebsite, setInputWebsite] = useState(vendorDetails.website || "");
   const [image, setImage] = useState(null);
 
   useEffect(() => {
@@ -32,32 +31,28 @@ const BasicInfo = ({ vendorDetails }) => {
     control,
   } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
 
-  const onUpload = (imageUrl) => {
-    console.log("Image uploaded:", imageUrl);
-    setImage(imageUrl);
+  const handleImageCrop = (images) => {
+    console.log("ImageUrl:", images.imageUrl);
+    console.log("Cropped image:", images.thumbUrl);
+    console.log("Cropped thumbnail:", images.iconUrl);
   };
 
-  const handleSubmit = async () => {
+  const handleImageChange = (imageUrl) => {
+    setImage((values) => ({ ...values, ["photo"]: imageUrl }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const updatedName = watch("name");
     const updatedWebsite = watch("website");
-    const formData = {
+    const formValues = {
       name: updatedName,
       website: updatedWebsite,
       photo: image,
     };
-
-    console.log("Updated Form Data:", formData);
-    try {
-      const response = await servicePage.businessStoreData(formData); // Call the storeData function with the form data
-      if (response.statuscode === 200) {
-        console.log("API Response:", response.data.result);
-      } else {
-        console.error("API Error:", response.statuscode);
-      }
-    } catch (error) {
-      console.error("API Request Error:", error);
-    }
+    Business.updateBusiness_Demo(1, formValues, setInputsErrors);
   };
+
   return (
     <div className="basic-info-container">
       <div className="basic-sub-header">
@@ -74,10 +69,15 @@ const BasicInfo = ({ vendorDetails }) => {
                 type="text"
                 required
                 name="name"
-                className="basicinfo-input-style"
+                className={`basicinfo-input-style ${
+                  errors.name ? "signup-error-border" : ""
+                }`}
                 defaultValue={vendorDetails.name}
                 {...register("name")}
               />
+              <p className="text-[12px] text-red-500 font-semibold mt-1">
+                {errors.name?.message}
+              </p>
             </div>
           </div>
           {/* Wesbite */}
@@ -98,7 +98,10 @@ const BasicInfo = ({ vendorDetails }) => {
             <div>
               <label className="font-semibold">Upload Business Logo</label>
             </div>
-            <ImageUploader image={image} onUpload={onUpload} />
+            <ImageUploader
+              onImageCrop={handleImageCrop}
+              onChangeCrop={handleImageChange}
+            />
             <div className="upload-recommendation">
               <span>Recommended Size: 400px x 300px</span>
               <br />

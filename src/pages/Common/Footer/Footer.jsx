@@ -40,52 +40,7 @@ const Footer = () => {
             )}
           </ul>
         </div>
-        <div className="flex justify-between gap-[20px] lg:gap-[35px]">
-          <div className="footer-content-1">
-            <ul>
-              <div className="footer-text">
-                <Link to={"/directory"}>Wedding Directory</Link>
-              </div>
-              <div className="footer-text">
-                <Link to={"/awards"}>Wedding Awards</Link>
-              </div>
-              <div className="footer-text">
-                <Link to={"/reviews"}>Wedding Reviews</Link>
-              </div>
-            </ul>
-          </div>
-          <div className="lg:block"></div>
-          <div className="lg:block"></div>
-          <div className="footer-content-2">
-            <ul>
-              <div className="footer-text">
-                <Link to={"/about-us"}>About ABIA</Link>
-              </div>
-              <div className="footer-text">
-                <Link to={"/contact-us"}>Contact ABIA</Link>
-              </div>
-            </ul>
-          </div>
-        </div>
 
-        <div className="footer-content-3 ">
-          <div className="footer-text">
-            <Link to={"/terms-conditions"}>Terms & Conditions</Link>
-          </div>
-          <div className="border h-[20px] text-[#fff]"></div>
-          <div className="footer-text">
-            <Link to={"/privacy-policy"}>Privacy Policy</Link>
-          </div>
-        </div>
-        {/* Terms and conditions in Desktop */}
-        <div className="footer-content-3-desktop ">
-          <div className="footer-text">
-            <Link to={"/terms-conditions"}>Terms & Conditions</Link>
-          </div>
-          <div className="footer-text">
-            <Link to={"/privacy-policy"}>Privacy Policy</Link>
-          </div>
-        </div>
         <div className="footer-social-icon">
           <a href="https://www.facebook.com/" alt="">
             <FBIcon className="w-[40px]" />

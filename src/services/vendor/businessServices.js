@@ -45,3 +45,7 @@ export async function update_settings(id, settings, postData) {
     postData
   );
 }
+
+export async function stateDropdown(postData) {
+  return await apiService.apiCall(apiUrls.STATE_DROPDOWN, "GET", postData);
+}

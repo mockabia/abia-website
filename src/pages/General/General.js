@@ -3,12 +3,11 @@ import * as reactUrls from "../../api/reactUrls";
 import * as servicesPage from "../../services/vendor/businessServices";
 import * as customValidator from "../Plugins/customValidator";
 
-
 export const hasJWT = async (navigate) => {
   let flag = false;
   localStorage.getItem("vendorToken") ? (flag = true) : (flag = false);
   if (flag == true) {
-    navigate(reactUrls.BUSINESS_MENU['DASHBOARD'].path);
+    navigate(reactUrls.BUSINESS_MENU["DASHBOARD"].path);
   }
 };
 
@@ -36,7 +35,7 @@ export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
   e.preventDefault();
   let requestData = inputs;
   //if (customValidator.validateEmail && customValidator.validatePassword) {
-  if (customValidator.validateVendorLoginForm(inputs, setInputsErrors)) {
+  if (customValidator.validateteBasicInfo(inputs, setInputsErrors)) {
     await servicesPage.login(requestData).then(function (response) {
       if (response.statuscode == 200) {
         const token = response.token;
@@ -64,13 +63,13 @@ export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
               localStorage.vpassword     = inputs.password;
               localStorage.vremember_me  = inputs.remember_me;
             } */
-            apiService.setAuthToken(token);
-            navigate(reactUrls.BUSINESS_MENU['DASHBOARD'].path);
-          } else {
-            navigate(reactUrls.BUSINESS_MENU['USER_STATE'].path, {
-              state: { userStatesData, token: token , email: inputs.email ,}
-            });
-          }
+          apiService.setAuthToken(token);
+          navigate(reactUrls.BUSINESS_MENU["DASHBOARD"].path);
+        } else {
+          navigate(reactUrls.BUSINESS_MENU["USER_STATE"].path, {
+            state: { userStatesData, token: token, email: inputs.email },
+          });
+        }
       } else {
         setInputsErrors(response.errors);
       }
@@ -99,10 +98,10 @@ export const vendorLoginStateForm = async (e, inputs, navigate) => {
             localStorage.vpassword     = inputs.password;
             localStorage.vremember_me  = inputs.remember_me;
           } */
-          apiService.setAuthToken(token);
-          navigate(reactUrls.BUSINESS_MENU['DASHBOARD'].path);
-        }
-    });
+      apiService.setAuthToken(token);
+      navigate(reactUrls.BUSINESS_MENU["DASHBOARD"].path);
+    }
+  });
 };
 export const logout = async (navigate) => {
   await servicesPage.logout().then(function (response) {
@@ -111,7 +110,7 @@ export const logout = async (navigate) => {
         apiService.setAuthToken(null);
         localStorage.removeItem("vendorToken");
         localStorage.removeItem("user");
-        navigate(reactUrls.BUSINESS_MENU['LOGIN'].path);
+        navigate(reactUrls.BUSINESS_MENU["LOGIN"].path);
       }
     }
   });
@@ -149,9 +148,9 @@ export const vendorForgot = async (e, inputs, setInputsErrors, navigate) => {
               localStorage.vremember_me  = inputs.remember_me;
             } */
           apiService.setAuthToken(token);
-          navigate(reactUrls.BUSINESS_MENU['DASHBOARD'].path);
+          navigate(reactUrls.BUSINESS_MENU["DASHBOARD"].path);
         } else {
-          navigate(reactUrls.BUSINESS_MENU['USER_STATE'].path, {
+          navigate(reactUrls.BUSINESS_MENU["USER_STATE"].path, {
             state: { userStatesData },
           });
         }

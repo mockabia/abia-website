@@ -3,7 +3,7 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import LayoutVendor from "../Common/LayoutVendor";
 import * as BusinessJS from "./Business";
 
-import "../../pages - Copy/Settings/businessSettings.css";
+import "../../pages/Style/BusinessSettings.css";
 import { ReactComponent as BusinessUserIcon } from "../../icons/ic-user-interface-info (1).svg";
 import { ReactComponent as BusinessEmail } from "../../icons/business-email (1).svg";
 import { ReactComponent as USernamePasswordIcon } from "../../icons/ic-user-interface-password (1).svg";
@@ -17,7 +17,8 @@ import {
   AccordionItemButton,
   AccordionItemPanel,
 } from "react-accessible-accordion";
-import { BasicInfo, ContactDetails } from "./BusinessSettings_Tab";
+// import { BasicInfo, ContactDetails } from "./BusinessSettings_Tab";
+import BasicInfo from "../../pages - Copy/Settings/BasicInfo";
 // import ContactDetails from "../../pages - Copy/Settings/ContactDetails";
 import UsernamePassword from "../../pages - Copy/Settings/UsernamePassword";
 import Category from "../../pages - Copy/Settings/Category";
@@ -25,11 +26,12 @@ import MyLocation from "../../pages - Copy/Settings/MyLocation";
 
 const BusinessSettings = (props) => {
   let navigate = useNavigate();
+  const [dataSet, setDataSet] = useState(false);
   const [inputs, setInputs] = useState({});
   const [inputsErrors, setInputsErrors] = useState({});
 
   useEffect(() => {
-    BusinessJS.fetchbusiness(setInputs);
+    BusinessJS.fetchbusiness(setInputs, setDataSet);
   }, []);
 
   const handleStateSubmit = (e) => {
@@ -80,21 +82,27 @@ const BusinessSettings = (props) => {
               Keep ABIA up-to-date by updating your business settings below.
             </p>
           </div>
-
-          <Accordion allowZeroExpanded>
-            {accordionItems.map((item) => (
-              <AccordionItem key={item.id}>
-                <AccordionItemHeading>
-                  <AccordionItemButton>
-                    <span className="icon-transition">{item.icon}</span>
-                    <h4 className="accordion-item-header">{item.heading}</h4>
-                    <RxTriangleDown size={30} className="business-down-aroww" />
-                  </AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>{item.content}</AccordionItemPanel>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          {dataSet == true ? (
+            <Accordion allowZeroExpanded>
+              {accordionItems.map((item) => (
+                <AccordionItem key={item.id}>
+                  <AccordionItemHeading>
+                    <AccordionItemButton>
+                      <span className="icon-transition">{item.icon}</span>
+                      <h4 className="accordion-item-header">{item.heading}</h4>
+                      <RxTriangleDown
+                        size={30}
+                        className="business-down-aroww"
+                      />
+                    </AccordionItemButton>
+                  </AccordionItemHeading>
+                  <AccordionItemPanel>{item.content}</AccordionItemPanel>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          ) : (
+            ""
+          )}
         </div>
       </LayoutVendor>
     </>
