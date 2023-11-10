@@ -35,6 +35,7 @@ export const BasicInfo = ({ vendorDetails }) => {
       ["name"]: vendorDetails.name,
       ["website"]: vendorDetails.website,
       ["photo"]: vendorDetails.photo,
+      ["vid"]: vendorDetails.id,
     }));
   }, []);
 

@@ -35,8 +35,8 @@ export async function forgot(postData) {
   return await apiService.apiCall(MAIN_API["FORGOT"], "POST", postData);
 }
 
-export async function update_settings(id, settings, postData) {
-  return await apiService.apiCall( MAIN_API["SETTINGS"] + "/" + id + "/" + settings,"POST",postData);
+export async function update_settings(settings, postData) {
+  return await apiService.apiCall( MAIN_API["SETTINGS"] + "/" + settings,"POST",postData);
 }
 
 export async function stateDropdown(postData) {

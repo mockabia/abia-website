@@ -8,23 +8,19 @@ export const fetchbusiness = async (setInputs, setDataSet) => {
   token = JSON.parse(token);
   let userSession = token && token.user ? token.user : null;
   let userId = userSession && userSession.id ? userSession.id : null;
-
   await servicesPage.editData(userId).then(function (response) {
     if (response.statuscode == 200) {
       setInputs(response.result);
+      console.log("Response:, response")
+      
       setDataSet(true);
     }
   });
 };
 
 export const updateBusiness = async (settings, formValues, setInputsErrors) => {
-  let token = localStorage.getItem("vendorToken");
-  token = JSON.parse(token);
-  let userSession = token && token.user ? token.user : null;
-  let userId = userSession && userSession.id ? userSession.id : null;
-
   await servicesPage
-    .update_settings(userId, settings, formValues)
+    .update_settings(settings, formValues)
     .then(function (response) {
       if (response.statuscode == 200) {
         console.log("Success:", response);

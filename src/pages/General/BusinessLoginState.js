@@ -11,6 +11,7 @@ const BusinessLoginState = () => {
   const navigate                = useNavigate();
   const { userStatesData }      = location.state;
   const email                   = location.state.email;
+  const password                = location.state.password;
   const token                   = location.state.token;
 
 
@@ -24,6 +25,7 @@ const BusinessLoginState = () => {
     let state               = e.target.getAttribute('state');
     var inputs              = {};
     inputs["email"]         = email;
+    inputs["password"]         = password;
     inputs["currenttocken"] = token;
     inputs["currentvid"]    = vid;
     inputs["currentstate"]  = state;
@@ -47,7 +49,7 @@ const BusinessLoginState = () => {
                       <ul>
                         {userStatesData.map((state) => (
                           <li
-                            state={state.stateid}
+                            state={state.stateurl}
                             vid={state.vid}
                             onClick={handleStateSubmit}
                             className="selectedStyled"

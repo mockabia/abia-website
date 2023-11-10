@@ -38,7 +38,8 @@ const BasicInfo = ({ vendorDetails }) => {
   };
 
   const handleImageChange = (imageUrl) => {
-    setImage((values) => ({ ...values, ["photo"]: imageUrl }));
+    setImage(imageUrl)
+    // setImage((values) => ({ ...values, ["photo"]: imageUrl }));
   };
 
   const handleSubmit = async (e) => {
@@ -50,7 +51,7 @@ const BasicInfo = ({ vendorDetails }) => {
       website: updatedWebsite,
       photo: image,
     };
-    Business.updateBusiness(1, formValues, setInputsErrors);
+    console.log("Form data:",formValues )
   };
 
   return (

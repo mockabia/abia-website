@@ -38,6 +38,7 @@ export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
     await servicesPage.login(requestData).then(function (response) {
       if (response.statuscode == 200) {
         const token = response.token;
+        // alert(token)
         const userStatesData = response.result;
         const statesLegnth = response.result.length;
         console.log("State length:", statesLegnth);
@@ -67,7 +68,7 @@ export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
           navigate(reactUrls.BUSINESS_MENU["DASHBOARD"].path);
         } else {
           navigate(reactUrls.BUSINESS_MENU["USER_STATE"].path, {
-            state: { userStatesData, token: token, email: inputs.email },
+            state: { userStatesData, token: token, email: inputs.email , password: inputs.password},
           });
         }
       } else {
@@ -81,6 +82,7 @@ export const vendorLoginStateForm = async (e, inputs, navigate) => {
   e.preventDefault();
   let requestData = inputs;
   await servicesPage.loginStates(requestData).then(function (response) {
+     console.log("Response:", response);
     if (response.statuscode == 200) {
       const token = response.token;
 
@@ -101,6 +103,7 @@ export const vendorLoginStateForm = async (e, inputs, navigate) => {
           } */
       apiService.setAuthToken(token);
       navigate(reactUrls.BUSINESS_MENU["DASHBOARD"].path);
+      console.log("Navigating to dashboard");
     }
   });
 };
