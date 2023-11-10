@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import * as servicesPage from "../../../services/contentServices";
 import "../../Style/Footer.css";
 
@@ -11,33 +11,37 @@ import AbiaLogo from "../../../abiaLogo";
 
 const Footer = () => {
   const [footerMenu, setFooterMenu] = useState({});
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchCommonPageMenu();
   }, []);
   const fetchCommonPageMenu = async () => {
     await servicesPage.fetchFooterMenus().then(function (response) {
       if (response.statuscode == 200) {
-        setFooterMenu(response.result)
+        setFooterMenu(response.result);
       }
     });
+  };
+
+  const handleLogoClick = () => {
+    navigate("/");
   };
 
   return (
     <div className="bg-[#000]">
       <div className="footer-container">
-        <div className="footer-logo">
+        <div className="footer-logo" onClick={handleLogoClick}>
           <div className="logo-adjust cursor-pointer">
             <AbiaLogo />
           </div>
         </div>
         <div className="footerMenus">
           <ul>
-            {Object.values(footerMenu).map((FooterMenu, i) =>
+            {Object.values(footerMenu).map((FooterMenu, i) => (
               <li className="footer-text">
-                  <NavLink to={`/${FooterMenu.url}`} >{FooterMenu.title} </NavLink>
+                <NavLink to={`/${FooterMenu.url}`}>{FooterMenu.title} </NavLink>
               </li>
-            )}
+            ))}
           </ul>
         </div>
 

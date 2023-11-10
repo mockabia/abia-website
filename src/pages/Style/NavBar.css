@@ -61,7 +61,6 @@
     }
     .login-subheaders {
         height: 40px;
-        /* border-bottom: 1px solid #b8b8b8; */
         display: flex;
         align-items: center;
         font-family: 'Playfair Display', serif;

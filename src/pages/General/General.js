@@ -34,8 +34,7 @@ export const handleChange = (e, setInputs, setInputsErrors) => {
 export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
   e.preventDefault();
   let requestData = inputs;
-  //if (customValidator.validateEmail && customValidator.validatePassword) {
-  if (customValidator.validateteBasicInfo(inputs, setInputsErrors)) {
+  if (customValidator.validateVendorLoginForm(inputs, setInputsErrors)) {
     await servicesPage.login(requestData).then(function (response) {
       if (response.statuscode == 200) {
         const token = response.token;
@@ -50,6 +49,7 @@ export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
 
         if (statesLegnth <= 1) {
           localStorage.setItem("vendorToken", JSON.stringify(token));
+          localStorage.setItem("abiaType", "V");
           let expiresInMS = token.expires_in;
           let currentTime = new Date();
           let expireTime = new Date(currentTime.getTime() + expiresInMS);
@@ -85,6 +85,7 @@ export const vendorLoginStateForm = async (e, inputs, navigate) => {
       const token = response.token;
 
       localStorage.setItem("vendorToken", JSON.stringify(token));
+      localStorage.setItem("abiaType", "V");
       let expiresInMS = token.expires_in;
       let currentTime = new Date();
       let expireTime = new Date(currentTime.getTime() + expiresInMS);

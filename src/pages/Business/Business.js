@@ -17,26 +17,25 @@ export const fetchbusiness = async (setInputs, setDataSet) => {
   });
 };
 
-export const updateBusiness = async (settings, inputs, setInputsErrors) => {
+export const updateBusiness = async (settings, formValues, setInputsErrors) => {
   let token = localStorage.getItem("vendorToken");
   token = JSON.parse(token);
   let userSession = token && token.user ? token.user : null;
   let userId = userSession && userSession.id ? userSession.id : null;
-  if (customValidator.validateteBasicInfo(inputs, setInputsErrors)) {
-    await servicesPage
-      .update_settings(userId, settings, inputs)
-      .then(function (response) {
-        if (response.statuscode == 200) {
-          console.log("Success:", response);
-        } else {
-          if (response.errors) {
-            setInputsErrors(response.errors);
-          } else if (response.statusmessage) {
-            setInputsErrors(response.statusmessage);
-          }
+
+  await servicesPage
+    .update_settings(userId, settings, formValues)
+    .then(function (response) {
+      if (response.statuscode == 200) {
+        console.log("Success:", response);
+      } else {
+        if (response.errors) {
+          setInputsErrors(response.errors);
+        } else if (response.statusmessage) {
+          setInputsErrors(response.statusmessage);
         }
-      });
-  }
+      }
+    });
 };
 
 export const handleChange = (e, setInputs, setInputsErrors) => {
@@ -54,13 +53,13 @@ export const fetchState = async (setStateOptions) => {
   });
 };
 
-export const updateBusiness_Demo = async (settings, formValues, setInputsErrors) => {
-  let token = localStorage.getItem("vendorToken");
-  token = JSON.parse(token);
-  let userSession = token && token.user ? token.user : null;
-  let userId = userSession && userSession.id ? userSession.id : null;
+export const updateBusiness_Demo = async (
+  settings,
+  formValues,
+  setInputsErrors
+) => {
   await servicesPage
-    .update_settings(userId, settings, formValues)
+    .update_settings(settings, formValues)
     .then(function (response) {
       if (response.statuscode == 200) {
         console.log("Success:", response);

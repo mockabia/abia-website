@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import LayoutVendor from "../Common/LayoutVendor";
 import * as BusinessJS from "./Business";
+import Skeleton from "@mui/material/Skeleton";
 
 import "../../pages/Style/BusinessSettings.css";
 import { ReactComponent as BusinessUserIcon } from "../../icons/ic-user-interface-info (1).svg";
@@ -78,9 +79,28 @@ const BusinessSettings = (props) => {
           <div className="business-header ">
             {/* <ContentHeader title="Business Settings" /> */}
             <h2>Business Settings</h2>
-            <p className="mt-[10px] whitespace-break-spaces">
-              Keep ABIA up-to-date by updating your business settings below.
-            </p>
+
+            {dataSet ? (
+              <>
+                <p className="mt-[10px] whitespace-break-spaces">
+                  Keep ABIA up-to-date by updating your business settings below.
+                </p>
+              </>
+            ) : (
+              <>
+                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                <br />
+                <Skeleton variant="rectangular" width="100%" height="5rem" />
+                <br />
+                <Skeleton variant="rectangular" width="100%" height="5rem" />
+                <br />
+                <Skeleton variant="rectangular" width="100%" height="5rem" />
+                <br />
+                <Skeleton variant="rectangular" width="100%" height="5rem" />
+                <br />
+              </>
+            )}
           </div>
           {dataSet == true ? (
             <Accordion allowZeroExpanded>

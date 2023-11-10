@@ -15,20 +15,42 @@ export async function apiCall(url, method, data) {
     token = JSON.parse(token);
     let userSession = token && token.user ? token.user : null;
     let userId = userSession && userSession.id ? userSession.id : null;
+    let abiaType =
+      userId && userId != null ? localStorage.getItem("abiaType") : null;
     let accessToken = userSession && token ? token.access_token : null;
-    const headers = userId
+
+    /* const headers = userId
       ? {
           "Content-Type": "application/json",
-          api_key: process.env.REACT_APP_API_KEY,
-          authorization: `Bearer ${accessToken}`,
+          "api_key": process.env.REACT_APP_API_KEY,
+          "authorization": `Bearer ${accessToken}`,
           "X-Request-ID": userId,
         }
       : {
           "Content-Type": "application/json",
-          api_key: process.env.REACT_APP_API_KEY,
-          authorization: `Bearer ${accessToken}`,
-        };
-
+          "api_key": process.env.REACT_APP_API_KEY,
+          "authorization": `Bearer ${accessToken}`,
+        }; */
+    let headers = {
+      "Content-Type": "application/json",
+      api_key: process.env.REACT_APP_API_KEY,
+      authorization: `Bearer ${accessToken}`,
+    };
+    if (userId && abiaType == "V") {
+      headers = {
+        "Content-Type": "application/json",
+        api_key: process.env.REACT_APP_API_KEY,
+        authorization: `Bearer ${accessToken}`,
+        "X-Request-VID": userId,
+      };
+    } else {
+      headers = {
+        "Content-Type": "application/json",
+        api_key: process.env.REACT_APP_API_KEY,
+        authorization: `Bearer ${accessToken}`,
+        "X-Request-WID": userId,
+      };
+    }
     try {
       const response = await axios({
         url,

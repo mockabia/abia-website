@@ -8,15 +8,16 @@ export const MAIN_API = apiUrls.BUSINESS_API;
 export async function storeData(postData) {
   return await apiService.apiCall(MAIN_API["STORE"], "POST", postData);
 }
-export async function editData() {
-  return await apiService.apiCall(MAIN_API["EDIT"], "GET");
+export async function editData(id) {
+  return await apiService.apiCall(MAIN_API["EDIT"] + "/" + id, "GET");
 }
-export async function showData() {
-  return await apiService.apiCall(MAIN_API["SHOW"], "GET");
+export async function showData(id) {
+  return await apiService.apiCall(MAIN_API["SHOW"] + "/" + id, "GET");
 }
-export async function updateData(postData) {
-  return await apiService.apiCall(MAIN_API["UPDATE"],"POST",postData );
+export async function updateData(id, postData) {
+  return await apiService.apiCall(MAIN_API['UPDATE'] + "/" + id,"POST",postData);
 }
+
 export async function login(postData) {
   return await apiService.apiCall(MAIN_API["LOGIN"], "POST", postData);
 }
@@ -35,11 +36,7 @@ export async function forgot(postData) {
 }
 
 export async function update_settings(id, settings, postData) {
-  return await apiService.apiCall(
-    MAIN_API["SETTINGS"] + "/" + id + "/" + settings,
-    "POST",
-    postData
-  );
+  return await apiService.apiCall( MAIN_API["SETTINGS"] + "/" + id + "/" + settings,"POST",postData);
 }
 
 export async function stateDropdown(postData) {

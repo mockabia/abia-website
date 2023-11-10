@@ -50,7 +50,7 @@ const BasicInfo = ({ vendorDetails }) => {
       website: updatedWebsite,
       photo: image,
     };
-    Business.updateBusiness_Demo(1, formValues, setInputsErrors);
+    Business.updateBusiness(1, formValues, setInputsErrors);
   };
 
   return (
