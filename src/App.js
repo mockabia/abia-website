@@ -4,6 +4,7 @@ import * as servicesPage from "./services/contentServices";
 import RootLayout from "./layouts/RootLayout";
 
 import RoutePath from "./Routes/RoutePath";
+import ContentRoutes from "./Routes/ContentRoutes";
 import BusinessLogin from "./pages/General/BusinessLogin";
 import BusinessSignup from "./pages/General/BusinessSignup";
 import BusinessLoginState from "./pages/General/BusinessLoginState";
@@ -21,10 +22,10 @@ const App = () => {
   const [commonMenu, setCommonMenu] = useState({});
 
   useEffect(() => {
-    fetchCommonPageMenu();
+    //fetchCommonPageMenu();
   }, []);
   const fetchCommonPageMenu = async () => {
-    await servicesPage.fetchMenu().then(function (response) {
+    await servicesPage.fetchHeaderMenus().then(function (response) {
       if (response.statuscode == 200) {
         setCommonMenu(response.result);
       }
@@ -32,6 +33,7 @@ const App = () => {
   };
   // const { token } = useAuth();
   return (
+    <>
     <Routes>
       <Route path="/" element={<Public />} />
       <Route path="/directory" element={<Directory />} />
@@ -39,7 +41,6 @@ const App = () => {
       <Route path="/registry" element={<Registry />} />
       <Route path="/specials" element={<Specials />} />
       <Route path="/awards" element={<Awards />} />
-
       {/* <Route path="/login" element={<Login />} />
       <Route path="/user-state" element={<LoginUserState />} />
       <Route path="/signup" element={<SignUp />} />
@@ -49,9 +50,9 @@ const App = () => {
 
       <Route path="/" element={<Public />} />
       <Route path="/registry" element={<Registry />} /> */}
-      {Object.values(commonMenu).map((MainMenu, i) => (
+      {/* {Object.values(commonMenu).map((MainMenu, i) => (
         <Route path={`/${MainMenu.url}`} element={<MainContent />} />
-      ))}
+      ))} */}
       {/* BUSINESS */}
       <Route
         path="/business/*"
@@ -66,6 +67,8 @@ const App = () => {
         }
       />
     </Routes>
+    <ContentRoutes/>
+    </>
   );
 };
 

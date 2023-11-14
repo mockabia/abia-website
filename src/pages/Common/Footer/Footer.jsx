@@ -10,7 +10,7 @@ import { ReactComponent as PinterestIcon } from "../../../icons/pinterest.svg";
 import AbiaLogo from "../../../abiaLogo";
 
 const Footer = () => {
-  const [footerMenu, setFooterMenu] = useState({});
+  const [footerMenu, setFooterMenu] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     fetchCommonPageMenu();
@@ -37,7 +37,8 @@ const Footer = () => {
         </div>
         <div className="footerMenus">
           <ul>
-            {Object.values(footerMenu).map((FooterMenu, i) => (
+            {footerMenu.map((FooterMenu, i) => (
+            //{Object.values(footerMenu).map((FooterMenu, i) => (
               <li className="footer-text">
                 <NavLink to={`/${FooterMenu.url}`}>{FooterMenu.title} </NavLink>
               </li>

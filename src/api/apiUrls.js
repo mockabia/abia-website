@@ -32,6 +32,14 @@ export const CONTENT_API = {
   FOOTER_MENUS      : `${baseUrl}WebCommonFooterMenu`,
   CONTENT_DETAILS   : `${baseUrl}WebViewContentRecord`,
 };
+export const ROUTES_API = {
+  CONTENT_SUBCONTENT_ROUTES   : `${baseUrl}PublicContentVsSubForRoutes`,
+  PRE_CONTENT_ROUTES          : `${baseUrl}PublicPrecontentForRoutes`,
+  SUPPLIER_CONTENT_ROUTES     : `${baseUrl}PublicSuppliercontentForRoutes`,
+  BRIDE_CONTENT_ROUTES        : `${baseUrl}PublicBridecontentForRoutes`,
+  BLOGCAT_BLOGSUBCAT_ROUTES   : `${baseUrl}PublicBlogCatVsSubForRoutes`,
+  BLOG_ROUTES                 : `${baseUrl}PublicBlogForRoutes`,
+};
 
 export const BUSINESS_API = {
   SEARCH: `${baseUrl}search-business`,
