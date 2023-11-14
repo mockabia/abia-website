@@ -11,7 +11,6 @@ export const fetchbusiness = async (setInputs, setDataSet) => {
   await servicesPage.editData(userId).then(function (response) {
     if (response.statuscode == 200) {
       setInputs(response.result);
-      console.log("Response:, response")
       
       setDataSet(true);
     }
@@ -27,6 +26,7 @@ export const updateBusiness = async (settings, formValues, setInputsErrors) => {
       } else {
         if (response.errors) {
           setInputsErrors(response.errors);
+          // console.log("Business Errors:", response.errors)
         } else if (response.statusmessage) {
           setInputsErrors(response.statusmessage);
         }
@@ -49,22 +49,19 @@ export const fetchState = async (setStateOptions) => {
   });
 };
 
-export const updateBusiness_Demo = async (
-  settings,
-  formValues,
-  setInputsErrors
-) => {
-  await servicesPage
-    .update_settings(settings, formValues)
-    .then(function (response) {
-      if (response.statuscode == 200) {
-        console.log("Success:", response);
-      } else {
-        if (response.errors) {
-          setInputsErrors(response.errors);
-        } else if (response.statusmessage) {
-          setInputsErrors(response.statusmessage);
-        }
-      }
-    });
+export const fetchCategory = async (setCategoryOption) => {
+  await servicesPage.categoryDropdown().then(function (response) {
+    if (response.statuscode === 200) {
+      setCategoryOption(response.result);
+    }
+  });
+};
+
+export const fetchRegion = async (setPrimaryLocation) => {
+  await servicesPage.stateRegionDropdwon().then(function (response) {
+    if (response.statuscode === 200) {
+      setPrimaryLocation(response.result);
+      console.log("Primary location:", response.result)
+    }
+  });
 };

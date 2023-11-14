@@ -19,6 +19,8 @@ const BasicInfo = ({ vendorDetails }) => {
   const [inputsErrors, setInputsErrors] = useState({});
 
   const [image, setImage] = useState(null);
+  const VendorID = vendorDetails.vid
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -28,7 +30,6 @@ const BasicInfo = ({ vendorDetails }) => {
     watch,
     register,
     formState: { errors, isValid, isSubmitted },
-    control,
   } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
 
   const handleImageCrop = (images) => {
@@ -50,8 +51,11 @@ const BasicInfo = ({ vendorDetails }) => {
       name: updatedName,
       website: updatedWebsite,
       photo: image,
+      vid: VendorID
     };
-    console.log("Form data:",formValues )
+    // console.log("Form data:",formValues )
+    Business.updateBusiness(1, formValues, setInputsErrors);
+
   };
 
   return (

@@ -42,3 +42,12 @@ export async function update_settings(settings, postData) {
 export async function stateDropdown(postData) {
   return await apiService.apiCall(apiUrls.STATE_DROPDOWN, "GET", postData);
 }
+
+export async function categoryDropdown(postData) {
+  return await apiService.apiCall(apiUrls.CATEGORY_DROPDOWN_API, "GET", postData);
+}
+
+
+export async function stateRegionDropdwon(postData) {
+  return await apiService.apiCall(apiUrls.REGION_DROPDOWN, "GET", postData);
+}

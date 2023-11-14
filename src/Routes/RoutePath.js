@@ -9,7 +9,7 @@ import BusinessDashboard from "../pages/Business/Dashboard";
 // import BusinessProfile from "../pages/Business/BusinessProfile";
 import BusinessProfile from "../pages - Copy/MyProfile2/profile";
 
-import BusinessSettings from "../pages/Business/BusinessSettings";
+import BusinessSettings from "../pages/Business/BusinessSettings/BusinessSettings";
 import GetReviews from "../pages - Copy/Get Review/GetReviews";
 
 /*import Login from "./pages/Login/LoginPage";

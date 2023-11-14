@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../Style/BusinessSettings.css";
-import ImageUploader from "../../components/ImageUploader";
-import * as Business from "./Business";
+import ImageUploader from "../../../components/ImageUploader";
+import * as Business from "../Business";
 
 //
 import { useNavigate } from "react-router-dom";

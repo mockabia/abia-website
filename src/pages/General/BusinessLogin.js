@@ -38,6 +38,8 @@ const LoginPage = () => {
     Object.values(inputsErrors).filter((error) => typeof error !== "undefined")
       .length === 0;
 
+  console.log("Error response:", inputsErrors)
+  const hasInputErrors = Object.values(inputsErrors).some(error => typeof error !== "undefined");
   return (
     <>
       <LayoutGeneral>
@@ -99,14 +101,21 @@ const LoginPage = () => {
                       <VendorLoginButton disabled={!isValidForm} type="submit">
                         <span>Login</span>
                       </VendorLoginButton>
+                       
                     </div>
                   </Stack>
-
                   {/* Password */}
                 </form>
                 <div className="cursor-pointer text-[#6cc2bc] text-[14px] font-semibold flex justify-center items-center mb-[10px]">
                   <BusinessForgotPassword />
                 </div>
+                 {hasInputErrors && (
+                  <div className="flex font-bold text-red-600 text-[14px]">
+                    {Object.values(inputsErrors).map((error, index) => (
+                      <div  key={index}>{error}</div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>

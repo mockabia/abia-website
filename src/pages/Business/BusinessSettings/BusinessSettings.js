@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import LayoutVendor from "../Common/LayoutVendor";
-import * as BusinessJS from "./Business";
+import LayoutVendor from "../../Common/LayoutVendor";
+import * as BusinessJS from "../Business";
 import Skeleton from "@mui/material/Skeleton";
 
-import "../../pages/Style/BusinessSettings.css";
-import { ReactComponent as BusinessUserIcon } from "../../icons/ic-user-interface-info (1).svg";
-import { ReactComponent as BusinessEmail } from "../../icons/business-email (1).svg";
-import { ReactComponent as USernamePasswordIcon } from "../../icons/ic-user-interface-password (1).svg";
-import { ReactComponent as CategoryIcon } from "../../icons/check-all (1).svg";
-import { ReactComponent as LocationIcon } from "../../icons/location (1).svg";
+import "../../../pages/Style/BusinessSettings.css";
+import { ReactComponent as BusinessUserIcon } from "../../../icons/ic-user-interface-info (1).svg";
+import { ReactComponent as BusinessEmail } from "../../../icons/business-email (1).svg";
+import { ReactComponent as USernamePasswordIcon } from "../../../icons/ic-user-interface-password (1).svg";
+import { ReactComponent as CategoryIcon } from "../../../icons/check-all (1).svg";
+import { ReactComponent as LocationIcon } from "../../../icons/location (1).svg";
 import { RxTriangleDown } from "react-icons/rx";
 import {
   Accordion,
@@ -18,12 +18,11 @@ import {
   AccordionItemButton,
   AccordionItemPanel,
 } from "react-accessible-accordion";
-// import { BasicInfo, ContactDetails } from "./BusinessSettings_Tab";
-import BasicInfo from "../../pages - Copy/Settings/BasicInfo";
-// import ContactDetails from "../../pages - Copy/Settings/ContactDetails";
-import UsernamePassword from "../../pages - Copy/Settings/UsernamePassword";
-import Category from "../../pages - Copy/Settings/Category";
-import MyLocation from "../../pages - Copy/Settings/MyLocation";
+import BasicInfo from "./BusinessSetting_1";
+import UsernamePassword from "./BusinessSettings_3";
+import ContactDetails from "./BusinessSettings_2";
+import Category from "./BusinessSettings_4";
+import MyLocation from "./BusinessSettings_5";
 
 const BusinessSettings = (props) => {
   let navigate = useNavigate();
@@ -46,30 +45,40 @@ const BusinessSettings = (props) => {
       heading: "Basic Information",
       content: <BasicInfo vendorDetails={inputs} />,
     },
-    // {
-    //   id: 2,
-    //   icon: <BusinessEmail />,
-    //   heading: "Contact Details",
-    //   content: <ContactDetails vendorDetails={inputs} />,
-    // },
-    // {
-    //   id: 3,
-    //   icon: <USernamePasswordIcon />,
-    //   heading: "Email + Password",
-    //   content: <UsernamePassword vendorDetails={inputs} />,
-    // },
-    // {
-    //   id: 4,
-    //   icon: <CategoryIcon />,
-    //   heading: "Categories",
-    //   content: <Category vendorDetails={inputs} />,
-    // },
-    // {
-    //   id: 5,
-    //   icon: <LocationIcon />,
-    //   heading: "My Locations",
-    //   content: <MyLocation vendorDetails={inputs} />,
-    // },
+    {
+      id: 2,
+      icon: <BusinessEmail />,
+      heading: "Contact Details",
+      content: <ContactDetails vendorDetails={inputs} />,
+    },
+    {
+      id: 3,
+      icon: <USernamePasswordIcon />,
+      heading: "Email + Password",
+      content: <UsernamePassword vendorDetails={inputs} />,
+    },
+    {
+      id: 4,
+      icon: <CategoryIcon />,
+      heading: "Categories",
+      content: <Category vendorDetails={inputs} />,
+    },
+    {
+      id: 5,
+      icon: <LocationIcon />,
+      heading: "My Locations",
+      content: <MyLocation vendorDetails={inputs} />,
+    },
+  ];
+
+  const skeletonLines = [
+    { variant: "text", height: "1rem" },
+    { variant: "text", height: "1rem" },
+    { variant: "rectangular", width: "100%", height: "5rem" },
+    { variant: "rectangular", width: "100%", height: "5rem" },
+    { variant: "rectangular", width: "100%", height: "5rem" },
+    { variant: "rectangular", width: "100%", height: "5rem" },
+    { variant: "rectangular", width: "100%", height: "5rem" },
   ];
   return (
     <>
@@ -88,17 +97,15 @@ const BusinessSettings = (props) => {
               </>
             ) : (
               <>
-                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-                <br />
-                <Skeleton variant="rectangular" width="100%" height="5rem" />
-                <br />
-                <Skeleton variant="rectangular" width="100%" height="5rem" />
-                <br />
-                <Skeleton variant="rectangular" width="100%" height="5rem" />
-                <br />
-                <Skeleton variant="rectangular" width="100%" height="5rem" />
-                <br />
+                {skeletonLines.map((line, index) => (
+                  <div key={index}>
+                    <Skeleton
+                      variant={line.variant}
+                      sx={{ width: line.width, height: line.height }}
+                    />
+                    <br />
+                  </div>
+                ))}
               </>
             )}
           </div>
