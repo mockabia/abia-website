@@ -11,7 +11,7 @@ export const fetchbusiness = async (setInputs, setDataSet) => {
   await servicesPage.editData(userId).then(function (response) {
     if (response.statuscode == 200) {
       setInputs(response.result);
-      
+
       setDataSet(true);
     }
   });
@@ -57,11 +57,11 @@ export const fetchCategory = async (setCategoryOption) => {
   });
 };
 
-export const fetchRegion = async (setPrimaryLocation) => {
-  await servicesPage.stateRegionDropdwon().then(function (response) {
+// state + region
+export const fetchRegion = async (targetState, setPrimaryLocation) => {
+  await servicesPage.stateRegionDropdwon(targetState).then(function (response) {
     if (response.statuscode === 200) {
       setPrimaryLocation(response.result);
-      console.log("Primary location:", response.result)
     }
   });
 };

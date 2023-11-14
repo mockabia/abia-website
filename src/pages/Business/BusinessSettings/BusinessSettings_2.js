@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
-import Select, { components } from "react-select";
+import Select from "react-select";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import "../../Style/BusinessSettings.css";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,59 +11,6 @@ import * as BusinessJS from "../Business";
 
 
 
-const customStyles = {
-  control: (baseStyles, state) => ({
-    ...baseStyles,
-    background: "#fafafa",
-    border: "1px solid #c3bebe",
-    boxShadow: "none",
-    borderRadius: "10px",
-    borderColor: state.isFocused ? "grey" : "red",
-    padding: "5px",
-    width: "100%",
-    height: "100%",
-    maxHeight: "50px",
-    maxWidth: "100%",
-    "@media (min-width: 1190px)": {
-      width: "96%",
-      maxWidth: "96%",
-    },
-  }),
-  menu: (provided) => ({
-    ...provided,
-    marginTop: "10px",
-    borderRadius: "20px",
-    padding: "15px",
-    border: "1px solid #c3bebe",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-    fontSize: "14px",
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    backgroundColor: state.isSelected
-      ? "#e7f5f4"
-      : state.isFocused
-      ? "#e7f5f4"
-      : "white",
-    color: state.isSelected ? "black" : "inherit",
-    padding: "12px",
-  }),
-  indicatorSeparator: (defaultStyles) => {
-    return {
-      ...defaultStyles,
-      display: "none",
-    };
-  },
-  input: (provided) => ({
-    ...provided,
-    WebkitUserSelect: "none",
-    MozUserSelect: "none",
-    msUserSelect: "none",
-    userSelect: "none",
-    inputMode: "none",
-    tabIndex: "0",
-  }),
-};
 
 const schema = yup.object().shape({
   contact_person: yup.string().required("Contact name is required"),
@@ -94,7 +40,8 @@ const ContactDetails = ({ vendorDetails }) => {
     postcode: "",
     vid: vendorDetails.vid,
   });
-
+  
+  
   const {
     watch,
     register,
@@ -229,7 +176,6 @@ const onSubmit = (data) => {
                     {...field}
                     name="state"
                     value={{ label: selectedState, value: selectedState }}
-                    style={customStyles}
                     options={stateOptions.map((state) => ({
                       value: state.value,
                       label: state.label,
@@ -252,7 +198,7 @@ const onSubmit = (data) => {
               )}
             </div>
           </div>
-
+{/*  */}
           <div className="relative space-y-3"  >
             <button
               className="basicinfo-submit-button"

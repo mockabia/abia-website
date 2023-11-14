@@ -1,62 +1,54 @@
 import React, { useEffect, useState } from "react";
 import Dropdown from "../../../third-party-packs/dropDown";
 import SingleSelect from "../../../third-party-packs/singleSelect";
-import { MenuItem, Select, styled } from "@mui/material";
-import * as BusinessJS from "../Business"; 
+import { MenuItem, styled } from "@mui/material";
+import * as BusinessJS from "../Business";
+import Select, { components } from "react-select";
 
-const MenuItemStyle = styled(MenuItem)(({ theme }) => ({
-  fontSize: "14px",
-  fontFamily: "Raleway",
-  fontWeight: "600",
-  backgroundColor: "transparent",
-}));
-
-const MyLocation = () => {
+const MyLocation = ({ vendorDetails }) => {
   let target_region = [];
   const [primaryLocation, setPrimaryLocation] = useState([]);
-  const [primarySelect, setPrimarySelect] = useState("");
+  const [stateOptions, setStateOptions] = useState([]);
+  const [multiLocation, setMultiLocation] = useState([]);
+  const [selected, setSelected] = useState(null);
 
+  const initialState = {
+    value: vendorDetails.state,
+    label: vendorDetails.state,
+  };
+  // target state
+  const targetState = vendorDetails.target_state;
+  const initialTargetState = targetState.split(",").map((state) => ({
+    value: state,
+    label: state,
+  }));
+  // target region
+  const targetRegion = vendorDetails.target_region;
+  const initialTargetRegion = targetRegion.split(",").map((region) => ({
+    value: region,
+    label: region,
+  }));
+
+  // option state
+  const targetStateOptions = stateOptions.map((stateOption) => ({
+    value: stateOption.url,
+    label: stateOption.url,
+  }));
+
+ 
   useEffect(() => {
-    window.scrollTo(0, 0); // Scrolls to the top of the page
+    window.scrollTo(0, 0);
   }, []);
 
-  const handleStateChange = (selectedOptions) => {
-    target_region = selectedOptions;
-    console.log("State select:", target_region);
-  };
-  const handleLocationChange = (selectedOptions) => {
-    target_region = selectedOptions;
-    console.log("Location select:", target_region);
-  };
-  const handlePrimaryLocation = (selectedOptions) => {
-    primaryLocation = selectedOptions.value;
-    console.log("Primary Location:", primaryLocation);
-  };
-
-  //api
-//   const fetchRegion = async () => {
-//     try {
-//       const response = await axios.get(apiurls.REGION_DROPDOWN);
-//       if (response.status === 200) {
-//         const locationTitles = response.data.result;
-//         setPrimaryLocation(locationTitles);
-//         console.log("List Response", response);
-//         console.log("List Regions", primaryLocation);
-//       } else {
-//         console.error("API Error:", response.status, response.statusText);
-//       }
-//     } catch (error) {
-//       console.error("API Request Error:", error);
-//     }
-//   };
-//   useEffect(() => {
-//     fetchRegion();
-//   }, []);
+  useEffect(() => {
+    BusinessJS.fetchRegion(vendorDetails.state, setPrimaryLocation);
+  }, [vendorDetails.state]);
 
   useEffect(() => {
-      BusinessJS.fetchRegion(setPrimaryLocation );
-  }, [])
+    BusinessJS.fetchState(setStateOptions);
+  }, []);
 
+  // console.log("states in MyLcoation:", stateOptions);
   // submit api
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,14 +56,12 @@ const MyLocation = () => {
       target_region,
       primaryLocation,
     };
-
- 
   };
 
-  const options = primaryLocation.map((region) => ({
-    value: region.rid,
-    label: region.title,
-  }));
+  const handleChange = (selectedOption) => {
+    setSelected(selectedOption);
+    // console.log(`Option selected:`, selectedOption);
+  };
 
   return (
     <div className="mylocation-container">
@@ -82,12 +72,42 @@ const MyLocation = () => {
       </div>
       <div className="mt-[20px]">
         <form className="">
+          {/* state */}
+          <div className="hidden space-y-2">
+            <label className="font-semibold">State*</label>
+            <br />
+            <div className="relative lg:w-[52%] mylocation-location-multiselect">
+              <Select sx={{ width: "100%" }} defaultValue={initialState} />
+            </div>
+            <br />
+          </div>
+          {/* Target state */}
           <div className="space-y-2">
-            {/* Locations */}
+            <label className="font-semibold">Target States*</label>
+            <br />
+            <div className="relative lg:w-[52%] mylocation-location-multiselect">
+              <Select
+                sx={{ width: "100%" }}
+                isMulti
+                defaultValue={initialTargetState}
+                options={targetStateOptions}
+                onChange={handleChange}
+              />
+            </div>
+            <br />
+          </div>
+          {/* target regions */}
+          <div className="space-y-2">
             <label className="font-semibold">Locations*</label>
             <br />
             <div className="relative lg:w-[52%] mylocation-location-multiselect">
-              <Dropdown options={options} onFormSubmit={handleLocationChange} />
+              <Select
+                sx={{ width: "100%" }}
+                isMulti={true}
+                defaultValue={initialTargetRegion}
+                options={primaryLocation}
+                onChange={handleChange}
+              />
             </div>
             <br />
           </div>
@@ -95,16 +115,21 @@ const MyLocation = () => {
           <div className="space-y-2">
             <label className="font-semibold">Primary Location*</label>
             <br />
-            <div className="relative lg:w-[52%] mylocation-primarylocaion-multiselect">
-              <SingleSelect
-                options={options}
-                onFormSubmit={handlePrimaryLocation}
+            <div className="relative lg:w-[52%] mylocation-location-multiselect">
+              <Select
+                sx={{ width: "100%" }}
+                options={primaryLocation}
+                onChange={handleChange}
               />
             </div>
             <br />
           </div>
-          <div className="basicinfo-submit-button relative space-y-3" onClick={handleSubmit}>
-            <button >Save</button>
+
+          <div
+            className="basicinfo-submit-button relative space-y-3"
+            onClick={handleSubmit}
+          >
+            <button>Save</button>
           </div>
         </form>
       </div>

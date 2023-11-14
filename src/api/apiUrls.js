@@ -24,7 +24,7 @@ export const NATIONALEVENTS_DROPDOWN = `${baseUrl}nationaleventsDropdown`;
 export const BLOGVENDORS_DROPDOWN = `${baseUrl}blogVendorsDropdown`;
 export const INCLUSIONS_DROPDOWN = `${baseUrl}InclusionsDropdown`;
 export const VENDOR_DROPDOWN = `${baseUrl}BusinessDropdown`;
-export const STATE_VS_REGION_API = `${baseUrl}WebStateVsRegionDropdown/ACT`;
+export const STATE_VS_REGION_API = `${baseUrl}WebStateVsRegionDropdown`;
 
 
 export const CONTENT_API = {
