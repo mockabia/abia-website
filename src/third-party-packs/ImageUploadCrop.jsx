@@ -108,7 +108,7 @@ const ImageUpload = ({
   Modal.setAppElement("#root");
 
   return (
-    <form onSubmit={handleSubmit} className="">
+    <div>
       <div>
         <input
           type="file"
@@ -188,7 +188,7 @@ const ImageUpload = ({
           <ClearButton onClick={closeModal}>Close</ClearButton>
         </div>
       </Modal>
-    </form>
+    </div>
   );
 };
 

@@ -11,6 +11,9 @@ import MainContent from "./pages/General/MainContent";
 import Public from "./pages/General/Public";
 import Directory from "./pages/General/GeneralDirectory/Directory.js";
 import Registry from "./pages/Common/NavBar/Registry.js";
+import BusinessSetting from "./pages - Copy/Settings/businessSettings.jsx";
+// import CoupleSignUp from "./pages - Copy/Couples/Signup/index.js";
+import CSideBar from "./components/Couple-Layout/CSideBar.js";
 const App = () => {
   
   const [commonMenu, setCommonMenu] = useState({});
@@ -50,13 +53,8 @@ const App = () => {
             <Route path="/login" element={<BusinessLogin />} />
             <Route path="/signup" element={<BusinessSignup />} />
             <Route path="/user-state" element={<BusinessLoginState />} />
-
-            <Route
-              path="/*"
-              element={
-                  <RoutePath />
-              }
-            />
+            <Route path="/wedding-profile" element={<CSideBar />} />
+            <Route path="/*" element={<RoutePath />} />
           </Routes>
         }
       />

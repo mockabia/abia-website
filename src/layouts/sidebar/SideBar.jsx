@@ -32,8 +32,6 @@ import { Link, NavLink, useLocation, useRoutes } from "react-router-dom";
 
 //import upgradeNow from "../../pages/upgradeNow";
 
-import * as reactUrls from "../../api/reactUrls";
-
 //css
 import "./sideBar.css";
 import TopBar from "./TopBar";
@@ -141,7 +139,7 @@ const Sidebar = () => {
           <ul className="overflow-auto pl-[28px] text-[0.9rem] py-[32px] flex flex-col gap-2  overflow-x-hidden scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100   md:h-[68%] h-[70%]  ">
             <li>
               <NavLink
-                to={"/business/home"}
+                to={"/home"}
                 className="link sidebarMenuItem"
                 activeClassName="active"
               >
@@ -233,7 +231,7 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink
-                to={reactUrls.BUSINESS_MENU['PROFILE']}
+                to={"/my-profile "}
                 className="link sidebarMenuItem"
                 activeClassName="active"
               >
@@ -258,7 +256,7 @@ const Sidebar = () => {
             )} */}
             <li>
               <NavLink
-                to={reactUrls.BUSINESS_MENU['SETTINGS']}
+                to={"/settings"}
                 className="link sidebarMenuItem"
                 activeClassName="active"
               >

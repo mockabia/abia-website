@@ -10,7 +10,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import * as apiurls from "../../api/apiUrls";
-export const MAIN_API       = apiurls.BUSINESS_API;
+export const MAIN_API = apiurls.BUSINESS_API;
 
 const phoneRegExp = /^\d{10,}$/;
 
@@ -111,7 +111,7 @@ const ContactDetails = ({ vendorDetails }) => {
   } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
 
   useEffect(() => {
-    setSelectedState(vendorDetails.state); // Set the default value
+    setSelectedState(vendorDetails.state);
   }, [vendorDetails.state]);
 
   // common handleChange
@@ -195,7 +195,7 @@ const ContactDetails = ({ vendorDetails }) => {
 
   const onSubmit = async (formData) => {
     try {
-      const response = await fetch(MAIN_API['SETTINGS2'], formData);
+      const response = await fetch(MAIN_API["SETTINGS2"], formData);
       if (response.status == 200) {
         console.log("API Response:", response.data);
       } else {
@@ -226,12 +226,6 @@ const ContactDetails = ({ vendorDetails }) => {
                   }`}
                   {...register(field.name)}
                 />
-
-                {errors[field.name] && (
-                  <p className="text-[12px] text-red-500 font-semibold mt-1">
-                    {errors[field.name].message}
-                  </p>
-                )}
               </div>
             </div>
           ))}
@@ -262,10 +256,7 @@ const ContactDetails = ({ vendorDetails }) => {
                   />
                 )}
               />
-
-              
             </div>
-           
           </div>
 
           <div className="relative space-y-3">

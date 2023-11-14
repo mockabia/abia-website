@@ -1,6 +1,16 @@
 
 .main-content {
-    padding: 20px 90px 30px 90px;
+    /* padding: 20px 90px 30px 90px; */
+    padding: 1rem 1.5rem;
+    height: 100vh;
+    overflow: auto;
+}
+@media(min-width:1024px) {
+   .main-content {
+    padding: 1rem 12rem;
+    height: 100vh;
+    overflow: auto;
+} 
 }
 .main-header {
     font-family: 'Playfair Display', serif;
