@@ -15,12 +15,9 @@ export async function showData(id) {
   return await apiService.apiCall(MAIN_API["SHOW"] + "/" + id, "GET");
 }
 export async function updateData(id, postData) {
-  return await apiService.apiCall(
-    MAIN_API["UPDATE"] + "/" + id,
-    "POST",
-    postData
-  );
+  return await apiService.apiCall(MAIN_API['UPDATE'] + "/" + id,"POST",postData);
 }
+
 export async function login(postData) {
   return await apiService.apiCall(MAIN_API["LOGIN"], "POST", postData);
 }
@@ -38,14 +35,19 @@ export async function forgot(postData) {
   return await apiService.apiCall(MAIN_API["FORGOT"], "POST", postData);
 }
 
-export async function update_settings(id, settings, postData) {
-  return await apiService.apiCall(
-    MAIN_API["SETTINGS"] + "/" + id + "/" + settings,
-    "POST",
-    postData
-  );
+export async function update_settings(settings, postData) {
+  return await apiService.apiCall( MAIN_API["SETTINGS"] + "/" + settings,"POST",postData);
 }
 
 export async function stateDropdown(postData) {
   return await apiService.apiCall(apiUrls.STATE_DROPDOWN, "GET", postData);
+}
+
+export async function categoryDropdown(postData) {
+  return await apiService.apiCall(apiUrls.CATEGORY_DROPDOWN_API, "GET", postData);
+}
+
+
+export async function stateRegionDropdwon(postData) {
+  return await apiService.apiCall(apiUrls.REGION_DROPDOWN, "GET", postData);
 }

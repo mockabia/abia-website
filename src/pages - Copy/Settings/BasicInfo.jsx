@@ -19,6 +19,8 @@ const BasicInfo = ({ vendorDetails }) => {
   const [inputsErrors, setInputsErrors] = useState({});
 
   const [image, setImage] = useState(null);
+  const VendorID = vendorDetails.vid
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -28,7 +30,6 @@ const BasicInfo = ({ vendorDetails }) => {
     watch,
     register,
     formState: { errors, isValid, isSubmitted },
-    control,
   } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
 
   const handleImageCrop = (images) => {
@@ -38,7 +39,8 @@ const BasicInfo = ({ vendorDetails }) => {
   };
 
   const handleImageChange = (imageUrl) => {
-    setImage((values) => ({ ...values, ["photo"]: imageUrl }));
+    setImage(imageUrl)
+    // setImage((values) => ({ ...values, ["photo"]: imageUrl }));
   };
 
   const handleSubmit = async (e) => {
@@ -49,8 +51,11 @@ const BasicInfo = ({ vendorDetails }) => {
       name: updatedName,
       website: updatedWebsite,
       photo: image,
+      vid: VendorID
     };
-    Business.updateBusiness_Demo(1, formValues, setInputsErrors);
+    // console.log("Form data:",formValues )
+    Business.updateBusiness(1, formValues, setInputsErrors);
+
   };
 
   return (

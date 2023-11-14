@@ -105,7 +105,7 @@ export const ForgetBox = {
   bgcolor: "#fff",
   border: "1px solid #949494",
   borderRadius: "1rem",
-  padding:"3rem",
+  padding: "3rem",
   "@media (max-width: 1024px)": {
     width: "20rem",
   },
@@ -539,24 +539,7 @@ export const VLTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-// .login-login-button {
-//         display: inline-block;
-//         display: flex;
-//         justify-content: center;
-//         align-items: center;
-//         margin: 0 auto;
-//         width: 260px;
-//         height: 35px;
-//         border-radius: 30px;
-//         background-color: #6cc2bc;
-//         color: white;
-//         font-size: 14px;
-//         font-weight: 700;
-//         cursor: pointer;
-//         margin-bottom: 2rem;
-//         margin-top: 4rem;
-//         outline: none;
-// }
+
 export const VendorLoginButton = styled(Button)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
@@ -589,4 +572,13 @@ export const VendorLoginButton = styled(Button)(({ theme }) => ({
     backgroundColor: "grey", // Background color when disabled
     color: "white",
   },
+}));
+
+export const NavMenuStyle = styled(Button)(({ theme }) => ({
+  fontFamily: "Playfair Display",
+  color: "#515151", // Set text color to black
+  height: "45px",
+  fontSize: "16px",
+  fontWeight: "600",
+  letterSpacing: "1px",
 }));

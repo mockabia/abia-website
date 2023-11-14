@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../Style/BusinessSettings.css";
-import ImageUploader from "../../components/ImageUploader";
-import * as Business from "./Business";
+import ImageUploader from "../../../components/ImageUploader";
+import * as Business from "../Business";
 
 //
 import { useNavigate } from "react-router-dom";
@@ -35,6 +35,7 @@ export const BasicInfo = ({ vendorDetails }) => {
       ["name"]: vendorDetails.name,
       ["website"]: vendorDetails.website,
       ["photo"]: vendorDetails.photo,
+      ["vid"]: vendorDetails.id,
     }));
   }, []);
 

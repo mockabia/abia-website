@@ -10,12 +10,14 @@ import BusinessLoginState from "./pages/General/BusinessLoginState";
 import MainContent from "./pages/General/MainContent";
 import Public from "./pages/General/Public";
 import Directory from "./pages/General/GeneralDirectory/Directory.js";
-import Registry from "./pages/Common/NavBar/Registry.js";
+import IdeasAndTopList from "./pages/General/Blog.js";
+import Registry from "./pages/General/Registry.js";
+import Specials from "./pages/General/Promotions.js";
+import Awards from "./pages/General/Awards.js";
 import BusinessSetting from "./pages - Copy/Settings/businessSettings.jsx";
 // import CoupleSignUp from "./pages - Copy/Couples/Signup/index.js";
 import CSideBar from "./components/Couple-Layout/CSideBar.js";
 const App = () => {
-  
   const [commonMenu, setCommonMenu] = useState({});
 
   useEffect(() => {
@@ -23,15 +25,21 @@ const App = () => {
   }, []);
   const fetchCommonPageMenu = async () => {
     await servicesPage.fetchMenu().then(function (response) {
-        if (response.statuscode == 200) {
-          setCommonMenu(response.result)
-        }
+      if (response.statuscode == 200) {
+        setCommonMenu(response.result);
+      }
     });
   };
   // const { token } = useAuth();
   return (
     <Routes>
       <Route path="/" element={<Public />} />
+      <Route path="/directory" element={<Directory />} />
+      <Route path="/ideas-topLists" element={<IdeasAndTopList />} />
+      <Route path="/registry" element={<Registry />} />
+      <Route path="/specials" element={<Specials />} />
+      <Route path="/awards" element={<Awards />} />
+
       {/* <Route path="/login" element={<Login />} />
       <Route path="/user-state" element={<LoginUserState />} />
       <Route path="/signup" element={<SignUp />} />
@@ -40,11 +48,10 @@ const App = () => {
       <Route path="/wedding-login" element={<CouplesLogin />} />
 
       <Route path="/" element={<Public />} />
-      <Route path="/directory" element={<Directory />} />
       <Route path="/registry" element={<Registry />} /> */}
-      {Object.values(commonMenu).map((MainMenu, i) =>
+      {Object.values(commonMenu).map((MainMenu, i) => (
         <Route path={`/${MainMenu.url}`} element={<MainContent />} />
-      )}
+      ))}
       {/* BUSINESS */}
       <Route
         path="/business/*"

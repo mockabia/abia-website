@@ -64,18 +64,7 @@ export const validator = (values, fieldName) => {
 export const validateVendorLoginForm = (inputs, setInputsErrors) => {
   setInputsErrors({});
   let validate = true;
-  let validName = validateName(inputs["name"], setInputsErrors);
-  if (validName.valid === false) {
-    validate = false;
-    setInputsErrors((values) => ({
-      ...values,
-      ["name"]: validName.error,
-    }));
-    const nameInput = document.querySelector('input[name="email"]');
-    if (nameInput) {
-      nameInput.focus();
-    }
-  }
+
   let vaildEmail = validateEmail(inputs["email"], setInputsErrors);
   if (vaildEmail.valid === false) {
     validate = false;
@@ -118,18 +107,18 @@ export const validateteBasicInfo = (inputs, setInputsErrors) => {
       nameInput.focus();
     }
   }
-   let validContact = validateName(inputs["name"], setInputsErrors);
-   if (validName.valid === false) {
-     validate = false;
-     setInputsErrors((values) => ({
-       ...values,
-       ["name"]: validName.error,
-     }));
-     const nameInput = document.querySelector('input[name="email"]');
-     if (nameInput) {
-       nameInput.focus();
-     }
-   }
+  let validContact = validateName(inputs["name"], setInputsErrors);
+  if (validName.valid === false) {
+    validate = false;
+    setInputsErrors((values) => ({
+      ...values,
+      ["name"]: validName.error,
+    }));
+    const nameInput = document.querySelector('input[name="email"]');
+    if (nameInput) {
+      nameInput.focus();
+    }
+  }
 
   return validate;
 };

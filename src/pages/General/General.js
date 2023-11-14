@@ -34,11 +34,11 @@ export const handleChange = (e, setInputs, setInputsErrors) => {
 export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
   e.preventDefault();
   let requestData = inputs;
-  //if (customValidator.validateEmail && customValidator.validatePassword) {
-  if (customValidator.validateteBasicInfo(inputs, setInputsErrors)) {
+  if (customValidator.validateVendorLoginForm(inputs, setInputsErrors)) {
     await servicesPage.login(requestData).then(function (response) {
       if (response.statuscode == 200) {
         const token = response.token;
+        // alert(token)
         const userStatesData = response.result;
         const statesLegnth = response.result.length;
         console.log("State length:", statesLegnth);
@@ -50,6 +50,7 @@ export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
 
         if (statesLegnth <= 1) {
           localStorage.setItem("vendorToken", JSON.stringify(token));
+          localStorage.setItem("abiaType", "V");
           let expiresInMS = token.expires_in;
           let currentTime = new Date();
           let expireTime = new Date(currentTime.getTime() + expiresInMS);
@@ -67,7 +68,7 @@ export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
           navigate(reactUrls.BUSINESS_MENU["DASHBOARD"].path);
         } else {
           navigate(reactUrls.BUSINESS_MENU["USER_STATE"].path, {
-            state: { userStatesData, token: token, email: inputs.email },
+            state: { userStatesData, token: token, email: inputs.email , password: inputs.password},
           });
         }
       } else {
@@ -81,10 +82,12 @@ export const vendorLoginStateForm = async (e, inputs, navigate) => {
   e.preventDefault();
   let requestData = inputs;
   await servicesPage.loginStates(requestData).then(function (response) {
+     console.log("Response:", response);
     if (response.statuscode == 200) {
       const token = response.token;
 
       localStorage.setItem("vendorToken", JSON.stringify(token));
+      localStorage.setItem("abiaType", "V");
       let expiresInMS = token.expires_in;
       let currentTime = new Date();
       let expireTime = new Date(currentTime.getTime() + expiresInMS);
@@ -100,6 +103,7 @@ export const vendorLoginStateForm = async (e, inputs, navigate) => {
           } */
       apiService.setAuthToken(token);
       navigate(reactUrls.BUSINESS_MENU["DASHBOARD"].path);
+      console.log("Navigating to dashboard");
     }
   });
 };

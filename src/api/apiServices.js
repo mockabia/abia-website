@@ -15,20 +15,29 @@ export async function apiCall(url, method, data) {
     token = JSON.parse(token);
     let userSession = token && token.user ? token.user : null;
     let userId = userSession && userSession.id ? userSession.id : null;
+    let abiaType =
+      userId && userId != null ? localStorage.getItem("abiaType") : null;
     let accessToken = userSession && token ? token.access_token : null;
-    const headers = userId
-      ? {
-          "Content-Type": "application/json",
-          api_key: process.env.REACT_APP_API_KEY,
-          // authorization: `Bearer ${accessToken}`,
-          "X-Request-ID": userId,
-        }
-      : {
-          "Content-Type": "application/json",
-          api_key: process.env.REACT_APP_API_KEY,
-          // authorization: `Bearer ${accessToken}`,
-        };
-
+    let headers = {
+      "Content-Type": "application/json",
+      api_key: process.env.REACT_APP_API_KEY,
+      authorization: `Bearer ${accessToken}`,
+    };
+    if (userId && abiaType == "V") {
+      headers = {
+        "Content-Type": "application/json",
+        api_key: process.env.REACT_APP_API_KEY,
+        authorization: `Bearer ${accessToken}`,
+        "X-Request-VID": userId,
+      };
+    } else {
+      headers = {
+        "Content-Type": "application/json",
+        api_key: process.env.REACT_APP_API_KEY,
+        authorization: `Bearer ${accessToken}`,
+        "X-Request-WID": userId,
+      };
+    }
     try {
       const response = await axios({
         url,
@@ -39,8 +48,17 @@ export async function apiCall(url, method, data) {
       });
       return response.data;
     } catch (err) {
-      if (err.response.status == 401) {
+      if(err.response.status==401){
         refreshToken();
+      }else if(err.response.data.message=='Token has expired' || err.response.data.message=='Token could not be parsed from the request.'){
+        if ((localStorage.vusername && localStorage.vusername !== "") && (localStorage.vpassword && localStorage.vpassword !== "")) {
+          refreshToken();
+        }else{
+          setAuthToken(null);
+          localStorage.removeItem("vendorToken");
+          localStorage.removeItem("user");
+          window.location = reactUrls.BUSINESS_MENU["LOGIN"].path;
+        }
       }
     }
   } else {
@@ -50,6 +68,8 @@ export async function apiCall(url, method, data) {
     window.location = reactUrls.BUSINESS_MENU["LOGIN"].path;
   }
 }
+
+
 export async function refreshToken() {
   var requestData = {
     username: localStorage.vusername,
@@ -61,7 +81,7 @@ export async function refreshToken() {
       setAuthToken(null);
       localStorage.removeItem("vendorToken");
       localStorage.removeItem("vuser");
-      window.location = process.env.REACT_APP_URL + "/login";
+      window.location = reactUrls.BUSINESS_MENU["LOGIN"].path;
     } else {
       const token = response.token;
       localStorage.setItem("vendorToken", JSON.stringify(token));
