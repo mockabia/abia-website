@@ -5,7 +5,7 @@ import BusinessMenu from "../../layouts/sidebar/BusinessMenu";
 const LayoutVendor = (props) => {
     return (
         <div className="relative flex">
-            <TopBar />
+            {/* <TopBar /> */}
             <div className="flex flex-1">
                 <BusinessMenu />
                 <main className="rootLayout">

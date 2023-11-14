@@ -17,6 +17,8 @@ const Public = () => {
     await servicesPage.fetchContentDetails(url).then(function (response) {
         if (response.statuscode == 200) {
           setPageContent(response.result)
+        }else{
+          setPageContent({title:`Sorry, No data Found for ${url}`})
         }
     });
   };

@@ -1,7 +1,7 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../Style/NavBar.css";
 import { useNavigate } from "react-router-dom";
+import * as servicesPage from "../../../services/contentServices";
 
 import AbiaLogo from "../../../abiaLogo";
 
@@ -32,9 +32,9 @@ import UseAutocomplete from "../../../components/AsyncSearch";
 import styled from "@emotion/styled";
 
 const NavBar = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl]       = useState(null);
   const [searchValue, setSearchValue] = useState("");
-  const [options, setOptions] = useState([
+  const [options, setOptions]         = useState([
     "Wedding Venues",
     "Wedding Dresses",
     "Celebrants",
@@ -56,10 +56,43 @@ const NavBar = () => {
     "Hair Stylist",
     "1st Night Honeymoon",
   ]);
-  const [subMenu, setSubMenu] = useState(null); // Added state for sub-menu
+  const navigate                        = useNavigate();
+  const [subMenu, setSubMenu]           = useState(null); // Added state for sub-menu
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+  const [menuItems, setMenuItems]       = useState([]);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    fetchHeaderMenus();
+  }, []);
+
+  const fetchHeaderMenus =  () => {
+    servicesPage.fetchHeaderMenus().then(function (response) {
+      if (response.statuscode == 200) {
+        setMenuItems(response.result);
+        /* const menuItem = [
+          { label: "DIRECTORY", to: "/directory", subMenu: null },
+          { label: "IDEAS & TOP LISTS", to: "/ideas-topLists", subMenu: null },
+      
+          { label: "REGISTRY", to: "/registry", subMenu: null },
+          { label: "SPECIALS", to: "/specials", subMenu: null },
+          {
+            label: "FEATURED",
+            to: null,
+            subMenu: [
+              { label: "Naufal-test", onClick: () => alert("Option A") },
+              { label: "ABIA-DEMO", onClick: () => alert("Option B") },
+              { label: "Austrialia", onClick: () => alert("Option C") },
+              { label: "Northern Teritory", onClick: () => alert("Option D") },
+              { label: "Queensland", onClick: () => alert("Option E") },
+            ],
+          },
+          { label: "AWARDS", to: "/awards", subMenu: null },
+        ];
+        setMenuItems(menuItem); */
+      }
+    });
+  };
+
 
   const theme = createTheme({
     components: {
@@ -111,26 +144,6 @@ const NavBar = () => {
   const filteredOptions = options.filter((option) =>
     option.toLowerCase().includes(searchValue.toLowerCase())
   );
-
-  const menuItems = [
-    { label: "DIRECTORY", to: "/directory", subMenu: null },
-    { label: "IDEAS & TOP LISTS", to: "/ideas-topLists", subMenu: null },
-
-    { label: "REGISTRY", to: "/registry", subMenu: null },
-    { label: "SPECIALS", to: "/specials", subMenu: null },
-    {
-      label: "FEATURED",
-      to: null,
-      subMenu: [
-        { label: "Naufal-test", onClick: () => alert("Option A") },
-        { label: "ABIA-DEMO", onClick: () => alert("Option B") },
-        { label: "Austrialia", onClick: () => alert("Option C") },
-        { label: "Northern Teritory", onClick: () => alert("Option D") },
-        { label: "Queensland", onClick: () => alert("Option E") },
-      ],
-    },
-    { label: "AWARDS", to: "/awards", subMenu: null },
-  ];
 
   return (
     <div>
@@ -194,18 +207,18 @@ const NavBar = () => {
         <ul className="login-subheaders absolute ">
           {menuItems.map((menuItem, index) => (
             <li className="nav-menu-list" key={index}>
-              {menuItem.subMenu ? (
+              {menuItem.Sub_content.length>0 ? (
                 <div>
                   <NavMenuStyle
-                    id={`${menuItem.label.toLowerCase()}-menu`}
+                    id={`${menuItem.title.toLowerCase()}-menu`}
                     aria-controls={menuAnchorEl ? "sub-menu" : undefined}
                     aria-haspopup="true"
                     aria-expanded={menuAnchorEl ? "true" : undefined}
                     onClick={(event) =>
-                      handleMenuClick(event, menuItem.subMenu)
+                      handleMenuClick(event, menuItem.Sub_content)
                     }
                   >
-                    {menuItem.label}
+                    {menuItem.title}
                   </NavMenuStyle>
                   <Menu
                     id="sub-menu"
@@ -213,18 +226,18 @@ const NavBar = () => {
                     open={Boolean(menuAnchorEl)}
                     onClose={handleMenuClose}
                     MenuListProps={{
-                      "aria-labelledby": `${menuItem.label.toLowerCase()}-menu`,
+                      "aria-labelledby": `${menuItem.title.toLowerCase()}-menu`,
                     }}
                   >
-                    {menuItem.subMenu.map((subMenuItem, subIndex) => (
-                      <MenuItem key={subIndex} onClick={subMenuItem.onClick}>
-                        {subMenuItem.label}
+                    {menuItem.Sub_content.map((subMenuItem, subIndex) => (
+                      <MenuItem key={subIndex}>
+                        <Link to={`/${menuItem.main_url}/${subMenuItem.sub_url}`}>{subMenuItem.title}</Link>
                       </MenuItem>
                     ))}
                   </Menu>
                 </div>
               ) : (
-                <Link to={menuItem.to}>{menuItem.label}</Link>
+                <Link to={`/${menuItem.main_url}`}>{menuItem.title}</Link>
               )}
             </li>
           ))}
