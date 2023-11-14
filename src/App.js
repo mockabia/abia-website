@@ -12,7 +12,7 @@ import MainContent from "./pages/General/MainContent";
 import Public from "./pages/General/Public";
 import Directory from "./pages/General/GeneralDirectory/Directory.js";
 import IdeasAndTopList from "./pages/General/Blog.js";
-import Registry from "./pages/General/Registry.js";
+// import Registry from "./pages/General/Registry.js";
 import Specials from "./pages/General/Promotions.js";
 import Awards from "./pages/General/Awards.js";
 import BusinessSetting from "./pages - Copy/Settings/businessSettings.jsx";
@@ -20,7 +20,7 @@ import BusinessSetting from "./pages - Copy/Settings/businessSettings.jsx";
 import CSideBar from "./components/Couple-Layout/CSideBar.js";
 const App = () => {
   const [commonMenu, setCommonMenu] = useState({});
-
+ 
   useEffect(() => {
     //fetchCommonPageMenu();
   }, []);
@@ -38,7 +38,7 @@ const App = () => {
       <Route path="/" element={<Public />} />
       <Route path="/directory" element={<Directory />} />
       <Route path="/ideas-topLists" element={<IdeasAndTopList />} />
-      <Route path="/registry" element={<Registry />} />
+      {/* <Route path="/registry" element={<Registry />} /> */}
       <Route path="/specials" element={<Specials />} />
       <Route path="/awards" element={<Awards />} />
       {/* <Route path="/login" element={<Login />} />
