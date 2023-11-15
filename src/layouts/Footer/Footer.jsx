@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import * as servicesPage from "../../../services/contentServices";
-import "../../Style/Footer.css";
+import * as servicesPage from "../../services/contentServices";
+import "../css/Footer.css";
 
-import { ReactComponent as FBIcon } from "../../../icons/facebook.svg";
-import { ReactComponent as InstaIcon } from "../../../icons/instagram.svg";
-import { ReactComponent as PinterestIcon } from "../../../icons/pinterest.svg";
-// import { ReactComponent as AbiaLogo } from "../../abialogo.svg";
-import AbiaLogo from "../../../abiaLogo";
+import { ReactComponent as FBIcon } from "../../icons/facebook.svg";
+import { ReactComponent as InstaIcon } from "../../icons/instagram.svg";
+import { ReactComponent as PinterestIcon } from "../../icons/pinterest.svg";
+import AbiaLogo from "../../abiaLogo";
 
 const Footer = () => {
   const [footerMenu, setFooterMenu] = useState([]);
