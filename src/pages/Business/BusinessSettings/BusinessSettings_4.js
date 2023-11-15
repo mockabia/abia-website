@@ -27,9 +27,14 @@ const Category = ({ vendorDetails }) => {
 
   const onSubmit = (data) => {
     setFormValues(data);
+
+    const transformedOtherCategory = data.other_category.map((category) => [
+      category.value,
+      category.label,
+    ]);
     const formValues = {
       first_category: data.first_category || vendorDetails.first_category,
-      other_category: data.other_category,
+      other_category: transformedOtherCategory,
     };
     formValues.vid = vendorDetails.vid;
     BusinessJS.updateBusiness(4, formValues, setInputsErrors);

@@ -380,3 +380,116 @@
         width: 52%;
     } */
 }
+
+
+/*********DROPDOWN *******/
+.dropDown-position {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+}
+
+
+
+.custom-inputcheckbox {
+    display: none;
+}
+
+.label-checkbox {
+    display: block;
+    position: relative;
+    padding-left: 45px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.label-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkbox-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    border-radius: 3px;
+    background-color: #eee;
+    border: 1px solid #c3bebe;
+    margin-left: 12px;
+}
+
+/* On mouse-over, add a grey background color */
+.label-checkbox:hover input~.checkbox-indicator {
+    background-color: #ccc;
+    font-weight: 400;
+}
+
+/* When the checkbox is checked, add a 6cc2bc background */
+.label-checkbox input:checked~.checkbox-indicator {
+    background-color: #6cc2bc;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkbox-indicator:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.label-checkbox input:checked~.checkbox-indicator:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.label-checkbox .checkbox-indicator:after {
+    left: 6px;
+    top: 4px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/* Prevent Safari from zooming in on select inputs */
+@media only screen and (max-width: 1024px) {
+
+    select:focus,
+    select[multiple]:focus {
+        zoom: 1;
+        -webkit-text-size-adjust: none;
+    }
+}
+
+
+.css-1p3m7a8-multiValue {
+    max-width: 100px !important;
+}
+
+.css-wsp0cs-MultiValueGeneric {
+    font-size: 14px !important;
+}
+
+@media(min-width: 1000px) {
+    .css-1p3m7a8-multiValue {
+        max-width: 150px !important;
+    }
+}
