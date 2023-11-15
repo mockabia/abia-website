@@ -58,8 +58,8 @@ export const fetchCategory = async (setCategoryOption) => {
 };
 
 // state + region
-export const fetchRegion = async (targetState, setPrimaryLocation) => {
-  await servicesPage.stateRegionDropdwon(targetState).then(function (response) {
+export const fetchRegion = async (selectedStates) => {
+  await servicesPage.stateRegionDropdwon(selectedStates).then(function (response) {
     if (response.statuscode === 200) {
       setPrimaryLocation(response.result);
     }

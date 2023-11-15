@@ -6,63 +6,28 @@ import * as BusinessJS from "../Business";
 import Select, { components } from "react-select";
 
 const MyLocation = ({ vendorDetails }) => {
-  let target_region = [];
-  const [primaryLocation, setPrimaryLocation] = useState([]);
+  const [selectedStates, setSelectedStates] = useState([]);
+  const [regions, setRegions] = useState([]);
   const [stateOptions, setStateOptions] = useState([]);
-  const [multiLocation, setMultiLocation] = useState([]);
-  const [selected, setSelected] = useState(null);
-
-  const initialState = {
-    value: vendorDetails.state,
-    label: vendorDetails.state,
-  };
-  // target state
-  const targetState = vendorDetails.target_state;
-  const initialTargetState = targetState.split(",").map((state) => ({
-    value: state,
-    label: state,
-  }));
-  // target region
-  const targetRegion = vendorDetails.target_region;
-  const initialTargetRegion = targetRegion.split(",").map((region) => ({
-    value: region,
-    label: region,
-  }));
-
-  // option state
-  const targetStateOptions = stateOptions.map((stateOption) => ({
-    value: stateOption.url,
-    label: stateOption.url,
-  }));
-
- 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    BusinessJS.fetchRegion(vendorDetails.state, setPrimaryLocation);
-  }, [vendorDetails.state]);
 
   useEffect(() => {
     BusinessJS.fetchState(setStateOptions);
   }, []);
 
-  // console.log("states in MyLcoation:", stateOptions);
-  // submit api
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = {
-      target_region,
-      primaryLocation,
-    };
-  };
+  console.log("State options:", stateOptions);
+  console.log("region options:", regions);
 
   const handleChange = (selectedOption) => {
-    setSelected(selectedOption);
-    // console.log(`Option selected:`, selectedOption);
+    setSelectedStates(selectedOption);
   };
+  useEffect(() => {
+    BusinessJS.fetchRegion(selectedStates, setRegions);
+  }, [setSelectedStates]);
 
+  const updatedStateOptions = stateOptions.map((state) => ({
+    value: state.url,
+    label: `${state.label} (${state.url})`,
+  }));
   return (
     <div className="mylocation-container">
       <div>
@@ -73,11 +38,17 @@ const MyLocation = ({ vendorDetails }) => {
       <div className="mt-[20px]">
         <form className="">
           {/* state */}
-          <div className="hidden space-y-2">
+          <div className=" space-y-2">
             <label className="font-semibold">State*</label>
             <br />
             <div className="relative lg:w-[52%] mylocation-location-multiselect">
-              <Select sx={{ width: "100%" }} defaultValue={initialState} />
+              <Select
+                sx={{ width: "100%" }}
+                options={updatedStateOptions}
+                isMulti
+                value={selectedStates}
+                onChange={handleChange}
+              />
             </div>
             <br />
           </div>
@@ -86,13 +57,7 @@ const MyLocation = ({ vendorDetails }) => {
             <label className="font-semibold">Target States*</label>
             <br />
             <div className="relative lg:w-[52%] mylocation-location-multiselect">
-              <Select
-                sx={{ width: "100%" }}
-                isMulti
-                defaultValue={initialTargetState}
-                options={targetStateOptions}
-                onChange={handleChange}
-              />
+              <Select sx={{ width: "100%" }} isMulti />
             </div>
             <br />
           </div>
@@ -101,13 +66,7 @@ const MyLocation = ({ vendorDetails }) => {
             <label className="font-semibold">Locations*</label>
             <br />
             <div className="relative lg:w-[52%] mylocation-location-multiselect">
-              <Select
-                sx={{ width: "100%" }}
-                isMulti={true}
-                defaultValue={initialTargetRegion}
-                options={primaryLocation}
-                onChange={handleChange}
-              />
+              <Select sx={{ width: "100%" }} isMulti={true} options={regions} />
             </div>
             <br />
           </div>
@@ -116,18 +75,14 @@ const MyLocation = ({ vendorDetails }) => {
             <label className="font-semibold">Primary Location*</label>
             <br />
             <div className="relative lg:w-[52%] mylocation-location-multiselect">
-              <Select
-                sx={{ width: "100%" }}
-                options={primaryLocation}
-                onChange={handleChange}
-              />
+              <Select sx={{ width: "100%" }} />
             </div>
             <br />
           </div>
 
           <div
             className="basicinfo-submit-button relative space-y-3"
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
           >
             <button>Save</button>
           </div>
@@ -138,5 +93,3 @@ const MyLocation = ({ vendorDetails }) => {
 };
 
 export default MyLocation;
-
-
