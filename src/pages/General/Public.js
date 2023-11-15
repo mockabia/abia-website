@@ -1,5 +1,5 @@
 import React from "react";
-import LayoutGeneral from "../Common/LayoutGeneral";
+import LayoutGeneral from "../../layouts/Layout/LayoutGeneral";
 import "../Style/Public.css";
 
 const Public = () => {

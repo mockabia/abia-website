@@ -1,5 +1,5 @@
-import SideBar from "./sidebar/SideBar";
-import TopBar from "./sidebar/TopBar";
+import SideBar from "../sidebar/SideBar";
+import TopBar from "../sidebar/TopBar";
 import "./root.css";
 
 function RootLayout({ children, title }) {

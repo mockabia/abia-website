@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import LayoutVendor from "../Common/LayoutVendor";
+import LayoutVendor from "../../layouts/Layout/LayoutVendor";
 
 const Home = () => {
   return (<>

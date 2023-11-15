@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import * as servicesPage from "./services/contentServices";
-import RootLayout from "./layouts/RootLayout";
 
 import RoutePath from "./Routes/RoutePath";
 import ContentRoutes from "./Routes/ContentRoutes";

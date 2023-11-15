@@ -35,7 +35,7 @@ import { Link, NavLink, useLocation, useRoutes } from "react-router-dom";
 import * as reactUrls from "../../api/reactUrls";
 
 //css
-import "./sideBar.css";
+import "./css/sideBar.css";
 import AbiaLogo from "../../abiaLogo";
 
 const Sidebar = () => {

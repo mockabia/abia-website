@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import LayoutVendor from "../../Common/LayoutVendor";
+import LayoutVendor from "../../../layouts/Layout/LayoutVendor";
 import * as BusinessJS from "../Business";
 import Skeleton from "@mui/material/Skeleton";
 

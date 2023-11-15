@@ -5,8 +5,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 
-import "./TopBar.css";
-import Sidebar from "./SideBar";
+import "./css/TopBar.css";
 import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
 import { ReactComponent as HomeIcon } from "../../icons/home.svg";
 import GetReview from "../../icons/getReview";

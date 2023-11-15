@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./GetReviews.css";
 import { useNavigate } from "react-router-dom";
 import ContentHeader from "../../layouts/sidebar/ContentHeader";
-import LayoutVendor from "../../pages/Common/LayoutVendor";
+import LayoutVendor from "../../layouts/Layout/LayoutVendor";
 
 const GetReviews = () => {
   const navigate = useNavigate();

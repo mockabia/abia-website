@@ -1,5 +1,5 @@
 import React from "react";
-import "./content.css";
+import "./css/content.css";
 
 const ContentHeader = ({ title }) => {
   return (

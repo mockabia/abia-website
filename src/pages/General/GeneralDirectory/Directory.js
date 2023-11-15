@@ -8,7 +8,7 @@ import { useState } from "react";
 import BottomFilter from "../../../components/layouts/BottomFilter";
 // import * as servicesPage from "../../services/vendor/signupPageService";
 import "../../Style/GeneralDirectory.css";
-import LayoutGeneral from "../../Common/LayoutGeneral";
+import LayoutGeneral from "../../../layouts/Layout/LayoutGeneral";
 
 const Directory = () => {
   const [mainCity, setMainCity] = useState(null);
