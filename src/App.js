@@ -7,14 +7,15 @@ import ContentRoutes from "./Routes/ContentRoutes";
 import BusinessLogin from "./pages/General/BusinessLogin";
 import BusinessSignup from "./pages/General/BusinessSignup";
 import BusinessLoginState from "./pages/General/BusinessLoginState";
-import MainContent from "./pages/General/MainContent";
 import Public from "./pages/General/Public";
+/*
+import MainContent from "./pages/General/MainContent"; 
 import Directory from "./pages/General/GeneralDirectory/Directory.js";
 import IdeasAndTopList from "./pages/General/Blog.js";
 import Registry from "./pages/General/Registry.js";
 import Specials from "./pages/General/Promotions.js";
 import Awards from "./pages/General/Awards.js";
-import BusinessSetting from "./pages - Copy/Settings/businessSettings.jsx";
+import BusinessSetting from "./pages - Copy/Settings/businessSettings.jsx"; */
 // import CoupleSignUp from "./pages - Copy/Couples/Signup/index.js";
 import CSideBar from "./components/Couple-Layout/CSideBar.js";
 const App = () => {
@@ -52,6 +53,7 @@ const App = () => {
       {/* {Object.values(commonMenu).map((MainMenu, i) => (
         <Route path={`/${MainMenu.url}`} element={<MainContent />} />
       ))} */}
+      <Route path="/*" element={<ContentRoutes/>} />
       {/* BUSINESS */}
       <Route
         path="/business/*"
@@ -66,7 +68,6 @@ const App = () => {
         }
       />
     </Routes>
-    <ContentRoutes/>
     </>
   );
 };
