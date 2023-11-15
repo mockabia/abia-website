@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 
-import BreadCrumbs from "./BreadCrumbs";
-import Main from "./Main";
-import Cards from "./Cards";
-import CardGrid from "./Cards";
+import BreadCrumbs from "./GeneralDirectory/BreadCrumbs";
+import Main from "./GeneralDirectory/Main";
+import Cards from "./GeneralDirectory/Cards";
+import CardGrid from "./GeneralDirectory/Cards";
 import { useState } from "react";
-import BottomFilter from "../../../components/layouts/BottomFilter";
+import BottomFilter from "../../components/layouts/BottomFilter";
 // import * as servicesPage from "../../services/vendor/signupPageService";
-import "../../Style/GeneralDirectory.css";
-import LayoutGeneral from "../../../layouts/Layout/LayoutGeneral";
+import "../Style/GeneralDirectory.css";
+import LayoutGeneral from "../../layouts/Layout/LayoutGeneral";
 
 const Directory = () => {
   const [mainCity, setMainCity] = useState(null);

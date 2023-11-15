@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { useNavigate,Link, NavLink } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 import * as servicesPage from "../../services/contentServices";
 import "../css/NavBar.css";
@@ -10,6 +10,10 @@ import LoginDropdown from "../../components/Login and Signup/LoginDropdown";
 import SignUpDropDown from "../../components/Login and Signup/SignUpDropDown";
 import MenuItems from "../../components/Login and Signup/MenuItems";
 import { NavMenuStyle } from "../../components/FormStyle";
+import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
+import * as GeneralJS from "../../pages/General/General";
+import * as reactUrls from "../../api/reactUrls";
+
 import {
   TextField,
   Popper,
@@ -24,14 +28,13 @@ import {
   MenuItem,
 } from "@mui/material";
 
-import { Link } from "react-router-dom";
 import UseAutocomplete from "../../components/AsyncSearch";
 import styled from "@emotion/styled";
 
 const NavBar = () => {
-  const [anchorEl, setAnchorEl]       = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [searchValue, setSearchValue] = useState("");
-  const [options, setOptions]         = useState([
+  const [options, setOptions] = useState([
     "Wedding Venues",
     "Wedding Dresses",
     "Celebrants",
@@ -53,39 +56,42 @@ const NavBar = () => {
     "Hair Stylist",
     "1st Night Honeymoon",
   ]);
-  const navigate                        = useNavigate();
-  const [subMenu, setSubMenu]           = useState(null); // Added state for sub-menu
+  const navigate = useNavigate();
+  const [subMenu, setSubMenu] = useState(null); // Added state for sub-menu
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
-  const [menuItems, setMenuItems]       = useState([]);
+  const [menuItems, setMenuItems] = useState([]);
+  const profileRef = useRef(null);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState({});
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setProfileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+  useEffect(() => {
+    let token = localStorage.getItem("vendorToken");
+    if (token !== undefined && token !== "undefined") {
+      token = JSON.parse(token);
+      let userSession = token && token.user ? token.user : null;
+      setUserProfile(userSession);
+    }
+  }, []);
 
   useEffect(() => {
     fetchHeaderMenus();
   }, []);
 
-  const fetchHeaderMenus =  () => {
+  const fetchHeaderMenus = () => {
     servicesPage.fetchHeaderMenus().then(function (response) {
       if (response.statuscode == 200) {
         setMenuItems(response.result);
-        /* const menuItem = [
-          { label: "DIRECTORY", to: "/directory", subMenu: null },
-          { label: "IDEAS & TOP LISTS", to: "/ideas-topLists", subMenu: null },
-      
-          { label: "REGISTRY", to: "/registry", subMenu: null },
-          { label: "SPECIALS", to: "/specials", subMenu: null },
-          {
-            label: "FEATURED",
-            to: null,
-            subMenu: [
-              { label: "Naufal-test", onClick: () => alert("Option A") },
-              { label: "ABIA-DEMO", onClick: () => alert("Option B") },
-              { label: "Austrialia", onClick: () => alert("Option C") },
-              { label: "Northern Teritory", onClick: () => alert("Option D") },
-              { label: "Queensland", onClick: () => alert("Option E") },
-            ],
-          },
-          { label: "AWARDS", to: "/awards", subMenu: null },
-        ];
-        setMenuItems(menuItem); */
       }
     });
   };
@@ -141,6 +147,12 @@ const NavBar = () => {
   const filteredOptions = options.filter((option) =>
     option.toLowerCase().includes(searchValue.toLowerCase())
   );
+  const toggleProfile = () => {
+    setProfileOpen(!profileOpen);
+  };
+  const handleLogout = () => {
+    GeneralJS.logout(navigate)
+  };
 
   return (
     <div>
@@ -200,11 +212,11 @@ const NavBar = () => {
         </div>
       </div>
       {/* Subheaders */}
-      <div className="navbar-subhead-large relative">
+      <div className="navbar-subhead-large relative" ref={profileRef}>
         <ul className="login-subheaders absolute ">
           {menuItems.map((menuItem, index) => (
             <li className="nav-menu-list" key={index}>
-              {menuItem.Sub_content.length>0 ? (
+              {menuItem.Sub_content.length > 0 ? (
                 <div>
                   <NavMenuStyle
                     id={`${menuItem.title.toLowerCase()}-menu`}
@@ -240,8 +252,42 @@ const NavBar = () => {
           ))}
         </ul>
         <div className="login-signup-group">
-          <LoginDropdown />
-          <SignUpDropDown />
+          {(userProfile && userProfile.name != '') ? (
+            <>
+              <button className="mr-4 focus:outline-none" onClick={toggleProfile}>
+                <div className="relative ">
+                  <div className="absolute inset-0  bg-[#6cc2bc] w-[10px] h-[10px] md:w-[40px] md:h-[40px] mt-[-9px] rounded-full"></div>
+                  <UserIcons
+                    fill="#fff"
+                    className="w-[22px] relative z-10 md:text-[#6cc2bc] ml-[8.5px]  md:mr-10  "
+                  />
+                </div>
+              </button>
+              {profileOpen && (
+                <div className="dash-dropdown arrow-top highZIndex">
+                  <ul className="">
+                    <li className="px-4 cursor-pointer">
+                      <span className=" text-[17px] font-bold"> {userProfile.name} </span>
+                      <br></br>
+                      <span className="text-[15px]"> {userProfile.email} </span>
+                    </li>
+                    <li className="px-4  text-[15px] cursor-pointer"> <Link to={`${reactUrls.BUSINESS_MENU['DASHBOARD'].path}`}>{reactUrls.BUSINESS_MENU['DASHBOARD'].text}</Link></li>
+                    <li
+                      className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
+                      onClick={handleLogout}
+                    >
+                      <button>Log Out</button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              <LoginDropdown />
+              <SignUpDropDown />
+            </>
+          )}
         </div>
       </div>
     </div>
