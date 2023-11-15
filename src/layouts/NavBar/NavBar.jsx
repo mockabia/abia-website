@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
-import "../../Style/NavBar.css";
 import { useNavigate } from "react-router-dom";
-import * as servicesPage from "../../../services/contentServices";
-
-import AbiaLogo from "../../../abiaLogo";
-
-import SingleSelect from "../../../third-party-packs/singleSelect";
-import LoginDropdown from "../../../components/Login and Signup/LoginDropdown";
-import SignUpDropDown from "../../../components/Login and Signup/SignUpDropDown";
-import SearchBarLogin from "../../../components/SearchBarLogin";
-import MenuItems from "../../../components/Login and Signup/MenuItems";
 import { FiSearch } from "react-icons/fi";
-import { NavMenuStyle } from "../../../components/FormStyle";
-import Asynchronous, { AsyncSearch } from "../../../components/AsyncSearch";
+import * as servicesPage from "../../services/contentServices";
+import "../css/NavBar.css";
+
+import AbiaLogo from "../../abiaLogo";
+
+import LoginDropdown from "../../components/Login and Signup/LoginDropdown";
+import SignUpDropDown from "../../components/Login and Signup/SignUpDropDown";
+import MenuItems from "../../components/Login and Signup/MenuItems";
+import { NavMenuStyle } from "../../components/FormStyle";
 import {
   TextField,
   Popper,
@@ -28,7 +25,7 @@ import {
 } from "@mui/material";
 
 import { Link } from "react-router-dom";
-import UseAutocomplete from "../../../components/AsyncSearch";
+import UseAutocomplete from "../../components/AsyncSearch";
 import styled from "@emotion/styled";
 
 const NavBar = () => {
