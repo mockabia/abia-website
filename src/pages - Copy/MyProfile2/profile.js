@@ -2,7 +2,7 @@ import React from "react";
 import TopBar from "../../layouts/sidebar/TopBar";
 import PreviewLisitng2 from "./PreviewLisitng2";
 import "./Profile.css";
-import LayoutVendor from "../../pages/Common/LayoutVendor";
+import LayoutVendor from "../../layouts/Layout/LayoutVendor";
 
 const Profile = () => {
   return (

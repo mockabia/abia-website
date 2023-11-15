@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import "../Style/BusinessLogin.css";
 import { Link, useNavigate } from "react-router-dom";
-import LayoutGeneral from "../Common/LayoutGeneral";
+import LayoutGeneral from "../../layouts/Layout/LayoutGeneral";
 import BusinessForgotPassword from "./BusinessForgotPassword";
 import * as GeneralJS from "./General";
 import { IconButton, Stack } from "@mui/material";

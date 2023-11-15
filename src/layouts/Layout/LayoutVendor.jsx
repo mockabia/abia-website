@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import TopBar from "../../layouts/sidebar/TopBar";
-import BusinessMenu from "../../layouts/sidebar/BusinessMenu";
+import TopBar from "../sidebar/TopBar";
+import BusinessMenu from "../sidebar/BusinessMenu";
 
 const LayoutVendor = (props) => {
     return (
         <div className="relative flex">
-            {/* <TopBar /> */}
+            <TopBar />
             <div className="flex flex-1">
                 <BusinessMenu />
                 <main className="rootLayout">

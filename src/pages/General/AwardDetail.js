@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import * as servicesPage from "../../services/contentServices";
-import LayoutGeneral from "../Common/LayoutGeneral";
+import LayoutGeneral from "../../layouts/Layout/LayoutGeneral";
 import "../Style/MainContent.css";
 
 const Public = () => {

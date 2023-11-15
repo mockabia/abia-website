@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Box, Stack } from "@mui/material";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import LayoutGeneral from "../Common/LayoutGeneral";
+import LayoutGeneral from "../../layouts/Layout/LayoutGeneral";
 import * as GeneralJS from "./General";
 import "../Style/BusinessLoginState.css";
 

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { RxTriangleDown } from "react-icons/rx";
 import { NavLink, useLocation } from "react-router-dom";
-import "./sideBar.css";
+import "./css/sideBar.css";
 
 const SubMenu = ({ data }) => {
   const [subMenuOpen, setSubMenuOpen] = useState(false);
