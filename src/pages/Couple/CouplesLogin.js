@@ -1,17 +1,17 @@
 import React from "react";
-import "./CouplesLogin.css";
+import "../Style/CouplesLogin.css";
 import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
 import {
   CLLoginStyle,
   CouplesLoginBox,
   ForgetBox,
   NextButtonStyle,
-} from "../../../components/FormStyle";
+} from "../../components/FormStyle";
 import { AiOutlineClose } from "react-icons/ai";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { useState } from "react";
-import CoupleForgotPwd from "../CoupleForgotPwd";
+import CoupleForgotPwd from "./CoupleForgotPwd";
 import { Link } from "react-router-dom";
 
 const CouplesLogin = () => {

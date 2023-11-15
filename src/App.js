@@ -16,11 +16,12 @@ import IdeasAndTopList from "./pages/General/Blog.js";
 import Specials from "./pages/General/Promotions.js";
 import Awards from "./pages/General/Awards.js";
 import BusinessSetting from "./pages - Copy/Settings/businessSettings.jsx";
-// import CoupleSignUp from "./pages - Copy/Couples/Signup/index.js";
+import CoupleSignUp from "./pages - Copy/Couples/Signup/index.js";
 import CSideBar from "./components/Couple-Layout/CSideBar.js";
+import CouplesLogin from "./pages/Couple/CouplesLogin.js";
+
 const App = () => {
   const [commonMenu, setCommonMenu] = useState({});
- 
   useEffect(() => {
     //fetchCommonPageMenu();
   }, []);
@@ -34,40 +35,36 @@ const App = () => {
   // const { token } = useAuth();
   return (
     <>
-    <Routes>
-      <Route path="/" element={<Public />} />
-       {/* <Route path="/directory" element={<Directory />} />
-      <Route path="/ideas-topLists" element={<IdeasAndTopList />} />
-      {/* <Route path="/registry" element={<Registry />} /> */}
-      <Route path="/specials" element={<Specials />} />
-      <Route path="/awards" element={<Awards />} />
-     <Route path="/login" element={<Login />} />
-      <Route path="/user-state" element={<LoginUserState />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/directory" element={<Directory />} />
-      <Route path="/wedding-signup" element={<CoupleSignUp />} />
-      <Route path="/wedding-login" element={<CouplesLogin />} />
+      <Routes>
+        <Route path="/" element={<Public />} />
+        <Route path="/specials" element={<Specials />} />
+        <Route path="/awards" element={<Awards />} />
+        <Route path="/directory" element={<Directory />} />
 
-      <Route path="/" element={<Public />} />
-      <Route path="/registry" element={<Registry />} /> */}
-      {/* {Object.values(commonMenu).map((MainMenu, i) => (
-        <Route path={`/${MainMenu.url}`} element={<MainContent />} />
-      ))} */}
-      {/* BUSINESS */}
-      <Route
-        path="/business/*"
-        element={
-          <Routes>
-            <Route path="/login" element={<BusinessLogin />} />
-            <Route path="/signup" element={<BusinessSignup />} />
-            <Route path="/user-state" element={<BusinessLoginState />} />
-            <Route path="/wedding-profile" element={<CSideBar />} />
-            <Route path="/*" element={<RoutePath />} />
-          </Routes>
-        }
-      />
-    </Routes>
-    <ContentRoutes/>
+        {/* BUSINESS */}
+        <Route
+          path="/business/*"
+          element={
+            <Routes>
+              <Route path="/login" element={<BusinessLogin />} />
+              <Route path="/signup" element={<BusinessSignup />} />
+              <Route path="/user-state" element={<BusinessLoginState />} />
+              <Route path="/wedding-profile" element={<CSideBar />} />
+              <Route path="/*" element={<RoutePath />} />
+            </Routes>
+          }
+        />
+        <Route
+          path="/wedding/*"
+          element={
+            <Routes>
+              <Route path="/login" element={<CouplesLogin />} />
+              <Route path="/signup" element={<CoupleSignUp/>} />
+            </Routes>
+          }
+        />
+      </Routes>
+      <ContentRoutes />
     </>
   );
 };

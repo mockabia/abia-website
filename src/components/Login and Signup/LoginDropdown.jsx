@@ -10,7 +10,7 @@ const LoginDropdown = () => {
   const menuItem = [
     {
       title: "Couple",
-      path: "/business/wedding-login",
+      path: "/wedding/login",
     },
     {
       title: "Vendor",
