@@ -90,7 +90,6 @@ const NavBar = () => {
     servicesPage.fetchHeaderMenus().then(function (response) {
       if (response.statuscode == 200) {
         setMenuItems(response.result);
-        console.log("MenuItem:", menuItems);
       }
     });
   };
