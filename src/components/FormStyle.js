@@ -390,8 +390,8 @@ export const StepperStyle = styled(Stepper)(({ theme }) => ({
     color: "#757575",
     // fill: "white",
   },
-  "& .Mui-active": {
-    color: "black",
+  "& .MuiSvgIcon-root.Mui-active": {
+    color: "#6cc2bc",
   },
   "& .MuiStepLabel-label": {
     fontFamily: "Raleway",
@@ -538,7 +538,6 @@ export const VLTextField = styled(TextField)(({ theme }) => ({
     marginLeft: "0rem ",
   },
 }));
-
 
 export const VendorLoginButton = styled(Button)(({ theme }) => ({
   display: "flex",

@@ -8,6 +8,9 @@ import BusinessLogin from "./pages/General/BusinessLogin";
 import BusinessSignup from "./pages/General/BusinessSignup";
 import BusinessLoginState from "./pages/General/BusinessLoginState";
 import Public from "./pages/General/Public";
+
+import CouplesLogin from "./pages/Couple/CouplesLogin.js";
+import CouplesSignUp from "./pages/Couple/CoupleSignUp.js";
 /*
 import MainContent from "./pages/General/MainContent"; 
 import Directory from "./pages/General/GeneralDirectory/Directory.js";
@@ -64,6 +67,16 @@ const App = () => {
               <Route path="/user-state" element={<BusinessLoginState />} />
               <Route path="/wedding-profile" element={<CSideBar />} />
               <Route path="/*" element={<RoutePath />} />
+            </Routes>
+          }
+        />
+        {/* WEDDING */}
+        <Route
+          path="/wedding/*"
+          element={
+            <Routes>
+              <Route path="/login" element={<CouplesLogin />} />
+              <Route path="/signup" element={<CouplesSignUp />} />
             </Routes>
           }
         />
