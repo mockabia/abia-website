@@ -5,8 +5,17 @@ import RoutePath from "./Routes/RoutePath";
 import Login from "./pages/Login/LoginPage";
 import LoginUserState from "./pages/Login/LoginUserState";
 
+<<<<<<< Updated upstream
+=======
+import ContentRoutes from "./Routes/ContentRoutes";
+import BusinessRoutes from "./Routes/BusinessRoutes";
+import Loader from "./plugins/Loader/Loader";
+
+>>>>>>> Stashed changes
 const App = () => {
+  const [showLoader, setShowLoader]           = useState(true);
   return (
+<<<<<<< Updated upstream
     <Routes>
       {/* <Route path="/" element={<Public />} />
       <Route path="/login" element={<Login />} />
@@ -38,6 +47,15 @@ const App = () => {
       />
       {/* )} */}
     </Routes>
+=======
+    <>
+    <Loader active={showLoader}/>
+      <Routes>
+        <Route path="/*" element={<ContentRoutes  showLoader={showLoader} setShowLoader={setShowLoader} />} />
+        <Route path="/business/*" element={<BusinessRoutes  showLoader={showLoader} setShowLoader={setShowLoader} />} />
+      </Routes>
+    </>
+>>>>>>> Stashed changes
   );
 };
 
