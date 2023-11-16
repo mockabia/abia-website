@@ -11,7 +11,11 @@ const schema = yup.object().shape({
     .array()
     .min(1, "Primary Locations is required")
     .required("Primary Locations is required"),
-  taarget_region: yup
+  target_state: yup
+    .array()
+    .min(1, "Target Locations is required")
+    .required("Target Locations is required"),
+  target_region: yup
     .array()
     .min(1, "Target Locations is required")
     .required("Target Locations is required"),
@@ -46,7 +50,7 @@ const MyLocation = ({ vendorDetails }) => {
     setSelectedRegions(selectedOption);
     setInputsErrors((prevErrors) => ({
       ...prevErrors,
-      taarget_region: null,
+      target_region: null,
     }));
   };
 
@@ -88,7 +92,7 @@ const MyLocation = ({ vendorDetails }) => {
     const formValues = {
       primaryLocation: initialState,
       target_state: selectedStates,
-      taarget_region: selectedRegions,
+      target_region: selectedRegions,
       vid: vendorDetails.vid,
     };
     try {
@@ -172,7 +176,7 @@ const MyLocation = ({ vendorDetails }) => {
             <br />
             <div className="relative lg:w-[52%] mylocation-location-multiselect">
               <Select
-                name="taarget_region"
+                name="target_region"
                 sx={{ width: "100%" }}
                 isMulti={true}
                 options={regions}
@@ -183,9 +187,9 @@ const MyLocation = ({ vendorDetails }) => {
                 hideSelectedOptions={false}
                 components={{ MultiValue }}
               />
-              {getFieldError("taarget_region") && (
+              {getFieldError("target_region") && (
                 <p className="text-[12px] text-red-500 font-semibold mt-1">
-                  {getFieldError("taarget_region")}
+                  {getFieldError("target_region")}
                 </p>
               )}
             </div>

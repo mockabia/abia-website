@@ -9,7 +9,6 @@ import Directory from "../pages/General/Directory";
 const ContentRoutes = (props) => {
   const [routesFromApi, setRoutesFromApi] = useState([]);
   const location = useLocation();
-  const url = location.pathname.split("/").pop();
 
   const LoadablePage = loadable((props) => import(`../pages/General/${props.page}`));
 

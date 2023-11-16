@@ -393,6 +393,9 @@ export const StepperStyle = styled(Stepper)(({ theme }) => ({
   "& .MuiSvgIcon-root.Mui-active": {
     color: "#6cc2bc",
   },
+  "& .MuiSvgIcon-root.Mui-completed": {
+    color: "#6cc2bc",
+  },
   "& .MuiStepLabel-label": {
     fontFamily: "Raleway",
   },
@@ -464,6 +467,7 @@ export const LeftAlignedTypography = styled(Typography)({
   fontFamily: "Raleway",
   textTransform: "capitalize",
   color: "#0e0e0e",
+  fontWeight: "600",
 });
 
 export const CheckBoxStyle = styled(Checkbox)({
@@ -581,3 +585,10 @@ export const NavMenuStyle = styled(Button)(({ theme }) => ({
   fontWeight: "600",
   letterSpacing: "1px",
 }));
+
+export const CSmenuItemStyle = {
+  fontWeight: "500",
+  fontFamily: "Raleway",
+
+  // Add other styles as needed
+};

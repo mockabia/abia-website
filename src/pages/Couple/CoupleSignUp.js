@@ -5,7 +5,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import styled from "@emotion/styled";
+import Select from "react-select";
 // import { ReactComponent as EngagedIcon } from "../../../icons/Couples/engaged.svg";
 import { ReactComponent as EngagedIcon } from "../../icons/Couples/engaged.svg";
 import { ReactComponent as PlanningIcon } from "../../icons/Couples/planning.svg";
@@ -35,25 +35,27 @@ import {
   LeftAlignedTypography,
   CheckBoxStyle,
   CSTextfield,
+  CSmenuItemStyle,
 } from "../../components/FormStyle";
+import * as CoupleJS from "../Couple/Couple";
 
-const steps = ["Get started", "The basics", "Finish up"];
+const steps = ["Let’s Begin", "The Basics", "Final Touches"];
 
 const options = [
+  //   {
+  //     label: "Newly engaged and exploring",
+  //     icon: <EngagedIcon />,
+  //   },
   {
-    label: "Newly engaged and exploring",
-    icon: <EngagedIcon />,
-  },
-  {
-    label: "Planning mode but haven't booked a venue yet",
+    label: "Recently engaged and starting from scratch.",
     icon: <PlanningIcon />,
   },
   {
-    label: "Planning mode and already booked a venue",
+    label: "Searching for our perfect venue and more.",
     icon: <Planning2Icon />,
   },
   {
-    label: "Almost done just the details left",
+    label: "Booked a venue and need to secure other services.",
     icon: <FormICon4 />,
   },
 ];
@@ -64,8 +66,14 @@ export default function CouplesSignUp() {
   const [selectedOption, setSelectedOption] = React.useState(null);
 
   const [location, setLocation] = React.useState([]);
+  const [selectState, setSelectState] = React.useState();
+
   const [checked, setChecked] = React.useState(true);
   // const [formStep, setFormStep] = useState(0);
+
+  useEffect(() => {
+    CoupleJS.fetchState(setLocation);
+  }, []);
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -115,19 +123,6 @@ export default function CouplesSignUp() {
     window.history.back(); // This will navigate back to the previous page in the browser's history
   };
 
-  //api
-  const fetchState = async () => {
-    await servicesPage.stateDropdown().then(function (response) {
-      if (response.statuscode == 200) {
-        setLocation(response.result);
-      }
-    });
-  };
-
-  useEffect(() => {
-    fetchState();
-  }, []);
-
   return (
     <div>
       <form>
@@ -171,7 +166,7 @@ export default function CouplesSignUp() {
               <React.Fragment>
                 <div>
                   <h1 className="cs-signup-header">
-                    Start Planning with your free wedding account.
+                    Congratulations! How can we help plan your big day?
                   </h1>
                 </div>
                 {/* Option buttons */}
@@ -268,19 +263,19 @@ export default function CouplesSignUp() {
                 {/* Option buttons */}
                 {/* 1 */}
                 <div>
-                  <h1 className="cs-signup-header">Fill the basic details</h1>
+                  <h1 className="cs-signup-header"> It’s nice to meet you. </h1>
                 </div>
                 <Box>
                   <Box className="cs-textfield-flex">
                     <CSTextfield
                       className="cs-textfield"
                       id="demo-helper-text-aligned"
-                      label="Full Name"
+                      label="Full Name*"
                     />
                     <CSTextfield
                       className="cs-textfield"
                       id="demo-helper-text-aligned"
-                      label="Partner's Name"
+                      label="Partner's Name*"
                     />
                   </Box>
                   <br />
@@ -307,23 +302,27 @@ export default function CouplesSignUp() {
                     />
                   </Box>
                   <br />
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Typography
-                      fontSize={12}
-                      sx={{
-                        marginRight: "1rem",
-                        fontFamily: "Raleway",
-                      }}
+                  <Box>
+                    <CSTextfield
+                      select
+                      className="cs-textfield-2"
+                      label="Wedding State*"
+                      id="reddit-input"
+                      SelectProps={{ IconComponent: () => null }}
                     >
-                      All fields required
-                    </Typography>
+                      {location.map((option) => (
+                        <MenuItem
+                          key={option.value}
+                          value={option.value}
+                          style={CSmenuItemStyle}
+                        >
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </CSTextfield>
                   </Box>
+                  <br />
+
                   <br />
                   {/* Next */}
                   <NextButtonStyle
@@ -410,7 +409,7 @@ export default function CouplesSignUp() {
                 {/* 1 */}
                 <div>
                   <h1 className="cs-signup-header">
-                    Nice! Before we continue, let's save your details
+                    Let’s save your details for next time!
                   </h1>
                 </div>
                 <Stack spacing={3}>
@@ -418,30 +417,16 @@ export default function CouplesSignUp() {
                     type="email"
                     className="cs-textfield-2"
                     id="demo-helper-text-aligned"
-                    label="Email"
+                    label="Email*"
                   />
                   <CSTextfield
                     type="password"
                     className="cs-textfield-2"
                     id="demo-helper-text-aligned"
-                    label="Password"
+                    label="Password*"
                   />
 
-                  <CSTextfield
-                    select
-                    className="cs-textfield-2"
-                    label="Wedding State*"
-                    id="reddit-input"
-                    SelectProps={{ IconComponent: () => null }}
-                  >
-                    {location.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </CSTextfield>
-
-                  <Box
+                  {/* <Box
                     sx={{
                       display: "flex",
                       justifyContent: "flex-end",
@@ -457,7 +442,7 @@ export default function CouplesSignUp() {
                     >
                       All fields required
                     </Typography>
-                  </Box>
+                  </Box> */}
                   {/* Next */}
                   <NextButtonStyle
                     variant="outlined"

@@ -157,10 +157,9 @@
     }
 }
 
-/* Stepper */
-/* .MuiSvgIcon-root {
-    color: #757575 !important;
+/* Menu style */
+.menuItemStyle {
+    font-family: "Raleway";
+    color: red;
+    font-weight: bold;
 }
-.MuiSvgIcon-root.MUi-active {
-    color: #6cc2bc !important;
-} */

@@ -37,7 +37,7 @@ export function DatePickerPublic({ label, TextFieldProps }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePickerStype
-        label="Preferred Wedding Date"
+        label="Preferred Wedding Dates"
         slots={{
           textField: (params) => <DateTextField variant="filled" {...params} />,
         }}
@@ -50,7 +50,7 @@ export function DatePickerCouple({ label, TextFieldProps }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePickerStype
-        label="Preferred Wedding Date"
+        label="Preferred Wedding Date*"
         slots={{
           textField: (params) => (
             <TextFieldCouple variant="outlined" {...params} />
