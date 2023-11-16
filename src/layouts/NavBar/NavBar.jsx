@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate,Link, NavLink } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 import * as servicesPage from "../../services/contentServices";
 import "../css/NavBar.css";
@@ -32,6 +32,7 @@ import UseAutocomplete from "../../components/AsyncSearch";
 import styled from "@emotion/styled";
 
 const NavBar = () => {
+  
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchValue, setSearchValue] = useState("");
   const [options, setOptions] = useState([
@@ -75,6 +76,7 @@ const NavBar = () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
+
   useEffect(() => {
     let token = localStorage.getItem("vendorToken");
     if (token !== undefined && token !== "undefined") {
@@ -84,18 +86,18 @@ const NavBar = () => {
     }
   }, []);
 
-  useEffect(() => {
-    fetchHeaderMenus();
-  }, []);
-
   const fetchHeaderMenus = () => {
     servicesPage.fetchHeaderMenus().then(function (response) {
       if (response.statuscode == 200) {
         setMenuItems(response.result);
+        console.log("MenuItem:", menuItems);
       }
     });
   };
 
+  useEffect(() => {
+    fetchHeaderMenus();
+  }, []);
 
   const theme = createTheme({
     components: {
@@ -151,7 +153,7 @@ const NavBar = () => {
     setProfileOpen(!profileOpen);
   };
   const handleLogout = () => {
-    GeneralJS.logout(navigate)
+    GeneralJS.logout(navigate);
   };
 
   return (
@@ -240,7 +242,11 @@ const NavBar = () => {
                   >
                     {menuItem.Sub_content.map((subMenuItem, subIndex) => (
                       <MenuItem key={subIndex}>
-                        <Link to={`/${menuItem.main_url}/${subMenuItem.sub_url}`}>{subMenuItem.title}</Link>
+                        <Link
+                          to={`/${menuItem.main_url}/${subMenuItem.sub_url}`}
+                        >
+                          {subMenuItem.title}
+                        </Link>
                       </MenuItem>
                     ))}
                   </Menu>
@@ -252,9 +258,12 @@ const NavBar = () => {
           ))}
         </ul>
         <div className="login-signup-group">
-          {(userProfile && userProfile.name != '') ? (
+          {userProfile && userProfile.name != "" ? (
             <>
-              <button className="mr-4 focus:outline-none" onClick={toggleProfile}>
+              <button
+                className="mr-4 focus:outline-none"
+                onClick={toggleProfile}
+              >
                 <div className="relative ">
                   <div className="absolute inset-0  bg-[#6cc2bc] w-[10px] h-[10px] md:w-[40px] md:h-[40px] mt-[-9px] rounded-full"></div>
                   <UserIcons
@@ -267,11 +276,19 @@ const NavBar = () => {
                 <div className="dash-dropdown arrow-top highZIndex">
                   <ul className="">
                     <li className="px-4 cursor-pointer">
-                      <span className=" text-[17px] font-bold"> {userProfile.name} </span>
+                      <span className=" text-[17px] font-bold">
+                        {" "}
+                        {userProfile.name}{" "}
+                      </span>
                       <br></br>
                       <span className="text-[15px]"> {userProfile.email} </span>
                     </li>
-                    <li className="px-4  text-[15px] cursor-pointer"> <Link to={`${reactUrls.BUSINESS_MENU['DASHBOARD'].path}`}>{reactUrls.BUSINESS_MENU['DASHBOARD'].text}</Link></li>
+                    <li className="px-4  text-[15px] cursor-pointer">
+                      {" "}
+                      <Link to={`${reactUrls.BUSINESS_MENU["DASHBOARD"].path}`}>
+                        {reactUrls.BUSINESS_MENU["DASHBOARD"].text}
+                      </Link>
+                    </li>
                     <li
                       className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
                       onClick={handleLogout}
