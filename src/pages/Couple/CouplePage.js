@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import LayoutVendor from "../Common/LayoutCouple";
+import LayoutVendor from "../../layouts/Layout/LayoutCouple";
 import * as BusinessJS from "./Couple";
 
 

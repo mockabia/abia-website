@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Packages2.css";
+import "../MyProfile2/Packages2.css";
 import { BiUpload } from "react-icons/bi";
 import { RxTriangleUp } from "react-icons/rx";
 import {

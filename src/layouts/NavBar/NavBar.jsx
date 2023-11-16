@@ -57,13 +57,13 @@ const NavBar = () => {
     "Hair Stylist",
     "1st Night Honeymoon",
   ]);
-  const navigate = useNavigate();
-  const [subMenu, setSubMenu] = useState(null); // Added state for sub-menu
+  const navigate                        = useNavigate();
+  const [subMenu, setSubMenu]           = useState(null); // Added state for sub-menu
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
-  const [menuItems, setMenuItems] = useState([]);
-  const profileRef = useRef(null);
-  const [profileOpen, setProfileOpen] = useState(false);
-  const [userProfile, setUserProfile] = useState({});
+  const [menuItems, setMenuItems]       = useState([]);
+  const profileRef                      = useRef(null);
+  const [profileOpen, setProfileOpen]   = useState(false);
+  const [userProfile, setUserProfile]   = useState({});
 
   useEffect(() => {
     const handleOutsideClick = (event) => {

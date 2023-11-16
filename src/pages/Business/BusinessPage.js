@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import LayoutVendor from "../Common/LayoutVendor";
+import LayoutVendor from "../../layouts/Layout/LayoutVendor";
 import * as BusinessJS from "./Business";
 
 
@@ -20,7 +20,7 @@ const BusinessPage = (props) => {
         <div>
           <div className="main-content">
           <h1 className="main-header">Business Page Demo</h1>
-          <div className="content" dangerouslySetInnerHTML={{__html: pageContent.detail}}></div>
+          {/* <div className="content" dangerouslySetInnerHTML={{__html: pageContent.detail}}></div> */}
           </div>
         </div>
       </LayoutVendor>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../Style/BusinessSettings.css";
+import "../../Style/BusinessSettings.css";
 import ImageUploader from "../../../components/ImageUploader";
 import * as Business from "../Business";
 

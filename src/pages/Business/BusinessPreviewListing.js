@@ -1,14 +1,14 @@
 import React, { useRef, useState } from "react";
 import "../Style/BusinessPreviewListing.css";
 import { Accordion, AccordionItem } from "react-accessible-accordion";
-import QuickDescription from "../MyProfile2/QuickDescription";
-import FullDescription from "./FullDescription2";
-import VideoGallery from "../My Profile/photos&videos/myProfileVideo";
-import MeetTheOwner2 from "./MeetTheOwner2";
-import PhotoGalleryTest from "../My Profile/photos&videos/MyProfile-PhotoUplaoder/PhotoGalleryTest";
-import Pricing2 from "./Pricing2";
-import QandA2 from "./QandA2";
-import Packages2 from "./Packages2";
+import QuickDescription from "../../pages - Copy/MyProfile2/QuickDescription";
+import FullDescription from "../../pages - Copy/MyProfile2/FullDescription2";
+import VideoGallery from "../../pages - Copy/My Profile/photos&videos/myProfileVideo";
+import MeetTheOwner2 from "../../pages - Copy/MyProfile2/MeetTheOwner2";
+import PhotoGalleryTest from "../../pages - Copy/My Profile/photos&videos/MyProfile-PhotoUplaoder/PhotoGalleryTest";
+import Pricing2 from "../../pages - Copy/MyProfile2/Pricing2";
+import QandA2 from "../../pages - Copy/MyProfile2/QandA2";
+import Packages2 from "../../pages - Copy/MyProfile2/Packages2";
 
 const PreviewListing = () => {
   //accordion style change by state management

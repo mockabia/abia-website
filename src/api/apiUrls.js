@@ -39,6 +39,7 @@ export const ROUTES_API = {
   BRIDE_CONTENT_ROUTES        : `${baseUrl}PublicBridecontentForRoutes`,
   BLOGCAT_BLOGSUBCAT_ROUTES   : `${baseUrl}PublicBlogCatVsSubForRoutes`,
   BLOG_ROUTES                 : `${baseUrl}PublicBlogForRoutes`,
+  BUSINESS_ROUTES                 : `${baseUrl}PublicBlogForRoutes`,
 };
 
 export const BUSINESS_API = {

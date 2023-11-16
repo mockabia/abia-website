@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import * as servicesPage from "../services/contentServices";
 import loadable from "@loadable/component";
-import MainContent from "../pages/General/MainContent"; 
-import Directory from "../pages/General/Directory"; 
+import LayoutGeneral from "../layouts/Layout/LayoutGeneral";
 
+import Public from "../pages/General/Public";
 
 const ContentRoutes = (props) => {
   const [routesFromApi, setRoutesFromApi] = useState([]);
@@ -68,18 +68,17 @@ const ContentRoutes = (props) => {
     });
   };
   return (
-    <>
+    <LayoutGeneral>
       <Routes>
-        <>
+      <Route path="/" element={<Public />} />
         {routesFromApi.map((routes, i) => (
           <Route
             path={`/${routes.url}`}
             element={<LoadablePage page={routes.pagename} {...props} />}
           />
         ))}
-        </>
       </Routes>
-    </>
+    </LayoutGeneral>
   );
 };
 export default ContentRoutes;
