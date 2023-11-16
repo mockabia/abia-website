@@ -1,0 +1,153 @@
+/* active class */
+
+
+/* .active {
+
+} */
+
+.link {
+    padding: 6px;
+    display: flex;
+    border-radius: 1rem 0 0 1rem;
+    gap: 1rem;
+    align-items: center;
+    justify-content: start;
+    cursor: pointer;
+    transition-duration: 300ms;
+    font-weight: 500;
+    margin-left: -10px;
+}
+
+.link:hover{
+color: #fff;
+    background-color: #339890;
+    /* font-size: 16px; */
+}
+
+.link.active {
+   color: #6cc2bc;
+    background-color: #f4f5f6;
+}
+
+.link.active .fill-current {
+    fill: #6cc2bc;
+}
+
+
+
+/*****************Sub menu ***************/
+/* submenu highlight */
+.sublink {
+    padding: 6px;
+    display: flex;
+    border-radius: 0 0 0 0;
+    align-items: center;
+    justify-content: start;
+    cursor: pointer;
+    transition-duration: 300ms;
+    font-weight: 600px;
+    margin-left: -28px;
+
+}
+
+.sublink:hover {
+    color: #fff;
+    background-color: #339890;
+    border-left: 4px solid #e8cf82;
+    /* font-size: 15px;
+    font-weight: 500; */
+}
+
+.sublink.active {
+
+    color: #6cc2bc;
+    background-color: #f4f5f6;
+    font-weight: 600;
+    font-size: 14px;
+    border-left: 3px solid #e8cf82;
+}
+
+
+
+
+/* submenu style */
+.submenu-style {
+    text-transform: capitalize;
+    font-weight: 300;
+    font-size: 14px;
+/* gap: 5px;     */
+}
+
+/* vertical lining */
+.submenu-line {
+    position: absolute;
+    top: -13px;
+    bottom: -50px;
+    left: -30px;
+    width: 1px;
+    background-color: #fff;
+    content: "";
+}
+/*  */
+.submenu-list {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    position: relative;
+    /* Add this line */
+}
+
+.submenu-list li {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    position: relative;
+   
+    
+    /* Add this line */
+}
+
+
+
+
+.icon-wrapper {
+    margin-right: 0.5rem;
+    /* Adjust the margin as needed */
+}
+
+
+/**********ICONs changes**************/
+/* showcase icon */
+#OBJECT {
+    /* width: 20px;
+    height: 20px;
+    margin-left: 21px; */
+
+}
+
+/* promotions */
+.link.active .cls-1{
+    fill:#6cc2bc
+}
+
+/*enquiry icon  */
+.link.active .st0 {
+    fill: #6cc2bc;
+}
+
+
+
+.fixed-sidebar {
+    position: fixed;
+    
+}
+
+
+/* scrollbar */
+
+.scrollbar-thumb-slate-100{
+    --scrollbar-thumb: initial !important
+}
+
+.scrollbar-track-white{
+    --scrollbar-track: initial !important
+}
+

@@ -1,0 +1,6 @@
+.selectedStyled {
+    font-weight: 600;
+    color: #000;
+    margin: 1rem;
+    cursor: pointer;
+}

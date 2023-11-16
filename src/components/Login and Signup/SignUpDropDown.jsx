@@ -12,11 +12,11 @@ const SignUpDropDown = () => {
   const menuItem = [
     {
       title: "Couple",
-      path: "/wedding-signup",
+      path: "/wedding/signup",
     },
     {
       title: "Vendor",
-      path: "/signup",
+      path: "/business/signup",
     },
   ];
 

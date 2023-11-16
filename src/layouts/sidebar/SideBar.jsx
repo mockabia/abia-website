@@ -30,7 +30,7 @@ import { ReactComponent as MyProfileIcon } from "../../icons/my-profile.svg";
 
 import { Link, NavLink, useLocation, useRoutes } from "react-router-dom";
 
-import upgradeNow from "../../pages/upgradeNow";
+//import upgradeNow from "../../pages/upgradeNow";
 
 //css
 import "./sideBar.css";

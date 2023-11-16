@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500&family=Playfair+Display:wght@500&display=swap');
+
+    .login-navbar-style {
+        background-color: #6cc2bc;
+        display: flex;
+        height: 70px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 25px;
+    }
+    .highZIndex{
+        z-index: 999 !important;
+    }
+    .login-logo {
+        /* position: absolute; */
+        width: 90px;
+        margin-left: 12px;
+    }
+
+    .login-search-field {
+        /* position: absolute; */
+        margin-left: 155vw;
+    }
+
+
+    .login-subheaders {
+        display: none;
+    }
+
+    .search-icon-responsive {
+        margin-top: 13px;
+        cursor: pointer;
+        transition: 0.5s;
+    }
+
+    .navbar-mobile-align{
+        display: none;
+    }
+
+    .text-field-container {
+        background-color: white;
+        border-radius: 8px;
+        padding: 8px;
+    }
+
+    .nav-menu-list {
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+
+@media(min-width:1024px) {
+
+    .login-navbar-style {
+        background-color: #6cc2bc;
+        height: 70px;
+        padding: 0px 50px;
+    }
+    .login-logo {
+        position: absolute;
+        width: 90px;
+
+    }
+    .login-subheaders {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        font-family: 'Playfair Display', serif;
+        font-weight: 600;
+        font-size: 16px;
+        column-gap: 12px;
+        padding-left: 60px;
+        position: relative;
+        letter-spacing: 1px;
+        
+    }
+    .subheaders-empty-div {
+        flex-basis: 250px;
+    }
+
+       .login-search-field {
+        /* position: absolute; */
+        /* margin-left: 90vw; */
+    }
+
+    /* .login-logo {
+        position: absolute;
+        width: 90px;
+        margin-left: 5vw;
+        margin-top: 10px;
+    } */
+
+    .login-button-group{
+        margin-right: 1vw;
+        justify-self: end;
+    }
+
+
+    .login-signup-group {
+        display: flex;
+        align-items: center;
+        margin-top: 0px;
+        padding-right: 50px;
+        column-gap: 10px;
+
+    }
+
+    .navbar-subhead-large {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #b8b8b8;
+    }
+
+    .navbar-mobile-align {
+        display: block;
+
+    }
+
+    .extra-div-adjust {
+        display: none;
+    }
+
+    .search-icon-responsive {
+        display: none;
+    }
+
+}
+
+@media(min-width:1250px) {
+.searchbar-position {
+        margin-left: 40vw;
+        margin-top: 16px;
+    }
+    .login-subheaders {
+        column-gap: 56px;        
+    }
+
+    .login-signup-group {
+        margin-top: 0px;
+        margin-left: 2vw;
+    }
+    .extra-div-adjust {
+      display: block;
+    }
+}

@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import RouteGuard from "./RouteGuard"
+import RouteGuard from "./RouteGuard";
 //history
 //import { history } from '../helpers/history';
 
-import Profile from "../pages/MyProfile2/profile";
+import BusinessDashboard from "../pages/Business/Dashboard";
+// import BusinessProfile from "../pages/Business/BusinessProfile";
+import BusinessProfile from "../pages - Copy/MyProfile2/profile";
+
+import BusinessSettings from "../pages/Business/BusinessSettings/BusinessSettings";
+import GetReviews from "../pages - Copy/Get Review/GetReviews";
 
 /*import Login from "./pages/Login/LoginPage";
 import Public from "./pages/Public";
@@ -29,24 +34,37 @@ import Home from "./pages/Dashboard/Home";
 import Directory from "./pages/Directory/index";
 import CoupleSignUp from "./pages/Couples/Signup/index";
 import CouplesLogin from "./pages/Couples/Login/index";
-import LoginUserState from "./pages/Login/LoginUserState";
 import { useAuth } from "./context/AuthProvider";*/
 
 function hasJWT() {
   let flag = false;
   //check user has JWT token
-  localStorage.getItem("vendorToken") ? flag=true : flag=false
-  return flag
+  localStorage.getItem("vendorToken") ? (flag = true) : (flag = false);
+  return flag;
 }
 const RoutePaths = (props) => {
+  return (
+    <>
+      <Routes>
+        <Route
+          path="/home"
+          element={<RouteGuard {...props} Component={BusinessDashboard} />}
+        />
+        <Route
+          path="/settings"
+          element={<RouteGuard {...props} Component={BusinessSettings} />}
+        />
 
-    return (
-      <>
-        <Routes>
-
-          <Route path="/my-profile" element={<RouteGuard {...props}  Component={Profile}/>} />
-        </Routes>
-      </>
-    );
-  }
-export default RoutePaths
+        <Route
+          path="/my-profile"
+          element={<RouteGuard {...props} Component={BusinessProfile} />}
+        />
+        <Route
+          path="/get-reviews"
+          element={<RouteGuard {...props} Component={GetReviews} />}
+        />
+      </Routes>
+    </>
+  );
+};
+export default RoutePaths;

@@ -5,8 +5,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 
-import "./TopBar.css";
-import Sidebar from "./SideBar";
+import "./css/TopBar.css";
 import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
 import { ReactComponent as HomeIcon } from "../../icons/home.svg";
 import GetReview from "../../icons/getReview";
@@ -21,13 +20,15 @@ import { RxTriangleDown } from "react-icons/rx";
 import { ReactComponent as MenuIcon } from "../../icons/menuIcon.svg";
 import { ReactComponent as AbiaLogo } from "../../ABIA-White-Logo-gold-crown(1).svg";
 import AbiaLogo1 from "../../abiaLogo";
+import * as GeneralJS from "../../pages/General/General";
 //components
 
 const TopBar = ({ title, logo }) => {
-  const navigate = useNavigate();
+  const navigate                      = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false);
-  const profileRef = useRef(null);
-  const isMobile = useMediaQuery({ maxWidth: 769 });
+  const profileRef                    = useRef(null);
+  const isMobile                      = useMediaQuery({ maxWidth: 769 });
+  const [userProfile, setUserProfile] = useState({});
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -39,6 +40,14 @@ const TopBar = ({ title, logo }) => {
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
+  }, []);
+  useEffect(() => {
+    let token = localStorage.getItem("vendorToken");
+    if (token !== undefined && token !== "undefined") {
+      token = JSON.parse(token);
+      let userSession = token && token.user ? token.user : null;
+      setUserProfile(userSession);
+    }
   }, []);
 
   //mobile
@@ -55,21 +64,17 @@ const TopBar = ({ title, logo }) => {
   const toggleSettingsSubMenu = () => {
     setShowSettingsSubmenu(!showSeetingsSubmenu);
   };
-
   const toggleProfile = () => {
     setProfileOpen(!profileOpen);
   };
-
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-
   const closeMenu = () => {
     setMenuOpen(false);
   };
-
   const handleLogout = () => {
-    navigate("/login");
+    GeneralJS.logout(navigate)
   };
   return (
     <div
@@ -107,20 +112,11 @@ const TopBar = ({ title, logo }) => {
           <div className="dash-dropdown arrow-top">
             <ul className="">
               <li className="px-4 cursor-pointer">
-                <span className=" text-[17px] font-bold">
-                  ABC Cakes at...
-                  {/* {auth.email} */}
-                </span>
+                <span className=" text-[17px] font-bold"> {userProfile.name} </span>
                 <br></br>
-                <span className="text-[15px]">
-                  info@abccakesmel.co
-                  {/* {auth.email} */}
-                </span>
+                <span className="text-[15px]"> {userProfile.email} </span>
               </li>
-              <li className="px-4  text-[15px] cursor-pointer">
-                Account Details
-              </li>
-
+              <li className="px-4  text-[15px] cursor-pointer"> Account Details </li>
               <li
                 className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
                 onClick={handleLogout}
