@@ -32,3 +32,6 @@ export async function fetchBlogCatsRoutes() {
 export async function fetchBlogRoutes() {
   return await apiService.apiCall(ROUTES_API["BLOG_ROUTES"], "GET");
 }
+export async function fetchVendorMenuRoutes() {
+  return await apiService.apiCall(ROUTES_API["BUSINESS_ROUTES"], "GET");
+}
