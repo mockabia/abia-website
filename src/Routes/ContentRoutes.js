@@ -2,14 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import * as servicesPage from "../services/contentServices";
 import loadable from "@loadable/component";
-import MainContent from "../pages/General/MainContent"; 
-import Directory from "../pages/General/Directory"; 
 
 
 const ContentRoutes = (props) => {
   const [routesFromApi, setRoutesFromApi] = useState([]);
-  const location = useLocation();
-  const url = location.pathname.split("/").pop();
 
   const LoadablePage = loadable((props) => import(`../pages/General/${props.page}`));
 
