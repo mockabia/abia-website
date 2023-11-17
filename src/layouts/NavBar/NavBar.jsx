@@ -32,7 +32,6 @@ import UseAutocomplete from "../../components/AsyncSearch";
 import styled from "@emotion/styled";
 
 const NavBar = () => {
-  
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchValue, setSearchValue] = useState("");
   const [options, setOptions] = useState([
@@ -57,13 +56,13 @@ const NavBar = () => {
     "Hair Stylist",
     "1st Night Honeymoon",
   ]);
-  const navigate                        = useNavigate();
-  const [subMenu, setSubMenu]           = useState(null); // Added state for sub-menu
+  const navigate = useNavigate();
+  const [subMenu, setSubMenu] = useState(null); // Added state for sub-menu
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
-  const [menuItems, setMenuItems]       = useState([]);
-  const profileRef                      = useRef(null);
-  const [profileOpen, setProfileOpen]   = useState(false);
-  const [userProfile, setUserProfile]   = useState({});
+  const [menuItems, setMenuItems] = useState([]);
+  const profileRef = useRef(null);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState({});
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -281,13 +280,12 @@ const NavBar = () => {
                       </span>
                       <br></br>
                       <span className="text-[15px]"> {userProfile.email} </span>
-                    </li>
-                    <li className="px-4  text-[15px] cursor-pointer">
-                      {" "}
-                      <Link to={`${reactUrls.BUSINESS_MENU["DASHBOARD"].path}`}>
+                    </li>{" "}
+                    <Link to={`${reactUrls.BUSINESS_MENU["DASHBOARD"].path}`}>
+                      <li className="px-4  text-[15px] cursor-pointer">
                         {reactUrls.BUSINESS_MENU["DASHBOARD"].text}
-                      </Link>
-                    </li>
+                      </li>
+                    </Link>
                     <li
                       className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
                       onClick={handleLogout}

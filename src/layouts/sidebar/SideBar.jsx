@@ -4,16 +4,7 @@ import SubMenu from "./SubMenu";
 import { motion } from "framer-motion";
 
 // * React icons
-import { IoIosArrowBack } from "react-icons/io";
-import { SlSettings } from "react-icons/sl";
-import { AiOutlineAppstore } from "react-icons/ai";
-import { BsPerson } from "react-icons/bs";
-import { HiOutlineDatabase } from "react-icons/hi";
-import { TbReportAnalytics } from "react-icons/tb";
-import { FaCrown } from "react-icons/fa";
-import { MdOutlineMail } from "react-icons/md";
 import { useMediaQuery } from "react-responsive";
-import { MdMenu } from "react-icons/md";
 import GetReview from "../../icons/getReview"; //get review
 // svg
 // import manageReview from "../../icons/manageReview";
@@ -128,9 +119,9 @@ const Sidebar = () => {
         overflow-hidden md:relative h-screen "
       >
         {/* <AbiaLogo /> */}
-        <div className="border-b border-white py-[22px] w-full">
+        <div className="border-b border-white py-[22px] w-full ">
           <div className=" flex justify-center items-center">
-            <div className="w-[86px]">
+            <div className="vendor_abialogo">
               <AbiaLogo alt="Abia-logo" />
             </div>
           </div>

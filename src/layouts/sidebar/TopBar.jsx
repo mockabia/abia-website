@@ -24,10 +24,10 @@ import * as GeneralJS from "../../pages/General/General";
 //components
 
 const TopBar = ({ title, logo }) => {
-  const navigate                      = useNavigate();
+  const navigate = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false);
-  const profileRef                    = useRef(null);
-  const isMobile                      = useMediaQuery({ maxWidth: 769 });
+  const profileRef = useRef(null);
+  const isMobile = useMediaQuery({ maxWidth: 769 });
   const [userProfile, setUserProfile] = useState({});
 
   useEffect(() => {
@@ -74,8 +74,12 @@ const TopBar = ({ title, logo }) => {
     setMenuOpen(false);
   };
   const handleLogout = () => {
-    GeneralJS.logout(navigate)
+    GeneralJS.logout(navigate);
   };
+
+  const handleLogoClick = () => {
+    navigate("/")
+  }
   return (
     <div
       ref={profileRef}
@@ -94,7 +98,7 @@ const TopBar = ({ title, logo }) => {
         <h1>test</h1>
       </div>
 
-      <div className="relative w-[85px]  ml-[20px] md:hidden">
+      <div onClick={handleLogoClick} className="relative w-[85px]  ml-[20px] md:hidden cursor-pointer">
         <AbiaLogo1 />
       </div>
 
@@ -112,11 +116,17 @@ const TopBar = ({ title, logo }) => {
           <div className="dash-dropdown arrow-top">
             <ul className="">
               <li className="px-4 cursor-pointer">
-                <span className=" text-[17px] font-bold"> {userProfile.name} </span>
+                <span className=" text-[17px] font-bold">
+                  {" "}
+                  {userProfile.name}{" "}
+                </span>
                 <br></br>
                 <span className="text-[15px]"> {userProfile.email} </span>
               </li>
-              <li className="px-4  text-[15px] cursor-pointer"> Account Details </li>
+              <li className="px-4  text-[15px] cursor-pointer">
+                {" "}
+                Account Details{" "}
+              </li>
               <li
                 className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
                 onClick={handleLogout}

@@ -43,41 +43,46 @@ function hasJWT() {
   return flag;
 }
   return (
-    <LayoutVendor>
-      <Routes>
-        {/* {routesFromApi.map((routes, i) => (
+    <Routes>
+      {/* {routesFromApi.map((routes, i) => (
           <Route
             path={`/${routes.url}`}
             element={<LoadablePage page={routes.pagename} {...props} />}
           />
         ))} */}
-              <Route path="/login" element={<BusinessLogin />} />
-              <Route path="/signup" element={<BusinessSignup />} />
-              <Route path="/user-state" element={<BusinessLoginState />} />
-              <Route path="/wedding-profile" element={<CSideBar />} />
-              <Route path="/*" element={
-                      <Routes>
-                        <Route
-                          path="/home"
-                          element={<RouteGuard {...props} Component={BusinessDashboard} />}
-                        />
-                        <Route
-                          path="/settings"
-                          element={<RouteGuard {...props} Component={BusinessSettings} />}
-                        />
-                
-                        <Route
-                          path="/my-profile"
-                          element={<RouteGuard {...props} Component={BusinessProfile} />}
-                        />
-                        <Route
-                          path="/get-reviews"
-                          element={<RouteGuard {...props} Component={GetReviews} />}
-                        />
-                      </Routes>
-              } />
+      <Route path="/login" element={<BusinessLogin />} />
+      <Route path="/signup" element={<BusinessSignup />} />
+      <Route path="/user-state" element={<BusinessLoginState />} />
+      <Route path="/wedding-profile" element={<CSideBar />} />
+      <Route
+        path="/*"
+        element={
+          <LayoutVendor>
+            <Routes>
+              <Route
+                path="/home"
+                element={
+                  <RouteGuard {...props} Component={BusinessDashboard} />
+                }
+              />
+              <Route
+                path="/settings"
+                element={<RouteGuard {...props} Component={BusinessSettings} />}
+              />
+
+              <Route
+                path="/my-profile"
+                element={<RouteGuard {...props} Component={BusinessProfile} />}
+              />
+              <Route
+                path="/get-reviews"
+                element={<RouteGuard {...props} Component={GetReviews} />}
+              />
             </Routes>
-    </LayoutVendor>
+          </LayoutVendor>
+        }
+      />
+    </Routes>
   );
 };
 export default ContentRoutes;

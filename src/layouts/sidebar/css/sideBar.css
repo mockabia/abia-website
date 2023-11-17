@@ -151,3 +151,9 @@ color: #fff;
     --scrollbar-track: initial !important
 }
 
+/* logo */
+
+.vendor_abialogo {
+    width: 86px;
+    cursor: pointer;
+}

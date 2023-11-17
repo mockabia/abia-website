@@ -7,17 +7,15 @@ import LayoutVendor from "../../layouts/Layout/LayoutVendor";
 const Profile = () => {
   return (
     <>
-      <LayoutVendor>
-        <div className="relative mt-[20px]">
-          <div className="preview-lisitng-div">
-            <button className="preview-listing-button ">Preview Listing</button>
-          </div>
+      <div className="relative mt-[20px]">
+        <div className="preview-lisitng-div">
+          <button className="preview-listing-button ">Preview Listing</button>
         </div>
-        {/* Section */}
-        <div className="myprofile-container">
-          <PreviewLisitng2 />
-        </div>
-      </LayoutVendor>
+      </div>
+      {/* Section */}
+      <div className="myprofile-container">
+        <PreviewLisitng2 />
+      </div>
     </>
   );
 };

@@ -82,56 +82,51 @@ const BusinessSettings = (props) => {
   ];
   return (
     <>
-      <LayoutVendor>
-        {/* <pre>{JSON.stringify(inputs, null, 2)}</pre> */}
-        <div className="business-acordion-container">
-          <div className="business-header ">
-            {/* <ContentHeader title="Business Settings" /> */}
-            <h2>Business Settings</h2>
+      {/* <pre>{JSON.stringify(inputs, null, 2)}</pre> */}
+      <div className="business-acordion-container">
+        <div className="business-header ">
+          {/* <ContentHeader title="Business Settings" /> */}
+          <h2>Business Settings</h2>
 
-            {dataSet ? (
-              <>
-                <p className="mt-[10px] whitespace-break-spaces">
-                  Keep ABIA up-to-date by updating your business settings below.
-                </p>
-              </>
-            ) : (
-              <>
-                {skeletonLines.map((line, index) => (
-                  <div key={index}>
-                    <Skeleton
-                      variant={line.variant}
-                      sx={{ width: line.width, height: line.height }}
-                    />
-                    <br />
-                  </div>
-                ))}
-              </>
-            )}
-          </div>
-          {dataSet == true ? (
-            <Accordion allowZeroExpanded>
-              {accordionItems.map((item) => (
-                <AccordionItem key={item.id}>
-                  <AccordionItemHeading>
-                    <AccordionItemButton>
-                      <span className="icon-transition">{item.icon}</span>
-                      <h4 className="accordion-item-header">{item.heading}</h4>
-                      <RxTriangleDown
-                        size={30}
-                        className="business-down-aroww"
-                      />
-                    </AccordionItemButton>
-                  </AccordionItemHeading>
-                  <AccordionItemPanel>{item.content}</AccordionItemPanel>
-                </AccordionItem>
-              ))}
-            </Accordion>
+          {dataSet ? (
+            <>
+              <p className="mt-[10px] whitespace-break-spaces">
+                Keep ABIA up-to-date by updating your business settings below.
+              </p>
+            </>
           ) : (
-            ""
+            <>
+              {skeletonLines.map((line, index) => (
+                <div key={index}>
+                  <Skeleton
+                    variant={line.variant}
+                    sx={{ width: line.width, height: line.height }}
+                  />
+                  <br />
+                </div>
+              ))}
+            </>
           )}
         </div>
-      </LayoutVendor>
+        {dataSet == true ? (
+          <Accordion allowZeroExpanded>
+            {accordionItems.map((item) => (
+              <AccordionItem key={item.id}>
+                <AccordionItemHeading>
+                  <AccordionItemButton>
+                    <span className="icon-transition">{item.icon}</span>
+                    <h4 className="accordion-item-header">{item.heading}</h4>
+                    <RxTriangleDown size={30} className="business-down-aroww" />
+                  </AccordionItemButton>
+                </AccordionItemHeading>
+                <AccordionItemPanel>{item.content}</AccordionItemPanel>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        ) : (
+          ""
+        )}
+      </div>
     </>
   );
 };
