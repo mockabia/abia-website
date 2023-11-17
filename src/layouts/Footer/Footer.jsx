@@ -8,7 +8,7 @@ import { ReactComponent as InstaIcon } from "../../icons/instagram.svg";
 import { ReactComponent as PinterestIcon } from "../../icons/pinterest.svg";
 import AbiaLogo from "../../abiaLogo";
 
-const Footer = () => {
+const Footer = (props) => {
   const [footerMenu, setFooterMenu] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -18,6 +18,7 @@ const Footer = () => {
     await servicesPage.fetchFooterMenus().then(function (response) {
       if (response.statuscode == 200) {
         setFooterMenu(response.result);
+        props.setShowLoader(false)
       }
     });
   };
@@ -27,7 +28,7 @@ const Footer = () => {
   };
 
   return (
-    <div className="bg-[#000]">
+    <div className={`${props.showLoader ? "hidden" : ""} bg-[#000] `}>
       <div className="footer-container">
         <div className="footer-logo" onClick={handleLogoClick}>
           <div className="logo-adjust cursor-pointer">

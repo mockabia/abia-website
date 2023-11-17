@@ -31,7 +31,8 @@ import {
 import UseAutocomplete from "../../components/AsyncSearch";
 import styled from "@emotion/styled";
 
-const NavBar = () => {
+const NavBar = (props) => {
+  
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchValue, setSearchValue] = useState("");
   const [options, setOptions] = useState([
@@ -155,7 +156,7 @@ const NavBar = () => {
   };
 
   return (
-    <div>
+    <div className={`${props.showLoader ? "hidden" : ""} `}>
       <div className="login-navbar-style relative">
         <div className="">
           <MenuItems />

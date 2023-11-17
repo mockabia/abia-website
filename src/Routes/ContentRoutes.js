@@ -24,40 +24,40 @@ const ContentRoutes = (props) => {
     await servicesPage.fetchContentRoutes().then(function (response) {
       if (response.statuscode == 200) {
         setRoutesFromApi(response.result);
-        fetchPreContentRoutes();
       }
+        fetchPreContentRoutes();
     });
   };
   const fetchPreContentRoutes = async () => {
     await servicesPage.fetchPreContentRoutes().then(function (response) {
       if (response.statuscode == 200) {
         setRoutesFromApi((oldArray) => [...oldArray, response.result]);
-        fetchSupplierContentRoutes();
       }
+        fetchSupplierContentRoutes();
     });
   };
   const fetchSupplierContentRoutes = async () => {
     await servicesPage.fetchSupplierContentRoutes().then(function (response) {
       if (response.statuscode == 200) {
         setRoutesFromApi((oldArray) => [...oldArray, response.result]);
-        fetchBrideContentRoutes();
       }
+        fetchBrideContentRoutes();
     });
   };
   const fetchBrideContentRoutes = async () => {
     await servicesPage.fetchBrideContentRoutes().then(function (response) {
       if (response.statuscode == 200) {
         setRoutesFromApi((oldArray) => [...oldArray, response.result]);
-        fetchBlogCatsRoutes();
       }
+        fetchBlogCatsRoutes();
     });
   };
   const fetchBlogCatsRoutes = async () => {
     await servicesPage.fetchBlogCatsRoutes().then(function (response) {
       if (response.statuscode == 200) {
         setRoutesFromApi((oldArray) => [...oldArray, response.result]);
-        fetchBlogRoutes();
       }
+        fetchBlogRoutes();
     });
   };
   const fetchBlogRoutes = async () => {
@@ -68,16 +68,20 @@ const ContentRoutes = (props) => {
     });
   };
   return (
-    <LayoutGeneral>
-      <Routes>
-      <Route path="/" element={<Public />} />
-        {routesFromApi.map((routes, i) => (
-          <Route
-            path={`/${routes.url}`}
-            element={<LoadablePage page={routes.pagename} {...props} />}
-          />
-        ))}
-      </Routes>
+    <LayoutGeneral {...props}>
+      {(props.showLoader !== undefined && props.showLoader != true) ?
+        <>
+          <Routes>
+            <Route path="/" element={<Public {...props} />} />
+            {routesFromApi.map((routes, i) => (
+              <Route
+                path={`/${routes.url}`}
+                element={<LoadablePage page={routes.pagename} {...props} />}
+              />
+            ))}
+          </Routes>
+        </> : ''
+      }
     </LayoutGeneral>
   );
 };

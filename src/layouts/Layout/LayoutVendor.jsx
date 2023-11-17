@@ -6,7 +6,7 @@ import "../css/LayoutVendor.css"
 const LayoutVendor = (props) => {
     return (
         <div className="relative flex">
-            <TopBar />
+            <TopBar {...props} />
             <div className="flex flex-1">
                 <BusinessMenu />
                 <main className="rootLayout">
