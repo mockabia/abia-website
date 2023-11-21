@@ -16,12 +16,7 @@ const SingleSelect = forwardRef(
       setSelectedOptions(selected);
       onFormSubmit(selected);
     };
-    //  const handleChange = (selectedOption) => {
-    //    // Extract the value from the selected option
-    //    const selectedValue = selectedOption ? selectedOption.value : null;
-    //    // Call the onFormSubmit function with the extracted value
-    //    onFormSubmit(selectedValue);
-    //  };
+
 
     useEffect(() => {
       setSelectedOptions(defaultValue || null);

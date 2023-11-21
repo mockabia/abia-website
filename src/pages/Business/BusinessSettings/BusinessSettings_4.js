@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import "../../Style/BusinessSettings.css";
 import * as BusinessJS from "../Business";
@@ -6,6 +6,98 @@ import Select, { components } from "react-select";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
+import { customSelectStyles, MultiValue } from "../../../components/FormStyle";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+
+const CheckboxOption = ({ innerProps, label, isSelected }) => {
+  const divRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (divRef.current) {
+      divRef.current.style.backgroundColor = "#6cc2bc";
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (divRef.current) {
+      divRef.current.style.backgroundColor = isSelected
+        ? "#FAFAFA"
+        : "transparent";
+    }
+  };
+
+  return (
+    <div
+      {...innerProps}
+      ref={divRef}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        cursor: "pointer",
+        color: isSelected ? "#6cc2bc" : "#333333",
+        backgroundColor: isSelected ? "#FAFAFA" : "transparent",
+        borderRadius: "4px",
+        transition: "background-color 0.3s, color 0.3s", // Add transition for a smooth effect
+      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <input
+        type="checkbox"
+        checked={isSelected}
+        readOnly
+        style={{ marginRight: "8px" }}
+      />
+      <label style={{ margin: "0.5rem", padding: 0 }}>{label}</label>
+    </div>
+  );
+};
+const CustomSelect = ({ field, categoryOptions }) => (
+  <Select
+    {...field}
+    isMulti
+    options={categoryOptions}
+    styles={customSelectStyles}
+    closeMenuOnSelect={false}
+    blurInputOnSelect={false}
+    hideSelectedOptions={false}
+    isClearable={false}
+    components={{
+      Menu,
+      MultiValue,
+      IndicatorSeparator: null,
+      DropdownIndicator: () => (
+        <div>
+          <FontAwesomeIcon
+            icon={faCaretDown}
+            className="dropDown-position"
+            style={{ color: "#7c7c7c" }}
+          />
+        </div>
+      ),
+      Option: ({ innerProps, label, isSelected }) => (
+        <CheckboxOption
+          innerProps={innerProps}
+          label={label}
+          isSelected={isSelected}
+        />
+      ),
+    }}
+  />
+);
+const Menu = (props) => {
+  const optionSelectedLength = props.getValue().length || 0;
+  return (
+    <components.Menu {...props}>
+      {optionSelectedLength < 4 ? (
+        props.children
+      ) : (
+        <div style={{ margin: "1rem", color: "red" }}>Max limit achieved</div>
+      )}
+    </components.Menu>
+  );
+};
 
 const Category = ({ vendorDetails }) => {
   const [formValues, setFormValues] = useState({
@@ -52,19 +144,6 @@ const Category = ({ vendorDetails }) => {
       : null;
   };
 
-  const Menu = (props) => {
-    const optionSelectedLength = props.getValue().length || 0;
-    return (
-      <components.Menu {...props}>
-        {optionSelectedLength < 4 ? (
-          props.children
-        ) : (
-          <div style={{ margin: "1rem", color: "red" }}>Max limit achieved</div>
-        )}
-      </components.Menu>
-    );
-  };
-
   const isValidNewOption = (inputValue, selectValue) =>
     inputValue.length > 0 && selectValue.length < 3;
 
@@ -89,6 +168,20 @@ const Category = ({ vendorDetails }) => {
                   label: vendorDetails.first_category_val,
                   value: vendorDetails.first_category,
                 }}
+                styles={customSelectStyles}
+                components={{
+                  MultiValue,
+                  IndicatorSeparator: null,
+                  DropdownIndicator: () => (
+                    <div>
+                      <FontAwesomeIcon
+                        icon={faCaretDown}
+                        className="dropDown-position"
+                        style={{ color: "#7c7c7c" }}
+                      />
+                    </div>
+                  ),
+                }}
               />
               {getFieldError("first_category") && (
                 <p className="text-[12px] text-red-500 font-semibold mt-1">
@@ -105,26 +198,51 @@ const Category = ({ vendorDetails }) => {
               <Controller
                 name="other_category"
                 control={control}
+                render={({ field }) => (
+                  <CustomSelect
+                    field={field}
+                    categoryOptions={categoryOption}
+                  />
+                )}
+              />
+              {/* <Controller
+                name="other_category"
+                control={control}
                 rules={{
                   required: true,
                 }}
                 render={({ field }) => (
                   <Select
                     name="other_category"
-                    components={{ Menu }}
+                    // components={{ Menu }}
                     placeholder=""
+                    isMulti
                     value={additionaCatSelect}
+                    styles={customSelectStyles}
+                    options={categoryOption}
                     onChange={(selectedOptions) => {
                       setAdditionaCatSelect(selectedOptions);
                       field.onChange(selectedOptions);
                     }}
                     {...field}
-                    isMulti
-                    options={categoryOption}
                     isValidNewOption={isValidNewOption}
+                    components={{
+                      Menu,
+                      MultiValue,
+                      IndicatorSeparator: null,
+                      DropdownIndicator: () => (
+                        <div>
+                          <FontAwesomeIcon
+                            icon={faCaretDown}
+                            className="dropDown-position"
+                            style={{ color: "#7c7c7c" }}
+                          />
+                        </div>
+                      ),
+                    }}
                   />
                 )}
-              />
+              /> */}
             </div>
             <br />
           </div>

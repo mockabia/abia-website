@@ -19,6 +19,7 @@ import BusinessProfile from "../pages - Copy/MyProfile2/profile";
 import BusinessSettings from "../pages/Business/BusinessSettings/BusinessSettings";
 import GetReviews from "../pages/Business/BusinessGetReview/BusinessGetReviews";
 import PastWedding from "../pages/Business/BusinessGetReview/BusinessPastWedding";
+import FutureWedding from "../pages/Business/BusinessGetReview/BusinessFutureWedding";
 
 const BusinessRoutes = (props) => {
   const [routesFromApi, setRoutesFromApi] = useState([]);
@@ -85,6 +86,10 @@ const BusinessRoutes = (props) => {
               <Route
                 path="/get-reviews/past-wedding"
                 element={<RouteGuard {...props} Component={PastWedding} />}
+              />
+              <Route
+                path="/get-reviews/future-wedding"
+                element={<RouteGuard {...props} Component={FutureWedding} />}
               />
             </Routes>
           </LayoutVendor>

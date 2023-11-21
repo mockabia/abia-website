@@ -25,7 +25,7 @@ const GetReviews = () => {
       bgColor: "#e8cf82",
       hoverColor: "#efc649",
       linkFunction: () =>
-        navigate(process.env.REACT_BUSINESS_URL + "/future-wedding"),
+        navigate("/business/get-reviews/future-wedding"),
     },
     {
       title: "Send Personalised Review Link",

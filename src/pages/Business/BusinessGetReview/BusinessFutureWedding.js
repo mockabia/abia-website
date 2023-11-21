@@ -9,11 +9,7 @@ import Select, { components } from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import {
-  customSelectStyles,
-  MoreSelectedBadge,
-  MultiValue,
-} from "../../../components/FormStyle";
+import { customSelectStyles } from "../../../components/FormStyle";
 
 import Calendar from "../../../third-party-packs/Calendar";
 import * as BusinessJS from "../Business";
@@ -33,20 +29,17 @@ const schema = yup.object().shape({
     .email("Invalid email address")
     .oneOf([yup.ref("email"), null], "Emails must match"),
   phone: yup.number(),
-  // phone: yup.number().max(13, "Phone number must not exceed 13 characters"),
-
+  phone: yup.number().required("Phone no: is required"),
   wedding_state: yup.string().required("The state field is required."),
+  resident_state: yup.string().required("The Resident state is required."),
   other_category: yup.array().required("Services Booked is required."),
 });
 
-
-
-
-const PastWedding = () => {
+const FutureWedding = () => {
   const [stateOptions, setStateOptions] = useState({});
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [selectedState, setSelectedState] = useState([]);
-
+  const [reseidentState, setResidentState] = useState([]);
   const {
     watch,
     register,
@@ -59,12 +52,13 @@ const PastWedding = () => {
     defaultValues: {
       birde: "",
       groom: "",
-      date_of_wedding: "",
+      date_of_wedding: null,
       wedding_state: "",
+      resident_state: "",
       email: "",
       confirm_email: "",
-      phone: "",
-      other_category: "",
+      phone: null,
+      other_category: null,
     },
   });
 
@@ -83,10 +77,9 @@ const PastWedding = () => {
 
   const registrationGuidelines = [
     "1. ABIA will not release registered details to any third parties.",
-    "2. Only register weddings that took place in the past 12 months from 00-00-0000.",
-    "3. Your Wedding Client has 365 days from their wedding date to complete the form.",
-    "4. You can resend the online voting forms every 3 days.",
-    "5. ABIA will send an automated reminder to your Wedding Client at least '2' times.",
+    "2. Only register future weddings after a booking has been confirmed and a deposit has been received.",
+    "3. Your Future Wedding  will display in your Wedding History,once the wedding date has passed.",
+    "4. ABIA will send an automated reminder to your Wedding Client at least '2' times.",
   ];
 
   const handleStateChange = (selectedOption, field) => {
@@ -94,16 +87,22 @@ const PastWedding = () => {
     setSelectedState({ label: stateValue, value: stateValue });
     field.onChange(stateValue);
   };
+  const handleResStateChange = (selectedOption, field) => {
+    const stateValue = selectedOption ? selectedOption.label : "";
+    setResidentState({ label: stateValue, value: stateValue });
+    field.onChange(stateValue);
+  };
 
   const onSubmitForm = (data) => {
     const formValues = {
       birde: watch("bride"),
       groom: watch("groom"),
-      date_of_wedding: watch("date_of_wedding"),
+      date_of_wedding: watch("date_of_wedding") || null,
       wedding_state: watch("wedding_state"),
+      resident_state: watch("resident_state"),
       email: watch("email"),
       confirm_email: watch("confirm_email"),
-      phone: watch("phone"),
+      phone: watch("phone") || null,
       other_category: watch("other_category"),
     };
 
@@ -119,12 +118,13 @@ const PastWedding = () => {
       <div className="register-past">
         <div className="main-header-past">
           <h2 className="">
-            Send an online voting form to your wedding clients today
+            Schedule an online voting form to be sent 3 days after wedding date.
           </h2>
           <p className="mt-[10px] whitespace-adjust">
-            Your clients will receive a customised voting link delivered
-            directly to their inbox/junk mail. We highly recommend you text or
-            email your client advising{" "}
+            Register your clients below, and they will receive a customised
+            voting link 3 days after their wedding date. Furthermore, ABIA will
+            send '1' email asking if they need further help planning their
+            wedding day.{" "}
             <span className="text-[#3fa19a] font-[600] cursor-pointer ">
               vote@abia.com.au
             </span>{" "}
@@ -137,18 +137,18 @@ const PastWedding = () => {
           <ul className="custom-ol">
             {registrationGuidelines.map((guideline, index) => (
               <li key={index} className="mt-[10px] custom-li">
-                {index === 3 ? (
+                {index === 2 ? (
                   <p className="whitespace-adjust">
-                    4. You can{" "}
+                    3. Your Future Weddings will display in your{" "}
                     <span>
                       <a
-                        className="text-[#6cc2bc] font-semibold underline"
+                        className="text-[#3fa19a] font-semibold  underline underline-offset-4 "
                         href="www.abia.com.au/vendor/wedding-history"
                       >
-                        resend the online voting forms
-                      </a>{" "}
+                        Wedding History
+                      </a>
                     </span>
-                    every 3 days.
+                    , once the wedding date has passed.
                   </p>
                 ) : (
                   <p className="whitespace-adjust">{guideline}</p>
@@ -240,12 +240,12 @@ const PastWedding = () => {
                     <Select
                       {...field}
                       name="wedding_state"
+                      value={selectedState}
                       options={stateOptions}
                       onChange={(selectedOption) =>
                         handleStateChange(selectedOption, field)
                       }
                       styles={customSelectStyles}
-                      value={selectedState}
                       components={{
                         MultiValue,
                         IndicatorSeparator: null,
@@ -265,6 +265,46 @@ const PastWedding = () => {
                 {errors.wedding_state && (
                   <p className="text-[12px] text-red-500 font-semibold mt-1">
                     {errors.wedding_state.message}
+                  </p>
+                )}
+              </div>
+              <br />
+              <label className="header-text-past">Resident State*</label>
+              <br />
+              <div className="relative">
+                <Controller
+                  name="resident_state"
+                  control={control}
+                  // rules={{ required: "Wedding State is required" }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      name="resident_state"
+                      value={reseidentState}
+                      options={stateOptions}
+                      onChange={(selectedOption) =>
+                        handleResStateChange(selectedOption, field)
+                      }
+                      styles={customSelectStyles}
+                      components={{
+                        MultiValue,
+                        IndicatorSeparator: null,
+                        DropdownIndicator: () => (
+                          <div>
+                            <FontAwesomeIcon
+                              icon={faCaretDown}
+                              className="dropDown-position"
+                              style={{ color: "#7c7c7c" }}
+                            />
+                          </div>
+                        ),
+                      }}
+                    />
+                  )}
+                />
+                {errors.resident_state && (
+                  <p className="text-[12px] text-red-500 font-semibold mt-1">
+                    {errors.resident_state.message}
                   </p>
                 )}
               </div>
@@ -303,7 +343,7 @@ const PastWedding = () => {
                 </p>
               )}
               <br />
-              <label className="header-text-past">Phone</label>
+              <label className="header-text-past">Phone*</label>
               <br />
               <div className="relative">
                 <span className="phone-icon"></span>
@@ -315,6 +355,11 @@ const PastWedding = () => {
                   className="input-style"
                 />
               </div>
+              {errors.phone && (
+                <p className="text-[12px] text-red-500 font-semibold mt-1">
+                  {errors.phone.message}
+                </p>
+              )}
               <br />
               <label className="header-text-past">Services Booked*</label>
               <br />
@@ -374,4 +419,39 @@ const PastWedding = () => {
   );
 };
 
-export default PastWedding;
+export default FutureWedding;
+
+const MoreSelectedBadge = ({ items }) => {
+  const style = {
+    marginLeft: "auto",
+    background: "#d4eefa",
+    borderRadius: "4px",
+    fontFamily: "Open Sans",
+    fontSize: "11px",
+    padding: "3px",
+    order: 99,
+  };
+
+  const title = items.join(", ");
+  const length = items.length;
+  const label = `+ ${length} item${length !== 1 ? "s" : ""} selected`;
+
+  return (
+    <div style={style} title={title}>
+      {label}
+    </div>
+  );
+};
+
+const MultiValue = ({ index, getValue, ...props }) => {
+  const maxToShow = 2;
+  const overflow = getValue()
+    .slice(maxToShow)
+    .map((x) => x.label);
+
+  return index < maxToShow ? (
+    <components.MultiValue {...props} />
+  ) : index === maxToShow ? (
+    <MoreSelectedBadge items={overflow} />
+  ) : null;
+};

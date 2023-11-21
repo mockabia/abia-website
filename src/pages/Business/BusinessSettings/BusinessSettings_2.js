@@ -6,9 +6,9 @@ import "../../Style/BusinessSettings.css";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as BusinessJS from "../Business";
-
-
-
+import { customSelectStyles, MultiValue } from "../../../components/FormStyle";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 const schema = yup.object().shape({
   contact_person: yup.string().required("Contact name is required"),
@@ -16,9 +16,12 @@ const schema = yup.object().shape({
     .string()
     .required("Email is required")
     .email("Invalid email address"),
-  mobile_phone: yup.string().required("Phone no: is required").max(13, 'Phone number must not exceed 13 characters'), 
+  mobile_phone: yup
+    .string()
+    .required("Phone no: is required")
+    .max(13, "Phone number must not exceed 13 characters"),
 
-//   state: yup.string().required("The state field is required."),
+  //   state: yup.string().required("The state field is required."),
   postcode: yup.string().required("Postcode is required"),
   suburb: yup.string().required("Suburb is required"),
 });
@@ -26,7 +29,7 @@ const schema = yup.object().shape({
 const ContactDetails = ({ vendorDetails }) => {
   const [selectedState, setSelectedState] = useState(vendorDetails.state);
   const [stateOptions, setStateOptions] = useState([]);
- const [inputsErrors, setInputsErrors] = useState({});
+  const [inputsErrors, setInputsErrors] = useState({});
 
   const [formValues, setFormValues] = useState({
     contact_person: "",
@@ -38,8 +41,7 @@ const ContactDetails = ({ vendorDetails }) => {
     postcode: "",
     vid: vendorDetails.vid,
   });
-  
-  
+
   const {
     watch,
     register,
@@ -49,16 +51,15 @@ const ContactDetails = ({ vendorDetails }) => {
   } = useForm({
     mode: "onChange",
     resolver: yupResolver(schema),
-    defaultValues:{
-        contact_person: vendorDetails.contact_person,
-        email: vendorDetails.email,
-        mobile_phone:vendorDetails.mobile_phone,
-        address:  vendorDetails.address,
-        postcode: vendorDetails.postcode,
-        suburb: vendorDetails.suburb,
-        state: vendorDetails.state,
-
-    }
+    defaultValues: {
+      contact_person: vendorDetails.contact_person,
+      email: vendorDetails.email,
+      mobile_phone: vendorDetails.mobile_phone,
+      address: vendorDetails.address,
+      postcode: vendorDetails.postcode,
+      suburb: vendorDetails.suburb,
+      state: vendorDetails.state,
+    },
   });
 
   useEffect(() => {
@@ -70,7 +71,6 @@ const ContactDetails = ({ vendorDetails }) => {
     setSelectedState(stateValue);
     field.onChange(stateValue);
   };
-
 
   const fieldConfig = [
     {
@@ -106,32 +106,31 @@ const ContactDetails = ({ vendorDetails }) => {
     },
   ];
 
+  useEffect(() => {
+    BusinessJS.fetchState(setStateOptions);
+  }, []);
 
-useEffect(() => {
-    BusinessJS.fetchState(setStateOptions );
-},[])
-
-const onSubmit = (data) => {
-  alert(JSON.stringify(data));
-  const formValues = {};
-  for (const field of fieldConfig) {
-    formValues[field.name] = data[field.name] || formValues[field.name];
-  }
-  formValues.state = selectedState; // Set the state property
-  formValues.vid = vendorDetails.vid;
-  const formValuesJSON = JSON.stringify(formValues);
-  console.log("Console:", formValuesJSON);
-  BusinessJS.updateBusiness(2, formValuesJSON , setInputsErrors);
-
-};
-
+  const onSubmit = (data) => {
+    alert(JSON.stringify(data));
+    const formValues = {};
+    for (const field of fieldConfig) {
+      formValues[field.name] = data[field.name] || formValues[field.name];
+    }
+    formValues.state = selectedState; // Set the state property
+    formValues.vid = vendorDetails.vid;
+    const formValuesJSON = JSON.stringify(formValues);
+    console.log("Console:", formValuesJSON);
+    BusinessJS.updateBusiness(2, formValuesJSON, setInputsErrors);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-   const getFieldError = (fieldName) => {
-    return inputsErrors && inputsErrors[fieldName] ? inputsErrors[fieldName][0] : null;
+  const getFieldError = (fieldName) => {
+    return inputsErrors && inputsErrors[fieldName]
+      ? inputsErrors[fieldName][0]
+      : null;
   };
 
   return (
@@ -185,6 +184,20 @@ const onSubmit = (data) => {
                     onChange={(selectedOption) =>
                       handleStateChange(selectedOption, field)
                     }
+                    styles={customSelectStyles}
+                    components={{
+                      MultiValue,
+                      IndicatorSeparator: null,
+                      DropdownIndicator: () => (
+                        <div>
+                          <FontAwesomeIcon
+                            icon={faCaretDown}
+                            className="dropDown-position"
+                            style={{ color: "#7c7c7c" }}
+                          />
+                        </div>
+                      ),
+                    }}
                   />
                 )}
               />
