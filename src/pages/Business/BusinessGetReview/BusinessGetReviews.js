@@ -1,8 +1,7 @@
 import React from "react";
-import "./GetReviews.css";
+import "../../Style/BusinessGetReviews.css";
 import { useNavigate } from "react-router-dom";
-import ContentHeader from "../../layouts/sidebar/ContentHeader";
-import LayoutVendor from "../../layouts/Layout/LayoutVendor";
+import ContentHeader from "../../../layouts/sidebar/ContentHeader";
 
 const GetReviews = () => {
   const navigate = useNavigate();
@@ -16,7 +15,7 @@ const GetReviews = () => {
       bgColor: "#6cc2bc",
       hoverColor: "#339890",
       linkFunction: () =>
-        navigate(process.env.REACT_BUSINESS_URL + "/past-wedding"),
+        navigate( "/business/get-reviews/past-wedding"),
     },
     {
       title: "Register Future Couples",

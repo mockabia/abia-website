@@ -48,6 +48,6 @@ export async function categoryDropdown(postData) {
 }
 
 
-export async function stateRegionDropdwon(state, postData) {
-  return await apiService.apiCall(apiUrls.REGIONS_BY_STATE  + state, "GET", postData);
+export async function stateRegionDropdwon(state) {
+  return await apiService.apiCall(apiUrls.REGIONS_BY_STATE  +'/'+ state, "GET");
 }

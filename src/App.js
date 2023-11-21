@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import ContentRoutes from "./Routes/ContentRoutes";
 import BusinessRoutes from "./Routes/BusinessRoutes";
 import Loader from "./plugins/Loader/Loader";
+import CoupleRoutes from "./Routes/CoupleRoutes";
 
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
       <Routes>
         <Route path="/*" element={<ContentRoutes  showLoader={showLoader} setShowLoader={setShowLoader} />} />
         <Route path="/business/*" element={<BusinessRoutes  showLoader={showLoader} setShowLoader={setShowLoader} />} />
+        <Route path="/wedding/*" element={<CoupleRoutes  showLoader={showLoader} setShowLoader={setShowLoader} />} />
       </Routes>
     </>
   );

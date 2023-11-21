@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import "../../Style/BusinessSettings.css";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -65,9 +63,13 @@ const ContactDetails = ({ vendorDetails }) => {
 
   useEffect(() => {
     setSelectedState(vendorDetails.state);
-    
   }, [vendorDetails.state]);
 
+  const handleStateChange = (selectedOption, field) => {
+    const stateValue = selectedOption ? selectedOption.label : "";
+    setSelectedState(stateValue);
+    field.onChange(stateValue);
+  };
 
 
   const fieldConfig = [
@@ -135,7 +137,7 @@ const onSubmit = (data) => {
   return (
     <div className="contact-details-container">
       <div className="mt-[20px]">
-        <form className="space-y-5" onSubmit={handleSubmit(onSubmit)} >
+        <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
           {fieldConfig.map((field) => (
             <div key={field.name}>
               <label className="font-semibold">{field.label}</label>
@@ -144,18 +146,18 @@ const onSubmit = (data) => {
                   type={field.type}
                   name={field.name}
                   className="contactdetails-input-style"
-                //   className={`contactdetails-input-style ${
-                //     errors[field.name] ? "contactdetails-error-border" : ""
-                //   }`}
+                  //   className={`contactdetails-input-style ${
+                  //     errors[field.name] ? "contactdetails-error-border" : ""
+                  //   }`}
                   {...register(field.name)}
                 />
                 <div>
-              {errors[field.name] && (
+                  {errors[field.name] && (
                     <p className="text-[12px] text-red-500 font-semibold mt-1">
-                        {errors[field.name].message}
+                      {errors[field.name].message}
                     </p>
-                )}
-                 {getFieldError(field.name) && (
+                  )}
+                  {getFieldError(field.name) && (
                     <p className="text-[12px] text-red-500 font-semibold mt-1">
                       {getFieldError(field.name)}
                     </p>
@@ -180,30 +182,24 @@ const onSubmit = (data) => {
                       value: state.value,
                       label: state.label,
                     }))}
-                  
-                    onChange={(selectedOption) => {
-                      const stateValue = selectedOption
-                        ? selectedOption.label
-                        : "";
-                      setSelectedState(stateValue);
-                      field.onChange(stateValue);
-                    }}
+                    onChange={(selectedOption) =>
+                      handleStateChange(selectedOption, field)
+                    }
                   />
                 )}
               />
-                {getFieldError("state") && (
+              {getFieldError("state") && (
                 <p className="text-[12px] text-red-500 font-semibold mt-1">
                   {getFieldError("state")}
                 </p>
               )}
             </div>
           </div>
-{/*  */}
-          <div className="relative space-y-3"  >
+          {/*  */}
+          <div className="relative space-y-3">
             <button
               className="basicinfo-submit-button"
-            //   disabled={!isValid || isSubmitted}
-             
+              //   disabled={!isValid || isSubmitted}
             >
               Save
             </button>

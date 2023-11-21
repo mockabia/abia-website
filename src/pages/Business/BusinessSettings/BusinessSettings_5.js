@@ -22,20 +22,20 @@ const schema = yup.object().shape({
 });
 
 const MyLocation = ({ vendorDetails }) => {
-  const [initialState, setInitialState] = useState([]);
+  const [initialRegion, setInitialRegion] = useState({});
   const [selectedStates, setSelectedStates] = useState([]);
   const [stateOptions, setStateOptions] = useState([]);
 
-  const [regions, setRegions] = useState([]);
+  const [regions, setRegions] = useState([]); //options
   const [selectedRegions, setSelectedRegions] = useState([]);
 
   const [inputsErrors, setInputsErrors] = useState({});
 
-  console.log("Target details:", vendorDetails.target_state);
-  console.log("Target region:", vendorDetails.target_region);
+  //console.log("Target details:", vendorDetails.target_state);
+  //console.log("Target region:", vendorDetails.target_region);
 
-  const stateChange = (selectedOption) => {
-    setInitialState(selectedOption);
+  const regionChange = (selectedOption) => {
+    setInitialRegion([selectedOption]);
   };
 
   const handleChange = (selectedOption) => {
@@ -61,8 +61,11 @@ const MyLocation = ({ vendorDetails }) => {
 
   // initial values of hte Select components
   useEffect(() => {
-    setInitialState([
-      { value: vendorDetails.state, label: vendorDetails.state },
+    setInitialRegion([
+      {
+        value: vendorDetails.primaryLocation,
+        label: vendorDetails.primaryLocation,
+      },
     ]);
     const targetStateArray = vendorDetails.target_state
       .split(",")
@@ -84,21 +87,26 @@ const MyLocation = ({ vendorDetails }) => {
   // fetch region for selected states
   useEffect(() => {
     const selectedStateUrls = selectedStates.map((state) => state.value);
-    BusinessJS.fetchRegion(`/${selectedStateUrls}`, setRegions);
+    if (selectedStateUrls.length > 0) {
+      let stateNames = selectedStateUrls.join();
+      BusinessJS.fetchRegion(stateNames, setRegions);
+    }
   }, [selectedStates]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+
     const formValues = {
-      primaryLocation: initialState,
-      target_state: selectedStates,
+      primaryLocation: initialRegion,
       target_region: selectedRegions,
       vid: vendorDetails.vid,
     };
+    console.log("Form data:", formValues);
     try {
       await schema.validate(formValues, { abortEarly: false });
       console.log("Form data:", formValues);
-      BusinessJS.updateBusiness(5, formValues, setInputsErrors);
+      // BusinessJS.updateBusiness(5, formValues, setInputsErrors);
     } catch (error) {
       const validationErrors = {};
       error.inner.forEach((err) => {
@@ -125,28 +133,8 @@ const MyLocation = ({ vendorDetails }) => {
       </div>
       <div className="mt-[20px]">
         <form className="">
-          {/* state */}
-          <div className="space-y-2">
-            <label className="font-semibold">Primary Location*</label>
-            <br />
-            <div className="relative lg:w-[52%] mylocation-location-multiselect">
-              <Select
-                name="primaryLocation"
-                sx={{ width: "100%" }}
-                value={initialState}
-                options={stateOptions}
-                onChange={stateChange}
-              />
-              {getFieldError("primaryLocation") && (
-                <p className="text-[12px] text-red-500 font-semibold mt-1">
-                  {getFieldError("primaryLocation")}
-                </p>
-              )}
-            </div>
-            <br />
-          </div>
-          {/* Target Location */}
-          <div className="space-y-2">
+          {/* HIDDEN  - Target Location */}
+          <div className="hidden space-y-2">
             <label className="font-semibold">Target Wedding States*</label>
             <br />
             <div className="relative lg:w-[52%] mylocation-location-multiselect">
@@ -195,6 +183,27 @@ const MyLocation = ({ vendorDetails }) => {
             </div>
             <br />
           </div>
+          {/* Primary region -HQ */}
+          <div className="space-y-2">
+            <label className="font-semibold">Primary Location*</label>
+            <br />
+            <div className="relative lg:w-[52%] mylocation-location-multiselect">
+              <Select
+                name="primaryLocation"
+                sx={{ width: "100%" }}
+                value={initialRegion}
+                options={selectedRegions}
+                onChange={regionChange}
+              />
+              {getFieldError("primaryLocation") && (
+                <p className="text-[12px] text-red-500 font-semibold mt-1">
+                  {getFieldError("primaryLocation")}
+                </p>
+              )}
+            </div>
+            <br />
+          </div>
+
           <div
             className="basicinfo-submit-button relative space-y-3"
             onClick={handleSubmit}

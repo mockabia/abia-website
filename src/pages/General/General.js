@@ -21,14 +21,8 @@ export const checkRememberMe = (setInputs) => {
 export const handleChange = (e, setInputs, setInputsErrors) => {
   const name = e.target.name;
   const value = e.target.value;
-  // const formData = { [name]: value };
-  // const fieldErrors = customValidator.validator(formData, name);
   setInputs((values) => ({ ...values, [name]: value }));
   setInputsErrors({});
-
-  // if (Object.values(fieldErrors).length > 0) {
-  //   setInputsErrors((prevErrors) => ({ ...prevErrors, ...fieldErrors }));
-  // }
 };
 
 export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
@@ -68,7 +62,12 @@ export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
           navigate(reactUrls.BUSINESS_MENU["DASHBOARD"].path);
         } else {
           navigate(reactUrls.BUSINESS_MENU["USER_STATE"].path, {
-            state: { userStatesData, token: token, email: inputs.email , password: inputs.password},
+            state: {
+              userStatesData,
+              token: token,
+              email: inputs.email,
+              password: inputs.password,
+            },
           });
         }
       } else {
@@ -82,7 +81,7 @@ export const vendorLoginStateForm = async (e, inputs, navigate) => {
   e.preventDefault();
   let requestData = inputs;
   await servicesPage.loginStates(requestData).then(function (response) {
-     console.log("Response:", response);
+    console.log("Response:", response);
     if (response.statuscode == 200) {
       const token = response.token;
 

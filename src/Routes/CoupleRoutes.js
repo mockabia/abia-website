@@ -9,18 +9,19 @@ import RouteGuard from "./RouteGuard";
 //history
 //import { history } from '../helpers/history';
 
-import BusinessLogin from "../pages/General/BusinessLogin";
-import BusinessSignup from "../pages/General/BusinessSignup";
-import BusinessLoginState from "../pages/General/BusinessLoginState";
+// import BusinessLogin from "../pages/General/BusinessLogin";
+// import BusinessSignup from "../pages/General/BusinessSignup";
+// import BusinessLoginState from "../pages/General/BusinessLoginState";
 import CSideBar from "../components/Couple-Layout/CSideBar";
+import CouplesLogin from "../pages/Couple/CouplesLogin";
+import CoupleSignUp from "../pages/Couple/CoupleSignUp";
+// import BusinessDashboard from "../pages/Business/Dashboard";
+// import BusinessProfile from "../pages - Copy/MyProfile2/profile";
+// import BusinessSettings from "../pages/Business/BusinessSettings/BusinessSettings";
+// import GetReviews from "../pages/Business/BusinessGetReview/BusinessGetReviews";
+// import PastWedding from "../pages/Business/BusinessGetReview/BusinessPastWedding";
 
-import BusinessDashboard from "../pages/Business/Dashboard";
-import BusinessProfile from "../pages - Copy/MyProfile2/profile";
-import BusinessSettings from "../pages/Business/BusinessSettings/BusinessSettings";
-import GetReviews from "../pages/Business/BusinessGetReview/BusinessGetReviews";
-import PastWedding from "../pages/Business/BusinessGetReview/BusinessPastWedding";
-
-const BusinessRoutes = (props) => {
+const CoupleRoutes = (props) => {
   const [routesFromApi, setRoutesFromApi] = useState([]);
   const location = useLocation();
 
@@ -54,11 +55,10 @@ const BusinessRoutes = (props) => {
             element={<LoadablePage page={routes.pagename} {...props} />}
           />
         ))} */}
-      <Route path="/login" element={<BusinessLogin />} />
-      <Route path="/signup" element={<BusinessSignup />} />
-      <Route path="/user-state" element={<BusinessLoginState />} />
-      <Route path="/wedding-profile" element={<CSideBar />} />
-      <Route
+      <Route path="/login" element={<CouplesLogin />} />
+      <Route path="/signup" element={<CoupleSignUp />} />
+
+      {/* <Route
         path="/*"
         element={
           <LayoutVendor>
@@ -89,8 +89,8 @@ const BusinessRoutes = (props) => {
             </Routes>
           </LayoutVendor>
         }
-      />
+      /> */}
     </Routes>
   );
 };
-export default BusinessRoutes;
+export default CoupleRoutes;

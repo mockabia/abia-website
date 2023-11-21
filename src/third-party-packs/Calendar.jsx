@@ -5,19 +5,24 @@ import "react-datepicker/dist/react-datepicker.module.css";
 import "./calendar.css";
 import { forwardRef } from "react";
 
-const Calendar = ({ onChange, onFormSubmit }) => {
+const Calendar = forwardRef(({ onChange, onBlur }, ref) => {
   const [startDate, setStartDate] = useState(null);
+  const [error, setError] = useState("");
+  const [touched, setTouched] = useState(false);
   const inputRef = useRef(null);
 
   const ExampleCustomInput = forwardRef(
-    ({ value, onClick, onChange, onkeyDown }, ref) => (
+    ({ value, onClick, onChange, onkeyDown, onBlur }, ref) => (
       <input
         value={value}
         className="example-custom-input"
         onClick={onClick}
         onChange={onChange}
-        // onKeyDown={(e) => e.preventDefault()}
         onKeyDown={onkeyDown}
+        onBlur={() => {
+          setTouched(true);
+          onBlur && onBlur();
+        }}
         ref={ref}
         inputMode="none"
       />
@@ -28,7 +33,7 @@ const Calendar = ({ onChange, onFormSubmit }) => {
     return () => {
       setStartDate(null);
     };
-  }, [onFormSubmit]);
+  }, []);
 
   const handleKeyDown = (e) => {
     if (e.key === "Tab" && !startDate) {
@@ -36,20 +41,43 @@ const Calendar = ({ onChange, onFormSubmit }) => {
       inputRef.current.setFocus();
     }
   };
+  const handleDateChange = (date) => {
+    setStartDate(date);
+
+    // Validate the date
+    if (!date && touched) {
+      setError("Please select a date.");
+    } else {
+      setError("");
+    }
+
+    // Pass the selected date to the parent component
+    onChange && onChange(date);
+  };
 
   return (
-    <DatePicker
-      selected={startDate}
-      onChange={(date) => setStartDate(date)}
-      customInput={
-        <ExampleCustomInput onKeyDown={handleKeyDown} ref={inputRef} />
-      }
-      dayClassName={() => "example-datepicker-day-class"}
-      popperPlacement="bottom-start"
-      showYearDropdown
-      dateFormat="dd / MM / yyyy"
-    />
+    <div>
+      <DatePicker
+        selected={startDate}
+        onChange={handleDateChange}
+        customInput={
+          <ExampleCustomInput
+            onKeyDown={handleKeyDown}
+            ref={inputRef}
+            onBlur={() => {
+              setTouched(true);
+              onBlur && onBlur();
+            }}
+          />
+        }
+        dayClassName={() => "example-datepicker-day-class"}
+        popperPlacement="bottom-start"
+        showYearDropdown
+        dateFormat="dd / MM / yyyy"
+      />
+      <div> {error && <p className="text-red-500">{error}</p>}</div>
+    </div>
   );
-};
+});
 
 export default Calendar;

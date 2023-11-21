@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { components } from "react-select";
 import { default as ReactSelect } from "react-select";
-// import fontawesome from "@fortawesome/fontawesome";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import "./dropDown.css";
+import { forwardRef } from "react";
 
-const Dropdown = ({ options, onFormSubmit }) => {
+const Dropdown = forwardRef(({ options, onFormSubmit }, ref) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
 
   const handleSelectChange = (selected) => {
@@ -24,25 +24,6 @@ const Dropdown = ({ options, onFormSubmit }) => {
     readOnly: true,
   };
 
-  const Option = (props) => {
-    return (
-      <div>
-        <components.Option {...props}>
-          <label className="label-checkbox">
-            <input
-              type="checkbox"
-              checked={props.isSelected}
-              onChange={() => null}
-              className="custom-inputcheckbox"
-            />
-            <span className="checkbox-indicator"></span>
-            {props.label}
-          </label>
-        </components.Option>
-      </div>
-    );
-  };
-
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -55,25 +36,21 @@ const Dropdown = ({ options, onFormSubmit }) => {
       background: "#fafafa",
       padding: "5px",
       width: "100%",
-      height: "55px",
+      height: "50px",
       maxWidth: "100%",
-      fontSize: "12px",
-      inputMode: "none",
       "@media (min-width: 1190px)": {
         width: "96%",
         maxWidth: "96%",
       },
-      // boxShadow: state.isFocused ? "0 0 0 2px lightblue" : "none",
     }),
     menu: (provided) => ({
       ...provided,
       marginTop: "10px",
       borderRadius: "20px",
-      width: "95%",
-      paddingTop: "10px",
-      padding: "5px",
+      padding: "15px",
       border: "1px solid #c3bebe",
       boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+      fontSize: "14px",
     }),
     option: (provided, state) => ({
       ...provided,
@@ -83,9 +60,9 @@ const Dropdown = ({ options, onFormSubmit }) => {
         ? "#e7f5f4"
         : "white",
       color: state.isSelected ? "black" : "inherit",
-      // padding: "12px",
+      padding: "12px",
     }),
-    indicatorSeparator: (defaultStyles: any) => {
+    indicatorSeparator: (defaultStyles) => {
       return {
         ...defaultStyles,
         display: "none",
@@ -105,7 +82,6 @@ const Dropdown = ({ options, onFormSubmit }) => {
     }),
     multiValueRemove: (provided) => ({
       ...provided,
-      // display: "none", // Set display to "none" to hide the default remove button
     }),
   };
 
@@ -162,8 +138,8 @@ const Dropdown = ({ options, onFormSubmit }) => {
           closeMenuOnSelect={false}
           blurInputOnSelect={false} //bug fixed
           hideSelectedOptions={false}
-          // allowSelectAll={true}
           value={selectedOptions}
+          ref={ref}
           onChange={handleSelectChange}
           styles={customStyles}
           components={{
@@ -179,13 +155,12 @@ const Dropdown = ({ options, onFormSubmit }) => {
                 )}
               </div>
             ),
-            Option,
             ClearIndicator: null,
           }}
         />
       </span>
     </div>
   );
-};
+});
 
 export default Dropdown;

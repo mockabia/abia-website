@@ -55,13 +55,10 @@ const DesktopForm = () => {
   const navigate = useNavigate();
 
   const {
-    watch,
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid, isSubmitting, submitCount },
     control,
-    setValue,
-    reset,
   } = useForm({
     mode: "onChange", //isValid works on mode=onChange
 

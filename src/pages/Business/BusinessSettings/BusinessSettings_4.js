@@ -14,6 +14,7 @@ const Category = ({ vendorDetails }) => {
     vid: vendorDetails.vid,
   });
   const [categoryOption, setCategoryOption] = useState([]);
+  const [additionaCatSelect, setAdditionaCatSelect] = useState([]);
   const [inputsErrors, setInputsErrors] = useState({});
 
   // useforms
@@ -50,6 +51,22 @@ const Category = ({ vendorDetails }) => {
       ? inputsErrors[fieldName][0]
       : null;
   };
+
+  const Menu = (props) => {
+    const optionSelectedLength = props.getValue().length || 0;
+    return (
+      <components.Menu {...props}>
+        {optionSelectedLength < 4 ? (
+          props.children
+        ) : (
+          <div style={{ margin: "1rem", color: "red" }}>Max limit achieved</div>
+        )}
+      </components.Menu>
+    );
+  };
+
+  const isValidNewOption = (inputValue, selectValue) =>
+    inputValue.length > 0 && selectValue.length < 3;
 
   return (
     <div className="category-container">
@@ -88,14 +105,23 @@ const Category = ({ vendorDetails }) => {
               <Controller
                 name="other_category"
                 control={control}
-                rules={{ required: true }}
+                rules={{
+                  required: true,
+                }}
                 render={({ field }) => (
                   <Select
                     name="other_category"
+                    components={{ Menu }}
                     placeholder=""
+                    value={additionaCatSelect}
+                    onChange={(selectedOptions) => {
+                      setAdditionaCatSelect(selectedOptions);
+                      field.onChange(selectedOptions);
+                    }}
                     {...field}
                     isMulti
                     options={categoryOption}
+                    isValidNewOption={isValidNewOption}
                   />
                 )}
               />

@@ -592,3 +592,66 @@ export const CSmenuItemStyle = {
 
   // Add other styles as needed
 };
+/********sSELECT */
+export const customSelectStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    border: "1px solid #c3bebe",
+    boxShadow: "none",
+    "&:hover": {
+      border: "1px solid #c3bebe",
+    },
+    borderRadius: "10px",
+    background: "#fafafa",
+    padding: "5px",
+    width: "100%",
+    height: "50px",
+    // maxHeight: "50px",
+    maxWidth: "100%",
+    "@media (min-width: 1190px)": {
+      width: "96%",
+      maxWidth: "96%",
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    marginTop: "10px",
+    borderRadius: "20px",
+    padding: "15px",
+    border: "1px solid #c3bebe",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    fontSize: "14px",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected
+      ? "#e7f5f4"
+      : state.isFocused
+      ? "#e7f5f4"
+      : "white",
+    color: state.isSelected ? "black" : "inherit",
+    padding: "12px",
+  }),
+  indicatorSeparator: (defaultStyles) => {
+    return {
+      ...defaultStyles,
+      display: "none",
+    };
+  },
+  input: (provided) => ({
+    ...provided,
+    WebkitUserSelect: "none",
+    MozUserSelect: "none",
+    msUserSelect: "none",
+    userSelect: "none",
+    inputMode: "none",
+    tabIndex: "0",
+  }),
+  clearIndicator: () => ({
+    display: "none",
+  }),
+
+  multiValueRemove: (provided) => ({
+    ...provided,
+  }),
+};
