@@ -39,7 +39,12 @@ export const ROUTES_API = {
   BRIDE_CONTENT_ROUTES        : `${baseUrl}PublicBridecontentForRoutes`,
   BLOGCAT_BLOGSUBCAT_ROUTES   : `${baseUrl}PublicBlogCatVsSubForRoutes`,
   BLOG_ROUTES                 : `${baseUrl}PublicBlogForRoutes`,
-  BUSINESS_ROUTES                 : `${baseUrl}PublicBlogForRoutes`,
+  BUSINESS_LOGIN_ROUTES       : `${baseUrl}VendorLoginMenu`,
+  BUSINESS_LOGINED_ROUTES     : `${baseUrl}VendorLoginedMenu`,
+  BUSINESS_DASHBOARD_ROUTES   : `${baseUrl}VendorDashboardMenu`,
+  COUPLE_LOGIN_ROUTES       : `${baseUrl}VendorLoginMenu`,
+  COUPLE_LOGINED_ROUTES     : `${baseUrl}VendorLoginedMenu`,
+  COUPLE_DASHBOARD_ROUTES   : `${baseUrl}VendorDashboardMenu`,
 };
 
 export const BUSINESS_API = {

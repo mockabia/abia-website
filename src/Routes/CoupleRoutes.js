@@ -31,12 +31,28 @@ const CoupleRoutes = (props) => {
 
   useEffect(() => {
     props.setShowLoader(false);
-    //fetchVendorMenuRoutes();
+    fetchCoupleLoginRoutes();
   }, []);
-  const fetchVendorMenuRoutes = async () => {
-    await servicesPage.fetchVendorMenuRoutes().then(function (response) {
+  const fetchCoupleLoginRoutes = async () => {
+    await servicesPage.fetchCoupleLoginRoutes().then(function (response) {
       if (response.statuscode == 200) {
         setRoutesFromApi(response.result);
+      }
+      //fetchCoupleLoginedRoutes();
+    });
+  };
+  const fetchCoupleLoginedRoutes = async () => {
+    await servicesPage.fetchCoupleLoginedRoutes().then(function (response) {
+      if (response.statuscode == 200) {
+        setRoutesFromApi((oldArray) => [...oldArray, response.result]);
+      }
+      //fetchCoupleDashboardRoutes();
+    });
+  };
+  const fetchCoupleDashboardRoutes = async () => {
+    await servicesPage.fetchCoupleDashboardRoutes().then(function (response) {
+      if (response.statuscode == 200) {
+        setRoutesFromApi((oldArray) => [...oldArray, response.result]);
       }
     });
   };

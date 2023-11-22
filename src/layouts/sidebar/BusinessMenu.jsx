@@ -28,7 +28,7 @@ import * as reactUrls from "../../api/reactUrls";
 import "./css/sideBar.css";
 import AbiaLogo from "../../abiaLogo";
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   let isTabletMid = useMediaQuery({ query: "(max-width: 768px)" });
   const [open, setOpen] = useState(isTabletMid ? false : true);
   //icon active
@@ -127,24 +127,25 @@ const Sidebar = () => {
             </Link>
           </div>
         </div>
+        {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(props.menu, null, 2)}</pre> */}
         <div className="flex flex-col  h-full text-white relative">
           <ul>
-            {Object.values(reactUrls.BUSINESS_MENU).map((MainMenu, i) => (
+            {props.leftmenu.map((MainMenu, i) => (
               <>
-                {MainMenu.menu !== false ? (
+              {MainMenu.Sub_content !== false ? (
                   <li>
                     <NavLink
-                      to={MainMenu.path}
+                      to={MainMenu.url}
                       className="link sidebarMenuItem"
                       activeClassName="active"
                     >
                       <div className="flex gap-5 ml-5">
-                        {menuIcons[MainMenu.text] &&
-                          React.createElement(menuIcons[MainMenu.text], {
+                        {menuIcons[MainMenu.title] &&
+                          React.createElement(menuIcons[MainMenu.title], {
                             className:
                               "mt-[2px] w-[18px] h-[18px] fill-current text-[#fff]",
                           })}
-                        {MainMenu.text}
+                        {MainMenu.title}
                       </div>
                     </NavLink>
                   </li>

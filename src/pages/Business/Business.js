@@ -3,6 +3,19 @@ import * as reactUrls from "../../api/reactUrls";
 import * as servicesPage from "../../services/vendor/businessServices";
 import * as customValidator from "../Plugins/customValidator";
 
+export const logout = async (navigate) => {
+  await servicesPage.logout().then(function (response) {
+    if (response) {
+      if (response.statuscode == 200) {
+        apiService.setAuthToken(null);
+        localStorage.removeItem("vendorToken");
+        localStorage.removeItem("user");
+        //navigate(reactUrls.BUSINESS_MENU["LOGIN"].path);
+      }
+    }
+  });
+};
+
 export const fetchbusiness = async (setInputs, setDataSet) => {
   let token = localStorage.getItem("vendorToken");
   token = JSON.parse(token);

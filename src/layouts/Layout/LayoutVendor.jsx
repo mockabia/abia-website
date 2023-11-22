@@ -8,7 +8,7 @@ const LayoutVendor = (props) => {
         <div className="relative flex">
             <TopBar {...props} />
             <div className="flex flex-1">
-                <BusinessMenu />
+                <BusinessMenu {...props} />
                 <main className="rootLayout">
                     {props.children}
                 </main>
