@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../Style/BusinessGetReviews.css";
 import { useNavigate } from "react-router-dom";
 import ContentHeader from "../../layouts/sidebar/ContentHeader";
+import { useState } from "react";
+import * as BusinessJS from "./Business";
 
 const GetReviews = () => {
   const navigate = useNavigate();

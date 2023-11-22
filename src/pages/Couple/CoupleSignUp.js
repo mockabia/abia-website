@@ -533,32 +533,82 @@ export default function CouplesSignUp() {
                   </h1>
                 </div>
                 <Stack spacing={3}>
-                  <Box>
+                  {/* <Box> */}
                     <FormGroup>
-                       <Grid container spacing={2}>
-        {/* First Column */}
-        <Grid item xs={6} sx={{whiteSpace:"normal"}}>
-          <FormControlLabel required control={<Checkbox />} label="Requiredcdcddddddddddvvvvvvvvvvvvvvvvvvvvvvvv" />
-          <FormControlLabel required control={<Checkbox />} label="Required" />
-          <FormControlLabel required control={<Checkbox />} label="Required" />
-          <FormControlLabel required control={<Checkbox />} label="Required" />
-          <FormControlLabel required control={<Checkbox />} label="Required" />
-          <FormControlLabel required control={<Checkbox />} label="Required" />
-          
-        </Grid>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} direction="column" >
+                          <FormControlLabel
+                            // required
+                            control={<Checkbox />}
+                            label={
+                              <Typography sx={{ whiteSpace: "normal" }}>
+                                This is the list of the Categories
+                              </Typography>
+                            }
+                          />
+                          <FormControlLabel
+                            required
+                            control={<Checkbox />}
+                            label="Required"
+                          />
+                          <FormControlLabel
+                            required
+                            control={<Checkbox />}
+                            label="Required"
+                          />
+                          <FormControlLabel
+                            required
+                            control={<Checkbox />}
+                            label="Required"
+                          />
+                          <FormControlLabel
+                            required
+                            control={<Checkbox />}
+                            label="Required"
+                          />
+                          <FormControlLabel
+                            required
+                            control={<Checkbox />}
+                            label="Required"
+                          />
+                        </Grid>
 
-        {/* Second Column */}
-        <Grid item xs={6}>
-          <FormControlLabel required control={<Checkbox />} label="Required" />
-          <FormControlLabel required control={<Checkbox />} label="Required" />
-          <FormControlLabel required control={<Checkbox />} label="Required" />
-          <FormControlLabel required control={<Checkbox />} label="Required" />
-          <FormControlLabel required control={<Checkbox />} label="Required" />
-          <FormControlLabel required control={<Checkbox />} label="Required" />
-        </Grid>
-      </Grid>
+                        {/* Second Column */}
+                        <Grid item xs={6}>
+                          <FormControlLabel
+                            required
+                            control={<Checkbox />}
+                            label="Required"
+                          />
+                          <FormControlLabel
+                            required
+                            control={<Checkbox />}
+                            label="Required"
+                          />
+                          <FormControlLabel
+                            required
+                            control={<Checkbox />}
+                            label="Required"
+                          />
+                          <FormControlLabel
+                            required
+                            control={<Checkbox />}
+                            label="Required"
+                          />
+                          <FormControlLabel
+                            required
+                            control={<Checkbox />}
+                            label="Required"
+                          />
+                          <FormControlLabel
+                            required
+                            control={<Checkbox />}
+                            label="Required"
+                          />
+                        </Grid>
+                      </Grid>
                     </FormGroup>
-                  </Box>
+                  {/* </Box> */}
                   {/* Next */}
                   <NextButtonStyle
                     variant="outlined"
