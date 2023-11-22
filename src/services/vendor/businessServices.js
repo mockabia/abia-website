@@ -39,7 +39,9 @@ export async function update_settings(settings, postData) {
   return await apiService.apiCall( MAIN_API["SETTINGS"] + "/" + settings,"POST",postData);
 }
 
-
+export async function manage_wedding(options, postData) {
+  return await apiService.apiCall( MAIN_API["MANAGE_WEDDING"] + "/"+"0"+"/" + options,"POST",postData);
+}
 
 
 export async function stateDropdown(postData) {

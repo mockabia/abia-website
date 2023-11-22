@@ -31,7 +31,7 @@ const schema = yup.object().shape({
   phone: yup.number(),
   phone: yup.number().required("Phone no: is required"),
   wedding_state: yup.string().required("The state field is required."),
-  resident_state: yup.string().required("The Resident state is required."),
+  state: yup.string().required("The Resident state is required."),
   other_category: yup.array().required("Services Booked is required."),
 });
 
@@ -54,7 +54,7 @@ const FutureWedding = () => {
       groom: "",
       date_of_wedding: null,
       wedding_state: "",
-      resident_state: "",
+      state: "",
       email: "",
       confirm_email: "",
       phone: null,
@@ -99,7 +99,7 @@ const FutureWedding = () => {
       groom: watch("groom"),
       date_of_wedding: watch("date_of_wedding") || null,
       wedding_state: watch("wedding_state"),
-      resident_state: watch("resident_state"),
+      state: watch("state"),
       email: watch("email"),
       confirm_email: watch("confirm_email"),
       phone: watch("phone") || null,
@@ -274,13 +274,13 @@ const FutureWedding = () => {
               <br />
               <div className="relative">
                 <Controller
-                  name="resident_state"
+                  name="state"
                   control={control}
                   // rules={{ required: "Wedding State is required" }}
                   render={({ field }) => (
                     <Select
                       {...field}
-                      name="resident_state"
+                      name="state"
                       value={reseidentState}
                       options={stateOptions}
                       onChange={(selectedOption) =>
@@ -303,9 +303,9 @@ const FutureWedding = () => {
                     />
                   )}
                 />
-                {errors.resident_state && (
+                {errors.state && (
                   <p className="text-[12px] text-red-500 font-semibold mt-1">
-                    {errors.resident_state.message}
+                    {errors.state.message}
                   </p>
                 )}
               </div>

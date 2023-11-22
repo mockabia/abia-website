@@ -32,17 +32,17 @@ const Sidebar = () => {
   let isTabletMid = useMediaQuery({ query: "(max-width: 768px)" });
   const [open, setOpen] = useState(isTabletMid ? false : true);
   //icon active
-  const [isActive, setIsActive] = useState(false);
+  // const [isActive, setIsActive] = useState(false);
 
   const sidebarRef = useRef();
   const { pathname } = useLocation();
 
-  const handleNavLinkClick = () => {
-    setIsActive(true);
-  };
-  const handleNavLinkBlur = () => {
-    setIsActive(false);
-  };
+  // const handleNavLinkClick = () => {
+  //   setIsActive(true);
+  // };
+  // const handleNavLinkBlur = () => {
+  //   setIsActive(false);
+  // };
 
   useEffect(() => {
     if (isTabletMid) {
@@ -135,8 +135,11 @@ const Sidebar = () => {
                   <li>
                     <NavLink
                       to={MainMenu.path}
+                      activeClassName={
+                        pathname === MainMenu.path ? "active" : ""
+                      }
                       className="link sidebarMenuItem"
-                      activeClassName="active"
+                      // activeClassName="active"
                     >
                       <div className="flex gap-5 ml-5">
                         {menuIcons[MainMenu.text] &&

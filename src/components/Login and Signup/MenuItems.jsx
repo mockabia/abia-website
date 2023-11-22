@@ -13,11 +13,9 @@ import {
   AccordionItemHeading,
   AccordionItemPanel,
 } from "react-accessible-accordion";
-// import { ReactComponent as MenuIcon } from "../../icons/menuIcon.svg";
-// import { AiOutlineClose } from "react-icons/ai";
 import { AiFillCaretDown } from "react-icons/ai";
 
-const MenuItems = () => {
+const MenuItems = (props) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [expandedItems, setExpandedItems] = useState([]);
 
@@ -37,15 +35,6 @@ const MenuItems = () => {
     setMenuOpen(false);
   };
 
-  const menuItemsArray = [
-    { label: "Directory", to: "/wedding-directory" },
-    { label: "Ideas & Top List", to: "/inspo" },
-    { label: "Registry", to: "/registry" },
-    { label: "Specials", to: "/wedding-promotions" },
-    { label: "Features", to: "/featured" },
-    { label: "Awards", to: "" },
-  ];
-
   return (
     <div className="">
       <Menu isOpen={menuOpen} onStateChange={handleStateChange}>
@@ -56,18 +45,48 @@ const MenuItems = () => {
         </div>
         <div className="flex flex-col justify-center">
           <div className="mt-[25px] mb-[140px]">
-            {menuItemsArray.map((item, index) => (
-              <Link
-                key={index}
-                onClick={closeMenu}
-                className="mobile-menu-item"
-                to={item.to}
-              >
-                {item.label}
-              </Link>
+            {props.menuItems.map((menuItem, index) => (
+              <React.Fragment key={index}>
+                {menuItem.Sub_content.length > 0 ? (
+                  <Accordion allowZeroExpanded className="border-none">
+                    <AccordionItem>
+                      <AccordionItemHeading>
+                        <AccordionItemButton
+                          onClick={() => handleAccordionChange(1)}
+                          className="relative cursor-pointer w-[100%] flex items-center pb-[0.5rem]"
+                        >
+                          {menuItem.title}
+                          <AiFillCaretDown className="ml-2" />
+                        </AccordionItemButton>
+                      </AccordionItemHeading>
+                      <AccordionItemPanel>
+                        {menuItem.Sub_content.map((subMenuItem, subIndex) => (
+                          <Link
+                            key={subIndex}
+                            onClick={closeMenu}
+                            className="mobile-menu-item submenu-item"
+                            to={`/${menuItem.main_url}/${subMenuItem.sub_url}`}
+                          >
+                            {subMenuItem.title}
+                          </Link>
+                        ))}
+                      </AccordionItemPanel>
+                    </AccordionItem>
+                  </Accordion>
+                ) : (
+                  <Link
+                    onClick={closeMenu}
+                    className="mobile-menu-item"
+                    to={`/${menuItem.main_url}`}
+                  >
+                    {menuItem.title}
+                  </Link>
+                )}
+              </React.Fragment>
             ))}
           </div>
 
+          {/* LOGIN ANF SIGNUP */}
           <hr />
           <div className="mt-[25px]">
             <Accordion allowZeroExpanded className="border-none">

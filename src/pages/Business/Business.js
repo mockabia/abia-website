@@ -65,11 +65,25 @@ export const updateBusiness = async (settings, formValues, setInputsErrors) => {
     .update_settings(settings, formValues)
     .then(function (response) {
       if (response.statuscode == 200) {
-        console.log("Success:", response);
       } else {
         if (response.errors) {
           setInputsErrors(response.errors);
-          // console.log("Business Errors:", response.errors)
+        } else if (response.statusmessage) {
+          setInputsErrors(response.statusmessage);
+        }
+      }
+    });
+};
+
+// GET REVIEWS/MANAGE WEDDING
+export const updateManageWedding = async (options, formValues, setInputsErrors) => {
+  await servicesPage
+    .manage_wedding(options, formValues)
+    .then(function (response) {
+      if (response.statuscode == 200) {
+      } else {
+        if (response.errors) {
+          setInputsErrors(response.errors);
         } else if (response.statusmessage) {
           setInputsErrors(response.statusmessage);
         }

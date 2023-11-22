@@ -96,6 +96,7 @@ const NavBar = (props) => {
   useEffect(() => {
     fetchHeaderMenus();
   }, []);
+  console.log("Header menus:", MenuItems);
 
   const theme = createTheme({
     components: {
@@ -158,7 +159,7 @@ const NavBar = (props) => {
     <div className={`${props.showLoader ? "hidden" : ""} `}>
       <div className="login-navbar-style relative">
         <div className="">
-          <MenuItems />
+          <MenuItems menuItems={menuItems} />
         </div>
         <div className="login-logo cursor-pointer" onClick={handleLogoClick}>
           <AbiaLogo />

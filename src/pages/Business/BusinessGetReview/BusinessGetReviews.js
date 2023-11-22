@@ -13,10 +13,9 @@ const GetReviews = () => {
 
   useEffect(() => {
     BusinessJS.fetchbusiness(setVendorInputs, setDataSet);
-    console.log(BusinessJS.fetchbusiness);
   }, []);
 
-  // console.log("Vendor Id:", vendorInput.vid);
+  console.log("Vendor :", vendorInput);
 
   const cardData = [
     {

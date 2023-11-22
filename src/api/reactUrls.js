@@ -13,8 +13,17 @@ export const BUSINESS_MENU = {
   DASHBOARD: { text: "Home", path: businessUrls + "/home" },
   GET_REVIEWS: { text: "Get Reviews", path: businessUrls + "/get-reviews" },
 
-  MANAGE_REVIEWS: { text: "Manage Reviews",path: businessUrls + "/manage-review"  },
-  SHOWCASE: {text: "Showcase",path: businessUrls + "/showcase"},
+  MANAGE_REVIEWS: {
+    text: "Manage Reviews",
+    path: businessUrls + "/manage-review",
+  },
+  "SHOWCASE": {
+      text: "Showcase",
+      secondaryMenu: [
+        { text: "Review widget", path: "/review-widget" },
+        { text: "Award badges", path: "/award-badges" },
+      ],
+      },
 
   PROMOTIONS: { text: "Promotions", path: businessUrls + "/promotions" },
   SHOP: { text: "Shop", path: businessUrls + "/shop" },

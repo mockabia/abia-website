@@ -44,10 +44,12 @@ const PastWedding = () => {
   const [stateOptions, setStateOptions] = useState({});
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [selectedState, setSelectedState] = useState([]);
+    const [inputsErrors, setInputsErrors] = useState({});
+
   const location = useLocation();
   const { vendorInput } = location.state || {};
 
-  console.log("Vendor in Past:", vendorInput);
+  console.log("Vendor in ID:", vendorInput.vid);
   const {
     watch,
     register,
@@ -106,11 +108,12 @@ const PastWedding = () => {
       confirm_email: watch("confirm_email"),
       phone: watch("phone"),
       vcid: watch("vcid"),
+      vid: vendorInput.vid,
     };
-
-    console.log("Form data:", data);
+    BusinessJS.updateManageWedding(1, formValues, setInputsErrors);
+    console.log("Form data:", formValues);
   };
-
+  // Business.updateBusiness(1, formValues, setInputsErrors);
   const onInvalid = (errors) => console.error(errors);
   return (
     <>
