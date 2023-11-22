@@ -134,7 +134,6 @@ const BusinessSignup = () => {
   }, []);
   return (
     <>
-      <LayoutGeneral>
         <div className=" desktop-form">
           <form onSubmit={handleSubmit(onSubmit)}>
             {formStep === 0 && (
@@ -549,7 +548,6 @@ const BusinessSignup = () => {
             )}
           </form>
         </div>
-      </LayoutGeneral>
     </>
   );
 };
