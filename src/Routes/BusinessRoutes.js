@@ -19,17 +19,16 @@ const BusinessRoutes = (props) => {
   const LoadablePage = loadable((props) =>
     import(`../pages/Business/${props.page}`)
   );
-
   useEffect(() => {
     fetchVendorLoginRoutes();
+  }, [!hasJWT()]);
+  useEffect(() => {
+    fetchVendorLoginedRoutes();
   }, [hasJWT()]);
   const fetchVendorLoginRoutes = async () => {
     await servicesPage.fetchVendorLoginRoutes().then(function (response) {
       if (response.statuscode == 200) {
-        setLoginMenu(response.result);
-      }
-      if (hasJWT()) {
-        fetchVendorLoginedRoutes();
+        setLoginMenu(response.result[0].Sub_content);
       }
     });
   };
@@ -92,6 +91,7 @@ const BusinessRoutes = (props) => {
         <>
 
           <LayoutGeneral {...props}>
+          {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(loginMenu, null, 2)}</pre> */}
             <Routes>
               {loginMenu.map((loginRoutes, i) => (
                 <Route
@@ -99,6 +99,8 @@ const BusinessRoutes = (props) => {
                   element={<LoadablePage page={loginRoutes.pagename} {...props} />}
                 />
               ))}
+              {/* <Route path="/signup" element={<BusinessSignup />} />
+              <Route path="/user-state" element={<BusinessLoginState />} /> */}
             </Routes>
           </LayoutGeneral>
         </>

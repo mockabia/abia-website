@@ -33,9 +33,7 @@ const BusinessLoginState = () => {
   };
 
   return (
-    <>
-      <LayoutGeneral>
-        <div className="login-vendorlogin-content relative">
+    <div className="login-vendorlogin-content relative">
           <div className="login-vendorlogin-box">
             <div className="flex flex-col justify-center items-center p-[20px] relative">
               <h1 className="login-loginbox-header">Welcome</h1>
@@ -65,8 +63,6 @@ const BusinessLoginState = () => {
             </div>
           </div>
         </div>
-      </LayoutGeneral>
-    </>
   );
 };
 export default BusinessLoginState;
