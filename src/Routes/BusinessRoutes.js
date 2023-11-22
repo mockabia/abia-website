@@ -3,26 +3,17 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import * as servicesPage from "../services/contentServices";
 import loadable from "@loadable/component";
 import LayoutVendor from "../layouts/Layout/LayoutVendor";
-import RoutePath from "../Routes/RoutePath";
+import LayoutGeneral from "../layouts/Layout/LayoutGeneral";
 
-import RouteGuard from "./RouteGuard";
-//history
-//import { history } from '../helpers/history';
-
-import BusinessLogin from "../pages/General/BusinessLogin";
-import BusinessSignup from "../pages/General/BusinessSignup";
-import BusinessLoginState from "../pages/General/BusinessLoginState";
+import BusinessLogin from "../pages/Business/BusinessLogin";
+import BusinessSignup from "../pages/Business/BusinessSignup";
+import BusinessLoginState from "../pages/Business/BusinessLoginState";
 import CSideBar from "../components/Couple-Layout/CSideBar";
 
-import BusinessDashboard from "../pages/Business/Dashboard";
-import BusinessProfile from "../pages - Copy/MyProfile2/profile";
-import BusinessSettings from "../pages/Business/BusinessSettings/BusinessSettings";
-import GetReviews from "../pages/Business/BusinessGetReview/BusinessGetReviews";
-import PastWedding from "../pages/Business/BusinessGetReview/BusinessPastWedding";
-import FutureWedding from "../pages/Business/BusinessGetReview/BusinessFutureWedding";
-
 const BusinessRoutes = (props) => {
-  const [routesFromApi, setRoutesFromApi] = useState([]);
+  const [loginMenu, setLoginMenu] = useState([]);
+  const [loginedMenu, setLoginedMenu] = useState([]);
+  const [businessMenu, setBusinessMenu] = useState([]);
   const location = useLocation();
 
   const LoadablePage = loadable((props) =>
@@ -30,13 +21,31 @@ const BusinessRoutes = (props) => {
   );
 
   useEffect(() => {
-    props.setShowLoader(false);
-    //fetchVendorMenuRoutes();
+    fetchVendorLoginRoutes();
   }, []);
-  const fetchVendorMenuRoutes = async () => {
-    await servicesPage.fetchVendorMenuRoutes().then(function (response) {
+  const fetchVendorLoginRoutes = async () => {
+    await servicesPage.fetchVendorLoginRoutes().then(function (response) {
       if (response.statuscode == 200) {
-        setRoutesFromApi(response.result);
+        setLoginMenu(response.result);
+      }
+      if (hasJWT()) {
+        fetchVendorLoginedRoutes();
+      }
+    });
+  };
+  const fetchVendorLoginedRoutes = async () => {
+    await servicesPage.fetchVendorLoginedRoutes().then(function (response) {
+      if (response.statuscode == 200) {
+        setLoginedMenu(response.result);
+      }
+      fetchVendorDashboardRoutes();
+    });
+  };
+  const fetchVendorDashboardRoutes = async () => {
+    await servicesPage.fetchVendorDashboardRoutes().then(function (response) {
+      if (response.statuscode == 200) {
+        setBusinessMenu(response.result);
+        props.setShowLoader(false);
       }
     });
   };
@@ -48,54 +57,53 @@ const BusinessRoutes = (props) => {
     return flag;
   }
   return (
-    <Routes>
-      {/* {routesFromApi.map((routes, i) => (
-          <Route
-            path={`/${routes.url}`}
-            element={<LoadablePage page={routes.pagename} {...props} />}
-          />
-        ))} */}
-      <Route path="/login" element={<BusinessLogin />} />
-      <Route path="/signup" element={<BusinessSignup />} />
-      <Route path="/user-state" element={<BusinessLoginState />} />
-      <Route path="/wedding-profile" element={<CSideBar />} />
-      <Route
-        path="/*"
-        element={
-          <LayoutVendor>
+    <>
+      {hasJWT() ? (
+        <>
+          <LayoutVendor leftmenu={businessMenu} topmenu={loginedMenu}>
             <Routes>
-              <Route
-                path="/home"
-                element={
-                  <RouteGuard {...props} Component={BusinessDashboard} />
-                }
-              />
-              <Route
-                path="/settings"
-                element={<RouteGuard {...props} Component={BusinessSettings} />}
-              />
-
-              <Route
-                path="/my-profile"
-                element={<RouteGuard {...props} Component={BusinessProfile} />}
-              />
-              <Route
-                path="/get-reviews"
-                element={<RouteGuard {...props} Component={GetReviews} />}
-              />
-              <Route
-                path="/get-reviews/past-wedding"
-                element={<RouteGuard {...props} Component={PastWedding} />}
-              />
-              <Route
-                path="/get-reviews/future-wedding"
-                element={<RouteGuard {...props} Component={FutureWedding} />}
-              />
+              {loginedMenu.map((loginedRoutes, i) => (
+                <Route
+                  path={`/${loginedRoutes.url}`}
+                  element={<LoadablePage page={loginedRoutes.pagename} {...props} />}
+                />
+              ))}
             </Routes>
           </LayoutVendor>
-        }
-      />
-    </Routes>
+          <Routes>
+            <Route
+              path="/*"
+              element={
+                <LayoutVendor leftmenu={businessMenu} topmenu={loginedMenu}>
+                  <Routes>
+                    {businessMenu.map((businessRoutes, i) => (
+                      <Route
+                        path={`/${businessRoutes.url}`}
+                        element={<LoadablePage page={businessRoutes.pagename} {...props} />}
+                      />
+                    ))}
+                  </Routes>
+                </LayoutVendor>
+              }
+            />
+          </Routes>
+        </>
+      ) : (
+        <>
+
+          <LayoutGeneral {...props}>
+            <Routes>
+              {loginMenu.map((loginRoutes, i) => (
+                <Route
+                  path={`/${loginRoutes.url}`}
+                  element={<LoadablePage page={loginRoutes.pagename} {...props} />}
+                />
+              ))}
+            </Routes>
+          </LayoutGeneral>
+        </>
+      )}
+    </>
   );
 };
 export default BusinessRoutes;

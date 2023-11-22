@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import "../Style/BusinessLogin.css";
 import { Link, useNavigate } from "react-router-dom";
 import LayoutGeneral from "../../layouts/Layout/LayoutGeneral";
-import BusinessForgotPassword from "./BusinessForgotPassword";
-import * as GeneralJS from "./General";
+import BusinessForgotPassword from "../General/BusinessForgotPassword";
+import * as GeneralJS from "../General/General";
 import { IconButton, Stack } from "@mui/material";
 import { VLTextField, VendorLoginButton } from "../../components/FormStyle";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
@@ -41,8 +41,6 @@ const LoginPage = () => {
   console.log("Error response:", inputsErrors)
   const hasInputErrors = Object.values(inputsErrors).some(error => typeof error !== "undefined");
   return (
-    <>
-      <LayoutGeneral>
         <div>
           <div className="login-vendorlogin-content relative">
             <div className="login-vendorlogin-box">
@@ -139,9 +137,7 @@ const LoginPage = () => {
             </div>
             <br />
           </div>
-        </div> 
-      </LayoutGeneral>
-    </>
+        </div>
   );
 };
 

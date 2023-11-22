@@ -20,10 +20,10 @@ import { RxTriangleDown } from "react-icons/rx";
 import { ReactComponent as MenuIcon } from "../../icons/menuIcon.svg";
 import { ReactComponent as AbiaLogo } from "../../ABIA-White-Logo-gold-crown(1).svg";
 import AbiaLogo1 from "../../abiaLogo";
-import * as GeneralJS from "../../pages/General/General";
+import * as BusinessJS from "../../pages/Business/Business";
 //components
 
-const TopBar = ({ title, logo }) => {
+const TopBar = (props) => {
   const navigate = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef(null);
@@ -74,7 +74,7 @@ const TopBar = ({ title, logo }) => {
     setMenuOpen(false);
   };
   const handleLogout = () => {
-    GeneralJS.logout(navigate);
+    BusinessJS.logout(navigate);
   };
 
   const handleLogoClick = () => {
@@ -89,7 +89,7 @@ const TopBar = ({ title, logo }) => {
         <div className="">
           <div className="md:ml-[30px] md:mt-[12px] relative">
             <div className="md:text-[25px] font-bold md:ml-[256px]">
-              <h1>{title}</h1>
+              <h1>{props.title}</h1>
             </div>
           </div>
         </div>
@@ -123,16 +123,22 @@ const TopBar = ({ title, logo }) => {
                 <br></br>
                 <span className="text-[15px]"> {userProfile.email} </span>
               </li>
-              <li className="px-4  text-[15px] cursor-pointer">
-                {" "}
-                Account Details{" "}
-              </li>
-              <li
-                className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
-                onClick={handleLogout}
-              >
-                <button>Log Out</button>
-              </li>
+              {props.topmenu[0].Sub_content.map((loginedRoutes, i) => (
+                <>
+                {loginedRoutes.url=='logout' ? (
+                  <li
+                    className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
+                    onClick={handleLogout}
+                  >{loginedRoutes.title}</li>
+                ) : (
+                  <li
+                    className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
+                  ><NavLink
+                  to={loginedRoutes.url}
+                >{loginedRoutes.title}</NavLink></li>
+                )}
+                </>
+              ))}
             </ul>
           </div>
         )}
@@ -219,7 +225,7 @@ const TopBar = ({ title, logo }) => {
                             initial={{ opacity: 0, y: -20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            // className="mb-4"
+                          // className="mb-4"
                           >
                             <NavLink
                               to={"/showcase/award-badges"}

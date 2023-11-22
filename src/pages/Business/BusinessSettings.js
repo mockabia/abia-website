@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import LayoutVendor from "../../../layouts/Layout/LayoutVendor";
-import * as BusinessJS from "../Business";
+import * as BusinessJS from "./Business";
 import Skeleton from "@mui/material/Skeleton";
 
-import "../../../pages/Style/BusinessSettings.css";
-import { ReactComponent as BusinessUserIcon } from "../../../icons/ic-user-interface-info (1).svg";
-import { ReactComponent as BusinessEmail } from "../../../icons/business-email (1).svg";
-import { ReactComponent as USernamePasswordIcon } from "../../../icons/ic-user-interface-password (1).svg";
-import { ReactComponent as CategoryIcon } from "../../../icons/check-all (1).svg";
-import { ReactComponent as LocationIcon } from "../../../icons/location (1).svg";
+import "../Style/BusinessSettings.css";
+import { ReactComponent as BusinessUserIcon } from "../../icons/ic-user-interface-info (1).svg";
+import { ReactComponent as BusinessEmail } from "../../icons/business-email (1).svg";
+import { ReactComponent as USernamePasswordIcon } from "../../icons/ic-user-interface-password (1).svg";
+import { ReactComponent as CategoryIcon } from "../../icons/check-all (1).svg";
+import { ReactComponent as LocationIcon } from "../../icons/location (1).svg";
 import { RxTriangleDown } from "react-icons/rx";
 import {
   Accordion,
@@ -18,11 +17,11 @@ import {
   AccordionItemButton,
   AccordionItemPanel,
 } from "react-accessible-accordion";
-import BasicInfo from "./BusinessSetting_1";
-import UsernamePassword from "./BusinessSettings_3";
-import ContactDetails from "./BusinessSettings_2";
-import Category from "./BusinessSettings_4";
-import MyLocation from "./BusinessSettings_5";
+import BasicInfo from "./BusinessSettings/BusinessSetting_1";
+import UsernamePassword from "./BusinessSettings/BusinessSettings_3";
+import ContactDetails from "./BusinessSettings/BusinessSettings_2";
+import Category from "./BusinessSettings/BusinessSettings_4";
+import MyLocation from "./BusinessSettings/BusinessSettings_5";
 
 const BusinessSettings = (props) => {
   let navigate = useNavigate();

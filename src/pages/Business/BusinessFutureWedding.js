@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import "../../Style/BusinessGetReviews.css";
+import "../Style/BusinessGetReviews.css";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import ContentHeader from "../../../layouts/sidebar/ContentHeader";
+import ContentHeader from "../../layouts/sidebar/ContentHeader";
 
 import Select, { components } from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { customSelectStyles } from "../../../components/FormStyle";
+import { customSelectStyles } from "../../components/FormStyle";
 
-import Calendar from "../../../third-party-packs/Calendar";
-import * as BusinessJS from "../Business";
+import Calendar from "../../third-party-packs/Calendar";
+import * as BusinessJS from "./Business";
 import ReactDatePicker from "react-datepicker";
 
 const schema = yup.object().shape({
