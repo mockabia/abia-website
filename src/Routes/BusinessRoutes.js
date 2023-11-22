@@ -11,10 +11,10 @@ import BusinessLoginState from "../pages/Business/BusinessLoginState";
 import CSideBar from "../components/Couple-Layout/CSideBar";
 
 const BusinessRoutes = (props) => {
-  const [loginMenu, setLoginMenu] = useState([]);
-  const [loginedMenu, setLoginedMenu] = useState([]);
+  const [loginMenu, setLoginMenu]       = useState([]);
+  const [loginedMenu, setLoginedMenu]   = useState([]);
   const [businessMenu, setBusinessMenu] = useState([]);
-  const location = useLocation();
+  const location                        = useLocation();
 
   const LoadablePage = loadable((props) =>
     import(`../pages/Business/${props.page}`)
@@ -22,7 +22,7 @@ const BusinessRoutes = (props) => {
 
   useEffect(() => {
     fetchVendorLoginRoutes();
-  }, []);
+  }, [hasJWT()]);
   const fetchVendorLoginRoutes = async () => {
     await servicesPage.fetchVendorLoginRoutes().then(function (response) {
       if (response.statuscode == 200) {
