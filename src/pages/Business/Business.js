@@ -10,7 +10,7 @@ export const logout = async (navigate) => {
         apiService.setAuthToken(null);
         localStorage.removeItem("vendorToken");
         localStorage.removeItem("user");
-        //navigate(reactUrls.BUSINESS_MENU["LOGIN"].path);
+        navigate(reactUrls.BUSINESS_MENU["LOGIN"].path);
       }
     }
   });
