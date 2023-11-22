@@ -17,22 +17,6 @@ export const fetchbusiness = async (setInputs, setDataSet) => {
   });
 };
 
-export const updateBusiness = async (settings, formValues, setInputsErrors) => {
-  await servicesPage
-    .update_settings(settings, formValues)
-    .then(function (response) {
-      if (response.statuscode == 200) {
-        console.log("Success:", response);
-      } else {
-        if (response.errors) {
-          setInputsErrors(response.errors);
-          // console.log("Business Errors:", response.errors)
-        } else if (response.statusmessage) {
-          setInputsErrors(response.statusmessage);
-        }
-      }
-    });
-};
 
 export const handleChange = (e, setInputs, setInputsErrors) => {
   const name = e.target.name;
@@ -56,6 +40,14 @@ export const fetchCategory = async (setCategoryOption) => {
     }
   });
 };
+// addtional category
+export const fetchAddCategory = async (ids, setAddCategoryOption) => {
+  await servicesPage.addCategoryDropdown(ids).then(function (response) {
+    if (response.statuscode === 200) {
+      setAddCategoryOption(response.result);
+    }
+  });
+};
 
 // state + region
 export const fetchRegion = async (selectedStates, setRegions) => {
@@ -67,6 +59,20 @@ export const fetchRegion = async (selectedStates, setRegions) => {
       }
     });
 };
-
-
-
+// BUSINESS SETTINGS
+export const updateBusiness = async (settings, formValues, setInputsErrors) => {
+  await servicesPage
+    .update_settings(settings, formValues)
+    .then(function (response) {
+      if (response.statuscode == 200) {
+        console.log("Success:", response);
+      } else {
+        if (response.errors) {
+          setInputsErrors(response.errors);
+          // console.log("Business Errors:", response.errors)
+        } else if (response.statusmessage) {
+          setInputsErrors(response.statusmessage);
+        }
+      }
+    });
+};

@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../Style/BusinessGetReviews.css";
 import { useNavigate } from "react-router-dom";
 import ContentHeader from "../../../layouts/sidebar/ContentHeader";
+import * as BusinessJS from "../Business";
+// import PastWedding from "./BusinessPastWedding";
+// import FutureWedding from "./BusinessFutureWedding";
 
 const GetReviews = () => {
   const navigate = useNavigate();
+  const [vendorInput, setVendorInputs] = useState();
+  const [dataSet, setDataSet] = useState(false);
+
+  useEffect(() => {
+    BusinessJS.fetchbusiness(setVendorInputs, setDataSet);
+    console.log(BusinessJS.fetchbusiness);
+  }, []);
+
+  // console.log("Vendor Id:", vendorInput.vid);
 
   const cardData = [
     {
@@ -15,7 +27,9 @@ const GetReviews = () => {
       bgColor: "#6cc2bc",
       hoverColor: "#339890",
       linkFunction: () =>
-        navigate( "/business/get-reviews/past-wedding"),
+        navigate("/business/get-reviews/past-wedding", {
+          state: { vendorInput },
+        }),
     },
     {
       title: "Register Future Couples",
@@ -25,7 +39,9 @@ const GetReviews = () => {
       bgColor: "#e8cf82",
       hoverColor: "#efc649",
       linkFunction: () =>
-        navigate("/business/get-reviews/future-wedding"),
+        navigate("/business/get-reviews/future-wedding", {
+          state: { vendorInput },
+        }),
     },
     {
       title: "Send Personalised Review Link",

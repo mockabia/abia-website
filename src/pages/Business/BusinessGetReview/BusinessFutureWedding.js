@@ -212,6 +212,7 @@ const FutureWedding = () => {
                         onChange={(date) => field.onChange(date)}
                         dateFormat="MM/dd/yyyy" // Customize the date format
                         placeholderText="Select date"
+                        minDate={new Date()}
                       />
                     )}
                   />

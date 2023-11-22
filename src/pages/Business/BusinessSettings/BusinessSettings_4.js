@@ -106,6 +106,8 @@ const Category = ({ vendorDetails }) => {
     vid: vendorDetails.vid,
   });
   const [categoryOption, setCategoryOption] = useState([]);
+  const [addCategoryOption, setAddCategoryOption] = useState([]);
+
   const [additionaCatSelect, setAdditionaCatSelect] = useState([]);
   const [inputsErrors, setInputsErrors] = useState({});
 
@@ -137,6 +139,12 @@ const Category = ({ vendorDetails }) => {
   useEffect(() => {
     BusinessJS.fetchCategory(setCategoryOption);
   }, []);
+
+  useEffect(() => {
+    BusinessJS.fetchAddCategory(vendorDetails.first_category, setAddCategoryOption);
+  }, [vendorDetails.first_category]);
+
+  console.log("addtional category:", addCategoryOption);
 
   const getFieldError = (fieldName) => {
     return inputsErrors && inputsErrors[fieldName]
@@ -201,7 +209,7 @@ const Category = ({ vendorDetails }) => {
                 render={({ field }) => (
                   <CustomSelect
                     field={field}
-                    categoryOptions={categoryOption}
+                    categoryOptions={addCategoryOption}
                   />
                 )}
               />

@@ -25,21 +25,21 @@ export const BLOGVENDORS_DROPDOWN = `${baseUrl}blogVendorsDropdown`;
 export const INCLUSIONS_DROPDOWN = `${baseUrl}InclusionsDropdown`;
 export const VENDOR_DROPDOWN = `${baseUrl}BusinessDropdown`;
 export const STATE_VS_REGION_API = `${baseUrl}WebStateVsRegionDropdown`;
-
+export const ADDITIONAL_CATEGORY_DROPDOWN = `${baseUrl}WebAdditionalVCategoryDropdown`;
 
 export const CONTENT_API = {
-  HEADER_MENUS      : `${baseUrl}WebCommonHeaderMenu`,
-  FOOTER_MENUS      : `${baseUrl}WebCommonFooterMenu`,
-  CONTENT_DETAILS   : `${baseUrl}WebViewContentRecord`,
+  HEADER_MENUS: `${baseUrl}WebCommonHeaderMenu`,
+  FOOTER_MENUS: `${baseUrl}WebCommonFooterMenu`,
+  CONTENT_DETAILS: `${baseUrl}WebViewContentRecord`,
 };
 export const ROUTES_API = {
-  CONTENT_SUBCONTENT_ROUTES   : `${baseUrl}PublicContentVsSubForRoutes`,
-  PRE_CONTENT_ROUTES          : `${baseUrl}PublicPrecontentForRoutes`,
-  SUPPLIER_CONTENT_ROUTES     : `${baseUrl}PublicSuppliercontentForRoutes`,
-  BRIDE_CONTENT_ROUTES        : `${baseUrl}PublicBridecontentForRoutes`,
-  BLOGCAT_BLOGSUBCAT_ROUTES   : `${baseUrl}PublicBlogCatVsSubForRoutes`,
-  BLOG_ROUTES                 : `${baseUrl}PublicBlogForRoutes`,
-  BUSINESS_ROUTES                 : `${baseUrl}PublicBlogForRoutes`,
+  CONTENT_SUBCONTENT_ROUTES: `${baseUrl}PublicContentVsSubForRoutes`,
+  PRE_CONTENT_ROUTES: `${baseUrl}PublicPrecontentForRoutes`,
+  SUPPLIER_CONTENT_ROUTES: `${baseUrl}PublicSuppliercontentForRoutes`,
+  BRIDE_CONTENT_ROUTES: `${baseUrl}PublicBridecontentForRoutes`,
+  BLOGCAT_BLOGSUBCAT_ROUTES: `${baseUrl}PublicBlogCatVsSubForRoutes`,
+  BLOG_ROUTES: `${baseUrl}PublicBlogForRoutes`,
+  BUSINESS_ROUTES: `${baseUrl}PublicBlogForRoutes`,
 };
 
 export const BUSINESS_API = {
@@ -61,4 +61,5 @@ export const BUSINESS_API = {
   SETTINGS3: `${baseUrl}WebBusinessSettings/{id}/3`,
   SETTINGS4: `${baseUrl}WebBusinessSettings/{id}/4`,
   SETTINGS5: `${baseUrl}WebBusinessSettings/{id}/5`,
+  PAST_WEDDING: `${baseUrl}WebManageWedding`,
 };

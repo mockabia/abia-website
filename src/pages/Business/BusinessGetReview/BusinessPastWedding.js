@@ -14,10 +14,11 @@ import {
   MoreSelectedBadge,
   MultiValue,
 } from "../../../components/FormStyle";
-
-import Calendar from "../../../third-party-packs/Calendar";
+import Calendar from "../../../third-party-packs/Calendar"; //do not remove
+import { subDays } from "date-fns";
 import * as BusinessJS from "../Business";
 import ReactDatePicker from "react-datepicker";
+import { useLocation } from "react-router-dom";
 
 const schema = yup.object().shape({
   bride: yup.string().required("Client's name is required"),
@@ -36,17 +37,17 @@ const schema = yup.object().shape({
   // phone: yup.number().max(13, "Phone number must not exceed 13 characters"),
 
   wedding_state: yup.string().required("The state field is required."),
-  other_category: yup.array().required("Services Booked is required."),
+  vcid: yup.array().required("Services Booked is required."),
 });
-
-
-
 
 const PastWedding = () => {
   const [stateOptions, setStateOptions] = useState({});
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [selectedState, setSelectedState] = useState([]);
+  const location = useLocation();
+  const { vendorInput } = location.state || {};
 
+  console.log("Vendor in Past:", vendorInput);
   const {
     watch,
     register,
@@ -64,7 +65,7 @@ const PastWedding = () => {
       email: "",
       confirm_email: "",
       phone: "",
-      other_category: "",
+      vcid: "",
     },
   });
 
@@ -104,7 +105,7 @@ const PastWedding = () => {
       email: watch("email"),
       confirm_email: watch("confirm_email"),
       phone: watch("phone"),
-      other_category: watch("other_category"),
+      vcid: watch("vcid"),
     };
 
     console.log("Form data:", data);
@@ -212,6 +213,7 @@ const PastWedding = () => {
                         onChange={(date) => field.onChange(date)}
                         dateFormat="MM/dd/yyyy" // Customize the date format
                         placeholderText="Select date"
+                        maxDate={subDays(new Date(), 1)}
                       />
                     )}
                   />
@@ -320,7 +322,7 @@ const PastWedding = () => {
               <br />
               <div className="relative">
                 <Controller
-                  name="other_category"
+                  name="vcid"
                   control={control}
                   render={({ field }) => (
                     <Select
@@ -348,9 +350,9 @@ const PastWedding = () => {
                     />
                   )}
                 />
-                {errors.other_category && (
+                {errors.vcid && (
                   <p className="text-[12px] text-red-500 font-semibold mt-1">
-                    {errors.other_category.message}
+                    {errors.vcid.message}
                   </p>
                 )}
               </div>

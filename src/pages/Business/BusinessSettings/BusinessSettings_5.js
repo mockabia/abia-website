@@ -171,7 +171,6 @@ const MyLocation = ({ vendorDetails }) => {
   useEffect(() => {
     BusinessJS.fetchState(setStateOptions);
   }, []);
-  // fetch region for selected states
   useEffect(() => {
     const selectedStateUrls = selectedStates.map((state) => state.value);
     if (selectedStateUrls.length > 0) {
@@ -254,9 +253,9 @@ const MyLocation = ({ vendorDetails }) => {
                 sx={{ width: "100%" }}
                 isMulti={true}
                 options={regions}
-                value={selectedRegions}
+                // value={selectedRegions}
                 styles={customSelectStyles}
-                onChange={handleRegionChange}
+                onChange={(selectedOptions) => handleRegionChange(selectedOptions)}
                 isClearable={false}
                 closeMenuOnSelect={false}
                 hideSelectedOptions={false}

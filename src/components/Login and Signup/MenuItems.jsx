@@ -38,11 +38,11 @@ const MenuItems = () => {
   };
 
   const menuItemsArray = [
-    { label: "Directory", to: "/directory" },
-    { label: "Ideas & Top List", to: "" },
-    { label: "Registry", to: "" },
-    { label: "Specials", to: "" },
-    { label: "Features", to: "" },
+    { label: "Directory", to: "/wedding-directory" },
+    { label: "Ideas & Top List", to: "/inspo" },
+    { label: "Registry", to: "/registry" },
+    { label: "Specials", to: "/wedding-promotions" },
+    { label: "Features", to: "/featured" },
     { label: "Awards", to: "" },
   ];
 

@@ -32,7 +32,6 @@ import UseAutocomplete from "../../components/AsyncSearch";
 import styled from "@emotion/styled";
 
 const NavBar = (props) => {
-  
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchValue, setSearchValue] = useState("");
   const [options, setOptions] = useState([
