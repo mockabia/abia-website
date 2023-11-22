@@ -32,7 +32,7 @@ const schema = yup.object().shape({
   phone: yup.number().required("Phone no: is required"),
   wedding_state: yup.string().required("The state field is required."),
   state: yup.string().required("The Resident state is required."),
-  other_category: yup.array().required("Services Booked is required."),
+  vcid: yup.array().required("Services Booked is required."),
 });
 
 const FutureWedding = () => {
@@ -58,7 +58,7 @@ const FutureWedding = () => {
       email: "",
       confirm_email: "",
       phone: null,
-      other_category: null,
+      vcid: null,
     },
   });
 
@@ -103,7 +103,7 @@ const FutureWedding = () => {
       email: watch("email"),
       confirm_email: watch("confirm_email"),
       phone: watch("phone") || null,
-      other_category: watch("other_category"),
+      vcid: watch("vcid"),
     };
 
     console.log("Form data:", data);
@@ -366,7 +366,7 @@ const FutureWedding = () => {
               <br />
               <div className="relative">
                 <Controller
-                  name="other_category"
+                  name="vcid"
                   control={control}
                   render={({ field }) => (
                     <Select
@@ -394,9 +394,9 @@ const FutureWedding = () => {
                     />
                   )}
                 />
-                {errors.other_category && (
+                {errors.vcid && (
                   <p className="text-[12px] text-red-500 font-semibold mt-1">
-                    {errors.other_category.message}
+                    {errors.vcid.message}
                   </p>
                 )}
               </div>

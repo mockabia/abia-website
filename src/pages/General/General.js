@@ -171,3 +171,56 @@ export const validateForm = (values) => {
   errors.password = customValidator.validatePassword(values.password);
   return errors;
 };
+
+// COUPLES
+// export const CoupleLoginForm = async (e, inputs, setInputsErrors, navigate) => {
+//   e.preventDefault();
+//   let requestData = inputs;
+//   if (customValidator.validateVendorLoginForm(inputs, setInputsErrors)) {
+//     await servicesPage.login(requestData).then(function (response) {
+//       if (response.statuscode == 200) {
+//         const token = response.token;
+//         // alert(token)
+//         const userStatesData = response.result;
+//         const statesLegnth = response.result.length;
+//         console.log("State length:", statesLegnth);
+//         console.log("State Listed:", userStatesData);
+//         //setToken(token);
+//         console.log(token);
+//         //setUserStates(userStatesData);
+//         //setApiRequestSuccess(true);
+
+//         if (statesLegnth <= 1) {
+//           localStorage.setItem("vendorToken", JSON.stringify(token));
+//           localStorage.setItem("abiaType", "V");
+//           let expiresInMS = token.expires_in;
+//           let currentTime = new Date();
+//           let expireTime = new Date(currentTime.getTime() + expiresInMS);
+
+//           localStorage.setItem("vexpireTime", expireTime);
+//           localStorage.removeItem("vusername");
+//           localStorage.removeItem("vpassword");
+//           localStorage.removeItem("vremember_me");
+//           /* if (inputs.remember_me && inputs.remember_me !== "") {
+//               localStorage.vusername     = inputs.username;
+//               localStorage.vpassword     = inputs.password;
+//               localStorage.vremember_me  = inputs.remember_me;
+//             } */
+//           apiService.setAuthToken(token);
+//           navigate(reactUrls.BUSINESS_MENU["DASHBOARD"].path);
+//         } else {
+//           navigate(reactUrls.BUSINESS_MENU["USER_STATE"].path, {
+//             state: {
+//               userStatesData,
+//               token: token,
+//               email: inputs.email,
+//               password: inputs.password,
+//             },
+//           });
+//         }
+//       } else {
+//         setInputsErrors(response.errors);
+//       }
+//     });
+//   }
+// };

@@ -16,6 +16,8 @@ import {
   Checkbox,
   FormControl,
   FormControlLabel,
+  FormGroup,
+  Grid,
   MenuItem,
   Stack,
   TextField,
@@ -63,7 +65,7 @@ const options = [
 export default function CouplesSignUp() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-  const [selectedOption, setSelectedOption] = React.useState(null);
+  const [selectedOption, setSelectedOption] = React.useState(null); //first page option
 
   const [location, setLocation] = React.useState([]);
   const [selectState, setSelectState] = React.useState();
@@ -443,6 +445,120 @@ export default function CouplesSignUp() {
                       All fields required
                     </Typography>
                   </Box> */}
+                  {/* Next */}
+                  <NextButtonStyle
+                    variant="outlined"
+                    className="cs-button-text-position"
+                    disabled={selectedOption === null}
+                    onClick={handleNext}
+                    style={{
+                      backgroundColor:
+                        selectedOption !== null ? "black" : "#b7b7b7",
+                    }}
+                  >
+                    <span className="cs-next-button">Submit</span>
+                  </NextButtonStyle>
+                </Stack>
+                <br />
+                {/* Terms and Policies */}
+                <div className="mt-2">
+                  <div className="flex justify-center ">
+                    <h5 className="text-[12px]">
+                      Already have an account?{" "}
+                      <Link>
+                        <span className="font-bold text-[#6cc2bc]">Log in</span>
+                      </Link>
+                    </h5>
+                  </div>
+
+                  <div className="flex justify-center mt-2">
+                    <h5 className="text-[12px]">
+                      By creating your ABIA's account you agree to our{" "}
+                      <Link>
+                        <span className="cs-text-highlight">Terms of use</span>
+                      </Link>{" "}
+                      and{" "}
+                      <Link>
+                        <span className="cs-text-highlight">
+                          Privacy policy
+                        </span>
+                      </Link>
+                    </h5>
+                  </div>
+                </div>
+              </React.Fragment>
+            </Box>
+          </section>
+        )}
+        {activeStep === 3 && (
+          <section className="couples-singup-container">
+            <div className="couples-signup-image">
+              <div className="cs-image-container cs-image-container-3"></div>
+            </div>
+            <div className="cs-back-button" onClick={handleBack}>
+              <ArrowBackIcon />
+              <p className="text-[12px] text-black font-[800]">Back</p>
+            </div>
+            <div className="cs-close-icon" onClick={handleClosePage}>
+              <CloseIcon />
+            </div>
+
+            <Box
+              component="form"
+              sx={{ width: "100%" }}
+              className="cs-signup-form"
+            >
+              <StepperStyle activeStep={activeStep}>
+                {steps.map((label, index) => {
+                  const stepProps = {};
+                  const labelProps = {};
+
+                  if (isStepSkipped(index)) {
+                    stepProps.completed = false;
+                  }
+                  return (
+                    <Step key={label} {...stepProps}>
+                      <StepLabel {...labelProps}>{label}</StepLabel>
+                    </Step>
+                  );
+                })}
+              </StepperStyle>
+
+              <React.Fragment>
+                {/* Option buttons */}
+                {/* 1 */}
+                <div>
+                  <h1 className="cs-signup-header">
+                    Help us build our dream wedding team.
+                  </h1>
+                </div>
+                <Stack spacing={3}>
+                  <Box>
+                    <FormGroup>
+                       <Grid container spacing={2}>
+        {/* First Column */}
+        <Grid item xs={6} sx={{whiteSpace:"normal"}}>
+          <FormControlLabel required control={<Checkbox />} label="Requiredcdcddddddddddvvvvvvvvvvvvvvvvvvvvvvvv" />
+          <FormControlLabel required control={<Checkbox />} label="Required" />
+          <FormControlLabel required control={<Checkbox />} label="Required" />
+          <FormControlLabel required control={<Checkbox />} label="Required" />
+          <FormControlLabel required control={<Checkbox />} label="Required" />
+          <FormControlLabel required control={<Checkbox />} label="Required" />
+          
+        </Grid>
+
+        {/* Second Column */}
+        <Grid item xs={6}>
+          <FormControlLabel required control={<Checkbox />} label="Required" />
+          <FormControlLabel required control={<Checkbox />} label="Required" />
+          <FormControlLabel required control={<Checkbox />} label="Required" />
+          <FormControlLabel required control={<Checkbox />} label="Required" />
+          <FormControlLabel required control={<Checkbox />} label="Required" />
+          <FormControlLabel required control={<Checkbox />} label="Required" />
+        </Grid>
+      </Grid>
+                    </FormGroup>
+                  </Box>
                   {/* Next */}
                   <NextButtonStyle
                     variant="outlined"

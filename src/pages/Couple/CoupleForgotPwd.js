@@ -19,15 +19,24 @@ export const MAIN_API = apiurls.BUSINESS_API;
 const CoupleForgotPwd = () => {
   const [open, setOpen] = React.useState(false);
   const [username, setUsername] = useState("");
+  const [emailError, setEmailError] = useState("");
 
   const handleOpen = () => setOpen(true);
 
   const handleClose = () => {
-    // console.log("Modal closed");
     setOpen(false);
   };
 
   const handleSubmit = async () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!username.trim()) {
+      setEmailError("Email is required");
+      return;
+    }
+    if (!emailRegex.test(username)) {
+      setEmailError("Invalid email format");
+      return;
+    }
     try {
       const response = await axios.post(MAIN_API["FORGOT"], {
         username: username,
@@ -80,13 +89,14 @@ const CoupleForgotPwd = () => {
           </Box>
           <form>
             <h3 className="form-header">Forgot Password. ?</h3>
+            <br />
             <p className="flex justify-center">
               You can reset your password here.
             </p>
             <div className="mt-[1rem]">
               <TextField
-                label="Enter your Username"
-                id="username"
+                label="Enter your Valid Email"
+                name="email"
                 sx={{ width: "100%" }}
                 InputProps={{
                   startAdornment: (
@@ -102,7 +112,12 @@ const CoupleForgotPwd = () => {
                   ),
                 }}
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  setEmailError("");
+                }}
+                error={!!emailError}
+                helperText={emailError}
               />
               <Button
                 // type="submit"

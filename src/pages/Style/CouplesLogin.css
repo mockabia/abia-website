@@ -40,3 +40,33 @@
     }
 }
     
+.clLoginButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2rem;
+    width: 100%;
+    height: 3.5rem;
+    background-color: #000;
+    border: none;
+    color: #fff;
+}
+
+.clLoginButton:hover {
+    background-color: #000;
+    border: none;
+}
+
+.clLoginButton:active {
+    background-color: #6cc2bc;
+    border: 1px solid black;
+}
+
+.clLoginButton:focus {
+    background-color: #6cc2bc;
+    border: none;
+}
+
+.clLoginButton .MuiSvgIcon {
+    fill: black;
+}

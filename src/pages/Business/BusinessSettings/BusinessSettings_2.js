@@ -21,7 +21,6 @@ const schema = yup.object().shape({
     .required("Phone no: is required")
     .max(13, "Phone number must not exceed 13 characters"),
 
-  //   state: yup.string().required("The state field is required."),
   postcode: yup.string().required("Postcode is required"),
   suburb: yup.string().required("Suburb is required"),
 });
