@@ -100,9 +100,6 @@ const Sidebar = (props) => {
     "My Profile": MyProfileIcon,
     Settings: SettingsIcons,
   };
-
-  const subMenusList = reactUrls.BUSINESS_MENU["SHOWCASE"].secondaryMenu;
-
   return (
     <div>
       <div

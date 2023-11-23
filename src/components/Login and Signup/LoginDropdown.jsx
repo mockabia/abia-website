@@ -10,11 +10,11 @@ const LoginDropdown = () => {
   const menuItem = [
     {
       title: "Couple",
-      path: "/wedding/login",
+      path: window.BLOGIN,
     },
     {
       title: "Vendor",
-      path: "/business/login",
+      path: window.VLOGIN,
     },
   ];
   const dropdownRef = useRef(null);

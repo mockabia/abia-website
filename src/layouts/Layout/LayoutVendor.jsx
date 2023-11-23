@@ -7,7 +7,6 @@ const LayoutVendor = (props) => {
   return (
     <div className="relative flex">
       <TopBar {...props} />
-      {/* className="flex flex-1" */}
       <div className="flex flex-1">
         <BusinessMenu {...props} />
         <main className="rootLayout">{props.children}</main>

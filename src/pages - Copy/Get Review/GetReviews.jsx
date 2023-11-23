@@ -16,7 +16,7 @@ const GetReviews = () => {
       bgColor: "#6cc2bc",
       hoverColor: "#339890",
       linkFunction: () =>
-        navigate(process.env.REACT_BUSINESS_URL + "/past-wedding"),
+        navigate(process.env.REACT_APP_BUSINESS_URL + "/past-wedding"),
     },
     {
       title: "Register Future Couples",
@@ -26,7 +26,7 @@ const GetReviews = () => {
       bgColor: "#e8cf82",
       hoverColor: "#efc649",
       linkFunction: () =>
-        navigate(process.env.REACT_BUSINESS_URL + "/future-wedding"),
+        navigate(process.env.REACT_APP_BUSINESS_URL + "/future-wedding"),
     },
     {
       title: "Send Personalised Review Link",

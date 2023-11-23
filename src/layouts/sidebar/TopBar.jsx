@@ -123,9 +123,9 @@ const TopBar = (props) => {
                 <br></br>
                 <span className="text-[15px]"> {userProfile.email} </span>
               </li>
-              {props.topmenu[0].Sub_content.map((loginedRoutes, i) => (
+              {props.topmenu.map((loginedRoutes, i) => (
                 <>
-                {loginedRoutes.url=='logout' ? (
+                {loginedRoutes.id=='4' ? (
                   <li
                     className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
                     onClick={handleLogout}
