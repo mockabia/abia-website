@@ -42,9 +42,9 @@ export const ROUTES_API = {
   BUSINESS_LOGIN_ROUTES       : `${baseUrl}VendorLoginMenu`,
   BUSINESS_LOGINED_ROUTES     : `${baseUrl}VendorLoginedMenu`,
   BUSINESS_DASHBOARD_ROUTES   : `${baseUrl}VendorDashboardMenu`,
-  COUPLE_LOGIN_ROUTES       : `${baseUrl}VendorLoginMenu`,
-  COUPLE_LOGINED_ROUTES     : `${baseUrl}VendorLoginedMenu`,
-  COUPLE_DASHBOARD_ROUTES   : `${baseUrl}VendorDashboardMenu`,
+  COUPLE_LOGIN_ROUTES       : `${baseUrl}BrideLoginMenu`,
+  COUPLE_LOGINED_ROUTES     : `${baseUrl}BrideLoginedMenu`,
+  COUPLE_DASHBOARD_ROUTES   : `${baseUrl}BrideDashboardMenu`,
 };
 
 export const BUSINESS_API = {
@@ -67,4 +67,11 @@ export const BUSINESS_API = {
   SETTINGS4: `${baseUrl}WebBusinessSettings/{id}/4`,
   SETTINGS5: `${baseUrl}WebBusinessSettings/{id}/5`,
   MANAGE_WEDDING: `${baseUrl}WebManageWedding`,
+};
+
+export const COUPLE_API = {
+  LOGIN: `${baseUrl}WebCoupleLogin`,
+  FORGOT: `${baseUrl}WebCoupleForgot`,
+  LOGOUT: `${baseUrl}WebCoupleLogout`,
+  REFRESH: `${baseUrl}couple-refresh`,
 };

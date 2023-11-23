@@ -93,9 +93,53 @@ export const fetchVendorDashboardRoutes = async (setBusinessMenu, setShowLoader)
     });
 };
 
-export function hasJWT() {
+export function hasVendorJWT() {
     let flag = false;
     //check user has JWT token
     localStorage.getItem("vendorToken") ? (flag = true) : (flag = false);
     return flag;
 }
+export function hasCoupleJWT() {
+    let flag = false;
+    //check user has JWT token
+    localStorage.getItem("coupleToken") ? (flag = true) : (flag = false);
+    return flag;
+}
+
+/* couple routes */
+export const fetchCoupleLoginRoutes = async (setLoginMenu) => {
+    await servicesPage.fetchCoupleLoginRoutes().then(function (response) {
+        if (response.statuscode == 200) {
+            console.log(response.result[0].Sub_content)
+            let login = response.result[0].Sub_content.filter((subs) => {
+                return subs.id == '2';
+            });
+            window.CLOGIN = process.env.REACT_APP_COUPLE_URL + '/' + login[0].url;
+            let signup = response.result[0].Sub_content.filter((subs) => {
+                return subs.id == '1';
+            });
+            window.CSIGNUP = process.env.REACT_APP_COUPLE_URL + '/' + signup[0].url;
+            setLoginMenu(response.result[0].Sub_content);
+        }
+    });
+};
+export const fetchCoupleLoginedRoutes = async (setLoginedMenu,setBusinessMenu, setShowLoader) => {
+    await servicesPage.fetchCoupleLoginedRoutes().then(function (response) {
+        if (response.statuscode == 200) {
+            let dashboard = response.result[0].Sub_content.filter((subs) => {
+                return subs.id == '3';
+            });
+            window.CDASHBOARD = process.env.REACT_APP_COUPLE_URL + '/' + dashboard[0].url;
+            setLoginedMenu(response.result[0].Sub_content);
+        }
+        fetchCoupleDashboardRoutes(setBusinessMenu, setShowLoader);
+    });
+};
+export const fetchCoupleDashboardRoutes = async (setBusinessMenu, setShowLoader) => {
+    await servicesPage.fetchCoupleDashboardRoutes().then(function (response) {
+        if (response.statuscode == 200) {
+            setBusinessMenu(response.result);
+            setShowLoader(false);
+        }
+    });
+};
