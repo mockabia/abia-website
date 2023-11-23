@@ -57,7 +57,7 @@ export async function apiCall(url, method, data) {
           setAuthToken(null);
           localStorage.removeItem("vendorToken");
           localStorage.removeItem("user");
-          window.location = reactUrls.BUSINESS_MENU["LOGIN"].path;
+          window.location = window.VLOGIN;
         }
       }
     }
@@ -65,7 +65,7 @@ export async function apiCall(url, method, data) {
     setAuthToken(null);
     localStorage.removeItem("vendorToken");
     localStorage.removeItem("vuser");
-    window.location = reactUrls.BUSINESS_MENU["LOGIN"].path;
+    window.location = window.VLOGIN;
   }
 }
 
@@ -81,7 +81,7 @@ export async function refreshToken() {
       setAuthToken(null);
       localStorage.removeItem("vendorToken");
       localStorage.removeItem("vuser");
-      window.location = reactUrls.BUSINESS_MENU["LOGIN"].path;
+      window.location = window.VLOGIN;
     } else {
       const token = response.token;
       localStorage.setItem("vendorToken", JSON.stringify(token));

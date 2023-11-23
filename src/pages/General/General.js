@@ -7,7 +7,7 @@ export const hasJWT = async (navigate) => {
   let flag = false;
   localStorage.getItem("vendorToken") ? (flag = true) : (flag = false);
   if (flag == true) {
-    navigate(reactUrls.BUSINESS_MENU["DASHBOARD"].path);
+    navigate(window.VDASHBOARD);
   }
 };
 
@@ -59,9 +59,9 @@ export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
               localStorage.vremember_me  = inputs.remember_me;
             } */
           apiService.setAuthToken(token);
-          navigate(reactUrls.BUSINESS_MENU["DASHBOARD"].path);
+          navigate(window.VDASHBOARD);
         } else {
-          navigate(reactUrls.BUSINESS_MENU["USER_STATE"].path, {
+          navigate(window.VLOGIN_STATE, {
             state: {
               userStatesData,
               token: token,
@@ -101,7 +101,7 @@ export const vendorLoginStateForm = async (e, inputs, navigate) => {
             localStorage.vremember_me  = inputs.remember_me;
           } */
       apiService.setAuthToken(token);
-      navigate(reactUrls.BUSINESS_MENU["DASHBOARD"].path);
+      navigate(window.VDASHBOARD);
       console.log("Navigating to dashboard");
     }
   });
@@ -113,7 +113,7 @@ export const logout = async (navigate) => {
         apiService.setAuthToken(null);
         localStorage.removeItem("vendorToken");
         localStorage.removeItem("user");
-        navigate(reactUrls.BUSINESS_MENU["LOGIN"].path);
+        navigate(window.VLOGIN);
       }
     }
   });
@@ -151,9 +151,9 @@ export const vendorForgot = async (e, inputs, setInputsErrors, navigate) => {
               localStorage.vremember_me  = inputs.remember_me;
             } */
           apiService.setAuthToken(token);
-          navigate(reactUrls.BUSINESS_MENU["DASHBOARD"].path);
+          navigate(window.VDASHBOARD);
         } else {
-          navigate(reactUrls.BUSINESS_MENU["USER_STATE"].path, {
+          navigate(window.VLOGIN_STATE, {
             state: { userStatesData },
           });
         }
@@ -207,9 +207,9 @@ export const validateForm = (values) => {
 //               localStorage.vremember_me  = inputs.remember_me;
 //             } */
 //           apiService.setAuthToken(token);
-//           navigate(reactUrls.BUSINESS_MENU["DASHBOARD"].path);
+//           navigate(window.VDASHBOARD);
 //         } else {
-//           navigate(reactUrls.BUSINESS_MENU["USER_STATE"].path, {
+//           navigate(window.VLOGIN_STATE, {
 //             state: {
 //               userStatesData,
 //               token: token,

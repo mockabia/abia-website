@@ -158,9 +158,9 @@ const MyLocation = ({ vendorDetails }) => {
       .split(",")
       .map((region) => ({ value: region, label: region.trim() }));
     setSelectedStates(targetStateArray);
-    const targetRegionArray = vendorDetails.target_region
+    const targetRegionArray = (vendorDetails.target_region != null ) ? vendorDetails.target_region
       .split(",")
-      .map((region) => ({ value: region, label: region.trim() }));
+      .map((region) => ({ value: region, label: region.trim() })) : [];
     setSelectedRegions(targetRegionArray);
   }, [
     vendorDetails.state,

@@ -11,7 +11,7 @@ import SignUpDropDown from "../../components/Login and Signup/SignUpDropDown";
 import MenuItems from "../../components/Login and Signup/MenuItems";
 import { NavMenuStyle } from "../../components/FormStyle";
 import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
-import * as GeneralJS from "../../pages/General/General";
+import * as BusinessJS from "../../pages/Business/Business";
 import * as reactUrls from "../../api/reactUrls";
 
 import {
@@ -152,7 +152,7 @@ const NavBar = (props) => {
     setProfileOpen(!profileOpen);
   };
   const handleLogout = () => {
-    GeneralJS.logout(navigate);
+    BusinessJS.logout(navigate);
   };
 
   return (
@@ -282,17 +282,35 @@ const NavBar = (props) => {
                       <br></br>
                       <span className="text-[15px]"> {userProfile.email} </span>
                     </li>{" "}
-                    <Link to={`${reactUrls.BUSINESS_MENU["DASHBOARD"].path}`}>
-                      <li className="px-4  text-[15px] cursor-pointer">
-                        {reactUrls.BUSINESS_MENU["DASHBOARD"].text}
-                      </li>
-                    </Link>
-                    <li
-                      className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
-                      onClick={handleLogout}
-                    >
-                      <button>Log Out</button>
-                    </li>
+                    {localStorage.getItem("vendorToken") ? (
+                      <>
+                        <Link to={`${window.VDASHBOARD}`}>
+                          <li className="px-4  text-[15px] cursor-pointer">
+                          DASHBOARD
+                          </li>
+                        </Link>
+                        <li
+                          className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
+                          onClick={handleLogout}
+                        >
+                          <button>Log Out</button>
+                        </li>
+                      </>
+                    ) : (
+                      <>
+                        <Link to={`${window.VDASHBOARD}`}>
+                          <li className="px-4  text-[15px] cursor-pointer">
+                          DASHBOARD
+                          </li>
+                        </Link>
+                        <li
+                          className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
+                          onClick={handleLogout}
+                        >
+                          <button>Log Out</button>
+                        </li>
+                      </>
+                    )}
                   </ul>
                 </div>
               )}
