@@ -1,15 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 
+/* PROFILE WHOLE */
 .headergroup-container {
     display: grid;
     grid-template-columns: repeat(16, 1fr);
 }
 
-
-
 .preview-lisitng-div {
    margin-left: 20px;
 }
-
 
 .myprofile-container {
     /* max-width: 1100px; */
@@ -105,6 +104,336 @@
     }
 }
 
+
+/***********PREVIEWLISTING ********/
+
+.preview-listing-container {
+    max-width: 1100px;
+    grid-column: 1/17;
+    grid-row: 1/6;
+    margin-top: 25px;
+}
+
+.profile-listing-header {
+    font-size: 22px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    line-height: 26px;
+    margin-top: 0px;
+    /* color: #515151; */
+    color: #222222;
+
+}
+
+.myprofile-accordion {
+    grid-column: 2/15;
+    grid-row: 2/5;
+    /* border: 1px solid #dad6d6; */
+    background-color: #ffffff;
+}
+
+
+.myprofile-accordion-button {
+    position: relative;
+    cursor: pointer;
+    padding: 25px 10px 25px 0px;
+    width: 100%;
+    /* display: flex; */
+    align-items: flex-start;
+    /* border: transparent !important; */
+    border-bottom: 1px solid #EBEBEB;
+    outline: none;
+    /* Add this line to remove the outline when focused */
+}
+
+
+
+.myprofile-edit-button {
+    position: absolute;
+    right: 0px;
+    font-size: 14px;
+    font-weight: 600;
+    /* color: #515151; */
+    color: #222222;
+    text-decoration: underline;
+}
+
+.myprofile-up-aroww {
+    position: absolute;
+    color: #6cc2bc;
+    margin-left: 0px;
+    right: 15px;
+    transform: rotate(0deg);
+    transition: transform 0.3s;
+    opacity: 0;
+}
+
+.myprofile-save-button {
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 40px;
+    border-radius: 30px;
+    background-color: #6cc2bc;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.myprofile-accordion-item-header {
+    font-size: 16px;
+    font-weight: 400;
+    color: #222222;
+    font-family: 'Raleway', sans-serif;
+    line-height: 20px;
+}
+
+.myprofile-accordion-item-header-2 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #222222;
+    line-height: 20px;
+}
+
+.myprofilePhotos-accordion-item-header {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18px;
+    /* color: #515151; */
+    color: #222222;
+    padding-top: 20px;
+    /* padding-bottom: 20px; */
+    font-family: 'Raleway', sans-serif;
+}
+
+.myprofile-accordion-subheading {
+    /* color: #8e8e8e; */
+    color: #717171;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    padding-right: 45px;
+    word-break: break-word;
+    white-space: nowrap;
+    font-family: 'Raleway', sans-serif;
+}
+
+
+
+.myprofile-accordion-subheading-pricing {
+    color: #8e8e8e;
+    margin-top: 10px;
+    font-size: 14px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    line-height: 18px;
+    padding-right: 45px;
+    word-break: break-word;
+    /* white-space: nowrap; */
+}
+
+
+
+.myprofile-accordion-button[aria-expanded="true"] .myprofile-accordion-subheading-pricing {
+    display: none;
+}
+
+.myprofilephotovideo-accordion-border {
+    margin-top: -25px;
+}
+
+
+.myprofile-accordion-button[aria-expanded="true"] {
+    border-bottom: 0px solid #b1b1b1;
+}
+
+.myprofile-accordion-button[aria-expanded="true"] .myprofile-accordion-item-header {
+    padding-left: 25px;
+    font-weight: 600;
+}
+
+.myprofile-accordion-button[aria-expanded="true"] .myprofile-heading-expand {
+    /* padding-left: 25px; */
+    font-weight: 600;
+}
+
+/* .myprofile-accordion-button[aria-expanded="true"] h4 {
+    font-weight: 600;
+} */
+
+.myprofile-accordion-button[aria-expanded="true"] .myprofile-accordion-item-header-2 {
+    padding-left: 25px;
+}
+
+.myprofile-accordion-button[aria-expanded="true"] .myprofile-accordion-subheading {
+    padding-left: 25px;
+    padding-right: 20px;
+}
+
+.myprofile-accordion-button[aria-expanded="true"] .qandA-button-change {
+    display: none !important;
+}
+
+.myprofile-accordion-button[aria-expanded="true"] .myprofile-edit-button {
+    opacity: 0;
+}
+
+.myprofile-accordion-button[aria-expanded="true"] .myprofile-up-aroww {
+    opacity: 1;
+    margin-top: -23px;
+    /* position: absolute; */
+}
+
+.myprofile-accordion-panel {
+    padding: 0px 20px 30px 20px;
+    /* border-bottom: 1px solid #b1b1b1; */
+}
+
+
+
+
+.quickdesc-summary {
+    /* margin-top: 20px; */
+    /* overflow-wrap: break-word; */
+    margin: 15px 15px 10px 25px;
+    color: #8e8e8e;
+}
+
+.borderno- {
+    border: none;
+}
+
+.hidden {
+    display: none;
+}
+
+
+
+/* .myprofile-accordion-button:active */
+
+input[type="radio"] {
+    /* Hide the default radio button */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* Create a custom circular radio button */
+    width: 20px;
+    height: 20px;
+    border: 4px solid #dad6d6;
+    border-radius: 50%;
+    margin-right: 8px;
+    outline: none;
+    cursor: pointer;
+    background-color: #ffffff;
+
+}
+
+input[type="radio"]:checked {
+    /* Replace "desired-color" with the color you want for the radio button when checked */
+    background-color: #6cc2bc;
+}
+
+
+
+.horizontal-line {
+    border: 1px solid #dcdbdb;
+    margin-top: 25px;
+}
+
+/* .photos-subheading-text {
+    display: none;
+} */
+
+.photos-subheading-text {
+    display: none;
+    color: #8e8e8e;
+    font-size: 14px;
+    padding-right: 40px;
+    white-space: pre-line;
+    word-wrap: break-word;
+    margin: 12px 0px 5px 0px
+}
+
+
+
+
+@media(min-width:1023px) {
+    .preview-listing-container {
+        /* max-width: 1100px; */
+        grid-column: 2/62;
+        grid-row: 1/4;
+        margin-top: 25px;
+        /* margin-bottom: 100px; */
+    }
+
+    .myprofile-up-aroww {
+        position: absolute;
+        color: #6cc2bc;
+        margin-left: 43vw;
+        transform: rotate(0deg);
+        transition: transform 0.3s;
+        opacity: 0;
+    }
+
+    .myprofile-edit-button {
+        position: absolute;
+        right: 12px;
+        font-size: 14px;
+        font-weight: 800;
+        text-decoration: underline;
+    }
+
+
+
+    .profile-listing-header {
+        font-size: 22px;
+        font-weight: 800;
+        line-height: 26px;
+        margin-top: 0px;
+        color: #515151;
+    }
+
+    .photos-subheading-text {
+        display: block;
+        color: #8e8e8e;
+        font-size: 14px;
+        padding-right: 40px;
+        white-space: pre-line;
+        word-wrap: break-word;
+        margin: 12px 0px 5px 0px
+    }
+
+    .myprofile-accordion-panel {
+        padding: 0px 20px 30px 40px;
+        /* border-bottom: 1px solid #b1b1b1; */
+    }
+
+    .myprofile-accordion-button[aria-expanded="true"] .myprofile-accordion-item-header {
+        padding-left: 40px;
+    }
+
+    .myprofile-accordion-button[aria-expanded="true"] .myprofile-accordion-item-header-2 {
+        padding-left: 40px;
+    }
+
+    .myprofile-accordion-button[aria-expanded="true"] .myprofile-accordion-subheading {
+        padding-left: 40px;
+        padding-right: 20px;
+        max-width: 875px;
+    }
+
+    .myprofile-accordion-subheading {
+        margin-top: 10px;
+        max-width: 750px;
+        padding-right: 55px;
+        word-break: break-word;
+        white-space: nowrap;
+    }
+}
 
 /******* FULL DESCRIPTION ******/
 .fulldescription-down-aroww {
