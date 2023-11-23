@@ -9,95 +9,7 @@ import { Controller, useForm } from "react-hook-form";
 import { customSelectStyles, MultiValue } from "../../../components/FormStyle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-
-const CheckboxOption = ({ innerProps, label, isSelected }) => {
-  const divRef = useRef(null);
-
-  const handleMouseEnter = () => {
-    if (divRef.current) {
-      divRef.current.style.backgroundColor = "#6cc2bc";
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (divRef.current) {
-      divRef.current.style.backgroundColor = isSelected
-        ? "#FAFAFA"
-        : "transparent";
-    }
-  };
-
-  return (
-    <div
-      {...innerProps}
-      ref={divRef}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        cursor: "pointer",
-        color: isSelected ? "#6cc2bc" : "#333333",
-        backgroundColor: isSelected ? "#FAFAFA" : "transparent",
-        borderRadius: "4px",
-        transition: "background-color 0.3s, color 0.3s", // Add transition for a smooth effect
-      }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <input
-        type="checkbox"
-        checked={isSelected}
-        readOnly
-        style={{ marginRight: "8px" }}
-      />
-      <label style={{ margin: "0.5rem", padding: 0 }}>{label}</label>
-    </div>
-  );
-};
-const CustomSelect = ({ field, categoryOptions }) => (
-  <Select
-    {...field}
-    isMulti
-    options={categoryOptions}
-    styles={customSelectStyles}
-    closeMenuOnSelect={false}
-    blurInputOnSelect={false}
-    hideSelectedOptions={false}
-    isClearable={false}
-    components={{
-      Menu,
-      MultiValue,
-      IndicatorSeparator: null,
-      DropdownIndicator: () => (
-        <div>
-          <FontAwesomeIcon
-            icon={faCaretDown}
-            className="dropDown-position"
-            style={{ color: "#7c7c7c" }}
-          />
-        </div>
-      ),
-      Option: ({ innerProps, label, isSelected }) => (
-        <CheckboxOption
-          innerProps={innerProps}
-          label={label}
-          isSelected={isSelected}
-        />
-      ),
-    }}
-  />
-);
-const Menu = (props) => {
-  const optionSelectedLength = props.getValue().length || 0;
-  return (
-    <components.Menu {...props}>
-      {optionSelectedLength < 4 ? (
-        props.children
-      ) : (
-        <div style={{ margin: "1rem", color: "red" }}>Max limit achieved</div>
-      )}
-    </components.Menu>
-  );
-};
+import { CustomMultiSelect } from "../../../components/CustomerSelect";
 
 const Category = ({ vendorDetails }) => {
   const [formValues, setFormValues] = useState({
@@ -141,7 +53,10 @@ const Category = ({ vendorDetails }) => {
   }, []);
 
   useEffect(() => {
-    BusinessJS.fetchAddCategory(vendorDetails.first_category, setAddCategoryOption);
+    BusinessJS.fetchAddCategory(
+      vendorDetails.first_category,
+      setAddCategoryOption
+    );
   }, [vendorDetails.first_category]);
 
   console.log("addtional category:", addCategoryOption);
@@ -207,12 +122,17 @@ const Category = ({ vendorDetails }) => {
                 name="other_category"
                 control={control}
                 render={({ field }) => (
-                  <CustomSelect
+                  <CustomMultiSelect
                     field={field}
                     categoryOptions={addCategoryOption}
                   />
                 )}
               />
+              {getFieldError("other_category") && (
+                <p className="text-[12px] text-red-500 font-semibold mt-1">
+                  {getFieldError("other_category")}
+                </p>
+              )}
               {/* <Controller
                 name="other_category"
                 control={control}

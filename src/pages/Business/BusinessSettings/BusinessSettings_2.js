@@ -65,12 +65,6 @@ const ContactDetails = ({ vendorDetails }) => {
     setSelectedState(vendorDetails.state);
   }, [vendorDetails.state]);
 
-  const handleStateChange = (selectedOption, field) => {
-    const stateValue = selectedOption ? selectedOption.label : "";
-    setSelectedState(stateValue);
-    field.onChange(stateValue);
-  };
-
   const fieldConfig = [
     {
       name: "contact_person",
@@ -143,10 +137,7 @@ const ContactDetails = ({ vendorDetails }) => {
                 <input
                   type={field.type}
                   name={field.name}
-                  className="contactdetails-input-style"
-                  //   className={`contactdetails-input-style ${
-                  //     errors[field.name] ? "contactdetails-error-border" : ""
-                  //   }`}
+                  className="basicinfo-input-style"
                   {...register(field.name)}
                 />
                 <div>
@@ -175,14 +166,12 @@ const ContactDetails = ({ vendorDetails }) => {
                   <Select
                     {...field}
                     name="state"
-                    value={{ label: selectedState, value: selectedState }}
-                    options={stateOptions.map((state) => ({
-                      value: state.value,
-                      label: state.label,
-                    }))}
-                    onChange={(selectedOption) =>
-                      handleStateChange(selectedOption, field)
-                    }
+                    value={selectedState.state}
+                    defaultValue={{
+                      label: vendorDetails.state,
+                      value: vendorDetails.state,
+                    }}
+                    options={stateOptions}
                     styles={customSelectStyles}
                     components={{
                       MultiValue,

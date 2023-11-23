@@ -104,3 +104,26 @@
         grid-column: 56/67;
     }
 }
+
+
+/******* FULL DESCRIPTION ******/
+.fulldescription-down-aroww {
+    color: #6cc2bc;
+    margin-left: 63vw;
+    margin-top: -23px;
+}
+
+.display-showmore {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+
+}
+
+@media(min-width:1024px) {
+    .fulldescription-down-aroww {
+        color: #6cc2bc;
+        margin-left: 49vw;
+        margin-top: -20px;
+    }
+}

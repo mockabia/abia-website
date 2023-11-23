@@ -6,95 +6,7 @@ import "../../Style/BusinessSettings.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { customSelectStyles } from "../../../components/FormStyle";
-
-const CheckboxOption = ({ innerProps, label, isSelected }) => {
-  const divRef = useRef(null);
-
-  const handleMouseEnter = () => {
-    if (divRef.current) {
-      divRef.current.style.backgroundColor = "#6cc2bc";
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (divRef.current) {
-      divRef.current.style.backgroundColor = isSelected
-        ? "#FAFAFA"
-        : "transparent";
-    }
-  };
-
-  return (
-    <div
-      {...innerProps}
-      ref={divRef}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        cursor: "pointer",
-        color: isSelected ? "#6cc2bc" : "#333333",
-        backgroundColor: isSelected ? "#FAFAFA" : "transparent",
-        borderRadius: "4px",
-        transition: "background-color 0.3s, color 0.3s", // Add transition for a smooth effect
-      }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <input
-        type="checkbox"
-        checked={isSelected}
-        readOnly
-        style={{ marginRight: "8px" }}
-      />
-      <label style={{ margin: "0.5rem", padding: 0 }}>{label}</label>
-    </div>
-  );
-};
-const CustomSelect = ({ field, categoryOptions }) => (
-  <Select
-    {...field}
-    isMulti
-    options={categoryOptions}
-    styles={customSelectStyles}
-    closeMenuOnSelect={false}
-    blurInputOnSelect={false}
-    hideSelectedOptions={false}
-    isClearable={false}
-    components={{
-      Menu,
-      MultiValue,
-      IndicatorSeparator: null,
-      DropdownIndicator: () => (
-        <div>
-          <FontAwesomeIcon
-            icon={faCaretDown}
-            className="dropDown-position"
-            style={{ color: "#7c7c7c" }}
-          />
-        </div>
-      ),
-      Option: ({ innerProps, label, isSelected }) => (
-        <CheckboxOption
-          innerProps={innerProps}
-          label={label}
-          isSelected={isSelected}
-        />
-      ),
-    }}
-  />
-);
-const Menu = (props) => {
-  const optionSelectedLength = props.getValue().length || 0;
-  return (
-    <components.Menu {...props}>
-      {optionSelectedLength < 4 ? (
-        props.children
-      ) : (
-        <div style={{ margin: "1rem", color: "red" }}>Max limit achieved</div>
-      )}
-    </components.Menu>
-  );
-};
+import { CheckboxOption } from "../../../components/CustomerSelect";
 
 const schema = yup.object().shape({
   primaryLocation: yup
@@ -255,7 +167,9 @@ const MyLocation = ({ vendorDetails }) => {
                 options={regions}
                 // value={selectedRegions}
                 styles={customSelectStyles}
-                onChange={(selectedOptions) => handleRegionChange(selectedOptions)}
+                onChange={(selectedOptions) =>
+                  handleRegionChange(selectedOptions)
+                }
                 isClearable={false}
                 closeMenuOnSelect={false}
                 hideSelectedOptions={false}
@@ -298,6 +212,7 @@ const MyLocation = ({ vendorDetails }) => {
                 name="primaryLocation"
                 sx={{ width: "100%" }}
                 value={initialRegion}
+                // value={selectedRegions}
                 options={selectedRegions}
                 onChange={regionChange}
                 styles={customSelectStyles}
@@ -345,6 +260,19 @@ const MyLocation = ({ vendorDetails }) => {
 };
 
 export default MyLocation;
+
+const Menu = (props) => {
+  const optionSelectedLength = props.getValue().length || 0;
+  return (
+    <components.Menu {...props}>
+      {optionSelectedLength < 4 ? (
+        props.children
+      ) : (
+        <div style={{ margin: "1rem", color: "red" }}>Max limit achieved</div>
+      )}
+    </components.Menu>
+  );
+};
 
 const MoreSelectedBadge = ({ items }) => {
   const style = {

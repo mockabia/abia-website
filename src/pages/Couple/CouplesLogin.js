@@ -40,19 +40,17 @@ const CouplesLogin = () => {
     handleSubmit,
     formState: { errors, isValid, isSubmitted },
   } = useForm({
-    mode: "onChange", //isValid works on mode=onChange
     resolver: yupResolver(schema),
   });
 
-  const onSubmitForm = (data, e) => {
-    e.preventDefault();
-    // const formValues = {
-    //   email: watch("email"),
-    //   password: watch("password"),
-    // };
-    // console.log("Submitted data:", data);
-    console.log("Submitted data:", watch());
+  const onSubmit = (data) => {
+    const formValues = {
+      email: watch("email"),
+      password: watch("password"),
+    };
+    console.log("Submitted data:", formValues);
   };
+
   const togglePasswordVisibility = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword);
@@ -61,10 +59,9 @@ const CouplesLogin = () => {
   const handleClosePage = () => {
     window.history.back();
   };
-
   return (
     <div className="cl-container">
-      <Box component="form" sx={CouplesLoginBox} noValidate autoComplete="off">
+      <Box sx={CouplesLoginBox}>
         <Box
           sx={{
             display: "flex",
@@ -82,14 +79,38 @@ const CouplesLogin = () => {
             <AiOutlineClose />
           </IconButton>
         </Box>
-        <form onSubmit={handleSubmit(onSubmitForm)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <h1 className="cs-signup-header flex justify-center items-center">
             Log In
           </h1>
           <label className="cl-label">Email</label>
           <div className="cl-field">
             {/* EMAIL */}
-            <Controller
+            <TextField
+              type="text"
+              name="email"
+              sx={{
+                width: "100%",
+                maxWidth: "22rem",
+                borderRadius: "10px",
+                "& .MuiInputBase-root": {
+                  fontFamily: "Raleway",
+                },
+              }}
+              {...register("email", {
+                required: "Email is required.",
+                pattern: {
+                  value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                  message: "Email is not valid.",
+                },
+              })}
+            />
+            {errors.email && (
+              <p className="text-[12px] text-red-500 font-semibold mt-1">
+                {errors.email.message}
+              </p>
+            )}
+            {/* <Controller
               name="email"
               control={control}
               render={({ field, fieldState }) => (
@@ -109,13 +130,41 @@ const CouplesLogin = () => {
                   helperText={fieldState.error?.message}
                 />
               )}
-            />
+            /> */}
           </div>
           <br />
           {/* PASSWORD */}
           <label className="cl-label">Password</label>
           <div className="cl-field">
-            <Controller
+            <TextField
+              type="text"
+              name="password"
+              sx={{
+                width: "100%",
+                maxWidth: "22rem",
+                borderRadius: "10px",
+                "& .MuiInputBase-root": {
+                  fontFamily: "Raleway",
+                },
+              }}
+              {...register("password", {
+                required: true,
+                validate: {
+                  checkLength: (value) => value.length >= 6,
+                },
+              })}
+            />
+            {errors.password?.type === "required" && (
+              <p className="text-[12px] text-red-500 font-semibold mt-1">
+                Password is required.
+              </p>
+            )}
+            {errors.password?.type === "checkLength" && (
+              <p className="text-[12px] text-red-500 font-semibold mt-1">
+                Password should be at-least 6 characters.
+              </p>
+            )}
+            {/* <Controller
               name="password"
               control={control}
               render={({ field, fieldState }) => (
@@ -146,7 +195,7 @@ const CouplesLogin = () => {
                   helperText={fieldState.error?.message}
                 />
               )}
-            />
+            /> */}
           </div>
 
           <Box
@@ -158,7 +207,7 @@ const CouplesLogin = () => {
             }}
           ></Box>
 
-          <button className="clLoginButton" disabled={!isValid || isSubmitted}>
+          <button type="submit" className="clLoginButton">
             Log In
           </button>
 
