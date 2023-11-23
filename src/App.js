@@ -9,22 +9,31 @@ import CoupleRoutes from "./Routes/CoupleRoutes";
 import * as RoutesJS from "./Routes/RoutesJS";
 
 const App = () => {
-  const [showLoader, setShowLoader]           = useState(false);
+  const [showLoader, setShowLoader]         = useState(false);
 
-  const [routesFromApi, setRoutesFromApi] = useState([]);
-  const [loginMenu, setLoginMenu]         = useState([]);
-  const [loginedMenu, setLoginedMenu]     = useState([]);
-  const [businessMenu, setBusinessMenu]   = useState([]);
+  const [routesFromApi, setRoutesFromApi]   = useState([]);
+  const [vloginMenu, setvLoginMenu]         = useState([]);
+  const [vloginedMenu, setvLoginedMenu]     = useState([]);
+  const [businessMenu, setBusinessMenu]     = useState([]);
+  const [cloginMenu, setcLoginMenu]         = useState([]);
+  const [cloginedMenu, setcLoginedMenu]     = useState([]);
+  const [coupleMenu, setCoupleMenu]         = useState([]);
 
   useEffect(() => {
     RoutesJS.fetchContentRoutes(setRoutesFromApi);
   }, []);
   useEffect(() => {
-    RoutesJS.fetchVendorLoginRoutes(setLoginMenu);
-  }, [!RoutesJS.hasJWT()]);
+    RoutesJS.fetchVendorLoginRoutes(setvLoginMenu);
+  }, [!RoutesJS.hasVendorJWT()]);
   useEffect(() => {
-    RoutesJS.fetchVendorLoginedRoutes(setLoginedMenu,setBusinessMenu,setShowLoader);
-  }, [RoutesJS.hasJWT()]);
+    RoutesJS.fetchVendorLoginedRoutes(setvLoginedMenu,setBusinessMenu,setShowLoader);
+  }, [RoutesJS.hasVendorJWT()]);
+  useEffect(() => {
+    RoutesJS.fetchCoupleLoginRoutes(setcLoginMenu);
+  }, [!RoutesJS.hasCoupleJWT()]);
+  useEffect(() => {
+    RoutesJS.fetchCoupleLoginedRoutes(setcLoginedMenu,setCoupleMenu,setShowLoader);
+  }, [RoutesJS.hasCoupleJWT()]);
 
 
   return (
@@ -32,10 +41,11 @@ const App = () => {
     <Loader active={showLoader}/>
       <Routes>
         <Route path="/business/*" element={<BusinessRoutes  showLoader={showLoader} setShowLoader={setShowLoader} 
-            leftmenu={businessMenu} topmenu={loginedMenu} loginMenu={loginMenu} />} />
-        <Route path="/wedding/*" element={<CoupleRoutes  showLoader={showLoader} setShowLoader={setShowLoader} />} />
+            leftmenu={businessMenu} topmenu={vloginedMenu} loginMenu={vloginMenu} />} />
+        <Route path="/wedding/*" element={<CoupleRoutes  showLoader={showLoader} setShowLoader={setShowLoader} 
+            leftmenu={coupleMenu} topmenu={cloginedMenu} loginMenu={cloginMenu} />} />
         <Route path="/*" element={<ContentRoutes  showLoader={showLoader} setShowLoader={setShowLoader} 
-            routesFromApi={routesFromApi} loginMenu={loginMenu} topmenu={loginedMenu}/>} />
+            routesFromApi={routesFromApi} />} />
       </Routes>
     </>
   );

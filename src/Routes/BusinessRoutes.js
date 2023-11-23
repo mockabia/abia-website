@@ -15,7 +15,7 @@ const BusinessRoutes = (props) => {
   
   return (
     <>
-      {RoutesJS.hasJWT() ? (
+      {RoutesJS.hasVendorJWT() ? (
         <>
           {/* <LayoutVendor leftmenu={businessMenu} topmenu={loginedMenu}>
             <Routes>
@@ -47,7 +47,6 @@ const BusinessRoutes = (props) => {
         </>
       ) : (
         <>
-
           <LayoutGeneral {...props}>
           {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(loginMenu, null, 2)}</pre> */}
             <Routes>
@@ -57,8 +56,6 @@ const BusinessRoutes = (props) => {
                   element={<LoadablePage page={loginRoutes.pagename} {...props} />}
                 />
               ))}
-              {/* <Route path="/signup" element={<BusinessSignup />} />
-              <Route path="/user-state" element={<BusinessLoginState />} /> */}
             </Routes>
           </LayoutGeneral>
         </>

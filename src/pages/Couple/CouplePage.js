@@ -20,7 +20,7 @@ const CouplePage = (props) => {
         <div>
           <div className="main-content">
           <h1 className="main-header">Business Page Demo</h1>
-          <div className="content" dangerouslySetInnerHTML={{__html: pageContent.detail}}></div>
+          <div className="content" dangerouslySetInnerHTML={{__html: props.pageContent.detail}}></div>
           </div>
         </div>
       </LayoutVendor>

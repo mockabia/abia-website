@@ -12,7 +12,7 @@ const SignUpDropDown = () => {
   const menuItem = [
     {
       title: "Couple",
-      path: window.BLOGIN,
+      path: window.CSIGNUP,
     },
     {
       title: "Vendor",

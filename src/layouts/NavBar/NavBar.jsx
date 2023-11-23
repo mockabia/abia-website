@@ -12,6 +12,7 @@ import MenuItems from "../../components/Login and Signup/MenuItems";
 import { NavMenuStyle } from "../../components/FormStyle";
 import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
 import * as BusinessJS from "../../pages/Business/Business";
+import * as CoupleJS from "../../pages/Couple/Couple";
 import * as reactUrls from "../../api/reactUrls";
 
 import {
@@ -151,8 +152,11 @@ const NavBar = (props) => {
   const toggleProfile = () => {
     setProfileOpen(!profileOpen);
   };
-  const handleLogout = () => {
+  const handleVendorLogout = () => {
     BusinessJS.logout(navigate);
+  };
+  const handleCoupleLogout = () => {
+    CoupleJS.logout(navigate);
   };
 
   return (
@@ -291,21 +295,21 @@ const NavBar = (props) => {
                         </Link>
                         <li
                           className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
-                          onClick={handleLogout}
+                          onClick={handleVendorLogout}
                         >
                           <button>Log Out</button>
                         </li>
                       </>
                     ) : (
                       <>
-                        <Link to={`${window.VDASHBOARD}`}>
+                        <Link to={`${window.CDASHBOARD}`}>
                           <li className="px-4  text-[15px] cursor-pointer">
                           DASHBOARD
                           </li>
                         </Link>
                         <li
                           className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
-                          onClick={handleLogout}
+                          onClick={handleCoupleLogout}
                         >
                           <button>Log Out</button>
                         </li>
