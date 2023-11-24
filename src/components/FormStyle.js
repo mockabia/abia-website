@@ -599,19 +599,20 @@ export const customSelectStyles = {
     ...provided,
     border: "1px solid #c3bebe",
     boxShadow: "none",
-    "&:hover": {
-      border: "1px solid #c3bebe",
-    },
+
     borderRadius: "10px",
     background: "#fafafa",
     padding: "5px",
-    width: "100%",
+    // width: "100%",
     height: "50px",
     // maxHeight: "50px",
     maxWidth: "100%",
-    "@media (min-width: 1190px)": {
-      width: "96%",
-      maxWidth: "96%",
+    "&:hover": {
+      border: "1px solid #c3bebe",
+    },
+    "@media (min-width: 1023px)": {
+      width: "100%",
+      // maxWidth: "100%",
     },
   }),
   menu: (provided) => ({

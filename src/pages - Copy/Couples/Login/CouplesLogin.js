@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 
 const CouplesLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isFormSubmitted, setFormSubmitted] = useState(false);
 
   const togglePasswordVisibility = (e) => {
     e.preventDefault();
@@ -32,7 +33,7 @@ const CouplesLogin = () => {
 
   return (
     <div className="cl-container">
-      <Box component="form" sx={CouplesLoginBox} noValidate autoComplete="off">
+      <Box component="form" sx={CouplesLoginBox}>
         <Box
           sx={{
             display: "flex",
@@ -63,6 +64,8 @@ const CouplesLogin = () => {
               type="text"
               placeholder="Email"
               variant="outlined"
+              error={isFormSubmitted && !email}
+              helperText={isFormSubmitted && !email && "Email is required"}
               sx={{
                 width: "100%",
                 maxWidth: "22rem",
@@ -81,6 +84,8 @@ const CouplesLogin = () => {
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               variant="outlined"
+              error={isFormSubmitted && !password}
+              helperText={isFormSubmitted && !password && "Password is required"}
               sx={{
                 width: "100%",
                 maxWidth: "22rem",

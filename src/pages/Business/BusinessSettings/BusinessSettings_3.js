@@ -76,13 +76,13 @@ const UsernamePassword = ({ vendorDetails }) => {
                 type="email"
                 name="email"
                 required
-                className="usernamepassword-input-style"
+                className="basicinfo-input-style"
                 {...register("email")}
               />
               <p className="text-[12px] text-red-500 font-semibold mt-1">
                 {errors.email?.message}
               </p>
-                {getFieldError("email") && (
+              {getFieldError("email") && (
                 <p className="text-[12px] text-red-500 font-semibold mt-1">
                   {getFieldError("email")}
                 </p>
@@ -96,14 +96,13 @@ const UsernamePassword = ({ vendorDetails }) => {
               <input
                 type="password"
                 name="password"
-                className="usernamepassword-input-style"
+                className="basicinfo-input-style"
                 {...register("password")}
-               
               />
               <p className="text-[12px] text-red-500 font-semibold mt-1">
                 {errors.password?.message}
               </p>
-                {getFieldError("password") && (
+              {getFieldError("password") && (
                 <p className="text-[12px] text-red-500 font-semibold mt-1">
                   {getFieldError("password")}
                 </p>
@@ -117,14 +116,13 @@ const UsernamePassword = ({ vendorDetails }) => {
               <input
                 type="password"
                 name="confirm_password"
-                className="usernamepassword-input-style"
+                className="basicinfo-input-style"
                 {...register("confirm_password")}
-             
               />
-                <p className="text-[12px] text-red-500 font-semibold mt-1">
+              <p className="text-[12px] text-red-500 font-semibold mt-1">
                 {errors.confirm_password?.message}
               </p>
-                {getFieldError("confirm_password") && (
+              {getFieldError("confirm_password") && (
                 <p className="text-[12px] text-red-500 font-semibold mt-1">
                   {getFieldError("confirm_password")}
                 </p>
@@ -132,7 +130,7 @@ const UsernamePassword = ({ vendorDetails }) => {
             </div>
           </div>
           <div className="usernamepassword-submit-button">
-            <button >Update</button>
+            <button>Update</button>
           </div>
         </form>
       </div>
