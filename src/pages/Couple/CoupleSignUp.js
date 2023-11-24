@@ -12,6 +12,8 @@ import { ReactComponent as PlanningIcon } from "../../icons/Couples/planning.svg
 import { ReactComponent as Planning2Icon } from "../../icons/Couples/bookVenue.svg";
 import { ReactComponent as FormICon4 } from "../../icons/Couples/formIcon4.svg";
 import CloseIcon from "@mui/icons-material/Close";
+import { Controller, useForm } from "react-hook-form";
+
 import {
   Checkbox,
   FormControl,
@@ -29,7 +31,6 @@ import {
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useEffect } from "react";
-import * as servicesPage from "../../services/vendor/signupPageService";
 import {
   StepperStyle,
   ButtonStyle,
@@ -40,89 +41,115 @@ import {
   CSmenuItemStyle,
 } from "../../components/FormStyle";
 import * as CoupleJS from "../Couple/Couple";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+// import { TextFieldCustom } from "../../components/input fields/TextInputForm";
 
 const steps = ["Let’s Begin", "The Basics", "Final Touches"];
 
 const options = [
-  //   {
-  //     label: "Newly engaged and exploring",
-  //     icon: <EngagedIcon />,
-  //   },
   {
+    value: 0,
     label: "Recently engaged and starting from scratch.",
     icon: <PlanningIcon />,
   },
   {
+    value: 1,
     label: "Searching for our perfect venue and more.",
     icon: <Planning2Icon />,
   },
   {
+    value: 2,
     label: "Booked a venue and need to secure other services.",
     icon: <FormICon4 />,
   },
 ];
 
 export default function CouplesSignUp() {
+  const [formValues, setFormValues] = React.useState({
+    bride_message: "",
+    bride: "",
+    groom: "",
+    wedding_date: null,
+    decision: false,
+    wedding_state: "",
+    email: "",
+    password: "",
+    marleting_category: "",
+  });
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [selectedOption, setSelectedOption] = React.useState(null); //first page option
-
   const [location, setLocation] = React.useState([]);
   const [selectState, setSelectState] = React.useState();
-
   const [checked, setChecked] = React.useState(true);
-  // const [formStep, setFormStep] = useState(0);
+  const [errors, setErrors] = React.useState({});
 
   useEffect(() => {
     CoupleJS.fetchState(setLocation);
   }, []);
 
-  const isStepOptional = (step) => {
-    return step === 1;
-  };
-
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };
 
-  const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
+  const handleNext = (data) => {
+    setFormValues({ ...formValues, ...data });
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+  };
+
+  const handleFormNext = () => {
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length === 0) {
+      setFormValues({ ...formValues, bride_message: selectedOption });
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    } else {
+      setErrors(validationErrors);
+    }
+  };
+  const handleInputChange = (fieldName, value) => {
+    setFormValues({ ...formValues, [fieldName]: value });
+    setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+  };
+
+  const handleDateChange = (fieldName, date) => {
+    setFormValues({ ...formValues, [fieldName]: date });
+    setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   const handleOptionClick = (index) => {
     setSelectedOption(index);
-    console.log(`Selected option: ${index}`);
+    const selectedOptionValue = options[index].value;
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      bride_message: selectedOptionValue,
+    }));
+    console.log(`Selected option: ${selectedOptionValue}`);
+  };
+  const handleClosePage = () => {
+    window.history.back();
   };
 
-  const handleClosePage = () => {
-    window.history.back(); // This will navigate back to the previous page in the browser's history
+  const validateForm = () => {
+    const errors = {};
+    if (!formValues.bride) {
+      errors.bride = "Full Name is required";
+    }
+    if (!formValues.groom) {
+      errors.groom = "Partner's Name is required";
+    }
+    if (!formValues.wedding_date) {
+      errors.wedding_date = "Date is required";
+    }
+    if (!formValues.wedding_state) {
+      errors.wedding_state = "State is required";
+    }
+    // Add more validation rules as needed
+    return errors;
   };
 
   return (
@@ -134,13 +161,7 @@ export default function CouplesSignUp() {
             <div className="couples-signup-image">
               <div className="cs-image-container-1 cs-image-container"></div>
             </div>
-            {/* <div
-              className="cs-back-button"
-              onClick={handleBack}
-            >
-              <ArrowBackIcon />
-              <p className="text-[12px] text-black font-[800]">Back</p>
-            </div> */}
+
             <div className="cs-close-icon" onClick={handleClosePage}>
               <CloseIcon />
             </div>
@@ -228,6 +249,7 @@ export default function CouplesSignUp() {
             </Box>
           </section>
         )}
+        {/* Page Two */}
         {activeStep === 1 && (
           <section className="couples-singup-container">
             <div className="couples-signup-image">
@@ -270,23 +292,39 @@ export default function CouplesSignUp() {
                 <Box>
                   <Box className="cs-textfield-flex">
                     <CSTextfield
+                      name="bride"
                       className="cs-textfield"
                       id="demo-helper-text-aligned"
                       label="Full Name*"
+                      onChange={(e) =>
+                        handleInputChange("bride", e.target.value)
+                      }
+                      error={errors.bride}
                     />
                     <CSTextfield
+                      name="groom"
                       className="cs-textfield"
                       id="demo-helper-text-aligned"
                       label="Partner's Name*"
+                      onChange={(e) =>
+                        handleInputChange("groom", e.target.value)
+                      }
+                      error={errors.groom}
                     />
                   </Box>
                   <br />
                   <Box className="cs-textfield-flex">
-                    <DatePickerCouple />
+                    <DatePickerCouple
+                      name="wedding_date"
+                      label="Preferred Wedding Date*"
+                      dateError={errors.wedding_date}
+                      handleDateChange={handleDateChange}
+                    />
                     <FormControlLabel
                       value="end"
                       control={
                         <CheckBoxStyle
+                          name="decision"
                           inputProps={{ "aria-label": "controlled" }}
                           sx={{
                             "&.Mui-checked": {
@@ -306,11 +344,17 @@ export default function CouplesSignUp() {
                   <br />
                   <Box>
                     <CSTextfield
+                      name="wedding_state"
                       select
                       className="cs-textfield-2"
                       label="Wedding State*"
                       id="reddit-input"
                       SelectProps={{ IconComponent: () => null }}
+                      onChange={(selectedValue) =>
+                        handleInputChange("wedding_state", selectedValue)
+                      }
+                      value={formValues.wedding_state}
+                      error={errors.wedding_state}
                     >
                       {location.map((option) => (
                         <MenuItem
@@ -331,10 +375,9 @@ export default function CouplesSignUp() {
                     variant="outlined"
                     className="cs-button-text-position"
                     disabled={selectedOption === null}
-                    onClick={handleNext}
+                    onClick={handleFormNext}
                     style={{
-                      backgroundColor:
-                        selectedOption !== null ? "black" : "#b7b7b7",
+                      backgroundColor: "black",
                     }}
                   >
                     <span className="cs-next-button">Next</span>
@@ -371,7 +414,7 @@ export default function CouplesSignUp() {
             </Box>
           </section>
         )}
-
+        {/* Page Three */}
         {activeStep === 2 && (
           <section className="couples-singup-container">
             <div className="couples-signup-image">
@@ -416,12 +459,14 @@ export default function CouplesSignUp() {
                 </div>
                 <Stack spacing={3}>
                   <CSTextfield
+                    name="email"
                     type="email"
                     className="cs-textfield-2"
                     id="demo-helper-text-aligned"
                     label="Email*"
                   />
                   <CSTextfield
+                    name="password"
                     type="password"
                     className="cs-textfield-2"
                     id="demo-helper-text-aligned"
@@ -452,8 +497,7 @@ export default function CouplesSignUp() {
                     disabled={selectedOption === null}
                     onClick={handleNext}
                     style={{
-                      backgroundColor:
-                        selectedOption !== null ? "black" : "#b7b7b7",
+                      backgroundColor: "black",
                     }}
                   >
                     <span className="cs-next-button">Submit</span>
@@ -490,6 +534,7 @@ export default function CouplesSignUp() {
             </Box>
           </section>
         )}
+        {/* Marketing Category */}
         {activeStep === 3 && (
           <section className="couples-singup-container">
             <div className="couples-signup-image">
@@ -534,89 +579,102 @@ export default function CouplesSignUp() {
                 </div>
                 <Stack spacing={3}>
                   {/* <Box> */}
-                    <FormGroup>
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} direction="column" >
-                          <FormControlLabel
-                            // required
-                            control={<Checkbox />}
-                            label={
-                              <Typography sx={{ whiteSpace: "normal" }}>
-                                This is the list of the Categories
-                              </Typography>
-                            }
-                          />
-                          <FormControlLabel
-                            required
-                            control={<Checkbox />}
-                            label="Required"
-                          />
-                          <FormControlLabel
-                            required
-                            control={<Checkbox />}
-                            label="Required"
-                          />
-                          <FormControlLabel
-                            required
-                            control={<Checkbox />}
-                            label="Required"
-                          />
-                          <FormControlLabel
-                            required
-                            control={<Checkbox />}
-                            label="Required"
-                          />
-                          <FormControlLabel
-                            required
-                            control={<Checkbox />}
-                            label="Required"
-                          />
-                        </Grid>
-
-                        {/* Second Column */}
-                        <Grid item xs={6}>
-                          <FormControlLabel
-                            required
-                            control={<Checkbox />}
-                            label="Required"
-                          />
-                          <FormControlLabel
-                            required
-                            control={<Checkbox />}
-                            label="Required"
-                          />
-                          <FormControlLabel
-                            required
-                            control={<Checkbox />}
-                            label="Required"
-                          />
-                          <FormControlLabel
-                            required
-                            control={<Checkbox />}
-                            label="Required"
-                          />
-                          <FormControlLabel
-                            required
-                            control={<Checkbox />}
-                            label="Required"
-                          />
-                          <FormControlLabel
-                            required
-                            control={<Checkbox />}
-                            label="Required"
-                          />
-                        </Grid>
+                  <FormGroup
+                    sx={{
+                      width: {
+                        xs: "100%",
+                        md: "31rem",
+                      },
+                    }}
+                  >
+                    <Grid container spacing={2}>
+                      <Grid
+                        item
+                        xs={6}
+                        sm={6}
+                        md={6}
+                        lg={6}
+                        xl={6}
+                        direction="column"
+                      >
+                        <FormControlLabel
+                          // required
+                          control={<Checkbox />}
+                          label={
+                            <Typography sx={{ whiteSpace: "normal" }}>
+                              This is the list of the Categories
+                            </Typography>
+                          }
+                        />
+                        <FormControlLabel
+                          required
+                          control={<Checkbox />}
+                          label="Required"
+                        />
+                        <FormControlLabel
+                          required
+                          control={<Checkbox />}
+                          label="Required"
+                        />
+                        <FormControlLabel
+                          required
+                          control={<Checkbox />}
+                          label="Required"
+                        />
+                        <FormControlLabel
+                          required
+                          control={<Checkbox />}
+                          label="Required"
+                        />
+                        <FormControlLabel
+                          required
+                          control={<Checkbox />}
+                          label="Required"
+                        />
                       </Grid>
-                    </FormGroup>
+
+                      {/* Second Column */}
+                      <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                        <FormControlLabel
+                          required
+                          control={<Checkbox />}
+                          label="Required"
+                        />
+                        <FormControlLabel
+                          required
+                          control={<Checkbox />}
+                          label="Required"
+                        />
+                        <FormControlLabel
+                          required
+                          control={<Checkbox />}
+                          label="Required"
+                        />
+                        <FormControlLabel
+                          required
+                          control={<Checkbox />}
+                          label="Required"
+                        />
+                        <FormControlLabel
+                          required
+                          control={<Checkbox />}
+                          label="Required"
+                        />
+                        <FormControlLabel
+                          required
+                          control={<Checkbox />}
+                          label="Required"
+                        />
+                      </Grid>
+                    </Grid>
+                  </FormGroup>
                   {/* </Box> */}
                   {/* Next */}
                   <NextButtonStyle
                     variant="outlined"
                     className="cs-button-text-position"
-                    disabled={selectedOption === null}
                     style={{
-                      backgroundColor:
-                        selectedOption !== null ? "black" : "#b7b7b7",
+                      backgroundColor: "black",
                     }}
                   >
                     <span className="cs-next-button">Submit</span>

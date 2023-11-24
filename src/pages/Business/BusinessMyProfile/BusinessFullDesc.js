@@ -86,7 +86,7 @@ const BusinessFullDesc = ({ handleFullAccordionChange }) => {
               )}
             </ShowMoreText>
           </div>
-          {/* <span className="quickdesc-summary">{quickDesc}</span> */}
+       
         </AccordionItemButton>
       </AccordionItemHeading>
       <AccordionItemPanel onClick={handlePanelClick}>

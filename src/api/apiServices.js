@@ -48,12 +48,21 @@ export async function apiCall(url, method, data) {
       });
       return response.data;
     } catch (err) {
-      if(err.response.status==401){
+      if (err.response.statuscode == 401) {
         refreshToken();
-      }else if(err.response.data.message=='Token has expired' || err.response.data.message=='Token could not be parsed from the request.'){
-        if ((localStorage.vusername && localStorage.vusername !== "") && (localStorage.vpassword && localStorage.vpassword !== "")) {
+      } else if (
+        err.response.data.message == "Token has expired" ||
+        err.response.data.message ==
+          "Token could not be parsed from the request."
+      ) {
+        if (
+          localStorage.vusername &&
+          localStorage.vusername !== "" &&
+          localStorage.vpassword &&
+          localStorage.vpassword !== ""
+        ) {
           refreshToken();
-        }else{
+        } else {
           setAuthToken(null);
           localStorage.removeItem("vendorToken");
           localStorage.removeItem("user");
@@ -68,7 +77,6 @@ export async function apiCall(url, method, data) {
     window.location = window.VLOGIN;
   }
 }
-
 
 export async function refreshToken() {
   var requestData = {

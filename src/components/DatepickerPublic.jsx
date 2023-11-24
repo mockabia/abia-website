@@ -46,14 +46,29 @@ export function DatePickerPublic({ label, TextFieldProps }) {
   );
 }
 
-export function DatePickerCouple({ label, TextFieldProps }) {
+export function DatePickerCouple({
+  name,
+  label,
+  TextFieldProps,
+  dateError,
+  handleDateChange,
+  formValues,
+}) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePickerStype
-        label="Preferred Wedding Date*"
+        name={name}
+        label={label}
+        onChange={(date) => handleDateChange(name, date)}
+        // value={formValues[name]}
         slots={{
           textField: (params) => (
-            <TextFieldCouple variant="outlined" {...params} />
+            <TextFieldCouple
+              variant="outlined"
+              {...params}
+              error={Boolean(dateError)}
+              helperText={dateError}
+            />
           ),
         }}
       />
