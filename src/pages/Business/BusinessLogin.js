@@ -38,7 +38,6 @@ const LoginPage = () => {
     Object.values(inputsErrors).filter((error) => typeof error !== "undefined")
       .length === 0;
 
-  console.log("Error response:", inputsErrors)
   const hasInputErrors = Object.values(inputsErrors).some(error => typeof error !== "undefined");
   return (
         <div>

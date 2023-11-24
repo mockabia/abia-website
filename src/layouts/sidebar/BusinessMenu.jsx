@@ -16,13 +16,14 @@ import { ReactComponent as EnquiryIcon } from "../../icons/enquiries.svg";
 import { ReactComponent as SettingsIcons } from "../../icons/settings.svg";
 import { ReactComponent as MyProfileIcon } from "../../icons/my-profile.svg";
 import { ReactComponent as GetREviewIcon } from "../../icons/getReview-2.svg";
+import { RxTriangleDown,RxTriangleUp  } from "react-icons/rx";
 // import { ReactComponent as AbiaLogo } from "../../ABIA-White-Logo-gold-crown (1).svg";
 
 import { Link, NavLink, useLocation, useRoutes } from "react-router-dom";
 
 //import upgradeNow from "../../pages/upgradeNow";
 
-import * as reactUrls from "../../api/reactUrls";
+import SideMenu from "./SideMenu";
 
 //css
 import "./css/sideBar.css";
@@ -36,6 +37,8 @@ const Sidebar = (props) => {
 
   const sidebarRef = useRef();
   const { pathname } = useLocation();
+  const [showSubMenu, setShowSubMenu] = useState({});
+  const [menuOpen, setMenuOpen]       = useState(false);
 
   // const handleNavLinkClick = () => {
   //   setIsActive(true);
@@ -58,36 +61,36 @@ const Sidebar = (props) => {
 
   const Nav_animation = isTabletMid
     ? {
-        open: {
-          x: 0,
-          width: "16rem",
-          transition: {
-            damping: 40,
-          },
+      open: {
+        x: 0,
+        width: "16rem",
+        transition: {
+          damping: 40,
         },
-        closed: {
-          x: -250,
-          width: 0,
-          transition: {
-            damping: 40,
-            delay: 0.15,
-          },
+      },
+      closed: {
+        x: -250,
+        width: 0,
+        transition: {
+          damping: 40,
+          delay: 0.15,
         },
-      }
+      },
+    }
     : {
-        open: {
-          width: "16rem",
-          transition: {
-            damping: 40,
-          },
+      open: {
+        width: "16rem",
+        transition: {
+          damping: 40,
         },
-        closed: {
-          width: "4rem",
-          transition: {
-            damping: 40,
-          },
+      },
+      closed: {
+        width: "4rem",
+        transition: {
+          damping: 40,
         },
-      };
+      },
+    };
 
   const menuIcons = {
     Home: HomeIcon,
@@ -100,13 +103,24 @@ const Sidebar = (props) => {
     "My Profile": MyProfileIcon,
     Settings: SettingsIcons,
   };
+
+  const toggleSubMenu = (id) => {
+    setShowSubMenu({
+        [id]: !showSubMenu[id]
+    });
+  };
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
   return (
     <div>
       <div
         onClick={() => setOpen(false)}
-        className={`md:hidden fixed inset-0 max-h-screen z-60 bg-black/50 ${
-          open ? "block" : "hidden"
-        } `}
+        className={`md:hidden fixed inset-0 max-h-screen z-60 bg-black/50 ${open ? "block" : "hidden"
+          } `}
       ></div>
       <motion.div
         ref={sidebarRef}
@@ -124,34 +138,9 @@ const Sidebar = (props) => {
             </Link>
           </div>
         </div>
-        {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(props.menu, null, 2)}</pre> */}
+        {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(props.leftmenu, null, 2)}</pre> */}
         <div className="flex flex-col  h-full text-white relative">
-          <ul>
-            {props.leftmenu.map((MainMenu, i) => (
-              <>
-              {MainMenu.Sub_content !== false ? (
-                  <li>
-                    <NavLink
-                      to={MainMenu.url}
-                      className="link sidebarMenuItem"
-                      // activeClassName="active"
-                    >
-                      <div className="flex gap-5 ml-5">
-                        {menuIcons[MainMenu.title] &&
-                          React.createElement(menuIcons[MainMenu.title], {
-                            className:
-                              "mt-[2px] w-[18px] h-[18px] fill-current text-[#fff]",
-                          })}
-                        {MainMenu.title}
-                      </div>
-                    </NavLink>
-                  </li>
-                ) : (
-                  ""
-                )}
-              </>
-            ))}
-          </ul>
+          <ul><SideMenu {...props} /></ul>
 
           <div className="mt-[30px] ml-[30px]">
             <div className="space-y-3">

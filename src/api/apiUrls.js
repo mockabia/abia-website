@@ -34,6 +34,7 @@ export const CONTENT_API = {
 };
 export const ROUTES_API = {
   CONTENT_SUBCONTENT_ROUTES   : `${baseUrl}PublicContentVsSubForRoutes`,
+  PUBLIC_ROUTES               : `${baseUrl}PublicGeneralForRoutes`,
   PRE_CONTENT_ROUTES          : `${baseUrl}PublicPrecontentForRoutes`,
   SUPPLIER_CONTENT_ROUTES     : `${baseUrl}PublicSuppliercontentForRoutes`,
   BRIDE_CONTENT_ROUTES        : `${baseUrl}PublicBridecontentForRoutes`,

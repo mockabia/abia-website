@@ -15,7 +15,7 @@ export async function fetchFooterMenus() {
   return await apiService.apiCall(MAIN_API["FOOTER_MENUS"], "GET");
 }
 export async function fetchContentRoutes() {
-  return await apiService.apiCall(ROUTES_API["CONTENT_SUBCONTENT_ROUTES"], "GET");
+  return await apiService.apiCall(ROUTES_API["PUBLIC_ROUTES"], "GET");
 }
 export async function fetchPreContentRoutes() {
   return await apiService.apiCall(ROUTES_API["PRE_CONTENT_ROUTES"], "GET");

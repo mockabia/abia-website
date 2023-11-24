@@ -19,7 +19,7 @@ const App = () => {
   const [cloginedMenu, setcLoginedMenu]     = useState([]);
   const [coupleMenu, setCoupleMenu]         = useState([]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     RoutesJS.fetchContentRoutes(setRoutesFromApi);
   }, []);
   useEffect(() => {
@@ -33,17 +33,21 @@ const App = () => {
   }, [!RoutesJS.hasCoupleJWT()]);
   useEffect(() => {
     RoutesJS.fetchCoupleLoginedRoutes(setcLoginedMenu,setCoupleMenu,setShowLoader);
-  }, [RoutesJS.hasCoupleJWT()]);
-
+  }, [RoutesJS.hasCoupleJWT()]); */
+useEffect(() => {
+    RoutesJS.fetchContentRoutes(setRoutesFromApi);
+    RoutesJS.fetchVendorDashboardRoutes(setBusinessMenu,setShowLoader);
+    RoutesJS.fetchCoupleDashboardRoutes(setCoupleMenu,setShowLoader);
+  }, []);
 
   return (
     <>
     <Loader active={showLoader}/>
       <Routes>
         <Route path="/business/*" element={<BusinessRoutes  showLoader={showLoader} setShowLoader={setShowLoader} 
-            leftmenu={businessMenu} topmenu={vloginedMenu} loginMenu={vloginMenu} />} />
+            menu={businessMenu} />} />
         <Route path="/wedding/*" element={<CoupleRoutes  showLoader={showLoader} setShowLoader={setShowLoader} 
-            leftmenu={coupleMenu} topmenu={cloginedMenu} loginMenu={cloginMenu} />} />
+            menu={coupleMenu}  />} />
         <Route path="/*" element={<ContentRoutes  showLoader={showLoader} setShowLoader={setShowLoader} 
             routesFromApi={routesFromApi} />} />
       </Routes>

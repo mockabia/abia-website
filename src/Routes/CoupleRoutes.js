@@ -7,58 +7,73 @@ import LayoutGeneral from "../layouts/Layout/LayoutGeneral";
 import * as RoutesJS from "./RoutesJS";
 
 const CoupleRoutes = (props) => {
-  const location                        = useLocation();
+  const location = useLocation();
+  const [loginMenu, setLoginMenu]     = useState([]);
+  const [loginedMenu, setLoginedMenu] = useState([]);
 
   const LoadablePage = loadable((props) =>
-    import(`../pages/Couple/${props.page}`)
+    import(`../pages/Business/${props.page}`)
   );
-  
+
+  useEffect(() => {
+    if (props.menu.length > 0) {
+      props.menu.map(function (MainMenu, i) {
+        if (MainMenu.Sub_content.length <= 0) {
+          let newArray1 = [];
+          newArray1['url'] = MainMenu.url;
+          newArray1['pagename'] = MainMenu.pagename;
+          if (MainMenu.id == '1') {
+            setLoginMenu(oldArray => [...oldArray, newArray1]);
+          } else {
+            setLoginedMenu(oldArray => [...oldArray, newArray1]);
+          }
+        } else {
+          MainMenu.Sub_content.map(function (SubMenu, i) {
+            let newArray1 = [];
+            newArray1['url'] = SubMenu.url;
+            newArray1['pagename'] = SubMenu.pagename;
+            if (MainMenu.id == '1') {
+              setLoginMenu(oldArray => [...oldArray, newArray1]);
+            } else {
+              setLoginedMenu(oldArray => [...oldArray, newArray1]);
+            }
+          })
+        }
+      })
+    }
+  }, [props.menu]);
+
   return (
     <>
-      {RoutesJS.hasCoupleJWT() ? (
-        <>
-          {/* <LayoutCouple {...props}>
-            <Routes>
-              {props.loginedMenu.map((loginedRoutes, i) => (
-                <Route
-                  path={`/${loginedRoutes.url}`}
-                  element={<LoadablePage page={loginedRoutes.pagename} {...props} />}
-                />
-              ))}
-            </Routes>
-          </LayoutCouple> */}
+      {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(routeMenu, null, 2)}</pre>  */}
+      {!RoutesJS.hasCoupleJWT() ? (
+      <>
+        <LayoutGeneral {...props}>
           <Routes>
-            <Route
-              path="/*"
-              element={
-                <LayoutCouple {...props}>
-                  <Routes>
-                    {props.leftmenu.map((coupleRoutes, i) => (
-                      <Route
-                        path={`/${coupleRoutes.url}`}
-                        element={<LoadablePage page={coupleRoutes.pagename} {...props} />}
-                      />
-                    ))}
-                  </Routes>
-                </LayoutCouple>
-              }
-            />
+            {loginMenu.map((routeMenus, i) => (
+              <Route
+                path={`/${routeMenus.url}`}
+                element={<LoadablePage page={routeMenus.pagename} {...props} />}
+              />
+
+            ))}
           </Routes>
-        </>
+        </LayoutGeneral>
+      </>
       ) : (
-        <>
-          {/* <LayoutGeneral {...props}> */}
-          {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(loginMenu, null, 2)}</pre> */}
-            <Routes>
-              {props.loginMenu.map((loginRoutes, i) => (
-                <Route
-                  path={`/${loginRoutes.url}`}
-                  element={<LoadablePage page={loginRoutes.pagename} {...props} />}
-                />
-              ))}
-            </Routes>
-          {/* </LayoutGeneral> */}
-        </>
+      <>
+        <LayoutCouple {...props}>
+          <Routes>
+            {loginedMenu.map((routeMenus, i) => (
+              <Route
+                path={`/${routeMenus.url}`}
+                element={<LoadablePage page={routeMenus.pagename} {...props} />}
+              />
+
+            ))}
+          </Routes>
+        </LayoutCouple>
+      </>
       )}
     </>
   );

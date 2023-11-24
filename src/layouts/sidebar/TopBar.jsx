@@ -4,7 +4,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
-
+import SideMenu from "./SideMenu";
 import "./css/TopBar.css";
 import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
 import { ReactComponent as HomeIcon } from "../../icons/home.svg";
@@ -16,7 +16,7 @@ import { ReactComponent as ShopIcon } from "../../icons/shop.svg";
 import { ReactComponent as EnquiryIcon } from "../../icons/enquiries.svg";
 import { ReactComponent as MyProfileICon } from "../../icons/my-profile.svg";
 import { ReactComponent as SettingsIcons } from "../../icons/settings.svg";
-import { RxTriangleDown } from "react-icons/rx";
+import { RxTriangleDown, RxTriangleUp } from "react-icons/rx";
 import { ReactComponent as MenuIcon } from "../../icons/menuIcon.svg";
 import { ReactComponent as AbiaLogo } from "../../ABIA-White-Logo-gold-crown(1).svg";
 import AbiaLogo1 from "../../abiaLogo";
@@ -73,7 +73,7 @@ const TopBar = (props) => {
   const closeMenu = () => {
     setMenuOpen(false);
   };
-  const handleLogout = () => {
+  const handleVendorLogout = () => {
     BusinessJS.logout(navigate);
   };
 
@@ -123,22 +123,16 @@ const TopBar = (props) => {
                 <br></br>
                 <span className="text-[15px]"> {userProfile.email} </span>
               </li>
-              {props.topmenu.map((loginedRoutes, i) => (
-                <>
-                {loginedRoutes.id=='4' ? (
-                  <li
-                    className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
-                    onClick={handleLogout}
-                  >{loginedRoutes.title}</li>
-                ) : (
-                  <li
-                    className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
-                  ><NavLink
-                  to={loginedRoutes.url}
-                >{loginedRoutes.title}</NavLink></li>
-                )}
-                </>
-              ))}
+
+              <li className="px-4  text-[15px] cursor-pointer">
+                <Link to={`${window.VDASHBOARD}`}> DASHBOARD </Link>
+              </li>
+              <li
+                className="px-4 text-[15px] cursor-pointer flex items-center font-semibold"
+                onClick={handleVendorLogout}
+              >
+                <button>Log Out</button>
+              </li>
             </ul>
           </div>
         )}
@@ -170,156 +164,7 @@ const TopBar = (props) => {
                   </div>
                 </div>
                 <ul className="mt-[100px] flex flex-col sm:justify-center  sm:mr-[85px] ">
-                  {/* sm:items-center */}
-                  <li className="mb-5 ">
-                    <NavLink to={"/home"} onClick={closeMenu}>
-                      <div className="flex gap-5">
-                        <HomeIcon className=" w-5 h-5 fill-current text-[#fff]" />
-                        Home
-                      </div>
-                    </NavLink>
-                    {/* <hr className="hr-line" /> */}
-                  </li>
-                  <li className="mb-5">
-                    <NavLink to={"/get-reviews"} onClick={closeMenu}>
-                      <div className="flex gap-5">
-                        <GetReview className=" w-5 h-5 fill-current text-[#fff]" />
-                        Get reviews
-                      </div>
-                    </NavLink>
-                  </li>
-                  <li className="mb-5">
-                    <NavLink to={"/manage-review"} onClick={closeMenu}>
-                      <div className="flex gap-5 ">
-                        <ManageReview className="w- h-5 fill-current text-[#fff] " />
-                        Manage reviews
-                      </div>
-                    </NavLink>
-                  </li>
-                  <li className="mb-5 relative">
-                    <div className="flex  " onClick={toggleSubMenu}>
-                      <NavLink className="flex gap-5">
-                        <ShowCase className="w-5 h-5 fill-current text-[#fff]" />
-                        Showcase
-                      </NavLink>
-
-                      <RxTriangleDown className="fixed ml-[79vw]" size={25} />
-                    </div>
-                    {showSubMenu && (
-                      <div>
-                        <ul className="ml-[41px] mt-4 ">
-                          <motion.li
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 }}
-                            className="mb-4"
-                          >
-                            <NavLink
-                              to={"/showcase/review-widget"}
-                              onClick={closeMenu}
-                            >
-                              Review Widgets
-                            </NavLink>
-                          </motion.li>
-                          <motion.li
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                          // className="mb-4"
-                          >
-                            <NavLink
-                              to={"/showcase/award-badges"}
-                              onClick={closeMenu}
-                            >
-                              Award Badges
-                            </NavLink>
-                          </motion.li>
-                        </ul>
-                      </div>
-                    )}
-                  </li>
-                  <li className="mb-5">
-                    <NavLink to={"/promotions"} onClick={closeMenu}>
-                      <div className="flex gap-5">
-                        <Promotions className="w-5 h-5 fill-current text-[#fff]" />
-                        Promotions
-                      </div>
-                    </NavLink>
-                  </li>
-                  <li className="mb-5">
-                    <NavLink to={"/shop"} onClick={closeMenu}>
-                      <div className="flex gap-5 ">
-                        <ShopIcon className="w-5 h-5 fill-current text-[#fff]" />
-                        Shop
-                      </div>
-                    </NavLink>
-                  </li>
-                  <li className="mb-5">
-                    <NavLink to={"/enquiries"} onClick={closeMenu}>
-                      <div className="flex gap-5 ">
-                        <EnquiryIcon className="w-5 h-5 fill-current text-[#fff]" />
-                        Enquiries
-                      </div>
-                    </NavLink>
-                  </li>
-                  <li className="mb-5">
-                    <NavLink to={"/my-profile"} onClick={closeMenu}>
-                      <div className="flex gap-5 ">
-                        <MyProfileICon className="w-5 h-5 fill-current text-[#fff]" />
-                        My Profile
-                      </div>
-                    </NavLink>
-                  </li>
-                  <li className="mb-5">
-                    <NavLink to={"/settings"} onClick={closeMenu}>
-                      <div className="flex gap-5 ">
-                        <SettingsIcons className="w-5 h-5 fill-current text-[#fff]" />
-                        Settings
-                      </div>
-                    </NavLink>
-                  </li>
-                  {/* <li className="mb-5 relative">
-                    <div className="flex  " onClick={toggleSettingsSubMenu}>
-                      <NavLink className="flex gap-5">
-                        <SettingsIcons className="w-5 h-5 fill-current text-[#fff]" />
-                        Settings
-                      </NavLink>
-
-                      <RxTriangleDown className="fixed ml-[79vw]" size={25} />
-                    </div>
-                    {showSeetingsSubmenu && (
-                      <div>
-                        <ul className="ml-[41px] mt-4 ">
-                          <motion.li
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 }}
-                            className="mb-4"
-                          >
-                            <NavLink
-                              to={"/settings/business-settings"}
-                              onClick={closeMenu}
-                            >
-                              Business Settings
-                            </NavLink>
-                          </motion.li>
-                          <motion.li
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                            // className="mb-4"
-                          >
-                            <NavLink
-                              to={"/settings/update-listing"}
-                              onClick={closeMenu}
-                            >
-                              Update Listing
-                            </NavLink>
-                          </motion.li>
-                        </ul>
-                      </div>
-                    )}
-                  </li> */}
+                  <SideMenu {...props} />
                 </ul>
                 <div className="mt-[65px] space-y-2">
                   <div className="mb-[10px]">
