@@ -107,8 +107,16 @@ export default function CouplesSignUp() {
       setErrors(validationErrors);
     }
   };
+  // const handleInputChange = (fieldName, value) => {
+  //   setFormValues({ ...formValues, [fieldName]: value });
+  //   setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+  // };
   const handleInputChange = (fieldName, value) => {
-    setFormValues({ ...formValues, [fieldName]: value });
+    if (fieldName === "decision") {
+      setFormValues({ ...formValues, [fieldName]: !formValues.decision });
+    } else {
+      setFormValues({ ...formValues, [fieldName]: value });
+    }
     setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
   };
 
@@ -319,6 +327,7 @@ export default function CouplesSignUp() {
                       label="Preferred Wedding Date*"
                       dateError={errors.wedding_date}
                       handleDateChange={handleDateChange}
+                      disabled={formValues.decision}
                     />
                     <FormControlLabel
                       value="end"
