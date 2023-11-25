@@ -97,7 +97,6 @@ const NavBar = (props) => {
   useEffect(() => {
     fetchHeaderMenus();
   }, []);
-  console.log("Header menus:", MenuItems);
 
   const theme = createTheme({
     components: {

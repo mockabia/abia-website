@@ -8,7 +8,7 @@ export const fetchContentRoutes = async (setRoutesFromApi) => {
         if (response.statuscode == 200) {
             setRoutesFromApi(response.result);
         }
-        fetchPreContentRoutes(setRoutesFromApi);
+        //fetchPreContentRoutes(setRoutesFromApi);
     });
 };
 export const fetchPreContentRoutes = async (setRoutesFromApi) => {
@@ -52,7 +52,7 @@ export const fetchBlogRoutes = async (setRoutesFromApi) => {
 };
 
 /* business routes */
-export const fetchVendorLoginRoutes = async (setLoginMenu) => {
+/* export const fetchVendorLoginRoutes = async (setLoginMenu) => {
     await servicesPage.fetchVendorLoginRoutes().then(function (response) {
         if (response.statuscode == 200) {
             console.log(response.result[0].Sub_content)
@@ -83,11 +83,34 @@ export const fetchVendorLoginedRoutes = async (setLoginedMenu,setBusinessMenu, s
         }
         fetchVendorDashboardRoutes(setBusinessMenu, setShowLoader);
     });
-};
+}; */
 export const fetchVendorDashboardRoutes = async (setBusinessMenu, setShowLoader) => {
     await servicesPage.fetchVendorDashboardRoutes().then(function (response) {
         if (response.statuscode == 200) {
             setBusinessMenu(response.result);
+            const loginMenu = response.result.filter(menus => {
+                return menus.id == '1';
+            });
+            const dashboardMenu = response.result.filter(menus => {
+                return menus.id == '4';
+            });
+            let signup = loginMenu[0].Sub_content.filter((subs) => {
+                return subs.id == '1';
+            });
+            window.VSIGNUP = process.env.REACT_APP_BUSINESS_URL + '/' + signup[0].url;
+
+            let login = loginMenu[0].Sub_content.filter((subs) => {
+                return subs.id == '2';
+            });
+            window.VLOGIN = process.env.REACT_APP_BUSINESS_URL + '/' + login[0].url;
+
+            let loginState = loginMenu[0].Sub_content.filter((subs) => {
+                return subs.id == '7';
+            });
+            window.VLOGIN_STATE = process.env.REACT_APP_BUSINESS_URL + '/' + loginState[0].url;
+
+            window.VDASHBOARD = process.env.REACT_APP_BUSINESS_URL + '/' + dashboardMenu[0].url;
+
             setShowLoader(false);
         }
     });
@@ -107,7 +130,7 @@ export function hasCoupleJWT() {
 }
 
 /* couple routes */
-export const fetchCoupleLoginRoutes = async (setLoginMenu) => {
+/* export const fetchCoupleLoginRoutes = async (setLoginMenu) => {
     await servicesPage.fetchCoupleLoginRoutes().then(function (response) {
         if (response.statuscode == 200) {
             console.log(response.result[0].Sub_content)
@@ -123,7 +146,7 @@ export const fetchCoupleLoginRoutes = async (setLoginMenu) => {
         }
     });
 };
-export const fetchCoupleLoginedRoutes = async (setLoginedMenu,setBusinessMenu, setShowLoader) => {
+export const fetchCoupleLoginedRoutes = async (setLoginedMenu,setCoupleMenu, setShowLoader) => {
     await servicesPage.fetchCoupleLoginedRoutes().then(function (response) {
         if (response.statuscode == 200) {
             let dashboard = response.result[0].Sub_content.filter((subs) => {
@@ -132,13 +155,31 @@ export const fetchCoupleLoginedRoutes = async (setLoginedMenu,setBusinessMenu, s
             window.CDASHBOARD = process.env.REACT_APP_COUPLE_URL + '/' + dashboard[0].url;
             setLoginedMenu(response.result[0].Sub_content);
         }
-        fetchCoupleDashboardRoutes(setBusinessMenu, setShowLoader);
+        fetchCoupleDashboardRoutes(setCoupleMenu, setShowLoader);
     });
-};
-export const fetchCoupleDashboardRoutes = async (setBusinessMenu, setShowLoader) => {
+}; */
+export const fetchCoupleDashboardRoutes = async (setCoupleMenu, setShowLoader) => {
     await servicesPage.fetchCoupleDashboardRoutes().then(function (response) {
         if (response.statuscode == 200) {
-            setBusinessMenu(response.result);
+            setCoupleMenu(response.result);
+            const loginMenu = response.result.filter(menus => {
+                return menus.id == '1';
+            });
+            const dashboardMenu = response.result.filter(menus => {
+                return menus.id == '4';
+            });
+            let signup = loginMenu[0].Sub_content.filter((subs) => {
+                return subs.id == '1';
+            });
+            window.CSIGNUP = process.env.REACT_APP_COUPLE_URL + '/' + signup[0].url;
+
+            let login = loginMenu[0].Sub_content.filter((subs) => {
+                return subs.id == '2';
+            });
+            window.CLOGIN = process.env.REACT_APP_COUPLE_URL + '/' + login[0].url;
+
+            window.CDASHBOARD = process.env.REACT_APP_COUPLE_URL + '/' + dashboardMenu[0].url;
+
             setShowLoader(false);
         }
     });
