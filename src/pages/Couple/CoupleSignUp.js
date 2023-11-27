@@ -96,6 +96,7 @@ export default function CouplesSignUp() {
   const handleNext = (data) => {
     setFormValues({ ...formValues, ...data });
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    console.log("Current form values:", { ...formValues, ...data });
   };
 
   const handleFormNext = () => {
@@ -103,10 +104,12 @@ export default function CouplesSignUp() {
     if (Object.keys(validationErrors).length === 0) {
       setFormValues({ ...formValues, bride_message: selectedOption });
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      console.log("Current form values:", { ...formValues, bride_message: selectedOption });
     } else {
       setErrors(validationErrors);
     }
   };
+
   // const handleInputChange = (fieldName, value) => {
   //   setFormValues({ ...formValues, [fieldName]: value });
   //   setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
@@ -115,6 +118,7 @@ export default function CouplesSignUp() {
     if (fieldName === "decision") {
       setFormValues({ ...formValues, [fieldName]: !formValues.decision });
       setCheckboxChecked(!formValues.decision);
+      console.log("Checkbox is ticked:", !formValues.decision);
     } else {
       setFormValues({ ...formValues, [fieldName]: value });
     }
@@ -327,7 +331,7 @@ export default function CouplesSignUp() {
                       name="wedding_date"
                       label="Preferred Wedding Date*"
                       dateError={errors.wedding_date}
-                      handleDateChange={handleDateChange}
+                      handleDateChange={handleInputChange}
                       checkboxChecked={checkboxChecked}
                       // disabled={formValues.decision}
                     />
@@ -361,8 +365,8 @@ export default function CouplesSignUp() {
                       label="Wedding State*"
                       id="reddit-input"
                       SelectProps={{ IconComponent: () => null }}
-                      onChange={(selectedValue) =>
-                        handleInputChange("wedding_state", selectedValue)
+                      onChange={(e) =>
+                        handleInputChange("wedding_state", e.target.value)
                       }
                       value={formValues.wedding_state}
                       error={errors.wedding_state}

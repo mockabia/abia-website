@@ -61,8 +61,7 @@ export function DatePickerCouple({
         name={name}
         label={label}
         onChange={(date) => handleDateChange(name, date)}
-        // value={formValues[name]}
-        disabled={checkboxChecked}
+        disabled
         slots={{
           textField: (params) => (
             <TextFieldCouple
