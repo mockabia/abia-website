@@ -33,19 +33,10 @@ export const CONTENT_API = {
   CONTENT_DETAILS: `${baseUrl}WebViewContentRecord`,
 };
 export const ROUTES_API = {
-  CONTENT_SUBCONTENT_ROUTES   : `${baseUrl}PublicContentVsSubForRoutes`,
-  PUBLIC_ROUTES               : `${baseUrl}PublicGeneralForRoutes`,
-  PRE_CONTENT_ROUTES          : `${baseUrl}PublicPrecontentForRoutes`,
-  SUPPLIER_CONTENT_ROUTES     : `${baseUrl}PublicSuppliercontentForRoutes`,
-  BRIDE_CONTENT_ROUTES        : `${baseUrl}PublicBridecontentForRoutes`,
-  BLOGCAT_BLOGSUBCAT_ROUTES   : `${baseUrl}PublicBlogCatVsSubForRoutes`,
-  BLOG_ROUTES                 : `${baseUrl}PublicBlogForRoutes`,
-  BUSINESS_LOGIN_ROUTES       : `${baseUrl}VendorLoginMenu`,
-  BUSINESS_LOGINED_ROUTES     : `${baseUrl}VendorLoginedMenu`,
-  BUSINESS_DASHBOARD_ROUTES   : `${baseUrl}VendorDashboardMenu`,
-  COUPLE_LOGIN_ROUTES       : `${baseUrl}BrideLoginMenu`,
-  COUPLE_LOGINED_ROUTES     : `${baseUrl}BrideLoginedMenu`,
-  COUPLE_DASHBOARD_ROUTES   : `${baseUrl}BrideDashboardMenu`,
+  PUBLIC_ROUTES       : `${baseUrl}PublicGeneralForRoutes`,
+  BLOG_ROUTES         : `${baseUrl}PublicBlogVsCatVsSubForRoutes`,
+  BUSINESS_ROUTES     : `${baseUrl}VendorDashboardMenu`,
+  COUPLE_ROUTES       : `${baseUrl}BrideDashboardMenu`,
 };
 
 export const BUSINESS_API = {

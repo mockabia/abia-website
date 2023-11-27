@@ -12,11 +12,7 @@ const App = () => {
   const [showLoader, setShowLoader]         = useState(false);
 
   const [routesFromApi, setRoutesFromApi]   = useState([]);
-  const [vloginMenu, setvLoginMenu]         = useState([]);
-  const [vloginedMenu, setvLoginedMenu]     = useState([]);
   const [businessMenu, setBusinessMenu]     = useState([]);
-  const [cloginMenu, setcLoginMenu]         = useState([]);
-  const [cloginedMenu, setcLoginedMenu]     = useState([]);
   const [coupleMenu, setCoupleMenu]         = useState([]);
 
   /* useEffect(() => {
@@ -36,8 +32,8 @@ const App = () => {
   }, [RoutesJS.hasCoupleJWT()]); */
 useEffect(() => {
     RoutesJS.fetchContentRoutes(setRoutesFromApi);
-    RoutesJS.fetchVendorDashboardRoutes(setBusinessMenu,setShowLoader);
-    RoutesJS.fetchCoupleDashboardRoutes(setCoupleMenu,setShowLoader);
+    RoutesJS.fetchBusinessRoutes(setBusinessMenu,setShowLoader);
+    RoutesJS.fetchCoupleRoutes(setCoupleMenu,setShowLoader);
   }, []);
 
   return (
