@@ -146,8 +146,5 @@
 .nav-menu-list .subMenu{
     position: absolute;
     background-color: #FFF;
-    border: 1px solid #b8b8b8;
-    top: 2.5rem;
-    z-index: 1;
-    border-radius: 0.25rem;
+    z-index: 9;
 }

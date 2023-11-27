@@ -14,6 +14,7 @@ const ContentRoutes = (props) => {
 
   return (
     <LayoutGeneral {...props}>
+      {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(props.routesFromApi, null, 2)}</pre> */}
       {(props.showLoader !== undefined && props.showLoader != true) ?
         <>
           <Routes>
@@ -24,6 +25,14 @@ const ContentRoutes = (props) => {
                 element={<LoadablePage page={routes.pagename} {...props} />}
               />
             ))}
+            <Route
+                path='wedding-blog/wedding-dress-tips'
+                element={<LoadablePage page='Blog' {...props} />}
+              />
+            <Route
+                path='wedding-blog/sposabella-bridal'
+                element={<LoadablePage page='BlogDetail' {...props} />}
+              />
           </Routes>
         </> : ''
       }

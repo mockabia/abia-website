@@ -1,19 +1,18 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
-import * as servicesPage from "../../services/contentServices";
-import "../css/NavBar.css";
+import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
+import { RxTriangleDown,RxTriangleUp  } from "react-icons/rx";
 
-import AbiaLogo from "../../abiaLogo";
+import * as servicesPage from "../../services/contentServices";
 
 import LoginDropdown from "../../components/Login and Signup/LoginDropdown";
 import SignUpDropDown from "../../components/Login and Signup/SignUpDropDown";
 import MenuItems from "../../components/Login and Signup/MenuItems";
-import { NavMenuStyle } from "../../components/FormStyle";
-import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
 import * as BusinessJS from "../../pages/Business/Business";
 import * as CoupleJS from "../../pages/Couple/Couple";
-import * as reactUrls from "../../api/reactUrls";
+import AbiaLogo from "../../abiaLogo";
+import "../css/NavBar.css";
 
 import {
   TextField,
@@ -61,6 +60,7 @@ const NavBar = (props) => {
   const [menuAnchorEl, setMenuAnchorEl] = useState({});
   const [menuItems, setMenuItems]       = useState([]);
   const profileRef                      = useRef(null);
+  const menuList                        = useRef(null);
   const [profileOpen, setProfileOpen]   = useState(false);
   const [userProfile, setUserProfile]   = useState({});
 
@@ -95,9 +95,18 @@ const NavBar = (props) => {
 
   useEffect(() => {
     fetchHeaderMenus();
-    document.addEventListener("mousedown", handleMenuClose);
+    document.body.addEventListener('mousedown', function(e) {
+        if (!e.target.classList.contains('MainwithSub') && !e.target.classList.contains('subMenu-link')) {
+          handleMenuClose()
+        }
+    });
     return () => {
-      document.removeEventListener("mousedown", handleMenuClose);
+      //document.removeEventListener("mousedown", handleOutsideClick);
+      document.body.addEventListener('mousedown', function(e) {
+        if (!e.target.classList.contains('MainwithSub') && !e.target.classList.contains('subMenu-link')) {
+          handleMenuClose()
+        }
+    });
     };
   }, []);
 
@@ -135,12 +144,13 @@ const NavBar = (props) => {
   const handleMenuClick = (mainId) => {
     setMenuAnchorEl({
       [mainId]: !menuAnchorEl[mainId]
+      //[mainId]: true
     });
   };
   const handleMenuClose = (event) => {
-    if (profileRef.current && !profileRef.current.contains(event.target)) {
+    //if (profileRef.current && !profileRef.current.contains(event.target)) {
       setMenuAnchorEl({});
-    }
+    //}
   };
 
   const handleClose = () => {
@@ -164,7 +174,6 @@ const NavBar = (props) => {
     CoupleJS.logout(navigate);
   };
 
-  
   return (
     <div className={`${props.showLoader ? "hidden" : ""} `}>
       <div className="login-navbar-style relative">
@@ -226,20 +235,23 @@ const NavBar = (props) => {
       <div className="navbar-subhead-large relative" ref={profileRef}>
         <ul className="login-subheaders absolute ">
           {menuItems.map((menuItem, index) => (
-            <li className="nav-menu-list" key={index}>
+            <li className={`nav-menu-list ${menuItem.Sub_content.length > 0 ? "MainwithSub" : "MainOnly"} `} key={index} ref={menuList}>
               {menuItem.Sub_content.length > 0 ? (
                 <div>
-                  <span onClick={() =>
+                  <span className="flex MainwithSub" onClick={() =>
                       handleMenuClick(menuItem.id)
-                    }>{menuItem.title}</span>
+                    }>{menuItem.title}
+                    {menuAnchorEl[menuItem.id] ? (<RxTriangleUp className="" size={25} />) : (<RxTriangleDown className="" size={25} />)}
+                  </span>
                     
                   {menuAnchorEl[menuItem.id] && (
                     <ul className={`subMenu ${menuAnchorEl[menuItem.id] ? "block" : "hidden"} `}>
                       {menuItem.Sub_content.map((subMenuItem, subIndex) => (
                         <MenuItem key={subIndex}>
                           <Link
-                            to={`/${menuItem.main_url}/${subMenuItem.sub_url}`}
-                            className="border-red-500"
+                            className="subMenu-link"
+                            to={`/${subMenuItem.url}`}
+                            onClick={handleMenuClose}
                           >
                             {subMenuItem.title}
                           </Link>

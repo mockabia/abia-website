@@ -5,33 +5,32 @@ import LayoutGeneral from "../../layouts/Layout/LayoutGeneral";
 import "../Style/MainContent.css";
 
 const Public = () => {
-  const location                      = useLocation();
+  const location = useLocation();
   const [pageContent, setPageContent] = useState({});
-  const url                           = location.pathname.split("/").pop();
+  const url = location.pathname.split("/").pop();
 
   useEffect(() => {
-    //fetchPageContent();
+    fetchPageContent();
   }, [url]);
-  
+
   const fetchPageContent = async () => {
-    await servicesPage.fetchContentDetails(url).then(function (response) {
-        if (response.statuscode == 200) {
-          setPageContent(response.result)
-        }
+    await servicesPage.fetchBlogDetail(url).then(function (response) {
+      if (response.statuscode == 200) {
+        setPageContent(response.result)
+      }
     });
   };
 
   return (
-    <>
-      <LayoutGeneral>
-        <div>
-          <div className="main-content">
-          <h1 className="main-header">Blog Details</h1>
-          <div className="content" dangerouslySetInnerHTML={{__html: pageContent.detail}}></div>
-          </div>
+    <div>
+      <div className="main-content">
+        <h1 className="main-header">{pageContent.bpagetitle}</h1>
+        <div className="grid grid-cols-2 gap-2">
+          <h3>{pageContent.btitle}</h3>
+          <div className="content" dangerouslySetInnerHTML={{__html: pageContent.bcomment}}></div>
         </div>
-      </LayoutGeneral>
-    </>
+      </div>
+    </div>
   );
 };
 
