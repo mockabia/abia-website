@@ -235,6 +235,7 @@ const NavBar = (props) => {
                         <MenuItem key={subIndex}>
                           <Link
                             to={`/${menuItem.main_url}/${subMenuItem.sub_url}`}
+                            className="border-red-500"
                           >
                             {subMenuItem.title}
                           </Link>
