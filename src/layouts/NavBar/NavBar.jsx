@@ -164,6 +164,7 @@ const NavBar = (props) => {
     CoupleJS.logout(navigate);
   };
 
+  
   return (
     <div className={`${props.showLoader ? "hidden" : ""} `}>
       <div className="login-navbar-style relative">
