@@ -10,11 +10,11 @@ const ContentRoutes = (props) => {
 
   const location                          = useLocation();
 
-  //const LoadablePage = loadable((props) => import(`../pages/General/${props.page}`));
-  const LoadablePage = loadable((props) => {
+  const LoadablePage = loadable((props) => import(`../pages/General/${props.page}`));
+  /* const LoadablePage = loadable((props) => {
     alert(props.page)
     return import(`../pages/General/${props.page}`);
-  });
+  }); */
 
   return (
     <LayoutGeneral {...props}>
