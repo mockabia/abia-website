@@ -82,7 +82,7 @@ export default function CouplesSignUp() {
   const [selectedOption, setSelectedOption] = React.useState(null); //first page option
   const [location, setLocation] = React.useState([]);
   const [selectState, setSelectState] = React.useState();
-  const [checked, setChecked] = React.useState(true);
+  const [checkboxChecked, setCheckboxChecked] = React.useState(false);
   const [errors, setErrors] = React.useState({});
 
   useEffect(() => {
@@ -114,6 +114,7 @@ export default function CouplesSignUp() {
   const handleInputChange = (fieldName, value) => {
     if (fieldName === "decision") {
       setFormValues({ ...formValues, [fieldName]: !formValues.decision });
+      setCheckboxChecked(!formValues.decision);
     } else {
       setFormValues({ ...formValues, [fieldName]: value });
     }
@@ -327,7 +328,8 @@ export default function CouplesSignUp() {
                       label="Preferred Wedding Date*"
                       dateError={errors.wedding_date}
                       handleDateChange={handleDateChange}
-                      disabled={formValues.decision}
+                      checkboxChecked={checkboxChecked}
+                      // disabled={formValues.decision}
                     />
                     <FormControlLabel
                       value="end"

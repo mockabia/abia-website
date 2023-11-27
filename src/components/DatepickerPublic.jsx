@@ -53,6 +53,7 @@ export function DatePickerCouple({
   dateError,
   handleDateChange,
   formValues,
+  checkboxChecked,
 }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -61,6 +62,7 @@ export function DatePickerCouple({
         label={label}
         onChange={(date) => handleDateChange(name, date)}
         // value={formValues[name]}
+        disabled={checkboxChecked}
         slots={{
           textField: (params) => (
             <TextFieldCouple
