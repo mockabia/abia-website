@@ -224,7 +224,6 @@ const NavBar = (props) => {
       </div>
       {/* Subheaders */}
       <div className="navbar-subhead-large relative" ref={profileRef}>
-        <pre style={{fontSize: "xx-small", }}>{JSON.stringify(menuAnchorEl, null, 2)}</pre>
         <ul className="login-subheaders absolute ">
           {menuItems.map((menuItem, index) => (
             <li className="nav-menu-list" key={index}>
