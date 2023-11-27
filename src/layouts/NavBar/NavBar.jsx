@@ -95,6 +95,10 @@ const NavBar = (props) => {
 
   useEffect(() => {
     fetchHeaderMenus();
+    document.addEventListener("mousedown", handleMenuClose);
+    return () => {
+      document.removeEventListener("mousedown", handleMenuClose);
+    };
   }, []);
 
   const theme = createTheme({
@@ -129,13 +133,14 @@ const NavBar = (props) => {
   };
 
   const handleMenuClick = (mainId) => {
-    console.log(mainId)
     setMenuAnchorEl({
       [mainId]: !menuAnchorEl[mainId]
     });
   };
-  const handleMenuClose = () => {
-    setMenuAnchorEl(null);
+  const handleMenuClose = (event) => {
+    if (profileRef.current && !profileRef.current.contains(event.target)) {
+      setMenuAnchorEl({});
+    }
   };
 
   const handleClose = () => {
@@ -226,9 +231,8 @@ const NavBar = (props) => {
                 <div>
                   <span onClick={() =>
                       handleMenuClick(menuItem.id)
-                    }>{menuItem.title}---{menuItem.id}</span>
+                    }>{menuItem.title}</span>
                     
-                  {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(props.leftmenu, null, 2)}</pre> */}
                   {menuAnchorEl[menuItem.id] && (
                     <ul className={`subMenu ${menuAnchorEl[menuItem.id] ? "block" : "hidden"} `}>
                       {menuItem.Sub_content.map((subMenuItem, subIndex) => (
