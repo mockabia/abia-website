@@ -23,3 +23,11 @@ export async function forgot(postData) {
 export async function stateDropdown(postData) {
   return await apiService.apiCall(apiUrls.STATE_DROPDOWN, "GET", postData);
 }
+
+export async function marketCategory(postData) {
+  return await apiService.apiCall(apiUrls.MARKETING_CATEGORY, "GET", postData);
+}
+
+
+
+// marketCategory;

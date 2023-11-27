@@ -22,7 +22,6 @@ const CoupleForgotPwd = () => {
   const [emailError, setEmailError] = useState("");
 
   const handleOpen = () => setOpen(true);
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -88,14 +87,13 @@ const CoupleForgotPwd = () => {
             </IconButton>
           </Box>
           <form>
-            <h3 className="form-header">Forgot Password. ?</h3>
-            <br />
-            <p className="flex justify-center">
+            <h3 className="form-header">Forgot Password ?</h3>
+            {/* <p className="flex justify-center">
               You can reset your password here.
-            </p>
+            </p> */}
+            <label className="cl-label">Enter your Valid Email</label>
             <div className="mt-[1rem]">
               <TextField
-                label="Enter your Valid Email"
                 name="email"
                 sx={{ width: "100%" }}
                 InputProps={{

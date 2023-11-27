@@ -41,9 +41,6 @@ import {
   CSmenuItemStyle,
 } from "../../components/FormStyle";
 import * as CoupleJS from "../Couple/Couple";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-// import { TextFieldCustom } from "../../components/input fields/TextInputForm";
 
 const steps = ["Let’s Begin", "The Basics", "Final Touches"];
 
@@ -80,56 +77,63 @@ export default function CouplesSignUp() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [selectedOption, setSelectedOption] = React.useState(null); //first page option
+  const [isOptionSelected, setIsOptionSelected] = React.useState(false);
   const [location, setLocation] = React.useState([]);
-  const [selectState, setSelectState] = React.useState();
+  // const [selectState, setSelectState] = React.useState();
   const [checkboxChecked, setCheckboxChecked] = React.useState(false);
   const [errors, setErrors] = React.useState({});
+  const [marketingOptions, setMarketingOptions] = React.useState([]);
+  const [marketingSelect, setMarketingSelect] = React.useState([]);
+
+  console.log(marketingSelect);
 
   useEffect(() => {
     CoupleJS.fetchState(setLocation);
+    CoupleJS.fetchMarketingCategory(setMarketingOptions);
+    // setIsOptionSelected(true);
   }, []);
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };
 
-  const handleNext = (data) => {
-    setFormValues({ ...formValues, ...data });
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    // console.log("Current form values:", { ...formValues, ...data });
+  const handleNext = () => {
+    if (selectedOption === null) {
+      setIsOptionSelected(false);
+    } else {
+      setIsOptionSelected(true);
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
   };
 
   const handleFormNext = () => {
-    console.log("Inside handleFormNext");
     const validationErrors = validateForm();
-    console.log("Validation Errors:", validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-      console.log("No validation errors, proceeding...");
       setFormValues({ ...formValues });
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       console.log("Current form values:", {
         formValues,
       });
     } else {
-      console.log("Validation errors found, not proceeding.");
       setErrors(validationErrors);
     }
   };
+
   const handleInputChange = (fieldName, value) => {
     if (fieldName === "decision") {
       setFormValues({ ...formValues, [fieldName]: !formValues.decision });
       setCheckboxChecked(!formValues.decision);
-      console.log("Checkbox is ticked:", !formValues.decision);
+      console.log("Checkbox is ticked:", checkboxChecked);
     } else {
       setFormValues({ ...formValues, [fieldName]: value });
     }
     setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
   };
 
-  const handleDateChange = (fieldName, date) => {
-    setFormValues({ ...formValues, [fieldName]: date });
-    setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
-  };
+  // const handleDateChange = (fieldName, date) => {
+  //   setFormValues({ ...formValues, [fieldName]: date });
+  //   setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+  // };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -137,6 +141,7 @@ export default function CouplesSignUp() {
 
   const handleOptionClick = (index) => {
     setSelectedOption(index);
+    setIsOptionSelected(true);
     const selectedOptionValue = options[index].value;
     setFormValues((prevValues) => ({
       ...prevValues,
@@ -180,6 +185,31 @@ export default function CouplesSignUp() {
     }
 
     return errors;
+  };
+  const sampleData = [
+    "Category 1",
+    "Required 1",
+    "Required 2",
+    "Required 3",
+    "Required 4",
+    "Required 5",
+    "Required 6",
+    "Required 7",
+    "Required 8",
+    "Required 9",
+    "Required 10",
+    "Required 11",
+  ];
+
+  const handleMarketingChange = (e) => {
+    const index = marketingSelect.indexOf(e.target.value);
+    if (index === -1) {
+      setMarketingSelect([...marketingSelect, e.target.value]);
+    } else {
+      setMarketingSelect(
+        marketingSelect.filter((category) => category !== e.target.value)
+      );
+    }
   };
 
   return (
@@ -238,6 +268,11 @@ export default function CouplesSignUp() {
                   </div>
                 ))}
 
+                {isOptionSelected === false && (
+                  <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
+                    Please select an option
+                  </Typography>
+                )}
                 <br />
                 {/* Next */}
                 <NextButtonStyle
@@ -344,19 +379,26 @@ export default function CouplesSignUp() {
                   </Box>
                   <br />
                   <Box className="cs-textfield-flex">
-                    <DatePickerCouple
-                      name="wedding_date"
-                      label="Preferred Wedding Date*"
-                      dateError={errors.wedding_date}
-                      handleDateChange={handleInputChange}
-                      checkboxChecked={checkboxChecked}
-                      // disabled={formValues.decision}
-                    />
+                    {!checkboxChecked && (
+                      <DatePickerCouple
+                        name="wedding_date"
+                        label="Preferred Wedding Date*"
+                        dateError={errors.wedding_date}
+                        handleDateChange={handleInputChange}
+                        checkboxChecked={checkboxChecked}
+                        // disabled={formValues.decision}
+                      />
+                    )}
+
                     <FormControlLabel
                       value="end"
                       control={
                         <CheckBoxStyle
                           name="decision"
+                          checked={formValues.decision}
+                          onChange={(e) =>
+                            handleInputChange("decision", e.target.checked)
+                          }
                           inputProps={{ "aria-label": "controlled" }}
                           sx={{
                             "&.Mui-checked": {
@@ -497,7 +539,7 @@ export default function CouplesSignUp() {
                     className="cs-textfield-2"
                     id="demo-helper-text-aligned"
                     label="Email*"
-                    onChange={(e) => handleInputChange("bride", e.target.value)}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
                     error={errors.email}
                     helperText={errors.email}
                   />
@@ -507,7 +549,9 @@ export default function CouplesSignUp() {
                     className="cs-textfield-2"
                     id="demo-helper-text-aligned"
                     label="Password*"
-                    onChange={(e) => handleInputChange("bride", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("password", e.target.value)
+                    }
                     error={errors.password}
                     helperText={errors.password}
                   />
@@ -627,84 +671,36 @@ export default function CouplesSignUp() {
                     }}
                   >
                     <Grid container spacing={2}>
-                      <Grid
-                        item
-                        xs={6}
-                        sm={6}
-                        md={6}
-                        lg={6}
-                        xl={6}
-                        direction="column"
-                      >
-                        <FormControlLabel
-                          // required
-                          control={<Checkbox />}
-                          label={
-                            <Typography sx={{ whiteSpace: "normal" }}>
-                              This is the list of the Categories
-                            </Typography>
-                          }
-                        />
-                        <FormControlLabel
-                          required
-                          control={<Checkbox />}
-                          label="Required"
-                        />
-                        <FormControlLabel
-                          required
-                          control={<Checkbox />}
-                          label="Required"
-                        />
-                        <FormControlLabel
-                          required
-                          control={<Checkbox />}
-                          label="Required"
-                        />
-                        <FormControlLabel
-                          required
-                          control={<Checkbox />}
-                          label="Required"
-                        />
-                        <FormControlLabel
-                          required
-                          control={<Checkbox />}
-                          label="Required"
-                        />
-                      </Grid>
-
-                      {/* Second Column */}
-                      <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                        <FormControlLabel
-                          required
-                          control={<Checkbox />}
-                          label="Required"
-                        />
-                        <FormControlLabel
-                          required
-                          control={<Checkbox />}
-                          label="Required"
-                        />
-                        <FormControlLabel
-                          required
-                          control={<Checkbox />}
-                          label="Required"
-                        />
-                        <FormControlLabel
-                          required
-                          control={<Checkbox />}
-                          label="Required"
-                        />
-                        <FormControlLabel
-                          required
-                          control={<Checkbox />}
-                          label="Required"
-                        />
-                        <FormControlLabel
-                          required
-                          control={<Checkbox />}
-                          label="Required"
-                        />
-                      </Grid>
+                      {marketingOptions.map((option, index) => (
+                        <Grid
+                          item
+                          xs={6}
+                          sm={6}
+                          md={6}
+                          lg={6}
+                          xl={6}
+                          key={index}
+                          direction="column"
+                        >
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                value={option.value}
+                                label={option.label}
+                                checked={marketingSelect.includes("value")}
+                                onChange={handleMarketingChange}
+                              />
+                            }
+                            label={
+                              <Typography sx={{ whiteSpace: "normal" }}>
+                                {index === 0
+                                  ? option.label
+                                  : `Required ${index}`}
+                              </Typography>
+                            }
+                          />
+                        </Grid>
+                      ))}
                     </Grid>
                   </FormGroup>
                   {/* </Box> */}

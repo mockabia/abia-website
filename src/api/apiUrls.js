@@ -28,6 +28,7 @@ export const INCLUSIONS_DROPDOWN = `${baseUrl}InclusionsDropdown`;
 export const VENDOR_DROPDOWN = `${baseUrl}BusinessDropdown`;
 export const STATE_VS_REGION_API = `${baseUrl}WebStateVsRegionDropdown`;
 export const ADDITIONAL_CATEGORY_DROPDOWN = `${baseUrl}WebAdditionalVCategoryDropdown`;
+export const MARKETING_CATEGORY = `${baseUrl}MarketingCategoryDropdown`;
 
 export const CONTENT_API = {
   HEADER_MENUS: `${baseUrl}WebCommonHeaderMenu`,

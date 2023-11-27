@@ -56,15 +56,15 @@ const CouplesLogin = () => {
           <h1 className="cs-signup-header flex justify-center items-center">
             Log In
           </h1>
-          <label className="cl-label">Email</label>
+          {/* <label className="cl-label">Email*</label> */}
           <div className="cl-field">
             {/* EMAIL */}
             <TextField
               name="email"
               type="text"
-              placeholder="Email"
+              // placeholder="Email"
               variant="outlined"
-              error={isFormSubmitted && !email}
+              // error={isFormSubmitted && !email}
               helperText={isFormSubmitted && !email && "Email is required"}
               sx={{
                 width: "100%",
@@ -77,12 +77,12 @@ const CouplesLogin = () => {
           </div>
           <br />
           {/* PASSWORD */}
-          <label className="cl-label">Password</label>
+          {/* <label className="cl-label">Password*</label> */}
           <div className="cl-field">
             <TextField
               name="password"
               type={showPassword ? "text" : "password"}
-              placeholder="Password"
+              // placeholder="Password"
               variant="outlined"
               error={isFormSubmitted && !password}
               helperText={isFormSubmitted && !password && "Password is required"}

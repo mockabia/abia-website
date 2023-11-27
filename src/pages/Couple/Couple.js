@@ -3,7 +3,6 @@ import * as reactUrls from "../../api/reactUrls";
 import * as servicesPage from "../../services/couple/coupleService";
 import * as customValidator from "../Plugins/customValidator";
 
-
 export const logout = async (navigate) => {
   await servicesPage.logout().then(function (response) {
     if (response) {
@@ -28,6 +27,14 @@ export const fetchState = async (setStateOptions) => {
   await servicesPage.stateDropdown().then(function (response) {
     if (response.statuscode === 200) {
       setStateOptions(response.result);
+    }
+  });
+};
+
+export const fetchMarketingCategory = async (setMarketingOptions) => {
+  await servicesPage.marketCategory().then(function (response) {
+    if (response.statuscode === 200) {
+      setMarketingOptions(response.result);
     }
   });
 };

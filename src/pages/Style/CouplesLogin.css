@@ -39,6 +39,16 @@
         margin-bottom: 0.25rem;
     }
 }
+@media screen and (min-width:1023px) {
+    .cl-label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 0.5rem;
+        margin-left: 0rem;
+        margin-bottom: 0rem;
+    }
+}
     
 .clLoginButton {
     display: flex;
