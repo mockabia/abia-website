@@ -409,16 +409,17 @@ export const StepperStyle = styled(Stepper)(({ theme }) => ({
   },
 }));
 
-export const ButtonStyle = styled(Button)(({ theme }) => ({
+export const ButtonStyle = styled(Button)(({ theme, isActive }) => ({
   display: "flex",
   justifyContent: "start",
-  border: "1px solid #B7B7B7",
+  border: isActive ? "1px solid black" : "1px solid #B7B7B7",
   borderRadius: "1rem",
   width: "100%",
   height: "3rem",
   marginBottom: "1.5rem",
+  backgroundColor: isActive ? "#f3f3f3" : "transparent",
   "&:hover": {
-    backgroundColor: "#f3f3f3",
+    backgroundColor: isActive ? "#f3f3f3" : "#f3f3f3", // Keep the same color for hover
     border: "1px solid black",
   },
   "&:active": {
@@ -430,7 +431,7 @@ export const ButtonStyle = styled(Button)(({ theme }) => ({
     border: "1px solid black",
   },
 
-  "&. MuiSvgIcon": {
+  "&.MuiSvgIcon": {
     fill: "black",
   },
 }));

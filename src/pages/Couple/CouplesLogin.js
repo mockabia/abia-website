@@ -232,10 +232,7 @@ const CouplesLogin = () => {
               }}
             >
               Don't have an account?{" "}
-              <Link
-                to="/wedding/coupleregister"
-                className="font-[900] underline"
-              >
+              <Link to={window.CSIGNUP} className="font-[900] underline">
                 {" "}
                 <span className="cl-gap">q</span>Sign Up Now
               </Link>
@@ -250,7 +247,7 @@ const CouplesLogin = () => {
               }}
             >
               Are you a Abia vendor?{" "}
-              <Link to="/business/login" className="font-[900] underline">
+              <Link to={window.VLOGIN} className="font-[900] underline">
                 {" "}
                 <span className="cl-gap">q</span> Sign In Here
               </Link>

@@ -77,7 +77,7 @@ export default function CouplesSignUp() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [selectedOption, setSelectedOption] = React.useState(null); //first page option
-  const [isOptionSelected, setIsOptionSelected] = React.useState(false);
+  const [isOptionSelected, setIsOptionSelected] = React.useState(true);
   const [location, setLocation] = React.useState([]);
   // const [selectState, setSelectState] = React.useState();
   const [checkboxChecked, setCheckboxChecked] = React.useState(false);
@@ -102,14 +102,28 @@ export default function CouplesSignUp() {
       setIsOptionSelected(false);
     } else {
       setIsOptionSelected(true);
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        bride_message: selectedOption,
+      }));
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      console.log("Current form values:", {
+        formValues,
+      });
     }
   };
 
   const handleFormNext = () => {
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
-      setFormValues({ ...formValues });
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        marketing_category: marketingSelect,
+      }));
+      // setFormValues({
+      //   ...formValues,
+      //   marketing_category: marketingSelect,
+      // });
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       console.log("Current form values:", {
         formValues,
@@ -124,18 +138,34 @@ export default function CouplesSignUp() {
       setFormValues({ ...formValues, [fieldName]: !formValues.decision });
       setCheckboxChecked(!formValues.decision);
       console.log("Checkbox is ticked:", checkboxChecked);
+      if (!formValues.decision) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          wedding_date: "", // Clear the error for the wedding date
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          wedding_date: "", // Clear the error for the wedding date
+        }));
+      }
     } else {
       setFormValues({ ...formValues, [fieldName]: value });
     }
     setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
   };
 
-  // const handleDateChange = (fieldName, date) => {
-  //   setFormValues({ ...formValues, [fieldName]: date });
-  //   setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
-  // };
+  const handleDateChange = (fieldName, date) => {
+    setFormValues({ ...formValues, [fieldName]: date });
+    setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+  };
 
   const handleBack = () => {
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      bride_message: selectedOption,
+      marketing_category: marketingSelect,
+    }));
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
@@ -162,7 +192,7 @@ export default function CouplesSignUp() {
       if (!formValues.groom) {
         errors.groom = "Partner's Name is required";
       }
-      if (!formValues.wedding_date) {
+      if (formValues.decision == false && !formValues.wedding_date) {
         errors.wedding_date = "Date is required";
       }
       if (!formValues.wedding_state) {
@@ -186,30 +216,17 @@ export default function CouplesSignUp() {
 
     return errors;
   };
-  const sampleData = [
-    "Category 1",
-    "Required 1",
-    "Required 2",
-    "Required 3",
-    "Required 4",
-    "Required 5",
-    "Required 6",
-    "Required 7",
-    "Required 8",
-    "Required 9",
-    "Required 10",
-    "Required 11",
-  ];
 
-  const handleMarketingChange = (e) => {
-    const index = marketingSelect.indexOf(e.target.value);
-    if (index === -1) {
-      setMarketingSelect([...marketingSelect, e.target.value]);
-    } else {
-      setMarketingSelect(
-        marketingSelect.filter((category) => category !== e.target.value)
-      );
-    }
+  const handleMarketingChange = (e, index) => {
+    const value = options[index].value;
+    console.log("Selected value:", value);
+    setMarketingSelect((prevMarketingSelect) => {
+      if (prevMarketingSelect.includes(value)) {
+        return prevMarketingSelect.filter((category) => category !== value);
+      } else {
+        return [...prevMarketingSelect, value];
+      }
+    });
   };
 
   return (
@@ -260,6 +277,7 @@ export default function CouplesSignUp() {
                       variant="outlined"
                       startIcon={option.icon}
                       onClick={() => handleOptionClick(index)}
+                      isActive={index === selectedOption}
                     >
                       <LeftAlignedTypography>
                         {option.label}
@@ -278,12 +296,15 @@ export default function CouplesSignUp() {
                 <NextButtonStyle
                   variant="outlined"
                   className="cs-button-text-position"
-                  disabled={selectedOption === null}
+                  // disabled={selectedOption === null}
                   onClick={handleNext}
                   style={{
-                    backgroundColor:
-                      selectedOption !== null ? "black" : "#b7b7b7",
+                    backgroundColor: "black",
                   }}
+                  // style={{
+                  //   backgroundColor:
+                  //     selectedOption !== null ? "black" : "#b7b7b7",
+                  // }}
                 >
                   <span className="cs-next-button">Next</span>
                 </NextButtonStyle>
@@ -291,7 +312,7 @@ export default function CouplesSignUp() {
                 <div className="flex justify-center">
                   <h5 className="text-[12px]">
                     Already have an account?{" "}
-                    <Link>
+                    <Link to={window.CLOGIN}>
                       <span className="font-bold text-[#6cc2bc]">Log in</span>
                     </Link>
                   </h5>
@@ -361,6 +382,7 @@ export default function CouplesSignUp() {
                       className="cs-textfield"
                       id="demo-helper-text-aligned"
                       label="Full Name*"
+                      value={formValues.bride}
                       onChange={(e) =>
                         handleInputChange("bride", e.target.value)
                       }
@@ -371,6 +393,7 @@ export default function CouplesSignUp() {
                       className="cs-textfield"
                       id="demo-helper-text-aligned"
                       label="Partner's Name*"
+                      value={formValues.groom}
                       onChange={(e) =>
                         handleInputChange("groom", e.target.value)
                       }
@@ -379,16 +402,17 @@ export default function CouplesSignUp() {
                   </Box>
                   <br />
                   <Box className="cs-textfield-flex">
-                    {!checkboxChecked && (
-                      <DatePickerCouple
-                        name="wedding_date"
-                        label="Preferred Wedding Date*"
-                        dateError={errors.wedding_date}
-                        handleDateChange={handleInputChange}
-                        checkboxChecked={checkboxChecked}
-                        // disabled={formValues.decision}
-                      />
-                    )}
+                    {/* {!checkboxChecked && ( */}
+                    <DatePickerCouple
+                      name="wedding_date"
+                      label="Preferred Wedding Date*"
+                      value={formValues.wedding_date}
+                      dateError={checkboxChecked ? "" : errors.wedding_date}
+                      // dateError={errors.wedding_date}
+                      handleDateChange={handleDateChange}
+                      checkboxChecked={checkboxChecked}
+                    />
+                    {/* )} */}
 
                     <FormControlLabel
                       value="end"
@@ -539,6 +563,7 @@ export default function CouplesSignUp() {
                     className="cs-textfield-2"
                     id="demo-helper-text-aligned"
                     label="Email*"
+                    value={formValues.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     error={errors.email}
                     helperText={errors.email}
@@ -549,6 +574,7 @@ export default function CouplesSignUp() {
                     className="cs-textfield-2"
                     id="demo-helper-text-aligned"
                     label="Password*"
+                    value={formValues.password}
                     onChange={(e) =>
                       handleInputChange("password", e.target.value)
                     }
@@ -661,53 +687,58 @@ export default function CouplesSignUp() {
                   </h1>
                 </div>
                 <Stack spacing={3}>
-                  {/* <Box> */}
-                  <FormGroup
-                    sx={{
-                      width: {
-                        xs: "100%",
-                        md: "31rem",
-                      },
-                    }}
-                  >
-                    <Grid container spacing={2}>
-                      {marketingOptions.map((option, index) => (
-                        <Grid
-                          item
-                          xs={6}
-                          sm={6}
-                          md={6}
-                          lg={6}
-                          xl={6}
-                          key={index}
-                          direction="column"
-                        >
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                value={option.value}
-                                label={option.label}
-                                checked={marketingSelect.includes("value")}
-                                onChange={handleMarketingChange}
-                              />
-                            }
-                            label={
-                              <Typography sx={{ whiteSpace: "normal" }}>
-                                {index === 0
-                                  ? option.label
-                                  : `Required ${index}`}
-                              </Typography>
-                            }
-                          />
-                        </Grid>
-                      ))}
-                    </Grid>
-                  </FormGroup>
+                  <FormControl>
+                    {/* <Box> */}
+                    <FormGroup
+                      sx={{
+                        width: {
+                          xs: "100%",
+                          md: "31rem",
+                        },
+                      }}
+                    >
+                      <Grid container spacing={2}>
+                        {marketingOptions.map((option, index) => (
+                          <Grid
+                            item
+                            xs={6}
+                            sm={6}
+                            md={6}
+                            lg={6}
+                            xl={6}
+                            key={index}
+                            direction="column"
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  value={option.value}
+                                  checked={marketingSelect.includes(
+                                    option.value
+                                  )}
+                                  onChange={(e) =>
+                                    handleMarketingChange(e, index)
+                                  }
+                                />
+                              }
+                              label={
+                                <Typography sx={{ whiteSpace: "normal" }}>
+                                  {option.label}
+                                </Typography>
+                              }
+                            />
+                          </Grid>
+                        ))}
+                      </Grid>
+                    </FormGroup>
+                  </FormControl>
+
                   {/* </Box> */}
                   {/* Next */}
                   <NextButtonStyle
                     variant="outlined"
                     className="cs-button-text-position"
+                    onClick={handleFormNext}
                     style={{
                       backgroundColor: "black",
                     }}

@@ -49,19 +49,21 @@ export function DatePickerPublic({ label, TextFieldProps }) {
 export function DatePickerCouple({
   name,
   label,
-  TextFieldProps,
   dateError,
   handleDateChange,
-  formValues,
   checkboxChecked,
+  value,
 }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePickerStype
+        value={value}
         name={name}
         label={label}
         onChange={(date) => handleDateChange(name, date)}
         // disabled="true"
+        disablePast
+        disabled={checkboxChecked}
         slots={{
           textField: (params) => (
             <TextFieldCouple
