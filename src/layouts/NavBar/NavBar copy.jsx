@@ -224,13 +224,27 @@ const NavBar = (props) => {
             <li className="nav-menu-list" key={index}>
               {menuItem.Sub_content.length > 0 ? (
                 <div>
-                  <span onClick={() =>
+                  <NavMenuStyle
+                    id={`${menuItem.title.toLowerCase()}-menu`}
+                    aria-controls={menuAnchorEl && menuAnchorEl[menuItem.id] ? "sub-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={menuAnchorEl && menuAnchorEl[menuItem.id] ? "true" : undefined}
+                    onClick={() =>
                       handleMenuClick(menuItem.id)
-                    }>{menuItem.title}---{menuItem.id}</span>
-                    
+                    }
+                  >
+                    {menuItem.title}---{menuItem.id}
                   {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(props.leftmenu, null, 2)}</pre> */}
                   {menuAnchorEl[menuItem.id] && (
-                    <ul className={`subMenu ${menuAnchorEl[menuItem.id] ? "block" : "hidden"} `}>
+                    <Menu
+                    id="sub-menu"
+                    anchorEl={menuAnchorEl ? menuAnchorEl[menuItem.id] :undefined }
+                    open={menuAnchorEl ? Boolean(menuAnchorEl[menuItem.id]) :undefined}
+                    onClose={handleMenuClose}
+                    MenuListProps={{
+                      "aria-labelledby": `${menuItem.title.toLowerCase()}-menu`,
+                    }}
+                  >
                       {menuItem.Sub_content.map((subMenuItem, subIndex) => (
                         <MenuItem key={subIndex}>
                           <Link
@@ -240,8 +254,9 @@ const NavBar = (props) => {
                           </Link>
                         </MenuItem>
                       ))}
-                      </ul>
+                      </Menu>
                   )}
+                  </NavMenuStyle>
                 </div>
               ) : (
                 <Link to={`/${menuItem.main_url}`}>{menuItem.title}</Link>

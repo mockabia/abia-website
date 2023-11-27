@@ -143,3 +143,7 @@
       display: block;
     }
 }
+.nav-menu-list .subMenu{
+    position: absolute;
+    background-color: #FFF;
+}
