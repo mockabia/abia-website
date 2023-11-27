@@ -61,6 +61,7 @@ const NavBar = (props) => {
   const [menuAnchorEl, setMenuAnchorEl] = useState({});
   const [menuItems, setMenuItems]       = useState([]);
   const profileRef                      = useRef(null);
+  const menuList                        = useRef(null);
   const [profileOpen, setProfileOpen]   = useState(false);
   const [userProfile, setUserProfile]   = useState({});
 
@@ -134,13 +135,14 @@ const NavBar = (props) => {
 
   const handleMenuClick = (mainId) => {
     setMenuAnchorEl({
-      [mainId]: !menuAnchorEl[mainId]
+      //[mainId]: !menuAnchorEl[mainId]
+      [mainId]: true
     });
   };
   const handleMenuClose = (event) => {
-    if (profileRef.current && !profileRef.current.contains(event.target)) {
+    //if (profileRef.current && !profileRef.current.contains(event.target)) {
       setMenuAnchorEl({});
-    }
+    //}
   };
 
   const handleClose = () => {
@@ -225,7 +227,7 @@ const NavBar = (props) => {
       <div className="navbar-subhead-large relative" ref={profileRef}>
         <ul className="login-subheaders absolute ">
           {menuItems.map((menuItem, index) => (
-            <li className="nav-menu-list" key={index}>
+            <li className={`nav-menu-list ${menuItem.Sub_content.length > 0 ? "MainwithSub" : "MainOnly"} `} key={index} ref={menuList}>
               {menuItem.Sub_content.length > 0 ? (
                 <div>
                   <span onClick={() =>
