@@ -3,18 +3,19 @@ import * as servicesPage from "../services/contentServices";
 /* public routes */
 
 
-export const fetchContentRoutes = async (setRoutesFromApi) => {
+export const fetchContentRoutes = async (setPublicMenu,setBlogMenu) => {
     await servicesPage.fetchContentRoutes().then(function (response) {
         if (response.statuscode == 200) {
-            setRoutesFromApi(response.result);
+            setPublicMenu(response.result);
         }
-        fetchBlogRoutes(setRoutesFromApi);
+        fetchBlogRoutes(setBlogMenu);
     });
 };
-export const fetchBlogRoutes = async (setRoutesFromApi) => {
+export const fetchBlogRoutes = async (setBlogMenu) => {
     await servicesPage.fetchBlogRoutes().then(function (response) {
         if (response.statuscode == 200) {
-            setRoutesFromApi((oldArray) => [...oldArray, response.result]);
+            //setRoutesFromApi((oldArray) => [...oldArray, response.result]);
+            setBlogMenu(response.result);
         }
     });
 };

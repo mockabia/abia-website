@@ -11,27 +11,13 @@ import * as RoutesJS from "./Routes/RoutesJS";
 const App = () => {
   const [showLoader, setShowLoader]         = useState(false);
 
-  const [routesFromApi, setRoutesFromApi]   = useState([]);
+  const [publicMenu, setPublicMenu]         = useState([]);
+  const [blogMenu, setBlogMenu]             = useState([]);
   const [businessMenu, setBusinessMenu]     = useState([]);
   const [coupleMenu, setCoupleMenu]         = useState([]);
 
-  /* useEffect(() => {
-    RoutesJS.fetchContentRoutes(setRoutesFromApi);
-  }, []);
-  useEffect(() => {
-    RoutesJS.fetchVendorLoginRoutes(setvLoginMenu);
-  }, [!RoutesJS.hasVendorJWT()]);
-  useEffect(() => {
-    RoutesJS.fetchVendorLoginedRoutes(setvLoginedMenu,setBusinessMenu,setShowLoader);
-  }, [RoutesJS.hasVendorJWT()]);
-  useEffect(() => {
-    RoutesJS.fetchCoupleLoginRoutes(setcLoginMenu);
-  }, [!RoutesJS.hasCoupleJWT()]);
-  useEffect(() => {
-    RoutesJS.fetchCoupleLoginedRoutes(setcLoginedMenu,setCoupleMenu,setShowLoader);
-  }, [RoutesJS.hasCoupleJWT()]); */
 useEffect(() => {
-    RoutesJS.fetchContentRoutes(setRoutesFromApi);
+    RoutesJS.fetchContentRoutes(setPublicMenu,setBlogMenu);
     RoutesJS.fetchBusinessRoutes(setBusinessMenu,setShowLoader);
     RoutesJS.fetchCoupleRoutes(setCoupleMenu,setShowLoader);
   }, []);
@@ -45,7 +31,7 @@ useEffect(() => {
         <Route path="/wedding/*" element={<CoupleRoutes  showLoader={showLoader} setShowLoader={setShowLoader} 
             menu={coupleMenu}  />} />
         <Route path="/*" element={<ContentRoutes  showLoader={showLoader} setShowLoader={setShowLoader} 
-            routesFromApi={routesFromApi} />} />
+            publicMenu={publicMenu} blogMenu={blogMenu} />} />
       </Routes>
     </>
   );
