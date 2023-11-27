@@ -5,20 +5,15 @@ import ContentRoutes from "./Routes/ContentRoutes";
 import BusinessRoutes from "./Routes/BusinessRoutes";
 import Loader from "./plugins/Loader/Loader";
 import CoupleRoutes from "./Routes/CoupleRoutes";
-import CouplesSignUp from "./pages/Couple/CoupleSignUp";
 
 import * as RoutesJS from "./Routes/RoutesJS";
 
 const App = () => {
-  const [showLoader, setShowLoader] = useState(false);
+  const [showLoader, setShowLoader]         = useState(false);
 
-  const [routesFromApi, setRoutesFromApi] = useState([]);
-  const [vloginMenu, setvLoginMenu] = useState([]);
-  const [vloginedMenu, setvLoginedMenu] = useState([]);
-  const [businessMenu, setBusinessMenu] = useState([]);
-  const [cloginMenu, setcLoginMenu] = useState([]);
-  const [cloginedMenu, setcLoginedMenu] = useState([]);
-  const [coupleMenu, setCoupleMenu] = useState([]);
+  const [routesFromApi, setRoutesFromApi]   = useState([]);
+  const [businessMenu, setBusinessMenu]     = useState([]);
+  const [coupleMenu, setCoupleMenu]         = useState([]);
 
   /* useEffect(() => {
     RoutesJS.fetchContentRoutes(setRoutesFromApi);
@@ -35,47 +30,22 @@ const App = () => {
   useEffect(() => {
     RoutesJS.fetchCoupleLoginedRoutes(setcLoginedMenu,setCoupleMenu,setShowLoader);
   }, [RoutesJS.hasCoupleJWT()]); */
-  useEffect(() => {
+useEffect(() => {
     RoutesJS.fetchContentRoutes(setRoutesFromApi);
-    RoutesJS.fetchVendorDashboardRoutes(setBusinessMenu, setShowLoader);
-    RoutesJS.fetchCoupleDashboardRoutes(setCoupleMenu, setShowLoader);
+    RoutesJS.fetchBusinessRoutes(setBusinessMenu,setShowLoader);
+    RoutesJS.fetchCoupleRoutes(setCoupleMenu,setShowLoader);
   }, []);
 
   return (
     <>
-      <Loader active={showLoader} />
+    <Loader active={showLoader}/>
       <Routes>
-        <Route
-          path="/business/*"
-          element={
-            <BusinessRoutes
-              showLoader={showLoader}
-              setShowLoader={setShowLoader}
-              menu={businessMenu}
-            />
-          }
-        />
-        <Route
-          path="/wedding/*"
-          element={
-            <CoupleRoutes
-              showLoader={showLoader}
-              setShowLoader={setShowLoader}
-              menu={coupleMenu}
-            />
-          }
-        />
-        <Route
-          path="/*"
-          element={
-            <ContentRoutes
-              showLoader={showLoader}
-              setShowLoader={setShowLoader}
-              routesFromApi={routesFromApi}
-            />
-          }
-        />
-        <Route path="/test/signup" element={<CouplesSignUp />} />
+        <Route path="/business/*" element={<BusinessRoutes  showLoader={showLoader} setShowLoader={setShowLoader} 
+            menu={businessMenu} />} />
+        <Route path="/wedding/*" element={<CoupleRoutes  showLoader={showLoader} setShowLoader={setShowLoader} 
+            menu={coupleMenu}  />} />
+        <Route path="/*" element={<ContentRoutes  showLoader={showLoader} setShowLoader={setShowLoader} 
+            routesFromApi={routesFromApi} />} />
       </Routes>
     </>
   );
