@@ -96,24 +96,25 @@ export default function CouplesSignUp() {
   const handleNext = (data) => {
     setFormValues({ ...formValues, ...data });
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    console.log("Current form values:", { ...formValues, ...data });
+    // console.log("Current form values:", { ...formValues, ...data });
   };
 
   const handleFormNext = () => {
+    console.log("Inside handleFormNext");
     const validationErrors = validateForm();
+    console.log("Validation Errors:", validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-      setFormValues({ ...formValues, bride_message: selectedOption });
+      console.log("No validation errors, proceeding...");
+      setFormValues({ ...formValues });
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      console.log("Current form values:", { ...formValues, bride_message: selectedOption });
+      console.log("Current form values:", {
+        formValues,
+      });
     } else {
+      console.log("Validation errors found, not proceeding.");
       setErrors(validationErrors);
     }
   };
-
-  // const handleInputChange = (fieldName, value) => {
-  //   setFormValues({ ...formValues, [fieldName]: value });
-  //   setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
-  // };
   const handleInputChange = (fieldName, value) => {
     if (fieldName === "decision") {
       setFormValues({ ...formValues, [fieldName]: !formValues.decision });
@@ -149,19 +150,35 @@ export default function CouplesSignUp() {
 
   const validateForm = () => {
     const errors = {};
-    if (!formValues.bride) {
-      errors.bride = "Full Name is required";
+    if (activeStep === 1) {
+      if (!formValues.bride) {
+        errors.bride = "Full Name is required";
+      }
+      if (!formValues.groom) {
+        errors.groom = "Partner's Name is required";
+      }
+      if (!formValues.wedding_date) {
+        errors.wedding_date = "Date is required";
+      }
+      if (!formValues.wedding_state) {
+        errors.wedding_state = "State is required";
+      }
+      // Add more validation rules as needed
+    } else if (activeStep === 2) {
+      if (!formValues.email) {
+        // Validate Email
+        errors.email = "Email is required";
+      } else if (!/\S+@\S+\.\S+/.test(formValues.email)) {
+        errors.email = "Invalid Email";
+      }
+      // Validate Password
+      if (!formValues.password) {
+        errors.password = "Password is required";
+      } else if (formValues.password.length < 6) {
+        errors.password = "Minimum 6 characters";
+      }
     }
-    if (!formValues.groom) {
-      errors.groom = "Partner's Name is required";
-    }
-    if (!formValues.wedding_date) {
-      errors.wedding_date = "Date is required";
-    }
-    if (!formValues.wedding_state) {
-      errors.wedding_state = "State is required";
-    }
-    // Add more validation rules as needed
+
     return errors;
   };
 
@@ -392,7 +409,8 @@ export default function CouplesSignUp() {
                     disabled={selectedOption === null}
                     onClick={handleFormNext}
                     style={{
-                      backgroundColor: "black",
+                      backgroundColor:
+                        selectedOption !== null ? "black" : "#b7b7b7",
                     }}
                   >
                     <span className="cs-next-button">Next</span>
@@ -479,6 +497,9 @@ export default function CouplesSignUp() {
                     className="cs-textfield-2"
                     id="demo-helper-text-aligned"
                     label="Email*"
+                    onChange={(e) => handleInputChange("bride", e.target.value)}
+                    error={errors.email}
+                    helperText={errors.email}
                   />
                   <CSTextfield
                     name="password"
@@ -486,6 +507,9 @@ export default function CouplesSignUp() {
                     className="cs-textfield-2"
                     id="demo-helper-text-aligned"
                     label="Password*"
+                    onChange={(e) => handleInputChange("bride", e.target.value)}
+                    error={errors.password}
+                    helperText={errors.password}
                   />
 
                   {/* <Box
@@ -510,7 +534,7 @@ export default function CouplesSignUp() {
                     variant="outlined"
                     className="cs-button-text-position"
                     disabled={selectedOption === null}
-                    onClick={handleNext}
+                    onClick={handleFormNext}
                     style={{
                       backgroundColor: "black",
                     }}

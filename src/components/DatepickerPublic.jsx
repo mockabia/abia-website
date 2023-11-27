@@ -61,7 +61,7 @@ export function DatePickerCouple({
         name={name}
         label={label}
         onChange={(date) => handleDateChange(name, date)}
-        disabled
+        // disabled="true"
         slots={{
           textField: (params) => (
             <TextFieldCouple
