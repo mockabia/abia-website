@@ -57,12 +57,12 @@ const NavBar = (props) => {
     "Hair Stylist",
     "1st Night Honeymoon",
   ]);
-  const navigate                        = useNavigate();
+  const navigate = useNavigate();
   const [menuAnchorEl, setMenuAnchorEl] = useState({});
-  const [menuItems, setMenuItems]       = useState([]);
-  const profileRef                      = useRef(null);
-  const [profileOpen, setProfileOpen]   = useState(false);
-  const [userProfile, setUserProfile]   = useState({});
+  const [menuItems, setMenuItems] = useState([]);
+  const profileRef = useRef(null);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState({});
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -129,11 +129,12 @@ const NavBar = (props) => {
   };
 
   const handleMenuClick = (mainId) => {
-    console.log(mainId)
+    console.log(mainId);
     setMenuAnchorEl({
-      [mainId]: !menuAnchorEl[mainId]
+      [mainId]: !menuAnchorEl[mainId],
     });
   };
+
   const handleMenuClose = () => {
     setMenuAnchorEl(null);
   };
@@ -171,7 +172,7 @@ const NavBar = (props) => {
         <div className="search-icon-responsive" onClick={handleSearchIconClick}>
           <FiSearch color="#fff" size={26} />
         </div>
-        <ThemeProvider theme={theme}>
+        {/* <ThemeProvider theme={theme}>
           <Popper
             open={Boolean(anchorEl)}
             anchorEl={anchorEl}
@@ -208,7 +209,7 @@ const NavBar = (props) => {
               )}
             </Paper>
           </Popper>
-        </ThemeProvider>
+        </ThemeProvider> */}
 
         <div className="navbar-mobile-align">
           <div className="flex justify-center items-center">
@@ -218,7 +219,9 @@ const NavBar = (props) => {
       </div>
       {/* Subheaders */}
       <div className="navbar-subhead-large relative" ref={profileRef}>
-        <pre style={{fontSize: "xx-small", }}>{JSON.stringify(menuAnchorEl, null, 2)}</pre>
+        {/* <pre style={{ fontSize: "xx-small" }}>
+          {JSON.stringify(menuAnchorEl, null, 2)}
+        </pre> */}
         <ul className="login-subheaders absolute ">
           {menuItems.map((menuItem, index) => (
             <li className="nav-menu-list" key={index}>
@@ -226,36 +229,43 @@ const NavBar = (props) => {
                 <div>
                   <NavMenuStyle
                     id={`${menuItem.title.toLowerCase()}-menu`}
-                    aria-controls={menuAnchorEl && menuAnchorEl[menuItem.id] ? "sub-menu" : undefined}
+                    aria-controls={`sub-menu-${menuItem.id}`} /* Use a unique ID for each Menu */
                     aria-haspopup="true"
-                    aria-expanded={menuAnchorEl && menuAnchorEl[menuItem.id] ? "true" : undefined}
-                    onClick={() =>
-                      handleMenuClick(menuItem.id)
+                    aria-expanded={
+                      menuAnchorEl && menuAnchorEl[menuItem.id]
+                        ? "true"
+                        : undefined
                     }
+                    onClick={(event) => handleMenuClick(menuItem.id, event)}
                   >
                     {menuItem.title}---{menuItem.id}
-                  {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(props.leftmenu, null, 2)}</pre> */}
-                  {menuAnchorEl[menuItem.id] && (
-                    <Menu
-                    id="sub-menu"
-                    anchorEl={menuAnchorEl ? menuAnchorEl[menuItem.id] :undefined }
-                    open={menuAnchorEl ? Boolean(menuAnchorEl[menuItem.id]) :undefined}
-                    onClose={handleMenuClose}
-                    MenuListProps={{
-                      "aria-labelledby": `${menuItem.title.toLowerCase()}-menu`,
-                    }}
-                  >
-                      {menuItem.Sub_content.map((subMenuItem, subIndex) => (
-                        <MenuItem key={subIndex}>
-                          <Link
-                            to={`/${menuItem.main_url}/${subMenuItem.sub_url}`}
-                          >
-                            {subMenuItem.title}
-                          </Link>
-                        </MenuItem>
-                      ))}
+                    {menuAnchorEl[menuItem.id] && (
+                      <Menu
+                        id={`sub-menu-${menuItem.id}`} /* Ensure a unique ID for each Menu */
+                        anchorEl={
+                          menuAnchorEl ? menuAnchorEl[menuItem.id] : undefined
+                        }
+                        open={
+                          menuAnchorEl
+                            ? Boolean(menuAnchorEl[menuItem.id])
+                            : undefined
+                        }
+                        onClose={handleMenuClose}
+                        MenuListProps={{
+                          "aria-labelledby": `${menuItem.title.toLowerCase()}-menu`,
+                        }}
+                      >
+                        {menuItem.Sub_content.map((subMenuItem, subIndex) => (
+                          <MenuItem key={subIndex}>
+                            <Link
+                              to={`/${menuItem.main_url}/${subMenuItem.sub_url}`}
+                            >
+                              {subMenuItem.title}
+                            </Link>
+                          </MenuItem>
+                        ))}
                       </Menu>
-                  )}
+                    )}
                   </NavMenuStyle>
                 </div>
               ) : (
