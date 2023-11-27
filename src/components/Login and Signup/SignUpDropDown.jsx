@@ -12,11 +12,14 @@ const SignUpDropDown = () => {
   const menuItem = [
     {
       title: "Couple",
-      path: window.CSIGNUP,
+      // path: window.CSIGNUP,
+
+      path: "/test/signup",
     },
     {
       title: "Vendor",
       path: window.VSIGNUP,
+      // path: "busisness/signup",
     },
   ];
 

@@ -1,4 +1,6 @@
-const baseUrl = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : `http://127.0.0.1:8000/web/`;
+const baseUrl = process.env.REACT_APP_API_URL
+  ? process.env.REACT_APP_API_URL
+  : `https://abia.abia-test.com/web/`;
 // const baseUrl = "https://abia.abia-test.com/web/";
 //const baseUrl = "http://127.0.0.1:8000/web/";
 
