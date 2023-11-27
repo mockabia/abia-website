@@ -96,14 +96,14 @@ const NavBar = (props) => {
   useEffect(() => {
     fetchHeaderMenus();
     document.body.addEventListener('mousedown', function(e) {
-        if (!e.target.classList.contains('MainwithSub')) {
+        if (!e.target.classList.contains('MainwithSub') && !e.target.classList.contains('subMenu-link')) {
           handleMenuClose()
         }
     });
     return () => {
       //document.removeEventListener("mousedown", handleOutsideClick);
       document.body.addEventListener('mousedown', function(e) {
-        if (!e.target.classList.contains('MainwithSub')) {
+        if (!e.target.classList.contains('MainwithSub') && !e.target.classList.contains('subMenu-link')) {
           handleMenuClose()
         }
     });
@@ -249,7 +249,9 @@ const NavBar = (props) => {
                       {menuItem.Sub_content.map((subMenuItem, subIndex) => (
                         <MenuItem key={subIndex}>
                           <Link
-                            to={`/${menuItem.main_url}/${subMenuItem.sub_url}`}
+                            className="subMenu-link"
+                            to={`/${subMenuItem.url}`}
+                            onClick={handleMenuClose}
                           >
                             {subMenuItem.title}
                           </Link>
