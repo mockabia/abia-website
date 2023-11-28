@@ -33,7 +33,7 @@ export const MARKETING_CATEGORY = `${baseUrl}MarketingCategoryDropdown`;
 export const CONTENT_API = {
   HEADER_MENUS    : `${baseUrl}WebCommonHeaderMenu`,
   FOOTER_MENUS    : `${baseUrl}WebCommonFooterMenu`,
-  CONTENT_DETAILS : `${baseUrl}WebViewContentRecord`,
+  CONTENT_DETAILS : `${baseUrl}Page_ContentDetails`,
   BLOG            : `${baseUrl}page_BlogsubcategorVsBlog`,
   BLOG_DETAIL     : `${baseUrl}View_BlogRecord`,
 };

@@ -24,7 +24,7 @@ const Public = () => {
     <div>
       <div className="main-content">
         <h1 className="main-header">{pageContent.bpagetitle}</h1>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 gap-5">
           <h3>{pageContent.btitle}</h3>
           <div className="content" dangerouslySetInnerHTML={{__html: pageContent.bcomment}}></div>
         </div>
