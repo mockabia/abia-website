@@ -92,29 +92,7 @@ const Sidebar = (props) => {
       },
     };
 
-  const menuIcons = {
-    Home: HomeIcon,
-    "Get Reviews": GetREviewIcon,
-    "Manage Reviews": ManageReview,
-    Showcase: ShowCase,
-    Promotions: Promotions,
-    Shop: ShopIcon,
-    Enquiries: EnquiryIcon,
-    "My Profile": MyProfileIcon,
-    Settings: SettingsIcons,
-  };
 
-  const toggleSubMenu = (id) => {
-    setShowSubMenu({
-        [id]: !showSubMenu[id]
-    });
-  };
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
   return (
     <div>
       <div

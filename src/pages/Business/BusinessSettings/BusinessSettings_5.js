@@ -26,7 +26,6 @@ const schema = yup.object().shape({
 const MyLocation = ({ vendorDetails }) => {
   const [initialRegion, setInitialRegion] = useState({});
   const [selectedStates, setSelectedStates] = useState([]);
-  const [stateOptions, setStateOptions] = useState([]);
 
   const [regions, setRegions] = useState([]); //options
   const [selectedRegions, setSelectedRegions] = useState([]);
@@ -47,53 +46,42 @@ const MyLocation = ({ vendorDetails }) => {
 
   const handleRegionChange = (selectedOption) => {
     setSelectedRegions(selectedOption);
-    setInputsErrors((prevErrors) => ({
-      ...prevErrors,
-      target_region: null,
-    }));
+    // setInputsErrors((prevErrors) => ({
+    //   ...prevErrors,
+    //   target_region: null,
+    // }));
   };
-
-  const updatedStateOptions = stateOptions.map((state) => ({
-    value: state.url,
-    label: state.url,
-  }));
 
   // initial values of hte Select components
   useEffect(() => {
     setInitialRegion([
       {
-        value: vendorDetails.primaryLocation,
-        label: vendorDetails.primaryLocation,
+        value: vendorDetails.target_region,
+        label: vendorDetails.target_region,
       },
     ]);
-    const targetStateArray = vendorDetails.target_state
-      .split(",")
-      .map((region) => ({ value: region, label: region.trim() }));
-    setSelectedStates(targetStateArray);
-    const targetRegionArray = (vendorDetails.target_region != null ) ? vendorDetails.target_region
-      .split(",")
-      .map((region) => ({ value: region, label: region.trim() })) : [];
+    const targetRegionArray =
+      vendorDetails.target_region != null
+        ? vendorDetails.target_region.split(",").map((region) => ({
+            value: region.trim(),
+            label:
+              region.trim().charAt(0).toUpperCase() + region.trim().slice(1),
+          }))
+        : [];
     setSelectedRegions(targetRegionArray);
   }, [
-    vendorDetails.state,
     vendorDetails.target_state,
     vendorDetails.target_region,
   ]);
 
+  console.log(selectedRegions);
   useEffect(() => {
-    BusinessJS.fetchState(setStateOptions);
-  }, []);
-  useEffect(() => {
-    const selectedStateUrls = selectedStates.map((state) => state.value);
-    if (selectedStateUrls.length > 0) {
-      let stateNames = selectedStateUrls.join();
-      BusinessJS.fetchRegion(stateNames, setRegions);
-    }
-  }, [selectedStates]);
+    BusinessJS.fetchRegion(vendorDetails.state, setRegions);
+  }, [vendorDetails.state]);
 
+  // handleSubmit
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formValues = {
       primaryLocation: initialRegion,
       target_region: selectedRegions,
@@ -130,31 +118,6 @@ const MyLocation = ({ vendorDetails }) => {
       </div>
       <div className="mt-[20px]">
         <form className="">
-          {/* HIDDEN  - Target Location */}
-          <div className="hidden space-y-2">
-            <label className="font-semibold">Target Wedding States*</label>
-            <br />
-            <div className="relative lg:w-[52%] mylocation-location-multiselect">
-              <Select
-                name="target_state"
-                sx={{ width: "100%" }}
-                options={updatedStateOptions}
-                isMulti
-                value={selectedStates}
-                onChange={handleChange}
-                isClearable={false}
-                closeMenuOnSelect={false}
-                hideSelectedOptions={false}
-                components={{ MultiValue, IndicatorSeparator: null }}
-              />
-              {getFieldError("target_state") && (
-                <p className="text-[12px] text-red-500 font-semibold mt-1">
-                  {getFieldError("target_state")}
-                </p>
-              )}
-            </div>
-            <br />
-          </div>
           {/* target regions */}
           <div className="space-y-2">
             <label className="font-semibold">Target Wedding Locations*</label>
@@ -165,7 +128,7 @@ const MyLocation = ({ vendorDetails }) => {
                 sx={{ width: "100%" }}
                 isMulti={true}
                 options={regions}
-                // value={selectedRegions}
+                value={selectedRegions}
                 styles={customSelectStyles}
                 onChange={(selectedOptions) =>
                   handleRegionChange(selectedOptions)
@@ -211,8 +174,9 @@ const MyLocation = ({ vendorDetails }) => {
               <Select
                 name="primaryLocation"
                 sx={{ width: "100%" }}
-                value={initialRegion}
+                // value={initialRegion}
                 // value={selectedRegions}
+
                 options={selectedRegions}
                 onChange={regionChange}
                 styles={customSelectStyles}
@@ -261,17 +225,20 @@ const MyLocation = ({ vendorDetails }) => {
 
 export default MyLocation;
 
+// const Menu = (props) => {
+//   const optionSelectedLength = props.getValue().length || 0;
+//   return (
+//     <components.Menu {...props}>
+//       {optionSelectedLength < 4 ? (
+//         props.children
+//       ) : (
+//         <div style={{ margin: "1rem", color: "red" }}>Max limit achieved</div>
+//       )}
+//     </components.Menu>
+//   );
+// };
 const Menu = (props) => {
-  const optionSelectedLength = props.getValue().length || 0;
-  return (
-    <components.Menu {...props}>
-      {optionSelectedLength < 4 ? (
-        props.children
-      ) : (
-        <div style={{ margin: "1rem", color: "red" }}>Max limit achieved</div>
-      )}
-    </components.Menu>
-  );
+  return <components.Menu {...props}>{props.children}</components.Menu>;
 };
 
 const MoreSelectedBadge = ({ items }) => {
