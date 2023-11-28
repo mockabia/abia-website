@@ -67,32 +67,38 @@ const ContactDetails = ({ vendorDetails }) => {
 
   const fieldConfig = [
     {
+      id: 1,
       name: "contact_person",
       label: "Contact Name*",
       type: "text",
     },
     {
+      id: 2,
       name: "email",
       label: "Email*",
       type: "text",
     },
     {
+      id: 3,
       name: "mobile_phone",
       label: "Phone/Mobile*",
       type: "tel",
     },
     {
+      id: 4,
       name: "address",
       label: "Address",
       type: "text",
     },
-
+  
     {
+      id: 5,
       name: "postcode",
       label: "Postcode*",
       type: "text",
     },
     {
+      id: 6,
       name: "suburb",
       label: "City/Region*",
       type: "text",
@@ -109,7 +115,7 @@ const ContactDetails = ({ vendorDetails }) => {
     for (const field of fieldConfig) {
       formValues[field.name] = data[field.name] || formValues[field.name];
     }
-    formValues.state = selectedState; // Set the state property
+    formValues.state = selectedState;
     formValues.vid = vendorDetails.vid;
     const formValuesJSON = JSON.stringify(formValues);
     console.log("Console:", formValuesJSON);
@@ -130,8 +136,33 @@ const ContactDetails = ({ vendorDetails }) => {
     <div className="contact-details-container">
       <div className="mt-[20px]">
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-          {fieldConfig.map((field) => (
+          {/* {fieldConfig.map((field) => (
             <div key={field.name}>
+              <label className="font-semibold">{field.label}</label>
+              <div>
+                <input
+                  type={field.type}
+                  name={field.name}
+                  className="basicinfo-input-style"
+                  {...register(field.name)}
+                />
+                <div>
+                  {errors[field.name] && (
+                    <p className="text-[12px] text-red-500 font-semibold mt-1">
+                      {errors[field.name].message}
+                    </p>
+                  )}
+                  {getFieldError(field.name) && (
+                    <p className="text-[12px] text-red-500 font-semibold mt-1">
+                      {getFieldError(field.name)}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))} */}
+          {fieldConfig.slice(0, 4).map((field) => (
+            <div key={field.id}>
               <label className="font-semibold">{field.label}</label>
               <div>
                 <input
@@ -196,6 +227,31 @@ const ContactDetails = ({ vendorDetails }) => {
               )}
             </div>
           </div>
+          {fieldConfig.slice(4, 6).map((field) => (
+            <div key={field.id}>
+              <label className="font-semibold">{field.label}</label>
+              <div>
+                <input
+                  type={field.type}
+                  name={field.name}
+                  className="basicinfo-input-style"
+                  {...register(field.name)}
+                />
+                <div>
+                  {errors[field.name] && (
+                    <p className="text-[12px] text-red-500 font-semibold mt-1">
+                      {errors[field.name].message}
+                    </p>
+                  )}
+                  {getFieldError(field.name) && (
+                    <p className="text-[12px] text-red-500 font-semibold mt-1">
+                      {getFieldError(field.name)}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
           {/*  */}
           <div className="relative space-y-3">
             <button
