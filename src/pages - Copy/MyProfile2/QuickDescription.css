@@ -61,6 +61,12 @@
 
 }
 
+.profile-editor-position {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem 1rem 1rem;
+}
 
 
 @media(min-width:769px) {

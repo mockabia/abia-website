@@ -10,7 +10,7 @@ import { useEffect } from "react";
 
 const MAX_WORD_LIMIT = 500;
 
-const DraftEditor = ({ onConvertedContent, handleFullAccordionChange }) => {
+const DraftEditor = ({ onConvertedContent, onSave }) => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
@@ -70,6 +70,7 @@ const DraftEditor = ({ onConvertedContent, handleFullAccordionChange }) => {
     setWordCount(0);
     onConvertedContent(convertedContent);
     setEditorState(EditorState.createEmpty());
+    onSave();
   };
 
   const handleCancel = () => {

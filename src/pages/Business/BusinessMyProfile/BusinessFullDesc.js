@@ -51,8 +51,8 @@ const BusinessFullDesc = ({ handleFullAccordionChange }) => {
   }
 
   return (
-    <AccordionItem>
-      <AccordionItemHeading>
+    <>
+      <div>
         <AccordionItemButton className="myprofile-accordion-button">
           <div className="myprofile-accordion-item-header">
             <h4 className="myprofile-heading-expand">Full Description</h4>
@@ -86,10 +86,9 @@ const BusinessFullDesc = ({ handleFullAccordionChange }) => {
               )}
             </ShowMoreText>
           </div>
-       
         </AccordionItemButton>
-      </AccordionItemHeading>
-      <AccordionItemPanel onClick={handlePanelClick}>
+      </div>
+      <div onClick={handlePanelClick}>
         <div>
           <div className="flex flex-col -mt-[20px]">
             <DraftEditor
@@ -98,8 +97,8 @@ const BusinessFullDesc = ({ handleFullAccordionChange }) => {
             />
           </div>
         </div>
-      </AccordionItemPanel>
-    </AccordionItem>
+      </div>
+    </>
   );
 };
 

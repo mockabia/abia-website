@@ -54,12 +54,6 @@ const MyLocation = ({ vendorDetails }) => {
 
   // initial values of hte Select components
   useEffect(() => {
-    setInitialRegion([
-      {
-        value: vendorDetails.target_region,
-        label: vendorDetails.target_region,
-      },
-    ]);
     const targetRegionArray =
       vendorDetails.target_region != null
         ? vendorDetails.target_region.split(",").map((region) => ({
@@ -68,17 +62,20 @@ const MyLocation = ({ vendorDetails }) => {
               region.trim().charAt(0).toUpperCase() + region.trim().slice(1),
           }))
         : [];
+    //console.log(targetRegionArray);
     setSelectedRegions(targetRegionArray);
-  }, [
-    vendorDetails.target_state,
-    vendorDetails.target_region,
-  ]);
+  }, [vendorDetails.target_region]);
 
-  console.log(selectedRegions);
+  useEffect(() => {
+    console.log("=======================================");
+    console.log(selectedRegions);
+  }, [selectedRegions]);
   useEffect(() => {
     BusinessJS.fetchRegion(vendorDetails.state, setRegions);
   }, [vendorDetails.state]);
 
+
+ 
   // handleSubmit
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -91,7 +88,7 @@ const MyLocation = ({ vendorDetails }) => {
     try {
       await schema.validate(formValues, { abortEarly: false });
       console.log("Form data:", formValues);
-      // BusinessJS.updateBusiness(5, formValues, setInputsErrors);
+      BusinessJS.updateBusiness(5, formValues, setInputsErrors);
     } catch (error) {
       const validationErrors = {};
       error.inner.forEach((err) => {
@@ -108,7 +105,10 @@ const MyLocation = ({ vendorDetails }) => {
   };
 
   //
-
+const modifiedRegion = regions.map((region) => ({
+  value: region.url,
+  label: region.label,
+}));
   return (
     <div className="mylocation-container">
       <div>
@@ -127,7 +127,7 @@ const MyLocation = ({ vendorDetails }) => {
                 name="target_region"
                 sx={{ width: "100%" }}
                 isMulti={true}
-                options={regions}
+                options={modifiedRegion}
                 value={selectedRegions}
                 styles={customSelectStyles}
                 onChange={(selectedOptions) =>

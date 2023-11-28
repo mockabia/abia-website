@@ -59,7 +59,7 @@ const Category = ({ vendorDetails }) => {
     );
   }, [vendorDetails.first_category]);
 
-  console.log("addtional category:", addCategoryOption);
+  // console.log("addtional category:", addCategoryOption);
 
   const getFieldError = (fieldName) => {
     return inputsErrors && inputsErrors[fieldName]

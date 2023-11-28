@@ -30,12 +30,12 @@ const QuickDescription = ({ handleAccordionChange }) => {
       setText("");
       handleAccordionChange();
 
-      // const accordionItemButton = document.getElementById(
-      //   "accordion__heading-1"
-      // );
-      // accordionItemButton.setAttribute("aria-expanded", "false");
-      // const accordionPanel = document.getElementById("accordion__panel-1");
-      // accordionPanel.setAttribute("hidden", "true");
+      const accordionItemButton = document.getElementById(
+        "accordion__heading-1"
+      );
+      accordionItemButton.setAttribute("aria-expanded", "false");
+      const accordionPanel = document.getElementById("accordion__panel-1");
+      accordionPanel.setAttribute("hidden", "true");
     }
   };
 
@@ -93,7 +93,7 @@ const QuickDescription = ({ handleAccordionChange }) => {
       </AccordionItemHeading>
       <AccordionItemPanel onClick={handlePanelClick}>
         <div className="mt-[0px]">
-          <div className="flex flex-col relative">
+          <div className="profile-editor-position">
             <textarea
               id="text-area"
               value={text}
