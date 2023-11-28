@@ -101,10 +101,10 @@ const MenuItems = (props) => {
                 </AccordionItemHeading>
 
                 <AccordionItemPanel className="mobile-menu-accordionPanel">
-                  <Link to={"/login"} className="mobile-menu-option">
+                  <Link to={window.VLOGIN} className="mobile-menu-option">
                     Vendor
                   </Link>
-                  <Link to={"/wedding-login"} className="mobile-menu-option">
+                  <Link to={window.CLOGIN} className="mobile-menu-option">
                     Couple
                   </Link>
                 </AccordionItemPanel>
@@ -119,10 +119,10 @@ const MenuItems = (props) => {
                   </AccordionItemButton>
                 </AccordionItemHeading>
                 <AccordionItemPanel className="mobile-menu-accordionPanel">
-                  <Link to={"/signup"} className="mobile-menu-option">
+                  <Link to={window.VSIGNUP} className="mobile-menu-option">
                     Vendor
                   </Link>
-                  <Link to={"/wedding-signup"} className="mobile-menu-option">
+                  <Link to={window.CSIGNUP} className="mobile-menu-option">
                     Couple
                   </Link>
                 </AccordionItemPanel>
