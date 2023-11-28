@@ -147,4 +147,12 @@
     position: absolute;
     background-color: #FFF;
     z-index: 9;
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #D0D0D0;
+}
+
+.subMenu-link {
+    font-family: "Playfair";
+    font-size: 16px;
 }

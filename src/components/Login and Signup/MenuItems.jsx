@@ -48,23 +48,26 @@ const MenuItems = (props) => {
             {props.menuItems.map((menuItem, index) => (
               <React.Fragment key={index}>
                 {menuItem.Sub_content.length > 0 ? (
-                  <Accordion allowZeroExpanded className="border-none">
+                  <Accordion
+                    // allowMultipleExpanded={false}
+                    className="border-none"
+                  >
                     <AccordionItem>
                       <AccordionItemHeading>
                         <AccordionItemButton
                           onClick={() => handleAccordionChange(1)}
-                          className="relative cursor-pointer w-[100%] flex items-center pb-[0.5rem]"
+                          className="relative cursor-pointer w-[100%] flex items-center mb-[1rem]"
                         >
                           {menuItem.title}
                           <AiFillCaretDown className="ml-2" />
                         </AccordionItemButton>
                       </AccordionItemHeading>
-                      <AccordionItemPanel>
+                      <AccordionItemPanel className="pl-[1rem]">
                         {menuItem.Sub_content.map((subMenuItem, subIndex) => (
                           <Link
                             key={subIndex}
                             onClick={closeMenu}
-                            className="mobile-menu-item submenu-item"
+                            className="mobile-menu-item submenu-item border-b-2"
                             to={`/${menuItem.main_url}/${subMenuItem.sub_url}`}
                           >
                             {subMenuItem.title}
