@@ -62,17 +62,21 @@ const MyLocation = ({ vendorDetails }) => {
   useEffect(() => {
     setInitialRegion([
       {
-        value: vendorDetails.primaryLocation,
-        label: vendorDetails.primaryLocation,
+        value: vendorDetails.target_region,
+        label: vendorDetails.target_region,
       },
     ]);
+
     const targetStateArray = vendorDetails.target_state
       .split(",")
       .map((region) => ({ value: region, label: region.trim() }));
     setSelectedStates(targetStateArray);
-    const targetRegionArray = (vendorDetails.target_region != null ) ? vendorDetails.target_region
-      .split(",")
-      .map((region) => ({ value: region, label: region.trim() })) : [];
+    const targetRegionArray =
+      vendorDetails.target_region != null
+        ? vendorDetails.target_region
+            .split(",")
+            .map((region) => ({ value: region, label: region.trim() }))
+        : [];
     setSelectedRegions(targetRegionArray);
   }, [
     vendorDetails.state,
@@ -91,9 +95,9 @@ const MyLocation = ({ vendorDetails }) => {
     }
   }, [selectedStates]);
 
+  // handleSubmit
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formValues = {
       primaryLocation: initialRegion,
       target_region: selectedRegions,
@@ -164,8 +168,14 @@ const MyLocation = ({ vendorDetails }) => {
                 name="target_region"
                 sx={{ width: "100%" }}
                 isMulti={true}
-                options={regions}
-                // value={selectedRegions}
+                options={regions.map((region) => ({
+                  label: region.label,
+                  value: region.value,
+                }))}
+                value={selectedRegions.map((region) => ({
+                  label: region.label,
+                  value: region.value,
+                }))}
                 styles={customSelectStyles}
                 onChange={(selectedOptions) =>
                   handleRegionChange(selectedOptions)
@@ -211,8 +221,9 @@ const MyLocation = ({ vendorDetails }) => {
               <Select
                 name="primaryLocation"
                 sx={{ width: "100%" }}
-                value={initialRegion}
+                // value={initialRegion}
                 // value={selectedRegions}
+
                 options={selectedRegions}
                 onChange={regionChange}
                 styles={customSelectStyles}
@@ -261,17 +272,20 @@ const MyLocation = ({ vendorDetails }) => {
 
 export default MyLocation;
 
+// const Menu = (props) => {
+//   const optionSelectedLength = props.getValue().length || 0;
+//   return (
+//     <components.Menu {...props}>
+//       {optionSelectedLength < 4 ? (
+//         props.children
+//       ) : (
+//         <div style={{ margin: "1rem", color: "red" }}>Max limit achieved</div>
+//       )}
+//     </components.Menu>
+//   );
+// };
 const Menu = (props) => {
-  const optionSelectedLength = props.getValue().length || 0;
-  return (
-    <components.Menu {...props}>
-      {optionSelectedLength < 4 ? (
-        props.children
-      ) : (
-        <div style={{ margin: "1rem", color: "red" }}>Max limit achieved</div>
-      )}
-    </components.Menu>
-  );
+  return <components.Menu {...props}>{props.children}</components.Menu>;
 };
 
 const MoreSelectedBadge = ({ items }) => {
