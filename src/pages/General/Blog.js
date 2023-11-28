@@ -4,9 +4,10 @@ import * as servicesPage from "../../services/contentServices";
 import "../Style/MainContent.css";
 
 const Public = () => {
-  const location = useLocation();
+  const location                      = useLocation();
+  const [pageTitle, setPageTitle]     = useState('');
   const [blogResults, setBlogResults] = useState([]);
-  const url = location.pathname.split("/").pop();
+  const url                           = location.pathname.split("/").pop();
 
   useEffect(() => {
     fetchBlogs();
@@ -15,6 +16,7 @@ const Public = () => {
   const fetchBlogs = async () => {
     await servicesPage.fetchBlogs(url).then(function (response) {
       if (response.statuscode == 200) {
+        setPageTitle(response.parentTitle)
         setBlogResults(response.result)
       }
     });
@@ -23,7 +25,7 @@ const Public = () => {
   return (
     <div>
       <div className="main-content">
-        <h1 className="main-header">{blogResults.parentTitle}</h1>
+        <h1 className="main-header">{pageTitle}</h1>
         <div className="grid grid-cols-4 gap-4">
           {blogResults.map((blog, j) => {
             return (
