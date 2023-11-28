@@ -39,7 +39,7 @@ export const CONTENT_API = {
 };
 export const ROUTES_API = {
   PUBLIC_ROUTES       : `${baseUrl}PublicGeneralForRoutes`,
-  BLOG_ROUTES         : `${baseUrl}PublicBlogVsCatVsSubForRoutes`,
+  BLOG_ROUTES         : `${baseUrl}BlogVsCatVsSubForRoutes`,
   BUSINESS_ROUTES     : `${baseUrl}VendorDashboardMenu`,
   COUPLE_ROUTES       : `${baseUrl}BrideDashboardMenu`,
 };
