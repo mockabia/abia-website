@@ -72,7 +72,7 @@ export default function CouplesSignUp() {
     wedding_state: "",
     email: "",
     password: "",
-    marleting_category: "",
+    marleting_category: [],
   });
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
@@ -110,26 +110,6 @@ export default function CouplesSignUp() {
       console.log("Current form values:", {
         formValues,
       });
-    }
-  };
-
-  const handleFormNext = () => {
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length === 0) {
-      setFormValues((prevFormValues) => ({
-        ...prevFormValues,
-        marketing_category: marketingSelect,
-      }));
-      // setFormValues({
-      //   ...formValues,
-      //   marketing_category: marketingSelect,
-      // });
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      console.log("Current form values:", {
-        formValues,
-      });
-    } else {
-      setErrors(validationErrors);
     }
   };
 
@@ -219,7 +199,6 @@ export default function CouplesSignUp() {
 
   const handleMarketingChange = (e, index) => {
     const value = options[index].value;
-    console.log("Selected value:", value);
     setMarketingSelect((prevMarketingSelect) => {
       if (prevMarketingSelect.includes(value)) {
         return prevMarketingSelect.filter((category) => category !== value);
@@ -227,6 +206,41 @@ export default function CouplesSignUp() {
         return [...prevMarketingSelect, value];
       }
     });
+  };
+
+  const handleFormNext = () => {
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length === 0) {
+     
+
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+      setFormValues((updatedFormValues) => {
+        console.log("Current form values:", { formValues: updatedFormValues });
+        return updatedFormValues;
+      });
+    } else {
+      setErrors(validationErrors);
+    }
+  };
+  const handleFormSubmit = () => {
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length === 0) {
+      console.log("Selected Marketing Categories:", marketingSelect);
+
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        marketing_category: Object.values(marketingSelect), // Convert object values to an array
+      }));
+      setFormValues((updatedFormValues) => {
+        console.log("Current form values:", {
+          formValues: updatedFormValues,
+        });
+        return updatedFormValues;
+      });
+    } else {
+      setErrors(validationErrors);
+    }
   };
 
   return (
@@ -713,9 +727,11 @@ export default function CouplesSignUp() {
                               control={
                                 <Checkbox
                                   value={option.value}
-                                  checked={marketingSelect.includes(
-                                    option.value
-                                  )}
+                                  // checked={marketingSelect.includes(
+                                  //   option.value
+                                  // )}
+                                  checked={marketingSelect[option.value]}
+                                  // onChange={handleMarketingChange}
                                   onChange={(e) =>
                                     handleMarketingChange(e, index)
                                   }
@@ -738,7 +754,7 @@ export default function CouplesSignUp() {
                   <NextButtonStyle
                     variant="outlined"
                     className="cs-button-text-position"
-                    onClick={handleFormNext}
+                    onClick={handleFormSubmit}
                     style={{
                       backgroundColor: "black",
                     }}
