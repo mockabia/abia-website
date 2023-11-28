@@ -67,15 +67,13 @@ const MyLocation = ({ vendorDetails }) => {
   }, [vendorDetails.target_region]);
 
   useEffect(() => {
-    console.log("=======================================");
-    console.log(selectedRegions);
+    // console.log("=======================================");
+    // console.log(selectedRegions);
   }, [selectedRegions]);
   useEffect(() => {
     BusinessJS.fetchRegion(vendorDetails.state, setRegions);
   }, [vendorDetails.state]);
 
-
- 
   // handleSubmit
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -105,10 +103,10 @@ const MyLocation = ({ vendorDetails }) => {
   };
 
   //
-const modifiedRegion = regions.map((region) => ({
-  value: region.url,
-  label: region.label,
-}));
+  const modifiedRegion = regions.map((region) => ({
+    value: region.url,
+    label: region.label,
+  }));
   return (
     <div className="mylocation-container">
       <div>
@@ -176,7 +174,7 @@ const modifiedRegion = regions.map((region) => ({
                 sx={{ width: "100%" }}
                 // value={initialRegion}
                 // value={selectedRegions}
-
+                placeholder=""
                 options={selectedRegions}
                 onChange={regionChange}
                 styles={customSelectStyles}
@@ -192,13 +190,6 @@ const modifiedRegion = regions.map((region) => ({
                         style={{ color: "#7c7c7c" }}
                       />
                     </div>
-                  ),
-                  Option: ({ innerProps, label, isSelected }) => (
-                    <CheckboxOption
-                      innerProps={innerProps}
-                      label={label}
-                      isSelected={isSelected}
-                    />
                   ),
                 }}
               />

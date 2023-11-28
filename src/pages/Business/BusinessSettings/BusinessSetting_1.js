@@ -10,7 +10,13 @@
     import Alert from "@mui/material/Alert";
 
     const schema = yup.object().shape({
-    name: yup.string().required("Business name is required"),
+      name: yup.string().required("Business name is required"),
+      website: yup
+        .string()
+        .matches(
+          /^(?:(?:(?:https?|ftp):)?\/\/)?(?:www\.)?([a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})+)(?:\/[^ "]+)?$/,
+          "Enter a valid website"
+        ),
     });
 
     const BasicInfo = ({ vendorDetails }) => {
@@ -69,83 +75,90 @@
         };
         // console.log("Form data:",formValues )
         Business.updateBusiness(1, formValues, setInputsErrors);
-        openSuccessSnackbar();
+        // openSuccessSnackbar();
     };
 
     return (
-        <div className="basic-info-container">
+      <div className="basic-info-container">
         <div className="basic-sub-header">
-            <p className="whitespace-break-spaces">
+          <p className="whitespace-break-spaces">
             Add your logo, business name and website to your ABIA Profile.{" "}
-            </p>
+          </p>
         </div>
         <div className="mt-[20px]">
-            <form className="space-y-7">
+          <form className="space-y-7">
             <div>
-                <label className="font-semibold">Business Name</label>
-                <div>
+              <label className="font-semibold">Business Name</label>
+              <div>
                 <input
-                    type="text"
-                    required
-                    name="name"
-                    className={`basicinfo-input-style ${
+                  type="text"
+                  required
+                  name="name"
+                  className={`basicinfo-input-style ${
                     errors.name ? "signup-error-border" : ""
-                    }`}
-                    defaultValue={vendorDetails.name}
-                    {...register("name")}
+                  }`}
+                  defaultValue={vendorDetails.name}
+                  {...register("name")}
                 />
                 <p className="text-[12px] text-red-500 font-semibold mt-1">
-                    {errors.name?.message}
+                  {errors.name?.message}
                 </p>
-                </div>
+              </div>
             </div>
             {/* Wesbite */}
             <div className="">
-                <label className="font-semibold">Website</label>
-                <div>
+              <label className="font-semibold">Website</label>
+              <div>
                 <input
-                    type="text"
-                    required
-                    name="website"
-                    className="basicinfo-input-style"
-                    defaultValue={vendorDetails.website}
-                    {...register("website")}
+                  type="text"
+                  required
+                  name="website"
+                  className="basicinfo-input-style"
+                  defaultValue={vendorDetails.website}
+                  {...register("website")}
                 />
-                </div>
+                <p className="text-[12px] text-red-500 font-semibold mt-1">
+                  {errors.website?.message}
+                </p>
+              </div>
             </div>
             <div className="relative">
-                <div>
+              <div>
                 <label className="font-semibold">Upload Business Logo</label>
-                </div>
-                <ImageUploader
+              </div>
+              <ImageUploader
                 onImageCrop={handleImageCrop}
                 onChangeCrop={handleImageChange}
-                />
-                <div className="upload-recommendation">
+              />
+              <div className="upload-recommendation">
                 <span>Recommended Size: 400px x 300px</span>
                 <br />
                 <span>Maximum file size 1MB</span>
-                </div>
-                <div className="basicinfo-submit-button" onClick={handleSubmit}>
+              </div>
+              <div className="basicinfo-submit-button" onClick={handleSubmit}>
                 <button>Save</button>
-                </div>
+              </div>
             </div>
-            </form>
-            {/* SNACKBAR */}
-            <Snackbar
-                sx={{
-                    zIndex:"10000"
-                }}
-                open={openSnackbar}
-                autoHideDuration={6000} 
-                onClose={closeSnackbar}
+          </form>
+          {/* SNACKBAR */}
+          <Snackbar
+            sx={{
+              zIndex: "10000",
+            }}
+            open={openSnackbar}
+            autoHideDuration={6000}
+            onClose={closeSnackbar}
+          >
+            <Alert
+              onClose={closeSnackbar}
+              severity="success"
+              sx={{ width: "100%" }}
             >
-                <Alert onClose={closeSnackbar} severity="success" sx={{ width: '100%' }}>
-                    Basic Information Submitted !
-                </Alert>
-            </Snackbar>            
+              Basic Information Submitted !
+            </Alert>
+          </Snackbar>
         </div>
-        </div>
+      </div>
     );
     };
 

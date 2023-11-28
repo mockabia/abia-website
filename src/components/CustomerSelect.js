@@ -101,15 +101,22 @@ const MultiValue = ({ index, getValue, ...props }) => {
     <MoreSelectedBadge items={overflow} />
   ) : null;
 };
+
 const Menu = (props) => {
-  const optionSelectedLength = props.getValue().length || 0;
+  const { getValue, children } = props;
+  const optionSelectedLength = getValue().length || 0;
+
   return (
     <components.Menu {...props}>
-      {optionSelectedLength < 4 ? (
-        props.children
-      ) : (
-        <div style={{ margin: "1rem", color: "red" }}>Max limit achieved</div>
-      )}
+      {optionSelectedLength <= 4
+        ? children
+        : React.Children.map(children, (child) => {
+            const isSelected = getValue().some(
+              (option) => option.value === child.props.value
+            );
+
+            return isSelected && child;
+          })}
     </components.Menu>
   );
 };
@@ -165,6 +172,7 @@ export const CheckboxOption = ({ innerProps, label, isSelected }) => {
           padding: 0,
           fontWeight: "400",
           fontSize: "14px",
+          color: isSelected ? "#6cc2bc" : "#333333",
         }}
       >
         {label}
