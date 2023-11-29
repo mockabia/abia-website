@@ -9,7 +9,10 @@ import { Controller, useForm } from "react-hook-form";
 import { customSelectStyles, MultiValue } from "../../../components/FormStyle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { CustomMultiSelect } from "../../../components/CustomerSelect";
+import {
+  CheckboxOption,
+  CustomMultiSelect,
+} from "../../../components/CustomerSelect";
 
 const Category = ({ vendorDetails }) => {
   const [formValues, setFormValues] = useState({
@@ -70,6 +73,10 @@ const Category = ({ vendorDetails }) => {
   const isValidNewOption = (inputValue, selectValue) =>
     inputValue.length > 0 && selectValue.length < 3;
 
+  const handleRegionChange = (selectedOption) => {
+    setAdditionaCatSelect(selectedOption);
+  };
+
   return (
     <div className="category-container">
       <div>
@@ -125,9 +132,45 @@ const Category = ({ vendorDetails }) => {
                   <CustomMultiSelect
                     field={field}
                     categoryOptions={addCategoryOption}
+                    selectedOptions={additionaCatSelect}
                   />
                 )}
               />
+              {/* <Select
+                name="other_category"
+                isMulti={true}
+                options={addCategoryOption}
+                // value={additionaCatSelect}
+                styles={customSelectStyles}
+                onChange={(selectedOptions) =>
+                  handleRegionChange(selectedOptions)
+                }
+                isClearable={false}
+                closeMenuOnSelect={false}
+                hideSelectedOptions={false}
+                isOptionDisabled={() => additionaCatSelect.length >= 4}
+                components={{
+                  Menu,
+                  MultiValue,
+                  IndicatorSeparator: null,
+                  DropdownIndicator: () => (
+                    <div>
+                      <FontAwesomeIcon
+                        icon={faCaretDown}
+                        className="dropDown-position"
+                        style={{ color: "#7c7c7c" }}
+                      />
+                    </div>
+                  ),
+                  Option: ({ innerProps, label, isSelected }) => (
+                    <CheckboxOption
+                      innerProps={innerProps}
+                      label={label}
+                      isSelected={isSelected}
+                    />
+                  ),
+                }}
+              /> */}
               {getFieldError("other_category") && (
                 <p className="text-[12px] text-red-500 font-semibold mt-1">
                   {getFieldError("other_category")}
@@ -184,3 +227,7 @@ const Category = ({ vendorDetails }) => {
 };
 
 export default Category;
+
+const Menu = (props) => {
+  return <components.Menu {...props}>{props.children}</components.Menu>;
+};

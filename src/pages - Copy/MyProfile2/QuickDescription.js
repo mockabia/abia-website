@@ -16,6 +16,7 @@ const QuickDescription = ({ handleAccordionChange }) => {
   const [showSubmittedText, setShowSubmittedText] = useState(false);
   const [wordCount, setWordCount] = useState(0);
 
+
   const handleTextChange = (e) => {
     setText(e.target.value);
     setWordCount(e.target.value.split(/\s+/).filter(Boolean).length);

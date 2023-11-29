@@ -17,6 +17,12 @@ const FullDescription2 = ({ handleFullAccordionChange }) => {
   const handlefullDescSubmit = (content) => {
     setMyProfileFullDescription(content);
     console.log("Full Description Content:", content);
+     const accordionItemButton = document.getElementById(
+       "accordion__heading-2"
+     );
+     accordionItemButton.setAttribute("aria-expanded", "false");
+     const accordionPanel = document.getElementById("accordion__panel-2");
+     accordionPanel.setAttribute("hidden", "true");
   };
 
   const handlePanelClick = (e) => {

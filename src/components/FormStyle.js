@@ -656,6 +656,7 @@ export const customSelectStyles = {
 
   multiValueRemove: (provided) => ({
     ...provided,
+    display: "none",
   }),
 };
 

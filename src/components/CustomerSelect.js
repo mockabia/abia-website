@@ -64,6 +64,7 @@ const customSelectStyles = {
 
   multiValueRemove: (provided) => ({
     ...provided,
+    display: "none", // Hide the "x" iconbusi
   }),
 };
 
@@ -102,23 +103,27 @@ const MultiValue = ({ index, getValue, ...props }) => {
   ) : null;
 };
 
+// const Menu = (props) => {
+//   const { getValue, children } = props;
+//   const optionSelectedLength = getValue().length || 0;
+
+//   return (
+//     <components.Menu {...props}>
+//       {optionSelectedLength <= 4
+//         ? children
+//         : React.Children.map(children, (child) => {
+//             const isSelected = getValue().some(
+//               (option) => option.value === child.props.value
+//             );
+
+//             return isSelected && child;
+//           })}
+//     </components.Menu>
+//   );
+// };
+
 const Menu = (props) => {
-  const { getValue, children } = props;
-  const optionSelectedLength = getValue().length || 0;
-
-  return (
-    <components.Menu {...props}>
-      {optionSelectedLength <= 4
-        ? children
-        : React.Children.map(children, (child) => {
-            const isSelected = getValue().some(
-              (option) => option.value === child.props.value
-            );
-
-            return isSelected && child;
-          })}
-    </components.Menu>
-  );
+  return <components.Menu {...props}>{props.children}</components.Menu>;
 };
 
 export const CheckboxOption = ({ innerProps, label, isSelected }) => {
@@ -181,7 +186,12 @@ export const CheckboxOption = ({ innerProps, label, isSelected }) => {
   );
 };
 
-export const CustomMultiSelect = ({ field, categoryOptions }) => (
+export const CustomMultiSelect = ({
+  field,
+  categoryOptions,
+  isOptionDisabled,
+  selectedOptions,
+}) => (
   <Select
     {...field}
     isMulti
@@ -191,6 +201,7 @@ export const CustomMultiSelect = ({ field, categoryOptions }) => (
     blurInputOnSelect={false}
     hideSelectedOptions={false}
     isClearable={false}
+    isOptionDisabled={() => selectedOptions.length >= 4}
     components={{
       Menu,
       MultiValue,
