@@ -235,7 +235,7 @@ const Menu = (props) => {
 const MoreSelectedBadge = ({ items }) => {
   const style = {
     marginLeft: "auto",
-    background: "#d4eefa",
+    background: "#d7d7d7",
     borderRadius: "4px",
     fontFamily: "Open Sans",
     fontSize: "11px",
@@ -245,7 +245,7 @@ const MoreSelectedBadge = ({ items }) => {
 
   const title = items.join(", ");
   const length = items.length;
-  const label = `+ ${length} item${length !== 1 ? "s" : ""} selected`;
+  const label = `+ ${length} item${length !== 1 ? "s" : ""}`;
 
   return (
     <div style={style} title={title}>

@@ -64,7 +64,7 @@ const customSelectStyles = {
 
   multiValueRemove: (provided) => ({
     ...provided,
-    display: "none", // Hide the "x" iconbusi
+    display: "none",
   }),
 };
 
@@ -81,7 +81,7 @@ const MoreSelectedBadge = ({ items }) => {
 
   const title = items.join(", ");
   const length = items.length;
-  const label = `+ ${length} item${length !== 1 ? "s" : ""} selected`;
+  const label = `+ ${length} item${length !== 1 ? "s" : ""}`;
 
   return (
     <div style={style} title={title}>
@@ -104,26 +104,29 @@ const MultiValue = ({ index, getValue, ...props }) => {
 };
 
 // const Menu = (props) => {
-//   const { getValue, children } = props;
-//   const optionSelectedLength = getValue().length || 0;
-
-//   return (
-//     <components.Menu {...props}>
-//       {optionSelectedLength <= 4
-//         ? children
-//         : React.Children.map(children, (child) => {
-//             const isSelected = getValue().some(
-//               (option) => option.value === child.props.value
-//             );
-
-//             return isSelected && child;
-//           })}
-//     </components.Menu>
-//   );
+//   return <components.Menu {...props}>{props.children}</components.Menu>;
 // };
 
 const Menu = (props) => {
-  return <components.Menu {...props}>{props.children}</components.Menu>;
+  const { getValue, children } = props;
+  const optionSelectedLength = getValue().length || 0;
+  const maxOptions = 4;
+
+  return (
+    <components.Menu {...props}>
+      {React.Children.map(children, (child) => {
+        const isSelected = getValue().some(
+          (option) => option.value === child.props.value
+        );
+
+        const isDisabled = optionSelectedLength >= maxOptions && !isSelected;
+
+        return React.cloneElement(child, {
+          isDisabled: isDisabled,
+        });
+      })}
+    </components.Menu>
+  );
 };
 
 export const CheckboxOption = ({ innerProps, label, isSelected }) => {
@@ -186,12 +189,7 @@ export const CheckboxOption = ({ innerProps, label, isSelected }) => {
   );
 };
 
-export const CustomMultiSelect = ({
-  field,
-  categoryOptions,
-  isOptionDisabled,
-  selectedOptions,
-}) => (
+export const CustomMultiSelect = ({ field, categoryOptions }) => (
   <Select
     {...field}
     isMulti
@@ -201,7 +199,6 @@ export const CustomMultiSelect = ({
     blurInputOnSelect={false}
     hideSelectedOptions={false}
     isClearable={false}
-    isOptionDisabled={() => selectedOptions.length >= 4}
     components={{
       Menu,
       MultiValue,

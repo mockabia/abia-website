@@ -39,30 +39,30 @@ const DraftEditor = ({ onConvertedContent, onSave }) => {
     };
   }
 
-  // function createMarkup(html) {
-  //   const element = document.createElement("div");
-  //   element.innerHTML = DOMPurify.sanitize(html);
+  function createMarkup(html) {
+    const element = document.createElement("div");
+    element.innerHTML = DOMPurify.sanitize(html);
 
-  //   // Convert list items to proper HTML format
-  //   const listItems = element.querySelectorAll("li");
-  //   listItems.forEach((item) => {
-  //     if (item.parentNode.tagName === "UL") {
-  //       item.outerHTML = `<li style="list-style-type: disc;">${item.innerHTML}</li>`;
-  //     } else if (item.parentNode.tagName === "OL") {
-  //       const index = Array.prototype.indexOf.call(
-  //         item.parentNode.children,
-  //         item
-  //       );
-  //       item.outerHTML = `<li style="list-style-type: decimal;">${index + 1}. ${
-  //         item.innerHTML
-  //       }</li>`;
-  //     }
-  //   });
+    // Convert list items to proper HTML format
+    const listItems = element.querySelectorAll("li");
+    listItems.forEach((item) => {
+      if (item.parentNode.tagName === "UL") {
+        item.outerHTML = `<li style="list-style-type: disc;">${item.innerHTML}</li>`;
+      } else if (item.parentNode.tagName === "OL") {
+        const index = Array.prototype.indexOf.call(
+          item.parentNode.children,
+          item
+        );
+        item.outerHTML = `<li style="list-style-type: decimal;">${index + 1}. ${
+          item.innerHTML
+        }</li>`;
+      }
+    });
 
-  //   return {
-  //     __html: element.innerHTML,
-  //   };
-  // }
+    return {
+      __html: element.innerHTML,
+    };
+  }
 
   const handleSaveButtonClick = () => {
     // Toggle the state to show/hide the converted content

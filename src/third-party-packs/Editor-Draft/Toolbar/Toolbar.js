@@ -140,6 +140,7 @@ const Toolbar = ({ editorState, setEditorState }) => {
       ? setEditorState(RichUtils.toggleBlockType(editorState, style))
       : setEditorState(RichUtils.toggleInlineStyle(editorState, style));
   };
+  
 
   const isActive = (style, method) => {
     if (method === "block") {

@@ -565,6 +565,13 @@ input[type="radio"]:checked {
             }
         }
 /******* FULL DESCRIPTION ******/
+.editor-container {
+    width: 52rem;
+    height: 10rem;
+    border: 1px solid #B1B1B1;
+    border-radius: 1rem;
+    background-color: #F4F5F6;
+}
 .fulldescription-down-aroww {
     color: #6cc2bc;
     margin-left: 63vw;
@@ -585,3 +592,4 @@ input[type="radio"]:checked {
         margin-top: -20px;
     }
 }
+

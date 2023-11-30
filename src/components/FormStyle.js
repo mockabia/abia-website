@@ -662,8 +662,8 @@ export const customSelectStyles = {
 
 export const MoreSelectedBadge = ({ items }) => {
   const style = {
-    marginLeft: "auto",
-    background: "#6cc2bc",
+    marginLeft: "1rem",
+    background: "#d7d7d7",
     borderRadius: "4px",
     fontFamily: "Open Sans",
     fontSize: "11px",
@@ -673,7 +673,7 @@ export const MoreSelectedBadge = ({ items }) => {
 
   const title = items.join(", ");
   const length = items.length;
-  const label = `+ ${length} item${length !== 1 ? "s" : ""} selected`;
+  const label = `+ ${length} item${length !== 1 ? "s" : ""}`;
 
   return (
     <div style={style} title={title}>
