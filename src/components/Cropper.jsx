@@ -1,157 +1,152 @@
-import { Box, Modal, Slider, Button } from "@mui/material";
-import { useRef, useState } from "react";
-import AvatarEditor from "react-avatar-editor";
+import React, { useEffect, useRef, useState } from "react";
+import { createObjectURL } from "file-saver";
+import "./Cropper.css";
 import profile from "../icons/profiel-bg-latest.svg";
 import { BiUpload } from "react-icons/bi";
+import Modal from "react-modal";
+import Cropper from "react-cropper";
+import "cropperjs/dist/cropper.css";
+import styled from "styled-components";
 
-import "./Cropper.css";
+const Image = styled.img`
+  width: 100%;
+`;
 
-// Styles
-const boxStyle = {
-  width: "300px",
-  height: "300px",
-  display: "flex",
-  flexFlow: "column",
-  justifyContent: "center",
-  alignItems: "center",
-};
-const modalStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
+const ThumbImage = styled.img`
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+`;
 
-// Modal
-const CropperModal = ({ src, modalOpen, setModalOpen, setPreview }) => {
-  const [slideValue, setSlideValue] = useState(10);
-  const cropRef = useRef(null);
+const UploadButton = styled.button`
+  padding: 8px 16px;
+  background-color: #0074e4;
+  color: #fff;
+  border-radius: 4px;
+  &:hover {
+    background-color: #0059b3;
+  }
+`;
 
-  //handle save
-  const handleSave = async () => {
-    if (cropRef) {
-      const dataUrl = cropRef.current.getImage().toDataURL();
-      const result = await fetch(dataUrl);
-      const blob = await result.blob();
-      setPreview(URL.createObjectURL(blob));
-      setModalOpen(false);
+const ClearButton = styled.button`
+  padding: 8px 16px;
+  background-color: #ff0000;
+  color: #fff;
+  border-radius: 4px;
+  &:hover {
+    background-color: #b30000;
+  }
+`;
+
+const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
+  const [image, setImage] = useState(null);
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [croppedThumb, setCroppedThumb] = useState(null);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [cropper, setCropper] = useState(null);
+  const inputImage = useRef(null);
+
+  // Modal disable image
+  useEffect(() => {
+    if (modalIsOpen) {
+      setCroppedThumb(null);
+    }
+  }, [modalIsOpen]);
+
+  const handleBrowseClick = () => {
+    inputImage.current.click();
+  };
+
+  const openModal = () => {
+    setIsOpen(true);
+    document.body.style.overflow = "hidden"; // javascript
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+    inputImage.current.value = null;
+    document.body.style.overflow = "auto";
+  };
+
+  const cropImage = () => {
+    if (cropper !== null) {
+      const canvas = cropper.getCroppedCanvas();
+      canvas.toBlob((blob) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => {
+          const thumbUrl = reader.result;
+          setCroppedImage(thumbUrl);
+          const imageUrl = image;
+          setImage(imageUrl);
+          const thumbCanvas = document.createElement("canvas");
+          const thumbSize = 150; // set the desired size of the thumb image here
+          thumbCanvas.width = thumbSize;
+          thumbCanvas.height = thumbSize;
+          const thumbCtx = thumbCanvas.getContext("2d");
+          thumbCtx.drawImage(canvas, 0, 0, thumbSize, thumbSize);
+          thumbCanvas.toBlob((thumbBlob) => {
+            const thumbReader = new FileReader();
+            thumbReader.readAsDataURL(thumbBlob);
+            thumbReader.onloadend = () => {
+              const iconUrl = thumbReader.result;
+              setCroppedThumb(iconUrl);
+
+              const images = {
+                thumbUrl: thumbUrl,
+                iconUrl: iconUrl,
+                imageUrl: imageUrl,
+              };
+
+              closeModal();
+              onImageCrop(images);
+            };
+          });
+        };
+      });
     }
   };
 
-  return (
-    <Modal sx={modalStyle} open={modalOpen}>
-      <Box sx={boxStyle}>
-        <AvatarEditor
-          ref={cropRef}
-          image={src}
-          style={{ width: "100%", height: "100%" }}
-          // border={50}
-          // borderRadius={150}
-          color={[0, 0, 0, 0.72]}
-          scale={slideValue / 10}
-          rotate={0}
-        />
+  const onFileChange = (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = () => {
+        setImage(reader.result);
+        onChangeCrop(reader.result);
 
-        {/* MUI Slider */}
-        <Slider
-          min={10}
-          max={50}
-          sx={{
-            margin: "0 auto",
-            width: "80%",
-            color: "cyan",
-          }}
-          size="medium"
-          defaultValue={slideValue}
-          value={slideValue}
-          onChange={(e) => setSlideValue(e.target.value)}
-        />
-        <Box
-          sx={{
-            display: "flex",
-            padding: "10px",
-            border: "3px solid white",
-            background: "black",
-          }}
-        >
-          <Button
-            size="small"
-            sx={{ marginRight: "10px", color: "white", borderColor: "white" }}
-            variant="outlined"
-            onClick={(e) => setModalOpen(false)}
-          >
-            cancel
-          </Button>
-          <Button
-            sx={{ background: "#6cc2bc" }}
-            size="small"
-            variant="contained"
-            onClick={handleSave}
-          >
-            Save
-          </Button>
-        </Box>
-      </Box>
-    </Modal>
-  );
-};
-
-// Container
-const Cropper = ({ onChangeImageSelect }) => {
-  // image src
-  const [src, setSrc] = useState(null);
-
-  // preview
-  const [preview, setPreview] = useState(null);
-
-  // modal state
-  const [modalOpen, setModalOpen] = useState(false);
-
-  // ref to control input element
-  const inputRef = useRef(null);
-
-  // handle Click
-  const handleInputClick = (e) => {
-    e.preventDefault();
-    inputRef.current.click();
-  };
-  // handle Change
-  const handleImgChange = (e) => {
-    setSrc(URL.createObjectURL(e.target.files[0]));
-    setModalOpen(true);
+        openModal();
+      };
+    }
   };
 
-  //handleimage slection
-  const handleImgSelection = (dataUrl) => {
-    setPreview(dataUrl);
-    onChangeImageSelect(dataUrl);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("Cropped image:", croppedImage);
+    console.log("Cropped thumbnail:", croppedThumb);
   };
 
   return (
-    <>
-      <div className="mt-[15px]">
-        <header>
-          <h4 className="text-[#222222] font-semibold">Upload Team Photo</h4>
-        </header>
-        <main className="cropper-container">
-          <CropperModal
-            modalOpen={modalOpen}
-            src={src}
-            setPreview={setPreview}
-            setModalOpen={setModalOpen}
-            handleImgSelection={handleImgSelection}
-          />
-
+    <form onSubmit={handleSubmit} className="">
+      <div>
+        <img
+          htmlFor="file-input"
+          className="image-style-uploader"
+          src={croppedImage || profile}
+          alt=""
+          onClick={handleBrowseClick}
+        />
+        <div>
           <input
             type="file"
+            id="file-input"
+            name="photo"
             accept="image/*"
-            ref={inputRef}
-            onChange={handleImgChange}
+            onChange={onFileChange}
+            className="hidden"
+            ref={inputImage}
           />
-          <div className="cropper-img-container" onClick={handleInputClick}>
-            <img src={preview || profile} alt="" />
-          </div>
-          <div className="space-y-5" onClick={handleInputClick}>
-            <div className="cropper-upload-button">
+          <div className="space-y-5">
+            <div className="upload-button">
               <label
                 htmlFor="file-input"
                 id="file-label"
@@ -159,7 +154,7 @@ const Cropper = ({ onChangeImageSelect }) => {
               >
                 Upload
               </label>
-              <span className="cropper-upload-icon">
+              <span className="upload-icon">
                 <BiUpload />
               </span>
             </div>
@@ -167,12 +162,173 @@ const Cropper = ({ onChangeImageSelect }) => {
           <div className="cropper-upload-recommendation">
             <span>Recommended Size: 400px x 300px</span>
             <br />
-            <span>Maximum file size 1MB</span>
+            <span>Maximum file size 1MB</span>{" "}
           </div>
-        </main>
+          {croppedImage && (
+            <div hidden="hidden">
+              <Image
+                className="w- h-1/4 object-contain"
+                src={croppedImage}
+                alt="Preview Image"
+              />
+            </div>
+          )}
+          {croppedThumb && (
+            <div className="preview-img hidden">
+              <ThumbImage src={croppedThumb} alt="Cropped Thumbnail" />
+            </div>
+          )}
+          {image && (
+            <div hidden="hidden">
+              <Image
+                className="w-full object-contain"
+                src={image}
+                alt="Orginal image"
+              />
+            </div>
+          )}
+          {/* Modal and Cropper */}
+          <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            shouldCloseOnOverlayClick={false}
+            shouldCloseOnEsc={false}
+            contentLabel="Crop Image Modal"
+            style={{
+              content: {
+                height: "fit-content",
+                width: "fit-content",
+                maxWidth: "90%",
+                maxHeight: "90%",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                backgroundColor: "rgb(224,224,224)",
+              },
+              overlay: {
+                zIndex: "9999",
+              },
+            }}
+          >
+            <Cropper
+              src={image}
+              style={{ height: "80%", width: "70%" }}
+              responsive={true}
+              //showCropper={true}
+              aspectRatio={120 / 120}
+              minCropBoxWidth={120}
+              minCropBoxHeight={120}
+              movable={false}
+              zoomable={false}
+              // className="cropper-img-container"
+              guides={true}
+              onInitialized={(instance) => {
+                setCropper(instance);
+              }}
+            />
+            <div className="mt-4 flex justify-center gap-4">
+              <UploadButton onClick={cropImage} className="ml-2">
+                Submit
+              </UploadButton>
+              <ClearButton onClick={closeModal}>Close</ClearButton>
+            </div>
+          </Modal>
+        </div>
       </div>
-    </>
+    </form>
   );
 };
 
-export default Cropper;
+export default ImageUploader;
+
+// import { Box, Modal, Slider, Button } from "@mui/material";
+// import { useRef, useState } from "react";
+// import AvatarEditor from "react-avatar-editor";
+// import profile from "../icons/profiel-bg-latest.svg";
+// import { BiUpload } from "react-icons/bi";
+
+// import "./Cropper.css";
+// import { CropperModal } from "./CropperModel";
+
+// // Container
+// const Cropper = ({ onChangeImageSelect }) => {
+//   // image src
+//   const [src, setSrc] = useState(null);
+
+//   // preview
+//   const [preview, setPreview] = useState(null);
+
+//   // modal state
+//   const [modalOpen, setModalOpen] = useState(false);
+
+//   // ref to control input element
+//   const inputRef = useRef(null);
+
+//   // handle Click
+//   const handleInputClick = (e) => {
+//     e.preventDefault();
+//     inputRef.current.click();
+//   };
+//   // handle Change
+//   const handleImgChange = (e) => {
+//     setSrc(URL.createObjectURL(e.target.files[0]));
+//     setModalOpen(true);
+//   };
+
+//   console.log("Preview:", preview);
+
+//   //handleimage slection
+//   const handleImgSelection = (dataUrl) => {
+//     setPreview(dataUrl);
+//   };
+
+//   return (
+//     <>
+//       <div className="mt-[15px]">
+//         <header>
+//           <h4 className="text-[#222222] font-semibold">Upload Team Photo</h4>
+//         </header>
+//         <main className="cropper-container">
+//           <CropperModal
+//             modalOpen={modalOpen}
+//             src={src}
+//             setPreview={setPreview}
+//             setModalOpen={setModalOpen}
+//             handleImgSelection={handleImgSelection}
+//           />
+
+//           <input
+//             type="file"
+//             accept="image/*"
+//             ref={inputRef}
+//             onChange={handleImgChange}
+//           />
+//           <div className="cropper-img-container" onClick={handleInputClick}>
+//             <img src={preview || profile} alt="" />
+//           </div>
+//           <div className="space-y-5" onClick={handleInputClick}>
+//             <div className="cropper-upload-button">
+//               <label
+//                 htmlFor="file-input"
+//                 id="file-label"
+//                 className="text-[14px] cursor-pointer"
+//               >
+//                 Upload
+//               </label>
+//               <span className="cropper-upload-icon">
+//                 <BiUpload />
+//               </span>
+//             </div>
+//           </div>
+//           <div className="cropper-upload-recommendation">
+//             <span>Recommended Size: 400px x 300px</span>
+//             <br />
+//             <span>Maximum file size 1MB</span>
+//           </div>
+//         </main>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default Cropper;

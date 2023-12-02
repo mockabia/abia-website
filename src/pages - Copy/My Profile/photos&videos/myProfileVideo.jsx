@@ -11,7 +11,7 @@ const myProfileVideo = () => {
           <VideoUploader />
         </div>
       </div>
-      <hr className="mt-[20px]" />
+      <hr className="mt-[20px] w-[83%]" />
     </div>
   );
 };

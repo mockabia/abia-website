@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createObjectURL } from "file-saver";
 import "./ImageUploader.css";
-import profile from "../icons/profiel-bg-latest.svg";
-import { BiUpload } from "react-icons/bi";
+import profile from "../icons/add-image.svg";
 import Modal from "react-modal";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
@@ -38,7 +37,7 @@ const ClearButton = styled.button`
   }
 `;
 
-const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
+const PhotoUpLoader2 = ({ onImageCrop, onChangeCrop }) => {
   const [image, setImage] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
   const [croppedThumb, setCroppedThumb] = useState(null);
@@ -128,13 +127,16 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
   return (
     <form onSubmit={handleSubmit} className="">
       <div>
-        <img
-          htmlFor="file-input"
-          className="image-style-uploader"
-          src={croppedImage || profile}
-          alt=""
+        <div
+          className="photo-uploader-img-container"
           onClick={handleBrowseClick}
-        />
+        >
+          <div>
+            <img className="photos-uploaderadd-button" src={profile} alt="" />
+            <span className="photo-uploader-text">add photo</span>  
+          </div>
+        </div>
+
         <div>
           <input
             type="file"
@@ -145,20 +147,7 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
             className="hidden"
             ref={inputImage}
           />
-          <div className="space-y-5">
-            <div className="upload-button">
-              <label
-                htmlFor="file-input"
-                id="file-label"
-                className="text-[14px] cursor-pointer"
-              >
-                Upload
-              </label>
-              <span className="upload-icon">
-                <BiUpload />
-              </span>
-            </div>
-          </div>
+
           {croppedImage && (
             <div hidden="hidden">
               <Image
@@ -228,10 +217,9 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
             </div>
           </Modal>
         </div>
-
       </div>
     </form>
   );
 };
 
-export default ImageUploader;
+export default PhotoUpLoader2;

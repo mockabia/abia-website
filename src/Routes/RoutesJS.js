@@ -24,12 +24,16 @@ export const fetchBlogRoutes = async (setBlogMenu) => {
 export const fetchBusinessRoutes = async (setBusinessMenu, setShowLoader) => {
     await servicesPage.fetchBusinessRoutes().then(function (response) {
         if (response.statuscode == 200) {
+            //alert();console.log(response.result)
             setBusinessMenu(response.result);
             const loginMenu = response.result.filter(menus => {
                 return menus.id == '1';
             });
             const dashboardMenu = response.result.filter(menus => {
                 return menus.id == '4';
+            });
+            const associateMenu = response.result.filter((menus) => {
+              return menus.id == "3";
             });
             let signup = loginMenu[0].Sub_content.filter((subs) => {
                 return subs.id == '1';
@@ -48,6 +52,14 @@ export const fetchBusinessRoutes = async (setBusinessMenu, setShowLoader) => {
 
             window.VDASHBOARD = process.env.REACT_APP_BUSINESS_URL + '/' + dashboardMenu[0].url;
 
+            let pastWedding = associateMenu[0].Sub_content.filter((subs) => {
+              return subs.id == "5";
+            });
+            let futureWedding = associateMenu[0].Sub_content.filter((subs) => {
+              return subs.id == "6";
+            });
+            window.VPAST    = process.env.REACT_APP_BUSINESS_URL + "/" + pastWedding[0].url;
+            window.VFUTURE  = process.env.REACT_APP_BUSINESS_URL + "/" + futureWedding[0].url;
             setShowLoader(false);
         }
     });

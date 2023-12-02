@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import {
-  customSelectStyles,
+  customSelectStyles2,
   MoreSelectedBadge,
   MultiValue,
 } from "../../components/FormStyle";
@@ -250,7 +250,7 @@ const PastWedding = () => {
                       onChange={(selectedOption) =>
                         handleStateChange(selectedOption, field)
                       }
-                      styles={customSelectStyles}
+                      styles={customSelectStyles2}
                       value={selectedState}
                       components={{
                         MultiValue,
@@ -260,7 +260,10 @@ const PastWedding = () => {
                             <FontAwesomeIcon
                               icon={faCaretDown}
                               className="dropDown-position"
-                              style={{ color: "#7c7c7c" }}
+                              style={{
+                                color: "#7c7c7c",
+                                marginRight: "1.5rem",
+                              }}
                             />
                           </div>
                         ),
@@ -333,7 +336,7 @@ const PastWedding = () => {
                       {...field}
                       isMulti
                       options={categoryOptions}
-                      styles={customSelectStyles}
+                      styles={customSelectStyles2}
                       closeMenuOnSelect={false}
                       blurInputOnSelect={false} //bug fixed
                       hideSelectedOptions={false}
@@ -346,7 +349,10 @@ const PastWedding = () => {
                             <FontAwesomeIcon
                               icon={faCaretDown}
                               className="dropDown-position"
-                              style={{ color: "#7c7c7c" }}
+                              style={{
+                                color: "#7c7c7c",
+                                marginRight: "1.5rem",
+                              }}
                             />
                           </div>
                         ),

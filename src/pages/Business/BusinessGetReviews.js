@@ -25,7 +25,7 @@ const GetReviews = () => {
       bgColor: "#6cc2bc",
       hoverColor: "#339890",
       linkFunction: () =>
-        navigate("/business/get-reviews/past-wedding", {
+        navigate(window.VPAST, {
           state: { vendorInput },
         }),
     },
@@ -37,7 +37,7 @@ const GetReviews = () => {
       bgColor: "#e8cf82",
       hoverColor: "#efc649",
       linkFunction: () =>
-        navigate("/business/get-reviews/future-wedding", {
+        navigate(window.VFUTURE, {
           state: { vendorInput },
         }),
     },

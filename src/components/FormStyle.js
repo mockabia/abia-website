@@ -3,7 +3,7 @@ import Select, { components } from "react-select";
 import { alpha, styled } from "@mui/material/styles";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { TextField } from "@mui/material";
+import { Accordion, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Stepper from "@mui/material/Stepper";
@@ -659,6 +659,70 @@ export const customSelectStyles = {
     display: "none",
   }),
 };
+export const customSelectStyles2 = {
+  control: (provided, state) => ({
+    ...provided,
+    border: "1px solid #c3bebe",
+    boxShadow: "none",
+
+    borderRadius: "10px",
+    background: "#fafafa",
+    padding: "5px",
+    // width: "100%",
+    height: "50px",
+    // maxHeight: "50px",
+    maxWidth: "100%",
+    "&:hover": {
+      border: "1px solid #c3bebe",
+    },
+    "@media (min-width: 1023px)": {
+      width: "96%",
+      // maxWidth: "100%",
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    marginTop: "10px",
+    borderRadius: "20px",
+    padding: "15px",
+    border: "1px solid #c3bebe",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    fontSize: "14px",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected
+      ? "#e7f5f4"
+      : state.isFocused
+      ? "#e7f5f4"
+      : "white",
+    color: state.isSelected ? "black" : "inherit",
+    padding: "12px",
+  }),
+  indicatorSeparator: (defaultStyles) => {
+    return {
+      ...defaultStyles,
+      display: "none",
+    };
+  },
+  input: (provided) => ({
+    ...provided,
+    WebkitUserSelect: "none",
+    MozUserSelect: "none",
+    msUserSelect: "none",
+    userSelect: "none",
+    inputMode: "none",
+    tabIndex: "0",
+  }),
+  clearIndicator: () => ({
+    display: "none",
+  }),
+
+  multiValueRemove: (provided) => ({
+    ...provided,
+    display: "none",
+  }),
+};
 
 export const MoreSelectedBadge = ({ items }) => {
   const style = {
@@ -694,3 +758,24 @@ export const MultiValue = ({ index, getValue, ...props }) => {
     <MoreSelectedBadge items={overflow} />
   ) : null;
 };
+
+/***************ACCORDION******************* */
+export const StyledAccordion = styled(Accordion)(({ theme, expanded }) => ({
+  padding: "2rem",
+  paddingLeft: "0rem",
+  borderRadius: "0",
+  boxShadow: "none",
+  borderBottom: "1px solid #D6D6D6",
+  width: {
+    xs: "100%",
+    md: "83%",
+  },
+  ...(expanded && {
+    border: "1px solid #D6D6D6",
+    borderRadius: "1rem 1rem 0 0",
+    borderBottom: "none",
+  }),
+  "@media (max-width: 500px)": {
+    padding: "1rem 1rem 1rem 0",
+  },
+}));

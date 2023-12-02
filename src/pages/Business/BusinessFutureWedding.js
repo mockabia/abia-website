@@ -9,7 +9,7 @@ import Select, { components } from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { customSelectStyles } from "../../components/FormStyle";
+import { customSelectStyles2 } from "../../components/FormStyle";
 
 import Calendar from "../../third-party-packs/Calendar";
 import * as BusinessJS from "./Business";
@@ -246,7 +246,7 @@ const FutureWedding = () => {
                       onChange={(selectedOption) =>
                         handleStateChange(selectedOption, field)
                       }
-                      styles={customSelectStyles}
+                      styles={customSelectStyles2}
                       components={{
                         MultiValue,
                         IndicatorSeparator: null,
@@ -255,7 +255,10 @@ const FutureWedding = () => {
                             <FontAwesomeIcon
                               icon={faCaretDown}
                               className="dropDown-position"
-                              style={{ color: "#7c7c7c" }}
+                              style={{
+                                color: "#7c7c7c",
+                                marginRight: "1.5rem",
+                              }}
                             />
                           </div>
                         ),
@@ -286,7 +289,7 @@ const FutureWedding = () => {
                       onChange={(selectedOption) =>
                         handleResStateChange(selectedOption, field)
                       }
-                      styles={customSelectStyles}
+                      styles={customSelectStyles2}
                       components={{
                         MultiValue,
                         IndicatorSeparator: null,
@@ -295,7 +298,10 @@ const FutureWedding = () => {
                             <FontAwesomeIcon
                               icon={faCaretDown}
                               className="dropDown-position"
-                              style={{ color: "#7c7c7c" }}
+                              style={{
+                                color: "#7c7c7c",
+                                marginRight: "1.5rem",
+                              }}
                             />
                           </div>
                         ),
@@ -373,7 +379,7 @@ const FutureWedding = () => {
                       {...field}
                       isMulti
                       options={categoryOptions}
-                      styles={customSelectStyles}
+                      styles={customSelectStyles2}
                       closeMenuOnSelect={false}
                       blurInputOnSelect={false} //bug fixed
                       hideSelectedOptions={false}
@@ -386,7 +392,10 @@ const FutureWedding = () => {
                             <FontAwesomeIcon
                               icon={faCaretDown}
                               className="dropDown-position"
-                              style={{ color: "#7c7c7c" }}
+                              style={{
+                                color: "#7c7c7c",
+                                marginRight: "1.5rem",
+                              }}
                             />
                           </div>
                         ),

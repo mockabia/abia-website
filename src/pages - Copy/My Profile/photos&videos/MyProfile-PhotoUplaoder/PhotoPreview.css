@@ -46,7 +46,7 @@
 @media(min-width:1023px) {
 .photo-preview-img {
     /* margin-left: 10px; */
-    margin: 10px 10px 10px 0px;
+    margin:0 0 0 1rem;
     width: 190px;
     height: 190px !important;
     border-radius: 12px;

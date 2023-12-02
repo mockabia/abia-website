@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { ReactComponent as CloseButton } from "../../../../icons/x-solid.svg";
 import "./PhotoPreview.css";
 
@@ -42,8 +40,8 @@ const PhotoPreview = ({ imagesPreviewUrls, deleteImage }) => {
 
   const renderPreview = () => {
     if (previewImages.length > 0) {
-      previewImages.map((items, index) => {
-        items.id = index + 1;
+      previewImages.forEach((items, index) => {
+        items.id = index;
       });
     }
     return (
@@ -60,7 +58,7 @@ const PhotoPreview = ({ imagesPreviewUrls, deleteImage }) => {
               onDrop={handleDrop}
             >
               <img
-                src={element.file}
+                src={element.url}
                 alt={element.name}
                 width="600"
                 height="600"
@@ -71,7 +69,6 @@ const PhotoPreview = ({ imagesPreviewUrls, deleteImage }) => {
                   <CloseButton
                     className="myprofile-photos-close"
                     onClick={() => deleteImage(element.id)}
-                    // icon={faTrash}
                   />
                 </div>
               </div>
@@ -85,13 +82,3 @@ const PhotoPreview = ({ imagesPreviewUrls, deleteImage }) => {
 };
 
 export default PhotoPreview;
-
-// import React from 'react'
-
-// const PhotoPreview = () => {
-//   return (
-//     <div>PhotoPreview</div>
-//   )
-// }
-
-// export default PhotoPreview

@@ -142,7 +142,7 @@ const MeetTheOwner2 = ({ handleOwnerAccordionChange }) => {
                 </div>
               </div>
               <div className="owner-avatar-cropper">
-                <Cropper onChangeImageSelect={handleCroppedImage} />
+              
               </div>
             </div>
 

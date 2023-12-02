@@ -12,6 +12,16 @@
     height: 16px;
     background-size: contain;
 }
+.dollar-icon2 {
+    position: absolute;
+    top: 50%;
+    left: 6.5rem;
+    transform: translateY(-50%);
+    background: url(../../icons/dollar-sign-symbol-bold-text-svgrepo-com.svg) center center no-repeat;
+    width: 16px;
+    height: 16px;
+    background-size: contain;
+}
 
 .myprofile-accordion-button[aria-expanded="true"] .myprofile-pricing-subheading {
     display: none;
@@ -31,20 +41,25 @@
 
 
 
+
 .yes-button {
     width: 85px;
     height: 40px;
     border-radius: 10px;
-    /* background-color: #15a75c;
-    color: white; */
+
     background-color: #ced6d2;
     color: #000;
     font-weight: 500;
     outline: none;
 }
 
-.yes-button:focus {
-    background-color: #56b379;
+.yes-button.selected {
+    background-color: #15a75c;
+    color: white;
+}
+
+.yes-button.selected:active {
+    background-color: #15a75c;
     color: white;
 }
 
@@ -58,11 +73,15 @@
     outline: none;
 }
 
-.no-button:focus {
+.no-button.selected {
     background-color: #ff0000;
-    color: #fff;
+    color: white;
 }
 
+.no-button.selected:active {
+    background-color: #ff0000;
+    color: white;
+}
 
 .pricing-save-button {
     display: inline-block;
@@ -81,6 +100,41 @@
     cursor: pointer;
 }
 
+.pricing-addons-container{
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   /* justify-content: space-between; */
+}
+.pricing-addon-label{
+    position: inherit;
+    margin-top: 10px;
+    font-weight: 600;
+    width: 44%;
+}
+
+.capacity-input-style {
+    width: 20%;
+    height: 50px;
+    border-radius: 10px;
+    background: #F4F5F6;
+    border: 1px solid #c3bebe;
+    padding: 10px;
+    padding-left: 0.5rem;
+    margin-top: 5px;
+    cursor: pointer;
+    /* margin-left: 1rem; */
+}
+
+.pricing-category-lbael{
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #d7d7d7;
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+    font-weight: 600;
+    font-size: 16px;
+}
 @media(min-width:437px) {
 
     /* .pricing-save-button {
@@ -95,13 +149,33 @@
 
 @media(min-width:1023px) {
     .pricing-input-style {
-        width: 50%;
+        width: 35%;
     }
-
+    /* .capacity-input-style {
+        width: 8%;
+        margin-left: 2rem;
+    } */
     .pricing-save-button {
         margin-top: 51px;
         width: 120px;
     }
+.pricing-addon-label {
+    position: inherit;
+    margin-top: 10px;
+    font-weight: 600;
+    width: 23%;
+}
+.capacity-input-style {
+    width: 10%;
+    height: 50px;
+    border-radius: 10px;
+    background: #F4F5F6;
+    border: 1px solid #c3bebe;
+    padding: 10px;
+    padding-left: 27px;
+    margin-top: 5px;
+    cursor: pointer;
+}
 }
 
 @media(min-width:1350px) {

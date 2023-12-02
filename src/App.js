@@ -7,6 +7,7 @@ import Loader from "./plugins/Loader/Loader";
 import CoupleRoutes from "./Routes/CoupleRoutes";
 
 import * as RoutesJS from "./Routes/RoutesJS";
+import CoupleProfile from "./pages/Couple/CoupleProfile";
 
 const App = () => {
   const [showLoader, setShowLoader]         = useState(false);
@@ -32,6 +33,7 @@ useEffect(() => {
             menu={coupleMenu}  />} />
         <Route path="/*" element={<ContentRoutes  showLoader={showLoader} setShowLoader={setShowLoader} 
             publicMenu={publicMenu} blogMenu={blogMenu} />} />
+        <Route path="/wedding/profile" element={<CoupleProfile/>} /> 
       </Routes>
     </>
   );

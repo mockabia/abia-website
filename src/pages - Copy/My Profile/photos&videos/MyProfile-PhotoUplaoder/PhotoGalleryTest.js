@@ -3,29 +3,40 @@ import "./PhotoGalleryTest.css";
 import PhotoUploader from "../MyProfile-PhotoUplaoder/PhotoUploader";
 import PhotoPreview from "../MyProfile-PhotoUplaoder/PhotoPreview";
 import { useState } from "react";
+import PhotoUpLoader2 from "../../../../components/PhotoUploader2";
 // import ImageUpload from "../../../../third-party-packs/ImageUploadCrop";
 
 const PhotoGalleryTest = () => {
-  const [imagesPreviewUrls, setImagesPreviewUrls] = useState([]);
+  const [croppedImages, setCroppedImages] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const addImagePreviewUrl = (result, id) => {
-    console.log("Adding image preview URL in gallery:", result);
-    setImagesPreviewUrls([...imagesPreviewUrls, { ...result, id }]);
+  const handleCroppedImage = (images) => {
+    setCroppedImages([
+      ...croppedImages,
+      { id: croppedImages.length + 1, url: images.thumbUrl },
+    ]);
+    setModalOpen(false);
+  };
+  const deleteCroppedImage = (index) => {
+    const newCroppedImages = [...croppedImages];
+    newCroppedImages.splice(index, 1);
+    setCroppedImages(newCroppedImages);
   };
 
-  const deleteImage = (id) => {
-    const filteredImages = imagesPreviewUrls.filter((image) => image.id !== id);
-    setImagesPreviewUrls(filteredImages);
-  };
+  // console.log("Cropped image in PgotoGallery:", croppedImages);
 
   return (
     <div>
       <div className="myprofile-photogallerytest">
-        <PhotoUploader imagesPreviewUrls={addImagePreviewUrl} />
-        {imagesPreviewUrls.length > 0 ? (
+        {/* <PhotoUploader imagesPreviewUrls={addImagePreviewUrl} /> */}
+        <PhotoUpLoader2
+          onImageCrop={handleCroppedImage}
+          onChangeCrop={() => {}}
+        />
+        {croppedImages.length > 0 ? (
           <PhotoPreview
-            imagesPreviewUrls={imagesPreviewUrls}
-            deleteImage={deleteImage}
+            imagesPreviewUrls={croppedImages}
+            deleteImage={deleteCroppedImage}
           />
         ) : null}
       </div>
