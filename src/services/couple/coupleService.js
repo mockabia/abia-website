@@ -28,6 +28,11 @@ export async function marketCategory(postData) {
   return await apiService.apiCall(apiUrls.MARKETING_CATEGORY, "GET", postData);
 }
 
+// STATE + REGION
+export async function stateRegionDropdwon(state) {
+  return await apiService.apiCall(apiUrls.REGIONS_BY_STATE  +'/'+ state, "GET");
+}
+
 
 
 // marketCategory;

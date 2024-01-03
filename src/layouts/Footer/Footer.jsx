@@ -28,7 +28,7 @@ const Footer = (props) => {
   };
 
   return (
-    <div className={`${props.showLoader ? "hidden" : ""} bg-[#000] `}>
+    <div className={`${props.showLoader ? "" : ""} bg-[#000] relative `}>
       <div className="footer-container">
         <div className="footer-logo" onClick={handleLogoClick}>
           <div className="logo-adjust cursor-pointer">

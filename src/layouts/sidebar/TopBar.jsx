@@ -78,12 +78,12 @@ const TopBar = (props) => {
   };
 
   const handleLogoClick = () => {
-    navigate("/")
-  }
+    navigate("/");
+  };
   return (
     <div
       ref={profileRef}
-      className="bg-[#6cc2bc]  md:bg-[#fff] h-20  flex items-center justify-between fixed top-0 left-0 right-0 z-40 border-b border-[#6cc2bc] "
+      className="bg-[#6cc2bc]  md:bg-[#fff] h-[6rem]  flex items-center justify-between fixed top-0 left-0 right-0 z-40 border-b border-[#6cc2bc] "
     >
       {!isMobile && (
         <div className="">
@@ -94,11 +94,14 @@ const TopBar = (props) => {
           </div>
         </div>
       )}
-      <div className="relative  ">
+      {/* <div className="relative  ">
         <h1>test</h1>
-      </div>
+      </div> */}
 
-      <div onClick={handleLogoClick} className="relative w-[85px]  ml-[20px] md:hidden cursor-pointer">
+      <div
+        onClick={handleLogoClick}
+        className="relative w-[85px]  ml-[20px] md:hidden cursor-pointer"
+      >
         <AbiaLogo1 />
       </div>
 

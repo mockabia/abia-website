@@ -1,11 +1,6 @@
 /* active class */
 
-
-/* .active {
-
-} */
-
-.link {
+.sidebarMenuItem {
     padding: 6px;
     display: flex;
     border-radius: 1rem 0 0 1rem;
@@ -18,22 +13,45 @@
     margin-left: -10px;
 }
 
-.link:hover{
+.sidebarMenuItem:hover{
 color: #fff;
     background-color: #339890;
     /* font-size: 16px; */
 }
 
-.link.active {
+.sidebarMenuItem.active {
    color: #6cc2bc;
     background-color: #f4f5f6;
 }
 
-.link.active .fill-current {
+.sidebarMenuItem.active .fill-current {
     fill: #6cc2bc;
 }
 
+.sidemenuwithSub {
+    padding: 6px;
+    display: flex;
+    border-radius: 1rem 0 0 1rem;
+    gap: 1rem;
+    cursor: pointer;
+    transition-duration: 300ms;
+    font-weight: 500;
+    margin-left: -10px;
+}
+.sidemenuwithSub:hover {
+    color: #fff;
+    background-color: #339890;
+    /* font-size: 16px; */
+}
 
+.sidemenuwithSub.active {
+    color: #6cc2bc;
+    background-color: #f4f5f6;
+}
+
+.sidemenuwithSub.active .fill-current {
+    fill: #6cc2bc;
+}
 
 /*****************Sub menu ***************/
 /* submenu highlight */
@@ -46,7 +64,6 @@ color: #fff;
     cursor: pointer;
     transition-duration: 300ms;
     font-weight: 600px;
-    margin-left: -28px;
 
 }
 
@@ -62,7 +79,7 @@ color: #fff;
 
     color: #6cc2bc;
     background-color: #f4f5f6;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 14px;
     border-left: 3px solid #e8cf82;
 }
@@ -80,13 +97,11 @@ color: #fff;
 
 /* vertical lining */
 .submenu-line {
-    position: absolute;
     top: -13px;
     bottom: -50px;
     left: -30px;
     width: 1px;
     background-color: #fff;
-    content: "";
 }
 /*  */
 .submenu-list {

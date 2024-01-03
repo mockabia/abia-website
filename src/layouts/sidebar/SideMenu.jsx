@@ -44,33 +44,33 @@ const SideMenu = (props) => {
             <li>
               {MainMenu.Sub_content.length <= 0 ? (
                 <div className="">
-                  <NavLink to={MainMenu.url} className="link sidebarMenuItem">
-                    <div className="flex gap-[2rem] ml-[2rem]">
+                  <NavLink to={MainMenu.url} className="sidebarMenuItem">
+                    <div className="flex gap-[2rem] ml-[1rem]">
                       {menuIcons[MainMenu.title] &&
                         React.createElement(menuIcons[MainMenu.title], {
                           className:
                             "mt-[2px] w-[18px] h-[18px] fill-current text-[#fff]",
                         })}
-                      {MainMenu.title}
+                      <h5 className="truncate">{MainMenu.title}</h5>
                     </div>
                   </NavLink>
                 </div>
               ) : (
                 <div
-                  className="flex"
+                  className="flex justify-between  sidemenuwithSub"
                   onClick={() => {
                     toggleSubMenu(MainMenu.id);
                   }}
                 >
-                  <div className="flex gap-[2rem] ml-[2rem]">
+                  <div className="flex gap-[2rem] ml-[1rem]">
                     {menuIcons[MainMenu.title] &&
                       React.createElement(menuIcons[MainMenu.title], {
                         className:
                           "mt-[2px] w-[18px] h-[18px] fill-current text-[#fff]",
                       })}
-                    {MainMenu.title}
+                    <h5 className="truncate">{MainMenu.title}</h5>
                   </div>
-                  <div className="ml-[4rem]">
+                  <div className="">
                     {showSubMenu[MainMenu.id] ? (
                       <RxTriangleUp className="" size={25} />
                     ) : (
@@ -81,16 +81,20 @@ const SideMenu = (props) => {
               )}
               {showSubMenu[MainMenu.id] && MainMenu.Sub_content.length > 0 && (
                 <div>
-                  <ul className="ml-[41px] mt-4 ">
+                  <ul className="ml-[3.5rem]  ">
                     {MainMenu.Sub_content.map((SubMenu, i) => (
                       <motion.li
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="mb-4"
+                        className="mb-0"
                       >
-                        <NavLink to={SubMenu.url} onClick={closeMenu}>
-                          {SubMenu.title}
+                        <NavLink
+                          className="sublink"
+                          to={SubMenu.url}
+                          onClick={closeMenu}
+                        >
+                          <h5>{SubMenu.title}</h5>
                         </NavLink>
                       </motion.li>
                     ))}

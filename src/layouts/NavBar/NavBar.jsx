@@ -8,7 +8,7 @@ import * as servicesPage from "../../services/contentServices";
 
 import LoginDropdown from "../../components/Login and Signup/LoginDropdown";
 import SignUpDropDown from "../../components/Login and Signup/SignUpDropDown";
-import MenuItems from "../../components/Login and Signup/MenuItems";
+import MenuItems from "../../components/Login and Signup/PublicMenuItems";
 import * as BusinessJS from "../../pages/Business/Business";
 import * as CoupleJS from "../../pages/Couple/Couple";
 import AbiaLogo from "../../abiaLogo";

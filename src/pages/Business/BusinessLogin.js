@@ -35,7 +35,7 @@ const LoginPage = () => {
   };
 
   let isValidForm =
-    Object.values(inputsErrors).filter((error) => typeof error !== "undefined")
+    Object.values(inputsErrors || "").filter((error) => typeof error !== "undefined")
       .length === 0;
 
   const hasInputErrors = Object.values(inputsErrors).some(

@@ -4,21 +4,6 @@ import SubMenu from "./SubMenu";
 import { motion } from "framer-motion";
 
 import { useMediaQuery } from "react-responsive";
-
-// svg
-// import manageReview from "../../icons/manageReview";
-import { ReactComponent as HomeIcon } from "../../icons/home.svg"; //home
-import { ReactComponent as ManageReview } from "../../icons/manage-reviews.svg"; //Manage Reviews
-import { ReactComponent as ShowCase } from "../../icons/showcase.svg"; //Manage Reviews
-import { ReactComponent as Promotions } from "../../icons/promotions.svg";
-import { ReactComponent as ShopIcon } from "../../icons/shop.svg";
-import { ReactComponent as EnquiryIcon } from "../../icons/enquiries.svg";
-import { ReactComponent as SettingsIcons } from "../../icons/settings.svg";
-import { ReactComponent as MyProfileIcon } from "../../icons/my-profile.svg";
-import { ReactComponent as GetREviewIcon } from "../../icons/getReview-2.svg";
-import { RxTriangleDown,RxTriangleUp  } from "react-icons/rx";
-// import { ReactComponent as AbiaLogo } from "../../ABIA-White-Logo-gold-crown (1).svg";
-
 import { Link, NavLink, useLocation, useRoutes } from "react-router-dom";
 
 //import upgradeNow from "../../pages/upgradeNow";
@@ -38,7 +23,7 @@ const Sidebar = (props) => {
   const sidebarRef = useRef();
   const { pathname } = useLocation();
   const [showSubMenu, setShowSubMenu] = useState({});
-  const [menuOpen, setMenuOpen]       = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // const handleNavLinkClick = () => {
   //   setIsActive(true);
@@ -61,55 +46,55 @@ const Sidebar = (props) => {
 
   const Nav_animation = isTabletMid
     ? {
-      open: {
-        x: 0,
-        width: "16rem",
-        transition: {
-          damping: 40,
+        open: {
+          x: 0,
+          width: "16rem",
+          transition: {
+            damping: 40,
+          },
         },
-      },
-      closed: {
-        x: -250,
-        width: 0,
-        transition: {
-          damping: 40,
-          delay: 0.15,
+        closed: {
+          x: -250,
+          width: 0,
+          transition: {
+            damping: 40,
+            delay: 0.15,
+          },
         },
-      },
-    }
+      }
     : {
-      open: {
-        width: "16rem",
-        transition: {
-          damping: 40,
+        open: {
+          width: "16rem",
+          transition: {
+            damping: 40,
+          },
         },
-      },
-      closed: {
-        width: "4rem",
-        transition: {
-          damping: 40,
+        closed: {
+          width: "4rem",
+          transition: {
+            damping: 40,
+          },
         },
-      },
-    };
-
+      };
 
   return (
     <div>
       <div
         onClick={() => setOpen(false)}
-        className={`md:hidden fixed inset-0 max-h-screen z-60 bg-black/50 ${open ? "block" : "hidden"
-          } `}
+        className={`md:hidden fixed inset-0 max-h-screen z-60 bg-black/50 ${
+          open ? "block" : "hidden"
+        } `}
       ></div>
       <motion.div
         ref={sidebarRef}
         variants={Nav_animation}
         initial={{ x: isTabletMid ? -250 : 0 }}
         animate={open ? "open" : "closed"}
-        className="fixed-sidebar bg-[#6cc2bc]  shadow-xl z-[9999] max-w-[16rem]  w-[16rem]
+        className="fixed-sidebar bg-[#6cc2bc]  shadow-xl z-[999] max-w-[16rem]  w-[16rem]
         overflow-hidden md:relative h-screen "
       >
         {/* <AbiaLogo /> */}
-        <div className="border-b border-white py-[22px] w-full">
+        <div className="border-b border-white py-[26.75px] w-full">
           <div className=" flex justify-center items-center">
             <Link to={"/"} className="vendor_abialogo">
               <AbiaLogo alt="Abia-logo" />
@@ -117,8 +102,10 @@ const Sidebar = (props) => {
           </div>
         </div>
         {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(props.leftmenu, null, 2)}</pre> */}
-        <div className="flex flex-col  h-full text-white relative">
-          <ul><SideMenu {...props} /></ul>
+        <div className="flex flex-col mt-[2rem] h-full text-white relative">
+          <ul className="space-y-2 ml-[1rem]">
+            <SideMenu {...props} />
+          </ul>
 
           <div className="mt-[30px] ml-[30px]">
             <div className="space-y-3">

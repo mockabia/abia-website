@@ -48,6 +48,12 @@
         white-space: nowrap;
     }
 
+    
+    .navbar-subhead-large {
+        display: none;
+        justify-content: space-between;
+        border-bottom: 1px solid #b8b8b8;
+    }
 
 @media(min-width:1024px) {
 

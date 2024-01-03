@@ -3,7 +3,6 @@
 .bm-item {
     display: inline-block;
     text-decoration: none;
-    /* margin-bottom: 10px; */
     color: #000;
     transition: color 0.2s;
     font-family: 'Playfair Display', serif;
@@ -125,7 +124,11 @@
     justify-content: space-between;
     align-items: center;
 } */
-
+.customAccordionPaper {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0;
+}
 
 
 @media(min-width:1023px) {
@@ -142,3 +145,4 @@
     display: none;
 }
 }
+

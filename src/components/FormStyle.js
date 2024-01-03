@@ -3,7 +3,7 @@ import Select, { components } from "react-select";
 import { alpha, styled } from "@mui/material/styles";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Accordion, TextField } from "@mui/material";
+import { Accordion, InputBase, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Stepper from "@mui/material/Stepper";
@@ -92,7 +92,19 @@ export const BoxStyle = {
   height: "auto",
   bgcolor: "#fff",
   border: "1px solid #949494",
-
+  p: 4,
+};
+export const BoxStyle2 = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "100%",
+  maxWidth: "600px",
+  height: "auto",
+  bgcolor: "#fff",
+  border: "1px solid #949494",
+  borderRadius: "1.5rem",
   p: 4,
 };
 export const ForgetBox = {
@@ -472,9 +484,21 @@ export const LeftAlignedTypography = styled(Typography)({
   fontWeight: "600",
 });
 
+export const CheckBoxTypo = styled(Typography)({
+  fontSize: "16px",
+  fontFamily: "Raleway",
+  color: "#0e0e0e",
+  fontWeight: "600",
+  whiteSpace: "normal",
+});
+
 export const CheckBoxStyle = styled(Checkbox)({
   "& .MuiSvgIcon-root": {
-    fontSize: "28px",
+    fontSize: "32px",
+    color: "#d7d7d7",
+  },
+  "&.Mui-checked": {
+    color: "#6cc2bc",
   },
   "& .MuiFormControlLabel-label": {
     fontFamily: "Raleway",
@@ -760,6 +784,7 @@ export const MultiValue = ({ index, getValue, ...props }) => {
 };
 
 /***************ACCORDION******************* */
+// used in Business-Myprofile
 export const StyledAccordion = styled(Accordion)(({ theme, expanded }) => ({
   padding: "2rem",
   paddingLeft: "0rem",
@@ -777,5 +802,326 @@ export const StyledAccordion = styled(Accordion)(({ theme, expanded }) => ({
   }),
   "@media (max-width: 500px)": {
     padding: "1rem 1rem 1rem 0",
+  },
+}));
+
+/*******COUPLES profile*******/
+export const CoupleInput = styled(TextField)(({ theme }) => ({
+  "label + &": {
+    marginTop: theme.spacing(1),
+  },
+  "& .MuiTextField-root": {
+    fontFamily: "Raleway",
+    height: "50px",
+    width: "15rem",
+    maxWidth: "22rem",
+    boxShadow: "none",
+    borderRadius: "10px",
+    // border: "1px solid #c3bebe",
+  },
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+    "& > fieldset": { borderColor: "#c3bebe" },
+    "&:hover fieldset": {
+      borderColor: "#c3bebe",
+    },
+  },
+
+  "& .MuiFormHelperText-root": {
+    border: "none",
+    marginLeft: "0rem",
+  },
+
+  "& .Mui-focused": {
+    boxShadow: "0 0 0 1px #c3bebe",
+
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+  },
+}));
+
+export const CoupleCommonInput = styled(TextField)(({ theme }) => ({
+  "& .MuiTextField-root": {
+    fontFamily: "Raleway",
+    height: "50px",
+    width: "100%",
+    maxWidth: "22rem",
+    boxShadow: "none",
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+    // border: "1px solid #c3bebe",
+  },
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+    "& > fieldset": { borderColor: "#c3bebe" },
+    "&:hover fieldset": {
+      borderColor: "#c3bebe",
+    },
+  },
+  "& .MuiFormHelperText-root": {
+    border: "none",
+    marginLeft: "0rem",
+  },
+  "& .Mui-focused": {
+    boxShadow: "0 0 0 1px #c3bebe",
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+  },
+}));
+
+// search field
+export const SearchInputStyle = styled(TextField)(({ theme }) => ({
+  "& .MuiTextField-root": {
+    fontFamily: "Raleway",
+    boxShadow: "none",
+    border: "1px solid #B7B7B7",
+  },
+  "& .MuiOutlinedInput-root": {
+    width: "18rem",
+    maxWidth: "100%",
+    height: "2.7rem",
+    borderRadius: "1.5rem",
+    fontFamily: "Raleway",
+    "& > fieldset": { borderColor: "#B7B7B7" },
+    "&:hover fieldset": {
+      borderColor: "#B7B7B7", // Set the same color as normal state to prevent the black border during hovering
+    },
+  },
+
+  "& .MuiFormHelperText-root.Mui-error": {
+    border: "1px solid #fff",
+    marginLeft: "0rem",
+  },
+
+  "& .Mui-focused": {
+    border: "1px solid #c3bebe",
+
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+  },
+  "@media (max-width: 800px)": {
+    display: "none",
+  },
+}));
+
+// Box style - div
+export const MuiBoxStyles = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "5px",
+};
+
+export const CoupleSelectStyle = {
+  control: (provided, state) => ({
+    ...provided,
+    fontFamily: "Raleway",
+    border: "1px solid #c3bebe",
+    boxShadow: "none",
+    marginTop: "8px",
+    borderRadius: "10px",
+    // background: "#fafafa",
+    height: "50px",
+    // width: "22rem",
+    maxWidth: "25rem",
+    "&:hover": {
+      border: "1px solid #c3bebe",
+    },
+    "@media (min-width: 551px)": {
+      width: "11rem",
+      maxWidth: "30rem",
+    },
+    "@media (min-width: 769px)": {
+      width: "11.5rem",
+      maxWidth: "30rem",
+    },
+    "@media (min-width: 1100px)": {
+      width: "12.75rem",
+      maxWidth: "30rem",
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    marginTop: "10px",
+    borderRadius: "20px",
+    padding: "15px",
+    border: "1px solid #c3bebe",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    fontSize: "14px",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected
+      ? "#e7f5f4"
+      : state.isFocused
+      ? "#e7f5f4"
+      : "white",
+    color: state.isSelected ? "black" : "inherit",
+    padding: "12px",
+  }),
+  indicatorSeparator: (defaultStyles) => {
+    return {
+      ...defaultStyles,
+      display: "none",
+    };
+  },
+  input: (provided) => ({
+    ...provided,
+    WebkitUserSelect: "none",
+    MozUserSelect: "none",
+    msUserSelect: "none",
+    userSelect: "none",
+    inputMode: "none",
+    tabIndex: "0",
+  }),
+  clearIndicator: () => ({
+    display: "none",
+  }),
+
+  multiValueRemove: (provided) => ({
+    ...provided,
+    display: "none",
+  }),
+};
+
+// BUDGET
+export const CoupleAddButton = styled(Button)(({ theme }) => ({
+  fontFamily: "Raleway",
+  textTransform: "initial",
+  color: "white", // Set text color to black
+  backgroundColor: "#6cc2bc", // Set background color to white
+  borderRadius: "50px",
+  border: "1px solid #6cc2bc",
+  maxWidth: "6rem",
+  width: "160px",
+  height: "45px",
+  fontSize: "12px",
+  fontWeight: "600",
+  boxShadow: "none",
+  "&:hover": {
+    backgroundColor: "#000",
+    boxShadow: "none",
+    color: "white",
+  },
+  "&.Mui-selected": {
+    backgroundColor: "#000",
+    boxShadow: "none",
+    color: "white",
+  },
+}));
+
+export const BudgetEditButton = styled(Button)(({ theme }) => ({
+  fontFamily: "Raleway",
+  textTransform: "initial",
+  color: "white", // Set text color to black
+  backgroundColor: "#000", // Set background color to white
+  borderRadius: "50px",
+  border: "1px solid #515151",
+  maxWidth: "6rem",
+  width: "160px",
+  height: "45px",
+  fontSize: "12px",
+  fontWeight: "600",
+  boxShadow: "none",
+  "&:hover": {
+    backgroundColor: "#000",
+    boxShadow: "none",
+    color: "white",
+  },
+  "&.Mui-selected": {
+    backgroundColor: "#000",
+    boxShadow: "none",
+    color: "white",
+  },
+}));
+export const CancelCoupleButton = styled(Button)(({ theme }) => ({
+  fontFamily: "Raleway",
+  textTransform: "initial",
+  color: "#6cc2bc", // Set text color to black
+  backgroundColor: "white", // Set background color to white
+  borderRadius: "50px",
+  border: "1px solid #6cc2bc",
+  maxWidth: "6rem",
+  width: "160px",
+  height: "45px",
+  fontSize: "12px",
+  fontWeight: "600",
+  boxShadow: "none",
+}));
+
+export const BlackLargeButton = styled(Button)(({ theme }) => ({
+  fontFamily: "Raleway",
+  textTransform: "initial",
+  color: "#fff", // Set text color to black
+  backgroundColor: "#6cc2bc", // Set background color to white
+  borderRadius: "50px",
+  border: "1px solid #6cc2bc",
+  maxWidth: "250px",
+  width: "160px",
+  height: "45px",
+  fontSize: "12px",
+  fontWeight: "600",
+  boxShadow: "none",
+  "&:hover": {
+    backgroundColor: "#B7b7b7",
+    boxShadow: "none",
+    color: "white",
+  },
+}));
+
+export const BlackSmallButton = styled(Button)(({ theme }) => ({
+  fontFamily: "Raleway",
+  textTransform: "initial",
+  color: "#fff", // Set text color to black
+  backgroundColor: "#6cc2bc", // Set background color to white
+  borderRadius: "50px",
+  border: "1px solid #6cc2bc",
+  maxWidth: "250px",
+  width: "5rem",
+  height: "2rem",
+  fontSize: "12px",
+  fontWeight: "600",
+  boxShadow: "none",
+  "&:hover": {
+    backgroundColor: "#B7b7b7",
+    boxShadow: "none",
+    color: "white",
+  },
+}));
+
+
+export const BudgetInput = styled(TextField)(({ theme }) => ({
+  "& .MuiTextField-root": {
+    fontFamily: "Raleway",
+    width: "100%",
+    maxWidth: "22rem",
+    boxShadow: "none",
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+    // border: "1px solid #c3bebe",
+  },
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "10px",
+    height:"46px",
+    width:"11rem",
+    fontFamily: "Source",
+    "& > fieldset": { borderColor: "#c3bebe" },
+    "&:hover fieldset": {
+      borderColor: "#c3bebe",
+    },
+  },
+  "& .MuiFormHelperText-root": {
+    border: "none",
+    marginLeft: "0rem",
+  },
+  "& .Mui-focused": {
+    boxShadow: "0 0 0 1px #c3bebe",
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
   },
 }));

@@ -3,6 +3,7 @@ import "../Style/CouplesLogin.css";
 import { Box, Button, IconButton, TextField, Typography } from "@mui/material";
 import {
   CLLoginStyle,
+  CoupleCommonInput,
   CouplesLoginBox,
   ForgetBox,
   NextButtonStyle,
@@ -13,6 +14,7 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import { useState } from "react";
 import CoupleForgotPwd from "./CoupleForgotPwd";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const CouplesLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -92,94 +94,40 @@ const CouplesLogin = () => {
           </h1>
           <label className="cl-label">Email</label>
           <div className="cl-field">
-            <TextField
+            <CoupleCommonInput
+              variant="outlined"
               name="email"
               type="email"
-              className="cs-textfield-2"
-              id="demo-helper-text-aligned"
-              // label="Email*"
-              sx={{
-                width: "100%",
-                maxWidth: "22rem",
-                borderRadius: "10px",
-                "& .MuiInputBase-root": {
-                  fontFamily: "Raleway",
-                },
-              }}
               onChange={(e) => handleInputChange("email", e.target.value)}
-              error={errors.email}
-              helperText={errors.email}
+              // error={errors.email}
             />
-            {/* EMAIL */}
-            {/* <TextField
-              type="text"
-              name="email"
-              
-              sx={{
-                width: "100%",
-                maxWidth: "22rem",
-                borderRadius: "10px",
-                "& .MuiInputBase-root": {
-                  fontFamily: "Raleway",
-                },
-              }}
-            /> */}
-
-            {/* <Controller
-              name="email"
-              control={control}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  type="text"
-                  placeholder="Email"
-                  variant="outlined"
-                  sx={{
-                    width: "100%",
-                    maxWidth: "22rem",
-                    "& .MuiInputBase-root": {
-                      fontFamily: "Raleway",
-                    },
-                  }}
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
-                />
-              )}
-            /> */}
+            {errors.email && <div className="error-text">{errors.email}</div>}
           </div>
           <br />
           {/* PASSWORD */}
           <label className="cl-label">Password</label>
           <div className="cl-field">
-            <TextField
+            <CoupleCommonInput
+              variant="outlined"
               name="password"
               type={showPassword ? "text" : "password"}
-              className="cs-textfield-2"
-              id="demo-helper-text-aligned"
               // label="Password*"
-              sx={{
-                width: "100%",
-                maxWidth: "22rem",
-                borderRadius: "10px",
-                "& .MuiInputBase-root": {
-                  fontFamily: "Raleway",
-                },
-              }}
               onChange={(e) => handleInputChange("password", e.target.value)}
-              error={errors.password}
-              helperText={errors.password}
               InputProps={{
                 endAdornment: (
                   <IconButton onClick={togglePasswordVisibility}>
                     {showPassword ? (
-                      <VisibilityOffOutlinedIcon />
+                      <VisibilityOffOutlinedIcon sx={{ fill: "#c3bebe" }} />
                     ) : (
-                      <VisibilityOutlinedIcon />
+                      <VisibilityOutlinedIcon sx={{ fill: "#c3bebe" }} />
                     )}
                   </IconButton>
                 ),
               }}
             />
+            {errors.password && (
+              <div className="error-text">{errors.password}</div>
+            )}
           </div>
 
           <Box

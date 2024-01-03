@@ -11,6 +11,7 @@
     width: 16px;
     height: 16px;
     background-size: contain;
+    margin-top: 1rem;
 }
 .dollar-icon2 {
     position: absolute;
@@ -126,12 +127,17 @@
     /* margin-left: 1rem; */
 }
 
-.pricing-category-lbael{
+.pricing-category-label-section{
     width: 100%;
     text-align: center;
     border-bottom: 1px solid #d7d7d7;
     line-height: 0.1em;
     margin: 10px 0 20px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.pricing-cate-label{
     font-weight: 600;
     font-size: 16px;
 }
@@ -163,7 +169,7 @@
     position: inherit;
     margin-top: 10px;
     font-weight: 600;
-    width: 23%;
+    width: 20%;
 }
 .capacity-input-style {
     width: 10%;

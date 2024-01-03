@@ -1,0 +1,247 @@
+.enqquiry-page-container {
+    /* padding: 1rem 0; */
+    height: 100vh;
+  
+}
+
+.enquiry-page-header {
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    white-space: nowrap;
+}
+
+.enquiry-mainwith-subitem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.enquiry-subMenu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 100%;
+    left: 2rem;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #b7b7b7;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Add your preferred box shadow */
+}
+
+.enquiry-subMenu-link {
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-family: "Raleway";
+    font-size: 14px;
+}
+
+.enquiry-secondary-menu {
+    display: flex;
+    gap: 2rem;
+    font-size: 14px;
+}
+
+.enquiry-secondary-menu li {
+    /* padding: 1rem;
+    padding-left: 0; */
+    cursor: pointer;
+}
+
+.active-tab {
+    color: #000;
+    border-bottom: 2px solid #000;
+}
+
+.padding-position {
+    padding: 1rem;
+}
+
+.enquiry-active-list {
+    height: 100vh;
+    width: 100%;
+    padding: 1rem;
+}
+
+.enquiry-active-list-mobile {
+    height: 100vh;
+    width: 100%;
+    /* padding: 1rem;
+    padding-right: 2rem; */
+}
+.enquiry-table {
+    width: 100%;
+}
+.enquiry-table th {
+    text-align: left;
+    padding: 1.5rem 0.5rem 1.5rem 1rem;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.enquiry-table-header {
+    background-color: #f9f9f9;
+    border-top: 1px solid #b7b7b7;
+    border-bottom: 1px solid #b7b7b7;
+}
+
+.enquiry-vendor-image {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+}
+.enquiry2-vendor-image {
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: contain;
+}
+.enquiry-status {
+    display: flex;
+    gap: 1rem;
+}
+.enquiry-status-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;  
+}
+
+.enquiry-body-row td {
+    padding: 1rem;
+    border-bottom: 1px solid #b7b7b7;
+}
+
+.your-inquiry-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+    gap: 1.5rem;
+}
+
+.your-inquiry-container ul li {
+    list-style-type: square;
+    margin-left: 18px;
+    
+}
+.your-inquiry-container ul li::marker {
+    color: #b7b7b7;
+    font-size: 24px;
+}
+
+
+.your-inquiry-table table {
+    width: 100%;
+    text-align: left;
+}
+
+.your-inquiry-table th {
+    width: 20%;
+    text-align: left;
+}
+
+.your-inquiry-table td {
+    font-weight: 600;
+    color: #000;
+    width: 10rem;
+}
+
+.your-inquiry-table-2 table {
+    width: 100%;
+    text-align: left;
+}
+
+.your-inquiry-table-2 th {
+    width: 20%;
+    text-align: left;
+}
+
+/* .your-inquiry-table-2 td {
+    font-weight: 600;
+    color: #000;
+    width: 10rem;
+} */
+
+.inquiry-td-style {
+    width: 20%;
+    font-weight: 600;
+    color: #000;
+}
+.inquiry-td-style-digit {
+    width: 20%;
+    font-weight: 600;
+    color: #000;
+    font-family: "Source-sans-pro";
+}
+
+
+/* overlay */
+.inquiry-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: #fff;
+    color: #8E8E8E;
+    padding: 2rem 2.5rem 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.inquiry-overlay::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 767px;
+    width: calc(100% - 400px);
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+}
+
+@media (min-width: 767px) {
+    .inquiry-overlay {
+        width: 450px;
+        right: 0;
+        left: unset;
+    }
+
+    .inquiry-overlay::after {
+        left: unset;
+        right: 450px;
+        /* Set the width where the opaque area ends */
+    }
+}
+
+.active-enquiry-desktop {
+    display: none;
+}
+.active-enquiry-mobile{
+    cursor: pointer;
+    display: block;
+    padding: 1rem;
+    padding-right: 2rem;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+}
+
+@media(min-width:1024px) {
+.active-enquiry-desktop {
+    display: block;
+}
+.active-enquiry-mobile{
+    display: none;
+}
+}
+

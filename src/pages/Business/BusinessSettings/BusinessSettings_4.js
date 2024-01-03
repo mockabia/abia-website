@@ -39,11 +39,9 @@ const Category = ({ vendorDetails }) => {
 
   const onSubmit = (data) => {
     setFormValues(data);
-
-    const transformedOtherCategory = data.other_category.map((category) => [
-      category.value,
-      category.label,
-    ]);
+    const transformedOtherCategory = additionaCatSelect.map(
+      (category) => category.value
+    );
     const formValues = {
       first_category: data.first_category || vendorDetails.first_category,
       other_category: transformedOtherCategory,

@@ -1,0 +1,39 @@
+/* // element.style {
+//     background: #d7d7d7;
+//     width: 20rem;
+//     max-width: 15rem;
+//     height: 100vh;
+// } */
+
+/* .couple-sidemenu {
+    background-color: #d7d7d7;
+    max-width: 20rem;
+    width: 20rem;
+    height: 100vh;
+
+}
+
+.couple-menu-list {
+    display: flex;
+    flex-direction: column;
+    margin: 3rem;
+} */
+
+body {
+    margin: 0;
+    /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; */
+    /* additions here*/
+    height: 100vh;
+}
+
+code {
+    /* font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace; */
+}
+
+
+

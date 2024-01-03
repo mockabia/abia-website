@@ -77,23 +77,17 @@ const MyLocation = ({ vendorDetails }) => {
   // handleSubmit
   const handleSubmit = async (e) => {
     e.preventDefault();
+   
+    const formattedTargetRegion = selectedRegions.map((region) => region.value);
+
     const formValues = {
-      primaryLocation: initialRegion,
-      target_region: selectedRegions,
+      primaryLocation: initialRegion.length > 0 ? initialRegion[0].value : vendorDetails.primaryLocation,
+      target_region: formattedTargetRegion,
       vid: vendorDetails.vid,
     };
     console.log("Form data:", formValues);
-    try {
-      await schema.validate(formValues, { abortEarly: false });
-      console.log("Form data:", formValues);
-      BusinessJS.updateBusiness(5, formValues, setInputsErrors);
-    } catch (error) {
-      const validationErrors = {};
-      error.inner.forEach((err) => {
-        validationErrors[err.path] = err.errors;
-      });
-      setInputsErrors(validationErrors);
-    }
+
+    BusinessJS.updateBusiness(5, formValues, setInputsErrors);
   };
 
   const getFieldError = (fieldName) => {

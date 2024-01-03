@@ -1,7 +1,7 @@
 
 .main-content {
     /* padding: 20px 90px 30px 90px; */
-    padding: 1rem 1.5rem;
+    margin: 1rem auto;
     height: 100vh;
     overflow: auto;
 }

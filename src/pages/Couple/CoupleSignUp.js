@@ -123,11 +123,6 @@ export default function CouplesSignUp() {
           ...prevErrors,
           wedding_date: "", // Clear the error for the wedding date
         }));
-      } else {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          wedding_date: "", // Clear the error for the wedding date
-        }));
       }
     } else {
       setFormValues({ ...formValues, [fieldName]: value });
@@ -211,8 +206,6 @@ export default function CouplesSignUp() {
   const handleFormNext = () => {
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
-     
-
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
       setFormValues((updatedFormValues) => {
@@ -391,7 +384,7 @@ export default function CouplesSignUp() {
                 </div>
                 <Box>
                   <Box className="cs-textfield-flex">
-                    <CSTextfield
+                    <TextField
                       name="bride"
                       className="cs-textfield"
                       id="demo-helper-text-aligned"
@@ -422,7 +415,6 @@ export default function CouplesSignUp() {
                       label="Preferred Wedding Date*"
                       value={formValues.wedding_date}
                       dateError={checkboxChecked ? "" : errors.wedding_date}
-                      // dateError={errors.wedding_date}
                       handleDateChange={handleDateChange}
                       checkboxChecked={checkboxChecked}
                     />

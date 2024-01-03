@@ -38,3 +38,14 @@ export const fetchMarketingCategory = async (setMarketingOptions) => {
     }
   });
 };
+
+
+export const fetchRegion = async (selectedStates, setRegions) => {
+  await servicesPage
+    .stateRegionDropdwon(selectedStates)
+    .then(function (response) {
+      if (response.statuscode === 200) {
+        setRegions(response.result);
+      }
+    });
+};

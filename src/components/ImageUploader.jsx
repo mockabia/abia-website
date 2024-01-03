@@ -38,21 +38,28 @@ const ClearButton = styled.button`
   }
 `;
 
-const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
-  const [image, setImage] = useState(null);
+const ImageUploader = (props) => {
+  const [image, setImage] = useState(props.childThumbImage || null);
   const [croppedImage, setCroppedImage] = useState(null);
   const [croppedThumb, setCroppedThumb] = useState(null);
+  const [defaultImg, setDefaultImg] = useState(null);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [cropper, setCropper] = useState(null);
   const inputImage = useRef(null);
 
+  useEffect(() => {
+    setDefaultImg(props.childThumbImage || profile);
+  }, []);
   // Modal disable image
   useEffect(() => {
     if (modalIsOpen) {
       setCroppedThumb(null);
     }
   }, [modalIsOpen]);
-
+  useEffect(() => {
+    // alert();
+    console.log(props);
+  }, []);
   const handleBrowseClick = () => {
     inputImage.current.click();
   };
@@ -76,6 +83,7 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
         reader.onloadend = () => {
           const thumbUrl = reader.result;
           setCroppedImage(thumbUrl);
+          setDefaultImg(thumbUrl);
           const imageUrl = image;
           setImage(imageUrl);
           const thumbCanvas = document.createElement("canvas");
@@ -98,7 +106,7 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
               };
 
               closeModal();
-              onImageCrop(images);
+              props.onImageCrop(images);
             };
           });
         };
@@ -112,7 +120,7 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
       reader.readAsDataURL(event.target.files[0]);
       reader.onload = () => {
         setImage(reader.result);
-        onChangeCrop(reader.result);
+        props.onChangeCrop(reader.result);
 
         openModal();
       };
@@ -121,17 +129,17 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Cropped image:", croppedImage);
-    console.log("Cropped thumbnail:", croppedThumb);
+    // console.log("Cropped image:", croppedImage);
+    // console.log("Cropped thumbnail:", croppedThumb);
   };
-
+  console.log("childThumbImage:", props.childThumbImage);
   return (
     <form onSubmit={handleSubmit} className="">
       <div>
         <img
           htmlFor="file-input"
           className="image-style-uploader"
-          src={croppedImage || profile}
+          src={defaultImg}
           alt=""
           onClick={handleBrowseClick}
         />
@@ -228,7 +236,6 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
             </div>
           </Modal>
         </div>
-
       </div>
     </form>
   );

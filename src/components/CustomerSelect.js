@@ -134,7 +134,7 @@ export const CheckboxOption = ({ innerProps, label, isSelected }) => {
 
   const handleMouseEnter = () => {
     if (divRef.current) {
-      divRef.current.style.backgroundColor = "#e7f5f4";
+      divRef.current.style.backgroundColor = "#e7f5f4";//background color
     }
   };
 
@@ -153,7 +153,7 @@ export const CheckboxOption = ({ innerProps, label, isSelected }) => {
         display: "flex",
         alignItems: "center",
         cursor: "pointer",
-        color: isSelected ? "#6cc2bc" : "#333333",
+        color: isSelected ? "#6cc2bc" : "#red",
 
         backgroundColor: isSelected ? "#FAFAFA" : "transparent",
         borderRadius: "4px",
@@ -220,5 +220,6 @@ export const CustomMultiSelect = ({ field, categoryOptions }) => (
         />
       ),
     }}
+    
   />
 );

@@ -90,7 +90,7 @@ const ContactDetails = ({ vendorDetails }) => {
       label: "Address",
       type: "text",
     },
-  
+
     {
       id: 5,
       name: "postcode",
@@ -103,6 +103,12 @@ const ContactDetails = ({ vendorDetails }) => {
       label: "City/Region*",
       type: "text",
     },
+    {
+      id: 7,
+      name: "state", // Include the state field
+      label: "State*",
+      type: "text", // You might want to adjust this based on the actual type
+    },
   ];
 
   useEffect(() => {
@@ -110,13 +116,20 @@ const ContactDetails = ({ vendorDetails }) => {
   }, []);
 
   const onSubmit = (data) => {
-    alert(JSON.stringify(data));
     const formValues = {};
     for (const field of fieldConfig) {
       formValues[field.name] = data[field.name] || formValues[field.name];
     }
-    formValues.state = selectedState;
+
+    const selectedState = stateOptions.find(
+      (option) => option.value === data.state.value
+    );
+
+    formValues.state = selectedState ? selectedState.url : vendorDetails.state;
     formValues.vid = vendorDetails.vid;
+
+    // If you want a separate property for the state abbreviation
+
     const formValuesJSON = JSON.stringify(formValues);
     console.log("Console:", formValuesJSON);
     BusinessJS.updateBusiness(2, formValuesJSON, setInputsErrors);
@@ -197,7 +210,9 @@ const ContactDetails = ({ vendorDetails }) => {
                   <Select
                     {...field}
                     name="state"
-                    value={selectedState.state}
+                    value={stateOptions.find(
+                      (option) => option.value === field.value
+                    )}
                     defaultValue={{
                       label: vendorDetails.state,
                       value: vendorDetails.state,

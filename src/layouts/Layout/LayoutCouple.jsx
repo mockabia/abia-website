@@ -1,16 +1,27 @@
-import React from 'react'
-import CoupleTopbar from '../Couples/Sidebar/CoupleTopbar'
+import React from "react";
+import CoupleTopbar from "../Couples/Sidebar/CoupleTopbar";
+import CoupleMenu from "../sidebar/CoupleMenu";
+import { ProSidebarProvider } from "react-pro-sidebar";
+import "../css/LayoutCouple.css";
+import CoupleMenuList from "../sidebar/CoupleMenuList";
+import BusinessMenu from "../sidebar/BusinessMenu";
 
 const LayoutCouple = (props) => {
+  const { title } = props;
+
   return (
-    // <div>LayoutCouple</div>
     <div className="relative flex">
-      <CoupleTopbar />
       <div className="flex flex-1">
-        <main className="rootLayout">{props.children}</main>
+        <CoupleTopbar title={title} />
+        <CoupleMenu />
+        <main className="cRootLayout">
+          <CoupleMenuList />
+          {props.children}
+        </main>
       </div>
     </div>
+    // <div>LayoutCouple</div>
   );
-}
+};
 
-export default LayoutCouple
+export default LayoutCouple;

@@ -31,6 +31,14 @@ const schema = yup.object().shape({
   first_category: yup.string().required("Please select an option"),
   avgperyear: yup.string().required("Please select an option"),
   findus: yup.string().required("Please select an option"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(6, "Password should be 6 chars minimum"),
+  confirm_password: yup
+    .string()
+    .required("Confirm Password is required.")
+    .oneOf([yup.ref("password")], "Passwords must match"),
 });
 
 const BusinessSignup = () => {
@@ -45,6 +53,8 @@ const BusinessSignup = () => {
     first_category: "",
     avgperyear: "",
     findus: "",
+    password: "",
+    confirm_password: "",
   });
   const [registerLocation, setRegisterLocation] = useState([]);
   const [registerService, setRegisterService] = useState([]);
@@ -134,420 +144,448 @@ const BusinessSignup = () => {
   }, []);
   return (
     <>
-        <div className=" desktop-form">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            {formStep === 0 && (
-              <section className="register-container register-container-1  relative">
-                <div class=" register-page1-div1 ">
-                  <div className="register-mobile-input-section">
-                    <div className="register-counter">1/3</div>
-                    <br />
+      <div className=" desktop-form">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {formStep === 0 && (
+            <section className="register-container register-container-1  relative">
+              <div class=" register-page1-div1 ">
+                <div className="register-mobile-input-section">
+                  <div className="register-counter">1/3</div>
+                  <br />
 
-                    <div className="register-signup-header">
-                      Let's get started.
+                  <div className="register-signup-header">
+                    Let's get started.
+                    <span className="register-position-adjust">fef01</span>{" "}
+                  </div>
+                  <br />
+
+                  <div>
+                    <label className="text-[14px] font-bold">
+                      Business Name*
+                    </label>
+                    <input
+                      type="text"
+                      id="bname"
+                      name="name"
+                      className={`signup-input-style ${
+                        errors.name ? "signup-error-border" : ""
+                      }`}
+                      {...register("name")}
+                    />
+                    <p className="text-[12px] text-red-500 font-semibold mt-1">
+                      {errors.name?.message}
+                    </p>
+                  </div>
+                  <div className="mt-2">
+                    <label className="text-[14px] font-bold">
+                      Email*
                       <span className="register-position-adjust">
-                        fef01
+                        fefeefefef
                       </span>{" "}
-                    </div>
-                    <br />
-
-                    <div>
-                      <label className="text-[14px] font-bold">
-                        Business Name*
-                      </label>
-                      <input
-                        type="text"
-                        id="bname"
-                        name="name"
-                        className={`signup-input-style ${
-                          errors.name ? "signup-error-border" : ""
-                        }`}
-                        {...register("name")}
-                      />
-                      <p className="text-[12px] text-red-500 font-semibold mt-1">
-                        {errors.name?.message}
-                      </p>
-                    </div>
-                    <div className="mt-2">
-                      <label className="text-[14px] font-bold">
-                        Email*
-                        <span className="register-position-adjust">
-                          fefeefefef
-                        </span>{" "}
-                      </label>
-                      <input
-                        id="email"
-                        name="email"
-                        type="text"
-                        className={`signup-input-style ${
-                          errors.email ? "signup-error-border" : ""
-                        }`}
-                        {...register("email")}
-                      />
-                      <p className="text-[12px] text-red-500 font-semibold mt-1">
-                        {errors.email?.message}
-                      </p>
-                    </div>
-
-                    <div className="mt-2">
-                      <label className="text-[14px] font-bold">
-                        Phone*
-                        <span className="register-position-adjust">
-                          fefeefefe
-                        </span>{" "}
-                      </label>
-                      <input
-                        id="phone"
-                        inputMode="tel"
-                        type="number"
-                        name="mobile_phone"
-                        className={`signup-input-style ${
-                          errors.mobile_phone ? "signup-error-border" : ""
-                        }`}
-                        {...register("mobile_phone")}
-                      />
-                      <p className="text-[12px] text-red-500 font-semibold mt-1">
-                        {errors.mobile_phone?.message}
-                      </p>
-                    </div>
-                    <br />
-                    <div>
-                      <button
-                        type="button"
-                        className={`register-next-button ${
-                          !isValid ? "disabled" : ""
-                        }`}
-                        onClick={compleTeFormStep}
-                      >
-                        Next
-                      </button>
-                    </div>
+                    </label>
+                    <input
+                      id="email"
+                      name="email"
+                      type="text"
+                      className={`signup-input-style ${
+                        errors.email ? "signup-error-border" : ""
+                      }`}
+                      {...register("email")}
+                    />
+                    <p className="text-[12px] text-red-500 font-semibold mt-1">
+                      {errors.email?.message}
+                    </p>
                   </div>
 
-                  <br />
-                  <br />
-                  <br />
-                </div>
-
-                {/* image */}
-                <div class=" register-page1-div2"></div>
-              </section>
-            )}
-            {formStep === 1 && (
-              <section className="register-container register-container-2 relative">
-                <div class="register-page2-div1">
-                  <div className="register-mobile-input-section">
-                    <div className="register-counter">2/3</div>
-                    <br />
-                    <div className="register-signup-header">
-                      Let'smake it personal
-                    </div>
-                    <br />
-                    <div>
-                      <label className="text-[14px] font-bold">
-                        Contact Name*
-                      </label>
-                      <input
-                        id="contact_person"
-                        type="text"
-                        name="contact_person"
-                        className={`signup-input-style ${
-                          errors.contact_person ? "signup-error-border" : ""
-                        }`}
-                        {...register("contact_person")}
-                      />
-                      <p className="text-[12px] text-red-500 font-semibold mt-1">
-                        {errors.contact_person?.message}
-                      </p>
-                    </div>
-                    {/* lcoation */}
-                    <div className="mt-2">
-                      <label className="text-[14px] font-bold whitespace-nowrap">
-                        Where are you based?*
-                        <span className="register-position-adjust">
-                          fefeefefedededdd
-                        </span>{" "}
-                      </label>
-                      <div className="text-[14px]">
-                        <Controller
-                          name="state"
-                          control={control}
-                          render={({ field }) => (
-                            <Select
-                              id="state"
-                              name="state"
-                              options={registerLocation}
-                              {...field}
-                              value={selectedState}
-                              onChange={(selectedLocation) => {
-                                setSelectedState(selectedLocation);
-                                field.onChange(
-                                  selectedLocation ? selectedLocation.url : ""
-                                );
-                              }}
-                              className={`signup-input-style ${
-                                errors.state ? "signup-error-border" : ""
-                              }`}
-                              styles={CustomDropdownSelectStyles}
-                              components={{
-                                DropdownIndicator: () => (
-                                  <div>
-                                    <FontAwesomeIcon
-                                      icon={faCaretDown}
-                                      className="dropDown-position"
-                                      style={{ color: "#7c7c7c" }}
-                                    />
-                                  </div>
-                                ),
-                              }}
-                            />
-                          )}
-                        />
-                        {errors.state && (
-                          <p className="text-[12px] text-red-500 font-semibold mt-1">
-                            {errors.state.message}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    {/* services */}
-                    <div className="mt-2">
-                      <label className="text-[14px] font-bold whitespace-nowrap">
-                        Primary Services*
-                        <span className="register-position-adjust">
-                          fefeefefedededdeeded
-                        </span>{" "}
-                      </label>
-                      <div className="text-[14px]">
-                        <Controller
-                          name="first_category"
-                          control={control}
-                          render={({ field }) => (
-                            <Select
-                              id="first_category"
-                              name="first_category"
-                              options={registerService}
-                              {...field}
-                              value={selectedCategory}
-                              onChange={(selectedOption) => {
-                                setSelectedCategory(selectedOption);
-                                field.onChange(
-                                  selectedOption ? selectedOption.value : ""
-                                );
-                              }}
-                              className={`signup-input-style ${
-                                errors.first_category
-                                  ? "signup-error-border"
-                                  : ""
-                              }`}
-                              styles={CustomDropdownSelectStyles}
-                              components={{
-                                DropdownIndicator: () => (
-                                  <div>
-                                    <FontAwesomeIcon
-                                      icon={faCaretDown}
-                                      className="dropDown-position"
-                                      style={{ color: "#7c7c7c" }}
-                                    />
-                                  </div>
-                                ),
-                              }}
-                            />
-                          )}
-                        />
-                        {errors.first_category && (
-                          <p className="text-[12px] text-red-500 font-semibold mt-1">
-                            {errors.first_category.message}
-                          </p>
-                        )}
-                      </div>
-                      {/* <input id="number" type="tel" className="signup-input-style" /> */}
-                    </div>
-
-                    <br />
-                    <div className="flex items-center gap-3">
-                      <AiOutlineArrowLeft
-                        size={34}
-                        fill="#b8b8b8"
-                        className="cursor-pointer"
-                        onClick={prevStep}
-                      />
-                      <button
-                        // disabled={!isValid}
-                        type="button"
-                        className="register-next-button"
-                        onClick={compleTeFormStep}
-                      >
-                        Next
-                      </button>
-                      <div className="blank-div ">ABCD</div>
-                    </div>
-                  </div>
-
-                  <br />
-                  <br />
-                  <br />
-                </div>
-
-                {/* image */}
-                <div class="register-page2-div2"></div>
-              </section>
-            )}
-
-            {formStep === 2 && (
-              <section className="register-container register-container-3 relative">
-                <div class="register-page3-div1">
-                  <div className="register-mobile-input-section">
-                    <div className="register-counter">3/3</div>
-                    <br />
-                    <div className="register-signup-header">
-                      Last, but not least
+                  <div className="mt-2">
+                    <label className="text-[14px] font-bold">
+                      Phone*
                       <span className="register-position-adjust">
-                        fef01
+                        fefeefefe
                       </span>{" "}
-                    </div>
-                    <br />
-                    {/* webiste */}
-                    <div>
-                      <label className="text-[14px] font-bold">
-                        Website*
-                        <span className="register-position-adjust">
-                          fefeef
-                        </span>{" "}
-                      </label>
-                      <input
-                        id="website"
-                        type="text"
-                        name="website"
-                        className="signup-input-style"
-                        {...register("website")}
+                    </label>
+                    <input
+                      id="phone"
+                      inputMode="tel"
+                      type="number"
+                      name="mobile_phone"
+                      className={`signup-input-style ${
+                        errors.mobile_phone ? "signup-error-border" : ""
+                      }`}
+                      {...register("mobile_phone")}
+                    />
+                    <p className="text-[12px] text-red-500 font-semibold mt-1">
+                      {errors.mobile_phone?.message}
+                    </p>
+                  </div>
+                  <br />
+                  <div>
+                    <button
+                      type="button"
+                      className={`register-next-button ${
+                        !isValid ? "disabled" : ""
+                      }`}
+                      onClick={compleTeFormStep}
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+
+                <br />
+                <br />
+                <br />
+              </div>
+
+              {/* image */}
+              <div class=" register-page1-div2"></div>
+            </section>
+          )}
+          {formStep === 1 && (
+            <section className="register-container register-container-2 relative">
+              <div class="register-page2-div1">
+                <div className="register-mobile-input-section">
+                  <div className="register-counter">2/3</div>
+                  <br />
+                  <div className="register-signup-header">
+                    Let'smake it personal
+                  </div>
+                  <br />
+                  <div>
+                    <label className="text-[14px] font-bold">
+                      Contact Name*
+                    </label>
+                    <input
+                      id="contact_person"
+                      type="text"
+                      name="contact_person"
+                      className={`signup-input-style ${
+                        errors.contact_person ? "signup-error-border" : ""
+                      }`}
+                      {...register("contact_person")}
+                    />
+                    <p className="text-[12px] text-red-500 font-semibold mt-1">
+                      {errors.contact_person?.message}
+                    </p>
+                  </div>
+                  {/* lcoation */}
+                  <div className="mt-2">
+                    <label className="text-[14px] font-bold whitespace-nowrap">
+                      Where are you based?*
+                      <span className="register-position-adjust">
+                        fefeefefedededdd
+                      </span>{" "}
+                    </label>
+                    <div className="text-[14px]">
+                      <Controller
+                        name="state"
+                        control={control}
+                        render={({ field }) => (
+                          <Select
+                            id="state"
+                            name="state"
+                            options={registerLocation}
+                            {...field}
+                            value={selectedState}
+                            onChange={(selectedLocation) => {
+                              setSelectedState(selectedLocation);
+                              field.onChange(
+                                selectedLocation ? selectedLocation.url : ""
+                              );
+                            }}
+                            className={`signup-input-style ${
+                              errors.state ? "signup-error-border" : ""
+                            }`}
+                            styles={CustomDropdownSelectStyles}
+                            components={{
+                              DropdownIndicator: () => (
+                                <div>
+                                  <FontAwesomeIcon
+                                    icon={faCaretDown}
+                                    className="dropDown-position"
+                                    style={{ color: "#7c7c7c" }}
+                                  />
+                                </div>
+                              ),
+                            }}
+                          />
+                        )}
                       />
+                      {errors.state && (
+                        <p className="text-[12px] text-red-500 font-semibold mt-1">
+                          {errors.state.message}
+                        </p>
+                      )}
                     </div>
-                    {/* bookings */}
-                    <div className="mt-2">
-                      <label className="text-[14px] font-bold">
-                        # of weddings booked this year?
-                        <span className="register-position-adjust">
-                          fefeedl
-                        </span>{" "}
-                      </label>
-                      <div className="text-[14px]">
-                        <Controller
-                          name="avgperyear"
-                          control={control}
-                          render={({ field }) => (
-                            <Select
-                              id="avgperyear"
-                              name="avgperyear"
-                              options={registerBooking}
-                              {...field}
-                              value={selectedBooking}
-                              onChange={(selectedLocation) => {
-                                setSelectedBooking(selectedLocation);
-                                field.onChange(
-                                  selectedLocation ? selectedLocation.value : ""
-                                );
-                              }}
-                              className={`signup-input-style ${
-                                errors.avgperyear ? "signup-error-border" : ""
-                              }`}
-                              styles={CustomDropdownSelectStyles}
-                              components={{
-                                DropdownIndicator: () => (
-                                  <div>
-                                    <FontAwesomeIcon
-                                      icon={faCaretDown}
-                                      className="dropDown-position"
-                                      style={{ color: "#7c7c7c" }}
-                                    />
-                                  </div>
-                                ),
-                              }}
-                            />
-                          )}
-                        />
-                      </div>
-                    </div>
-
-                    {/* find us */}
-                    <div className="mt-2">
-                      <label className="text-[14px] font-bold">
-                        How did you find us?
-                        <span className="register-position-adjust">
-                          fefeefefefefelelee
-                        </span>{" "}
-                      </label>
-                      <div className="text-[14px]">
-                        <Controller
-                          name="findus"
-                          control={control}
-                          render={({ field }) => (
-                            <Select
-                              id="findus"
-                              name="findus"
-                              options={registerFindUs}
-                              {...field} // This spreads the field object to control the input
-                              value={selectedFindUs}
-                              onChange={(selectedLocation) => {
-                                setSelectedFindUs(selectedLocation);
-                                field.onChange(
-                                  selectedLocation ? selectedLocation.value : ""
-                                );
-                              }}
-                              className={`signup-input-style ${
-                                errors.findus ? "signup-error-border" : ""
-                              }`}
-                              styles={CustomDropdownSelectStyles}
-                              components={{
-                                DropdownIndicator: () => (
-                                  <div>
-                                    <FontAwesomeIcon
-                                      icon={faCaretDown}
-                                      className="dropDown-position"
-                                      style={{ color: "#7c7c7c" }}
-                                    />
-                                  </div>
-                                ),
-                              }}
-                            />
-                          )}
-                        />
-                      </div>
-                    </div>
-                    <br />
-                    {submitCount > 0 && !isValid && (
-                      <p className="text-red-500 font-semibold">
-                        ! Please enter the valid details.
-                      </p>
-                    )}
-                    <br />
-
-                    <div className="flex items-center gap-3">
-                      <AiOutlineArrowLeft
-                        size={34}
-                        fill="#b8b8b8"
-                        className="cursor-pointer"
-                        onClick={prevStep}
+                  </div>
+                  {/* services */}
+                  <div className="mt-2">
+                    <label className="text-[14px] font-bold whitespace-nowrap">
+                      Primary Services*
+                      <span className="register-position-adjust">
+                        fefeefefedededdeeded
+                      </span>{" "}
+                    </label>
+                    <div className="text-[14px]">
+                      <Controller
+                        name="first_category"
+                        control={control}
+                        render={({ field }) => (
+                          <Select
+                            id="first_category"
+                            name="first_category"
+                            options={registerService}
+                            {...field}
+                            value={selectedCategory}
+                            onChange={(selectedOption) => {
+                              setSelectedCategory(selectedOption);
+                              field.onChange(
+                                selectedOption ? selectedOption.value : ""
+                              );
+                            }}
+                            className={`signup-input-style ${
+                              errors.first_category ? "signup-error-border" : ""
+                            }`}
+                            styles={CustomDropdownSelectStyles}
+                            components={{
+                              DropdownIndicator: () => (
+                                <div>
+                                  <FontAwesomeIcon
+                                    icon={faCaretDown}
+                                    className="dropDown-position"
+                                    style={{ color: "#7c7c7c" }}
+                                  />
+                                </div>
+                              ),
+                            }}
+                          />
+                        )}
                       />
-
-                      <button type="submit" className="register-next-button">
-                        Submit
-                      </button>
-                      <div className="blank-div ">ABCD</div>
+                      {errors.first_category && (
+                        <p className="text-[12px] text-red-500 font-semibold mt-1">
+                          {errors.first_category.message}
+                        </p>
+                      )}
                     </div>
+                    {/* <input id="number" type="tel" className="signup-input-style" /> */}
                   </div>
 
                   <br />
-                  <br />
-                  <br />
+                  <div className="flex items-center gap-3">
+                    <AiOutlineArrowLeft
+                      size={34}
+                      fill="#b8b8b8"
+                      className="cursor-pointer"
+                      onClick={prevStep}
+                    />
+                    <button
+                      // disabled={!isValid}
+                      type="button"
+                      className="register-next-button"
+                      onClick={compleTeFormStep}
+                    >
+                      Next
+                    </button>
+                    <div className="blank-div ">ABCD</div>
+                  </div>
                 </div>
 
-                {/* image */}
-                <div class="register-page3-div2"></div>
-              </section>
-            )}
-          </form>
-        </div>
+                <br />
+                <br />
+                <br />
+              </div>
+
+              {/* image */}
+              <div class="register-page2-div2"></div>
+            </section>
+          )}
+
+          {formStep === 2 && (
+            <section className="register-container register-container-3 relative">
+              <div class="register-page3-div1">
+                <div className="register-mobile-input-section">
+                  <div className="register-counter">3/3</div>
+                  <div className="register-signup-header">
+                    Last, but not least
+                    <span className="register-position-adjust">fef01</span>{" "}
+                  </div>
+                  <br />
+                  {/* webiste */}
+                  <div>
+                    <label className="text-[14px] font-bold">
+                      Website
+                      <span className="register-position-adjust">
+                        fefeef
+                      </span>{" "}
+                    </label>
+                    <input
+                      id="website"
+                      type="text"
+                      name="website"
+                      className="signup-input-style"
+                      {...register("website")}
+                    />
+                  </div>
+                  {/* bookings */}
+                  <div className="mt-2">
+                    <label className="text-[14px] font-bold">
+                      # of weddings booked this year?
+                      <span className="register-position-adjust">
+                        fefeedl
+                      </span>{" "}
+                    </label>
+                    <div className="text-[14px]">
+                      <Controller
+                        name="avgperyear"
+                        control={control}
+                        render={({ field }) => (
+                          <Select
+                            id="avgperyear"
+                            name="avgperyear"
+                            options={registerBooking}
+                            {...field}
+                            value={selectedBooking}
+                            onChange={(selectedLocation) => {
+                              setSelectedBooking(selectedLocation);
+                              field.onChange(
+                                selectedLocation ? selectedLocation.value : ""
+                              );
+                            }}
+                            className={`signup-input-style ${
+                              errors.avgperyear ? "signup-error-border" : ""
+                            }`}
+                            styles={CustomDropdownSelectStyles}
+                            components={{
+                              DropdownIndicator: () => (
+                                <div>
+                                  <FontAwesomeIcon
+                                    icon={faCaretDown}
+                                    className="dropDown-position"
+                                    style={{ color: "#7c7c7c" }}
+                                  />
+                                </div>
+                              ),
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
+                  </div>
+
+                  {/* find us */}
+                  <div className="mt-2">
+                    <label className="text-[14px] font-bold">
+                      How did you find us?
+                      <span className="register-position-adjust">
+                        fefeefefefefelelee
+                      </span>{" "}
+                    </label>
+                    <div className="text-[14px]">
+                      <Controller
+                        name="findus"
+                        control={control}
+                        render={({ field }) => (
+                          <Select
+                            id="findus"
+                            name="findus"
+                            options={registerFindUs}
+                            {...field} // This spreads the field object to control the input
+                            value={selectedFindUs}
+                            onChange={(selectedLocation) => {
+                              setSelectedFindUs(selectedLocation);
+                              field.onChange(
+                                selectedLocation ? selectedLocation.value : ""
+                              );
+                            }}
+                            className={`signup-input-style ${
+                              errors.findus ? "signup-error-border" : ""
+                            }`}
+                            styles={CustomDropdownSelectStyles}
+                            components={{
+                              DropdownIndicator: () => (
+                                <div>
+                                  <FontAwesomeIcon
+                                    icon={faCaretDown}
+                                    className="dropDown-position"
+                                    style={{ color: "#7c7c7c" }}
+                                  />
+                                </div>
+                              ),
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
+                  </div>
+                  {/* password */}
+                  <div className="mt-2">
+                    <label className="text-[14px] font-bold">
+                      Password*
+                      <span className="register-position-adjust">
+                        fefeef
+                      </span>{" "}
+                    </label>
+                    <input
+                      type="password"
+                      name="password"
+                      className="signup-input-style"
+                      {...register("password")}
+                    />
+                    <p className="text-[14px] text-red-500 font-semibold mt-1">
+                      {errors.password?.message}
+                    </p>
+                  </div>
+                  {/*repeat password */}
+                  <div className="mt-2">
+                    <label className="text-[14px] font-bold">
+                      Repeat Password*
+                      <span className="register-position-adjust">
+                        fefeef
+                      </span>{" "}
+                    </label>
+                    <input
+                      type="password"
+                      name="confirm_password"
+                      className="signup-input-style"
+                      {...register("confirm_password")}
+                    />
+                    <p className="text-[14px] text-red-500 font-semibold mt-1">
+                      {errors.confirm_password?.message}
+                    </p>
+                  </div>
+                  <br />
+                  {submitCount > 0 && !isValid && (
+                    <p className="text-red-500 font-semibold">
+                      ! Please enter the valid details.
+                    </p>
+                  )}
+                  <br />
+
+                  <div className="flex items-center gap-3">
+                    <AiOutlineArrowLeft
+                      size={34}
+                      fill="#b8b8b8"
+                      className="cursor-pointer"
+                      onClick={prevStep}
+                    />
+                    <button type="submit" className="register-next-button">
+                      Submit
+                    </button>
+                    <div className="blank-div ">ABCD</div>
+                  </div>
+                </div>
+
+                <br />
+                <br />
+                <br />
+              </div>
+
+              {/* image */}
+              <div class="register-page3-div2"></div>
+            </section>
+          )}
+        </form>
+      </div>
     </>
   );
 };

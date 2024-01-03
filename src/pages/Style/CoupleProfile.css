@@ -1,0 +1,80 @@
+.couple-page-header {
+    font-size: 20px;
+    font-family:"Raleway" ;
+}
+
+
+
+.couple-save-button {            
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 3rem;
+    border-radius: 30px;
+    background-color: #6cc2bc;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.couple-contact-container {
+    display: flex;
+}
+
+
+
+/* ********couple menu list ****************/
+.couple-menulist {
+    display: none;
+}
+.couplemenuList-style {
+    font-size: 14px;
+    margin-bottom: 1rem;
+}
+
+
+.couplemenuList-style:hover,
+.couplemenuList-style:active,
+.couplemenuList-style:focus,
+.couplemenuList-style.active-link {
+    font-weight: 600;
+}
+
+@media (min-width:1100px) {
+    .couple-menulist {
+        display: block;
+        width: 12rem;
+        margin-left: 3rem;
+    }
+}
+/*************************************/
+.couple-page-header {
+    font-size: 32px;
+    font-weight: 600;
+
+}
+
+
+.couple-menuList-box {
+    width: 13rem;
+    /* text-align: center; */
+    /* border-bottom: 1px solid #d7d7d7; */
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+    font-weight: 600;
+    font-size: 16px;
+}
+.couple-menuList-header {
+    font-weight: 900;
+    font-size: 14px;
+    background-color: #fff;
+    text-decoration: underline;
+}
+
+
+.error-text {
+    font-size: 12px;
+    color: red;
+}

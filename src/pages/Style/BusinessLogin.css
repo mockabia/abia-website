@@ -3,7 +3,7 @@
 
 
 .login-main-container {
-    height: auto;
+    height: 100vh;
     position: relative;
     display: flex;
     flex-direction: column;

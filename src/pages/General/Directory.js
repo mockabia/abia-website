@@ -6,14 +6,13 @@ import Cards from "./GeneralDirectory/Cards";
 import CardGrid from "./GeneralDirectory/Cards";
 import { useState } from "react";
 import BottomFilter from "../../components/layouts/BottomFilter";
-// import * as servicesPage from "../../services/vendor/signupPageService";
 import "../Style/GeneralDirectory.css";
 
 const Directory = () => {
   const [mainCity, setMainCity] = useState(null);
   const [suburb, setSubUrb] = useState(null);
 
-  console.log("Index city:", mainCity);
+  // console.log("Index city:", mainCity);
   const handleIndeCity = (newValue) => {
     setMainCity(newValue);
     // onChangeCityDir(newValue);

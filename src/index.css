@@ -63,6 +63,7 @@ h6 {
   font-size: 12px;
   line-height: 18px
 }
+
 h7 {
   font-size: 10px;
   line-height: 16px
@@ -84,12 +85,12 @@ label {
   line-height: 18px;
 }
 
+
  .mainHeader {
     font-size: 22px;
     font-weight: 800;
     line-height: 26px;
  }
-
 
 
  .sidebarMenuItem {
@@ -108,6 +109,7 @@ label {
     font-family: 'Source Sans 3', sans-serif;
 }
 
+.
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -118,3 +120,23 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+/* STYLE GUIDE */
+:root {
+  --search-icon-fill: #B7B7B7;
+  --navbar-icon-fill: #B7B7B7;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --navbar-icon-fill: #fff;
+  }
+}
+
+
+number {
+  font-family: "Source-sans-pro";
+  font-weight: 600;
+  font-size: 14px;
+}
+
