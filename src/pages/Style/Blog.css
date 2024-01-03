@@ -19,11 +19,14 @@ margin: 1rem auto;
     font-family: 'Playfair Display', serif;
     font-size: 30px;
     font-weight: 500;
-    margin: 30px;
-    text-align: center;
+    margin: 1rem;
+    /* text-align: center; */
 }
 
 @media(min-width:600px) {
+.main-header {
+    margin-left: 0;
+}
 .mobile-content {
         display: none;
     }
@@ -92,7 +95,10 @@ margin: 1rem auto;
 
 
 @media(min-width:1024px) {
-
+.main-header {
+        margin-left: 0;
+        margin-bottom: 2rem;
+    }
     .blog-content {
         display: block;
         padding: 1rem 6rem;
