@@ -47,10 +47,10 @@ export function DatePickerProfile({
 }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Box sx={{ display: "flex", flexDirection: "column" }} gap="5px">
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
         <label>
           {label}
-          <span style={{ color: "red", fontSize: "16px" }}>*</span>
+          <span className="star">*</span>
         </label>
         <DatePickerStype
           format="DD-MM-YYYY"

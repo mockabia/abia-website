@@ -111,9 +111,9 @@ const CoupleContact = () => {
               <h2>Contact Details</h2>
               {/* FULL NAME */}
               <Box sx={MuiBoxStyles}>
-                <label>
+                <label className="mb-[5px]">
                   Your Full Name
-                  <span style={{ color: "red", fontSize: "16px" }}>*</span>
+                  <span className="star">*</span>
                 </label>
                 <CoupleCommonInput
                   name="bride"
@@ -129,9 +129,9 @@ const CoupleContact = () => {
               </Box>
               {/* PARTNER NAME */}
               <Box sx={MuiBoxStyles}>
-                <label>
+                <label className="mb-[5px]">
                   Partner's Name
-                  <span style={{ color: "red", fontSize: "16px" }}>*</span>
+                  <span className="star">*</span>
                 </label>
                 <CoupleCommonInput
                   name="groom"
@@ -147,9 +147,9 @@ const CoupleContact = () => {
               </Box>
               {/* Mobile */}
               <Box sx={MuiBoxStyles}>
-                <label>
+                <label className="mb-[5px]">
                   Mobile
-                  <span style={{ color: "red", fontSize: "16px" }}>*</span>
+                  <span className="star">*</span>
                 </label>
                 <CoupleCommonInput
                   name="phone"
@@ -166,9 +166,9 @@ const CoupleContact = () => {
               </Box>
               {/* EMAIL */}
               <Box sx={MuiBoxStyles}>
-                <label>
+                <label className="mb-[5px]">
                   Email Address
-                  <span style={{ color: "red", fontSize: "16px" }}>*</span>
+                  <span className="star">*</span>
                 </label>
                 <CoupleCommonInput
                   name="email"

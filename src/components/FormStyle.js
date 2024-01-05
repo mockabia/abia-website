@@ -424,10 +424,12 @@ export const StepperStyle = styled(Stepper)(({ theme }) => ({
 export const ButtonStyle = styled(Button)(({ theme, isActive }) => ({
   display: "flex",
   justifyContent: "start",
+  alignItems: "center",
   border: isActive ? "1px solid black" : "1px solid #B7B7B7",
   borderRadius: "1rem",
   width: "100%",
   height: "3rem",
+  padding: "28px",
   marginBottom: "1.5rem",
   backgroundColor: isActive ? "#f3f3f3" : "transparent",
   "&:hover": {
@@ -479,8 +481,7 @@ export const LeftAlignedTypography = styled(Typography)({
   textAlign: "left",
   paddingLeft: "1rem",
   fontFamily: "Raleway",
-  textTransform: "capitalize",
-  color: "#0e0e0e",
+  textTransform: "initial",
   fontWeight: "600",
 });
 
@@ -506,6 +507,35 @@ export const CheckBoxStyle = styled(Checkbox)({
 });
 
 export const CSTextfield = styled(TextField)({
+  "& .MuiTextField-root": {
+    fontFamily: "Raleway",
+    height: "45px",
+    width: "100%",
+    maxWidth: "22rem",
+    boxShadow: "none",
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+    // border: "1px solid #c3bebe",
+  },
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+    fontSize: "14px",
+    "& > fieldset": { borderColor: "#c3bebe" },
+    "&:hover fieldset": {
+      borderColor: "#c3bebe",
+    },
+  },
+  "& .MuiFormHelperText-root": {
+    border: "none",
+    marginLeft: "0rem",
+  },
+  "& .Mui-focused": {
+    boxShadow: "0 0 0 1px #c3bebe",
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+  },
   "& .MuiFormLabel-root ": {
     fontFamily: "Raleway",
   },
@@ -615,6 +645,7 @@ export const NavMenuStyle = styled(Button)(({ theme }) => ({
 export const CSmenuItemStyle = {
   fontWeight: "500",
   fontFamily: "Raleway",
+  fontSize:"14px"
 
   // Add other styles as needed
 };
@@ -812,8 +843,8 @@ export const CoupleInput = styled(TextField)(({ theme }) => ({
   },
   "& .MuiTextField-root": {
     fontFamily: "Raleway",
-    height: "50px",
-    width: "15rem",
+    height: "45px",
+    width: "100%",
     maxWidth: "22rem",
     boxShadow: "none",
     borderRadius: "10px",
@@ -822,6 +853,7 @@ export const CoupleInput = styled(TextField)(({ theme }) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
     fontFamily: "Raleway",
+    fontSize: "14px",
     "& > fieldset": { borderColor: "#c3bebe" },
     "&:hover fieldset": {
       borderColor: "#c3bebe",
@@ -845,7 +877,7 @@ export const CoupleInput = styled(TextField)(({ theme }) => ({
 export const CoupleCommonInput = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
     fontFamily: "Raleway",
-    height: "50px",
+    height: "45px",
     width: "100%",
     maxWidth: "22rem",
     boxShadow: "none",
@@ -856,6 +888,7 @@ export const CoupleCommonInput = styled(TextField)(({ theme }) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
     fontFamily: "Raleway",
+    fontSize: "14px",
     "& > fieldset": { borderColor: "#c3bebe" },
     "&:hover fieldset": {
       borderColor: "#c3bebe",
@@ -913,7 +946,7 @@ export const SearchInputStyle = styled(TextField)(({ theme }) => ({
 export const MuiBoxStyles = {
   display: "flex",
   flexDirection: "column",
-  gap: "5px",
+  // gap: "5px",
 };
 
 export const CoupleSelectStyle = {
@@ -940,7 +973,7 @@ export const CoupleSelectStyle = {
       maxWidth: "30rem",
     },
     "@media (min-width: 1100px)": {
-      width: "12.75rem",
+      width: "11.5rem",
       maxWidth: "30rem",
     },
   }),
@@ -1093,7 +1126,6 @@ export const BlackSmallButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-
 export const BudgetInput = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
     fontFamily: "Raleway",
@@ -1106,8 +1138,8 @@ export const BudgetInput = styled(TextField)(({ theme }) => ({
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    height:"46px",
-    width:"11rem",
+    height: "46px",
+    width: "11rem",
     fontFamily: "Source",
     "& > fieldset": { borderColor: "#c3bebe" },
     "&:hover fieldset": {

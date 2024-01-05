@@ -162,7 +162,7 @@ const CoupleWeddingDetails = () => {
                   maxWidth: "30rem",
                 },
                 "@media (min-width: 1100px)": {
-                  width: "31rem",
+                  width: "28rem",
                   maxWidth: "35rem",
                 },
               }}
@@ -319,7 +319,7 @@ const CoupleWeddingDetails = () => {
                 <Box sx={MuiBoxStyles}>
                   <label>
                     Estimate Budget
-                    <span style={{ color: "red", fontSize: "16px" }}>*</span>
+                    <span className="star">*</span>
                   </label>
                   <CoupleInput
                     name="budget"

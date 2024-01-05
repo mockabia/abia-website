@@ -140,3 +140,8 @@ number {
   font-size: 14px;
 }
 
+/* star - important */
+.star {
+  color: red;
+  font-size: 16px;
+}

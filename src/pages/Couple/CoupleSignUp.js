@@ -39,8 +39,10 @@ import {
   CheckBoxStyle,
   CSTextfield,
   CSmenuItemStyle,
+  CoupleCommonInput,
 } from "../../components/FormStyle";
 import * as CoupleJS from "../Couple/Couple";
+import { DatePickerProfile } from "../../components/DatePickerProfile";
 
 const steps = ["Let’s Begin", "The Basics", "Final Touches"];
 
@@ -325,7 +327,7 @@ export default function CouplesSignUp() {
                   </h5>
                 </div>
 
-                <div className="flex justify-center mt-2">
+                <div className="privacy-section ">
                   <h5 className="text-[12px]">
                     By creating your ABIA's account you agree to our{" "}
                     <Link>
@@ -384,40 +386,55 @@ export default function CouplesSignUp() {
                 </div>
                 <Box>
                   <Box className="cs-textfield-flex">
-                    <TextField
-                      name="bride"
-                      className="cs-textfield"
-                      id="demo-helper-text-aligned"
-                      label="Full Name*"
-                      value={formValues.bride}
-                      onChange={(e) =>
-                        handleInputChange("bride", e.target.value)
-                      }
-                      error={errors.bride}
-                    />
-                    <CSTextfield
-                      name="groom"
-                      className="cs-textfield"
-                      id="demo-helper-text-aligned"
-                      label="Partner's Name*"
-                      value={formValues.groom}
-                      onChange={(e) =>
-                        handleInputChange("groom", e.target.value)
-                      }
-                      error={errors.groom}
-                    />
+                    <div>
+                      <label>
+                        Full Name<span className="star">*</span>
+                      </label>
+                      <CSTextfield
+                        name="bride"
+                        className="cs-textfield"
+                        id="demo-helper-text-aligned"
+                        value={formValues.bride}
+                        onChange={(e) =>
+                          handleInputChange("bride", e.target.value)
+                        }
+                        error={errors.bride}
+                      />
+                    </div>
+
+                    <div>
+                      <label>
+                        Partner's Name<span className="star">*</span>
+                      </label>
+                      <CSTextfield
+                        name="groom"
+                        className="cs-textfield"
+                        id="demo-helper-text-aligned"
+                        value={formValues.groom}
+                        onChange={(e) =>
+                          handleInputChange("groom", e.target.value)
+                        }
+                        error={errors.groom}
+                      />
+                    </div>
                   </Box>
                   <br />
                   <Box className="cs-textfield-flex">
-                    {/* {!checkboxChecked && ( */}
-                    <DatePickerCouple
-                      name="wedding_date"
-                      label="Preferred Wedding Date*"
-                      value={formValues.wedding_date}
-                      dateError={checkboxChecked ? "" : errors.wedding_date}
-                      handleDateChange={handleDateChange}
-                      checkboxChecked={checkboxChecked}
-                    />
+                    <div className="flex flex-col gap-[5px]">
+                      <label>
+                        Preferred Wedding Date<span className="star">*</span>
+                      </label>
+                      {/* {!checkboxChecked && ( */}
+                      <DatePickerCouple
+                        name="wedding_date"
+                        label="Preferred Wedding Date"
+                        value={formValues.wedding_date}
+                        dateError={checkboxChecked ? "" : errors.wedding_date}
+                        handleDateChange={handleDateChange}
+                        checkboxChecked={checkboxChecked}
+                      />
+                    </div>
+
                     {/* )} */}
 
                     <FormControlLabel
@@ -447,11 +464,12 @@ export default function CouplesSignUp() {
                   </Box>
                   <br />
                   <Box>
+                    <label>
+                      Wedding State<span className="star">*</span>
+                    </label>
                     <CSTextfield
-                      name="wedding_state"
                       select
                       className="cs-textfield-2"
-                      label="Wedding State*"
                       id="reddit-input"
                       SelectProps={{ IconComponent: () => null }}
                       onChange={(e) =>
@@ -496,7 +514,7 @@ export default function CouplesSignUp() {
                       </Link>
                     </h5>
                   </div>
-                  <div className="flex justify-center mt-1">
+                  <div className="privacy-section">
                     <h5 className="text-[12px]">
                       By creating your ABIA's account you agree to our{" "}
                       <Link>
@@ -563,30 +581,40 @@ export default function CouplesSignUp() {
                   </h1>
                 </div>
                 <Stack spacing={3}>
-                  <CSTextfield
-                    name="email"
-                    type="email"
-                    className="cs-textfield-2"
-                    id="demo-helper-text-aligned"
-                    label="Email*"
-                    value={formValues.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
-                    error={errors.email}
-                    helperText={errors.email}
-                  />
-                  <CSTextfield
-                    name="password"
-                    type="password"
-                    className="cs-textfield-2"
-                    id="demo-helper-text-aligned"
-                    label="Password*"
-                    value={formValues.password}
-                    onChange={(e) =>
-                      handleInputChange("password", e.target.value)
-                    }
-                    error={errors.password}
-                    helperText={errors.password}
-                  />
+                  <div>
+                    <label>
+                      Email<span className="star">*</span>
+                    </label>
+                    <CSTextfield
+                      name="email"
+                      type="email"
+                      className="cs-textfield-2"
+                      id="demo-helper-text-aligned"
+                      value={formValues.email}
+                      onChange={(e) =>
+                        handleInputChange("email", e.target.value)
+                      }
+                      error={errors.email}
+                      helperText={errors.email}
+                    />
+                  </div>
+                  <div>
+                    <label>
+                      Password<span className="star">*</span>
+                    </label>
+                    <CSTextfield
+                      name="password"
+                      type="password"
+                      className="cs-textfield-2"
+                      id="demo-helper-text-aligned"
+                      value={formValues.password}
+                      onChange={(e) =>
+                        handleInputChange("password", e.target.value)
+                      }
+                      error={errors.password}
+                      helperText={errors.password}
+                    />
+                  </div>
 
                   {/* <Box
                     sx={{
@@ -630,7 +658,7 @@ export default function CouplesSignUp() {
                     </h5>
                   </div>
 
-                  <div className="flex justify-center mt-2">
+                  <div className="privacy-section">
                     <h5 className="text-[12px]">
                       By creating your ABIA's account you agree to our{" "}
                       <Link>
@@ -701,43 +729,39 @@ export default function CouplesSignUp() {
                           xs: "100%",
                           md: "31rem",
                         },
+                        padding: "0",
                       }}
                     >
-                      <Grid container spacing={2}>
-                        {marketingOptions.map((option, index) => (
-                          <Grid
-                            item
-                            xs={6}
-                            sm={6}
-                            md={6}
-                            lg={6}
-                            xl={6}
-                            key={index}
-                            direction="column"
-                          >
-                            <FormControlLabel
-                              control={
-                                <Checkbox
-                                  value={option.value}
-                                  // checked={marketingSelect.includes(
-                                  //   option.value
-                                  // )}
-                                  checked={marketingSelect[option.value]}
-                                  // onChange={handleMarketingChange}
-                                  onChange={(e) =>
-                                    handleMarketingChange(e, index)
-                                  }
-                                />
-                              }
-                              label={
-                                <Typography sx={{ whiteSpace: "normal" }}>
-                                  {option.label}
-                                </Typography>
-                              }
+                      {/* <Grid container spacing={2}> */}
+                      {marketingOptions.map((option, index) => (
+                        <FormControlLabel
+                          style={{
+                            margin: "0",
+                          }}
+                          control={
+                            <CheckBoxStyle
+                              value={option.value}
+                              // checked={marketingSelect.includes(
+                              //   option.value
+                              // )}
+                              checked={marketingSelect[option.value]}
+                              // onChange={handleMarketingChange}
+                              onChange={(e) => handleMarketingChange(e, index)}
                             />
-                          </Grid>
-                        ))}
-                      </Grid>
+                          }
+                          label={
+                            <Typography
+                              sx={{
+                                whiteSpace: "normal",
+                                fontFamily: "Raleway",
+                                fontSize: "14px",
+                              }}
+                            >
+                              {option.label}
+                            </Typography>
+                          }
+                        />
+                      ))}
                     </FormGroup>
                   </FormControl>
 
@@ -766,7 +790,7 @@ export default function CouplesSignUp() {
                     </h5>
                   </div>
 
-                  <div className="flex justify-center mt-2">
+                  <div className="privacy-section">
                     <h5 className="text-[12px]">
                       By creating your ABIA's account you agree to our{" "}
                       <Link>

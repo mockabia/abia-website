@@ -12,11 +12,36 @@ const DatePickerStype = styled(MobileDatePicker)(({ theme }) => ({
 }));
 
 const TextFieldCouple = styled(TextField)(({ theme }) => ({
-  "& .MuiInputBase-root": {
+  "& .MuiTextField-root": {
+    fontFamily: "Raleway",
+    height: "45px",
     width: "100%",
-    // maxWidth: " 12rem",
+    maxWidth: "22rem",
+    boxShadow: "none",
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+    // border: "1px solid #c3bebe",
   },
-  "& .MuiInputLabel-root": {
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+    fontSize: "14px",
+    "& > fieldset": { borderColor: "#c3bebe" },
+    "&:hover fieldset": {
+      borderColor: "#c3bebe",
+    },
+  },
+  "& .MuiFormHelperText-root": {
+    border: "none",
+    marginLeft: "0rem",
+  },
+  "& .Mui-focused": {
+    boxShadow: "0 0 0 1px #c3bebe",
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+  },
+  "& .MuiFormLabel-root ": {
     fontFamily: "Raleway",
   },
   [`@media (min-width: 1024px)`]: {
@@ -27,7 +52,7 @@ const TextFieldCouple = styled(TextField)(({ theme }) => ({
   },
   [`@media (min-width: 1300px)`]: {
     "& .MuiInputBase-root": {
-      width: "15rem",
+      width: "14.5rem",
       maxWidth: " 16rem",
     },
   },
@@ -59,7 +84,8 @@ export function DatePickerCouple({
       <DatePickerStype
         value={value}
         name={name}
-        label={label}
+        format="dd/MM/yyyy"
+        // label={label}
         onChange={(date) => handleDateChange(name, date)}
         // disabled="true"
         disablePast
