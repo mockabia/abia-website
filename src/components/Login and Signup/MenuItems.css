@@ -73,7 +73,11 @@
 
 .mobile-menu-item {
     display: flex;
-    margin-bottom: 1rem;
+    margin-left: 1rem;
+    /* margin-bottom: 1rem; */
+}
+.submenu-item {
+    padding: 5px;
 }
 
 

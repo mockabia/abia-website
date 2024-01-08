@@ -456,10 +456,10 @@ export const NextButtonStyle = styled(Button)(({ theme }) => ({
   borderRadius: "2rem",
   width: "100%",
   height: "3.5rem",
-  backgroundColor: "#b7b7b7",
+  backgroundColor: "#6cc2bc",
   border: "none",
   "&:hover": {
-    backgroundColor: "#b7b7b7",
+    backgroundColor: "#6cc2bc",
     border: "none",
     // border: "1px solid black",
   },

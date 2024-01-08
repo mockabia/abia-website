@@ -11,23 +11,29 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { AiFillCaretDown } from "react-icons/ai";
+import Modal from "@mui/material/Modal";
 import styled from "@emotion/styled";
+import CouplesLogin from "../../pages/Couple/CouplesLogin";
+import { Box } from "@mui/material";
 
-// const CoupleInput = styled(TextField)(({ theme }) => ({
-
-// const AccordionMenuStyle = styled(Accordion)(({ theme }) => ({
-//   "& .MuiAccordion-root": {
-//     border: "none",
-//     boxShadow: "none",
-//   },
-//   "& .css-16jnori-MuiPaper-root-MuiAccordion-root": {
-//     boxShadow: "none",
-//   },
-// }));
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 450,
+};
 
 const MenuItems = (props) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
+  const [modalOpen, seetModalOpen] = useState(false);
+
+  const handleModalOpen = () => {
+    seetModalOpen(true);
+    setMenuOpen(false);
+  };
+  const handleModalClose = () => seetModalOpen(false);
 
   const handleAccordionChange = (itemIndex) => {
     setExpandedItem(expandedItem === itemIndex ? null : itemIndex);
@@ -99,7 +105,6 @@ const MenuItems = (props) => {
               className="customAccordionPaper"
               expanded={expandedItem === "login"}
               onChange={() => handleAccordionChange("login")}
-              // className="border-none mb-[10px]"
             >
               <AccordionSummary>
                 <span className="mobile-menu-login">Login</span>
@@ -108,9 +113,9 @@ const MenuItems = (props) => {
                 <Link to={window.VLOGIN} className="mobile-menu-option">
                   Vendor
                 </Link>
-                <Link to={window.CLOGIN} className="mobile-menu-option">
+                <div className="mobile-menu-option" onClick={handleModalOpen}>
                   Couple
-                </Link>
+                </div>
               </AccordionDetails>
             </Accordion>
             <Accordion
@@ -131,6 +136,16 @@ const MenuItems = (props) => {
               </AccordionDetails>
             </Accordion>
           </div>
+          <Modal
+            open={modalOpen}
+            onClose={handleModalClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <CouplesLogin handleClosePage={handleModalClose} />
+            </Box>
+          </Modal>
         </div>
       </Menu>
     </div>

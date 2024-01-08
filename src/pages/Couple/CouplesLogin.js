@@ -16,7 +16,7 @@ import CoupleForgotPwd from "./CoupleForgotPwd";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const CouplesLogin = () => {
+const CouplesLogin = ({ handleClosePage }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [formValues, setFormValues] = useState({ email: "", password: "" });
   const [errors, setErrors] = React.useState({});
@@ -24,10 +24,6 @@ const CouplesLogin = () => {
   const togglePasswordVisibility = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword);
-  };
-
-  const handleClosePage = () => {
-    window.history.back();
   };
 
   const validateForm = () => {
@@ -69,141 +65,140 @@ const CouplesLogin = () => {
   };
 
   return (
-    <div className="cl-container">
-      <Box sx={CouplesLoginBox}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "end",
+    // <div className="cl-container">
+    <Box sx={CouplesLoginBox}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "end",
+        }}
+      >
+        <IconButton
+          type="button"
+          className="cl-iconsbutton"
+          style={{
+            position: "absolute",
+            marginLeft: "0.5rem",
           }}
           onClick={handleClosePage}
         >
-          <IconButton
-            type="button"
-            className="cl-iconsbutton"
-            style={{
-              position: "absolute",
-            }}
-          >
-            <AiOutlineClose />
-          </IconButton>
-        </Box>
-        <form>
-          <h1 className="cs-signup-header flex justify-center items-center">
-            Log In
-          </h1>
-          <label className="cl-label">Email</label>
-          <div className="cl-field">
-            <CoupleCommonInput
-              variant="outlined"
-              name="email"
-              type="email"
-              onChange={(e) => handleInputChange("email", e.target.value)}
-              // error={errors.email}
-            />
-            {errors.email && <div className="error-text">{errors.email}</div>}
-          </div>
-          <br />
-          {/* PASSWORD */}
-          <label className="cl-label">Password</label>
-          <div className="cl-field">
-            <CoupleCommonInput
-              variant="outlined"
-              name="password"
-              type={showPassword ? "text" : "password"}
-              // label="Password*"
-              onChange={(e) => handleInputChange("password", e.target.value)}
-              InputProps={{
-                endAdornment: (
-                  <IconButton onClick={togglePasswordVisibility}>
-                    {showPassword ? (
-                      <VisibilityOffOutlinedIcon sx={{ fill: "#c3bebe" }} />
-                    ) : (
-                      <VisibilityOutlinedIcon sx={{ fill: "#c3bebe" }} />
-                    )}
-                  </IconButton>
-                ),
-              }}
-            />
-            {errors.password && (
-              <div className="error-text">{errors.password}</div>
-            )}
-          </div>
-
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignContent: "center",
-              marginTop: "2rem",
-            }}
-          ></Box>
-
-          <button
-            onClick={handleSubmit}
-            // type="submit"
-            className="clLoginButton"
-          >
-            Log In
-          </button>
-
-          {/* FORGOT PASSWORD */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignContent: "center",
-              marginTop: "1rem",
-            }}
-          >
-            <CoupleForgotPwd />
-          </Box>
-
-          {/* SIGN UP NOW AND SIGN IN VENDOR */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignContent: "center",
-              marginTop: "1rem",
-            }}
-          >
-            <Typography
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignContent: "center",
-                marginBottom: "1rem",
-                fontFamily: "Raleway",
-                fontSize: "14px",
-              }}
-            >
-              Don't have an account?{" "}
-              <Link to={window.CSIGNUP} className="font-[900] underline">
-                {" "}
-                <span className="cl-gap">q</span>Sign Up Now
-              </Link>
-            </Typography>
-            <Typography
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignContent: "center",
-                fontFamily: "Raleway",
-                fontSize: "14px",
-              }}
-            >
-              Are you a Abia vendor?{" "}
-              <Link to={window.VLOGIN} className="font-[900] underline">
-                {" "}
-                <span className="cl-gap">q</span> Sign In Here
-              </Link>
-            </Typography>
-          </Box>
-        </form>
+          <AiOutlineClose />
+        </IconButton>
       </Box>
-    </div>
+      <form>
+        <h1 className="cs-login-header">Bride/Groom Login</h1>
+        <label className="cl-label">Email</label>
+        <div className="cl-field">
+          <CoupleCommonInput
+            variant="outlined"
+            name="email"
+            type="email"
+            onChange={(e) => handleInputChange("email", e.target.value)}
+            // error={errors.email}
+          />
+          {errors.email && <div className="error-text">{errors.email}</div>}
+        </div>
+        <br />
+        {/* PASSWORD */}
+        <label className="cl-label">Password</label>
+        <div className="cl-field">
+          <CoupleCommonInput
+            variant="outlined"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            // label="Password*"
+            onChange={(e) => handleInputChange("password", e.target.value)}
+            InputProps={{
+              endAdornment: (
+                <IconButton onClick={togglePasswordVisibility}>
+                  {showPassword ? (
+                    <VisibilityOffOutlinedIcon sx={{ fill: "#c3bebe" }} />
+                  ) : (
+                    <VisibilityOutlinedIcon sx={{ fill: "#c3bebe" }} />
+                  )}
+                </IconButton>
+              ),
+            }}
+          />
+          {errors.password && (
+            <div className="error-text">{errors.password}</div>
+          )}
+        </div>
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+            marginTop: "2rem",
+          }}
+        ></Box>
+
+        <button
+          onClick={handleSubmit}
+          // type="submit"
+          className="clLoginButton"
+        >
+          Login
+        </button>
+
+        {/* FORGOT PASSWORD */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignContent: "center",
+            marginTop: "1rem",
+          }}
+        >
+          <CoupleForgotPwd />
+        </Box>
+
+        {/* SIGN UP NOW AND SIGN IN VENDOR */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignContent: "center",
+            marginTop: "1rem",
+          }}
+        >
+          <Typography
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignContent: "center",
+              marginBottom: "1rem",
+              fontFamily: "Raleway",
+              fontSize: "14px",
+            }}
+          >
+            Don't have an account?{" "}
+            <Link to={window.CSIGNUP} className="font-[900] underline">
+              {" "}
+              <span className="cl-gap">q</span>Sign Up Now
+            </Link>
+          </Typography>
+          <Typography
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignContent: "center",
+              fontFamily: "Raleway",
+              fontSize: "14px",
+            }}
+          >
+            Are you a Abia vendor?{" "}
+            <Link to={window.VLOGIN} className="font-[900] underline">
+              {" "}
+              <span className="cl-gap">q</span> Sign In Here
+            </Link>
+          </Typography>
+        </Box>
+      </form>
+    </Box>
+    // </div>
   );
 };
 

@@ -307,13 +307,6 @@ export default function CouplesSignUp() {
                   className="cs-button-text-position"
                   // disabled={selectedOption === null}
                   onClick={handleNext}
-                  style={{
-                    backgroundColor: "black",
-                  }}
-                  // style={{
-                  //   backgroundColor:
-                  //     selectedOption !== null ? "black" : "#b7b7b7",
-                  // }}
                 >
                   <span className="cs-next-button">Next</span>
                 </NextButtonStyle>
@@ -500,7 +493,7 @@ export default function CouplesSignUp() {
                     onClick={handleFormNext}
                     style={{
                       backgroundColor:
-                        selectedOption !== null ? "black" : "#b7b7b7",
+                        selectedOption !== null ? "#6cc2bc" : "#b7b7b7",
                     }}
                   >
                     <span className="cs-next-button">Next</span>
@@ -639,9 +632,6 @@ export default function CouplesSignUp() {
                     className="cs-button-text-position"
                     disabled={selectedOption === null}
                     onClick={handleFormNext}
-                    style={{
-                      backgroundColor: "black",
-                    }}
                   >
                     <span className="cs-next-button">Submit</span>
                   </NextButtonStyle>
@@ -771,9 +761,6 @@ export default function CouplesSignUp() {
                     variant="outlined"
                     className="cs-button-text-position"
                     onClick={handleFormSubmit}
-                    style={{
-                      backgroundColor: "black",
-                    }}
                   >
                     <span className="cs-next-button">Submit</span>
                   </NextButtonStyle>

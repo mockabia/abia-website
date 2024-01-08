@@ -236,19 +236,19 @@ const CoupleTopbar = (props) => {
       {menuOpen && (
         <>
           <div className="couple-fullscreen-overlay md:hidden ">
-            <div className="m-[1rem]">
-              <div className="flex justify-between items-center">
+            <div >
+              <div className="flex justify-between items-center m-[1rem]">
                 <div className="w-[6rem]">
                   <AbiaLogo alt="Abia-logo" />
                 </div>
                 <div
-                  className="ipad-mini relative inset-0  w-[30px] h-[30px] mt-[9px] rounded-full"
+                  className="ipad-mini relative inset-0  w-[30px] h-[30px] mt-[1rem] rounded-full"
                   onClick={closeMenu}
                 >
-                  <AiOutlineClose size={26} className=" ml-[5px] fixed " />
+                  <AiOutlineClose size={22} className=" ml-[5px] fixed " />
                 </div>
               </div>
-              <ul className="mt-[100px] flex flex-col sm:justify-center  sm:mr-[85px] ">
+              <ul className="mt-[50px] flex flex-col sm:justify-center  sm:mr-[85px] ">
                 <CoupleSideMenu />
               </ul>
             </div>

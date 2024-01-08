@@ -7,7 +7,7 @@ import {
   TextField,
 } from "@mui/material";
 import React from "react";
-import { ForgetBox } from "../../components/FormStyle";
+import { CoupleCommonInput, ForgetBox } from "../../components/FormStyle";
 import { AiOutlineClose } from "react-icons/ai";
 import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
 import { Stack } from "react-bootstrap";
@@ -91,9 +91,9 @@ const CoupleForgotPwd = () => {
             {/* <p className="flex justify-center">
               You can reset your password here.
             </p> */}
-            <label className="cl-label">Enter your Valid Email</label>
             <div className="mt-[1rem]">
-              <TextField
+              <label>Enter your Valid Email</label>
+              <CoupleCommonInput
                 name="email"
                 sx={{ width: "100%" }}
                 InputProps={{
