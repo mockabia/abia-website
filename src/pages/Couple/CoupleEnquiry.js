@@ -38,8 +38,11 @@ const CoupleEnquiry = () => {
     setActiveTab(tab);
   };
 
-  const toggleOpen = () => {
-    setDetailOpn(!detailOpen);
+  const toggleOpen = (vendorId) => {
+    setDetailOpn((prevState) => ({
+      ...prevState,
+      [vendorId]: !prevState[vendorId],
+    }));
   };
 
   const closeDetailOpen = () => {
@@ -81,11 +84,78 @@ const CoupleEnquiry = () => {
     },
   ];
 
+  const vendorEnquiryList = [
+    {
+      id: 1,
+      imageUrl: `https://eightwillowsretreat.com.au/wp-content/uploads/2020/12/cropped-cropped-Eight-willows-retreat-logo-website.png`,
+      vendorName: "Eight Willows Retreat",
+      vendorType: "Wedding Venue",
+      vendorReplayDate: "11/11/2023",
+      vendorStatus: "Vendor Replied",
+      yourStatus: "Reply Needed",
+      location: "Gold Coast",
+      stateurl: "QLD",
+      WeddingDateApprx: [
+        {
+          days: ["Monday", "Tuesday"],
+          month: "March",
+          year: 2025,
+        },
+      ],
+      guestCount: 100,
+      WeddingBudget: 50000,
+      VenueBudget: 20000,
+    },
+    {
+      id: 2,
+      imageUrl:
+        "https://victoriapark.com.au/wp-content/uploads/2023/04/Victoria-Park-Logo-Grey.png",
+      vendorName: "Victoria Park",
+      vendorType: "Wedding Venue",
+      vendorReplayDate: "11/11/2023",
+      vendorStatus: "Enquiry Sent",
+      yourStatus: "Reply Needed",
+      location: "Canberra",
+      stateurl: "ACT",
+      WeddingDateApprx: [
+        {
+          days: ["Monday", "Tuesday"],
+          month: "March",
+          year: 2025,
+        },
+      ],
+      guestCount: 150,
+      WeddingBudget: 60000,
+      VenueBudget: 25000,
+    },
+    {
+      id: 3,
+      imageUrl:
+        "https://ddsdiamonds.com.au/wp-content/uploads/2023/10/dds-diamonds-logo-2600x600-1-2048x473.png",
+      vendorName: "DDS Diamond Design Studios",
+      vendorType: "Wedding & Engagement Ring",
+      vendorReplayDate: "11/11/2023",
+      vendorStatus: "Vendor Replied",
+      yourStatus: "Reply Needed",
+      location: "Byron Bay",
+      stateurl: "NSW",
+      WeddingDateApprx: [
+        {
+          days: ["Monday", "Tuesday"],
+          month: "March",
+          year: 2025,
+        },
+      ],
+      guestCount: 200,
+      WeddingBudget: 75000,
+      VenueBudget: 25000,
+    },
+  ];
+
   return (
     <LayoutCouple title={title}>
-      <section className="enqquiry-page-container">
         {/* main menu */}
-        <div className="padding-position flex justify-start items-center border-b-[1px] border-[#b7b7b7]">
+        <div className="main-menu-section  ">
           <ul className="enquiry-page-header ">
             {mainMenus.map((menuItem) => (
               <li key={menuItem.id}>
@@ -157,50 +227,64 @@ const CoupleEnquiry = () => {
           </div>
         </div>
         {/* when the above Active or Archive is clicked */}
-        <div className="enquiry-active-list-mobile">
+        <main className="enquiry-active-list-mobile">
           {activeTab === "Active" && (
             <>
               {/*Active  Mobile */}
-              <div className="active-enquiry-mobile">
-                <div
-                  className=" flex justify-between items-center gap-[1rem]"
-                  onClick={toggleOpen}
-                >
-                  {/* image section and Heading */}
-                  <div className="flex items-center gap-[1rem]">
-                    <img src={sampleProfile} className="enquiry-vendor-image" />
-                    <div className="flex flex-col gap-1">
-                      <h3 className="text-[#000]">Raymonds</h3>
-                      <div>
-                        <h5>Dresses</h5>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Reply button */}
-                  <div className="cursor-pointer">
-                    <BlackSmallButton>
-                      <h6>Reply</h6>
-                    </BlackSmallButton>
-                  </div>
-                </div>
-                {/* Status */}
-                <div className="mt-[0.5rem]">
-                  <div className="enquiry-status-mobile">
-                    <div className="flex items-center gap-3">
-                      <TfiEmail />
-                      <div className="flex gap-[1rem]">
-                        <h6>11/4/2023</h6>
-                        <h6>Vendor Replied</h6>
+              {vendorEnquiryList.map((vendor) => (
+                <div className="active-enquiry-mobile">
+                  <div
+                    className=" flex justify-between items-center gap-[1rem]"
+                    onClick={() => toggleOpen(vendor.id)}
+                  >
+                    {/* image section and Heading */}
+                    <div className="flex items-center gap-[1rem]">
+                      <img
+                        src={vendor.imageUrl}
+                        className="enquiry-vendor-image"
+                      />
+                      <div className="flex flex-col gap-1">
+                        <h3 className="text-[#000]">{vendor.vendorName}</h3>
+                        <div>
+                          <h5>{vendor.vendorType}</h5>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="text-red-600 font-bold">
-                      <h6>Reply Needed</h6>
+                    {/* Reply button */}
+                    <div className="cursor-pointer">
+                      <BlackSmallButton>
+                        {vendor.vendorStatus === "Enquiry Sent" ? (
+                          <h6>View </h6>
+                        ) : (
+                          <h6>Replyr</h6>
+                        )}
+                      </BlackSmallButton>
+                    </div>
+                  </div>
+                  {/* Status */}
+                  <div className="mt-[0.5rem]">
+                    <div className="enquiry-status-mobile">
+                      <div className="flex items-center gap-3">
+                        <TfiEmail />
+                        <div className="flex gap-[1rem]">
+                          <h6>{vendor.vendorReplayDate}</h6>
+                          <h6>{vendor.vendorStatus}</h6>
+                        </div>
+                      </div>
+
+                      <div className="text-red-600 font-bold">
+                        {vendor.vendorStatus === "Enquiry Sent" ? (
+                          <h6> </h6>
+                        ) : (
+                          <h6>Reply Needed</h6>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ))}
+
               {/* Active Desktop */}
               <div className="active-enquiry-desktop">
                 <table className="enquiry-table">
@@ -213,166 +297,213 @@ const CoupleEnquiry = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="enquiry-body-row cursor-pointer">
-                      {/* Vendor image and Name */}
-                      <td onClick={toggleOpen}>
-                        <div className="flex gap-[1rem] justify-start items-center">
-                          <img
-                            src={sampleProfile}
-                            className="enquiry-vendor-image"
-                          />
-                          <h6 className="font-bold">Raymonds</h6>
-                        </div>
-                      </td>
-                      {/* Vendor Category */}
-                      <td onClick={toggleOpen}>
-                        <div className="flex justify-start items-center">
-                          <h6>Dresses</h6>
-                        </div>
-                      </td>
-                      {/* Status */}
-                      <td onClick={toggleOpen}>
-                        <div className="enquiry-status">
-                          <TfiEmail />
-                          <div className="flex gap-[1rem] whitespace-nowrap">
-                            <h6>11/4/2023</h6>
-                            <h6>Vendor Replied</h6>
+                    {vendorEnquiryList.map((vendor) => (
+                      <tr
+                        className="enquiry-body-row cursor-pointer"
+                        key={vendor.id}
+                      >
+                        {/* Vendor image and Name */}
+                        <td onClick={() => toggleOpen(vendor.id)}>
+                          <div className="flex gap-[1rem] justify-start items-center">
+                            <img
+                              src={vendor.imageUrl}
+                              className="enquiry-vendor-image"
+                              alt="Vendor"
+                            />
+                            <h6 className="font-bold">{vendor.vendorName}</h6>
                           </div>
-                          <div className="text-red-600 font-bold whitespace-nowrap">
-                            <h6>Reply Needed</h6>
+                        </td>
+
+                        {/* Vendor Category */}
+                        <td onClick={() => toggleOpen(vendor.id)}>
+                          <div className="flex justify-start items-center">
+                            <h6>{vendor.vendorType}</h6>
                           </div>
-                        </div>
-                      </td>
-                      {/* Actions */}
-                      <td>
-                        <BlackLargeButton>
-                          <h6>Reply to Vendor</h6>
-                        </BlackLargeButton>
-                      </td>
-                    </tr>
+                        </td>
+                        {/* Status */}
+                        <td onClick={() => toggleOpen(vendor.id)}>
+                          <div className="enquiry-status">
+                            <TfiEmail />
+                            <div className="flex whitespace-nowrap">
+                              <h6>{vendor.vendorReplayDate}</h6>
+                              <h6 className="pl-[1rem] pr-[1rem] w-[7rem]">
+                                {vendor.vendorStatus}
+                              </h6>
+                            </div>
+                            <div className="text-red-600 font-bold whitespace-nowrap">
+                              {vendor.vendorStatus === "Enquiry Sent" ? (
+                                <h6> </h6>
+                              ) : (
+                                <h6>Reply Needed</h6>
+                              )}
+                              {/* <h6>{vendor.yourStatus}</h6> */}
+                            </div>
+                          </div>
+                        </td>
+                        {/* Actions */}
+                        <td>
+                          <BlackLargeButton>
+                            {vendor.vendorStatus === "Enquiry Sent" ? (
+                              <h6>View Enquiry</h6>
+                            ) : (
+                              <h6>Reply to Vendor</h6>
+                            )}
+                          </BlackLargeButton>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
               {/* Detail box  */}
-              {detailOpen && (
-                <>
-                  <div className="inquiry-overlay">
-                    <div className="flex justify-end" onClick={closeDetailOpen}>
-                      <AiOutlineClose
-                        size={26}
-                        className=" fixed cursor-pointer "
-                      />
-                    </div>
-                    <div className="mt-[3rem]">
-                      {/* image section */}
-                      <div className="flex gap-[1rem]">
-                        <img
-                          src={sampleProfile}
-                          className="enquiry2-vendor-image"
+              {vendorEnquiryList.map((vendor) => (
+                <React.Fragment key={vendor.id}>
+                  {detailOpen[vendor.id] && (
+                    <div className="inquiry-overlay">
+                      <div
+                        className="flex justify-end"
+                        onClick={closeDetailOpen}
+                      >
+                        <AiOutlineClose
+                          size={26}
+                          className=" fixed cursor-pointer "
                         />
-                        <div className="flex flex-col gap-1">
-                          <h1 className="text-[#000]">Raymonds</h1>
-                          <div className="flex gap-2">
-                            <h5>Dresses</h5>
-                            <div className="flex items-center">
-                              <IoLocationOutline color="#000" size={22} />
-                              <h5>Gold Coast, QLD</h5>
+                      </div>
+
+                      <div className="mt-[3rem]">
+                        {/* image section */}
+                        <div className="flex gap-[1rem]">
+                          <img
+                            src={vendor.imageUrl}
+                            className="enquiry2-vendor-image"
+                          />
+                          <div className="flex flex-col gap-1">
+                            <h1 className="text-[#000]">{vendor.vendorName}</h1>
+                            <div className="detailbox-subheader">
+                              <h5>{vendor.vendorType}</h5>
+                              <div className="flex items-center">
+                                <IoLocationOutline color="#000" size={18} />
+                                <h5>
+                                  <span>{vendor.location}</span>,
+                                  <span>{vendor.stateurl}</span>{" "}
+                                </h5>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      {/* vendor listing */}
-                      <div className="flex items-center mt-[1rem]">
-                        <h4 className="font-bold">See their listing</h4>
-                        <HiOutlineArrowSmRight
-                          size={26}
-                          color="#000"
-                          fontWeight={600}
-                        />
-                      </div>
-                      {/* Your Enquiry */}
-                      <div className="your-inquiry-container">
-                        <h1 className="text-[#000]">Your inquiry</h1>
-                        {/* Requested Dates */}
-                        <div>
-                          <h4>Requested Dates</h4>
-                          <ul className="enquiry-listing">
-                            <li>
-                              <h4>Tuesday, Wednesday, Thursday or Friday</h4>
-                            </li>
+                        {/* vendor listing */}
+                        <div className="flex items-center mt-[1rem]">
+                          <h5 className="font-bold cursor-pointer">
+                            See their listing
+                          </h5>
+                          <HiOutlineArrowSmRight
+                            size={26}
+                            color="#000"
+                            fontWeight={600}
+                          />
+                        </div>
+                        {/* Your Enquiry */}
+                        <div className="your-inquiry-container">
+                          <h2 className="text-[#000]">Your Enquiry</h2>
+                          {/* Requested Dates */}
+                          <div>
+                            <h5>Requested Dates</h5>
+                            <ul className="enquiry-listing">
+                              <li>
+                                <h5>Tuesday, Wednesday, Thursday or Friday</h5>
+                              </li>
 
-                            <li>
-                              <h4>
-                                <span className="gap-1">
-                                  <span className="font-change">2025:</span>
-                                  <span>May</span>{" "}
-                                </span>
-                              </h4>
-                            </li>
-                          </ul>
+                              <li>
+                                <h5>
+                                  <span className="gap-1">
+                                    <span className="font-change">2025:</span>
+                                    <span>May</span>{" "}
+                                  </span>
+                                </h5>
+                              </li>
+                            </ul>
+                          </div>
+                          {/* Table  1*/}
+                          <div className="your-inquiry-table">
+                            <table>
+                              <thead>
+                                <tr>
+                                  <th>
+                                    <h5>Guest Count</h5>
+                                  </th>
+                                  <th>
+                                    <h5>Location</h5>
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td className="inquiry-td-style-digit">
+                                    <h5>{vendor.guestCount}</h5>
+                                  </td>
+                                  <td className="inquiry-td-style">
+                                    <h5>
+                                      {vendor.location},{" "}
+                                      <span>{vendor.stateurl}</span>
+                                    </h5>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          {/* Table  2*/}
+                          <div className="your-inquiry-table-2">
+                            <table>
+                              <thead>
+                                <tr>
+                                  <th>
+                                    <h5>Wedding Budget</h5>
+                                  </th>
+                                  <th>
+                                    <h5>Venue Budget</h5>
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td className="inquiry-td-style">
+                                    <span className="text-[14px]">Up to </span>
+                                    <span className="font-change">
+                                      $
+                                      {
+                                        <span>
+                                          {vendor.WeddingBudget.toLocaleString()}
+                                        </span>
+                                      }
+                                    </span>{" "}
+                                    {/* <span>(flexible)</span> */}
+                                  </td>
+                                  <td className="inquiry-td-style">
+                                    <span className="text-[14px]">Up to </span>
+                                    <span className="font-change">
+                                      $
+                                      {
+                                        <span>
+                                          {vendor.VenueBudget.toLocaleString()}
+                                        </span>
+                                      }
+                                    </span>{" "}
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <Divider sx={{ marginTop: "2rem" }} />
                         </div>
-                        {/* Table  1*/}
-                        <div className="your-inquiry-table">
-                          <table>
-                            <thead>
-                              <tr>
-                                <th>
-                                  <h4>Guest Count</h4>
-                                </th>
-                                <th>
-                                  <h4>Location</h4>
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td className="inquiry-td-style-digit">90</td>
-                                <td className="inquiry-td-style">
-                                  Gold Coast, QLD
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        {/* Table  2*/}
-                        <div className="your-inquiry-table-2">
-                          <table>
-                            <thead>
-                              <tr>
-                                <th>
-                                  <h4>Wedding Budget</h4>
-                                </th>
-                                <th>
-                                  <h4>Venue Budget</h4>
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td className="inquiry-td-style">
-                                  Up to{" "}
-                                  <span className="font-change">$50,000</span>{" "}
-                                  {/* <span>(flexible)</span> */}
-                                </td>
-                                <td className="inquiry-td-style">
-                                  Up to{" "}
-                                  <span className="font-change">$20,000</span>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <Divider sx={{ marginTop: "2rem" }} />
                       </div>
                     </div>
-                  </div>
-                </>
-              )}
+                  )}
+                </React.Fragment>
+              ))}
             </>
           )}
           {activeTab === "Archive" && <div>Archive Content</div>}
-        </div>
-      </section>
+        </main>
     </LayoutCouple>
   );
 };
