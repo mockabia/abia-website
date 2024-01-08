@@ -13,6 +13,7 @@ import CoupleWeddingDetails from "./pages/Couple/CoupleWeddingDetails";
 import CoupleAccountSetting from "./pages/Couple/CoupleAccountSetting";
 import CoupleCatBudget from "./pages/Couple/CoupleCatBudget";
 import CoupleEnquiry from "./pages/Couple/CoupleEnquiry";
+import Partnership from "./pages/General/Partnership";
 
 const App = () => {
   const [showLoader, setShowLoader] = useState(false);
@@ -69,6 +70,9 @@ const App = () => {
         <Route path="/wedding/settings" element={<CoupleAccountSetting />} />
         <Route path="/wedding/wedding-budget" element={<CoupleCatBudget />} />
         <Route path="/wedding/enquiry" element={<CoupleEnquiry />} />
+
+        {/* Partnership */}
+        <Route path="/parternship-benefits" element={<Partnership />} />
       </Routes>
     </>
   );

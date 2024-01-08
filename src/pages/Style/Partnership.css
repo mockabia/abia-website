@@ -1,0 +1,66 @@
+.main-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 500;
+    text-align: center;
+    margin: 2rem 0 ;
+}
+.toggle-switch {
+    outline: none;
+    border: 0;
+    width: 4rem;
+    height: 35px;
+    border-radius: 20px;
+    background-color: #6cc2bc;
+    /* position: absolute; */
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.benefit-button {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    transition: 0.4s ease-in-out;
+    background-color: #fff;
+}
+
+.toggle-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+
+
+.partnership-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.partnership-info-box {
+    width: 18rem;
+    /* height: 25rem; */
+    height: auto;
+    min-height: 20rem;
+    border: 1px solid #b7b7b7;
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.partnership-apply-button {
+    outline: none;
+    width: 100%;
+    height: 3rem;
+    background-color: #6cc2bc;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 24px;
+}
