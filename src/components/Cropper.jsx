@@ -146,7 +146,7 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
             ref={inputImage}
           />
           <div className="space-y-5">
-            <div className="upload-button">
+            <div className="cropper-upload-button">
               <label
                 htmlFor="file-input"
                 id="file-label"

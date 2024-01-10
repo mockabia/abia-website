@@ -5,7 +5,11 @@ import LayoutGeneral from "../../layouts/Layout/LayoutGeneral";
 import BusinessForgotPassword from "../General/BusinessForgotPassword";
 import * as GeneralJS from "../General/General";
 import { IconButton, Stack } from "@mui/material";
-import { VLTextField, VendorLoginButton } from "../../components/FormStyle";
+import {
+  CoupleCommonInput,
+  VLTextField,
+  VendorLoginButton,
+} from "../../components/FormStyle";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
@@ -35,14 +39,14 @@ const LoginPage = () => {
   };
 
   let isValidForm =
-    Object.values(inputsErrors || "").filter((error) => typeof error !== "undefined")
-      .length === 0;
+    Object.values(inputsErrors || "").filter(
+      (error) => typeof error !== "undefined"
+    ).length === 0;
 
   const hasInputErrors = Object.values(inputsErrors).some(
     (error) => typeof error !== "undefined"
   );
 
-  
   return (
     <div>
       <div className="login-vendorlogin-content relative">
@@ -53,34 +57,35 @@ const LoginPage = () => {
             <form onSubmit={handleSubmit} className="lg:mt-[20px] ">
               <Stack spacing={2}>
                 {/* email */}
-                <div className="flex flex-col ">
+                <div className="flex flex-col gap-[5px] ">
                   <label htmlFor="email" className=" text-[14px] font-bold">
                     Email
                   </label>
-                  <VLTextField
+                  <CoupleCommonInput
                     name="email"
                     variant="outlined"
                     defaultValue={inputs.email}
                     onChange={handleChange}
-                    error={inputsErrors.email ? true : false}
-                    helperText={inputsErrors.email}
                     autoCapitalize="off"
                   />
+                  {inputsErrors.email && (
+                    <div className="flex font-bold text-red-400 text-[12px]">
+                      {inputsErrors.email}
+                    </div>
+                  )}
                 </div>
                 {/* Password */}
-                <div className="flex flex-col ">
+                <div className="flex flex-col gap-[5px]">
                   <label htmlFor="password" className=" text-[14px] font-bold">
                     Password
                   </label>
-                  <VLTextField
+                  <CoupleCommonInput
                     name="password"
                     type={showPassword ? "text" : "password"}
                     variant="outlined"
                     defaultValue={inputs.password}
                     onChange={handleChange}
                     //onBlur={handleBlur}
-                    error={inputsErrors.password ? true : false}
-                    helperText={inputsErrors.password}
                     autoCapitalize="off"
                     InputProps={{
                       endAdornment: (
@@ -94,6 +99,11 @@ const LoginPage = () => {
                       ),
                     }}
                   />
+                  {inputsErrors.password && (
+                    <div className="flex font-bold text-red-400 text-[12px]">
+                      {inputsErrors.password}
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-col ">
                   <VendorLoginButton disabled={!isValidForm} type="submit">
@@ -101,13 +111,13 @@ const LoginPage = () => {
                   </VendorLoginButton>
                 </div>
               </Stack>
-              {/* Password */}
+              {/*Forgot Password */}
             </form>
-            <div className="cursor-pointer text-[#6cc2bc] text-[14px] font-semibold flex justify-center items-center mb-[10px]">
+            <div className="cursor-pointer text-[#6cc2bc] text-[14px] font-semibold flex justify-center items-center ">
               <BusinessForgotPassword />
             </div>
             {hasInputErrors && (
-              <div className="flex font-bold text-red-600 text-[14px]">
+              <div className="flex font-bold text-red-600 text-[12px]">
                 {Object.values(inputsErrors).map((error, index) => (
                   <div key={index}>{error}</div>
                 ))}

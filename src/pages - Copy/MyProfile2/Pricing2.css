@@ -140,6 +140,8 @@
 .pricing-cate-label{
     font-weight: 600;
     font-size: 16px;
+    background-color: white;
+    padding: 0 10px;
 }
 @media(min-width:437px) {
 

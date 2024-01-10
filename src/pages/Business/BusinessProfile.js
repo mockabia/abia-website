@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../Style/BusinessProfile.css";
 // Accordion
-import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -185,21 +184,29 @@ const Profile = ({ preview }) => {
       "owner-image": croppedImage,
     });
   };
+// QandA submit
+ const handleQuestionSave = () => {
+   setExpanded(false);
+   setSaveClicked(true);
+   // Check if any question or answer is not blank
+   const hasNonBlankQandA = questions.some(
+     (question) =>
+       question.question.trim() !== "" || question.answer.trim() !== ""
+   );
 
-  const handleQuestionSave = () => {
-    setExpanded(false);
-    setSaveClicked(true);
-    // Build the formatted questionDisplay content
-    const formattedQuestions = questions.map((question) => {
-      return `Q${question.id}:${question.question}\n A${question.id}:${question.answer}`;
-    });
-    // Join the formatted questions and answers with line breaks
-    const newQuestionDisplay = formattedQuestions.join("\n\n");
-    setQuestionDisplay([newQuestionDisplay]);
-    console.log("formValues:", {
-      qanda: newQuestionDisplay,
-    });
-  };
+   if (hasNonBlankQandA) {
+     // Build the formatted questionDisplay content
+     const formattedQuestions = questions.map((question) => {
+       return `Q${question.id}:${question.question}\n A${question.id}:${question.answer}`;
+     });
+     // Join the formatted questions and answers with line breaks
+     const newQuestionDisplay = formattedQuestions.join("\n\n");
+     setQuestionDisplay([newQuestionDisplay]);
+     console.log("formValues:", {
+       qanda: newQuestionDisplay,
+     });
+   }
+ };
 
   const handlePackageSubmit = () => {
     if (fileUploaded) {
@@ -346,7 +353,7 @@ const Profile = ({ preview }) => {
 
   const addQuestion = () => {
     const newId = questions.length + 1;
-    setQuestions([...questions, { id: newId, question: "" }]);
+    setQuestions([...questions, { id: newId, question: "", answer: "" }]);
   };
 
   const handleQuestionChange = (e, questionId) => {
@@ -368,6 +375,8 @@ const Profile = ({ preview }) => {
     const updatedQuestions = questions.filter((q) => q.id !== questionId);
     setQuestions(updatedQuestions);
   };
+
+  
   /*******PACKAGES*******8 */
   const handleFileChange = (e) => {
     const fileInput = e.target;
@@ -397,15 +406,17 @@ const Profile = ({ preview }) => {
 
   return (
     <div className="preview-listing-container">
+      <div className="preview-lisitng-div">
+        <h3>Preview Lisitng</h3>
+      </div>
       {/* PROFILE BASICS */}
       {/* <pre>{JSON.stringify(inputs, null, 2)}</pre> */}
       <div>
-        <div>
+        <div className="mb-[1rem]">
           <h2 className="profile-listing-header">Profile Basics</h2>
         </div>
-        <div className="">
+        <div className="grid grid-cols-1">
           {/* QUICK DESCRPTION */}
-          {/* <PreviewListing2 /> */}
           <StyledAccordion
             expanded={expanded === "panel1"}
             onChange={(e, isExpanded) => handleChange(isExpanded, "panel1")}
@@ -433,7 +444,6 @@ const Profile = ({ preview }) => {
               }}
             >
               <div>
-                {/* <h4 className="myprofile-heading-expand">Quick Description</h4> */}
                 <h4 style={{ fontWeight: expanded ? "bold" : "normal" }}>
                   Quick Description
                 </h4>
@@ -449,9 +459,7 @@ const Profile = ({ preview }) => {
             </AccordionSummary>
             <AccordionDetails>
               <div>
-                <div className="myprofile-accordion-item-header">
-                  {/* <span className="myprofile-edit-button">Edit</span> */}
-                </div>
+                <div className="myprofile-accordion-item-header"></div>
                 <div className="mt-[0px]">
                   <div className="profile-editor-position">
                     <textarea
@@ -542,7 +550,7 @@ const Profile = ({ preview }) => {
                 {/* Editor */}
                 {/* <DraftJsEditor2 /> */}
                 <div>
-                  <div className="editor-container">
+                  <div className="bprofile-editor-container">
                     <Editor
                       editorState={editorState}
                       onEditorStateChange={setEditorState}
@@ -683,7 +691,7 @@ const Profile = ({ preview }) => {
                           </label>
                         </div>
                       </div>
-                      <div className="owner-avatar-cropper">
+                      <div className="mb-[2rem]">
                         <Cropper
                           onImageCrop={handleImageCrop}
                           onChangeCrop={handleImageChange}
@@ -692,7 +700,7 @@ const Profile = ({ preview }) => {
                     </div>
 
                     {/* Submit and CAncel buttons */}
-                    <div className="myprofile-button-group-2 mt-[5rem]">
+                    <div className="myprofile-button-group-2 ">
                       <button
                         className="myprofile-cancel-button"
                         onClick={handleCancel}
@@ -722,7 +730,9 @@ const Profile = ({ preview }) => {
           <div className="photos-subheading-text">
             <span>Drag and drop your photos to change the order. </span>
           </div>
-          <PhotoGalleryTest />
+          <div className="mt-[1rem] ">
+            <PhotoGalleryTest />
+          </div>
           <br />
           <br />
           <div className="myprofilePhotos-accordion-item-header">Videos</div>
@@ -757,7 +767,7 @@ const Profile = ({ preview }) => {
             >
               <div>
                 <h4 className="profile-listing-header">Pricing</h4>
-                {saveClicked && displayPrice > 0 && !expanded ? (
+                {saveClicked && !expanded ? (
                   <>
                     <p className="myprofile-accordion-subheading">
                       You are responsible for updating your prices
@@ -779,8 +789,6 @@ const Profile = ({ preview }) => {
             </AccordionSummary>
             <AccordionDetails>
               <div>
-                {/* <div className="myprofile-accordion-item-header">
-                </div> */}
                 {dynamicFields.map((field, index) => (
                   <div className="mt-[0px]" key={field.id}>
                     <div>
@@ -1133,7 +1141,9 @@ const Profile = ({ preview }) => {
               <div>
                 <h4 className="profile-listing-header">Q&A</h4>
                 {saveClicked && questionDisplay.length > 0 && !expanded ? (
-                  <p className="whitespace-break-spaces">{questionDisplay}</p>
+                  <p className="whitespace-break-spaces mt-[10px]">
+                    {questionDisplay}
+                  </p>
                 ) : expanded || questionDisplay.length > 0 ? null : (
                   <p className="myprofile-accordion-subheading">
                     Add the most common Q&A your business is asked, this helps
@@ -1152,25 +1162,31 @@ const Profile = ({ preview }) => {
                     </p>
                     {questions.map((question, index) => (
                       <div key={question.id}>
-                        <div className="mt-[15px]  space-y-1">
+                        <div className="mt-[15px] space-y-1">
                           <span className="font-semibold">
                             Question ({index + 1})
                           </span>
                           <br />
-                          <input
-                            className="question-input-style"
-                            placeholder="Maximum 50 characters"
-                            value={question.question}
-                            onChange={(e) =>
-                              handleQuestionChange(e, question.id)
-                            }
-                          />
-                          <button
-                            className="remove-question-button"
-                            onClick={() => handleRemoveQuestion(question.id)}
-                          >
-                            <DeleteForeverIcon />
-                          </button>
+                          <div className="">
+                            <input
+                              className="question-input-style"
+                              placeholder="Maximum 50 characters"
+                              value={question.question}
+                              onChange={(e) =>
+                                handleQuestionChange(e, question.id)
+                              }
+                            />
+                            <div className="qandA-delete-button ">
+                              <button
+                                className="remove-question-button"
+                                onClick={() =>
+                                  handleRemoveQuestion(question.id)
+                                }
+                              >
+                                <DeleteForeverIcon />
+                              </button>
+                            </div>
+                          </div>
                         </div>
                         <div className="mt-[15px] space-y-1">
                           <span className="font-semibold">
@@ -1185,7 +1201,6 @@ const Profile = ({ preview }) => {
                         </div>
                       </div>
                     ))}
-                    {/* <p className="whitespace-break-spaces">{questionDisplay}</p> */}
 
                     <div className="myprofile-button-group relative">
                       <button

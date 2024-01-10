@@ -591,6 +591,7 @@ export const VLTextField = styled(TextField)(({ theme }) => ({
     cursor: "pointer",
     fontSize: "14px",
     fontFamily: "Raleway",
+    outline: "none",
   },
 
   "& .MuiFormHelperText-root": {
@@ -645,7 +646,7 @@ export const NavMenuStyle = styled(Button)(({ theme }) => ({
 export const CSmenuItemStyle = {
   fontWeight: "500",
   fontFamily: "Raleway",
-  fontSize:"14px"
+  fontSize: "14px",
 
   // Add other styles as needed
 };
@@ -817,11 +818,12 @@ export const MultiValue = ({ index, getValue, ...props }) => {
 /***************ACCORDION******************* */
 // used in Business-Myprofile
 export const StyledAccordion = styled(Accordion)(({ theme, expanded }) => ({
-  padding: "2rem",
+  padding: "1rem 2rem 2rem 0 ",
   paddingLeft: "0rem",
   borderRadius: "0",
   boxShadow: "none",
-  borderBottom: "1px solid #D6D6D6",
+  margin: "0px !important",
+  borderBottom: expanded ? "1px solid transparent" : "1px solid #D6D6D6",
   width: {
     xs: "100%",
     md: "83%",
@@ -829,7 +831,6 @@ export const StyledAccordion = styled(Accordion)(({ theme, expanded }) => ({
   ...(expanded && {
     border: "1px solid #D6D6D6",
     borderRadius: "1rem 1rem 0 0",
-    borderBottom: "none",
   }),
   "@media (max-width: 500px)": {
     padding: "1rem 1rem 1rem 0",

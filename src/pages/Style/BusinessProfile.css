@@ -7,7 +7,18 @@
 }
 
 .preview-lisitng-div {
-   margin-left: 20px;
+    width: 10rem;
+    border: 2px solid black;
+    padding: 0.5rem;
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+}
+
+.preview-lisitng-div h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .myprofile-container {
@@ -63,7 +74,7 @@
 
     .preview-lisitng-div {
         position: relative;
-       margin-left: 30px;
+       /* margin-left: 30px; */
     }
 
     .myprofile-container {
@@ -108,6 +119,7 @@
     /* margin-top: 25px; */
     margin-left: 0.5rem;
     /* width:100% */
+   
 
 }
 
@@ -572,6 +584,9 @@ input[type="radio"]:checked {
             .myprofile-save-button {
                 right: 70px;
             }
+        .myprofile-button-group-2 {
+            margin-top: 0;
+        }
         }
     
         @media(min-width:1350px) {
@@ -581,13 +596,22 @@ input[type="radio"]:checked {
             }
         }
 /******* FULL DESCRIPTION ******/
-.editor-container {
-    width: 52rem;
-    height: 10rem;
+.bprofile-editor-container {
+    width: 100%;
+    min-height: 10rem;
+    height: auto;
     border: 1px solid #B1B1B1;
     border-radius: 1rem;
     background-color: #F4F5F6;
 }
+
+@media(min-width:1024px) {
+.bprofile-editor-container {
+        width: 90%;
+      
+    }
+}
+
 .fulldescription-down-aroww {
     color: #6cc2bc;
     margin-left: 63vw;
@@ -608,4 +632,73 @@ input[type="radio"]:checked {
         margin-top: -20px;
     }
 }
+
+
+/* Q and A */
+.QandA-panel-container {
+    padding: 1px 25px 25px 0px;
+}
+
+.question-input-style {
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    background: #fafafa;
+    border: 1px solid #c3bebe;
+    padding: 10px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.answer-input-style {
+    width: 100%;
+    height: 100px;
+    border-radius: 10px;
+    background: #fafafa;
+    border: 1px solid #c3bebe;
+    padding: 10px;
+    margin-top: 5px;
+    cursor: pointer;
+    outline: none;
+}
+
+.qandA-delete-button {
+    position: absolute;
+    right: 2rem;
+    margin-top: -2.5rem;
+}
+
+.question-cancel-button {
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: underline;
+    height: 40px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+
+}
+
+@media(min-width:1023px) {
+    .question-input-style {
+        width: 90%;
+    }
+
+    .answer-input-style {
+        width: 90%;
+    }
+
+    .qandA-delete-button {
+        right: 6rem;
+    }
+}
+
+@media(min-width:1250px) {
+    .qandA-delete-button {
+        right: 7rem;
+    }
+}
+
 

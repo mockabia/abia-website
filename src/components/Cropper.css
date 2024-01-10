@@ -55,9 +55,9 @@
 
 
 .cropper-upload-recommendation {
-
+    position: absolute;
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5rem;
     color: #c3bebe;
     font-size: 14px;
     margin-left: calc((100vw - 375px) / 2);
@@ -66,7 +66,7 @@
 
 @media(min-width: 769px) {
     .cropper-upload-recommendation {
-        margin-left: calc((100vw - 760px) / 2);
+        margin-left: calc((100vw - 649px) / 2);
     }
 }
 
@@ -78,12 +78,13 @@
 
 @media(min-width:1023px) {
     .cropper-upload-recommendation {
-        margin-left: calc((100vw - 1100px) / 2);
+        margin-left: calc((100vw - 1024px) / 2);
+        
     }
 
 }
 
-@media(min-width:1100px) {
+@media(min-width:1250px) {
     .cropper-container {
         margin: 10px;
         width: 150px;
@@ -95,7 +96,7 @@
         display: inline-block;
         position: absolute;
         margin-top: -125px;
-        margin-left: 80px;
+        margin-left: 10.5rem;
         display: flex;
         justify-content: center;
         align-items: flex-end;
@@ -113,9 +114,9 @@
     .cropper-upload-recommendation {
         font-size: 13px;
         position: absolute;
-        margin-top: 1rem;
+        margin-top: -4.5rem;
         /* margin-top: -73px; */
-        margin-left: 13rem;
+        margin-left: 10.5rem;
         text-wrap: nowrap;
    }
 
@@ -173,7 +174,7 @@
 }
 
 
-@media(min-width:1023px) {
+@media(min-width:1250px) {
     .image-style-uploader {
         margin: 10px;
         width: 150px;

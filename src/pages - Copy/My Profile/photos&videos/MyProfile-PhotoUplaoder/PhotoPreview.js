@@ -18,6 +18,9 @@ const PhotoPreview = ({ imagesPreviewUrls, deleteImage }) => {
   const handleDrag = (ev) => {
     setDragId(ev.currentTarget.id);
   };
+  const handleDragEnd = () => {
+    setDragId("");
+  };
 
   const handleDrop = (ev) => {
     ev.preventDefault();
@@ -78,7 +81,11 @@ const PhotoPreview = ({ imagesPreviewUrls, deleteImage }) => {
     );
   };
 
-  return <div className="photopreview-wrapper ">{renderPreview()}</div>;
+  return (
+    <div className="photopreview-wrapper " onDragEnd={handleDragEnd}>
+      {renderPreview()}
+    </div>
+  );
 };
 
 export default PhotoPreview;

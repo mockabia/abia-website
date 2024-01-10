@@ -18,7 +18,7 @@ const Footer = (props) => {
     await servicesPage.fetchFooterMenus().then(function (response) {
       if (response.statuscode == 200) {
         setFooterMenu(response.result);
-        props.setShowLoader(false)
+        props.setShowLoader(false);
       }
     });
   };
@@ -28,7 +28,7 @@ const Footer = (props) => {
   };
 
   return (
-    <div className={`${props.showLoader ? "" : ""} bg-[#000] relative `}>
+    <div className={`${props.showLoader ? "" : ""} bg-[#000]  `}>
       <div className="footer-container">
         <div className="footer-logo" onClick={handleLogoClick}>
           <div className="logo-adjust cursor-pointer">
@@ -38,7 +38,7 @@ const Footer = (props) => {
         <div className="footerMenus">
           <ul>
             {footerMenu.map((FooterMenu, i) => (
-            //{Object.values(footerMenu).map((FooterMenu, i) => (
+              //{Object.values(footerMenu).map((FooterMenu, i) => (
               <li className="footer-text">
                 <NavLink to={`/${FooterMenu.url}`}>{FooterMenu.title} </NavLink>
               </li>

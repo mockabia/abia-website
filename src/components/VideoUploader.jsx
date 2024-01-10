@@ -98,10 +98,6 @@ const VideoUploader = () => {
           </div>
         ))}
       </div>
-      {/* <div className="myprofile-button-group">
-        <button className="myprofile-cancel-button">Cancel</button>
-        <button className="myprofile-save-button">Save</button>
-      </div> */}
 
       <Modal
         open={open}
@@ -129,6 +125,7 @@ const VideoUploader = () => {
               inputProps={{
                 style: {
                   height: "80px",
+                  outline: "none",
                 },
               }}
             />

@@ -1,8 +1,8 @@
 .myprofile-photogallerytest {
-    margin-top: 15px;
     display: flex;
     flex-wrap: wrap;
-    /* float: left; */
+    gap: 1rem;
+    float: left;
 }
 
 .myprofile-photogallerytest>* {
