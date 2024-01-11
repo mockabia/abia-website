@@ -95,12 +95,15 @@ const Profile = ({ preview }) => {
   const [cocktail, setCocktail] = useState("");
   const [seatedStyle, setSeatedStyle] = useState("");
   const [venueAmenities, setVenueAmmenities] = useState([]);
+  const [serviceOfferings, setServiceOfferings] = useState([]);
 
   //Qand A
   const [questions, setQuestions] = useState([
     { id: 1, question: "", answer: "" },
   ]);
   const [questionDisplay, setQuestionDisplay] = useState([]);
+  const [qwordCount, setQwordCount] = useState(0);
+  const [qandaWordCountError, setqandaWordCountError] = useState(false);
   // PACKAGES
   const [fileUploaded, setFileUploaded] = useState(false);
   const [packagesText, setPackagesText] = useState("");
@@ -184,29 +187,29 @@ const Profile = ({ preview }) => {
       "owner-image": croppedImage,
     });
   };
-// QandA submit
- const handleQuestionSave = () => {
-   setExpanded(false);
-   setSaveClicked(true);
-   // Check if any question or answer is not blank
-   const hasNonBlankQandA = questions.some(
-     (question) =>
-       question.question.trim() !== "" || question.answer.trim() !== ""
-   );
+  // QandA submit
+  const handleQuestionSave = () => {
+    setExpanded(false);
+    setSaveClicked(true);
+    // Check if any question or answer is not blank
+    const hasNonBlankQandA = questions.some(
+      (question) =>
+        question.question.trim() !== "" || question.answer.trim() !== ""
+    );
 
-   if (hasNonBlankQandA) {
-     // Build the formatted questionDisplay content
-     const formattedQuestions = questions.map((question) => {
-       return `Q${question.id}:${question.question}\n A${question.id}:${question.answer}`;
-     });
-     // Join the formatted questions and answers with line breaks
-     const newQuestionDisplay = formattedQuestions.join("\n\n");
-     setQuestionDisplay([newQuestionDisplay]);
-     console.log("formValues:", {
-       qanda: newQuestionDisplay,
-     });
-   }
- };
+    if (hasNonBlankQandA) {
+      // Build the formatted questionDisplay content
+      const formattedQuestions = questions.map((question) => {
+        return `Q${question.id}:${question.question}\n A${question.id}:${question.answer}`;
+      });
+      // Join the formatted questions and answers with line breaks
+      const newQuestionDisplay = formattedQuestions.join("\n\n");
+      setQuestionDisplay([newQuestionDisplay]);
+      console.log("formValues:", {
+        qanda: newQuestionDisplay,
+      });
+    }
+  };
 
   const handlePackageSubmit = () => {
     if (fileUploaded) {
@@ -280,7 +283,7 @@ const Profile = ({ preview }) => {
     }));
   };
   const handleVenueAmenitiesChange = (e, index) => {
-    const value = dynamicFields[index].id;
+    const value = dynamicFields[index].label;
     setVenueAmmenities((prevVenueAmmenities) => {
       if (prevVenueAmmenities.includes(value)) {
         return prevVenueAmmenities.filter((amenities) => amenities !== value);
@@ -289,15 +292,27 @@ const Profile = ({ preview }) => {
       }
     });
   };
+
+  const handleSErviceOfferings = (e, index) => {
+    const value = dynamicFields[index].label;
+    setServiceOfferings((prevVenueAmmenities) => {
+      if (prevVenueAmmenities.includes(value)) {
+        return prevVenueAmmenities.filter((amenities) => amenities !== value);
+      } else {
+        return [...prevVenueAmmenities, value];
+      }
+    });
+  };
+
   const handlePricingSubmit = () => {
     setExpanded(false);
     setSaveClicked(true);
 
     // Log values of state variables
-    console.log("Capacity:", capacity);
-    console.log("Cocktail:", cocktail);
-    console.log("Seated Style:", seatedStyle);
-    console.log("Venue Amenities:", venueAmenities);
+    // console.log("Capacity:", capacity);
+    // console.log("Cocktail:", cocktail);
+    // console.log("Seated Style:", seatedStyle);
+    // console.log("Venue Amenities:", venueAmenities);
 
     const formData = dynamicFields.reduce((acc, field) => {
       const fieldName = field.id;
@@ -376,7 +391,18 @@ const Profile = ({ preview }) => {
     setQuestions(updatedQuestions);
   };
 
-  
+  const handleQandAWordCount = (text) => {
+    const words = text.trim().split(/\s+/);
+    const count = words.length;
+    setQwordCount(count);
+
+    if (count > 50) {
+      setqandaWordCountError(true);
+    } else {
+      setqandaWordCountError(false);
+    }
+  };
+
   /*******PACKAGES*******8 */
   const handleFileChange = (e) => {
     const fileInput = e.target;
@@ -769,17 +795,58 @@ const Profile = ({ preview }) => {
                 <h4 className="profile-listing-header">Pricing</h4>
                 {saveClicked && !expanded ? (
                   <>
-                    <p className="myprofile-accordion-subheading">
-                      You are responsible for updating your prices
-                    </p>
-                    <p className="myprofile-accordion-subheading">
-                      Staring Price: ${amount}
-                    </p>
-                    <p className="myprofile-accordion-subheading">
-                      Display Price: {displayPrice ? "Yes" : "No"}
-                    </p>
+                    {/* Check if there is at least one category with Display Price set to "Yes" */}
+                    {dynamicFields.some((field) => displayStates[field.id]) ? (
+                      // Render starting prices for categories with Display Price set to "Yes"
+                      dynamicFields.map((field) => (
+                        <div key={field.id}>
+                          {displayStates[field.id] && (
+                            <>
+                              <p className="myprofile-accordion-subheading">
+                                {field.label} Starting Price: $
+                                {inputs[field.id]}
+                              </p>
+                              <p className="myprofile-accordion-subheading">
+                                Display Price:{" "}
+                                {displayStates[field.id] ? "Yes" : "No"}
+                              </p>
+                              {field.id === "Wedding_Venues" &&
+                                accomodatiion[field.id] !== undefined && (
+                                  <p className="myprofile-accordion-subheading">
+                                    Accommodation Availability:{" "}
+                                    {accomodatiion[field.id] ? "Yes" : "No"}
+                                  </p>
+                                )}
+
+                              {field.id === "Wedding_Venues" && capacity && (
+                                <p className="myprofile-accordion-subheading">
+                                  Capacity: {capacity}
+                                </p>
+                              )}
+                              {field.id === "Wedding_Venues" && cocktail && (
+                                <p className="myprofile-accordion-subheading">
+                                  Cocktail: ${cocktail}
+                                </p>
+                              )}
+                              {field.id === "Wedding_Venues" && seatedStyle && (
+                                <p className="myprofile-accordion-subheading">
+                                  Seated Style: {seatedStyle}
+                                </p>
+                              )}
+                            </>
+                          )}
+                        </div>
+                      ))
+                    ) : (
+                      // If all Display Price states are "No", display the comment
+                      <p className="myprofile-accordion-subheading">
+                        Add a Starting Price. It is not mandatory to display
+                        your prices.
+                      </p>
+                    )}
                   </>
                 ) : (
+                  // If not saved or not expanded, display the default comment
                   <p className="myprofile-accordion-subheading">
                     Add a Starting Price. It is not mandatory to display your
                     prices.
@@ -988,10 +1055,24 @@ const Profile = ({ preview }) => {
                   <h4 style={{ fontWeight: expanded ? "bold" : "normal" }}>
                     Venue Inclusions
                   </h4>
-                  <p className="myprofile-accordion-subheading">
-                    Add Your Venue inclusions
-                  </p>
-                  {/* ... (additional content for Venue Amenities and Services) */}
+                  {saveClicked && !expanded ? (
+                    <>
+                      {venueAmenities.length > 0 && (
+                        <p className="myprofile-accordion-subheading">
+                          Venue Amenities: {venueAmenities.join(", ")}
+                        </p>
+                      )}
+                      {serviceOfferings.length > 0 && (
+                        <p className="myprofile-accordion-subheading">
+                          Service Offerings : {serviceOfferings.join(", ")}
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <p className="myprofile-accordion-subheading">
+                      Add Your Venue inclusions
+                    </p>
+                  )}
                 </div>
               </AccordionSummary>
               <AccordionDetails>
@@ -1071,13 +1152,10 @@ const Profile = ({ preview }) => {
                                           <Checkbox
                                             value={option.value}
                                             checked={
-                                              venueAmenities[option.value]
+                                              serviceOfferings[option.value]
                                             }
                                             onChange={(e) =>
-                                              handleVenueAmenitiesChange(
-                                                e,
-                                                index
-                                              )
+                                              handleSErviceOfferings(e, index)
                                             }
                                           />
                                         }
@@ -1103,7 +1181,7 @@ const Profile = ({ preview }) => {
                 <div className="flex justify-center">
                   <button
                     className="mt-[2rem] flex justify-center items-center w-[120px] h-[40px] rounded-full bg-[#6cc2bc] text-[16px] text-white font-bold cursor-pointer"
-                    // onClick={handlePricingSubmit}
+                    onClick={handlePricingSubmit}
                   >
                     Save
                   </button>
@@ -1172,10 +1250,14 @@ const Profile = ({ preview }) => {
                               className="question-input-style"
                               placeholder="Maximum 50 characters"
                               value={question.question}
-                              onChange={(e) =>
-                                handleQuestionChange(e, question.id)
-                              }
+                              onChange={(e) => {
+                                handleQandAWordCount(e.target.value);
+                                handleQuestionChange(e, question.id);
+                              }}
                             />
+                            {qandaWordCountError && (
+                              <p className="error">Max word limit: 50 words</p>
+                            )}
                             <div className="qandA-delete-button ">
                               <button
                                 className="remove-question-button"

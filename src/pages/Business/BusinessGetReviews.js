@@ -5,7 +5,7 @@ import ContentHeader from "../../layouts/sidebar/ContentHeader";
 import { useState } from "react";
 import * as BusinessJS from "./Business";
 
-const GetReviews = () => {
+const GetReviews = (props) => {
   const navigate = useNavigate();
   const [vendorInput, setVendorInputs] = useState();
   const [dataSet, setDataSet] = useState(false);
@@ -63,7 +63,7 @@ const GetReviews = () => {
       </div>
       <main>
         <div className="reviews">
-          <div className="main-header">
+          <div className="main-header-get-review">
             <h2>3 options to get reviews & grow trust in your brand</h2>
             <p className="mt-[10px] max-w-[800px] whitespace-adjust ">
               Build trust, book more weddings and feature in the prestigious
