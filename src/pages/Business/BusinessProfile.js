@@ -4,12 +4,7 @@ import "../Style/BusinessProfile.css";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { RxTriangleUp } from "react-icons/rx";
-import { BorderBottom } from "@mui/icons-material";
-import DraftJsEditor2 from "../../components/Editor/DraftJsEditor2";
-// import DraftEditor from "../../third-party-packs/Editor-Draft/DraftEditor";
-import PreviewListing2 from "../../pages - Copy/MyProfile2/PreviewLisitng2";
 // Editor
 import { EditorState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
@@ -69,6 +64,7 @@ const dynamicFields = [
 ];
 
 const Profile = ({ preview }) => {
+  const isScreenSizeAbove1250px = window.innerWidth > 1250;
   const [expanded, setExpanded] = useState(false);
   const [draftText, setDraftText] = useState("");
   const [quickText, setQuickText] = useState("");
@@ -80,7 +76,7 @@ const Profile = ({ preview }) => {
   );
   const [convertedContent, setConvertedContent] = useState(null);
   const [fullText, setFullText] = useState(null);
-  const [fullDescContent, setFullDescContent] = useState(false);
+  const [fulldesccount, setFulldesccount] = useState(0);
   // Owner and Team
   const [ownerText, setOWnerText] = useState("");
   const [ownerContent, setOwnerContent] = useState("");
@@ -123,14 +119,17 @@ const Profile = ({ preview }) => {
     setAccomodatiion(initialDisplayStates);
   }, []);
 
-  useEffect(() => {
-    let html = convertToHTML(editorState.getCurrentContent());
-    setConvertedContent(html);
-    setFullText(
-      <div dangerouslySetInnerHTML={createMarkup(convertedContent)} />
-    );
-  }, [editorState, convertedContent]);
+ useEffect(() => {
+   let html = convertToHTML(editorState.getCurrentContent());
+   setConvertedContent(html);
+   const plainText = editorState.getCurrentContent().getPlainText();
+   const words = plainText.trim().split(/\s+/);
+   const count = words.length;
+   setFulldesccount(count);
 
+   // Use html directly instead of relying on state update
+   setFullText(<div dangerouslySetInnerHTML={createMarkup(html)} />);
+ }, [editorState, convertedContent]);
   /********************************************************8****** */
 
   const handleChange = (isExpanded: boolean, panel: string) => {
@@ -171,6 +170,11 @@ const Profile = ({ preview }) => {
     setFullText(plainTextContent);
     // setDraftText(""); // Reset the textarea
     // setWordCount(0);
+    const countWords = (content) => {
+      const words = content.split(/\s+/).filter(Boolean);
+      return words.length;
+    };
+
     console.log("formValues:", {
       "quick-desc": quickText,
       "full-desc": plainTextContent,
@@ -307,7 +311,6 @@ const Profile = ({ preview }) => {
   const handlePricingSubmit = () => {
     setExpanded(false);
     setSaveClicked(true);
-
     // Log values of state variables
     // console.log("Capacity:", capacity);
     // console.log("Cocktail:", cocktail);
@@ -430,17 +433,18 @@ const Profile = ({ preview }) => {
   // Log the selected value to the console
   // console.log(`Field ${fieldId} - Display Price: ${value ? "Yes" : "No"}`);
 
+  // Full descr word count
+
   return (
     <div className="preview-listing-container">
-      <div className="preview-lisitng-div">
-        <h3>Preview Lisitng</h3>
-      </div>
       {/* PROFILE BASICS */}
-      {/* <pre>{JSON.stringify(inputs, null, 2)}</pre> */}
+      <div className="preview-lisitng-div">
+        <h4 className="font-bold">Preview Lisitng</h4>
+      </div>
+      <div className="mb-[1rem]">
+        <h2 className="profile-listing-header">Profile Basics</h2>
+      </div>
       <div>
-        <div className="mb-[1rem]">
-          <h2 className="profile-listing-header">Profile Basics</h2>
-        </div>
         <div className="grid grid-cols-1">
           {/* QUICK DESCRPTION */}
           <StyledAccordion
@@ -448,6 +452,20 @@ const Profile = ({ preview }) => {
             onChange={(e, isExpanded) => handleChange(isExpanded, "panel1")}
           >
             <AccordionSummary
+              style={{
+                paddingLeft:
+                  expanded === "panel1"
+                    ? isScreenSizeAbove1250px
+                      ? "2rem"
+                      : "1rem"
+                    : "0",
+                paddingRight:
+                  expanded === "panel1"
+                    ? isScreenSizeAbove1250px
+                      ? "2rem"
+                      : "1rem"
+                    : "1rem",
+              }}
               id="panel1-header"
               aria-controls="panel1-content"
               expandIcon={
@@ -459,7 +477,11 @@ const Profile = ({ preview }) => {
                     fontWeight: "600",
                   }}
                 >
-                  Edit
+                  {expanded === "panel1" ? (
+                    <RxTriangleUp size={30} color="#6cc2bc" />
+                  ) : (
+                    "Edit"
+                  )}
                 </Typography>
               }
               sx={{
@@ -470,7 +492,11 @@ const Profile = ({ preview }) => {
               }}
             >
               <div>
-                <h4 style={{ fontWeight: expanded ? "bold" : "normal" }}>
+                <h4
+                  style={{
+                    fontWeight: expanded === "panel1" ? "bold" : "normal",
+                  }}
+                >
                   Quick Description
                 </h4>
                 {saveClicked && quickText.length > 0 && !expanded ? (
@@ -483,7 +509,16 @@ const Profile = ({ preview }) => {
                 )}
               </div>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails
+              style={{
+                paddingLeft:
+                  expanded === "panel1"
+                    ? isScreenSizeAbove1250px
+                      ? "2rem"
+                      : "1rem"
+                    : "0",
+              }}
+            >
               <div>
                 <div className="myprofile-accordion-item-header"></div>
                 <div className="mt-[0px]">
@@ -530,6 +565,14 @@ const Profile = ({ preview }) => {
             onChange={(e, isExpanded) => handleChange(isExpanded, "panel2")}
           >
             <AccordionSummary
+              style={{
+                paddingLeft:
+                  expanded === "panel2"
+                    ? isScreenSizeAbove1250px
+                      ? "2rem"
+                      : "1rem"
+                    : "0",
+              }}
               id="panel2-header"
               aria-controls="panel2-content"
               expandIcon={
@@ -541,7 +584,11 @@ const Profile = ({ preview }) => {
                     fontWeight: "600",
                   }}
                 >
-                  Edit
+                  {expanded === "panel2" ? (
+                    <RxTriangleUp size={30} color="#6cc2bc" />
+                  ) : (
+                    "Edit"
+                  )}
                 </Typography>
               }
               sx={{
@@ -553,7 +600,7 @@ const Profile = ({ preview }) => {
             >
               <div>
                 {/* <h4 className="myprofile-heading-expand">Full Description</h4> */}
-                <h4 style={{ fontWeight: expanded ? "bold" : "normal" }}>
+                <h4 style={{ fontWeight: expanded === "panel2" ? "bold" : "normal" }}>
                   Full Description
                 </h4>
                 {saveClicked && fullText.length > 0 && !expanded ? (
@@ -567,14 +614,19 @@ const Profile = ({ preview }) => {
                 )}
               </div>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails
+              style={{
+                paddingLeft:
+                  expanded === "panel2"
+                    ? isScreenSizeAbove1250px
+                      ? "2rem"
+                      : "1rem"
+                    : "0",
+              }}
+            >
               <div>
-                <div className="myprofile-accordion-item-header">
-                  {/* <span className="myprofile-edit-button">Edit</span> */}
-                  {/* <RxTriangleUp size={30} className="myprofile-up-aroww" /> */}
-                </div>
+                <div className="myprofile-accordion-item-header"></div>
                 {/* Editor */}
-                {/* <DraftJsEditor2 /> */}
                 <div>
                   <div className="bprofile-editor-container">
                     <Editor
@@ -582,13 +634,20 @@ const Profile = ({ preview }) => {
                       onEditorStateChange={setEditorState}
                       toolbar={toolbarOptions}
                     />
-                    {/* {convertedContent}
-                    {fullText} */}
                   </div>
                   <div
                     className="hidden"
                     dangerouslySetInnerHTML={createMarkup(convertedContent)}
                   />
+                  <span className="text-[12px] mt-[5px]">
+                    {fulldesccount >= 500 ? (
+                      <p className="text-red-500 text-[12px] mt-2">
+                        Limit exceeded (500 words maximum)
+                      </p>
+                    ) : (
+                      `${fulldesccount}/500`
+                    )}
+                  </span>
                 </div>
                 <div className="mt-[0px]">
                   <div className="profile-editor-position">
@@ -617,6 +676,14 @@ const Profile = ({ preview }) => {
             onChange={(e, isExpanded) => handleChange(isExpanded, "panel3")}
           >
             <AccordionSummary
+              style={{
+                paddingLeft:
+                  expanded === "panel3"
+                    ? isScreenSizeAbove1250px
+                      ? "2rem"
+                      : "1rem"
+                    : "0",
+              }}
               id="panel3-header"
               aria-controls="panel3-content"
               expandIcon={
@@ -628,7 +695,11 @@ const Profile = ({ preview }) => {
                     fontWeight: "600",
                   }}
                 >
-                  Edit
+                  {expanded === "panel3" ? (
+                    <RxTriangleUp size={30} color="#6cc2bc" />
+                  ) : (
+                    "Edit"
+                  )}
                 </Typography>
               }
               sx={{
@@ -639,7 +710,11 @@ const Profile = ({ preview }) => {
               }}
             >
               <div>
-                <h4 style={{ fontWeight: expanded ? "bold" : "normal" }}>
+                <h4
+                  style={{
+                    fontWeight: expanded === "panel3" ? "bold" : "normal",
+                  }}
+                >
                   Meet the Owner/Team
                 </h4>
                 {saveClicked && ownerContent.length > 0 && !expanded ? (
@@ -659,7 +734,16 @@ const Profile = ({ preview }) => {
                 )}
               </div>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails
+              style={{
+                paddingLeft:
+                  expanded === "panel3"
+                    ? isScreenSizeAbove1250px
+                      ? "2rem"
+                      : "1rem"
+                    : "0",
+              }}
+            >
               <div>
                 <div className="myprofile-accordion-item-header">
                   {/* <span className="myprofile-edit-button">Edit</span> */}
@@ -745,7 +829,11 @@ const Profile = ({ preview }) => {
               </div>
             </AccordionDetails>
           </StyledAccordion>
-          <br />
+          <hr
+            style={{
+              borderColor: expanded === "panel3" ? "transparent" : "#b1b1b1",
+            }}
+          />
           <br />
 
           {/* PHOTO GALLERY */}
@@ -760,7 +848,6 @@ const Profile = ({ preview }) => {
             <PhotoGalleryTest />
           </div>
           <br />
-          <br />
           <div className="myprofilePhotos-accordion-item-header">Videos</div>
           <VideoGallery />
 
@@ -770,6 +857,14 @@ const Profile = ({ preview }) => {
             onChange={(e, isExpanded) => handleChange(isExpanded, "panel4")}
           >
             <AccordionSummary
+              style={{
+                paddingLeft:
+                  expanded === "panel4"
+                    ? isScreenSizeAbove1250px
+                      ? "2rem"
+                      : "1rem"
+                    : "0",
+              }}
               id="panel4-header"
               aria-controls="panel4-content"
               expandIcon={
@@ -781,7 +876,11 @@ const Profile = ({ preview }) => {
                     fontWeight: "600",
                   }}
                 >
-                  Edit
+                  {expanded === "panel4" ? (
+                    <RxTriangleUp size={30} color="#6cc2bc" />
+                  ) : (
+                    "Edit"
+                  )}
                 </Typography>
               }
               sx={{
@@ -854,7 +953,16 @@ const Profile = ({ preview }) => {
                 )}
               </div>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails
+              style={{
+                paddingLeft:
+                  expanded === "panel4"
+                    ? isScreenSizeAbove1250px
+                      ? "2rem"
+                      : "1rem"
+                    : "0",
+              }}
+            >
               <div>
                 {dynamicFields.map((field, index) => (
                   <div className="mt-[0px]" key={field.id}>
@@ -867,11 +975,11 @@ const Profile = ({ preview }) => {
                       </div>
                       {/* pricing input */}
                       <div className="mt-[10px] relative">
-                        <span className="font-semibold flex flex-col">
+                        <h5 className="font-semibold flex flex-col">
                           {field.id === "Wedding_Venues"
                             ? "Price per Head:"
                             : "Starting Price:"}
-                        </span>
+                        </h5>
                         <div className="">
                           <span className="dollar-icon"></span>
                           <input
@@ -892,8 +1000,8 @@ const Profile = ({ preview }) => {
                       <div className="myprofile-button-group relative">
                         {/* quickdec-button-group */}
                         <div className="mt-[15px]">
-                          <span className="font-semibold">Display Price ?</span>
-                          <div className="mt-[15px] space-x-2">
+                          <h5 className="font-semibold">Display Price ?</h5>
+                          <div className="mt-[10px] space-x-2">
                             <button
                               className={`yes-button ${
                                 displayStates[field.id] ? "selected" : ""
@@ -924,9 +1032,9 @@ const Profile = ({ preview }) => {
                           {/* Accomodation Availability */}
                           <div className="myprofile-button-group relative">
                             <div className="mt-[15px]">
-                              <span className="font-semibold">
+                              <h5 className="font-semibold">
                                 Accomodation Availability
-                              </span>
+                              </h5>
                               <div className="mt-[15px] space-x-2">
                                 <button
                                   className={`yes-button ${
@@ -955,7 +1063,7 @@ const Profile = ({ preview }) => {
                           {/* Capacity */}
                           <div className="pricing-addons-container">
                             <div className="pricing-addon-label ">
-                              <span className="l">Capacity:</span>
+                              <h5 className="l">Capacity:</h5>
                             </div>
                             <input
                               type="number"
@@ -971,7 +1079,7 @@ const Profile = ({ preview }) => {
                           {/* Cocktail */}
                           <div className="pricing-addons-container">
                             <div className="pricing-addon-label ">
-                              <span className="l">Cocktail:</span>
+                              <h5 className="l">Cocktail:</h5>
                             </div>
                             <input
                               type="number"
@@ -987,7 +1095,7 @@ const Profile = ({ preview }) => {
                           {/* Seated Style */}
                           <div className="pricing-addons-container">
                             <div className="pricing-addon-label ">
-                              <span className="l">Seated Style</span>
+                              <h5 className="l">Seated Style</h5>
                             </div>
                             <input
                               type="number"
@@ -1030,6 +1138,14 @@ const Profile = ({ preview }) => {
               }
             >
               <AccordionSummary
+                style={{
+                  paddingLeft:
+                    expanded === "venueAmenities"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
                 id="venueAmenities-header"
                 aria-controls="venueAmenities-content"
                 expandIcon={
@@ -1041,7 +1157,11 @@ const Profile = ({ preview }) => {
                       fontWeight: "600",
                     }}
                   >
-                    Edit
+                    {expanded === "venueAmenities" ? (
+                      <RxTriangleUp size={30} color="#6cc2bc" />
+                    ) : (
+                      "Edit"
+                    )}
                   </Typography>
                 }
                 sx={{
@@ -1052,9 +1172,7 @@ const Profile = ({ preview }) => {
                 }}
               >
                 <div>
-                  <h4 style={{ fontWeight: expanded ? "bold" : "normal" }}>
-                    Venue Inclusions
-                  </h4>
+                  <h4 className="profile-listing-header">Venue Inclusions</h4>
                   {saveClicked && !expanded ? (
                     <>
                       {venueAmenities.length > 0 && (
@@ -1075,7 +1193,16 @@ const Profile = ({ preview }) => {
                   )}
                 </div>
               </AccordionSummary>
-              <AccordionDetails>
+              <AccordionDetails
+                style={{
+                  paddingLeft:
+                    expanded === "venueAmenities"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+              >
                 {dynamicFields.map((field, index) => (
                   <div className="mt-[0px]" key={field.id}>
                     <div>
@@ -1195,6 +1322,14 @@ const Profile = ({ preview }) => {
             onChange={(e, isExpanded) => handleChange(isExpanded, "panel5")}
           >
             <AccordionSummary
+              style={{
+                paddingLeft:
+                  expanded === "panel5"
+                    ? isScreenSizeAbove1250px
+                      ? "2rem"
+                      : "1rem"
+                    : "0",
+              }}
               id="panel5-header"
               aria-controls="panel5-content"
               expandIcon={
@@ -1206,7 +1341,11 @@ const Profile = ({ preview }) => {
                     fontWeight: "600",
                   }}
                 >
-                  Edit
+                  {expanded === "panel5" ? (
+                    <RxTriangleUp size={30} color="#6cc2bc" />
+                  ) : (
+                    "Edit"
+                  )}
                 </Typography>
               }
               sx={{
@@ -1230,7 +1369,16 @@ const Profile = ({ preview }) => {
                 )}
               </div>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails
+              style={{
+                paddingLeft:
+                  expanded === "panel5"
+                    ? isScreenSizeAbove1250px
+                      ? "2rem"
+                      : "1rem"
+                    : "0",
+              }}
+            >
               <div>
                 <div className="myprofile-accordion-item-header"></div>
                 <div className="mt-[0px]">
@@ -1309,6 +1457,14 @@ const Profile = ({ preview }) => {
             onChange={(e, isExpanded) => handleChange(isExpanded, "panel6")}
           >
             <AccordionSummary
+              style={{
+                paddingLeft:
+                  expanded === "panel6"
+                    ? isScreenSizeAbove1250px
+                      ? "2rem"
+                      : "1rem"
+                    : "0",
+              }}
               id="panel6-header"
               aria-controls="panel6-content"
               expandIcon={
@@ -1320,7 +1476,11 @@ const Profile = ({ preview }) => {
                     fontWeight: "600",
                   }}
                 >
-                  Edit
+                  {expanded === "panel6" ? (
+                    <RxTriangleUp size={30} color="#6cc2bc" />
+                  ) : (
+                    "Edit"
+                  )}
                 </Typography>
               }
               sx={{
@@ -1341,7 +1501,16 @@ const Profile = ({ preview }) => {
                 </div>
               </div>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails
+              style={{
+                paddingLeft:
+                  expanded === "panel6"
+                    ? isScreenSizeAbove1250px
+                      ? "2rem"
+                      : "1rem"
+                    : "0",
+              }}
+            >
               <div>
                 <div className="myprofile-accordion-item-header">
                   {/* <span className="myprofile-edit-button">Edit</span> */}

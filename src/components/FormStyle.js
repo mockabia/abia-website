@@ -9,6 +9,9 @@ import Checkbox from "@mui/material/Checkbox";
 import Stepper from "@mui/material/Stepper";
 import Typography from "@mui/material/Typography";
 import { createTheme } from "@mui/material/styles";
+import { RxTriangleUp } from "react-icons/rx";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
 
 export const RatingComponent = createTheme({
   components: {
@@ -818,16 +821,17 @@ export const MultiValue = ({ index, getValue, ...props }) => {
 /***************ACCORDION******************* */
 // used in Business-Myprofile
 export const StyledAccordion = styled(Accordion)(({ theme, expanded }) => ({
-  padding: "1rem 2rem 2rem 0 ",
+  padding: "1rem 0rem 2rem 0 ",
   paddingLeft: "0rem",
-  borderRadius: "0",
-  boxShadow: "none",
+  boxShadow: "none !important",
+  border: "none !important",
   margin: "0px !important",
-  borderBottom: expanded ? "1px solid transparent" : "1px solid #D6D6D6",
+  // borderBottom: expanded ? "1px solid transparent" : "1px solid #D6D6D6",
   width: {
     xs: "100%",
     md: "83%",
   },
+
   ...(expanded && {
     border: "1px solid #D6D6D6",
     borderRadius: "1rem 1rem 0 0",
@@ -836,6 +840,7 @@ export const StyledAccordion = styled(Accordion)(({ theme, expanded }) => ({
     padding: "1rem 1rem 1rem 0",
   },
 }));
+
 
 /*******COUPLES profile*******/
 export const CoupleInput = styled(TextField)(({ theme }) => ({
