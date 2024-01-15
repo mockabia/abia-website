@@ -62,6 +62,14 @@ export async function stateRegionDropdwon(state) {
 }
 
 // Business MyProfile
-export async function businessDescriotion1(postData, id) {
-  return await apiService.apiCall(MAIN_API["BUSINESSDESC"] +'/' + id, "POST", postData);
+export async function businessDescriotion1(id, option,postData) {
+  return await apiService.apiCall(
+    MAIN_API["BUSINESSDESC"] + "/" + id + "/" + option + "/" + id,
+    "POST",
+    postData
+  );
+}
+
+export async function businessViewData(id) {
+  return await apiService.apiCall(MAIN_API["BUSINESSDESCVIEW"] + "/" + id, "GET");
 }

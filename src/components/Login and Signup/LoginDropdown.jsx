@@ -19,7 +19,11 @@ const LoginDropdown = () => {
   const [open, setOpen] = useState(false);
   const [modalOpen, seetModalOpen] = useState(false);
 
-  const handleModalOpen = () => seetModalOpen(true);
+  const handleModalOpen = () => {
+    seetModalOpen(true);
+    setButtonClicked(false);
+    setOpen(false);
+  };
   const handleModalClose = () => seetModalOpen(false);
 
   const menuItem = [
@@ -64,7 +68,10 @@ const LoginDropdown = () => {
       {open && (
         <div className="login-dropdown-menu">
           <ul>
-            <li className="loginnav-menu-item">
+            <li
+              className="loginnav-menu-item"
+              onClick={() => setButtonClicked(false)}
+            >
               <Link to={window.VLOGIN}>Vendor</Link>
             </li>
             <li className="loginnav-menu-item">

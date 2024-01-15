@@ -3,7 +3,7 @@ import Select, { components } from "react-select";
 import { alpha, styled } from "@mui/material/styles";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Accordion, InputBase, TextField } from "@mui/material";
+import { Accordion, IconButton, InputBase, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Stepper from "@mui/material/Stepper";
@@ -546,7 +546,7 @@ export const CSTextfield = styled(TextField)({
 
 export const CouplesLoginBox = {
   width: "100%",
-  maxWidth: "27rem",
+  maxWidth: "24rem",
   height: "auto",
   bgcolor: "#fff",
   border: "1px solid #949494",
@@ -554,8 +554,19 @@ export const CouplesLoginBox = {
   p: 4,
   "@media (max-width: 600px)": {
     width: "100%",
+    maxWidth: "20rem",
   },
 };
+
+export const StyledIconButton = styled(IconButton)`
+  position: absolute;
+  right: 18%;
+  margin-top: -2rem;
+
+  @media (min-width: 1023px) {
+    right: 11%;
+  }
+`;
 
 export const CLLoginStyle = styled(Button)(({ theme }) => ({
   display: "flex",
@@ -604,6 +615,7 @@ export const VLTextField = styled(TextField)(({ theme }) => ({
 }));
 
 export const VendorLoginButton = styled(Button)(({ theme }) => ({
+  outline: "none",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -613,7 +625,6 @@ export const VendorLoginButton = styled(Button)(({ theme }) => ({
   color: "#fff", // Set text color to black
   backgroundColor: "#6cc2bc", // Set background color to white
   borderRadius: "50px",
-  border: "1px solid #515151",
   maxWidth: "250px",
   width: "250px",
   height: "40px",
@@ -840,7 +851,6 @@ export const StyledAccordion = styled(Accordion)(({ theme, expanded }) => ({
     padding: "1rem 1rem 1rem 0",
   },
 }));
-
 
 /*******COUPLES profile*******/
 export const CoupleInput = styled(TextField)(({ theme }) => ({

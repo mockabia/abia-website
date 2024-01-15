@@ -1,3 +1,5 @@
+//Business profile - latest
+
 import React, { useState, useEffect } from "react";
 import "../Style/BusinessProfile.css";
 // Accordion
@@ -64,20 +66,25 @@ const dynamicFields = [
 ];
 
 const Profile = ({ preview }) => {
+  const [previewListing, setPreviewListing] = useState("");
   const [vendorinputs, setVendorInputs] = useState("");
-  const vendorID = vendorinputs.id;
+  const vendorID = vendorinputs.vid;
+  const businessID = vendorinputs.id;
   const isScreenSizeAbove1250px = window.innerWidth > 1250;
   const [expanded, setExpanded] = useState(false);
   const [draftText, setDraftText] = useState("");
   const [quickText, setQuickText] = useState("");
   const [saveClicked, setSaveClicked] = useState(false);
   const [wordCount, setWordCount] = useState(0);
+
+  const [inputsErrors, setInputsErrors] = useState({});
+  const [dataSet, setDataSet] = useState(false);
   // Editor
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
   const [convertedContent, setConvertedContent] = useState(null);
-  const [fullText, setFullText] = useState(null);
+  const [fullText, setFullText] = useState(vendorinputs.profile_long_desc);
   const [fulldesccount, setFulldesccount] = useState(0);
   // Owner and Team
   const [ownerText, setOWnerText] = useState("");
@@ -106,11 +113,15 @@ const Profile = ({ preview }) => {
   const [fileUploaded, setFileUploaded] = useState(false);
   const [packagesText, setPackagesText] = useState("");
   const [uploadedFileName, setUploadedFileName] = useState("");
-  const [dataSet, setDataSet] = useState(false);
   const [inputs, setInputs] = useState({});
-  const [inputsErrors, setInputsErrors] = useState({});
 
-  // console.log("Inputs:", inputs);
+  //preview listing
+  useEffect(() => {
+    const fetchData = async () => {
+      await BusinessJS.vendorView(setPreviewListing, vendorID, setDataSet);
+    };
+    fetchData();
+  }, [vendorID]);
 
   // business input
   useEffect(() => {
@@ -148,9 +159,8 @@ const Profile = ({ preview }) => {
   const handleQuickTexChange = (e) => {
     const inputText = e.target.value;
     const currentWordCount = inputText.split(/\s+/).filter(Boolean).length;
-
     if (currentWordCount <= 100) {
-      setDraftText(inputText);
+      setQuickText(inputText);
       setWordCount(currentWordCount);
     }
   };
@@ -159,50 +169,24 @@ const Profile = ({ preview }) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
     return doc.body.textContent || "";
   };
-
-  const handleSubmit = () => {
+  // submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
     setExpanded(false);
     setSaveClicked(true);
-    setQuickText(draftText);
+    //
     const formValues = {
-      profile_short_desc: draftText,
-    };
-    BusinessJS.updateBusinessMyProfile(formValues, vendorID);
-
-    console.log("formValues:", formValues);
-  };
-  /*
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      const updatedName = watch("name");
-      const updatedWebsite = watch("website");
-      const formValues = {
-        name: updatedName,
-        website: updatedWebsite,
-        photo: inputs.photo,
-        vid: VendorID,
-      };
-      // console.log("Form data:",formValues )
-      Business.updateBusiness(1, formValues, setInputsErrors);
-      // openSuccessSnackbar();
-    };
-*/
-  const handleFullDescSubmit = () => {
-    setExpanded(false);
-    setSaveClicked(true);
-    const htmlContent = convertToHTML(editorState.getCurrentContent());
-    const plainTextContent = stripHtmlTags(htmlContent);
-    setFullText(plainTextContent);
-   
-    const countWords = (content) => {
-      const words = content.split(/\s+/).filter(Boolean);
-      return words.length;
+      vid: vendorID,
+      profile_short_desc: quickText,
     };
 
-    console.log("formValues:", {
-      "quick-desc": quickText,
-      "full-desc": plainTextContent,
-    });
+    BusinessJS.updateBusinessMyProfile(
+      formValues,
+      vendorID,
+      1,
+      setInputsErrors,
+      setVendorInputs
+    );
   };
 
   const handleOwnerSubmit = () => {
@@ -375,11 +359,7 @@ const Profile = ({ preview }) => {
     // console.log("Radio option:", ownerRadioOption);
   }, [ownerRadioOption]);
 
-  const handleImageCrop = (images) => {
-    // console.log("ImageUrl:", images.imageUrl);
-    // console.log("Cropped image:", images.thumbUrl);
-    // console.log("Cropped thumbnail:", images.iconUrl);
-  };
+  const handleImageCrop = (images) => {};
 
   const handleImageChange = (thumbUrl) => {
     setCroppedImage(thumbUrl);
@@ -437,19 +417,9 @@ const Profile = ({ preview }) => {
       setUploadedFileName("");
     }
 
-    // Log the fileUploaded status and filename to the console
     console.log("File Uploaded Status:", fileUploaded);
     console.log("Uploaded Filename:", uploadedFileName);
   };
-
-  // console.log("this is the Cropped image:", croppedImage);
-  /**************************************** ***********************************/
-  useEffect(() => {
-    // BusinessJS.fetchbusiness(setInputs, setDataSet);
-  }, []);
-
-  // Log the selected value to the console
-  // console.log(`Field ${fieldId} - Display Price: ${value ? "Yes" : "No"}`);
 
   return (
     <div className="preview-listing-container">
@@ -468,118 +438,130 @@ const Profile = ({ preview }) => {
       <div>
         <div className="grid grid-cols-1">
           {/* QUICK DESCRPTION */}
-          <StyledAccordion
-            expanded={expanded === "panel1"}
-            onChange={(e, isExpanded) => handleChange(isExpanded, "panel1")}
-          >
-            <AccordionSummary
-              style={{
-                paddingLeft:
-                  expanded === "panel1"
-                    ? isScreenSizeAbove1250px
-                      ? "2rem"
-                      : "1rem"
-                    : "0",
-                paddingRight:
-                  expanded === "panel1"
-                    ? isScreenSizeAbove1250px
-                      ? "2rem"
-                      : "1rem"
-                    : "1rem",
-              }}
-              id="panel1-header"
-              aria-controls="panel1-content"
-              expandIcon={
-                <Typography
-                  sx={{
+          {dataSet == true ? (
+            <StyledAccordion
+              expanded={expanded === "panel1"}
+              onChange={(e, isExpanded) => handleChange(isExpanded, "panel1")}
+            >
+              <AccordionSummary
+                style={{
+                  paddingLeft:
+                    expanded === "panel1"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                  paddingRight:
+                    expanded === "panel1"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "1rem",
+                }}
+                id="panel1-header"
+                aria-controls="panel1-content"
+                expandIcon={
+                  <Typography
+                    sx={{
+                      color: "black",
+                      fontFamily: "inherit",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {expanded === "panel1" ? (
+                      <RxTriangleUp size={30} color="#6cc2bc" />
+                    ) : (
+                      "Edit"
+                    )}
+                  </Typography>
+                }
+                sx={{
+                  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+                    transform: "rotate(0deg)",
                     color: "black",
-                    fontFamily: "inherit",
-                    fontSize: "14px",
-                    fontWeight: "600",
-                  }}
-                >
-                  {expanded === "panel1" ? (
-                    <RxTriangleUp size={30} color="#6cc2bc" />
+                  },
+                }}
+              >
+                <div>
+                  <h4
+                    style={{
+                      fontWeight: expanded === "panel1" ? "bold" : "normal",
+                    }}
+                  >
+                    Quick Description
+                  </h4>
+                  {saveClicked &&
+                  vendorinputs.profile_short_desc &&
+                  !expanded ? (
+                    <p className="myprofile-accordion-subheading">
+                      {vendorinputs.profile_short_desc}
+                    </p>
                   ) : (
-                    "Edit"
+                    <p className="myprofile-accordion-subheading">
+                      {expanded === "panel1"
+                        ? "Display a quick summary of your business. Tip includes what your service is and your location."
+                        : previewListing
+                        ? previewListing.profile_short_desc
+                        : "Display a quick summary of your business. Tip includes what your service is and your location."}
+                    </p>
                   )}
-                </Typography>
-              }
-              sx={{
-                "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-                  transform: "rotate(0deg)",
-                  color: "black",
-                },
-              }}
-            >
-              <div>
-                <h4
-                  style={{
-                    fontWeight: expanded === "panel1" ? "bold" : "normal",
-                  }}
-                >
-                  Quick Description
-                </h4>
-                {saveClicked && quickText.length > 0 && !expanded ? (
-                  <p className="myprofile-accordion-subheading">{quickText}</p>
-                ) : (
-                  <p className="myprofile-accordion-subheading">
-                    Display a quick summary of your business. Tip include what
-                    your service is and your location.
-                  </p>
-                )}
-              </div>
-            </AccordionSummary>
-            <AccordionDetails
-              style={{
-                paddingLeft:
-                  expanded === "panel1"
-                    ? isScreenSizeAbove1250px
-                      ? "2rem"
-                      : "1rem"
-                    : "0",
-              }}
-            >
-              <div>
-                <div className="myprofile-accordion-item-header"></div>
-                <div className="mt-[0px]">
-                  <div className="profile-editor-position">
-                    <textarea
-                      name="quick-desc"
-                      id="text-area"
-                      value={draftText}
-                      onChange={handleQuickTexChange}
-                      className="myprofile-textarea-style"
-                    />
+                </div>
+              </AccordionSummary>
+              <AccordionDetails
+                style={{
+                  paddingLeft:
+                    expanded === "panel1"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+              >
+                <div>
+                  <div className="myprofile-accordion-item-header"></div>
+                  <div className="mt-[0px]">
+                    <div className="profile-editor-position">
+                      <textarea
+                        name="profile_short_desc"
+                        id="text-area"
+                        // value={quickText}
+                        value={quickText || previewListing.profile_short_desc}
+                        onChange={handleQuickTexChange}
+                        className="myprofile-textarea-style"
+                      />
 
-                    <span className="text-[12px] mt-[5px]">
-                      {wordCount >= 100 ? (
-                        <p className="text-red-500 text-[12px] mt-2">
-                          Limit exceeded (100 words maximum)
-                        </p>
-                      ) : (
-                        `${wordCount}/100`
-                      )}
-                    </span>
-                    <div className="myprofile-button-group">
-                      <button
-                        className="myprofile-cancel-button"
-                        onClick={handleCancel}
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        className="myprofile-save-button"
-                        onClick={handleSubmit}
-                      >
-                        Save
-                      </button>
+                      <span className="text-[12px] mt-[5px]">
+                        {wordCount >= 100 ? (
+                          <p className="text-red-500 text-[12px] mt-2">
+                            Limit exceeded (100 words maximum)
+                          </p>
+                        ) : (
+                          `${wordCount}/100`
+                        )}
+                      </span>
+                      <div className="myprofile-button-group">
+                        <button
+                          className="myprofile-cancel-button"
+                          onClick={handleCancel}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="myprofile-save-button"
+                          onClick={handleSubmit}
+                        >
+                          Save
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </AccordionDetails>
-          </StyledAccordion>
+              </AccordionDetails>
+            </StyledAccordion>
+          ) : (
+            ""
+          )}
           {/* Full DESCRPTION */}
           <StyledAccordion
             expanded={expanded === "panel2"}
@@ -685,7 +667,7 @@ const Profile = ({ preview }) => {
                       </button>
                       <button
                         className="myprofile-save-button"
-                        onClick={handleFullDescSubmit}
+                        onClick={handleSubmit}
                       >
                         Save
                       </button>

@@ -31,17 +31,17 @@ export const ADDITIONAL_CATEGORY_DROPDOWN = `${baseUrl}WebAdditionalVCategoryDro
 export const MARKETING_CATEGORY = `${baseUrl}MarketingCategoryDropdown`;
 
 export const CONTENT_API = {
-  HEADER_MENUS    : `${baseUrl}WebCommonHeaderMenu`,
-  FOOTER_MENUS    : `${baseUrl}WebCommonFooterMenu`,
-  CONTENT_DETAILS : `${baseUrl}Page_ContentDetails`,
-  BLOG            : `${baseUrl}page_BlogsubcategorVsBlog`,
-  BLOG_DETAIL     : `${baseUrl}View_BlogRecord`,
+  HEADER_MENUS: `${baseUrl}WebCommonHeaderMenu`,
+  FOOTER_MENUS: `${baseUrl}WebCommonFooterMenu`,
+  CONTENT_DETAILS: `${baseUrl}Page_ContentDetails`,
+  BLOG: `${baseUrl}page_BlogsubcategorVsBlog`,
+  BLOG_DETAIL: `${baseUrl}View_BlogRecord`,
 };
 export const ROUTES_API = {
-  PUBLIC_ROUTES       : `${baseUrl}PublicGeneralForRoutes`,
-  BLOG_ROUTES         : `${baseUrl}BlogVsCatVsSubForRoutes`,
-  BUSINESS_ROUTES     : `${baseUrl}VendorDashboardMenu`,
-  COUPLE_ROUTES       : `${baseUrl}BrideDashboardMenu`,
+  PUBLIC_ROUTES: `${baseUrl}PublicGeneralForRoutes`,
+  BLOG_ROUTES: `${baseUrl}BlogVsCatVsSubForRoutes`,
+  BUSINESS_ROUTES: `${baseUrl}VendorDashboardMenu`,
+  COUPLE_ROUTES: `${baseUrl}BrideDashboardMenu`,
 };
 
 export const BUSINESS_API = {
@@ -64,7 +64,9 @@ export const BUSINESS_API = {
   SETTINGS4: `${baseUrl}WebBusinessSettings/{id}/4`,
   SETTINGS5: `${baseUrl}WebBusinessSettings/{id}/5`,
   MANAGE_WEDDING: `${baseUrl}WebManageWedding`,
-  BUSINESSDESC: `${baseUrl}Webview_VendorDescription`,
+  BUSINESSDESC: `${baseUrl}ManageprofileSettings`, //
+  BUSINESSDESCVIEW: `${baseUrl}Webview_VendorDescription`,
+  
 };
 
 export const COUPLE_API = {

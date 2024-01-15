@@ -1,15 +1,12 @@
+// //Business profile - latest
+
 // import React, { useState, useEffect } from "react";
 // import "../Style/BusinessProfile.css";
 // // Accordion
 // import AccordionDetails from "@mui/material/AccordionDetails";
 // import AccordionSummary from "@mui/material/AccordionSummary";
 // import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 // import { RxTriangleUp } from "react-icons/rx";
-// import { BorderBottom } from "@mui/icons-material";
-// import DraftJsEditor2 from "../../components/Editor/DraftJsEditor2";
-// // import DraftEditor from "../../third-party-packs/Editor-Draft/DraftEditor";
-// import PreviewListing2 from "../../pages - Copy/MyProfile2/PreviewLisitng2";
 // // Editor
 // import { EditorState } from "draft-js";
 // import { Editor } from "react-draft-wysiwyg";
@@ -33,7 +30,7 @@
 // import PhotoGalleryTest from "../../pages - Copy/My Profile/photos&videos/MyProfile-PhotoUplaoder/PhotoGalleryTest";
 // import VideoGallery from "../../pages - Copy/My Profile/photos&videos/myProfileVideo";
 // import { StyledAccordion } from "../../components/FormStyle";
-// import * as BusinessJS from "./Business";
+// import * as BusinessJS from "../Business/Business";
 
 // const toolbarOptions = {
 //   options: ["inline", "list"],
@@ -69,18 +66,26 @@
 // ];
 
 // const Profile = ({ preview }) => {
+//   const [previewListing, setPreviewListing] = useState("");
+//   const [vendorinputs, setVendorInputs] = useState("");
+//   const vendorID = vendorinputs.vid;
+//   const businessID = vendorinputs.id;
+//   const isScreenSizeAbove1250px = window.innerWidth > 1250;
 //   const [expanded, setExpanded] = useState(false);
 //   const [draftText, setDraftText] = useState("");
 //   const [quickText, setQuickText] = useState("");
 //   const [saveClicked, setSaveClicked] = useState(false);
 //   const [wordCount, setWordCount] = useState(0);
+
+//   const [inputsErrors, setInputsErrors] = useState({});
+//   const [dataSet, setDataSet] = useState(false);
 //   // Editor
 //   const [editorState, setEditorState] = useState(() =>
 //     EditorState.createEmpty()
 //   );
 //   const [convertedContent, setConvertedContent] = useState(null);
-//   const [fullText, setFullText] = useState(null);
-//   const [fullDescContent, setFullDescContent] = useState(false);
+//   const [fullText, setFullText] = useState(vendorinputs.profile_long_desc);
+//   const [fulldesccount, setFulldesccount] = useState(0);
 //   // Owner and Team
 //   const [ownerText, setOWnerText] = useState("");
 //   const [ownerContent, setOwnerContent] = useState("");
@@ -95,20 +100,34 @@
 //   const [cocktail, setCocktail] = useState("");
 //   const [seatedStyle, setSeatedStyle] = useState("");
 //   const [venueAmenities, setVenueAmmenities] = useState([]);
+//   const [serviceOfferings, setServiceOfferings] = useState([]);
 
 //   //Qand A
 //   const [questions, setQuestions] = useState([
 //     { id: 1, question: "", answer: "" },
 //   ]);
 //   const [questionDisplay, setQuestionDisplay] = useState([]);
-//   // PACKAGES
+//   const [qwordCount, setQwordCount] = useState(0);
+//   const [qandaWordCountError, setqandaWordCountError] = useState(false);
+
 //   const [fileUploaded, setFileUploaded] = useState(false);
 //   const [packagesText, setPackagesText] = useState("");
 //   const [uploadedFileName, setUploadedFileName] = useState("");
-//   const [dataSet, setDataSet] = useState(false);
 //   const [inputs, setInputs] = useState({});
 
-//   // console.log("Inputs:", inputs);
+//   //preview listing
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       await BusinessJS.vendorView(setPreviewListing, vendorID, setDataSet);
+//     };
+//     fetchData();
+//   }, [vendorID]);
+
+//   // business input
+//   useEffect(() => {
+//     BusinessJS.fetchbusiness(setVendorInputs, setDataSet);
+//   }, []);
+
 //   // pricing
 //   useEffect(() => {
 //     // Initialize display states for each dynamic field
@@ -123,11 +142,14 @@
 //   useEffect(() => {
 //     let html = convertToHTML(editorState.getCurrentContent());
 //     setConvertedContent(html);
-//     setFullText(
-//       <div dangerouslySetInnerHTML={createMarkup(convertedContent)} />
-//     );
-//   }, [editorState, convertedContent]);
+//     const plainText = editorState.getCurrentContent().getPlainText();
+//     const words = plainText.trim().split(/\s+/);
+//     const count = words.length;
+//     setFulldesccount(count);
 
+//     // Use html directly instead of relying on state update
+//     setFullText(<div dangerouslySetInnerHTML={createMarkup(html)} />);
+//   }, [editorState, convertedContent]);
 //   /********************************************************8****** */
 
 //   const handleChange = (isExpanded: boolean, panel: string) => {
@@ -137,9 +159,8 @@
 //   const handleQuickTexChange = (e) => {
 //     const inputText = e.target.value;
 //     const currentWordCount = inputText.split(/\s+/).filter(Boolean).length;
-
 //     if (currentWordCount <= 100) {
-//       setDraftText(inputText);
+//       setQuickText(inputText);
 //       setWordCount(currentWordCount);
 //     }
 //   };
@@ -148,30 +169,24 @@
 //     const doc = new DOMParser().parseFromString(html, "text/html");
 //     return doc.body.textContent || "";
 //   };
-
-//   const handleSubmit = () => {
+//   // submit
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
 //     setExpanded(false);
 //     setSaveClicked(true);
-//     setQuickText(draftText);
-//     // setDraftText(""); // Reset the textarea
-//     // setWordCount(0);
-//     console.log("formValues:", {
-//       "quick-desc": quickText,
-//     });
-//   };
+//     //
+//     const formValues = {
+//       vid: vendorID,
+//       profile_short_desc: quickText,
+//     };
 
-//   const handleFullDescSubmit = () => {
-//     setExpanded(false);
-//     setSaveClicked(true);
-//     const htmlContent = convertToHTML(editorState.getCurrentContent());
-//     const plainTextContent = stripHtmlTags(htmlContent);
-//     setFullText(plainTextContent);
-//     // setDraftText(""); // Reset the textarea
-//     // setWordCount(0);
-//     console.log("formValues:", {
-//       "quick-desc": quickText,
-//       "full-desc": plainTextContent,
-//     });
+//     BusinessJS.updateBusinessMyProfile(
+//       formValues,
+//       vendorID,
+//       1,
+//       setInputsErrors,
+//       setVendorInputs
+//     );
 //   };
 
 //   const handleOwnerSubmit = () => {
@@ -280,7 +295,7 @@
 //     }));
 //   };
 //   const handleVenueAmenitiesChange = (e, index) => {
-//     const value = dynamicFields[index].id;
+//     const value = dynamicFields[index].label;
 //     setVenueAmmenities((prevVenueAmmenities) => {
 //       if (prevVenueAmmenities.includes(value)) {
 //         return prevVenueAmmenities.filter((amenities) => amenities !== value);
@@ -289,16 +304,21 @@
 //       }
 //     });
 //   };
+
+//   const handleSErviceOfferings = (e, index) => {
+//     const value = dynamicFields[index].label;
+//     setServiceOfferings((prevVenueAmmenities) => {
+//       if (prevVenueAmmenities.includes(value)) {
+//         return prevVenueAmmenities.filter((amenities) => amenities !== value);
+//       } else {
+//         return [...prevVenueAmmenities, value];
+//       }
+//     });
+//   };
+
 //   const handlePricingSubmit = () => {
 //     setExpanded(false);
 //     setSaveClicked(true);
-
-//     // Log values of state variables
-//     console.log("Capacity:", capacity);
-//     console.log("Cocktail:", cocktail);
-//     console.log("Seated Style:", seatedStyle);
-//     console.log("Venue Amenities:", venueAmenities);
-
 //     const formData = dynamicFields.reduce((acc, field) => {
 //       const fieldName = field.id;
 //       const fieldPrice = inputs[fieldName] || "";
@@ -339,11 +359,7 @@
 //     // console.log("Radio option:", ownerRadioOption);
 //   }, [ownerRadioOption]);
 
-//   const handleImageCrop = (images) => {
-//     // console.log("ImageUrl:", images.imageUrl);
-//     // console.log("Cropped image:", images.thumbUrl);
-//     // console.log("Cropped thumbnail:", images.iconUrl);
-//   };
+//   const handleImageCrop = (images) => {};
 
 //   const handleImageChange = (thumbUrl) => {
 //     setCroppedImage(thumbUrl);
@@ -376,6 +392,18 @@
 //     setQuestions(updatedQuestions);
 //   };
 
+//   const handleQandAWordCount = (text) => {
+//     const words = text.trim().split(/\s+/);
+//     const count = words.length;
+//     setQwordCount(count);
+
+//     if (count > 50) {
+//       setqandaWordCountError(true);
+//     } else {
+//       setqandaWordCountError(false);
+//     }
+//   };
+
 //   /*******PACKAGES*******8 */
 //   const handleFileChange = (e) => {
 //     const fileInput = e.target;
@@ -389,31 +417,25 @@
 //       setUploadedFileName("");
 //     }
 
-//     // Log the fileUploaded status and filename to the console
 //     console.log("File Uploaded Status:", fileUploaded);
 //     console.log("Uploaded Filename:", uploadedFileName);
 //   };
 
-//   // console.log("this is the Cropped image:", croppedImage);
-//   /**************************************** ***********************************/
-//   useEffect(() => {
-//     // BusinessJS.fetchbusiness(setInputs, setDataSet);
-//   }, []);
-
-//   // Log the selected value to the console
-//   // console.log(`Field ${fieldId} - Display Price: ${value ? "Yes" : "No"}`);
-
 //   return (
 //     <div className="preview-listing-container">
-//       <div className="preview-lisitng-div">
-//         <h3>Preview Lisitng</h3>
-//       </div>
+//       {/* <pre>{JSON.stringify(vendorinputs, null, 2)}</pre> */}
+
 //       {/* PROFILE BASICS */}
-//       {/* <pre>{JSON.stringify(inputs, null, 2)}</pre> */}
 //       <div>
-//         <div className="mb-[1rem]">
-//           <h2 className="profile-listing-header">Profile Basics</h2>
+//         <div className="preview-listing-div">
+//           <h4 className="font-bold">Preview Listing</h4>
 //         </div>
+//       </div>
+
+//       <div className="mb-[1rem]">
+//         <h2 className="profile-listing-header">Profile Basics</h2>
+//       </div>
+//       <div>
 //         <div className="grid grid-cols-1">
 //           {/* QUICK DESCRPTION */}
 //           <StyledAccordion
@@ -421,6 +443,20 @@
 //             onChange={(e, isExpanded) => handleChange(isExpanded, "panel1")}
 //           >
 //             <AccordionSummary
+//               style={{
+//                 paddingLeft:
+//                   expanded === "panel1"
+//                     ? isScreenSizeAbove1250px
+//                       ? "2rem"
+//                       : "1rem"
+//                     : "0",
+//                 paddingRight:
+//                   expanded === "panel1"
+//                     ? isScreenSizeAbove1250px
+//                       ? "2rem"
+//                       : "1rem"
+//                     : "1rem",
+//               }}
 //               id="panel1-header"
 //               aria-controls="panel1-content"
 //               expandIcon={
@@ -432,7 +468,11 @@
 //                     fontWeight: "600",
 //                   }}
 //                 >
-//                   Edit
+//                   {expanded === "panel1" ? (
+//                     <RxTriangleUp size={30} color="#6cc2bc" />
+//                   ) : (
+//                     "Edit"
+//                   )}
 //                 </Typography>
 //               }
 //               sx={{
@@ -443,28 +483,47 @@
 //               }}
 //             >
 //               <div>
-//                 <h4 style={{ fontWeight: expanded ? "bold" : "normal" }}>
+//                 <h4
+//                   style={{
+//                     fontWeight: expanded === "panel1" ? "bold" : "normal",
+//                   }}
+//                 >
 //                   Quick Description
 //                 </h4>
-//                 {saveClicked && quickText.length > 0 && !expanded ? (
-//                   <p className="myprofile-accordion-subheading">{quickText}</p>
+//                 {saveClicked && vendorinputs.profile_short_desc && !expanded ? (
+//                   <p className="myprofile-accordion-subheading">
+//                     {vendorinputs.profile_short_desc}
+//                   </p>
 //                 ) : (
 //                   <p className="myprofile-accordion-subheading">
-//                     Display a quick summary of your business. Tip include what
-//                     your service is and your location.
+//                     {expanded === "panel1"
+//                       ? "Display a quick summary of your business. Tip includes what your service is and your location."
+//                       : previewListing
+//                       ? previewListing.profile_short_desc
+//                       : "Display a quick summary of your business. Tip includes what your service is and your location."}
 //                   </p>
 //                 )}
 //               </div>
 //             </AccordionSummary>
-//             <AccordionDetails>
+//             <AccordionDetails
+//               style={{
+//                 paddingLeft:
+//                   expanded === "panel1"
+//                     ? isScreenSizeAbove1250px
+//                       ? "2rem"
+//                       : "1rem"
+//                     : "0",
+//               }}
+//             >
 //               <div>
 //                 <div className="myprofile-accordion-item-header"></div>
 //                 <div className="mt-[0px]">
 //                   <div className="profile-editor-position">
 //                     <textarea
-//                       name="quick-desc"
+//                       name="profile_short_desc"
 //                       id="text-area"
-//                       value={draftText}
+//                       value={quickText}
+//                       // value={vendorinputs.profile_short_desc}
 //                       onChange={handleQuickTexChange}
 //                       className="myprofile-textarea-style"
 //                     />
@@ -503,6 +562,14 @@
 //             onChange={(e, isExpanded) => handleChange(isExpanded, "panel2")}
 //           >
 //             <AccordionSummary
+//               style={{
+//                 paddingLeft:
+//                   expanded === "panel2"
+//                     ? isScreenSizeAbove1250px
+//                       ? "2rem"
+//                       : "1rem"
+//                     : "0",
+//               }}
 //               id="panel2-header"
 //               aria-controls="panel2-content"
 //               expandIcon={
@@ -514,7 +581,11 @@
 //                     fontWeight: "600",
 //                   }}
 //                 >
-//                   Edit
+//                   {expanded === "panel2" ? (
+//                     <RxTriangleUp size={30} color="#6cc2bc" />
+//                   ) : (
+//                     "Edit"
+//                   )}
 //                 </Typography>
 //               }
 //               sx={{
@@ -526,7 +597,11 @@
 //             >
 //               <div>
 //                 {/* <h4 className="myprofile-heading-expand">Full Description</h4> */}
-//                 <h4 style={{ fontWeight: expanded ? "bold" : "normal" }}>
+//                 <h4
+//                   style={{
+//                     fontWeight: expanded === "panel2" ? "bold" : "normal",
+//                   }}
+//                 >
 //                   Full Description
 //                 </h4>
 //                 {saveClicked && fullText.length > 0 && !expanded ? (
@@ -540,14 +615,19 @@
 //                 )}
 //               </div>
 //             </AccordionSummary>
-//             <AccordionDetails>
+//             <AccordionDetails
+//               style={{
+//                 paddingLeft:
+//                   expanded === "panel2"
+//                     ? isScreenSizeAbove1250px
+//                       ? "2rem"
+//                       : "1rem"
+//                     : "0",
+//               }}
+//             >
 //               <div>
-//                 <div className="myprofile-accordion-item-header">
-//                   {/* <span className="myprofile-edit-button">Edit</span> */}
-//                   {/* <RxTriangleUp size={30} className="myprofile-up-aroww" /> */}
-//                 </div>
+//                 <div className="myprofile-accordion-item-header"></div>
 //                 {/* Editor */}
-//                 {/* <DraftJsEditor2 /> */}
 //                 <div>
 //                   <div className="bprofile-editor-container">
 //                     <Editor
@@ -555,13 +635,20 @@
 //                       onEditorStateChange={setEditorState}
 //                       toolbar={toolbarOptions}
 //                     />
-//                     {/* {convertedContent}
-//                     {fullText} */}
 //                   </div>
 //                   <div
 //                     className="hidden"
 //                     dangerouslySetInnerHTML={createMarkup(convertedContent)}
 //                   />
+//                   <span className="text-[12px] mt-[5px]">
+//                     {fulldesccount >= 500 ? (
+//                       <p className="text-red-500 text-[12px] mt-2">
+//                         Limit exceeded (500 words maximum)
+//                       </p>
+//                     ) : (
+//                       `${fulldesccount}/500`
+//                     )}
+//                   </span>
 //                 </div>
 //                 <div className="mt-[0px]">
 //                   <div className="profile-editor-position">
@@ -574,7 +661,7 @@
 //                       </button>
 //                       <button
 //                         className="myprofile-save-button"
-//                         onClick={handleFullDescSubmit}
+//                         onClick={handleSubmit}
 //                       >
 //                         Save
 //                       </button>
@@ -590,6 +677,14 @@
 //             onChange={(e, isExpanded) => handleChange(isExpanded, "panel3")}
 //           >
 //             <AccordionSummary
+//               style={{
+//                 paddingLeft:
+//                   expanded === "panel3"
+//                     ? isScreenSizeAbove1250px
+//                       ? "2rem"
+//                       : "1rem"
+//                     : "0",
+//               }}
 //               id="panel3-header"
 //               aria-controls="panel3-content"
 //               expandIcon={
@@ -601,7 +696,11 @@
 //                     fontWeight: "600",
 //                   }}
 //                 >
-//                   Edit
+//                   {expanded === "panel3" ? (
+//                     <RxTriangleUp size={30} color="#6cc2bc" />
+//                   ) : (
+//                     "Edit"
+//                   )}
 //                 </Typography>
 //               }
 //               sx={{
@@ -612,7 +711,11 @@
 //               }}
 //             >
 //               <div>
-//                 <h4 style={{ fontWeight: expanded ? "bold" : "normal" }}>
+//                 <h4
+//                   style={{
+//                     fontWeight: expanded === "panel3" ? "bold" : "normal",
+//                   }}
+//                 >
 //                   Meet the Owner/Team
 //                 </h4>
 //                 {saveClicked && ownerContent.length > 0 && !expanded ? (
@@ -632,7 +735,16 @@
 //                 )}
 //               </div>
 //             </AccordionSummary>
-//             <AccordionDetails>
+//             <AccordionDetails
+//               style={{
+//                 paddingLeft:
+//                   expanded === "panel3"
+//                     ? isScreenSizeAbove1250px
+//                       ? "2rem"
+//                       : "1rem"
+//                     : "0",
+//               }}
+//             >
 //               <div>
 //                 <div className="myprofile-accordion-item-header">
 //                   {/* <span className="myprofile-edit-button">Edit</span> */}
@@ -718,7 +830,11 @@
 //               </div>
 //             </AccordionDetails>
 //           </StyledAccordion>
-//           <br />
+//           <hr
+//             style={{
+//               borderColor: expanded === "panel3" ? "transparent" : "#b1b1b1",
+//             }}
+//           />
 //           <br />
 
 //           {/* PHOTO GALLERY */}
@@ -733,7 +849,6 @@
 //             <PhotoGalleryTest />
 //           </div>
 //           <br />
-//           <br />
 //           <div className="myprofilePhotos-accordion-item-header">Videos</div>
 //           <VideoGallery />
 
@@ -743,6 +858,14 @@
 //             onChange={(e, isExpanded) => handleChange(isExpanded, "panel4")}
 //           >
 //             <AccordionSummary
+//               style={{
+//                 paddingLeft:
+//                   expanded === "panel4"
+//                     ? isScreenSizeAbove1250px
+//                       ? "2rem"
+//                       : "1rem"
+//                     : "0",
+//               }}
 //               id="panel4-header"
 //               aria-controls="panel4-content"
 //               expandIcon={
@@ -754,7 +877,11 @@
 //                     fontWeight: "600",
 //                   }}
 //                 >
-//                   Edit
+//                   {expanded === "panel4" ? (
+//                     <RxTriangleUp size={30} color="#6cc2bc" />
+//                   ) : (
+//                     "Edit"
+//                   )}
 //                 </Typography>
 //               }
 //               sx={{
@@ -768,17 +895,58 @@
 //                 <h4 className="profile-listing-header">Pricing</h4>
 //                 {saveClicked && !expanded ? (
 //                   <>
-//                     <p className="myprofile-accordion-subheading">
-//                       You are responsible for updating your prices
-//                     </p>
-//                     <p className="myprofile-accordion-subheading">
-//                       Staring Price: ${amount}
-//                     </p>
-//                     <p className="myprofile-accordion-subheading">
-//                       Display Price: {displayPrice ? "Yes" : "No"}
-//                     </p>
+//                     {/* Check if there is at least one category with Display Price set to "Yes" */}
+//                     {dynamicFields.some((field) => displayStates[field.id]) ? (
+//                       // Render starting prices for categories with Display Price set to "Yes"
+//                       dynamicFields.map((field) => (
+//                         <div key={field.id}>
+//                           {displayStates[field.id] && (
+//                             <>
+//                               <p className="myprofile-accordion-subheading">
+//                                 {field.label} Starting Price: $
+//                                 {inputs[field.id]}
+//                               </p>
+//                               <p className="myprofile-accordion-subheading">
+//                                 Display Price:{" "}
+//                                 {displayStates[field.id] ? "Yes" : "No"}
+//                               </p>
+//                               {field.id === "Wedding_Venues" &&
+//                                 accomodatiion[field.id] !== undefined && (
+//                                   <p className="myprofile-accordion-subheading">
+//                                     Accommodation Availability:{" "}
+//                                     {accomodatiion[field.id] ? "Yes" : "No"}
+//                                   </p>
+//                                 )}
+
+//                               {field.id === "Wedding_Venues" && capacity && (
+//                                 <p className="myprofile-accordion-subheading">
+//                                   Capacity: {capacity}
+//                                 </p>
+//                               )}
+//                               {field.id === "Wedding_Venues" && cocktail && (
+//                                 <p className="myprofile-accordion-subheading">
+//                                   Cocktail: ${cocktail}
+//                                 </p>
+//                               )}
+//                               {field.id === "Wedding_Venues" && seatedStyle && (
+//                                 <p className="myprofile-accordion-subheading">
+//                                   Seated Style: {seatedStyle}
+//                                 </p>
+//                               )}
+//                             </>
+//                           )}
+//                         </div>
+//                       ))
+//                     ) : (
+//                       // If all Display Price states are "No", display the comment
+//                       <p className="myprofile-accordion-subheading">
+//                         Add a Starting Price. It is not mandatory to display
+//                         your prices.
+//                       </p>
+//                     )}
 //                   </>
 //                 ) : (
+//                   // If not saved or not expanded, display the default comment
 //                   <p className="myprofile-accordion-subheading">
 //                     Add a Starting Price. It is not mandatory to display your
 //                     prices.
@@ -786,7 +954,16 @@
 //                 )}
 //               </div>
 //             </AccordionSummary>
-//             <AccordionDetails>
+//             <AccordionDetails
+//               style={{
+//                 paddingLeft:
+//                   expanded === "panel4"
+//                     ? isScreenSizeAbove1250px
+//                       ? "2rem"
+//                       : "1rem"
+//                     : "0",
+//               }}
+//             >
 //               <div>
 //                 {dynamicFields.map((field, index) => (
 //                   <div className="mt-[0px]" key={field.id}>
@@ -799,11 +976,11 @@
 //                       </div>
 //                       {/* pricing input */}
 //                       <div className="mt-[10px] relative">
-//                         <span className="font-semibold flex flex-col">
+//                         <h5 className="font-semibold flex flex-col">
 //                           {field.id === "Wedding_Venues"
 //                             ? "Price per Head:"
 //                             : "Starting Price:"}
-//                         </span>
+//                         </h5>
 //                         <div className="">
 //                           <span className="dollar-icon"></span>
 //                           <input
@@ -824,8 +1001,8 @@
 //                       <div className="myprofile-button-group relative">
 //                         {/* quickdec-button-group */}
 //                         <div className="mt-[15px]">
-//                           <span className="font-semibold">Display Price ?</span>
-//                           <div className="mt-[15px] space-x-2">
+//                           <h5 className="font-semibold">Display Price ?</h5>
+//                           <div className="mt-[10px] space-x-2">
 //                             <button
 //                               className={`yes-button ${
 //                                 displayStates[field.id] ? "selected" : ""
@@ -856,9 +1033,9 @@
 //                           {/* Accomodation Availability */}
 //                           <div className="myprofile-button-group relative">
 //                             <div className="mt-[15px]">
-//                               <span className="font-semibold">
+//                               <h5 className="font-semibold">
 //                                 Accomodation Availability
-//                               </span>
+//                               </h5>
 //                               <div className="mt-[15px] space-x-2">
 //                                 <button
 //                                   className={`yes-button ${
@@ -887,7 +1064,7 @@
 //                           {/* Capacity */}
 //                           <div className="pricing-addons-container">
 //                             <div className="pricing-addon-label ">
-//                               <span className="l">Capacity:</span>
+//                               <h5 className="l">Capacity:</h5>
 //                             </div>
 //                             <input
 //                               type="number"
@@ -903,7 +1080,7 @@
 //                           {/* Cocktail */}
 //                           <div className="pricing-addons-container">
 //                             <div className="pricing-addon-label ">
-//                               <span className="l">Cocktail:</span>
+//                               <h5 className="l">Cocktail:</h5>
 //                             </div>
 //                             <input
 //                               type="number"
@@ -919,7 +1096,7 @@
 //                           {/* Seated Style */}
 //                           <div className="pricing-addons-container">
 //                             <div className="pricing-addon-label ">
-//                               <span className="l">Seated Style</span>
+//                               <h5 className="l">Seated Style</h5>
 //                             </div>
 //                             <input
 //                               type="number"
@@ -962,6 +1139,14 @@
 //               }
 //             >
 //               <AccordionSummary
+//                 style={{
+//                   paddingLeft:
+//                     expanded === "venueAmenities"
+//                       ? isScreenSizeAbove1250px
+//                         ? "2rem"
+//                         : "1rem"
+//                       : "0",
+//                 }}
 //                 id="venueAmenities-header"
 //                 aria-controls="venueAmenities-content"
 //                 expandIcon={
@@ -973,7 +1158,11 @@
 //                       fontWeight: "600",
 //                     }}
 //                   >
-//                     Edit
+//                     {expanded === "venueAmenities" ? (
+//                       <RxTriangleUp size={30} color="#6cc2bc" />
+//                     ) : (
+//                       "Edit"
+//                     )}
 //                   </Typography>
 //                 }
 //                 sx={{
@@ -984,16 +1173,37 @@
 //                 }}
 //               >
 //                 <div>
-//                   <h4 style={{ fontWeight: expanded ? "bold" : "normal" }}>
-//                     Venue Inclusions
-//                   </h4>
-//                   <p className="myprofile-accordion-subheading">
-//                     Add Your Venue inclusions
-//                   </p>
-//                   {/* ... (additional content for Venue Amenities and Services) */}
+//                   <h4 className="profile-listing-header">Venue Inclusions</h4>
+//                   {saveClicked && !expanded ? (
+//                     <>
+//                       {venueAmenities.length > 0 && (
+//                         <p className="myprofile-accordion-subheading">
+//                           Venue Amenities: {venueAmenities.join(", ")}
+//                         </p>
+//                       )}
+//                       {serviceOfferings.length > 0 && (
+//                         <p className="myprofile-accordion-subheading">
+//                           Service Offerings : {serviceOfferings.join(", ")}
+//                         </p>
+//                       )}
+//                     </>
+//                   ) : (
+//                     <p className="myprofile-accordion-subheading">
+//                       Add Your Venue inclusions
+//                     </p>
+//                   )}
 //                 </div>
 //               </AccordionSummary>
-//               <AccordionDetails>
+//               <AccordionDetails
+//                 style={{
+//                   paddingLeft:
+//                     expanded === "venueAmenities"
+//                       ? isScreenSizeAbove1250px
+//                         ? "2rem"
+//                         : "1rem"
+//                       : "0",
+//                 }}
+//               >
 //                 {dynamicFields.map((field, index) => (
 //                   <div className="mt-[0px]" key={field.id}>
 //                     <div>
@@ -1070,13 +1280,10 @@
 //                                           <Checkbox
 //                                             value={option.value}
 //                                             checked={
-//                                               venueAmenities[option.value]
+//                                               serviceOfferings[option.value]
 //                                             }
 //                                             onChange={(e) =>
-//                                               handleVenueAmenitiesChange(
-//                                                 e,
-//                                                 index
-//                                               )
+//                                               handleSErviceOfferings(e, index)
 //                                             }
 //                                           />
 //                                         }
@@ -1102,7 +1309,7 @@
 //                 <div className="flex justify-center">
 //                   <button
 //                     className="mt-[2rem] flex justify-center items-center w-[120px] h-[40px] rounded-full bg-[#6cc2bc] text-[16px] text-white font-bold cursor-pointer"
-//                     // onClick={handlePricingSubmit}
+//                     onClick={handlePricingSubmit}
 //                   >
 //                     Save
 //                   </button>
@@ -1116,6 +1323,14 @@
 //             onChange={(e, isExpanded) => handleChange(isExpanded, "panel5")}
 //           >
 //             <AccordionSummary
+//               style={{
+//                 paddingLeft:
+//                   expanded === "panel5"
+//                     ? isScreenSizeAbove1250px
+//                       ? "2rem"
+//                       : "1rem"
+//                     : "0",
+//               }}
 //               id="panel5-header"
 //               aria-controls="panel5-content"
 //               expandIcon={
@@ -1127,7 +1342,11 @@
 //                     fontWeight: "600",
 //                   }}
 //                 >
-//                   Edit
+//                   {expanded === "panel5" ? (
+//                     <RxTriangleUp size={30} color="#6cc2bc" />
+//                   ) : (
+//                     "Edit"
+//                   )}
 //                 </Typography>
 //               }
 //               sx={{
@@ -1151,7 +1370,16 @@
 //                 )}
 //               </div>
 //             </AccordionSummary>
-//             <AccordionDetails>
+//             <AccordionDetails
+//               style={{
+//                 paddingLeft:
+//                   expanded === "panel5"
+//                     ? isScreenSizeAbove1250px
+//                       ? "2rem"
+//                       : "1rem"
+//                     : "0",
+//               }}
+//             >
 //               <div>
 //                 <div className="myprofile-accordion-item-header"></div>
 //                 <div className="mt-[0px]">
@@ -1171,10 +1399,14 @@
 //                               className="question-input-style"
 //                               placeholder="Maximum 50 characters"
 //                               value={question.question}
-//                               onChange={(e) =>
-//                                 handleQuestionChange(e, question.id)
-//                               }
+//                               onChange={(e) => {
+//                                 handleQandAWordCount(e.target.value);
+//                                 handleQuestionChange(e, question.id);
+//                               }}
 //                             />
+//                             {qandaWordCountError && (
+//                               <p className="error">Max word limit: 50 words</p>
+//                             )}
 //                             <div className="qandA-delete-button ">
 //                               <button
 //                                 className="remove-question-button"
@@ -1226,6 +1458,14 @@
 //             onChange={(e, isExpanded) => handleChange(isExpanded, "panel6")}
 //           >
 //             <AccordionSummary
+//               style={{
+//                 paddingLeft:
+//                   expanded === "panel6"
+//                     ? isScreenSizeAbove1250px
+//                       ? "2rem"
+//                       : "1rem"
+//                     : "0",
+//               }}
 //               id="panel6-header"
 //               aria-controls="panel6-content"
 //               expandIcon={
@@ -1237,7 +1477,11 @@
 //                     fontWeight: "600",
 //                   }}
 //                 >
-//                   Edit
+//                   {expanded === "panel6" ? (
+//                     <RxTriangleUp size={30} color="#6cc2bc" />
+//                   ) : (
+//                     "Edit"
+//                   )}
 //                 </Typography>
 //               }
 //               sx={{
@@ -1258,7 +1502,16 @@
 //                 </div>
 //               </div>
 //             </AccordionSummary>
-//             <AccordionDetails>
+//             <AccordionDetails
+//               style={{
+//                 paddingLeft:
+//                   expanded === "panel6"
+//                     ? isScreenSizeAbove1250px
+//                       ? "2rem"
+//                       : "1rem"
+//                     : "0",
+//               }}
+//             >
 //               <div>
 //                 <div className="myprofile-accordion-item-header">
 //                   {/* <span className="myprofile-edit-button">Edit</span> */}

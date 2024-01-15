@@ -31,7 +31,6 @@ export const fetchbusiness = async (setInputs, setDataSet) => {
   });
 };
 
-
 export const handleChange = (e, setInputs, setInputsErrors) => {
   const name = e.target.name;
   const value = e.target.value;
@@ -73,7 +72,9 @@ export const fetchRegion = async (selectedStates, setRegions) => {
       }
     });
 };
+
 // BUSINESS SETTINGS
+
 export const updateBusiness = async (settings, formValues, setInputsErrors) => {
   await servicesPage
     .update_settings(settings, formValues)
@@ -89,13 +90,35 @@ export const updateBusiness = async (settings, formValues, setInputsErrors) => {
     });
 };
 
-
 // BUSINESS - MY-PROFILE
-export const updateBusinessMyProfile = async (formValues,id, setInputsErrors) => {
+export const vendorView = async (setPreviewListing, vendorID, setDataSet) => {
+  await servicesPage.businessViewData(vendorID).then(function (response) {
+    if (response.statuscode == 200) {
+      setPreviewListing(response.result);
+      setDataSet(true);
+    }
+  });
+};
+
+export const updateBusinessMyProfile = async (
+  formValues,
+  id,
+  option,
+  setInputsErrors,
+  setVendorInputs,
+  setDataSet
+) => {
   await servicesPage
-    .businessDescriotion1(formValues, id)
+    .businessDescriotion1(id, option, formValues)
     .then(function (response) {
+      console.log("Full API response:", response);
       if (response.statuscode == 200) {
+        // setDataSet(true);
+        console.log("Quikc de:", response.result);
+        setVendorInputs((values) => ({
+          ...values,
+          ["profile_short_desc"]: response.result.profile_short_desc,
+        }));
       } else {
         if (response.errors) {
           setInputsErrors(response.errors);
@@ -107,7 +130,11 @@ export const updateBusinessMyProfile = async (formValues,id, setInputsErrors) =>
 };
 
 // GET REVIEWS/MANAGE WEDDING
-export const updateManageWedding = async (options, formValues, setInputsErrors) => {
+export const updateManageWedding = async (
+  options,
+  formValues,
+  setInputsErrors
+) => {
   await servicesPage
     .manage_wedding(options, formValues)
     .then(function (response) {
