@@ -6,9 +6,10 @@ import Modal from "react-modal";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import styled from "styled-components";
+import { IoMdClose } from "react-icons/io";
 
 const Image = styled.img`
-  width: 100%;
+  width: 100% !important;
 `;
 
 const ThumbImage = styled.img`
@@ -17,15 +18,7 @@ const ThumbImage = styled.img`
   object-fit: contain;
 `;
 
-const UploadButton = styled.button`
-  padding: 8px 16px;
-  background-color: #0074e4;
-  color: #fff;
-  border-radius: 4px;
-  &:hover {
-    background-color: #0059b3;
-  }
-`;
+
 
 const ClearButton = styled.button`
   padding: 8px 16px;
@@ -44,6 +37,11 @@ const PhotoUpLoader2 = ({ onImageCrop, onChangeCrop }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [cropper, setCropper] = useState(null);
   const inputImage = useRef(null);
+  const [formData, setFormData] = useState({
+    caption: "",
+    credit: "",
+    // Add more fields as needed
+  });
 
   // Modal disable image
   useEffect(() => {
@@ -51,6 +49,13 @@ const PhotoUpLoader2 = ({ onImageCrop, onChangeCrop }) => {
       setCroppedThumb(null);
     }
   }, [modalIsOpen]);
+
+  const handleCreditCaptionChange = (fieldName) => (event) => {
+    setFormData({
+      ...formData,
+      [fieldName]: event.target.value,
+    });
+  };
 
   const handleBrowseClick = () => {
     inputImage.current.click();
@@ -94,6 +99,8 @@ const PhotoUpLoader2 = ({ onImageCrop, onChangeCrop }) => {
                 thumbUrl: thumbUrl,
                 iconUrl: iconUrl,
                 imageUrl: imageUrl,
+                caption: formData.caption, // Pass the caption
+                credit: formData.credit, // Pass the credit
               };
 
               closeModal();
@@ -122,6 +129,7 @@ const PhotoUpLoader2 = ({ onImageCrop, onChangeCrop }) => {
     event.preventDefault();
     console.log("Cropped image:", croppedImage);
     console.log("Cropped thumbnail:", croppedThumb);
+     console.log("Form Data:", formData);
   };
 
   return (
@@ -133,7 +141,7 @@ const PhotoUpLoader2 = ({ onImageCrop, onChangeCrop }) => {
         >
           <div>
             <img className="photos-uploaderadd-button" src={profile} alt="" />
-            <span className="photo-uploader-text">add photo</span>  
+            <span className="photo-uploader-text">add photo</span>
           </div>
         </div>
 
@@ -186,34 +194,63 @@ const PhotoUpLoader2 = ({ onImageCrop, onChangeCrop }) => {
                 maxHeight: "90%",
                 top: "50%",
                 left: "50%",
+                borderRadius: "12px",
                 transform: "translate(-50%, -50%)",
-                backgroundColor: "rgb(224,224,224)",
+                backgroundColor: "#fff",
               },
               overlay: {
                 zIndex: "9999",
+                backgroundColor: "rgba(0,0,0,0.5)",
               },
             }}
           >
-            <Cropper
-              src={image}
-              style={{ height: "80%", width: "70%" }}
-              responsive={true}
-              //showCropper={true}
-              aspectRatio={120 / 120}
-              minCropBoxWidth={120}
-              minCropBoxHeight={120}
-              movable={false}
-              zoomable={false}
-              guides={true}
-              onInitialized={(instance) => {
-                setCropper(instance);
-              }}
-            />
-            <div className="mt-4 flex justify-center gap-4">
-              <UploadButton onClick={cropImage} className="ml-2">
-                Submit
-              </UploadButton>
-              <ClearButton onClick={closeModal}>Close</ClearButton>
+            <div className="mycropper-close-button" onClick={closeModal}>
+              <IoMdClose size={22} />
+            </div>
+            <div className="flex flex-col justify-start p-[10px] overflow-y-auto gap-[1rem]">
+              <div className="">
+                <Cropper
+                  src={image}
+                  style={{ width: "100%", height: "100%" }}
+                  responsive={true}
+                  //showCropper={true}
+                  aspectRatio={100 / 100}
+                  minCropBoxWidth={100}
+                  minCropBoxHeight={100}
+                  movable={false}
+                  zoomable={false}
+                  guides={true}
+                  onInitialized={(instance) => {
+                    setCropper(instance);
+                  }}
+                />
+              </div>
+
+              <div className="flex flex-col gap-[3px]">
+                <label className="text-[12px]">Caption</label>
+                <input
+                  type="text"
+                  name="caption"
+                  className="caption-name-input"
+                  value={formData.caption}
+                  onChange={handleCreditCaptionChange("caption")}
+                />
+              </div>
+              <div className="flex justify-between items-end gap-[1rem] ">
+                <div className="flex flex-col gap-[3px]">
+                  <label className="text-[12px]">Credit</label>
+                  <input
+                    type="text"
+                    name="credit"
+                    className="credit-name-input"
+                    value={formData.credit}
+                    onChange={handleCreditCaptionChange("credit")}
+                  />
+                </div>
+                <div className="mycropper-save-button" onClick={cropImage}>
+                  <button>Save</button>
+                </div>
+              </div>
             </div>
           </Modal>
         </div>

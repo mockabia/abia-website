@@ -64,6 +64,7 @@ export const BUSINESS_API = {
   SETTINGS4: `${baseUrl}WebBusinessSettings/{id}/4`,
   SETTINGS5: `${baseUrl}WebBusinessSettings/{id}/5`,
   MANAGE_WEDDING: `${baseUrl}WebManageWedding`,
+  BUSINESSDESC: `${baseUrl}Webview_VendorDescription`,
 };
 
 export const COUPLE_API = {

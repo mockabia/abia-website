@@ -28,7 +28,7 @@ import { BiUpload } from "react-icons/bi";
 import PhotoGalleryTest from "../../pages - Copy/My Profile/photos&videos/MyProfile-PhotoUplaoder/PhotoGalleryTest";
 import VideoGallery from "../../pages - Copy/My Profile/photos&videos/myProfileVideo";
 import { StyledAccordion } from "../../components/FormStyle";
-import * as BusinessJS from "./Business";
+import * as BusinessJS from "../Business/Business";
 
 const toolbarOptions = {
   options: ["inline", "list"],
@@ -64,6 +64,8 @@ const dynamicFields = [
 ];
 
 const Profile = ({ preview }) => {
+  const [vendorinputs, setVendorInputs] = useState("");
+  const vendorID = vendorinputs.id;
   const isScreenSizeAbove1250px = window.innerWidth > 1250;
   const [expanded, setExpanded] = useState(false);
   const [draftText, setDraftText] = useState("");
@@ -100,14 +102,21 @@ const Profile = ({ preview }) => {
   const [questionDisplay, setQuestionDisplay] = useState([]);
   const [qwordCount, setQwordCount] = useState(0);
   const [qandaWordCountError, setqandaWordCountError] = useState(false);
-  // PACKAGES
+
   const [fileUploaded, setFileUploaded] = useState(false);
   const [packagesText, setPackagesText] = useState("");
   const [uploadedFileName, setUploadedFileName] = useState("");
   const [dataSet, setDataSet] = useState(false);
   const [inputs, setInputs] = useState({});
+  const [inputsErrors, setInputsErrors] = useState({});
 
   // console.log("Inputs:", inputs);
+
+  // business input
+  useEffect(() => {
+    BusinessJS.fetchbusiness(setVendorInputs, setDataSet);
+  }, []);
+
   // pricing
   useEffect(() => {
     // Initialize display states for each dynamic field
@@ -119,17 +128,17 @@ const Profile = ({ preview }) => {
     setAccomodatiion(initialDisplayStates);
   }, []);
 
- useEffect(() => {
-   let html = convertToHTML(editorState.getCurrentContent());
-   setConvertedContent(html);
-   const plainText = editorState.getCurrentContent().getPlainText();
-   const words = plainText.trim().split(/\s+/);
-   const count = words.length;
-   setFulldesccount(count);
+  useEffect(() => {
+    let html = convertToHTML(editorState.getCurrentContent());
+    setConvertedContent(html);
+    const plainText = editorState.getCurrentContent().getPlainText();
+    const words = plainText.trim().split(/\s+/);
+    const count = words.length;
+    setFulldesccount(count);
 
-   // Use html directly instead of relying on state update
-   setFullText(<div dangerouslySetInnerHTML={createMarkup(html)} />);
- }, [editorState, convertedContent]);
+    // Use html directly instead of relying on state update
+    setFullText(<div dangerouslySetInnerHTML={createMarkup(html)} />);
+  }, [editorState, convertedContent]);
   /********************************************************8****** */
 
   const handleChange = (isExpanded: boolean, panel: string) => {
@@ -155,21 +164,36 @@ const Profile = ({ preview }) => {
     setExpanded(false);
     setSaveClicked(true);
     setQuickText(draftText);
-    // setDraftText(""); // Reset the textarea
-    // setWordCount(0);
-    console.log("formValues:", {
-      "quick-desc": quickText,
-    });
-  };
+    const formValues = {
+      profile_short_desc: draftText,
+    };
+    BusinessJS.updateBusinessMyProfile(formValues, vendorID);
 
+    console.log("formValues:", formValues);
+  };
+  /*
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const updatedName = watch("name");
+      const updatedWebsite = watch("website");
+      const formValues = {
+        name: updatedName,
+        website: updatedWebsite,
+        photo: inputs.photo,
+        vid: VendorID,
+      };
+      // console.log("Form data:",formValues )
+      Business.updateBusiness(1, formValues, setInputsErrors);
+      // openSuccessSnackbar();
+    };
+*/
   const handleFullDescSubmit = () => {
     setExpanded(false);
     setSaveClicked(true);
     const htmlContent = convertToHTML(editorState.getCurrentContent());
     const plainTextContent = stripHtmlTags(htmlContent);
     setFullText(plainTextContent);
-    // setDraftText(""); // Reset the textarea
-    // setWordCount(0);
+   
     const countWords = (content) => {
       const words = content.split(/\s+/).filter(Boolean);
       return words.length;
@@ -311,12 +335,6 @@ const Profile = ({ preview }) => {
   const handlePricingSubmit = () => {
     setExpanded(false);
     setSaveClicked(true);
-    // Log values of state variables
-    // console.log("Capacity:", capacity);
-    // console.log("Cocktail:", cocktail);
-    // console.log("Seated Style:", seatedStyle);
-    // console.log("Venue Amenities:", venueAmenities);
-
     const formData = dynamicFields.reduce((acc, field) => {
       const fieldName = field.id;
       const fieldPrice = inputs[fieldName] || "";
@@ -433,14 +451,17 @@ const Profile = ({ preview }) => {
   // Log the selected value to the console
   // console.log(`Field ${fieldId} - Display Price: ${value ? "Yes" : "No"}`);
 
-  // Full descr word count
-
   return (
     <div className="preview-listing-container">
+      {/* <pre>{JSON.stringify(vendorinputs, null, 2)}</pre> */}
+
       {/* PROFILE BASICS */}
-      <div className="preview-lisitng-div">
-        <h4 className="font-bold">Preview Lisitng</h4>
+      <div>
+        <div className="preview-listing-div">
+          <h4 className="font-bold">Preview Listing</h4>
+        </div>
       </div>
+
       <div className="mb-[1rem]">
         <h2 className="profile-listing-header">Profile Basics</h2>
       </div>
@@ -600,7 +621,11 @@ const Profile = ({ preview }) => {
             >
               <div>
                 {/* <h4 className="myprofile-heading-expand">Full Description</h4> */}
-                <h4 style={{ fontWeight: expanded === "panel2" ? "bold" : "normal" }}>
+                <h4
+                  style={{
+                    fontWeight: expanded === "panel2" ? "bold" : "normal",
+                  }}
+                >
                   Full Description
                 </h4>
                 {saveClicked && fullText.length > 0 && !expanded ? (

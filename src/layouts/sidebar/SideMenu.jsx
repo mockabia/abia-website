@@ -68,7 +68,7 @@ const SideMenu = (props) => {
                         className:
                           "mt-[2px] w-[18px] h-[18px] fill-current text-[#fff]",
                       })}
-                    <h5 className="truncate">{MainMenu.title}</h5>
+                    <h5 className="truncate pt-[8px] pb-[8px]">{MainMenu.title}</h5>
                   </div>
                   <div className="">
                     {showSubMenu[MainMenu.id] ? (

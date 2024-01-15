@@ -1,3 +1,4 @@
+import { Identity } from "@mui/base";
 import * as apiService from "../../api/apiServices";
 import * as reactUrls from "../../api/reactUrls";
 import * as servicesPage from "../../services/vendor/businessServices";
@@ -76,6 +77,23 @@ export const fetchRegion = async (selectedStates, setRegions) => {
 export const updateBusiness = async (settings, formValues, setInputsErrors) => {
   await servicesPage
     .update_settings(settings, formValues)
+    .then(function (response) {
+      if (response.statuscode == 200) {
+      } else {
+        if (response.errors) {
+          setInputsErrors(response.errors);
+        } else if (response.statusmessage) {
+          setInputsErrors(response.statusmessage);
+        }
+      }
+    });
+};
+
+
+// BUSINESS - MY-PROFILE
+export const updateBusinessMyProfile = async (formValues,id, setInputsErrors) => {
+  await servicesPage
+    .businessDescriotion1(formValues, id)
     .then(function (response) {
       if (response.statuscode == 200) {
       } else {

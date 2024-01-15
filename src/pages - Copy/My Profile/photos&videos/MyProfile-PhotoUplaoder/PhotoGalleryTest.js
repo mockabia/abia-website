@@ -13,7 +13,12 @@ const PhotoGalleryTest = () => {
   const handleCroppedImage = (images) => {
     setCroppedImages([
       ...croppedImages,
-      { id: croppedImages.length + 1, url: images.thumbUrl },
+      {
+        id: croppedImages.length + 1,
+        url: images.thumbUrl,
+        caption: images.caption,
+        credit: images.credit,
+      },
     ]);
     setModalOpen(false);
   };

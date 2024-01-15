@@ -72,7 +72,7 @@ const App = () => {
         <Route path="/wedding/enquiry" element={<CoupleEnquiry />} />
 
         {/* Partnership */}
-        <Route path="/parternship-benefits" element={<Partnership />} />
+        <Route path="/partnership-benefits" element={<Partnership />} />
       </Routes>
     </>
   );

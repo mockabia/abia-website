@@ -24,7 +24,10 @@ import { subDays } from "date-fns";
 const schema = yup.object().shape({
   bride: yup.string().required("Client's name is required"),
   groom: yup.string().required("Partner's name is required"),
-  date_of_wedding: yup.date().required("Date of wedding is required"),
+  date_of_wedding: yup
+    .date()
+    .nullable()
+    .required("Date of wedding is required"),
   email: yup
     .string()
     .required("Email is required")
@@ -38,14 +41,14 @@ const schema = yup.object().shape({
   // phone: yup.number().max(13, "Phone number must not exceed 13 characters"),
 
   wedding_state: yup.string().required("The state field is required."),
-  vcid: yup.array().required("Services Booked is required."),
+  vcid: yup.array().min(1, "Services Booked is required."),
 });
 
 const PastWedding = () => {
   const [stateOptions, setStateOptions] = useState({});
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [selectedState, setSelectedState] = useState([]);
-    const [inputsErrors, setInputsErrors] = useState({});
+  const [inputsErrors, setInputsErrors] = useState({});
 
   const location = useLocation();
   const { vendorInput } = location.state || {};
@@ -63,12 +66,12 @@ const PastWedding = () => {
     defaultValues: {
       birde: "",
       groom: "",
-      date_of_wedding: "",
+      date_of_wedding: null,
       wedding_state: "",
       email: "",
       confirm_email: "",
       phone: "",
-      vcid: "",
+      vcid: [],
     },
   });
 
@@ -108,14 +111,29 @@ const PastWedding = () => {
       email: watch("email"),
       confirm_email: watch("confirm_email"),
       phone: watch("phone"),
-      vcid: watch("vcid"),
+      vcid: Array.isArray(watch("vcid")) ? watch("vcid") : [],
       vid: vendorInput.vid,
     };
+
+    // Trigger validation for the vcid field
+    schema.validate(formValues).catch((err) => {
+      if (err.path === "vcid") {
+        setInputsErrors({ vcid: err.message });
+      }
+    });
+    // Check if vcid is empty and display error message if needed
+    if (!formValues.vcid || formValues.vcid.length === 0) {
+      setInputsErrors({ vcid: "Service booked is required" });
+      return;
+    }
+
     BusinessJS.updateManageWedding(1, formValues, setInputsErrors);
     console.log("Form data:", formValues);
   };
   // Business.updateBusiness(1, formValues, setInputsErrors);
   const onInvalid = (errors) => console.error(errors);
+
+  // console.log("  ", inputsErrors);
   return (
     <>
       <div className="md:hidden">
@@ -211,15 +229,15 @@ const PastWedding = () => {
                     control={control}
                     render={({ field }) => (
                       <ReactDatePicker
-                        className="example-custom-input"
-                        {...field}
-                        selected={field.value}
+                        className="example-custom-input get-review-font"
+                        selected={field.value ? new Date(field.value) : null}
                         onChange={(date) => field.onChange(date)}
-                        dateFormat="MM/dd/yyyy" // Customize the date format
-                        placeholderText="Select date"
+                        dateFormat="MM/dd/yyyy"
                         maxDate={subDays(new Date(), 1)}
                       />
                     )}
+                    rules={{ required: "Date of wedding is required" }}
+                    as={ReactDatePicker}
                   />
 
                   {errors.date_of_wedding && (
@@ -246,6 +264,7 @@ const PastWedding = () => {
                     <Select
                       {...field}
                       name="wedding_state"
+                      placeholder=""
                       options={stateOptions}
                       onChange={(selectedOption) =>
                         handleStateChange(selectedOption, field)
@@ -335,10 +354,11 @@ const PastWedding = () => {
                     <Select
                       {...field}
                       isMulti
+                      placeholder={""}
                       options={categoryOptions}
                       styles={customSelectStyles2}
                       closeMenuOnSelect={false}
-                      blurInputOnSelect={false} //bug fixed
+                      blurInputOnSelect={false}
                       hideSelectedOptions={false}
                       isClearable={false}
                       components={{

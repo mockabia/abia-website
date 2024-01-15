@@ -148,17 +148,11 @@ const TopBar = (props) => {
           <>
             <div className="fullscreen-overlay md:hidden mt-[15px]">
               <div className="menu-container ">
-                <div className="flex items-center justify-center relative">
-                  <AbiaLogo
-                    width={80}
-                    alt="Abia-logo"
-                    className="-ml-[60px] fixed top-5 left-50"
-                  />
+                {/* Logo + close button */}
+                <div className="flex items-center justify-between p-[10px] pr-[2rem] relative">
+                  <AbiaLogo width={80} alt="Abia-logo" />
                   <div>
-                    <div
-                      className="ipad-mini relative inset-0  bg-[#4b817e] w-[30px] h-[30px]  ml-[63vw] mt-[9px] rounded-full"
-                      onClick={closeMenu}
-                    >
+                    <div onClick={closeMenu}>
                       <AiOutlineClose
                         size={20}
                         className=" mt-[5px] ml-[5px] fixed top-6 "
@@ -166,7 +160,7 @@ const TopBar = (props) => {
                     </div>
                   </div>
                 </div>
-                <ul className="mt-[100px] flex flex-col sm:justify-center  sm:mr-[85px] ">
+                <ul className="mt-[3rem] ">
                   <SideMenu {...props} />
                 </ul>
                 <div className="mt-[65px] space-y-2">
@@ -176,7 +170,7 @@ const TopBar = (props) => {
                     </span>
                   </div>
                   <Link
-                    to="/upgarade"
+                    to="/partnership-benefits"
                     className=" rounded-3xl bg-[#e8cf82] px-6 py-2 "
                     onClick={closeMenu}
                   >

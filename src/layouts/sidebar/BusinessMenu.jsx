@@ -115,7 +115,7 @@ const Sidebar = (props) => {
                 </span>
               </div>
               <Link
-                to="/upgrade"
+                to="/partnership-benefits"
                 className=" rounded-3xl bg-[#e8cf82] px-5 py-2 mb-2 "
               >
                 <span className="text-black text-[14px] font-bold">

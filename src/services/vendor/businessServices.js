@@ -60,3 +60,8 @@ export async function addCategoryDropdown(ids) {
 export async function stateRegionDropdwon(state) {
   return await apiService.apiCall(apiUrls.REGIONS_BY_STATE  +'/'+ state, "GET");
 }
+
+// Business MyProfile
+export async function businessDescriotion1(postData, id) {
+  return await apiService.apiCall(MAIN_API["BUSINESSDESC"] +'/' + id, "POST", postData);
+}

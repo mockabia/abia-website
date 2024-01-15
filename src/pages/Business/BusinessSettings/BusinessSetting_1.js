@@ -52,9 +52,9 @@ const BasicInfo = ({ vendorDetails }) => {
   } = useForm({ mode: "onChange", resolver: yupResolver(schema) });
 
   const handleImageCrop = (images) => {
-    console.log("ImageUrl:", images.imageUrl);
-    console.log("Cropped image:", images.thumbUrl);
-    console.log("Cropped thumbnail:", images.iconUrl);
+    // console.log("ImageUrl:", images.imageUrl);
+    // console.log("Cropped image:", images.thumbUrl);
+    // console.log("Cropped thumbnail:", images.iconUrl);
     setInputs((prevValues) => ({
       ...prevValues,
       photo: {
