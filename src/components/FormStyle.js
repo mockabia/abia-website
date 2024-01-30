@@ -514,7 +514,7 @@ export const CSTextfield = styled(TextField)({
     fontFamily: "Raleway",
     height: "45px",
     width: "100%",
-    maxWidth: "22rem",
+    maxWidth: "100%",
     boxShadow: "none",
     borderRadius: "10px",
     fontFamily: "Raleway",
@@ -523,6 +523,8 @@ export const CSTextfield = styled(TextField)({
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
     fontFamily: "Raleway",
+    width: "100%",
+    maxWidth: "100%",
     fontSize: "14px",
     "& > fieldset": { borderColor: "#c3bebe" },
     "&:hover fieldset": {
@@ -837,7 +839,7 @@ export const StyledAccordion = styled(Accordion)(({ theme, expanded }) => ({
   boxShadow: "none !important",
   border: "none !important",
   margin: "0px !important",
-  // borderBottom: expanded ? "1px solid transparent" : "1px solid #D6D6D6",
+  borderBottom: expanded ? "1px solid transparent" : "1px solid #D6D6D6",
   width: {
     xs: "100%",
     md: "83%",
@@ -870,6 +872,51 @@ export const CoupleInput = styled(TextField)(({ theme }) => ({
     borderRadius: "10px",
     fontFamily: "Raleway",
     fontSize: "14px",
+    width: "100%",
+    "& > fieldset": { borderColor: "#c3bebe" },
+    "&:hover fieldset": {
+      borderColor: "#c3bebe",
+    },
+  },
+
+  "& .MuiFormHelperText-root": {
+    border: "none",
+    marginLeft: "0rem",
+  },
+
+  "& .Mui-focused": {
+    boxShadow: "0 0 0 1px #c3bebe",
+
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+  },
+
+  [`@media (min-width: 1100px)`]: {
+    "& .MuiOutlinedInput-root": {
+      width: "18rem",
+    },
+  },
+}));
+
+export const TextAreaInput = styled(TextField)(({ theme }) => ({
+  "label + &": {
+    marginTop: theme.spacing(1),
+  },
+  "& .MuiTextField-root": {
+    fontFamily: "Raleway",
+    height: "45px",
+    width: "100%",
+    maxWidth: "22rem",
+    boxShadow: "none",
+    borderRadius: "10px",
+    // border: "1px solid #c3bebe",
+  },
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+    fontSize: "14px",
+    width: "100%",
     "& > fieldset": { borderColor: "#c3bebe" },
     "&:hover fieldset": {
       borderColor: "#c3bebe",
@@ -969,6 +1016,7 @@ export const CoupleSelectStyle = {
   control: (provided, state) => ({
     ...provided,
     fontFamily: "Raleway",
+    fontSize: "14px",
     border: "1px solid #c3bebe",
     boxShadow: "none",
     marginTop: "8px",
@@ -989,7 +1037,7 @@ export const CoupleSelectStyle = {
       maxWidth: "30rem",
     },
     "@media (min-width: 1100px)": {
-      width: "11.5rem",
+      width: "18rem",
       maxWidth: "30rem",
     },
   }),
@@ -1173,3 +1221,198 @@ export const BudgetInput = styled(TextField)(({ theme }) => ({
     },
   },
 }));
+
+// RATING AND REVIEW IPUT
+export const RatingInput = styled(TextField)(({ theme }) => ({
+  "& .MuiTextField-root": {
+    fontFamily: "Raleway",
+    height: "45px",
+    width: "16rem",
+    maxWidth: "100%",
+    boxShadow: "none",
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+    // border: "1px solid #c3bebe",
+  },
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+    fontSize: "14px",
+    width: "16rem",
+    maxWidth: "100%",
+    "& > fieldset": { borderColor: "#c3bebe" },
+    "&:hover fieldset": {
+      borderColor: "#c3bebe",
+    },
+  },
+  "& .MuiFormHelperText-root": {
+    border: "none",
+    marginLeft: "0rem",
+  },
+  "& .Mui-focused": {
+    boxShadow: "0 0 0 1px #c3bebe",
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+  },
+}));
+
+export const IndiRatingInput = styled(TextField)(({ theme }) => ({
+  "& .MuiTextField-root": {
+    fontFamily: "Raleway",
+    height: "45px",
+    // width: "16rem",
+    width: "100%",
+    maxWidth: "100%",
+    boxShadow: "none",
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+    textAlign: "center",
+    // border: "1px solid #c3bebe",
+  },
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+    fontSize: "14px",
+    width: "7rem",
+    maxWidth: "100%",
+    "& > fieldset": { borderColor: "#c3bebe" },
+    "&:hover fieldset": {
+      borderColor: "#c3bebe",
+    },
+  },
+  "& .MuiFormHelperText-root": {
+    border: "none",
+    marginLeft: "0rem",
+    position: "absolute",
+    top: "50%", // Center vertically
+    left: "50%", // Center horizontally
+    transform: "translate(-50%, -50%)",
+  },
+  "& .Mui-focused": {
+    boxShadow: "0 0 0 1px #c3bebe",
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+  },
+  "@media screen and (min-width: 1024px)": {
+    "& .MuiOutlinedInput-root": {
+      width: "10rem", // Change width for larger screens
+    },
+  },
+}));
+
+export const RatingCustomStyle = {
+  control: (provided, state) => ({
+    ...provided,
+    border: "1px solid #c3bebe",
+    boxShadow: "none",
+    fontSize: "14px",
+    borderRadius: "10px",
+    // background: "#fafafa",
+    padding: "5px",
+    width: "16rem",
+    maxWidth: "100%",
+    height: "50px",
+    // maxHeight: "50px",
+    "&:hover": {
+      border: "1px solid #c3bebe",
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    marginTop: "10px",
+    borderRadius: "20px",
+    padding: "15px",
+    border: "1px solid #c3bebe",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    fontSize: "14px",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected
+      ? "#e7f5f4"
+      : state.isFocused
+      ? "#e7f5f4"
+      : "red",
+    color: state.isSelected ? "black" : "red",
+    padding: "12px",
+  }),
+  indicatorSeparator: (defaultStyles) => {
+    return {
+      ...defaultStyles,
+      display: "none",
+    };
+  },
+  input: (provided) => ({
+    ...provided,
+    WebkitUserSelect: "none",
+    MozUserSelect: "none",
+    msUserSelect: "none",
+    userSelect: "none",
+    inputMode: "none",
+    tabIndex: "0",
+  }),
+  clearIndicator: () => ({
+    display: "none",
+  }),
+
+  multiValueRemove: (provided) => ({
+    ...provided,
+    display: "none",
+  }),
+};
+
+export const RatingButton = styled(Button)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  borderRadius: "2rem",
+  width: "16rem",
+  maxWidth: "100%",
+  height: "40px",
+  backgroundColor: "#6cc2bc",
+  color: "white",
+  textTransform: "capitalize",
+  border: "none",
+  "&:hover": {
+    backgroundColor: "#6cc2bc",
+    border: "none",
+    // border: "1px solid black",
+  },
+  "&:active": {
+    backgroundColor: "#red",
+    border: "1px solid black",
+  },
+  // "&:focus": {
+  //   backgroundColor: "black",
+  //   border: "1px solid black",
+  // },
+  "&. MuiSvgIcon": {
+    fill: "black",
+  },
+}));
+
+
+/*****REACT SELECT SCROLL STYLE */
+export const reactSelectScroll = {
+  menuList: (provided) => ({
+    ...provided,
+    maxHeight: "300px",
+    padding: "1rem",
+    overflowY: "auto",
+    "&::-webkit-scrollbar": {
+      width: "8px", // Set the width of the scrollbar
+      height: "30px",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "#6cc2bc", // Set the color of the scrollbar thumb
+    },
+    "&::-webkit-scrollbar-track": {
+      backgroundColor: "#f5f5f5", // Set the color of the scrollbar track
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+  }),
+};

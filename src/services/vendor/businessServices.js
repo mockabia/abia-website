@@ -15,7 +15,11 @@ export async function showData(id) {
   return await apiService.apiCall(MAIN_API["SHOW"] + "/" + id, "GET");
 }
 export async function updateData(id, postData) {
-  return await apiService.apiCall(MAIN_API['UPDATE'] + "/" + id,"POST",postData);
+  return await apiService.apiCall(
+    MAIN_API["UPDATE"] + "/" + id,
+    "POST",
+    postData
+  );
 }
 
 export async function login(postData) {
@@ -36,40 +40,110 @@ export async function forgot(postData) {
 }
 
 export async function update_settings(settings, postData) {
-  return await apiService.apiCall( MAIN_API["SETTINGS"] + "/" + settings,"POST",postData);
+  return await apiService.apiCall(
+    MAIN_API["SETTINGS"] + "/" + settings,
+    "POST",
+    postData
+  );
 }
 
 export async function manage_wedding(options, postData) {
-  return await apiService.apiCall( MAIN_API["MANAGE_WEDDING"] + "/"+"0"+"/" + options,"POST",postData);
+  return await apiService.apiCall(
+    MAIN_API["MANAGE_WEDDING"] + "/" + "0" + "/" + options,
+    "POST",
+    postData
+  );
 }
-
 
 export async function stateDropdown(postData) {
   return await apiService.apiCall(apiUrls.STATE_DROPDOWN, "GET", postData);
 }
 
 export async function categoryDropdown(postData) {
-  return await apiService.apiCall(apiUrls.CATEGORY_DROPDOWN_API, "GET", postData);
+  return await apiService.apiCall(
+    apiUrls.CATEGORY_DROPDOWN_API,
+    "GET",
+    postData
+  );
 }
 
 export async function addCategoryDropdown(ids) {
-  return await apiService.apiCall(apiUrls.ADDITIONAL_CATEGORY_DROPDOWN  +'/'+ ids, "GET");
+  return await apiService.apiCall(
+    apiUrls.ADDITIONAL_CATEGORY_DROPDOWN + "/" + ids,
+    "GET"
+  );
 }
 
-
 export async function stateRegionDropdwon(state) {
-  return await apiService.apiCall(apiUrls.REGIONS_BY_STATE  +'/'+ state, "GET");
+  return await apiService.apiCall(
+    apiUrls.REGIONS_BY_STATE + "/" + state,
+    "GET"
+  );
 }
 
 // Business MyProfile
-export async function businessDescriotion1(id, option,postData) {
+export async function businessDescriotion1(id, option, postData) {
   return await apiService.apiCall(
-    MAIN_API["BUSINESSDESC"] + "/" + id + "/" + option + "/" + id,
+    MAIN_API["BUSINESSDESC"] + "/" + id + "/" + option + "/" + 1,
+    "POST",
+    postData
+  );
+}
+
+export async function businessDescriotion_2(id, option, postData) {
+  return await apiService.imageUploadApi(
+    MAIN_API["BUSINESSDESC"] + "/" + id + "/" + option + "/" + 1,
     "POST",
     postData
   );
 }
 
 export async function businessViewData(id) {
-  return await apiService.apiCall(MAIN_API["BUSINESSDESCVIEW"] + "/" + id, "GET");
+  return await apiService.apiCall(
+    MAIN_API["BUSINESSDESCVIEW"] + "/" + id,
+    "GET"
+  );
+}
+
+export async function businessViewProfileSettings(id) {
+  return await apiService.apiCall(
+    MAIN_API["VIEWPROFILESETTINGS"] + "/" + id,
+    "GET"
+  );
+}
+
+export async function view_photogallery(id) {
+  return await apiService.apiCall(MAIN_API["VIEW_GALLERY"] + "/" + id, "GET");
+}
+
+export async function view_videoGallery(id) {
+  return await apiService.apiCall(MAIN_API["VIEW_VIDEO"] + "/" + id, "GET");
+}
+
+export async function delete_vendorPhotoGallery(id, pid) {
+  return await apiService.apiCall(
+    MAIN_API["DELETE_GALLERY"] + "/" + id + "/" + pid + "/" + 1
+  );
+}
+
+export async function delete_vendorVideo(id, vgid) {
+  return await apiService.apiCall(
+    MAIN_API["DELETE_VIDEO"] + "/" + id + "/" + vgid + "/" + 1
+  );
+}
+
+export async function delete_package(id) {
+  return await apiService.apiCall(
+    MAIN_API["DELETE_GALLERY"] + "/" + id + "/" + 1
+  );
+}
+
+export async function delete_qandA(vendorID, qid) {
+  return await apiService.apiCall(
+    MAIN_API["DELETE_QA"] + "/" + vendorID + "/" + qid + "/" + 1
+  );
+}
+
+export async function vendor_services() {
+  return await apiService.apiCall(apiUrls.CATEGORY_DROPDOWN_API, "GET");
 }

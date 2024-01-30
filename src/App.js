@@ -14,6 +14,11 @@ import CoupleAccountSetting from "./pages/Couple/CoupleAccountSetting";
 import CoupleCatBudget from "./pages/Couple/CoupleCatBudget";
 import CoupleEnquiry from "./pages/Couple/CoupleEnquiry";
 import Partnership from "./pages/General/Partnership";
+import Reviews from "./pages/General/Reviews";
+import BlogNimbus from "./pages/General/Blog-font/BlogNimbus";
+import BlogRoboto from "./pages/General/Blog-font/BlogRobot";
+import BlogHelvica from "./pages/General/Blog-font/BlogHelvica";
+import BlogNimbus2 from "./pages/General/Blog-font/BlogNimbus2";
 
 const App = () => {
   const [showLoader, setShowLoader] = useState(false);
@@ -70,9 +75,15 @@ const App = () => {
         <Route path="/wedding/settings" element={<CoupleAccountSetting />} />
         <Route path="/wedding/wedding-budget" element={<CoupleCatBudget />} />
         <Route path="/wedding/enquiry" element={<CoupleEnquiry />} />
+        {/* test */}
+        <Route path="/wedding-blog/Manrope" element={<BlogNimbus />} />
+        <Route path="/wedding-blog/Roboto" element={<BlogRoboto />} />
+        <Route path="/wedding-blog/Helvica" element={<BlogHelvica />} />
+        <Route path="/wedding-blog/Nimbus" element={<BlogNimbus2 />} />
 
         {/* Partnership */}
         <Route path="/partnership-benefits" element={<Partnership />} />
+        <Route path="/reviews" element={<Reviews />} />
       </Routes>
     </>
   );

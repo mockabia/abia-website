@@ -92,14 +92,20 @@ const Profile = ({ preview }) => {
 
   // business input
   useEffect(() => {
-    BusinessJS.fetchbusiness(setVendorInputs, setDataSet);
-  }, []);
+    if (saveClicked) {
+      console.log("QuickText has been saved:", quickText);
+    }
+    // Cleanup function
+    return () => {
+      console.log("Component is unmounted or dependencies changed");
+    };
+  }, [quickText, saveClicked]);
 
   const handleQuickTexChange = (e) => {
     const inputText = e.target.value;
     const currentWordCount = inputText.split(/\s+/).filter(Boolean).length;
     if (currentWordCount <= 100) {
-      setQuickText(inputText);
+      setQuickText(() => inputText); // Use callback to ensure the latest value
       setWordCount(currentWordCount);
     }
   };
@@ -218,19 +224,15 @@ const Profile = ({ preview }) => {
                   >
                     Quick Description
                   </h4>
-                  {saveClicked &&
-                  vendorinputs.profile_short_desc &&
-                  !expanded ? (
+                  {saveClicked ? (
                     <p className="myprofile-accordion-subheading">
-                      {vendorinputs.profile_short_desc}
+                      {quickText}
                     </p>
                   ) : (
                     <p className="myprofile-accordion-subheading">
                       {expanded === "panel1"
                         ? "Display a quick summary of your business. Tip includes what your service is and your location."
-                        : previewListing
-                        ? previewListing.profile_short_desc
-                        : "Display a quick summary of your business. Tip includes what your service is and your location."}
+                        : previewListing.profile_short_desc}
                     </p>
                   )}
                 </div>

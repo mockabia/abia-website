@@ -16,12 +16,35 @@ import {
   CoupleInput,
   CoupleSelectStyle,
   MuiBoxStyles,
+  TextAreaInput,
 } from "../../components/FormStyle";
 import "../Style/CoupleProfile.css";
-import { DatePickerProfile } from "../../components/DatePickerProfile";
 import * as CoupleJS from "../Couple/Couple";
 import { CheckboxOption } from "../../components/CustomerSelect";
 import { Title } from "@mui/icons-material";
+import { DatePickerProfile2 } from "../../components/DatepickerPublic";
+
+const customStyles = {
+  menuList: (provided) => ({
+    ...provided,
+    maxHeight: "300px",
+    overflowY: "auto",
+    "&::-webkit-scrollbar": {
+      width: "8px", // Set the width of the scrollbar
+      height: "30px",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "#6cc2bc", // Set the color of the scrollbar thumb
+    },
+    "&::-webkit-scrollbar-track": {
+      backgroundColor: "#f5f5f5", // Set the color of the scrollbar track
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+  }),
+};
 
 const CoupleWeddingDetails = () => {
   const title = "Account Settings";
@@ -162,8 +185,8 @@ const CoupleWeddingDetails = () => {
                   maxWidth: "30rem",
                 },
                 "@media (min-width: 1100px)": {
-                  width: "28rem",
-                  maxWidth: "35rem",
+                  width: "40rem",
+                  maxWidth: "100%",
                 },
               }}
               spacing={2}
@@ -172,10 +195,10 @@ const CoupleWeddingDetails = () => {
               <Stack
                 direction={isMobile ? "column" : "row"}
                 spacing={
-                  isMobile ? 2 : isAbove1100px ? "4.5rem" : "defaultSpacing"
+                  isMobile ? 2 : isAbove1100px ? "3rem" : "defaultSpacing"
                 }
               >
-                <DatePickerProfile
+                <DatePickerProfile2
                   name="wedding_date"
                   label="Wedding Date"
                   value={formValues.wedding_date}
@@ -221,7 +244,7 @@ const CoupleWeddingDetails = () => {
                 direction={isMobile ? "column" : "row"}
                 justifyContent="space-between"
                 alignItems={isMobile ? "" : "center"}
-                gap={2}
+                gap={0}
               >
                 <Box sx={MuiBoxStyles}>
                   <label>
@@ -229,11 +252,12 @@ const CoupleWeddingDetails = () => {
                     <span style={{ color: "red", fontSize: "16px" }}>*</span>
                   </label>
                   <Select
+                    className="custom-select-dropdown"
                     name="wedding_state"
                     placeholder=""
                     type="select"
                     sx={{ width: "100%", fontSize: "14px" }}
-                    styles={CoupleSelectStyle}
+                    styles={{ ...CoupleSelectStyle, ...customStyles }}
                     options={stateOptions}
                     onChange={handleStateChange}
                     // onChange={(selectedOptions) =>
@@ -249,7 +273,7 @@ const CoupleWeddingDetails = () => {
                           <FontAwesomeIcon
                             icon={faCaretDown}
                             className="dropDown-position"
-                            style={{ color: "#7c7c7c", marginRight: "0.5rem" }}
+                            style={{ color: "#6cc2bc", marginRight: "0.5rem" }}
                           />
                         </div>
                       ),
@@ -290,7 +314,7 @@ const CoupleWeddingDetails = () => {
                           <FontAwesomeIcon
                             icon={faCaretDown}
                             className="dropDown-position"
-                            style={{ color: "#7c7c7c", marginRight: "0.5rem" }}
+                            style={{ color: "#6cc2bc", marginRight: "0.5rem" }}
                           />
                         </div>
                       ),
@@ -438,10 +462,10 @@ const CoupleWeddingDetails = () => {
                   Your Wedding Vision
                   <span style={{ color: "red", fontSize: "16px" }}>*</span>
                 </label>
-                <CoupleInput
+                <TextAreaInput
                   name="profile_desc"
                   multiline
-                  rows={3}
+                  rows={4}
                   type="text"
                   value={formValues.profile_desc}
                   onChange={(e) =>
@@ -518,7 +542,7 @@ const MoreSelectedBadge = ({ items }) => {
 };
 
 const MultiValue = ({ index, getValue, ...props }) => {
-  const maxToShow = 3;
+  const maxToShow = 2;
   const overflow = getValue()
     .slice(maxToShow)
     .map((x) => x.label);

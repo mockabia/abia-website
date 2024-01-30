@@ -123,6 +123,14 @@
     width: 100%;
 }
 
+
+.cs-inputfield-cotainer {
+    width: 320px;
+    margin: 0 auto;
+}
+
+
+
 .cs-textfield-flex {
     display: flex;
     flex-direction: column;
@@ -136,6 +144,13 @@
     gap: 5px;
     grid-column: 2/8;
     cursor: pointer;
+}
+
+@media(min-width:600px) {
+.cs-inputfield-cotainer {
+    width: 500px;
+    margin: 0 auto;
+}    
 }
 
 

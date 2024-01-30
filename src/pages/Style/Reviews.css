@@ -1,0 +1,87 @@
+.review-margin {
+    margin: 2rem 1rem;
+}
+
+.abia-logo-section {
+    border: 1px solid #d7d7d7;
+    border-radius: 50%;
+    background-color: #6cc2bc;
+    width: 75px;
+    height: 75px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviews-container {
+    margin: 10rem auto;
+    /* border: 1px solid #d7d7d7; */
+    /* width: 400px; */
+    height: 40vh;
+    top: 50%;
+    left: 50%;
+    transform: "translate(-50%, -50%)";
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.review-logo-section {
+    width: 5rem;
+    height: 5rem;
+    border: 1px solid transparent;
+    
+}
+
+.review-heading {
+  font-weight: 400;
+  font-size: 26px;
+    text-align: center;
+}
+
+.review-next-button {
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.rating-category {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rating-category-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (min-width:1023px) {
+.rating-category-stack {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+}
+
+.rating-stack-1 {
+    display: flex;
+    gap: 2rem;
+}
+
+.rating-textarea {
+    border: 1px solid #b7b7b7;
+    outline: none;
+    width: 100%;
+    height: 7rem;
+    font-size: 14px;
+    padding: 1rem;
+    border-radius: 10px;
+    /* max-width: 50rem; */
+}

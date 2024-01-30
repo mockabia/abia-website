@@ -18,18 +18,6 @@ const ThumbImage = styled.img`
   object-fit: contain;
 `;
 
-
-
-const ClearButton = styled.button`
-  padding: 8px 16px;
-  background-color: #ff0000;
-  color: #fff;
-  border-radius: 4px;
-  &:hover {
-    background-color: #b30000;
-  }
-`;
-
 const PhotoUpLoader2 = ({ onImageCrop, onChangeCrop }) => {
   const [image, setImage] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);

@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box, Modal, Button, Input, TextField, Textarea } from "@mui/material";
-import ReactPlayer from "react-player";
 import { ReactComponent as CloseButton } from "../icons/x-solid.svg";
+import * as BusinessJs from "../pages/Business/Business";
 
 import "./VideoUploader.css";
 
@@ -29,16 +29,22 @@ const previewStyles = {
 
 //IModal
 
-const VideoUploader = () => {
+const VideoUploader = ({ vendorID }) => {
   const [open, setOpen] = useState(false);
+  const [vendorinputs, setVendorInputs] = useState("");
 
   //for onchange event
   const [videoURLs, setVideoURLs] = useState([]);
-
   //for submit events
   const [inputValue, setInputValue] = useState("");
-
+  const [inputsErrors, setInputsErrors] = useState({});
+  const [deleteVideo, setDeleteVideo] = useState("");
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    BusinessJs.V_viewVideoGallery(setVideoURLs, vendorID);
+    console.log("View video gallery:", videoURLs);
+  }, [vendorID]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -52,19 +58,37 @@ const VideoUploader = () => {
   const handleVideoChange = (e) => {
     setInputValue(e.target.value);
   };
-
   const handleVideoSubmit = (e) => {
     e.preventDefault();
-    setVideoURLs([...videoURLs, inputValue]);
-    setInputValue("");
+    const videoUrl = inputValue;
+
+    setVideoURLs([...videoURLs, videoUrl.video]);
+    const formValues = {
+      vid: vendorID,
+      video: videoUrl,
+    };
     setOpen(false);
+    BusinessJs.updateBusinessMyProfile(
+      formValues,
+      vendorID,
+      5,
+      setInputsErrors,
+      setVendorInputs
+    );
   };
 
-  const handleDeleteVideo = (index) => {
-    const updatedVideoURLs = [...videoURLs];
-    updatedVideoURLs.splice(index, 1);
-    setVideoURLs(updatedVideoURLs);
+  const handleDeleteVideo = async (id, vgid) => {
+    try {
+      await BusinessJs.V_deleteVideo(setDeleteVideo, id, vgid);
+
+      // Update the state to remove the deleted video
+      const updatedVideoURLs = videoURLs.filter((video) => video.vgid !== vgid);
+      setVideoURLs(updatedVideoURLs);
+    } catch (error) {
+      console.error("Error deleting photo:", error);
+    }
   };
+
   return (
     <div>
       <div className="video-gallery-container gap-4 relative">
@@ -81,19 +105,27 @@ const VideoUploader = () => {
         </label>
         {/* Display */}
 
-        {videoURLs.map((url, index) => (
-          <div key={index} className="video-upload-preview">
-            <ReactPlayer
-              key={index}
-              url={url}
-              className="video-preview"
-              controls
+        {videoURLs.map((element) => (
+          <div
+            key={element.vgid}
+            id={element.vgid}
+            className="video-upload-preview"
+          >
+            <div
+              dangerouslySetInnerHTML={{
+                __html: element.video.replace(
+                  "<iframe ",
+                  '<iframe width="100%" height="100%" '
+                ),
+              }}
             />
-            <div className="relative">
-              <CloseButton
-                className="myprofile-videos-close"
-                onClick={() => handleDeleteVideo(index)}
-              />
+            <div className="photopreview-desc">
+              <div className="photopreview-image-order">
+                <CloseButton
+                  className="myprofile-videos-close"
+                  onClick={() => handleDeleteVideo(element.vid, element.vgid)}
+                />
+              </div>
             </div>
           </div>
         ))}
@@ -110,25 +142,19 @@ const VideoUploader = () => {
             <div className="modal-close cursor-pointer" onClick={handleClose}>
               <AiOutlineClose />
             </div>
-            <sPan className="text-[20px] font-semibold">Add Videos</sPan>
-            <br />
-            <span>Copy & paste embedded codes of your videos from: </span>
-            <span className="mb-[15px]">Youtube/Facebook/Vimeo</span>
-            <TextField
-              multiline
-              rows={2}
-              maxRows={50}
-              size="large"
-              className="modal-input-topmargin w-[100%]  md:w-[95%] border"
+            <div className="flex flex-col gap-[8px] justify-center items-center">
+              <sPan className="text-[20px] font-semibold">Add Videos</sPan>
+              <span>
+                Copy & paste embedded codes of your videos from:{" "}
+                <span className="mb-[15px]">Youtube/Facebook/Vimeo</span>{" "}
+              </span>
+            </div>
+            <textarea
+              className="modal-input-topmargin w-[100%]  md:w-[95%]"
               value={inputValue}
               onChange={handleVideoChange}
-              inputProps={{
-                style: {
-                  height: "80px",
-                  outline: "none",
-                },
-              }}
             />
+
             <div className="flex justify-end align-middle mt-[10px]">
               <div className="quickdec-button-group">
                 {/* <button className="myprofile-cancel-button">Cancel</button> */}

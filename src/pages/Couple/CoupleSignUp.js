@@ -3,16 +3,11 @@ import "../Style/CoupleSignUp.css";
 import Box from "@mui/material/Box";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Select from "react-select";
-// import { ReactComponent as EngagedIcon } from "../../../icons/Couples/engaged.svg";
-import { ReactComponent as EngagedIcon } from "../../icons/Couples/engaged.svg";
 import { ReactComponent as PlanningIcon } from "../../icons/Couples/planning.svg";
 import { ReactComponent as Planning2Icon } from "../../icons/Couples/bookVenue.svg";
 import { ReactComponent as FormICon4 } from "../../icons/Couples/formIcon4.svg";
 import CloseIcon from "@mui/icons-material/Close";
-import { Controller, useForm } from "react-hook-form";
 
 import {
   Checkbox,
@@ -26,7 +21,7 @@ import {
 } from "@mui/material";
 import {
   DatePickerCouple,
-  DatePickerPublic,
+
 } from "../../components/DatepickerPublic";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -42,7 +37,6 @@ import {
   CoupleCommonInput,
 } from "../../components/FormStyle";
 import * as CoupleJS from "../Couple/Couple";
-import { DatePickerProfile } from "../../components/DatePickerProfile";
 
 const steps = ["Let’s Begin", "The Basics", "Final Touches"];
 
@@ -81,7 +75,6 @@ export default function CouplesSignUp() {
   const [selectedOption, setSelectedOption] = React.useState(null); //first page option
   const [isOptionSelected, setIsOptionSelected] = React.useState(true);
   const [location, setLocation] = React.useState([]);
-  // const [selectState, setSelectState] = React.useState();
   const [checkboxChecked, setCheckboxChecked] = React.useState(false);
   const [errors, setErrors] = React.useState({});
   const [marketingOptions, setMarketingOptions] = React.useState([]);
@@ -374,10 +367,14 @@ export default function CouplesSignUp() {
               <React.Fragment>
                 {/* Option buttons */}
                 {/* 1 */}
-                <div>
-                  <h1 className="cs-signup-header"> It’s nice to meet you. </h1>
-                </div>
-                <Box>
+
+                <div className="cs-inputfield-cotainer">
+                  <div>
+                    <h1 className="cs-signup-header">
+                      {" "}
+                      It’s nice to meet you.{" "}
+                    </h1>
+                  </div>
                   <Box className="cs-textfield-flex">
                     <div>
                       <label>
@@ -391,8 +388,17 @@ export default function CouplesSignUp() {
                         onChange={(e) =>
                           handleInputChange("bride", e.target.value)
                         }
-                        error={errors.bride}
+                        // error={errors.bride}
                       />
+                      {errors.bride && (
+                        <Typography
+                          color="error"
+                          variant="caption"
+                          component="div"
+                        >
+                          {errors.bride}
+                        </Typography>
+                      )}
                     </div>
 
                     <div>
@@ -407,8 +413,16 @@ export default function CouplesSignUp() {
                         onChange={(e) =>
                           handleInputChange("groom", e.target.value)
                         }
-                        error={errors.groom}
                       />
+                      {errors.groom && (
+                        <Typography
+                          color="error"
+                          variant="caption"
+                          component="div"
+                        >
+                          {errors.groom}
+                        </Typography>
+                      )}
                     </div>
                   </Box>
                   <br />
@@ -469,7 +483,6 @@ export default function CouplesSignUp() {
                         handleInputChange("wedding_state", e.target.value)
                       }
                       value={formValues.wedding_state}
-                      error={errors.wedding_state}
                     >
                       {location.map((option) => (
                         <MenuItem
@@ -481,6 +494,15 @@ export default function CouplesSignUp() {
                         </MenuItem>
                       ))}
                     </CSTextfield>
+                    {errors.wedding_state && (
+                      <Typography
+                        color="error"
+                        variant="caption"
+                        component="div"
+                      >
+                        {errors.wedding_state}
+                      </Typography>
+                    )}
                   </Box>
                   <br />
 
@@ -525,7 +547,7 @@ export default function CouplesSignUp() {
                       </Link> */}
                     </h5>
                   </div>
-                </Box>
+                </div>
               </React.Fragment>
             </Box>
           </section>
@@ -587,9 +609,16 @@ export default function CouplesSignUp() {
                       onChange={(e) =>
                         handleInputChange("email", e.target.value)
                       }
-                      error={errors.email}
-                      helperText={errors.email}
                     />
+                    {errors.email && (
+                      <Typography
+                        color="error"
+                        variant="caption"
+                        component="div"
+                      >
+                        {errors.email}
+                      </Typography>
+                    )}
                   </div>
                   <div>
                     <label>
@@ -604,9 +633,16 @@ export default function CouplesSignUp() {
                       onChange={(e) =>
                         handleInputChange("password", e.target.value)
                       }
-                      error={errors.password}
-                      helperText={errors.password}
                     />
+                    {errors.password && (
+                      <Typography
+                        color="error"
+                        variant="caption"
+                        component="div"
+                      >
+                        {errors.password}
+                      </Typography>
+                    )}
                   </div>
 
                   {/* <Box

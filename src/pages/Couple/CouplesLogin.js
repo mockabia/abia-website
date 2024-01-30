@@ -21,10 +21,16 @@ const CouplesLogin = ({ handleClosePage }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [formValues, setFormValues] = useState({ email: "", password: "" });
   const [errors, setErrors] = React.useState({});
+  const [showVisibilityIcon, setShowVisibilityIcon] = useState(false);
 
   const togglePasswordVisibility = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword);
+    if (formValues.password.trim() !== "" && showPassword) {
+      setShowVisibilityIcon(!showPassword);
+    } else {
+      setShowVisibilityIcon(false);
+    }
   };
 
   const validateForm = () => {
@@ -48,8 +54,8 @@ const CouplesLogin = ({ handleClosePage }) => {
 
   const handleInputChange = (fieldName, value) => {
     setFormValues({ ...formValues, [fieldName]: value });
-
     setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+    setShowVisibilityIcon(true);
   };
 
   const handleSubmit = (e) => {
@@ -75,13 +81,13 @@ const CouplesLogin = ({ handleClosePage }) => {
           }}
         >
           <StyledIconButton type="button" onClick={handleClosePage}>
-            <AiOutlineClose />
+            <AiOutlineClose size={20} />
           </StyledIconButton>
         </Box>
         <form>
           <h1 className="cs-login-header">Bride/Groom Login</h1>
-          <label className="cl-label">Email</label>
           <div className="cl-field">
+            <label className="cl-label">Email</label>
             <CoupleCommonInput
               variant="outlined"
               name="email"
@@ -93,8 +99,8 @@ const CouplesLogin = ({ handleClosePage }) => {
           </div>
           <br />
           {/* PASSWORD */}
-          <label className="cl-label">Password</label>
           <div className="cl-field">
+            <label className="cl-label">Password</label>
             <CoupleCommonInput
               variant="outlined"
               name="password"
@@ -102,7 +108,7 @@ const CouplesLogin = ({ handleClosePage }) => {
               // label="Password*"
               onChange={(e) => handleInputChange("password", e.target.value)}
               InputProps={{
-                endAdornment: (
+                endAdornment: showVisibilityIcon && (
                   <IconButton onClick={togglePasswordVisibility}>
                     {showPassword ? (
                       <VisibilityOffOutlinedIcon sx={{ fill: "#c3bebe" }} />
@@ -148,47 +154,22 @@ const CouplesLogin = ({ handleClosePage }) => {
           </Box>
 
           {/* SIGN UP NOW AND SIGN IN VENDOR */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignContent: "center",
-              marginTop: "1rem",
-            }}
-          >
-            <Typography
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignContent: "center",
-                marginBottom: "1rem",
-                fontFamily: "Raleway",
-                fontSize: "14px",
-              }}
-            >
+          <div className="clogin-margin-auto">
+            <h6>
               Don't have an account?{" "}
               <Link to={window.CSIGNUP} className="font-[900] underline">
                 {" "}
                 <span className="cl-gap">q</span>Sign Up Now
               </Link>
-            </Typography>
-            <Typography
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignContent: "center",
-                fontFamily: "Raleway",
-                fontSize: "14px",
-              }}
-            >
-              Are you a Abia vendor?{" "}
+            </h6>
+            <h6 style={{ marginTop: "10px" }}>
+              Are you a vendor?{" "}
               <Link to={window.VLOGIN} className="font-[900] underline">
                 {" "}
                 <span className="cl-gap">q</span> Sign In Here
               </Link>
-            </Typography>
-          </Box>
+            </h6>
+          </div>
         </form>
       </Box>
       //{" "}

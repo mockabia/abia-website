@@ -17,7 +17,7 @@ export const logout = async (navigate) => {
   });
 };
 
-export const fetchbusiness = async (setInputs, setDataSet) => {
+export const fetchbusiness = async (setInputs, setpreviewSet) => {
   let token = localStorage.getItem("vendorToken");
   token = JSON.parse(token);
   let userSession = token && token.user ? token.user : null;
@@ -26,7 +26,7 @@ export const fetchbusiness = async (setInputs, setDataSet) => {
     if (response.statuscode == 200) {
       setInputs(response.result);
 
-      setDataSet(true);
+      setpreviewSet(true);
     }
   });
 };
@@ -90,7 +90,8 @@ export const updateBusiness = async (settings, formValues, setInputsErrors) => {
     });
 };
 
-// BUSINESS - MY-PROFILE
+// **********BUSINESS - MY-PROFILE  *********/
+
 export const vendorView = async (setPreviewListing, vendorID, setDataSet) => {
   await servicesPage.businessViewData(vendorID).then(function (response) {
     if (response.statuscode == 200) {
@@ -98,6 +99,54 @@ export const vendorView = async (setPreviewListing, vendorID, setDataSet) => {
       setDataSet(true);
     }
   });
+};
+
+export const viewProfileSettings = async (vendorID, setViewProfile) => {
+  await servicesPage
+    .businessViewProfileSettings(vendorID)
+    .then(function (response) {
+      if (response.statuscode == 200) {
+        setViewProfile(response.result);
+        // console.log("View Profile d:", response.result)
+      }
+    });
+};
+// Photo gallery view
+export const V_viewPhotoGallery = async (setViewProfile, vendorID) => {
+  await servicesPage.view_photogallery(vendorID).then(function (response) {
+    if (response.statuscode == 200) {
+      setViewProfile(response.result);
+    }
+  });
+};
+// delete photo
+export const V_deletePhotoGallery = async (setDeletePhoto, vendorID, pid) => {
+  await servicesPage
+    .delete_vendorPhotoGallery(vendorID, pid)
+    .then(function (response) {
+      if (response.statuscode == 200) {
+        setDeletePhoto(response.result);
+      }
+    });
+};
+
+//View Vide0 gallery
+export const V_viewVideoGallery = async (setViewProfile, vendorID) => {
+  await servicesPage.view_videoGallery(vendorID).then(function (response) {
+    if (response.statuscode == 200) {
+      setViewProfile(response.result);
+    }
+  });
+};
+
+export const V_deleteVideo = async (setDeleteVideo, vendorID, vgid) => {
+  await servicesPage
+    .delete_vendorVideo(vendorID, vgid)
+    .then(function (response) {
+      if (response.statuscode == 200) {
+        setDeleteVideo(response.result);
+      }
+    });
 };
 
 export const updateBusinessMyProfile = async (
@@ -111,22 +160,92 @@ export const updateBusinessMyProfile = async (
   await servicesPage
     .businessDescriotion1(id, option, formValues)
     .then(function (response) {
-      console.log("Full API response:", response);
       if (response.statuscode == 200) {
         // setDataSet(true);
-        console.log("Quikc de:", response.result);
+        console.log("Submited values:", response.result);
         setVendorInputs((values) => ({
           ...values,
           ["profile_short_desc"]: response.result.profile_short_desc,
+          ["profile_long_desc"]: response.result.profile_long_desc,
+          // ["team_owner_details"]: response.result.team_owner_details,
+          // ["team_type"]: response.result.team_type,
         }));
       } else {
         if (response.errors) {
           setInputsErrors(response.errors);
+          console.log("Team input error:", response.errors);
         } else if (response.statusmessage) {
           setInputsErrors(response.statusmessage);
         }
       }
     });
+};
+
+// for packages
+export const updateBusinessMyProfile_Package = async (
+  formValues,
+  id,
+  option,
+  setInputsErrors,
+  setViewFile,
+  setDataSet
+) => {
+  await servicesPage
+    .businessDescriotion_2(id, option, formValues)
+    .then(function (response) {
+      if (response.statuscode == 200) {
+        // setDataSet(true);
+        // console.log("Submited values:", response.packageFile);
+        setViewFile(response);
+      } else {
+        if (response.errors) {
+          setInputsErrors(response.errors);
+          console.log("Team input error:", response.errors);
+        } else if (response.statusmessage) {
+          setInputsErrors(response.statusmessage);
+        }
+      }
+    });
+};
+//question and Answer
+export const updateQandAProfile = async (
+  formValues,
+  id,
+  option,
+  setInputsErrors,
+  setQuestionRes,
+  setDataSet
+) => {
+  await servicesPage
+    .businessDescriotion1(id, option, formValues)
+    .then(function (response) {
+      if (response.statuscode == 200) {
+        setQuestionRes(response.result);
+      } else {
+        if (response.errors) {
+          setInputsErrors(response.errors);
+          console.log("Team input error:", response.errors);
+        } else if (response.statusmessage) {
+          setInputsErrors(response.statusmessage);
+        }
+      }
+    });
+};
+
+export const V_deeletePackages = async (vendorID, setDelPackages) => {
+  await servicesPage.delete_package(vendorID).then(function (response) {
+    if (response.statuscode == 200) {
+      setDelPackages(response.result);
+    }
+  });
+};
+
+export const V_deeleteQA = async (vendorID, qid, setDelPackages) => {
+  await servicesPage.delete_qandA(vendorID, qid).then(function (response) {
+    if (response.statuscode == 200) {
+      setDelPackages(response.result);
+    }
+  });
 };
 
 // GET REVIEWS/MANAGE WEDDING
@@ -147,4 +266,13 @@ export const updateManageWedding = async (
         }
       }
     });
+};
+
+// LIST OF VENDOR SERVICES
+export const fetchVServices = async (setServices) => {
+  await servicesPage.vendor_services().then(function (response) {
+    if (response.statuscode === 200) {
+      setServices(response.result);
+    }
+  });
 };

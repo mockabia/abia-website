@@ -18,12 +18,26 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [inputs, setInputs] = useState({});
   const [inputsErrors, setInputsErrors] = useState({});
+  const [showVisibilityIcon, setShowVisibilityIcon] = useState(false);
 
+  // const togglePasswordVisibility = (e) => {
+  //   e.preventDefault();
+  //   setShowPassword(!showPassword);
+  // };
   const togglePasswordVisibility = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword);
-  };
 
+    const newPassword = inputs.password.trim();
+
+    if (newPassword === "" || newPassword.length === 0) {
+      // If the password is empty, hide the visibility icon
+      setShowVisibilityIcon(false);
+    } else {
+      // If the password is not empty, toggle the visibility icon
+      setShowVisibilityIcon(!showPassword);
+    }
+  };
   useEffect(() => {
     GeneralJS.hasJWT(navigate);
     GeneralJS.checkRememberMe(setInputs);
@@ -31,6 +45,7 @@ const LoginPage = () => {
 
   const handleChange = (e) => {
     GeneralJS.handleChange(e, setInputs, setInputsErrors);
+    setShowVisibilityIcon(true);
   };
 
   const handleSubmit = async (e) => {
@@ -90,11 +105,13 @@ const LoginPage = () => {
                     InputProps={{
                       endAdornment: (
                         <IconButton onClick={togglePasswordVisibility}>
-                          {showPassword ? (
-                            <VisibilityOffOutlinedIcon />
-                          ) : (
-                            <VisibilityOutlinedIcon />
-                          )}
+                          {showVisibilityIcon ? (
+                            showPassword ? (
+                              <VisibilityOffOutlinedIcon />
+                            ) : (
+                              <VisibilityOutlinedIcon />
+                            )
+                          ) : null}
                         </IconButton>
                       ),
                     }}

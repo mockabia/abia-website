@@ -257,7 +257,7 @@ const CoupleEnquiry = () => {
                         {vendor.vendorStatus === "Enquiry Sent" ? (
                           <h6>View </h6>
                         ) : (
-                          <h6>Replyr</h6>
+                          <h6>Reply</h6>
                         )}
                       </BlackSmallButton>
                     </div>

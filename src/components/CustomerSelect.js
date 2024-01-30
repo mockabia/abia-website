@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Select, { components } from "react-select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { FaCheck } from "react-icons/fa";
 
 const customSelectStyles = {
   control: (provided, state) => ({
@@ -29,10 +30,12 @@ const customSelectStyles = {
     marginTop: "10px",
     borderRadius: "20px",
     padding: "15px",
-    border: "1px solid #c3bebe",
+    border: "1px solid #6cc2bc",
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
     fontSize: "14px",
+    
   }),
+
   option: (provided, state) => ({
     ...provided,
     backgroundColor: state.isSelected
@@ -134,7 +137,7 @@ export const CheckboxOption = ({ innerProps, label, isSelected }) => {
 
   const handleMouseEnter = () => {
     if (divRef.current) {
-      divRef.current.style.backgroundColor = "#e7f5f4";//background color
+      divRef.current.style.backgroundColor = "#e7f5f4"; // Background color on hover
     }
   };
 
@@ -145,6 +148,7 @@ export const CheckboxOption = ({ innerProps, label, isSelected }) => {
         : "transparent";
     }
   };
+
   return (
     <div
       {...innerProps}
@@ -153,8 +157,7 @@ export const CheckboxOption = ({ innerProps, label, isSelected }) => {
         display: "flex",
         alignItems: "center",
         cursor: "pointer",
-        color: isSelected ? "#6cc2bc" : "#red",
-
+        color: isSelected ? "#fff" : "#red",
         backgroundColor: isSelected ? "#FAFAFA" : "transparent",
         borderRadius: "4px",
         transition: "background-color 0.3s, color 0.3s", // Add transition for a smooth effect
@@ -169,11 +172,20 @@ export const CheckboxOption = ({ innerProps, label, isSelected }) => {
         style={{
           marginRight: "8px",
           fontSize: "14px",
-          width: "20px",
-          height: "20px",
-          backgroundColor: isSelected ? "#000" : "initial",
+          width: "15px",
+          height: "15px",
+          border: "1px solid #b7b7b7",
+          backgroundColor: isSelected ? "#6cc2bc" : "transparent",
+          appearance: "none",
         }}
       />
+      {isSelected && (
+        <FaCheck
+          color="white"
+          size={10}
+          style={{ position: "absolute", marginLeft: "2.5px" }}
+        />
+      )}
       <label
         style={{
           margin: "0.5rem",
@@ -220,6 +232,5 @@ export const CustomMultiSelect = ({ field, categoryOptions }) => (
         />
       ),
     }}
-    
   />
 );

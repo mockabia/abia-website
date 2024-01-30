@@ -27,7 +27,7 @@ const partnershipList = [
 ];
 
 const featuredList = [
-  "Featured Article with unlimited images & written content",
+  "Featured Article with unlimited images & content",
   "ABIA will research specific keywords",
   "Shared on ABIA’s Facebook",
   "Shared on ABIA’s Instastories",
@@ -37,6 +37,12 @@ const Partnership = () => {
   const [mode, setMode] = useState(false);
   const [show, setShow] = useState(false);
   const [show2, setshow2] = useState(false);
+  const [visibleListItems, setVisibleListItems] = useState(
+    partnershipList.slice(0, 4)
+  );
+  const [visibleListItems_F, setVisibleListItems_F] = useState(
+    featuredList.slice(0, 4)
+  );
 
   const onClickHandler = () => {
     setMode(!mode);
@@ -44,17 +50,29 @@ const Partnership = () => {
 
   const handleOpen = () => {
     setShow(!show);
-    setshow2(false);
+    if (!show) {
+      // If "more" is pressed, update visibleListItems to show all items
+      setVisibleListItems(partnershipList);
+    } else {
+      // If "more" is pressed again, show only the first 3 items
+      setVisibleListItems(partnershipList.slice(0, 4));
+    }
   };
 
-  const handleFeatureOpen = () => {
-    setshow2(!show2);
-    setShow(false);
+  const handleOpen_F = () => {
+    setShow(!show);
+    if (!show) {
+      // If "more" is pressed, update visibleListItems to show all items
+      setVisibleListItems_F(featuredList);
+    } else {
+      // If "more" is pressed again, show only the first 3 items
+      setVisibleListItems_F(featuredList.slice(0, 4));
+    }
   };
 
   return (
     <LayoutGeneral>
-      <div className="h-screen overflow-auto">
+      <div className="h-screen overflow-auto pb-[10rem]">
         {/* toggle switch */}
         <h2 className="main-header">Partnetship Benefits</h2>
         <div className="toggle-div">
@@ -75,7 +93,7 @@ const Partnership = () => {
           {/* Box 1 */}
           <div className="partnership-box-one">
             <div className="partnership-info-box">
-              <div className="flex flex-col gap-[1rem]">
+              <div className="flex flex-col gap-[1.5rem]">
                 <div>
                   <span>
                     <span className="text-[30px] font-[600] font-change">
@@ -95,29 +113,29 @@ const Partnership = () => {
                     12 month minimum
                   </h5>
                 </div>
-              </div>
-              <button className="partnership-apply-button">Apply Today</button>
-              <div className="featurelist-header" onClick={handleOpen}>
-                <span>more</span>
-                <FaAnglesDown size={22} color="#6cc2bc" />
+                <button className="partnership-apply-button">
+                  Apply Today
+                </button>
+                <div>
+                  <ul>
+                    {visibleListItems.map((item, index) => (
+                      <li key={index} className="partnership-li">
+                        <FaCheck fill="#6cc2bc" size={22} /> {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="featurelist-header" onClick={handleOpen}>
+                  <span>more</span>
+                  {/* <FaAnglesDown size={22} color="#6cc2bc" /> */}
+                </div>
               </div>
             </div>{" "}
-            {show && (
-              <div className="listing-div">
-                <ul>
-                  {partnershipList.map((item, index) => (
-                    <li key={index} className="partnership-li">
-                      <FaCheck fill="#6cc2bc" size={22} /> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </div>
           {/* Box 2 */}
           <div className="partnership-box-two">
             <div className="partnership-info-box">
-              <div className="flex flex-col gap-[1rem]">
+              <div className="flex flex-col gap-[1.5rem]">
                 <div>
                   <span>
                     <span className="text-[30px] font-[600] font-change">
@@ -137,24 +155,24 @@ const Partnership = () => {
                     12 month minimum
                   </h5>
                 </div>
-              </div>
-              <button className="partnership-apply-button">Apply Today</button>
-              <div className="featurelist-header" onClick={handleFeatureOpen}>
-                more
-                <FaAnglesDown size={22} color="#6cc2bc" />
+                <button className="partnership-apply-button">
+                  Apply Today
+                </button>
+                <div>
+                  <ul>
+                    {visibleListItems_F.map((item, index) => (
+                      <li key={index} className="partnership-li">
+                        <FaCheck fill="#6cc2bc" size={22} /> <div>{item}</div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="featurelist-header" onClick={handleOpen_F}>
+                  more
+                  {/* <FaAnglesDown size={18} color="#6cc2bc" /> */}
+                </div>
               </div>
             </div>{" "}
-            {show2 && (
-              <div className="listing-div">
-                <ul>
-                  {featuredList.map((item, index) => (
-                    <li key={index} className="partnership-li">
-                      <FaCheck fill="#6cc2bc" size={22} /> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </div>
         </main>
       </div>

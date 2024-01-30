@@ -78,7 +78,11 @@ const MenuItems = (props) => {
                           key={subIndex}
                           onClick={closeMenu}
                           className="mobile-menu-item submenu-item border-b-2"
-                          to={`/${menuItem.main_url}/${subMenuItem.sub_url}`}
+                          to={`/${
+                            menuItem.main_url.endsWith("0")
+                              ? menuItem.main_url.slice(0, -1)
+                              : menuItem.main_url
+                          }/${subMenuItem.sub_url}`}
                         >
                           {subMenuItem.title}
                         </Link>

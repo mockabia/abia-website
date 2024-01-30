@@ -64,9 +64,15 @@ export const BUSINESS_API = {
   SETTINGS4: `${baseUrl}WebBusinessSettings/{id}/4`,
   SETTINGS5: `${baseUrl}WebBusinessSettings/{id}/5`,
   MANAGE_WEDDING: `${baseUrl}WebManageWedding`,
-  BUSINESSDESC: `${baseUrl}ManageprofileSettings`, //
+  BUSINESSDESC: `${baseUrl}ManageprofileSettings`, // update
   BUSINESSDESCVIEW: `${baseUrl}Webview_VendorDescription`,
-  
+  VIEWPROFILESETTINGS: `https://abia.abia-test.com/web/Webview_ProfileSettings`,
+  VIEW_GALLERY: `https://abia.abia-test.com/api/View_vendorPhotoGallery`, // to web  - Edit
+  DELETE_GALLERY: `https://abia.abia-test.com/api/delete_vendorPhotoGallery`, //delete
+  DELETE_VIDEO: `https://abia.abia-test.com/api/delete_vendorVideoGallery`,
+  VIEW_VIDEO: `https://abia.abia-test.com/api/View_vendorVideoGallery`,
+  DELETE_PACKAGE: `https://abia.abia-test.com/api/deletePackage`,
+  DELETE_QA: `https://abia.abia-test.com/api/delete_QuestionAnsRecord`,
 };
 
 export const COUPLE_API = {

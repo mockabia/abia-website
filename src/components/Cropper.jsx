@@ -7,6 +7,7 @@ import Modal from "react-modal";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import styled from "styled-components";
+import { IoMdClose } from "react-icons/io";
 
 const Image = styled.img`
   width: 100%;
@@ -18,27 +19,7 @@ const ThumbImage = styled.img`
   object-fit: contain;
 `;
 
-const UploadButton = styled.button`
-  padding: 8px 16px;
-  background-color: #0074e4;
-  color: #fff;
-  border-radius: 4px;
-  &:hover {
-    background-color: #0059b3;
-  }
-`;
-
-const ClearButton = styled.button`
-  padding: 8px 16px;
-  background-color: #ff0000;
-  color: #fff;
-  border-radius: 4px;
-  &:hover {
-    background-color: #b30000;
-  }
-`;
-
-const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
+const ImageUploader = ({ onImageCrop, onChangeCrop, defaultImage }) => {
   const [image, setImage] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
   const [croppedThumb, setCroppedThumb] = useState(null);
@@ -46,7 +27,6 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
   const [cropper, setCropper] = useState(null);
   const inputImage = useRef(null);
 
-  // Modal disable image
   useEffect(() => {
     if (modalIsOpen) {
       setCroppedThumb(null);
@@ -59,8 +39,9 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
 
   const openModal = () => {
     setIsOpen(true);
-    document.body.style.overflow = "hidden"; // javascript
+    document.body.style.overflow = "hidden";
   };
+
   const closeModal = () => {
     setIsOpen(false);
     inputImage.current.value = null;
@@ -79,7 +60,7 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
           const imageUrl = image;
           setImage(imageUrl);
           const thumbCanvas = document.createElement("canvas");
-          const thumbSize = 150; // set the desired size of the thumb image here
+          const thumbSize = 150;
           thumbCanvas.width = thumbSize;
           thumbCanvas.height = thumbSize;
           const thumbCtx = thumbCanvas.getContext("2d");
@@ -122,7 +103,6 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("Cropped image:", croppedImage);
-    console.log("Cropped thumbnail:", croppedThumb);
   };
 
   return (
@@ -131,7 +111,7 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
         <img
           htmlFor="file-input"
           className="image-style-uploader"
-          src={croppedImage || profile}
+          src={croppedImage || defaultImage || profile}
           alt=""
           onClick={handleBrowseClick}
         />
@@ -183,11 +163,10 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
               <Image
                 className="w-full object-contain"
                 src={image}
-                alt="Orginal image"
+                alt="Original image"
               />
             </div>
           )}
-          {/* Modal and Cropper */}
           <Modal
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
@@ -207,30 +186,33 @@ const ImageUploader = ({ onImageCrop, onChangeCrop }) => {
               },
               overlay: {
                 zIndex: "9999",
+                backgroundColor: "rgba(0,0,0,0.5)",
               },
             }}
           >
-            <Cropper
-              src={image}
-              style={{ height: "80%", width: "70%" }}
-              responsive={true}
-              //showCropper={true}
-              aspectRatio={120 / 120}
-              minCropBoxWidth={120}
-              minCropBoxHeight={120}
-              movable={false}
-              zoomable={false}
-              // className="cropper-img-container"
-              guides={true}
-              onInitialized={(instance) => {
-                setCropper(instance);
-              }}
-            />
-            <div className="mt-4 flex justify-center gap-4">
-              <UploadButton onClick={cropImage} className="ml-2">
-                Submit
-              </UploadButton>
-              <ClearButton onClick={closeModal}>Close</ClearButton>
+            <div className="mycropper-close-button" onClick={closeModal}>
+              <IoMdClose size={22} />
+            </div>
+            <div className="flex flex-col justify-start p-[10px] overflow-y-auto gap-[1rem]">
+              <div>
+                <Cropper
+                  src={image}
+                  style={{ height: "80%", width: "70%" }}
+                  responsive={true}
+                  aspectRatio={120 / 120}
+                  minCropBoxWidth={120}
+                  minCropBoxHeight={120}
+                  movable={false}
+                  zoomable={false}
+                  guides={true}
+                  onInitialized={(instance) => {
+                    setCropper(instance);
+                  }}
+                />
+              </div>
+              <div className="mycropper-save-button" onClick={cropImage}>
+                <button>Save</button>
+              </div>
             </div>
           </Modal>
         </div>
