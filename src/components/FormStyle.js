@@ -1334,8 +1334,8 @@ export const RatingCustomStyle = {
       ? "#e7f5f4"
       : state.isFocused
       ? "#e7f5f4"
-      : "red",
-    color: state.isSelected ? "black" : "red",
+      : "#fff",
+    color: state.isSelected ? "black" : "black",
     padding: "12px",
   }),
   indicatorSeparator: (defaultStyles) => {
@@ -1380,7 +1380,7 @@ export const RatingButton = styled(Button)(({ theme }) => ({
     // border: "1px solid black",
   },
   "&:active": {
-    backgroundColor: "#red",
+    backgroundColor: "#fff",
     border: "1px solid black",
   },
   // "&:focus": {

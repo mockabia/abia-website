@@ -276,3 +276,12 @@ export const fetchVServices = async (setServices) => {
     }
   });
 };
+
+//LIST OF VENDORS
+export const fetchVendors = async (setServices) => {
+  await servicesPage.list_vendors().then(function (response) {
+    if (response.statuscode === 200) {
+      setServices(response.result);
+    }
+  });
+};

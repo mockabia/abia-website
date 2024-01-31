@@ -147,3 +147,7 @@ export async function delete_qandA(vendorID, qid) {
 export async function vendor_services() {
   return await apiService.apiCall(apiUrls.CATEGORY_DROPDOWN_API, "GET");
 }
+
+export async function list_vendors() {
+  return await apiService.apiCall(apiUrls.VENDOR_DROPDOWN, "GET");
+}
