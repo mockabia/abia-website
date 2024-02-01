@@ -95,6 +95,7 @@ const Profile = ({ preview }) => {
   // const [inputsErrors, setInputsErrors] = useState({});
   const [questionRes, setQuestionRes] = useState({});
   const [deleteQA, setDeleteQA] = useState("");
+  const [viewQandA, setViewQandA] = useState({});
   // Pricing
   const [pricingInputs, setPricingInputs] = useState({});
   const [pricingDisplayStates, setPricingDisplayStates] = useState({});
@@ -112,18 +113,6 @@ const Profile = ({ preview }) => {
     setExpanded(isExpanded ? panel : false);
   };
 
-  // viewprofile
-  useEffect(() => {
-    BusinessJS.viewProfileSettings(vendorID, setViewProfile);
-    console.log("View profile:", viewProfile);
-  }, [vendorID]);
-
-  useEffect(() => {
-    setOwnerImage(viewProfile.teamownerpic || "");
-    setDefaultcontent(viewProfile.team_owner_details);
-  }, [viewProfile]);
-  console.log("Team owner detail:", viewProfile.team_owner_details);
-
   //preview listing
   useEffect(() => {
     const fetchData = async () => {
@@ -135,6 +124,23 @@ const Profile = ({ preview }) => {
     };
     fetchData();
   }, [vendorID]);
+
+  // viewprofile
+  useEffect(() => {
+    BusinessJS.viewProfileSettings(vendorID, setViewProfile);
+    console.log("View profile:", viewProfile);
+  }, [vendorID]);
+
+  useEffect(() => {
+    BusinessJS.viewVendorQandA(vendorID, setViewQandA);
+  }, [vendorID]);
+  console.log("View Qanda:", viewQandA);
+
+  useEffect(() => {
+    setOwnerImage(viewProfile.teamownerpic || "");
+    setDefaultcontent(viewProfile.team_owner_details);
+  }, [viewProfile]);
+  console.log("Team owner detail:", viewProfile.team_owner_details);
 
   const handleQuickTexChange = (e) => {
     const inputText = e.target.value;
@@ -308,6 +314,8 @@ const Profile = ({ preview }) => {
   const deletePackage = async () => {
     await BusinessJS.V_deeletePackages(vendorID, setDelPackages);
     console.log("Delete package:", deletePackage);
+    setFileUploaded(false);
+    setUploadedFileName("");
   };
   //*****Q and A ***********/
   //*****Q and A ***********/
@@ -364,6 +372,7 @@ const Profile = ({ preview }) => {
   };
 
   const handleAnswerChange = (e, questionId) => {
+    e.preventDefault();
     const updatedQuestions = questions.map((q) =>
       q.id === questionId ? { ...q, answer: e.target.value } : q
     );
@@ -1691,11 +1700,18 @@ const Profile = ({ preview }) => {
 
                     <div className="myprofile-accordion-subheading-pricing">
                       <>
-                        {" "}
+                        {packagesText || (
+                          <>
+                            {viewProfile.packageFile
+                              ? "Package Updated: Yes"
+                              : "Package Updated: No"}
+                          </>
+                        )}
+                        {/* {" "}
                         {viewProfile.package_file ||
                         (uploadedFileName && saveClicked)
                           ? "Package Updated: Yes"
-                          : "Package Updated: No"}
+                          : "Package Updated: No"} */}
                       </>
 
                       <br />
@@ -1727,25 +1743,23 @@ const Profile = ({ preview }) => {
                       <br />
 
                       <div className="flex justify-start items-center gap-[1rem]">
-                        <label
-                          htmlFor="upload-files"
-                          className="text-[14px] cursor-pointer"
-                        >
-                          {uploadedFileName
-                            ? `File Uploaded: ${uploadedFileName}`
-                            : viewProfile.package_file}
-                        </label>
-                        {(viewProfile.package_file ||
-                          (uploadedFileName && saveClicked)) && (
-                          <>
-                            <NavLink to={viewFile.packageFile} title="View">
-                              <HiOutlineViewfinderCircle size={24} />
-                            </NavLink>
-                            <button title="Delete" onClick={deletePackage}>
-                              <MdDelete size={24} />
-                            </button>
-                          </>
-                        )}
+                        {viewProfile.package_file ||
+                          (uploadedFileName && (
+                            <>
+                              <label
+                                htmlFor="upload-files"
+                                className="text-[14px] cursor-pointer"
+                              >
+                                File Uploaded: {uploadedFileName}
+                              </label>
+                              <NavLink to={viewFile.packageFile} title="View">
+                                <HiOutlineViewfinderCircle size={24} />
+                              </NavLink>
+                              <button title="Delete" onClick={deletePackage}>
+                                <MdDelete size={24} />
+                              </button>
+                            </>
+                          ))}
                       </div>
 
                       <div className="myprofile-button-group relative">

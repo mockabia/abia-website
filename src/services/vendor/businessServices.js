@@ -120,21 +120,21 @@ export async function view_videoGallery(id) {
   return await apiService.apiCall(MAIN_API["VIEW_VIDEO"] + "/" + id, "GET");
 }
 
-export async function delete_vendorPhotoGallery(id, pid) {
+export async function delete_vendorPhotoGallery(id, pid, option) {
   return await apiService.apiCall(
-    MAIN_API["DELETE_GALLERY"] + "/" + id + "/" + pid + "/" + 1
+    MAIN_API["DELETE_GALLERY"] + "/" + id + "/" + pid + "/" + option + "/" + 1
   );
 }
 
-export async function delete_vendorVideo(id, vgid) {
+export async function delete_vendorVideo(id, vgid, option) {
   return await apiService.apiCall(
-    MAIN_API["DELETE_VIDEO"] + "/" + id + "/" + vgid + "/" + 1
+    MAIN_API["DELETE_VIDEO"] + "/" + id + "/" + vgid + "/" + option + "/" + 1
   );
 }
 
 export async function delete_package(id) {
   return await apiService.apiCall(
-    MAIN_API["DELETE_GALLERY"] + "/" + id + "/" + 1
+    MAIN_API["DELETE_PACKAGE"] + "/" + id + "/" + 1
   );
 }
 
@@ -142,6 +142,10 @@ export async function delete_qandA(vendorID, qid) {
   return await apiService.apiCall(
     MAIN_API["DELETE_QA"] + "/" + vendorID + "/" + qid + "/" + 1
   );
+}
+
+export async function view_QandA (id) {
+  return await apiService.apiCall(MAIN_API["VIEW_QA"] + "/" + id, "GET");
 }
 
 export async function vendor_services() {

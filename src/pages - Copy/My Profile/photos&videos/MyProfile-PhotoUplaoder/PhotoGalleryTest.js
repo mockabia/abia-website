@@ -118,7 +118,7 @@ const PhotoGalleryTest = (vendorID) => {
 
           const newCroppedImage = {
             pid: viewPhotoGallery.length + 1,
-            imageUrl: selectedPhoto.imageUrl,
+            // imageUrl: imageUrl,
             thumbUrl: thumbUrl,
             title: formData.title,
             detail: formData.detail,
@@ -151,7 +151,7 @@ const PhotoGalleryTest = (vendorID) => {
   // Delete
   const deleteCroppedImage = async (id, pid) => {
     try {
-      await BusinessJs.V_deletePhotoGallery(setDeletePhoto, id, pid);
+      await BusinessJs.V_deletePhotoGallery(setDeletePhoto, id, pid, 4);
 
       // Update the state to remove the deleted photo
       const newViewPhotoGallery = viewPhotoGallery.filter(
@@ -205,7 +205,7 @@ const PhotoGalleryTest = (vendorID) => {
     openModal();
   };
   // console.log("Selected Image Details:", selectedPhoto);
-  
+
   return (
     <div>
       <div className="myprofile-photogallerytest">

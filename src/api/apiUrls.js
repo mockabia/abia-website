@@ -67,12 +67,13 @@ export const BUSINESS_API = {
   BUSINESSDESC: `${baseUrl}ManageprofileSettings`, // update
   BUSINESSDESCVIEW: `${baseUrl}Webview_VendorDescription`,
   VIEWPROFILESETTINGS: `https://abia.abia-test.com/web/Webview_ProfileSettings`,
-  VIEW_GALLERY: `https://abia.abia-test.com/api/View_vendorPhotoGallery`, // to web  - Edit
-  DELETE_GALLERY: `https://abia.abia-test.com/api/delete_vendorPhotoGallery`, //delete
-  DELETE_VIDEO: `https://abia.abia-test.com/api/delete_vendorVideoGallery`,
-  VIEW_VIDEO: `https://abia.abia-test.com/api/View_vendorVideoGallery`,
-  DELETE_PACKAGE: `https://abia.abia-test.com/api/deletePackage`,
-  DELETE_QA: `https://abia.abia-test.com/api/delete_QuestionAnsRecord`,
+  VIEW_GALLERY: `https://abia.abia-test.com/web/WebView_vendorPhotoGallery`, // to web  - Edit
+  DELETE_GALLERY: `https://abia.abia-test.com/web/Webdelete_vendorPhotoGallery`, //delete
+  DELETE_VIDEO: `https://abia.abia-test.com/web/Webdelete_vendorVideoGallery`,
+  VIEW_VIDEO: `https://abia.abia-test.com/web/WebView_vendorVideoGallery`,
+  DELETE_PACKAGE: `https://abia.abia-test.com/web/WebdeletePackage`,
+  DELETE_QA: `https://abia.abia-test.com/web/Webdelete_QuestionAnsRecord`,
+  VIEW_QA: `https://abia.abia-test.com/web/WebView_QuestionAnsRecord`,
 };
 
 export const COUPLE_API = {

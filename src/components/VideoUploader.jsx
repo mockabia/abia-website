@@ -79,7 +79,7 @@ const VideoUploader = ({ vendorID }) => {
 
   const handleDeleteVideo = async (id, vgid) => {
     try {
-      await BusinessJs.V_deleteVideo(setDeleteVideo, id, vgid);
+      await BusinessJs.V_deleteVideo(setDeleteVideo, id, vgid, 5);
 
       // Update the state to remove the deleted video
       const updatedVideoURLs = videoURLs.filter((video) => video.vgid !== vgid);

@@ -120,9 +120,14 @@ export const V_viewPhotoGallery = async (setViewProfile, vendorID) => {
   });
 };
 // delete photo
-export const V_deletePhotoGallery = async (setDeletePhoto, vendorID, pid) => {
+export const V_deletePhotoGallery = async (
+  setDeletePhoto,
+  vendorID,
+  pid,
+  option
+) => {
   await servicesPage
-    .delete_vendorPhotoGallery(vendorID, pid)
+    .delete_vendorPhotoGallery(vendorID, pid, option)
     .then(function (response) {
       if (response.statuscode == 200) {
         setDeletePhoto(response.result);
@@ -139,9 +144,9 @@ export const V_viewVideoGallery = async (setViewProfile, vendorID) => {
   });
 };
 
-export const V_deleteVideo = async (setDeleteVideo, vendorID, vgid) => {
+export const V_deleteVideo = async (setDeleteVideo, vendorID, vgid, option) => {
   await servicesPage
-    .delete_vendorVideo(vendorID, vgid)
+    .delete_vendorVideo(vendorID, vgid, option)
     .then(function (response) {
       if (response.statuscode == 200) {
         setDeleteVideo(response.result);
@@ -224,12 +229,21 @@ export const updateQandAProfile = async (
       } else {
         if (response.errors) {
           setInputsErrors(response.errors);
-          console.log("Team input error:", response.errors);
+          // console.log("Team input error:", response.errors);
         } else if (response.statusmessage) {
           setInputsErrors(response.statusmessage);
         }
       }
     });
+};
+
+export const viewVendorQandA = async (vendorID, setViewQandA) => {
+  await servicesPage.view_QandA(vendorID).then(function (response) {
+    if (response.statuscode == 200) {
+      setViewQandA(response.result);
+      
+    }
+  });
 };
 
 export const V_deeletePackages = async (vendorID, setDelPackages) => {

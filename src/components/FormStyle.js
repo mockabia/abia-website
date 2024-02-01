@@ -839,7 +839,7 @@ export const StyledAccordion = styled(Accordion)(({ theme, expanded }) => ({
   boxShadow: "none !important",
   border: "none !important",
   margin: "0px !important",
-  borderBottom: expanded ? "1px solid transparent" : "1px solid #D6D6D6",
+  borderBottom: expanded ? "1px solid #D6D6D6" : "1px solid transparent",
   width: {
     xs: "100%",
     md: "83%",
