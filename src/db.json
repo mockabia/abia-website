@@ -1,16 +1,33 @@
 {
-    "ratings": [
-        {
-            "bid": "1",
-            "email":"xyz@gmail.com",
-            "wedding_date": "",
-            "sel_services": []
-        }
+  "vendor": {
+    "id": 1,
+    "name": "Vendor Name",
+    "profile-image": "",
+    "images": [
+      {
+        "id": 1,
+        "url": "https://example.com/image1.jpg"
+      },
+      {
+        "id": 2,
+        "url": "https://example.com/image2.jpg"
+      },
+      {
+        "id": 3,
+        "url": "https://example.com/image3.jpg"
+      },
+      {
+        "id": 4,
+        "url": "https://example.com/image4.jpg"
+      },
+      {
+        "id": 5,
+        "url": "https://example.com/image5.jpg"
+      }
     ]
+  },
+  "ratings": {
+    "average": 4.5,
+    "total": 100
+  }
 }
-
-/* "fname": "John Doe",
-            "partner_name": "XYZ",
-            "wedding_date": "06/05/2023",
-            "phone":
-*/

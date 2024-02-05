@@ -206,7 +206,7 @@ export function RatingDatePicker({
         // label={label}
         onChange={(date) => handleDateChange(name, date)}
         // disabled="true"
-        disablePast
+        disableFuture
         disabled={checkboxChecked}
         slots={{
           textField: (params) => (

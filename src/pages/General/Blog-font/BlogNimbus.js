@@ -177,6 +177,8 @@ const Public = () => {
   const [parentDesc, setParentDesc] = useState(
     "Planning Your Wedding is an exciting and important journey, however can also be an overwhelming experience. To assist in designing your ultimate wedding, it is important to book trustworthy Wedding Vendors from Wedding Venues, Wedding Dresses, Celebrants to Photographers and many more who understand the importance of your special day. When planning your wedding day, be sure to research before you book. Ensure you look for credibility, industry awards, verified customer reviews and experience. Meet some of our featured vendors in your wedding state below!"
   );
+
+  const [activeButton, setActiveButton] = useState(1);
   const url = location.pathname.split("/").pop();
 
   useEffect(() => {
@@ -188,128 +190,259 @@ const Public = () => {
   const threeColumnBlog = blogResults.slice(1, 4);
   const fourColumnblogs = blogResults.slice(5);
 
+  const handleButtonClick = (buttonNumber) => {
+    setActiveButton(buttonNumber);
+  };
+
   return (
     <div>
       {/* Mobile View */}
       <div className="mobile-content">
-        <h2 className="main-header">{pageTitle}</h2>
-        <div
-          style={{
-            fontFamily: "'Manrope'",
-            fontSize: "16px",
-            color: "#8e8e8e",
-          }}
-          className="sub-description-M"
+        <h1>{pageTitle}</h1>
+        <h3
+        // style={{
+        //   fontFamily: "'Manrope'",
+        //   fontSize: "16px",
+        //   color: "#8e8e8e",
+        // }}
+        // className="sub-description-M"
         >
           {parentDesc}
-        </div>
+        </h3>
         <div className="blog-mobile">
           {blogResults.map((blog, j) => (
             <Link to={`/${blog.url}`} key={blog.id}>
               <div className="mob-blog-box">
-                <img className="mobile-image" src={blog.pagephoto_val} alt={blog.pagephoto_val} />
-                <h3 style={{ fontFamily: "'Helvetica Neue', sans-serif" }}>
-                  {blog.title}
-                </h3>
-                <p style={{ fontFamily: "'Helvetica Neue', sans-serif" }}>
-                  {blog.short_bcomment}
-                </p>
+                <img
+                  className="mobile-image"
+                  src={blog.pagephoto_val}
+                  alt={blog.pagephoto_val}
+                />
+                <h2>{blog.title}</h2>
+                <p>{blog.short_bcomment}</p>
               </div>
             </Link>
           ))}
         </div>
       </div>
-
+      {/* BUTTON 1 */}
       {/* Desktop View */}
-      <div className="blog-content">
-        <h2 className="main-header">{pageTitle}</h2>
-        <div
-          style={{
-            fontFamily: "'Manrope', sans-serif",
-            fontSize: "14px",
-            color: "#8e8e8e",
-          }}
-          className="sub-description-M"
+      <div className="button-group">
+        <button
+          onClick={() => handleButtonClick(1)}
+          className={activeButton === 1 ? "active" : ""}
         >
-          {parentDesc}
-        </div>
+          Bold
+        </button>
+        <button
+          onClick={() => handleButtonClick(2)}
+          className={activeButton === 2 ? "active" : ""}
+        >
+          Black
+        </button>
+        <button
+          onClick={() => handleButtonClick(3)}
+          className={activeButton === 3 ? "active" : ""}
+        >
+          Medium
+        </button>
+      </div>
+      {activeButton === 1 && (
+        <div className="blog-content">
+          <div className="margin-center">
+            <h1>{pageTitle}</h1>
+          </div>
+          <p>{parentDesc}</p>
 
-        {/* 1 column */}
-        <div className="first-blog">
-          {firstBlog.map((blog, j) => (
-            <Link to={`/${blog.url}`} key={blog.id}>
-              <div className="first-image-desktop">
-                <div>
+          {/* 1 column */}
+          <div className="first-blog">
+            {firstBlog.map((blog, j) => (
+              <Link to={`/${blog.url}`} key={blog.id}>
+                <div className="first-image-desktop">
+                  <div>
+                    <img
+                      src={blog.pagephoto_val}
+                      alt={blog.pagephoto_val}
+                      className="first-image"
+                    />
+                  </div>
+                  <div className="first-blog-content">
+                    <h2>{blog.title}</h2>
+                    <p>{blog.short_bcomment}</p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* 3 column */}
+          <div className="three-blogs mb-[2rem]">
+            {threeColumnBlog.map((blog, j) => (
+              <Link to={`/${blog.url}`} className="single-blog" key={blog.id}>
+                <div className="three-blog-image">
                   <img
                     src={blog.pagephoto_val}
                     alt={blog.pagephoto_val}
-                    className="first-image"
+                    style={{ width: "100%" }}
                   />
                 </div>
-                <div className="first-blog-content">
-                  <h2 style={{ fontFamily: "'Manrope', sans-serif" }}>
-                    {blog.title}
-                  </h2>
-                  <p style={{ fontFamily: "'Manrope', sans-serif" }}>
-                    {blog.short_bcomment}
-                  </p>
+                <h3>{blog.title}</h3>
+                <p>{blog.short_bcomment}</p>
+              </Link>
+            ))}
+          </div>
+
+          {/* 4 column */}
+          <div className="four-column-blogs">
+            {fourColumnblogs.map((blog, j) => (
+              <Link
+                className="fourblog-link-class"
+                to={`/${blog.url}`}
+                key={blog.id}
+              >
+                <div className="four-blog-image">
+                  <img src={blog.pagephoto_val} alt={blog.pagephoto_val} />
                 </div>
-              </div>
-            </Link>
-          ))}
+                <h3 className="mt-[0.5rem] mb-[0.5rem]">{blog.title}</h3>
+                <p>{blog.short_bcomment}</p>
+              </Link>
+            ))}
+          </div>
         </div>
+      )}
 
-        {/* 3 column */}
-        <div className="three-blogs mb-[2rem]">
-          {threeColumnBlog.map((blog, j) => (
-            <Link to={`/${blog.url}`} className="single-blog" key={blog.id}>
-              <div className="three-blog-image">
-                <img
-                  src={blog.pagephoto_val}
-                  alt={blog.pagephoto_val}
-                  style={{ width: "100%" }}
-                />
-              </div>
-              <h3
-                style={{
-                  fontFamily: "'Manrope', sans-serif",
-                  marginTop: "5px",
-                  marginBottom: "5px",
-                }}
-              >
-                {blog.title}
-              </h3>
-              <p style={{ fontFamily: "'Manrope', sans-serif" }}>
-                {blog.short_bcomment}
-              </p>
-            </Link>
-          ))}
-        </div>
+      {/* BUTTON 2 */}
+      {/* Desktop View */}
+      {activeButton === 2 && (
+        <div className="blog-content-1">
+          <div className="margin-center">
+            <h1>{pageTitle}</h1>
+          </div>
+          <p>{parentDesc}</p>
 
-        {/* 4 column */}
-        <div className="four-column-blogs">
-          {fourColumnblogs.map((blog, j) => (
-            <Link
-              className="fourblog-link-class"
-              to={`/${blog.url}`}
-              key={blog.id}
-            >
-              <div className="four-blog-image">
-                <img src={blog.pagephoto_val} alt={blog.pagephoto_val} />
-              </div>
-              <h4
-                style={{ fontFamily: "'Manrope', sans-serif" }}
-                className="mt-[0.5rem] mb-[0.5rem] font-[00]"
+          {/* 1 column */}
+          <div className="first-blog">
+            {firstBlog.map((blog, j) => (
+              <Link to={`/${blog.url}`} key={blog.id}>
+                <div className="first-image-desktop">
+                  <div>
+                    <img
+                      src={blog.pagephoto_val}
+                      alt={blog.pagephoto_val}
+                      className="first-image"
+                    />
+                  </div>
+                  <div className="first-blog-content">
+                    <h2>{blog.title}</h2>
+                    <p>{blog.short_bcomment}</p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* 3 column */}
+          <div className="three-blogs mb-[2rem]">
+            {threeColumnBlog.map((blog, j) => (
+              <Link to={`/${blog.url}`} className="single-blog" key={blog.id}>
+                <div className="three-blog-image">
+                  <img
+                    src={blog.pagephoto_val}
+                    alt={blog.pagephoto_val}
+                    style={{ width: "100%" }}
+                  />
+                </div>
+                <h3>{blog.title}</h3>
+                <p>{blog.short_bcomment}</p>
+              </Link>
+            ))}
+          </div>
+
+          {/* 4 column */}
+          <div className="four-column-blogs">
+            {fourColumnblogs.map((blog, j) => (
+              <Link
+                className="fourblog-link-class"
+                to={`/${blog.url}`}
+                key={blog.id}
               >
-                {blog.title}
-              </h4>
-              <p style={{ fontFamily: "'Manrope', sans-serif" }}>
-                {blog.short_bcomment}
-              </p>
-            </Link>
-          ))}
+                <div className="four-blog-image">
+                  <img src={blog.pagephoto_val} alt={blog.pagephoto_val} />
+                </div>
+                <h3 className="mt-[0.5rem] mb-[0.5rem] font-[00]">
+                  {blog.title}
+                </h3>
+                <p>{blog.short_bcomment}</p>
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+      {/* BUTTON 3 */}
+      {/* Desktop View */}
+      {activeButton === 3 && (
+        <div className="blog-content-2">
+          <div className="margin-center">
+            <h1>{pageTitle}</h1>
+          </div>
+          <p>{parentDesc}</p>
+
+          {/* 1 column */}
+          <div className="first-blog">
+            {firstBlog.map((blog, j) => (
+              <Link to={`/${blog.url}`} key={blog.id}>
+                <div className="first-image-desktop">
+                  <div>
+                    <img
+                      src={blog.pagephoto_val}
+                      alt={blog.pagephoto_val}
+                      className="first-image"
+                    />
+                  </div>
+                  <div className="first-blog-content">
+                    <h2>{blog.title}</h2>
+                    <p>{blog.short_bcomment}</p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* 3 column */}
+          <div className="three-blogs mb-[2rem]">
+            {threeColumnBlog.map((blog, j) => (
+              <Link to={`/${blog.url}`} className="single-blog" key={blog.id}>
+                <div className="three-blog-image">
+                  <img
+                    src={blog.pagephoto_val}
+                    alt={blog.pagephoto_val}
+                    style={{ width: "100%" }}
+                  />
+                </div>
+                <h3>{blog.title}</h3>
+                <p>{blog.short_bcomment}</p>
+              </Link>
+            ))}
+          </div>
+
+          {/* 4 column */}
+          <div className="four-column-blogs">
+            {fourColumnblogs.map((blog, j) => (
+              <Link
+                className="fourblog-link-class"
+                to={`/${blog.url}`}
+                key={blog.id}
+              >
+                <div className="four-blog-image">
+                  <img src={blog.pagephoto_val} alt={blog.pagephoto_val} />
+                </div>
+                <h3 className="mt-[0.5rem] mb-[0.5rem]">{blog.title}</h3>
+                <p>{blog.short_bcomment}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

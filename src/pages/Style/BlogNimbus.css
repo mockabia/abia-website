@@ -31,13 +31,12 @@
     display: none;
 }
 
-.main-header {
-    font-family: 'Playfair Display', serif;
+/* .main-header {
+    font-family: 'Manrope', sans-serif;
     font-size: 30px;
     font-weight: 500;
     margin: 2rem 0 1rem 0;
-    /* text-align: center; */
-}
+} */
 
 .sub-description-M {
     font-family: 'Manrope';
@@ -55,7 +54,7 @@
         display: none;
     }
 
-    .blog-content {
+    .blog-content, .blog-content-1 {
         display: block;
         padding: 1rem;
         height: 100vh;
@@ -167,7 +166,7 @@
         margin-bottom: 1rem;
     }
 
-    .blog-content {
+    .blog-content,.blog-content-1, .blog-content-2  {
         display: block;
         padding: 1rem 6rem;
         height: 100vh;
@@ -265,7 +264,7 @@
         /* max-height: 50rem; */
     }
 
-    .blog-content {
+    .blog-content, .blog-content-1, .blog-content-2 {
         display: block;
         padding: 1rem 12rem;
         height: 100vh;
@@ -311,4 +310,116 @@
         height: 250px;
         overflow: hidden;
     }
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.button-group button {
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.button-group button.active {
+    background-color: #6cc2bc;
+    /* Active button color */
+}
+
+/************/
+
+.blog-content h1 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 20px;
+    margin: 0 auto;
+}
+.blog-content h2 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 18px;
+    margin: 0 auto;
+}
+
+.blog-content h3 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 15px;
+    margin: 0 auto;
+}
+
+.blog-content p {
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    margin: 0 auto;
+    line-height: 28px;
+}
+.margin-center {
+   display: flex;
+   justify-content: center;
+}
+
+
+/* black */
+.blog-content-1 h1 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 20px;
+    color: black !important;
+    font-weight: 400 !important;
+    margin: 0 auto;
+}
+
+.blog-content-1 h2 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 18px;
+    margin: 0 auto;
+    color: black !important;
+    font-weight: 400 !important;
+}
+
+.blog-content-1 p {
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    margin: 0 auto;
+    line-height: 28px;
+    font-weight: 400 !important;
+}
+
+.blog-content-1 h3 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 15px;
+    margin: 0 auto;
+    color: black !important;
+    font-weight: 400 !important;
+}
+
+/* Medium */
+.blog-content-2 h1 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 20px;
+    font-weight: 400 !important;
+    margin: 0 auto;
+}
+
+.blog-content-2 h2 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 18px;
+    margin: 0 auto;
+    font-weight: 400 !important;
+}
+
+.blog-content-2 p {
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    margin: 0 auto;
+    line-height: 28px;
+    font-weight: 400 !important;
+}
+
+.blog-content-2 h3 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 15px;
+    margin: 0 auto;
+    font-weight: 400 !important;
 }

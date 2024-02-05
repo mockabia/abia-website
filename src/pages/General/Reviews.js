@@ -271,7 +271,7 @@ const Reviews = () => {
       </div>
       {/* Review container */}
       {activeStep === 0 && (
-        <div className="reviews-container">
+        <div className="reviews-container-1">
           {/* vendor-logo */}
           <div className="review-logo-section">
             <img
@@ -287,6 +287,7 @@ const Reviews = () => {
           {/* Page 1 */}
           {/* input field */}
           <div className="flex flex-col gap-[5px] justify-center items-center">
+            {/* EMAIL */}
             <RatingInput
               name="rating_email"
               value={formValues.rating_email}
@@ -305,6 +306,7 @@ const Reviews = () => {
               emails.
             </span>
           </div>
+          {/* DATE */}
           <RatingDatePicker
             name="wedding_date"
             value={formValues.wedding_date}
@@ -351,7 +353,7 @@ const Reviews = () => {
           )}
           <br />
           <RatingButton onClick={handleFormNext}>Next</RatingButton>
-          <diV>
+          <diV className="pb-[2rem]">
             <h5>1 of 5</h5>
           </diV>
         </div>
@@ -392,7 +394,7 @@ const Reviews = () => {
                 key={option.value}
               >
                 {/* Selected service */}
-                <div>
+                <div className="mx-auto">
                   <h4 className="font-semibold">
                     Rate your {option.label} Review Form
                   </h4>
@@ -478,7 +480,7 @@ const Reviews = () => {
                   </div>
                 </div>
                 {/* Best Vendor */}
-                <div>
+                <div className="mx-auto">
                   <button
                     name="best_vendor"
                     onClick={() => handleBestVendorClick(index)}
@@ -504,7 +506,12 @@ const Reviews = () => {
             {/* <RatingButton onClick={handleFormNext}>Next</RatingButton> */}
             <RatingButton onClick={handleRatingsSubmit}>Submit</RatingButton>
 
-            <button className="review-next-button"></button>
+            <button
+              className="review-next-button invisible"
+              onClick={handleSkip}
+            >
+              Skip
+            </button>
           </div>
 
           <diV>
@@ -529,7 +536,7 @@ const Reviews = () => {
           {/* input field */}
 
           {/*  */}
-          <div>
+          <div className="flex flex-col gap-[5px]">
             <label>Find Businesses</label>
             <Select
               name="new_vendor"
@@ -629,7 +636,8 @@ const Reviews = () => {
 
           {/*  */}
           <div className="flex flex-col gap-4">
-            <div className="flex gap-[1rem]">
+            <div className="reviews-help-stack">
+              {/* 1 */}
               <div className="flex flex-col gap-[5px]">
                 <label>Perfect Wedding Season ?</label>
                 <RatingInput
@@ -641,6 +649,7 @@ const Reviews = () => {
                   }
                 />
               </div>
+              {/* 2 */}
               <div className="flex flex-col gap-[5px]">
                 <label># of Wedding Guests ?</label>
                 <RatingInput
@@ -654,7 +663,8 @@ const Reviews = () => {
                 />
               </div>
             </div>
-            <div className="flex gap-[1rem]">
+            <div className="reviews-help-stack">
+              {/* 3 */}
               <div className="flex flex-col gap-[5px]">
                 <label>Original Wedding Budget</label>
                 <RatingInput
@@ -667,6 +677,7 @@ const Reviews = () => {
                   }
                 />
               </div>
+              {/* 4 */}
               <div className="flex flex-col gap-[5px]">
                 <label>Actual Cost of Wedding</label>
                 <RatingInput
@@ -680,7 +691,8 @@ const Reviews = () => {
                 />
               </div>
             </div>
-            <div className="flex gap-[1rem]">
+            <div className="reviews-help-stack">
+              {/* 5 */}
               <div className="flex flex-col gap-[5px]">
                 <label># of International Guests</label>
                 <RatingInput
@@ -692,6 +704,7 @@ const Reviews = () => {
                   }
                 />
               </div>
+              {/* 6 */}
               <div className="flex flex-col gap-[5px]">
                 <label># of Interstate Guests</label>
                 <RatingInput
@@ -704,7 +717,8 @@ const Reviews = () => {
                 />
               </div>
             </div>
-            <div className="flex gap-[1rem]">
+            {/* 7 */}
+            <div className="reviews-help-stack]">
               <div className="flex flex-col gap-[5px]">
                 <label>Did you Read Wedding Reviews ?</label>
                 <Select
@@ -736,7 +750,7 @@ const Reviews = () => {
             </button>
           </div>
 
-          <diV>
+          <diV className="pb-[2rem]">
             <h5>4 of 5</h5>
           </diV>
         </div>
@@ -825,7 +839,16 @@ const Reviews = () => {
 
           <br />
           <div className="flex justify-center items-center gap-[2rem]">
-            <RatingButton onClick={handleVerifySubmit}>Next</RatingButton>
+            <button className="review-next-button" onClick={handleBack}>
+              Back
+            </button>
+            <RatingButton onClick={handleVerifySubmit}>Submit</RatingButton>
+            <button
+              className="review-next-button invisible"
+              onClick={handleBack}
+            >
+              Back
+            </button>
           </div>
 
           <diV className="pb-[2rem]">

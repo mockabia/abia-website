@@ -1383,15 +1383,13 @@ export const RatingButton = styled(Button)(({ theme }) => ({
     backgroundColor: "#fff",
     border: "1px solid black",
   },
-  // "&:focus": {
-  //   backgroundColor: "black",
-  //   border: "1px solid black",
-  // },
+  [theme.breakpoints.down("600")]: {
+    width: "8rem",
+  },
   "&. MuiSvgIcon": {
     fill: "black",
   },
 }));
-
 
 /*****REACT SELECT SCROLL STYLE */
 export const reactSelectScroll = {

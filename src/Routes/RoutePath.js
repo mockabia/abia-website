@@ -11,6 +11,7 @@ import BusinessProfile from "../pages - Copy/MyProfile2/profile";
 
 import BusinessSettings from "../pages/Business/BusinessSettings";
 import GetReviews from "../pages - Copy/Get Review/GetReviews";
+import BusinessShop from "../pages/Business/BusinessShop";
 
 /*import Login from "./pages/Login/LoginPage";
 import Public from "./pages/Public";
@@ -62,6 +63,10 @@ const RoutePaths = (props) => {
         <Route
           path="/get-reviews"
           element={<RouteGuard {...props} Component={GetReviews} />}
+        />
+        <Route
+          path="/shops"
+          element={<RouteGuard {...props} Component={BusinessShop} />}
         />
       </Routes>
     </>

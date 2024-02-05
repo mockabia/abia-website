@@ -19,6 +19,9 @@ import BlogNimbus from "./pages/General/Blog-font/BlogNimbus";
 import BlogRoboto from "./pages/General/Blog-font/BlogRobot";
 import BlogHelvica from "./pages/General/Blog-font/BlogHelvica";
 import BlogNimbus2 from "./pages/General/Blog-font/BlogNimbus2";
+import BlogFonts from "./pages/General/Blog-font/fonts";
+import PublicProfile from "./pages/General/PublicProfile/PublicProfile";
+import BusinessShop from "./pages/Business/BusinessShop";
 
 const App = () => {
   const [showLoader, setShowLoader] = useState(false);
@@ -80,10 +83,12 @@ const App = () => {
         <Route path="/wedding-blog/Roboto" element={<BlogRoboto />} />
         <Route path="/wedding-blog/Helvica" element={<BlogHelvica />} />
         <Route path="/wedding-blog/Nimbus" element={<BlogNimbus2 />} />
-
+        <Route path="/fonts" element={<BlogFonts />} />
         {/* Partnership */}
         <Route path="/partnership-benefits" element={<Partnership />} />
         <Route path="/reviews" element={<Reviews />} />
+        <Route path="/public-profile" element={<PublicProfile />} />
+        {/* Shop */}
       </Routes>
     </>
   );

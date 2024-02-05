@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope&family=Raleway&family=Source+Sans+3&display=swap');
+/* Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Manrope&family=Raleway&family=Roboto&family=Roboto+Flex:opsz,wght@8..144,200;8..144,400&family=Source+Sans+3&display=swap');
+/* Nimbus */
+ @import url('https://fonts.cdnfonts.com/css/nimbus-sans-l');
+/* Helvetica */
+ @import url('https://fonts.cdnfonts.com/css/helvetica-neue-5');
+
+ /* DIGITS */
+/* source sans pro */
+@import url('https://fonts.googleapis.com/css2?family=Manrope&family=Raleway&family=Roboto&family=Roboto+Flex:opsz,wght@8..144,200;8..144,400&family=Source+Sans+3&display=swap');
+
+/* veranda */
+ @import url('https://fonts.cdnfonts.com/css/verdana');
+
+
+
+.font-source {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 20px;
+}
+
+.font-manrope {
+    font-family: 'Manrope', sans-serif;
+    font-size: 20px;
+}
+
+.fonr-veranda {
+    font-family: 'Verdana';
+}
+
+
+
+ /* font-family: 'Helvetica Neue'; */
+ /* font-family: 'Nimbus Sans L'; */
+/* font-family: 'Roboto',
+sans-serif; */
+
+/* .font-manrope {
+    font-family: 'Manrope', sans-serif;
+} */
+
+
+.center-container {
+    text-align: center;
+    margin: 2rem auto;
+}
+
+.font-container {
+    width: 300px;
+}
+
+
+.font-container h1 {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Manrope', sans-serif;
+}
+
+.font-container h2 {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Manrope', sans-serif;
+}
+
+.font-container h3 {
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Manrope', sans-serif;
+}
+
+/* Roboto */
+.font-container-2 {
+    width: 300px;
+}
+
+.font-container-2 h1 {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+}
+
+.font-container-2 h2 {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+}
+
+.font-container-2 h3 {
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;  
+}
+
+/* Nimbus */
+.font-container-3 {
+    width: 300px;
+}
+
+.font-container-3 h1 {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Nimbus Sans L';
+}
+
+.font-container-3 h2 {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Nimbus Sans L';
+}
+
+.font-container-3 h3 {
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Nimbus Sans L';   
+}
+
+
+/* Helvetica */
+.font-container-4 {
+    width: 300px;
+}
+
+.font-container-4 h1 {
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Helvetica Neue';
+}
+
+.font-container-4 h2 {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Helvetica Neue';
+}
+
+.font-container-4 h3 {
+    font-size: 15px;
+    font-weight: 600;
+    font-family: 'Helvetica Neue';
+}
+
