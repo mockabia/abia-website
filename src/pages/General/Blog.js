@@ -26,19 +26,20 @@ const Public = () => {
     });
   };
 
-  // console.log("desc:", parentDesc);
-
   const firstBlog = blogResults.slice(0, 1);
-  const threeColumnBlog = blogResults.slice(1, 4);
-  const fourColumnblogs = blogResults.slice(5);
+  const threeColumnBlog = blogResults.slice(1);
+  // const fourColumnblogs = blogResults.slice(5);
   return (
-    <div>
+    <div className="blog-background">
       <div className="mobile-content">
-        <h2 className="main-header">{pageTitle}</h2>
-        <div
-          className="sub-description"
-          dangerouslySetInnerHTML={{ __html: parentDesc }}
-        />
+        <div className="flex flex-col gap-[10px] mb-[1rem]" >
+          <h2 className="blog-main-header">{pageTitle}</h2>
+          <div
+            className="sub-description"
+            dangerouslySetInnerHTML={{ __html: parentDesc }}
+          />
+        </div>
+
         <div className="blog-mobile">
           {blogResults.map((blog, j) => {
             return (
@@ -55,16 +56,18 @@ const Public = () => {
       </div>
       {/******** Desktop *********/}
       <div className="blog-content">
-        <h1 className="main-header">{pageTitle}</h1>
-        <div
-          className="sub-description float-none"
-          style={{ textAlign: "left" }}
-        >
+        <div className="flex flex-col gap-[10px] mb-[1rem]">
+          <h1 className="blog-main-header">{pageTitle}</h1>
           <div
-            dangerouslySetInnerHTML={{
-              __html: parentDesc,
-            }}
-          />
+            className="sub-description float-none"
+            style={{ textAlign: "left" }}
+          >
+            <div
+              dangerouslySetInnerHTML={{
+                __html: parentDesc,
+              }}
+            />
+          </div>
         </div>
 
         {/* 1 column */}
@@ -82,8 +85,13 @@ const Public = () => {
                   </div>
 
                   <div className="first-blog-content">
-                    <h2>{blog.title}</h2>
-                    <p>{blog.short_bcomment}</p>
+                    <div>
+                      <h2>{blog.title}</h2>
+                      <p>{blog.short_bcomment}</p>
+                    </div>
+                    <div className="blog-read-more">
+                      <bbuton>read more</bbuton>
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -97,25 +105,11 @@ const Public = () => {
               <Link to={`/${blog.url}`} className="single-blog">
                 <div className="three-blog-content">
                   <img src={blog.pagephoto_val} alt={blog.pagephoto_val} />
-                  <h3>{blog.title}</h3>
-                  <p>{blog.short_bcomment}</p>
+                  <div className="p-[1rem] flex flex-col gap-[8px">
+                    <h3>{blog.title}</h3>
+                    <p>{blog.short_bcomment}</p>
+                  </div>
                 </div>
-              </Link>
-            );
-          })}
-        </div>
-        {/* 4 column */}
-        <div className="four-column-blogs">
-          {fourColumnblogs.map((blog, j) => {
-            return (
-              <Link className="fourblog-link-class" to={`/${blog.url}`}>
-                <div className="four-blog-image">
-                  <img src={blog.pagephoto_val} alt={blog.pagephoto_val} />
-                </div>
-                <h4 className="mt-[0.5rem] mb-[0.5rem] font-[00]">
-                  {blog.title}
-                </h4>
-                <p>{blog.short_bcomment}</p>
               </Link>
             );
           })}

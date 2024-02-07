@@ -1,0 +1,127 @@
+.payment-box-container {
+    display: block;
+    background-color: #f2eeea;
+}
+.payment-detail-box {
+    width: 92%;
+    height: auto;
+    margin: 1rem auto;
+    overflow: hidden;
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.payment-header-div {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+
+.payment-box-container button {
+    width: 8rem;
+    padding: 10px;
+    border: 1px solid #d7d7d7;
+    border-radius: 6px;
+    font-size: 14px;
+    height: 50px;
+    background-color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.payment-box-container button.active,
+.payment-box-container button:active {
+    background-color: black;
+    color: #fff;
+    font-weight: 500;
+}
+
+.payments-pay-buttons .button-1 {
+     width: 8rem;
+    padding: 10px;
+    border: 1px solid #d7d7d7;
+    border-radius: 6px;
+    font-size: 14px;
+    height: 50px;
+    background-color: black;
+    color: #fff;
+    font-weight: 500;
+     display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.payments-pay-buttons .button-2 {
+    width: 8rem;
+    padding: 10px;
+    border: 1px solid #d7d7d7;
+    border-radius: 6px;
+    font-size: 14px;
+    height: 50px;
+    background-color: #CCCCCC;
+    color: #fff;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.payments-pay-buttons .button-1:hover {
+    border: 1px solid #000000;
+}
+.payments-pay-buttons .button-2:hover {
+    border: 1px solid #000000;
+    color: #000000;
+}
+
+/* Payment summary */
+.payment-summary {
+    width: 92%;
+    height: auto;
+    background-color: #C3E7E4;
+    border-radius: 18px;
+    margin: 1rem auto;
+    overflow: hidden;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    gap: 8px;
+    padding: 1rem;
+}
+
+
+@media(min-width:745px) {
+    .payment-box-container {
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        margin: 0 auto;
+        
+    }
+    .payment-summary {
+        height: 32vh;
+        max-width: auto;
+        margin: 2rem auto;
+    }
+    .payment-detail-box {
+        width: 50%;
+    }
+}
+
+
+@media(min-width:1250px) {
+    .payment-box-container {
+        padding: 0 10%;
+    }
+    .payment-summary {
+        height: 32vh;
+        max-width: 22vw;
+    }
+}

@@ -3,6 +3,7 @@ import LayoutGeneral from "../../layouts/Layout/LayoutGeneral";
 import "../Style/Partnership.css";
 import { FaCheck } from "react-icons/fa6";
 import { FaAnglesDown } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const partnershipList = [
   "Public Listing on ABIA Directory",
@@ -113,9 +114,12 @@ const Partnership = () => {
                     12 month minimum
                   </h5>
                 </div>
-                <button className="partnership-apply-button">
-                  Apply Today
-                </button>
+                <Link to={`/payments/${mode ? "annual" : "monthly"}`}>
+                  <button className="partnership-apply-button">
+                    Apply Today
+                  </button>
+                </Link>
+
                 <div>
                   <ul>
                     {visibleListItems.map((item, index) => (
@@ -155,9 +159,11 @@ const Partnership = () => {
                     12 month minimum
                   </h5>
                 </div>
-                <button className="partnership-apply-button">
-                  Apply Today
-                </button>
+                <Link to={`/payments/${mode ? "annual" : "monthly"}`}>
+                  <button className="partnership-apply-button">
+                    Apply Today
+                  </button>
+                </Link>
                 <div>
                   <ul>
                     {visibleListItems_F.map((item, index) => (

@@ -1414,3 +1414,52 @@ export const reactSelectScroll = {
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
   }),
 };
+
+// PAYMENTS INPUT
+export const PaymentInput = styled(TextField)(({ theme }) => ({
+  "& .MuiTextField-root": {
+    fontFamily: "Raleway",
+    height: "45px",
+    width: "16rem",
+    maxWidth: "100%",
+    boxShadow: "none",
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+  },
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+    backgroundColor: "#FFF",
+    fontSize: "14px",
+    width: "100%",
+    maxWidth: "100%",
+    "& > fieldset": { borderColor: "transparent" },
+    "&:hover fieldset": {
+      borderColor: "transparent",
+    },
+  },
+  "& .MuiFormHelperText-root": {
+    border: "none",
+    marginLeft: "0rem",
+  },
+  "& .Mui-focused": {
+    boxShadow: "0 0 0 1px #c3bebe",
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+  },
+}));
+
+export const CheckBoxStyle2 = styled(Checkbox)({
+  "& .MuiSvgIcon-root": {
+    fontSize: "24px",
+    color: "#d7d7d7",
+  },
+  "&.Mui-checked .MuiSvgIcon-root": {
+    fontSize: "24px",
+    backgroundColor: "#515151", // Set background color to black when checked
+  },
+  "& .MuiFormControlLabel-label": {
+    fontFamily: "Raleway",
+  },
+});

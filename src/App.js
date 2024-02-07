@@ -15,13 +15,10 @@ import CoupleCatBudget from "./pages/Couple/CoupleCatBudget";
 import CoupleEnquiry from "./pages/Couple/CoupleEnquiry";
 import Partnership from "./pages/General/Partnership";
 import Reviews from "./pages/General/Reviews";
-import BlogNimbus from "./pages/General/Blog-font/BlogNimbus";
-import BlogRoboto from "./pages/General/Blog-font/BlogRobot";
-import BlogHelvica from "./pages/General/Blog-font/BlogHelvica";
-import BlogNimbus2 from "./pages/General/Blog-font/BlogNimbus2";
 import BlogFonts from "./pages/General/Blog-font/fonts";
 import PublicProfile from "./pages/General/PublicProfile/PublicProfile";
 import BusinessShop from "./pages/Business/BusinessShop";
+import Payment from "./pages/General/Payment";
 
 const App = () => {
   const [showLoader, setShowLoader] = useState(false);
@@ -79,16 +76,13 @@ const App = () => {
         <Route path="/wedding/wedding-budget" element={<CoupleCatBudget />} />
         <Route path="/wedding/enquiry" element={<CoupleEnquiry />} />
         {/* test */}
-        <Route path="/wedding-blog/Manrope" element={<BlogNimbus />} />
-        <Route path="/wedding-blog/Roboto" element={<BlogRoboto />} />
-        <Route path="/wedding-blog/Helvica" element={<BlogHelvica />} />
-        <Route path="/wedding-blog/Nimbus" element={<BlogNimbus2 />} />
         <Route path="/fonts" element={<BlogFonts />} />
         {/* Partnership */}
         <Route path="/partnership-benefits" element={<Partnership />} />
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/public-profile" element={<PublicProfile />} />
-        {/* Shop */}
+        {/* Payment */}
+        <Route path="/payments/:planType" element={<Payment />} />
       </Routes>
     </>
   );
