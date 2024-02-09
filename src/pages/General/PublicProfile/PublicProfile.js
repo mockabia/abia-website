@@ -2,12 +2,24 @@ import React from "react";
 import LayoutGeneral from "../../../layouts/Layout/LayoutGeneral";
 import "../../Style/PublicProfile.css";
 import MainImage from "./MainImage";
+import { ReactComponent as LeftFeather } from "../../../icons/feather2-left.svg";
+import { ReactComponent as RightFeather } from "../../../icons/feather-right.svg";
+import Rating from "@mui/material/Rating";
+// import LeftFeather from "../../../icons/feather-right.jpg";
+// import RightFeather from "../../../icons/feather-left.jpg";
 
 const PublicProfile = () => {
   const vendorData = {
     vendor: {
       id: 1,
-      name: "Vendor Name",
+      name: "Zonzo Estate",
+      partner_type: "Gold Partner",
+      ratings: {
+        average: 4.9,
+        total: 100,
+      },
+      reviews_count: "998",
+      awards_count: "60",
       "profile-image":
         "https://abia.com.au/uploads/vcoverimage/thumb_zonzo-estate-yarra-glen_2203020113541.jpeg",
       imagesa_videos: [
@@ -35,10 +47,6 @@ const PublicProfile = () => {
         },
       ],
     },
-    ratings: {
-      average: 4.5,
-      total: 100,
-    },
   };
 
   return (
@@ -46,45 +54,98 @@ const PublicProfile = () => {
       <LayoutGeneral>
         <div className="pp-content">
           <MainImage vendorData={vendorData} />
-          <div className="flex justify-start items-start w-[100%] py-0 px-[10%] h-screen">
-            <div className="w-[65%] bg-[#6cc2bc]">
-              BusinessSnippet
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
-              <div>Sample</div>
+          {/* BUSINESS DETAILS */}
+          <div className="pp-business-wrapper">
+            <div className="pp-business-details">
+              <div>
+                <h1>{vendorData.vendor.name}</h1>
+                <div className="pp-business-snippet">
+                  {/* PArtner type */}
+                  <div className="flex justify-between items-center">
+                    <LeftFeather />
+                    <h5
+                      style={{
+                        whiteSpace: "break-spaces",
+                        textAlign: "center",
+                        color: "black",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {vendorData.vendor.partner_type}
+                    </h5>
+                    <RightFeather />
+                  </div>
+                  <div className="h-[40px] w-[1px] bg-[#d7d7d7]"></div>
+                  {/* Ratings avg */}
+                  <div className="flex flex-col justify-center items-center gap-[5px]">
+                    <h5
+                      style={{
+                        color: "black",
+                        fontWeight: "600",
+                        fontSize: "22px",
+                      }}
+                    >
+                      {vendorData.vendor.ratings.average}
+                    </h5>
+                    <Rating
+                      name="half-rating-read"
+                      size="small"
+                      precision={0.25}
+                      value={vendorData.vendor.ratings.average}
+                      style={{ color: "black", fontSize: "14px" }}
+                      readOnly
+                    />
+                  </div>
+                  <div className="h-[40px] w-[1px] bg-[#d7d7d7]"></div>
+                  {/* Review count */}
+                  <div className="flex flex-col justify-center items-center gap-[5px]">
+                    <h5
+                      style={{
+                        color: "black",
+                        fontWeight: "600",
+                        fontSize: "22px",
+                      }}
+                    >
+                      {vendorData.vendor.reviews_count}
+                    </h5>
+                    <h5
+                      style={{
+                        color: "black",
+                        fontWeight: "600",
+                        borderBottom: "2px solid black",
+                        paddingBottom: "1px",
+                      }}
+                    >
+                      Reviews
+                    </h5>
+                  </div>
+                  <div className="h-[40px] w-[1px] bg-[#d7d7d7]"></div>
+                  {/* Awards Count */}
+                  <div className="flex flex-col justify-center items-center gap-[5px]">
+                    <h5
+                      style={{
+                        color: "black",
+                        fontWeight: "600",
+                        fontSize: "22px",
+                      }}
+                    >
+                      {vendorData.vendor.awards_count}
+                    </h5>
+                    <h5
+                      style={{
+                        color: "black",
+                        fontWeight: "600",
+                        borderBottom: "2px solid black",
+                        paddingBottom: "1px",
+                      }}
+                    >
+                     Awards
+                    </h5>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="w-[35%] bg-[#b7b7b7] h-[10%] sticky top-0">
-              Enquiry
-            </div>
+            <div className="pp-message-enq">Enquiry</div>
           </div>
         </div>
       </LayoutGeneral>

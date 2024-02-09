@@ -3,12 +3,20 @@ import LayoutGeneral from "../../layouts/Layout/LayoutGeneral";
 import "../Style/Payment.css";
 import MaskedInput from "react-text-mask";
 import { CheckBoxStyle2, PaymentInput } from "../../components/FormStyle";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Checkbox, FormControlLabel, Modal } from "@mui/material";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { CiCreditCard2 } from "react-icons/ci";
 import { WidthFull } from "@mui/icons-material";
+import AbiaLogo from "../../abiaLogo";
 
-const Payment = () => {
+const dbEmails = [
+  { email: "email1@example.com", name: "John Doe" },
+  { email: "email2@example.com", name: "Jane Doe" },
+  { email: "email3@example.com", name: "Bob Smith" },
+  // Add more dummy email objects as needed
+];
+
+const EditPayment = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { mode, amount, type } = location.state || {};
@@ -19,17 +27,20 @@ const Payment = () => {
   // const [vendorDetails, setVendorDetails] = useState({});
   const [formValues, setFormValues] = useState({
     email: "",
+    business_name: "",
     contact_person: "",
     card_number: "",
     expiry: "",
     ccv: "",
     condition: true,
   });
-
   // const [dataSet, setDataSet] = useState(false);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState("");
+  const [modalContent, setModalContent] = useState(null);
+
+  const emailErrorText = `Unfortunately we cannot find an ABIA Account with this email address, please enter the correct email or contact  <span style="color: #6cc2bc; font-weight: bold;">accounts@abia.com.au</span>, and we will support you`;
 
   const handlePlanChange = (plan) => {
     setSelectedPlan(plan);
@@ -65,7 +76,21 @@ const Payment = () => {
     if (!formValues.condition) {
       newErrors.condition = "Please agree to the terms and conditions";
     }
+    // Check if the entered email is in dbEmails
+    const enteredEmail = formValues.email.trim(); // Trim to remove leading/trailing spaces
+    if (enteredEmail === "") {
+      newErrors.email = "Please enter details";
+    } else {
+      // Check if the entered email is in dbEmails
+      const emailExists = dbEmails.some(
+        (dbEmail) => dbEmail.email.toLowerCase() === enteredEmail.toLowerCase()
+      );
 
+      if (!emailExists) {
+        newErrors.email = "Email not found in the database";
+        setModalContent(emailErrorText);
+      }
+    }
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
@@ -87,6 +112,10 @@ const Payment = () => {
     navigate(-1); // Go back one step in the history
   };
 
+  // Function to close the modal
+  const handleCloseModal = () => {
+    setModalContent(null);
+  };
   return (
     <LayoutGeneral>
       <div className="payment-box-container">
@@ -98,7 +127,7 @@ const Payment = () => {
             {submissionMessage === "Successfully Completed" && (
               <>
                 <h5>
-                  {formValues.contact_person} is an active ABIA Industry Partner
+                  {formValues.business_name} is an active ABIA Industry Partner
                 </h5>
                 <h5>
                   Please check you indox as we have resent your login details
@@ -160,6 +189,21 @@ const Payment = () => {
             />
             {errors.email && (
               <span className="error-message">{errors.email}</span>
+            )}
+            {/* Name */}
+            <PaymentInput
+              name="business_name"
+              value={formValues.business_name}
+              onChange={(e) =>
+                handleInputChange("business_name", e.target.value)
+              }
+              InputProps={{
+                placeholder: "Business Name",
+                style: { color: "#000", fontWeight: "600" },
+              }}
+            />
+            {errors.business_name && (
+              <span className="error-message">{errors.business_name}</span>
             )}
             {/* Name */}
             <PaymentInput
@@ -325,7 +369,7 @@ const Payment = () => {
           {submissionMessage === "Successfully Completed" && (
             <div className="mt-[8px] flex flex-col gap-[5px]">
               <h4 style={{ fontWeight: "600" }}>Business Name</h4>
-              <h5>{formValues.name}</h5>
+              <h5>{formValues.business_name}</h5>
               <h4 style={{ fontWeight: "600" }}>Contact Person</h4>
               <h5>{formValues.contact_person}</h5>
               <h4 style={{ fontWeight: "600" }}>State</h4>
@@ -338,8 +382,32 @@ const Payment = () => {
           )}
         </div>
       </div>
+      {/*Modal */}
+      <Modal open={!!modalContent} onClose={handleCloseModal}>
+        <div className="payment-modal-overlay">
+          <div className="payment-modal-content">
+            <div className="payment-logo-section">
+              <AbiaLogo />
+            </div>
+
+            <h2>Email not Found</h2>
+
+            {/* <p style={{ width: "50vw" }}>{modalContent}</p> */}
+            <p
+              style={{ width: "30vw", textAlign: "center" }}
+              dangerouslySetInnerHTML={{ __html: emailErrorText }}
+            />
+            <div className="abia-border"></div>
+            <button className="payment-close-button" onClick={handleCloseModal}>
+              Close
+            </button>
+          </div>
+        </div>
+      </Modal>
     </LayoutGeneral>
   );
 };
 
-export default Payment;
+export default EditPayment;
+
+// export default EditPayment

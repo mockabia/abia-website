@@ -106,25 +106,18 @@ const Sidebar = (props) => {
           <ul className="space-y-2 ml-[1rem]">
             <SideMenu {...props} />
           </ul>
-
-          <div className="mt-[30px] ml-[30px]">
-            <div className="space-y-3">
-              <div className="mb-2">
-                <span className="text-sm text-white ml-2 ">
-                  Your Plan: Free
-                </span>
-              </div>
-              <Link
-                to="/partnership-benefits"
-                className=" rounded-3xl bg-[#e8cf82] px-5 py-2 mb-2 "
-              >
-                <span className="text-black text-[14px] font-bold">
-                  {" "}
-                  Upgrade Now
-                </span>
-              </Link>
+          <Link
+            to={window.UPGRADE}
+            className="flex flex-col mx-[1rem] my-[3rem] gap-[10px] cursor-pointer"
+          >
+            <span className="text-sm text-white ml-2 ">Your Plan: Free</span>
+            <div className=" rounded-3xl bg-[#e8cf82] px-5 py-2 mb-2 w-[9rem] flex justify-center items-center ">
+              <span className="text-black text-[14px] font-bold">
+                {" "}
+                Upgrade Now
+              </span>
             </div>
-          </div>
+          </Link>
         </div>
       </motion.div>
     </div>

@@ -153,5 +153,10 @@ number {
     font-weight: 400;
 }
 
+.error-message {
+  font-size: 12px;
+  color: red;
+}
+
 /**************React-select scroll*********************/
     /* Scroll Bar */

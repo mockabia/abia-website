@@ -277,6 +277,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding: 10px !important;
 }
 
+
+
 .downarrow-icon {
     position: absolute;
     top: 50%;

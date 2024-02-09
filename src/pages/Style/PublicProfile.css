@@ -37,6 +37,8 @@
 
 
 
+
+
 @media(min-width: 745px) {
 
     .pp-content {
@@ -126,24 +128,47 @@
 }
 
 /* BUSINESS SNIPPET */
-.pp-business-container {
-    position: relative;
-    width: 100%;
 
+.pp-business-wrapper {
+    display: grid;
+    grid: template columns 1fr;;
+    margin-top: 2rem;
+    /* background-color: #d7d7d7; */
 }
 
+@media(min-width: 745px) {
+    .pp-business-wrapper {
+        display: grid;
+        grid-template-columns: 30vw 30vw 30vw;
+        /* background-color: #d7d7d7; */
+    }
+}
+
+@media(min-width:1024px) {
+.pp-business-wrapper {
+        display: grid;
+        grid-template-columns: 25vw 25vw 25vw;
+        /* background-color: #d7d7d7; */
+    }
+
+.pp-business-details {
+    /* border: 1px solid #d7d7d7; */
+    grid-column: 1/ span 2;
+}
+
+.pp-message-enq {
+    border: 1px solid #6cc2bc;
+    grid-column: 3;
+
+}
 .pp-business-snippet {
-    width: 58.33%;
-    background-color: aliceblue;
-    height: 100vh;
-    overflow: auto;
+    border: 1px solid #d7d7d7;
+    padding: 1rem;
+    width: 52%;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
 }
-
-.pp-enquiry {
-    background-color: aquamarine;
-    height: 35vh;
-    width: 41.67%;
-    padding: 2rem;
-    
-  
 }

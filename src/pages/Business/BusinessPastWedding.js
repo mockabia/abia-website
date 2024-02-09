@@ -20,6 +20,10 @@ import * as BusinessJS from "./Business";
 import ReactDatePicker from "react-datepicker";
 import { useLocation } from "react-router-dom";
 import { subDays } from "date-fns";
+import {
+  RatingDatePicker,
+  VendorDatePicker,
+} from "../../components/DatepickerPublic";
 
 const schema = yup.object().shape({
   bride: yup.string().required("Client's name is required"),
@@ -221,10 +225,15 @@ const PastWedding = () => {
                 </p>
               )}
               <br />
-              <div className="mt-[0px]">
+              <div className="mt-[0px] flex flex-col gap-[5px]">
                 <label>Wedding Date*</label>
-                <div className="relative">
-                  <Controller
+                <VendorDatePicker />
+                {!errors.date_of_wedding && (
+                  <p className="text-[12px] text-[#f20431] font-extrabold ">
+                    Wedding Date must be before 00-00-0000.{" "}
+                  </p>
+                )}
+                {/* <Controller
                     name="date_of_wedding"
                     control={control}
                     render={({ field }) => (
@@ -238,19 +247,13 @@ const PastWedding = () => {
                     )}
                     rules={{ required: "Date of wedding is required" }}
                     as={ReactDatePicker}
-                  />
+                  /> */}
 
-                  {errors.date_of_wedding && (
+                {/* {errors.date_of_wedding && (
                     <p className=" mt-[2rem] text-[12px] text-[#f20431] font-extrabold">
                       {errors.date_of_wedding.message}
                     </p>
-                  )}
-                </div>
-                {!errors.date_of_wedding && (
-                  <p className="text-[12px] text-[#f20431] font-extrabold mt-[40px]">
-                    Wedding Date must be before 00-00-0000.{" "}
-                  </p>
-                )}
+                  )} */}
               </div>
               <br />
               <label className="header-text-past">Wedding State*</label>

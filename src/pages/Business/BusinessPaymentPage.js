@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import LayoutGeneral from "../../layouts/Layout/LayoutGeneral";
-import "../Style/Payment.css";
+import { useLocation, useNavigate } from "react-router-dom";
+import "../Style/BusinessPayment.css";
 import MaskedInput from "react-text-mask";
 import { CheckBoxStyle2, PaymentInput } from "../../components/FormStyle";
-import { Checkbox, FormControlLabel } from "@mui/material";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Checkbox, FormControlLabel, Skeleton } from "@mui/material";
+import { Link, useParams } from "react-router-dom";
 import { CiCreditCard2 } from "react-icons/ci";
-import { WidthFull } from "@mui/icons-material";
+import * as BusinessJS from "./Business";
 
-const Payment = () => {
+const BusinessPaymentPage = () => {
+  const { planType } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const { mode, amount, type } = location.state || {};
@@ -16,28 +17,33 @@ const Payment = () => {
   const [selectedPlan, setSelectedPlan] = useState(
     mode === "annually" ? "annually" : "monthly"
   );
-  // const [vendorDetails, setVendorDetails] = useState({});
+  const [vendorDetails, setVendorDetails] = useState({});
   const [formValues, setFormValues] = useState({
-    email: "",
-    contact_person: "",
+    email: "" || vendorDetails.email,
+    contact_person: "" || vendorDetails.contact_person,
     card_number: "",
     expiry: "",
     ccv: "",
     condition: true,
   });
 
-  // const [dataSet, setDataSet] = useState(false);
+  const [dataSet, setDataSet] = useState(false);
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [submissionMessage, setSubmissionMessage] = useState("");
+  const [isDataFetched, setIsDataFetched] = useState(false);
+
+  useEffect(() => {
+    // Check if data has already been fetched
+    if (!isDataFetched) {
+      BusinessJS.fetchbusiness(setVendorDetails, setDataSet);
+      setIsDataFetched(true);
+    }
+    console.log("Vendor details:", vendorDetails);
+  }, [vendorDetails, isDataFetched]);
 
   const handlePlanChange = (plan) => {
     setSelectedPlan(plan);
   };
-
-  useEffect(() => {
-    setSelectedPlan(mode === "annually" ? "annually" : "monthly");
-  }, [mode]);
+  // console.log("Selected plan:", selectedPlan);
 
   const handleInputChange = (field, value) => {
     setFormValues({
@@ -65,53 +71,25 @@ const Payment = () => {
     if (!formValues.condition) {
       newErrors.condition = "Please agree to the terms and conditions";
     }
-
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-    // Set loading state and simulate a 10-second delay
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setSubmissionMessage("Subscription in Progress");
-
-      // Simulate another delay for 10 seconds before showing success message
-      setTimeout(() => {
-        setSubmissionMessage("Successfully Completed");
-      }, 10000);
-    }, 0);
+    console.log("Form Values:", formValues);
   };
+
+  useEffect(() => {
+    setSelectedPlan(mode === "annually" ? "annually" : "monthly");
+  }, [mode]);
 
   const handleBack = () => {
     navigate(-1); // Go back one step in the history
   };
 
   return (
-    <LayoutGeneral>
-      <div className="payment-box-container">
-        {/* Payment input details */}
-        {submissionMessage ? (
-          <div className="payment-subscription-box">
-            <h2>{submissionMessage}</h2>
-
-            {submissionMessage === "Successfully Completed" && (
-              <>
-                <h5>
-                  {formValues.contact_person} is an active ABIA Industry Partner
-                </h5>
-                <h5>
-                  Please check you indox as we have resent your login details
-                </h5>
-                <div className="mt-[1rem]">
-                  <login className="payment-login-button">
-                    Login to your ABIA account
-                  </login>
-                </div>
-              </>
-            )}
-          </div>
-        ) : (
+    <div>
+      {dataSet ? (
+        <div className="payment-box-container">
           <div className="payment-detail-box">
             {/* Logo section */}
             <div className="payment-header-div">
@@ -119,15 +97,13 @@ const Payment = () => {
                 <h2>ABIA Weddings Australia</h2>
               </div>
             </div>
-            {/* Display loading and submission messages */}
-            {/* {loading && <p>Loading...</p>}
-            {submissionMessage && <p>{submissionMessage}</p>} */}
+            {/* Display the passed state values */}
+
             {/* <div>
-            <h3>Payment Mode: {mode}</h3>
-            <h3>Amount: {amount}</h3>
-            <h3>Type: {type}</h3>
-          </div>{" "} */}
-            {/* Sub head section */}
+              <h3>Payment Mode: {mode}</h3>
+              <h3>Amount: {amount}</h3>
+              <h3>Type: {type}</h3>
+            </div> */}
             <div>
               <h4>Activate’s ABIA {type} Benefits</h4>
               <h5 className="mt-[5px] mb-[8px]">Choose Your Plan:</h5>
@@ -147,15 +123,17 @@ const Payment = () => {
                 </button>
               </div>
             </div>
+
             {/* Input Fields */}
             {/* Emal */}
+
             <PaymentInput
               name="email"
-              value={formValues.email}
+              value={vendorDetails.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
               InputProps={{
                 placeholder: "Email",
-                style: { color: "#000", fontWeight: "600" },
+                style: { color: "", fontWeight: "600" },
               }}
             />
             {errors.email && (
@@ -164,10 +142,8 @@ const Payment = () => {
             {/* Name */}
             <PaymentInput
               name="contact_person"
-              value={formValues.contact_person}
-              onChange={(e) =>
-                handleInputChange("contact_person", e.target.value)
-              }
+              value={vendorDetails.contact_person}
+              onChange={(e) => handleInputChange("cname", e.target.value)}
               InputProps={{
                 placeholder: "Cardholder Name",
                 style: { color: "#000", fontWeight: "600" },
@@ -176,6 +152,7 @@ const Payment = () => {
             {errors.contact_person && (
               <span className="error-message">{errors.contact_person}</span>
             )}
+            {/* card number */}
             <PaymentInput
               type="number"
               name="card_number"
@@ -196,11 +173,13 @@ const Payment = () => {
                 <span className="error-message">{errors.card_number}</span>
               )}
             </div>
+
             {/* Expiry */}
             <div className="flex gap-[1rem]">
               <div className="flex flex-col gap-[5px]">
                 <PaymentInput
                   name="expiry"
+                  type="number"
                   placeholder="Expiry - MM/YY"
                   value={formValues.expiry}
                   onChange={(e) => handleInputChange("expiry", e.target.value)}
@@ -285,61 +264,82 @@ const Payment = () => {
               </button>
             </div>
           </div>
-        )}
-        {/* Payment Summary */}
-        <div className="payment-summary">
-          <h3>Payment Summary</h3>
-          <div className="flex justify-start items-center gap-[5px]">
-            <h2>
-              $
-              {selectedPlan === "monthly"
-                ? type === "Partnership"
-                  ? 41.99
-                  : type === "Featured"
-                  ? 69.99
-                  : 0
-                : type === "Partnership"
-                ? 499.0
-                : type === "Featured"
-                ? 799.0
-                : amount}
-            </h2>
-            <h4>{selectedPlan === "monthly" ? "per month" : "per year"}</h4>
-          </div>
-          <h5>
-            {selectedPlan === "monthly"
-              ? "+ $10 for one-time setup fee $"
-              : "+ $10 for Setup Fee"}
-          </h5>
-          <div className="mt-[8px] flex flex-col gap-[8px]">
-            <h3>Payment</h3>
-            <h5>
-              {selectedPlan === "monthly"
-                ? "Monthly (12 month minimum)"
-                : "Annual"}
-            </h5>
-            <h5>For ABIA {type} Program</h5>
-          </div>
-          <div className="border-b-4 border-white mt-[10px]"></div>
-          {/* Business details */}
-          {submissionMessage === "Successfully Completed" && (
+          {/* Payment Summary */}
+          <div className="payment-summary">
+            <div className="flex flex-col gap-[8px] ">
+              <h3>Payment Summary</h3>
+              <div className="flex justify-start items-center gap-[8px]">
+                <h2>
+                  $
+                  {selectedPlan === "monthly"
+                    ? type === "Partnership"
+                      ? 41.99
+                      : type === "Featured"
+                      ? 69.99
+                      : 0
+                    : type === "Partnership"
+                    ? 499.0
+                    : type === "Featured"
+                    ? 799.0
+                    : amount}
+                </h2>
+                <h4>{selectedPlan === "monthly" ? "per month" : "per year"}</h4>
+              </div>
+              <h5>
+                {selectedPlan === "monthly"
+                  ? "+ $10 for one-time setup fee $"
+                  : "+ $10 for Setup Fee"}
+              </h5>
+              <div className="mt-[8px] flex flex-col gap-[8px] ">
+                <h3>Payment</h3>
+                <h5>
+                  {selectedPlan === "monthly"
+                    ? "Monthly (12 month minimum)"
+                    : "Annual"}
+                </h5>
+                <h5>For ABIA {type} Program</h5>
+              </div>
+              <div className="border-b-4 border-white mt-[10px]"></div>
+            </div>
+
+            {/* Business details */}
             <div className="mt-[8px] flex flex-col gap-[5px]">
               <h4 style={{ fontWeight: "600" }}>Business Name</h4>
-              <h5>{formValues.name}</h5>
+              <h5>{vendorDetails.name}</h5>
               <h4 style={{ fontWeight: "600" }}>Contact Person</h4>
-              <h5>{formValues.contact_person}</h5>
+              <h5>{vendorDetails.contact_person}</h5>
               <h4 style={{ fontWeight: "600" }}>State</h4>
-              <h5>{formValues.state_val}</h5>
+              <h5>{vendorDetails.state_val}</h5>
               <h4 style={{ fontWeight: "600" }}>Email</h4>
-              <h5>{formValues.email}</h5>
+              <h5>{vendorDetails.email}</h5>
               <h4 style={{ fontWeight: "600" }}>Phone</h4>
-              <h5>{formValues.phone}</h5>
+              <h5>{vendorDetails.phone}</h5>
             </div>
-          )}
+          </div>
         </div>
-      </div>
-    </LayoutGeneral>
+      ) : (
+        <>
+          <div className="p-[2rem]">
+            <Skeleton variant="rectangular" width={600} height={20} />
+            <br />
+            <Skeleton variant="rectangular" width={600} height={20} />
+            <br />
+            <Skeleton variant="rectangular" width={600} height={20} />
+            <br />
+            <Skeleton variant="rectangular" width={600} height={60} />
+            <br />
+            <Skeleton variant="rectangular" width={600} height={60} />
+            <br />
+            <Skeleton variant="rectangular" width={600} height={60} />
+            <br />
+            <Skeleton variant="rectangular" width={600} height={60} />
+            <br />
+            <Skeleton variant="rounded" width={210} height={60} />
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 
-export default Payment;
+export default BusinessPaymentPage;

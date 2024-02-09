@@ -71,7 +71,7 @@ const BusinessSettings = (props) => {
   ];
 
   const skeletonLines = [
-    { variant: "text", height: "1rem" },
+    { variant: "text", height: "1rem", width: "50%" },
     { variant: "text", height: "1rem" },
     { variant: "rectangular", width: "100%", height: "5rem" },
     { variant: "rectangular", width: "100%", height: "5rem" },

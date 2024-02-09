@@ -28,6 +28,7 @@ const partnershipList = [
 ];
 
 const featuredList = [
+  "All Previous Options",
   "Featured Article with unlimited images & content",
   "ABIA will research specific keywords",
   "Shared on ABIA’s Facebook",
@@ -52,28 +53,27 @@ const Partnership = () => {
   const handleOpen = () => {
     setShow(!show);
     if (!show) {
-      // If "more" is pressed, update visibleListItems to show all items
       setVisibleListItems(partnershipList);
     } else {
-      // If "more" is pressed again, show only the first 3 items
       setVisibleListItems(partnershipList.slice(0, 4));
     }
   };
 
+  const moreButtonText = show ? "less" : "more";
+  const moreButtonText2 = show2 ? "less" : "more";
+
   const handleOpen_F = () => {
-    setShow(!show);
-    if (!show) {
-      // If "more" is pressed, update visibleListItems to show all items
+    setshow2(!show2);
+    if (!show2) {
       setVisibleListItems_F(featuredList);
     } else {
-      // If "more" is pressed again, show only the first 3 items
       setVisibleListItems_F(featuredList.slice(0, 4));
     }
   };
 
   return (
     <LayoutGeneral>
-      <div className="h-screen overflow-auto pb-[10rem]">
+      <div className="h-screen pb-[10rem]">
         {/* toggle switch */}
         <h2 className="main-header">Partnetship Benefits</h2>
         <div className="toggle-div">
@@ -114,7 +114,14 @@ const Partnership = () => {
                     12 month minimum
                   </h5>
                 </div>
-                <Link to={`/payments/${mode ? "annual" : "monthly"}`}>
+                <Link
+                  to="/payments"
+                  state={{
+                    mode: mode ? "annually" : "monthly",
+                    amount: mode ? 499.0 : 41.99,
+                    type: "Partnership",
+                  }}
+                >
                   <button className="partnership-apply-button">
                     Apply Today
                   </button>
@@ -130,8 +137,7 @@ const Partnership = () => {
                   </ul>
                 </div>
                 <div className="featurelist-header" onClick={handleOpen}>
-                  <span>more</span>
-                  {/* <FaAnglesDown size={22} color="#6cc2bc" /> */}
+                  <span>{moreButtonText}</span>
                 </div>
               </div>
             </div>{" "}
@@ -159,7 +165,14 @@ const Partnership = () => {
                     12 month minimum
                   </h5>
                 </div>
-                <Link to={`/payments/${mode ? "annual" : "monthly"}`}>
+                <Link
+                  to="/payments"
+                  state={{
+                    mode: mode ? "annually" : "monthly",
+                    amount: mode ? 699.0 : 69.99,
+                    type: "Featured",
+                  }}
+                >
                   <button className="partnership-apply-button">
                     Apply Today
                   </button>
@@ -174,7 +187,7 @@ const Partnership = () => {
                   </ul>
                 </div>
                 <div className="featurelist-header" onClick={handleOpen_F}>
-                  more
+                  {moreButtonText2}
                   {/* <FaAnglesDown size={18} color="#6cc2bc" /> */}
                 </div>
               </div>

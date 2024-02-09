@@ -80,6 +80,10 @@ const TopBar = (props) => {
   const handleLogoClick = () => {
     navigate("/");
   };
+
+  const handleMenuLinkClick = () => {
+    closeMenu();
+  };
   return (
     <div
       ref={profileRef}
@@ -94,9 +98,6 @@ const TopBar = (props) => {
           </div>
         </div>
       )}
-      {/* <div className="relative  ">
-        <h1>test</h1>
-      </div> */}
 
       <div
         onClick={handleLogoClick}
@@ -161,23 +162,22 @@ const TopBar = (props) => {
                   </div>
                 </div>
                 <ul className="mt-[3rem] ">
-                  <SideMenu {...props} />
+                  <SideMenu {...props} onMenuLinkClick={handleMenuLinkClick} />
                 </ul>
-                <div className="mt-[65px] space-y-2">
-                  <div className="mb-[10px]">
-                    <span className="text-sm text-white ml-2">
+                <div onClick={handleMenuLinkClick}>
+                  <Link
+                    to={window.UPGRADE}
+                    className="flex flex-col mx-[1rem] my-[3rem] gap-[10px] cursor-pointer"
+                  >
+                    <span className="text-sm text-white ml-2 ">
                       Your Plan: Free
                     </span>
-                  </div>
-                  <Link
-                    to="/partnership-benefits"
-                    className=" rounded-3xl bg-[#e8cf82] px-6 py-2 "
-                    onClick={closeMenu}
-                  >
-                    <span className="text-black text-sm font-bold">
-                      {" "}
-                      Upgrade Now
-                    </span>
+                    <div className=" rounded-3xl bg-[#e8cf82] px-5 py-2 mb-2 w-[9rem] flex justify-center items-center ">
+                      <span className="text-black text-[14px] font-bold">
+                        {" "}
+                        Upgrade Now
+                      </span>
+                    </div>
                   </Link>
                 </div>
               </div>

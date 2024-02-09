@@ -2,7 +2,11 @@ import * as React from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
-import { CoupleInput, DateTextField, SelectTextField } from "../components/FormStyle";
+import {
+  CoupleInput,
+  DateTextField,
+  SelectTextField,
+} from "../components/FormStyle";
 import { TextField, Typography, styled } from "@mui/material";
 
 const DatePickerStype = styled(MobileDatePicker)(({ theme }) => ({
@@ -93,6 +97,43 @@ export const RatingInput = styled(TextField)(({ theme }) => ({
   },
 }));
 
+export const VendorInput = styled(TextField)(({ theme }) => ({
+  "& .MuiTextField-root": {
+    fontFamily: "Raleway",
+    height: "45px",
+    width: "100%",
+    maxWidth: "100%",
+    boxShadow: "none",
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+
+    // border: "1px solid #c3bebe",
+  },
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "10px",
+    fontFamily: "Raleway",
+    fontSize: "14px",
+    width: "100%",
+    maxWidth: "100%",
+    "& > fieldset": { borderColor: "#c3bebe", backgroundColor: "#fafafa" },
+    "&:hover fieldset": {
+      borderColor: "#c3bebe",
+    },
+  },
+  "& .MuiFormHelperText-root": {
+    border: "none",
+    marginLeft: "0rem",
+  },
+  "& .Mui-focused": {
+    boxShadow: "0 0 0 1px #c3bebe",
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+  },
+  "@media (min-width: 1024px)": {
+    width: "97%",
+  },
+}));
 
 export function DatePickerPublic({ label, TextFieldProps }) {
   return (
@@ -216,7 +257,41 @@ export function RatingDatePicker({
               error={Boolean(dateError)}
               helperText={dateError}
             />
-            
+          ),
+        }}
+      />
+    </LocalizationProvider>
+  );
+}
+
+// VENDOR DATEPICKER
+export function VendorDatePicker({
+  name,
+  label,
+  dateError,
+  handleDateChange,
+  checkboxChecked,
+  value,
+}) {
+  return (
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <DatePickerStype
+        value={value}
+        name={name}
+        format="dd/MM/yyyy"
+        // label={label}
+        onChange={(date) => handleDateChange(name, date)}
+        // disabled="true"
+        disableFuture
+        disabled={checkboxChecked}
+        slots={{
+          textField: (params) => (
+            <VendorInput
+              variant="outlined"
+              {...params}
+              error={Boolean(dateError)}
+              helperText={dateError}
+            />
           ),
         }}
       />

@@ -59,10 +59,21 @@ export const fetchBusinessRoutes = async (setBusinessMenu, setShowLoader) => {
       let futureWedding = associateMenu[0].Sub_content.filter((subs) => {
         return subs.id == "6";
       });
+      let upgradeNow = associateMenu[0].Sub_content.filter((subs) => {
+        return subs.id == "10";
+      });
+      let payment = associateMenu[0].Sub_content.filter((subs) => {
+        return subs.id == "11";
+      });
+
       window.VPAST =
         process.env.REACT_APP_BUSINESS_URL + "/" + pastWedding[0].url;
       window.VFUTURE =
         process.env.REACT_APP_BUSINESS_URL + "/" + futureWedding[0].url;
+      window.UPGRADE =
+        process.env.REACT_APP_BUSINESS_URL + "/" + upgradeNow[0].url;
+
+      window.PAY = process.env.REACT_APP_BUSINESS_URL + "/" + payment[0].url;
       setShowLoader(false);
     }
   });

@@ -19,6 +19,7 @@ import BlogFonts from "./pages/General/Blog-font/fonts";
 import PublicProfile from "./pages/General/PublicProfile/PublicProfile";
 import BusinessShop from "./pages/Business/BusinessShop";
 import Payment from "./pages/General/Payment";
+import EditPayment from "./pages/General/EditPayment";
 
 const App = () => {
   const [showLoader, setShowLoader] = useState(false);
@@ -82,7 +83,8 @@ const App = () => {
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/public-profile" element={<PublicProfile />} />
         {/* Payment */}
-        <Route path="/payments/:planType" element={<Payment />} />
+        <Route path="/payments" element={<Payment />} />
+        <Route path="/edit-payments" element={<EditPayment />} />
       </Routes>
     </>
   );

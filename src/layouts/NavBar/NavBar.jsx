@@ -89,12 +89,12 @@ const NavBar = (props) => {
     servicesPage.fetchHeaderMenus().then(function (response) {
       if (response.statuscode == 200) {
         setMenuItems(response.result);
-        console.log("Menus in Navbar:", menuItems);
+        // console.log("Menus in Navbar:", menuItems);
       }
     });
   };
 
-  console.log("Console MEnus:", menuItems);
+  // console.log("Console MEnus:", menuItems);
 
   useEffect(() => {
     fetchHeaderMenus();

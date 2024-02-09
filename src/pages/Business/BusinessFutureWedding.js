@@ -14,6 +14,7 @@ import { customSelectStyles2 } from "../../components/FormStyle";
 import Calendar from "../../third-party-packs/Calendar";
 import * as BusinessJS from "./Business";
 import ReactDatePicker from "react-datepicker";
+import { VendorDatePicker } from "../../components/DatepickerPublic";
 
 const schema = yup.object().shape({
   bride: yup.string().required("Client's name is required"),
@@ -198,10 +199,10 @@ const FutureWedding = () => {
                 </p>
               )}
               <br />
-              <div className="mt-[0px]">
+              <div className="mt-[0px] flex flex-col gap-[5px]">
                 <label>Wedding Date*</label>
-                <div className="relative">
-                  <Controller
+                <VendorDatePicker />
+                {/* <Controller
                     name="date_of_wedding"
                     control={control}
                     render={({ field }) => (
@@ -221,10 +222,10 @@ const FutureWedding = () => {
                     <p className=" mt-[2rem] text-[12px] text-[#f20431] font-extrabold">
                       {errors.date_of_wedding.message}
                     </p>
-                  )}
-                </div>
+                  )} */}
+
                 {!errors.date_of_wedding && (
-                  <p className="text-[12px] text-[#f20431] font-extrabold mt-[40px]">
+                  <p className="text-[12px] text-[#f20431] font-extrabold">
                     Wedding Date must be before 00-00-0000.{" "}
                   </p>
                 )}

@@ -1429,7 +1429,7 @@ export const PaymentInput = styled(TextField)(({ theme }) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
     fontFamily: "Raleway",
-    backgroundColor: "#FFF",
+    backgroundColor: "#f5f5f5",
     fontSize: "14px",
     width: "100%",
     maxWidth: "100%",
