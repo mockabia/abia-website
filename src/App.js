@@ -18,8 +18,10 @@ import Reviews from "./pages/General/Reviews";
 import BlogFonts from "./pages/General/Blog-font/fonts";
 import PublicProfile from "./pages/General/PublicProfile/PublicProfile";
 import BusinessShop from "./pages/Business/BusinessShop";
-import Payment from "./pages/General/Payment";
-import EditPayment from "./pages/General/EditPayment";
+import Payment from "./pages/General/Payments/Payment";
+import EditSubscription from "./pages/General/EditSubscription";
+import EditPayment from "./pages/General/Payments/EditPayment";
+import ExistingUserPayment from "./pages/General/Payments/ExistingUserPayment";
 
 const App = () => {
   const [showLoader, setShowLoader] = useState(false);
@@ -84,7 +86,10 @@ const App = () => {
         <Route path="/public-profile" element={<PublicProfile />} />
         {/* Payment */}
         <Route path="/payments" element={<Payment />} />
-        <Route path="/edit-payments" element={<EditPayment />} />
+        {/* Cancel subscription */}
+        <Route path="/edit-subscrption" element={<EditSubscription />} />
+        <Route path="/edit-payment" element={<EditPayment />} />
+        <Route path="/partnerhsip-payment" element={<ExistingUserPayment />} />
       </Routes>
     </>
   );

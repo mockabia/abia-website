@@ -1,14 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import LayoutGeneral from "../../../layouts/Layout/LayoutGeneral";
 import "../../Style/PublicProfile.css";
 import MainImage from "./MainImage";
 import { ReactComponent as LeftFeather } from "../../../icons/feather2-left.svg";
 import { ReactComponent as RightFeather } from "../../../icons/feather-right.svg";
 import Rating from "@mui/material/Rating";
+import { SiInstagram } from "react-icons/si";
+import { FaTiktok } from "react-icons/fa";
+import AwardSlide from "./AwardSlide";
 // import LeftFeather from "../../../icons/feather-right.jpg";
 // import RightFeather from "../../../icons/feather-left.jpg";
 
 const PublicProfile = () => {
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [truncatedDescription, setTruncatedDescription] = useState("");
+
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
+  // Function to truncate the description to the first 50 words
+  const truncateDescription = (description) => {
+    const words = description.split(" ");
+    const truncatedWords = words.slice(0, 50);
+    return truncatedWords.join(" ");
+  };
+
+  const renderDescription = () => {
+    if (showFullDescription) {
+      return (
+        <div>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: vendorData.vendor.full_desc,
+            }}
+          />
+          <button className="text-[14px] font-bold" onClick={toggleDescription}>
+            Show less
+          </button>
+        </div>
+      );
+    } else {
+      // Show truncated description with "see more" link
+      return (
+        <div>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: vendorData.vendor.full_desc.substring(0, 200) + "...",
+            }}
+          />
+          <button className="text-[14px] font-bold" onClick={toggleDescription}>
+            See more
+          </button>
+        </div>
+      );
+    }
+  };
+
   const vendorData = {
     vendor: {
       id: 1,
@@ -20,6 +67,8 @@ const PublicProfile = () => {
       },
       reviews_count: "998",
       awards_count: "60",
+      full_desc:
+        "<div><h2 style=`marginBottom:1rem;`>Text Header</h2><br/><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer semper sapien libero, a posuere erat bibendum sodales. Etiam rutrum dui a sem dapibus, elementum maximus mi ultricies. Vivamus id interdum dui. Nulla vel ornare massa. Aliquam venenatis nisl nisl, eu feugiat elit viverra a. Proin viverra aliquet diam at lobortis. Fusce dapibus semper viverra. Ut nec varius magna. Suspendisse a sapien maximus, dictum augue in, accumsan mauris. Aliquam vehicula viverra magna, eu elementum ante convallis ut. Nulla velit mi, iaculis in est eget, varius sollicitudin nunc. Sed in risus iaculis mi finibus volutpat id in mauris. Nam dictum erat et.</p></div>",
       "profile-image":
         "https://abia.com.au/uploads/vcoverimage/thumb_zonzo-estate-yarra-glen_2203020113541.jpeg",
       imagesa_videos: [
@@ -46,6 +95,50 @@ const PublicProfile = () => {
           thumbUrl: "https://img.youtube.com/vi/tEHNeM3DCm0/maxresdefault.jpg",
         },
       ],
+      awards: [
+        {
+          id: 1,
+          awardurl: "https://abia.com.au/images/abia-award-badge_FINALIST.svg",
+          award_name: "2023 Finalist (VIC)",
+          award_category: "Function Coordinator",
+          award_voting: "99.52%",
+        },
+        {
+          id: 2,
+          awardurl: "https://abia.com.au/images/abia-award-badge_WINNER.svg",
+          award_name: "2023 Winner (VIC)",
+          award_category: "Restaurant Reception",
+          award_voting: "99.85%",
+        },
+        {
+          id: 3,
+          awardurl: "https://abia.com.au/images/abia-award-badge_NATIONAL.svg",
+          award_name: "2023 Top 10 (NATIONAL)",
+          award_category: "Function Coordinato",
+          award_voting: "",
+        },
+        {
+          id: 4,
+          awardurl: "https://abia.com.au/images/abia-award-badge_NATIONAL.svg",
+          award_name: "2023 Top 10 (NATIONAL)",
+          award_category: "Function Coordinato",
+          award_voting: "",
+        },
+        {
+          id: 5,
+          awardurl: "https://abia.com.au/images/abia-award-badge_NATIONAL.svg",
+          award_name: "2023 Top 10 (NATIONAL)",
+          award_category: "Function Coordinato",
+          award_voting: "",
+        },
+        {
+          id: 6,
+          awardurl: "https://abia.com.au/images/abia-award-badge_NATIONAL.svg",
+          award_name: "2023 Top 10 (NATIONAL)",
+          award_category: "Function Coordinato",
+          award_voting: "",
+        },
+      ],
     },
   };
 
@@ -57,8 +150,11 @@ const PublicProfile = () => {
           {/* BUSINESS DETAILS */}
           <div className="pp-business-wrapper">
             <div className="pp-business-details">
+              {/* BUSINESS NAME */}
+              <h1>{vendorData.vendor.name}</h1>
+
+              {/* BUSINESS SNIPPET */}
               <div>
-                <h1>{vendorData.vendor.name}</h1>
                 <div className="pp-business-snippet">
                   {/* PArtner type */}
                   <div className="flex justify-between items-center">
@@ -139,9 +235,42 @@ const PublicProfile = () => {
                         paddingBottom: "1px",
                       }}
                     >
-                     Awards
+                      Awards
                     </h5>
                   </div>
+                </div>
+              </div>
+              {/* BUSINESS CONTACT */}
+              <div className="flex justify-start items-center gap-[1rem]">
+                {/* phone */}
+                <div className="pp-phone">phone</div>
+                <div className="pp-website">website</div>
+                <div className="pp-instagram">
+                  <SiInstagram size={20} color="#fff" />
+                </div>
+                <div className="pp-instagram">
+                  <FaTiktok size={20} color="#fff" />
+                </div>
+              </div>
+              {/* NAVIGATION MENU */}
+              <div className="pp-nav-border flex justify-between">
+                <ul className="pp-nav-list ">
+                  <li>About</li>
+                  <li>Awards</li>
+                  <li>Reviews</li>
+                  <li>Photos + Videos</li>
+                  <li>Special</li>
+                  <li>FAQs</li>
+                </ul>
+                <div></div>
+              </div>
+              {/* ABOUT US */}
+              <div className="w-[80%]"> {renderDescription()}</div>
+              <div className="pp-sperator"></div>
+              {/* AWARDS */}
+              <div>
+                <div>
+                  <AwardSlide awards={vendorData.vendor.awards} />
                 </div>
               </div>
             </div>
