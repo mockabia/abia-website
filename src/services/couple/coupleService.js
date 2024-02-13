@@ -6,8 +6,8 @@ export const MAIN_API = apiUrls.COUPLE_API;
 export async function login(postData) {
   return await apiService.apiCall(MAIN_API["LOGIN"], "POST", postData);
 }
-export async function loginStates(postData) {
-  return await apiService.apiCall(MAIN_API["LOGIN_STATE"], "POST", postData);
+export async function coupleSignup(postData) {
+  return await apiService.apiCall(MAIN_API["SIGNUP"], "POST", postData);
 }
 export async function logout() {
   return await apiService.apiCall(MAIN_API["LOGOUT"], "POST");

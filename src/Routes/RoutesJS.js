@@ -106,15 +106,23 @@ export const fetchCoupleRoutes = async (setCoupleMenu, setShowLoader) => {
       let signup = loginMenu[0].Sub_content.filter((subs) => {
         return subs.id == "1";
       });
-      window.CSIGNUP = process.env.REACT_APP_COUPLE_URL + "/" + signup[0].url;
-
       let login = loginMenu[0].Sub_content.filter((subs) => {
         return subs.id == "2";
       });
+      
+      const associateMenu = response.result.filter((menus) => {
+        return menus.id == "3";
+      });
+      let thankyou = associateMenu[0].Sub_content.filter((subs) => {
+        return subs.id == "5";
+      });
+      
+      window.CSIGNUP = process.env.REACT_APP_COUPLE_URL + "/" + signup[0].url;
       window.CLOGIN = process.env.REACT_APP_COUPLE_URL + "/" + login[0].url;
-
       window.CDASHBOARD =
         process.env.REACT_APP_COUPLE_URL + "/" + dashboardMenu[0].url;
+      window.CTHANKYOU =
+        process.env.REACT_APP_COUPLE_URL + "/" + thankyou[0].url;
 
       setShowLoader(false);
     }

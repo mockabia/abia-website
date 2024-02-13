@@ -77,6 +77,7 @@ export const BUSINESS_API = {
 };
 
 export const COUPLE_API = {
+  SIGNUP: `${baseUrl}WebCoupleSignup`,
   LOGIN: `${baseUrl}WebCoupleLogin`,
   FORGOT: `${baseUrl}WebCoupleForgot`,
   LOGOUT: `${baseUrl}WebCoupleLogout`,

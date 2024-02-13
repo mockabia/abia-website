@@ -2,6 +2,8 @@ import * as apiService from "../../api/apiServices";
 import * as reactUrls from "../../api/reactUrls";
 import * as servicesPage from "../../services/couple/coupleService";
 import * as customValidator from "../Plugins/customValidator";
+import * as customJS from "../../plugins/custom/custom";
+export {customJS};
 
 export const logout = async (navigate) => {
   await servicesPage.logout().then(function (response) {
@@ -16,12 +18,6 @@ export const logout = async (navigate) => {
   });
 };
 
-export const handleChange = (e, setInputs, setInputsErrors) => {
-  const name = e.target.name;
-  const value = e.target.value;
-  setInputs((values) => ({ ...values, [name]: value }));
-  setInputsErrors({});
-};
 
 export const fetchState = async (setStateOptions) => {
   await servicesPage.stateDropdown().then(function (response) {
@@ -48,4 +44,17 @@ export const fetchRegion = async (selectedStates, setRegions) => {
         setRegions(response.result);
       }
     });
+};
+export const coupleSignup = async (formValues, setErrors,navigate) => {navigate(window.CTHANKYOU)
+  await servicesPage.coupleSignup(formValues).then(function (response) {
+    if (response.statuscode == 200) {
+      navigate(window.CTHANKYOU)
+    } else {
+      if (response.errors) {
+        setErrors(response.errors);
+      } else if (response.statusmessage) {
+        setErrors(response.statusmessage);
+      }
+    }
+  });
 };
