@@ -48,7 +48,7 @@ const CoupleRoutes = (props) => {
       {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(routeMenu, null, 2)}</pre>  */}
       {!RoutesJS.hasCoupleJWT() ? (
       <>
-        {/* <LayoutGeneral {...props}> */}
+        <LayoutGeneral {...props}>
           <Routes>
             {loginMenu.map((routeMenus, i) => (
               <Route
@@ -58,7 +58,7 @@ const CoupleRoutes = (props) => {
 
             ))}
           </Routes>
-        {/* </LayoutGeneral> */}
+        </LayoutGeneral>
       </>
       ) : (
       <>
