@@ -8,6 +8,7 @@ import Rating from "@mui/material/Rating";
 import { SiInstagram } from "react-icons/si";
 import { FaTiktok } from "react-icons/fa";
 import AwardSlide from "./AwardSlide";
+import PublicEnquiry from "./PublicEnquiry";
 // import LeftFeather from "../../../icons/feather-right.jpg";
 // import RightFeather from "../../../icons/feather-left.jpg";
 
@@ -274,7 +275,9 @@ const PublicProfile = () => {
                 </div>
               </div>
             </div>
-            <div className="pp-message-enq">Enquiry</div>
+            <div className="pp-message-enq">
+              <PublicEnquiry />
+            </div>
           </div>
         </div>
       </LayoutGeneral>

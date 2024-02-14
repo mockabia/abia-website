@@ -137,6 +137,45 @@ export const VendorInput = styled(TextField)(({ theme }) => ({
     width: "97%",
   },
 }));
+export const PublicMessageInput = styled(TextField)(({ theme }) => ({
+  "& .MuiTextField-root": {
+    fontFamily: "Manrope",
+    height: "40px",
+    width: "100%",
+    maxWidth: "100%",
+    boxShadow: "none",
+    borderRadius: "10px",
+
+    // border: "1px solid #c3bebe",
+  },
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "10px",
+    fontFamily: "Manrope",
+    height: "45px",
+    fontSize: "14px",
+    fontWeight: "600",
+    width: "100%",
+    maxWidth: "100%",
+    backgroundColor: "#fff",
+    "& > fieldset": { borderColor: "#fff" },
+    "&:hover fieldset": {
+      borderColor: "#fff",
+    },
+  },
+  "& .MuiFormHelperText-root": {
+    border: "none",
+    marginLeft: "0rem",
+  },
+  "& .Mui-focused": {
+    boxShadow: "0 0 0 1px #c3bebe",
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+  },
+  "@media (min-width: 1024px)": {
+    width: "100%",
+  },
+}));
 
 export function DatePickerPublic({ label, TextFieldProps }) {
   return (
@@ -323,6 +362,40 @@ export function VendorFutureDatePicker({
         slots={{
           textField: (params) => (
             <VendorInput
+              variant="outlined"
+              {...params}
+              error={Boolean(dateError)}
+              helperText={dateError}
+            />
+          ),
+        }}
+      />
+    </LocalizationProvider>
+  );
+}
+// PP - Message
+export function PublicProfileDate({
+  name,
+  label,
+  dateError,
+  handleDateChange,
+  checkboxChecked,
+  value,
+}) {
+  const dateValue = typeof value === "string" ? parseISO(value) : value;
+  return (
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <DatePickerStype
+        value={dateValue}
+        name={name}
+        format="dd/MM/yyyy"
+        onChange={(date) => handleDateChange(name, date)}
+        // disabled="true"
+        disablePast
+        disabled={checkboxChecked}
+        slots={{
+          textField: (params) => (
+            <PublicMessageInput
               variant="outlined"
               {...params}
               error={Boolean(dateError)}

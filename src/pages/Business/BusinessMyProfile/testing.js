@@ -47,30 +47,9 @@
 //   },
 // };
 
-// const dynamicFields = [
-//   {
-//     id: "first_category_val",
-//     label: "First Category",
-//   },
-//   {
-//     id: "other_category",
-//     label: "Other Category",
-//     subFields: [
-//       {
-//         id: "label",
-//         label: "Label",
-//       },
-//       // Add more subfields as needed
-//     ],
-//   },
-//   {
-//     id: "Wedding_Venues",
-//     label: "Wedding Venues",
-//   },
-//   // Add more dynamic fields as needed
-// ];
-
 // const Profile = ({ preview }) => {
+//   const [viewProfile, setViewProfile] = useState("");
+
 //   const [previewListing, setPreviewListing] = useState("");
 //   const [vendorinputs, setVendorInputs] = useState("");
 //   const vendorID = vendorinputs.vid;
@@ -94,10 +73,11 @@
 //   // Owner and Team
 //   const [ownerText, setOWnerText] = useState("");
 //   const [ownerContent, setOwnerContent] = useState("");
+//   const [defaultContent, setDefaultcontent] = useState("");
 //   const [ownerRadioOption, setOwnerRadioOption] = useState(1);
 //   const [croppedImage, setCroppedImage] = useState("");
 //   const [imageTypes, setImageTypes] = useState({});
-//   const [viewProfile, setViewProfile] = useState("");
+//   const [ownerImage, setOwnerImage] = useState(viewProfile.teamownerpic || "");
 //   // Packages
 //   const [pfile, setPfile] = useState();
 //   const [fileUploaded, setFileUploaded] = useState(false);
@@ -112,6 +92,10 @@
 //   const [questionDisplay, setQuestionDisplay] = useState([]);
 //   const [qwordCount, setQwordCount] = useState(0);
 //   const [qandaWordCountError, setqandaWordCountError] = useState(false);
+//   // const [inputsErrors, setInputsErrors] = useState({});
+//   const [questionRes, setQuestionRes] = useState({});
+//   const [deleteQA, setDeleteQA] = useState("");
+//   const [viewQandA, setViewQandA] = useState({});
 //   // Pricing
 //   const [pricingInputs, setPricingInputs] = useState({});
 //   const [pricingDisplayStates, setPricingDisplayStates] = useState({});
@@ -129,12 +113,6 @@
 //     setExpanded(isExpanded ? panel : false);
 //   };
 
-//   // viewprofile
-//   useEffect(() => {
-//     BusinessJS.viewProfileSettings(vendorID, setViewProfile);
-//     console.log("View profile:", viewProfile);
-//   }, [vendorID]);
-
 //   //preview listing
 //   useEffect(() => {
 //     const fetchData = async () => {
@@ -146,6 +124,23 @@
 //     };
 //     fetchData();
 //   }, [vendorID]);
+
+//   // viewprofile
+//   useEffect(() => {
+//     BusinessJS.viewProfileSettings(vendorID, setViewProfile);
+//     console.log("View profile:", viewProfile);
+//   }, [vendorID]);
+
+//   useEffect(() => {
+//     BusinessJS.viewVendorQandA(vendorID, setViewQandA);
+//   }, [vendorID]);
+//   console.log("View Qanda:", viewQandA);
+
+//   useEffect(() => {
+//     setOwnerImage(viewProfile.teamownerpic || "");
+//     setDefaultcontent(viewProfile.team_owner_details);
+//   }, [viewProfile]);
+//   console.log("Team owner detail:", viewProfile.team_owner_details);
 
 //   const handleQuickTexChange = (e) => {
 //     const inputText = e.target.value;
@@ -319,7 +314,10 @@
 //   const deletePackage = async () => {
 //     await BusinessJS.V_deeletePackages(vendorID, setDelPackages);
 //     console.log("Delete package:", deletePackage);
+//     setFileUploaded(false);
+//     setUploadedFileName("");
 //   };
+//   //*****Q and A ***********/
 //   //*****Q and A ***********/
 //   const handleQandAWordCount = (text) => {
 //     const words = text.trim().split(/\s+/);
@@ -345,22 +343,46 @@
 //     setQuestions(updatedQuestions);
 //     // onQandAType(e.target.value);
 //   };
-
+//   // DELETE Q AND A
 //   const handleRemoveQuestion = (questionId) => {
 //     const updatedQuestions = questions.filter((q) => q.id !== questionId);
 //     setQuestions(updatedQuestions);
+//     handleRemoveQuestionFunction(questionId);
+//   };
+//   //
+//   const handleRemoveQuestionFunction = (qid) => {
+//     const updatedQuestions = questions.filter((q) => q.id !== qid);
+//     setQuestions(updatedQuestions);
+//     const formValues = updatedQuestions.map((question) => {
+//       return {
+//         qid: question.id,
+//         vid: vendorID,
+//         question: question.question,
+//         answer: question.answer,
+//       };
+//     });
+//     const formattedQuestions = formValues
+//       .map(
+//         (question) =>
+//           `${question.qid}: ${question.question}\n${question.qid}: ${question.answer}`
+//       )
+//       .join("\n\n");
+//     setQuestionDisplay([formattedQuestions]);
+//     BusinessJS.V_deeleteQA(vendorID, qid, setDeleteQA);
 //   };
 
 //   const handleAnswerChange = (e, questionId) => {
+//     e.preventDefault();
 //     const updatedQuestions = questions.map((q) =>
 //       q.id === questionId ? { ...q, answer: e.target.value } : q
 //     );
 //     setQuestions(updatedQuestions);
 //   };
 
-//   const handleQuestionSave = () => {
+//   const handleQuestionSubmit = async () => {
 //     setExpanded(false);
 //     setSaveClicked(true);
+
 //     // Check if any question or answer is not blank
 //     const hasNonBlankQandA = questions.some(
 //       (question) =>
@@ -369,18 +391,36 @@
 
 //     if (hasNonBlankQandA) {
 //       // Build the formatted questionDisplay content
-//       const formattedQuestions = questions.map((question) => {
-//         return `Q${question.id}:${question.question}\n A${question.id}:${question.answer}`;
+//       const formValues = questions.map((question) => {
+//         return {
+//           qid: question.id,
+//           vid: vendorID,
+//           question: question.question,
+//           answer: question.answer,
+//         };
 //       });
-//       // Join the formatted questions and answers with line breaks
-//       const newQuestionDisplay = formattedQuestions.join("\n\n");
-//       setQuestionDisplay([newQuestionDisplay]);
-//       console.log("formValues:", {
-//         qanda: newQuestionDisplay,
-//       });
+//       BusinessJS.updateQandAProfile(
+//         formValues,
+//         vendorID,
+//         7,
+//         setInputsErrors,
+//         setQuestionRes
+//       );
+//       // Format to Display in the Accordion Summary
+//       const formattedQuestions = formValues
+//         .map(
+//           (question) =>
+//             `${question.qid}: ${question.question}\n${question.qid}: ${question.answer}`
+//         )
+//         .join("\n\n");
+
+//       setQuestionDisplay([formattedQuestions]);
+//       // console.log("Display question :", {
+//       //   formValues,
+//       // });
 //     }
 //   };
-//   /*****Pricing  ***********/
+
 //   /*****Pricing  ***********/
 //   // Handle pricing input change
 //   const handlePricingInputChange = (categoryID, value) => {
@@ -490,7 +530,7 @@
 //       {/* <pre>{JSON.stringify(previewListing, null, 2)}</pre> */}
 
 //       {/* PROFILE BASICS */}
-//       <div>
+//       <div className="grid grid-cols-1" style={{ justifyItems: "end" }}>
 //         <div className="preview-listing-div">
 //           <h4 className="font-bold">Preview Listing</h4>
 //         </div>
@@ -500,7 +540,7 @@
 //       <>
 //         <h2 className="profile-listing-header">Profile Basics</h2>
 //       </>
-
+//       <br />
 //       <div>
 //         <div className="grid grid-cols-1">
 //           {/* QUICK DESCRPTION */}
@@ -802,166 +842,195 @@
 //           </div>
 //           {/* TEAM AND OWNER DETAILS*/}
 //           <div>
-//             <StyledAccordion
-//               expanded={expanded === "panel3"}
-//               onChange={(e, isExpanded) => handleChange(isExpanded, "panel3")}
-//             >
-//               <AccordionSummary
-//                 style={{
-//                   paddingLeft:
-//                     expanded === "panel3"
-//                       ? isScreenSizeAbove1250px
-//                         ? "2rem"
-//                         : "1rem"
-//                       : "0",
-//                 }}
-//                 id="panel3-header"
-//                 aria-controls="panel3-content"
-//                 expandIcon={
-//                   <Typography
-//                     sx={{
+//             {viewProfile ? (
+//               <StyledAccordion
+//                 expanded={expanded === "panel3"}
+//                 onChange={(e, isExpanded) => handleChange(isExpanded, "panel3")}
+//               >
+//                 <AccordionSummary
+//                   style={{
+//                     paddingLeft:
+//                       expanded === "panel3"
+//                         ? isScreenSizeAbove1250px
+//                           ? "2rem"
+//                           : "1rem"
+//                         : "0",
+//                   }}
+//                   id="panel3-header"
+//                   aria-controls="panel3-content"
+//                   expandIcon={
+//                     <Typography
+//                       sx={{
+//                         color: "black",
+//                         fontFamily: "inherit",
+//                         fontSize: "14px",
+//                         fontWeight: "600",
+//                       }}
+//                     >
+//                       {expanded === "panel3" ? (
+//                         <RxTriangleUp size={30} color="#6cc2bc" />
+//                       ) : (
+//                         "Edit"
+//                       )}
+//                     </Typography>
+//                   }
+//                   sx={{
+//                     "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+//                       transform: "rotate(0deg)",
 //                       color: "black",
-//                       fontFamily: "inherit",
-//                       fontSize: "14px",
-//                       fontWeight: "600",
-//                     }}
-//                   >
-//                     {expanded === "panel3" ? (
-//                       <RxTriangleUp size={30} color="#6cc2bc" />
+//                     },
+//                   }}
+//                 >
+//                   <div>
+//                     <h4
+//                       style={{
+//                         fontWeight: expanded === "panel3" ? "bold" : "normal",
+//                       }}
+//                     >
+//                       Meet the Owner/Team
+//                     </h4>
+
+//                     {saveClicked && defaultContent && !expanded === "panel3" ? (
+//                       <>
+//                         <p className="myprofile-accordion-subheading">
+//                           {ownerContent}
+//                         </p>
+//                         <p className="myprofile-accordion-subheading">
+//                           Type:{" "}
+//                           {ownerRadioOption === 1 || viewProfile.team_type === 1
+//                             ? "The Owner"
+//                             : ownerRadioOption === 2 ||
+//                               viewProfile.team_type === 2
+//                             ? "The Team"
+//                             : "Other Type"}
+//                         </p>
+//                       </>
 //                     ) : (
-//                       "Edit"
-//                     )}
-//                   </Typography>
-//                 }
-//                 sx={{
-//                   "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-//                     transform: "rotate(0deg)",
-//                     color: "black",
-//                   },
-//                 }}
-//               >
-//                 <div>
-//                   <h4
-//                     style={{
-//                       fontWeight: expanded === "panel3" ? "bold" : "normal",
-//                     }}
-//                   >
-//                     Meet the Owner/Team
-//                   </h4>
-
-//                   {saveClicked && !expanded ? (
-//                     <>
 //                       <p className="myprofile-accordion-subheading">
-//                         {ownerContent}
-//                       </p>
-//                       <p className="myprofile-accordion-subheading">
-//                         Type:{" "}
-//                         {ownerRadioOption === 1
-//                           ? "The Owner"
-//                           : ownerRadioOption === 2
-//                           ? "The Team"
-//                           : "Other Type"}
-//                       </p>
-//                     </>
-//                   ) : (
-//                     <p className="myprofile-accordion-subheading">
-//                       Add a personal touch by letting couples get to know you,
-//                       add a photo, and let us know if you are a team or owner.
-//                     </p>
-//                   )}
-//                 </div>
-//               </AccordionSummary>
-//               <AccordionDetails
-//                 style={{
-//                   paddingLeft:
-//                     expanded === "panel3"
-//                       ? isScreenSizeAbove1250px
-//                         ? "2rem"
-//                         : "1rem"
-//                       : "0",
-//                 }}
-//               >
-//                 <div>
-//                   <div className="myprofile-accordion-item-header">
-//                     {/* <span className="myprofile-edit-button">Edit</span> */}
-//                   </div>
-//                   <div className="mt-[0px]">
-//                     <div className="profile-editor-position">
-//                       <textarea
-//                         name="owner-desc"
-//                         id="text-area"
-//                         value={ownerText}
-//                         onChange={handleOwnerTextChange}
-//                         className="myprofile-textarea-style"
-//                       />
-
-//                       <span className="text-[12px] mt-[5px]">
-//                         {wordCount >= 100 ? (
-//                           <p className="text-red-500 text-[12px] mt-2">
-//                             Limit exceeded (100 words maximum)
-//                           </p>
+//                         {expanded === "panel3" ? (
+//                           "Add a personal touch by letting couples get to know you, add a photo, and let us know if you are a team or owner."
 //                         ) : (
-//                           `${wordCount}/100`
+//                           <>
+//                             Type:{" "}
+//                             {ownerRadioOption === 1 ||
+//                             (viewProfile && viewProfile.team_type === 1)
+//                               ? "The Owner"
+//                               : ownerRadioOption === 2 ||
+//                                 (viewProfile && viewProfile.team_type === 2)
+//                               ? "The Team"
+//                               : "Other Type"}
+//                             <br />
+//                             <br />
+//                             {defaultContent}
+//                           </>
 //                         )}
-//                       </span>
-//                       <div className="myprofile-radio-group">
-//                         <div className="owner-radio-inputs mt-[15px] space-y-3 ">
-//                           <h4 className="text-[#222222] font-semibold">
-//                             Who are we getting to know?
-//                           </h4>
+//                       </p>
+//                     )}
+//                   </div>
+//                 </AccordionSummary>
+//                 <AccordionDetails
+//                   style={{
+//                     paddingLeft:
+//                       expanded === "panel3"
+//                         ? isScreenSizeAbove1250px
+//                           ? "2rem"
+//                           : "1rem"
+//                         : "0",
+//                   }}
+//                 >
+//                   <div>
+//                     <div className="myprofile-accordion-item-header">
+//                       {/* <span className="myprofile-edit-button">Edit</span> */}
+//                     </div>
+//                     <div className="mt-[0px]">
+//                       <div className="profile-editor-position">
+//                         <textarea
+//                           name="owner-desc"
+//                           id="text-area"
+//                           value={ownerText || viewProfile.team_owner_details}
+//                           onChange={handleOwnerTextChange}
+//                           className="myprofile-textarea-style"
+//                         />
 
-//                           <div className="flex items-center ">
-//                             <label className="space-x-2 flex items-center">
-//                               <input
-//                                 type="radio"
-//                                 value="The Owner"
-//                                 checked={ownerRadioOption === 1}
-//                                 onChange={() => handleOwnerRadioChange(1)}
-//                               />
-//                               <span className="font-semibold">The Owner</span>
-//                             </label>
+//                         <span className="text-[12px] mt-[5px]">
+//                           {wordCount >= 100 ? (
+//                             <p className="text-red-500 text-[12px] mt-2">
+//                               Limit exceeded (100 words maximum)
+//                             </p>
+//                           ) : (
+//                             `${wordCount}/100`
+//                           )}
+//                         </span>
+//                         <div className="myprofile-radio-group">
+//                           <div className="owner-radio-inputs mt-[15px] space-y-3 ">
+//                             <h4 className="text-[#222222] font-semibold">
+//                               Who are we getting to know?
+//                             </h4>
+
+//                             <div className="flex items-center ">
+//                               <label className="space-x-2 flex items-center">
+//                                 <input
+//                                   type="radio"
+//                                   value="The Owner"
+//                                   checked={ownerRadioOption === 1}
+//                                   onChange={() => handleOwnerRadioChange(1)}
+//                                 />
+//                                 <span className="font-semibold">The Owner</span>
+//                               </label>
+//                             </div>
+
+//                             <div>
+//                               <label className="space-x-2 flex items-center">
+//                                 <input
+//                                   type="radio"
+//                                   value="The Team"
+//                                   checked={ownerRadioOption === 2}
+//                                   onChange={() => handleOwnerRadioChange(2)}
+//                                 />
+//                                 <span className="font-semibold">The Team</span>
+//                               </label>
+//                             </div>
 //                           </div>
-
-//                           <div>
-//                             <label className="space-x-2 flex items-center">
-//                               <input
-//                                 type="radio"
-//                                 value="The Team"
-//                                 checked={ownerRadioOption === 2}
-//                                 onChange={() => handleOwnerRadioChange(2)}
-//                               />
-//                               <span className="font-semibold">The Team</span>
-//                             </label>
+//                           <div className="mb-[2rem]">
+//                             <Cropper
+//                               onImageCrop={handleImageCrop}
+//                               onChangeCrop={handleImageChange}
+//                               defaultImage={ownerImage}
+//                             />
 //                           </div>
 //                         </div>
-//                         <div className="mb-[2rem]">
-//                           <Cropper
-//                             onImageCrop={handleImageCrop}
-//                             onChangeCrop={handleImageChange}
-//                           />
-//                         </div>
-//                       </div>
 
-//                       {/* Submit and CAncel buttons */}
-//                       <div className="myprofile-button-group-2 ">
-//                         <button
-//                           className="myprofile-cancel-button"
-//                           onClick={handleCancel}
-//                         >
-//                           Cancel
-//                         </button>
-//                         <button
-//                           className="myprofile-save-button"
-//                           onClick={handleOwnerSubmit}
-//                         >
-//                           Save
-//                         </button>
+//                         {/* Submit and CAncel buttons */}
+//                         <div className="myprofile-button-group-2 ">
+//                           <button
+//                             className="myprofile-cancel-button"
+//                             onClick={handleCancel}
+//                           >
+//                             Cancel
+//                           </button>
+//                           <button
+//                             className="myprofile-save-button"
+//                             onClick={handleOwnerSubmit}
+//                           >
+//                             Save
+//                           </button>
+//                         </div>
 //                       </div>
 //                     </div>
 //                   </div>
+//                 </AccordionDetails>
+//               </StyledAccordion>
+//             ) : (
+//               skeletonLines.map((line, index) => (
+//                 <div key={index}>
+//                   <Skeleton
+//                     variant={line.variant}
+//                     sx={{ width: line.width, height: line.height }}
+//                   />
+//                   <br />
 //                 </div>
-//               </AccordionDetails>
-//             </StyledAccordion>
+//               ))
+//             )}
 //           </div>
 
 //           {/* PHOTO GALLERY */}
@@ -1490,11 +1559,12 @@
 //             >
 //               <div>
 //                 <h4 className="profile-listing-header">Q&A</h4>
-//                 {saveClicked && questionDisplay.length > 0 && !expanded ? (
-//                   <p className="whitespace-break-spaces mt-[10px]">
+//                 {saveClicked && questionDisplay && !expanded ? (
+//                   <div className="whitespace-break-spaces mt-[10px]">
 //                     {questionDisplay}
-//                   </p>
-//                 ) : expanded || questionDisplay.length > 0 ? null : (
+//                   </div>
+//                 ) : expanded ||
+//                   (questionDisplay && questionDisplay.length > 0) ? null : (
 //                   <p className="myprofile-accordion-subheading">
 //                     Add the most common Q&A your business is asked, this helps
 //                     couples get to know you further.
@@ -1574,7 +1644,7 @@
 //                       </button>
 //                       <button
 //                         className="myprofile-save-button"
-//                         onClick={handleQuestionSave}
+//                         onClick={handleQuestionSubmit}
 //                       >
 //                         Save
 //                       </button>
@@ -1630,11 +1700,18 @@
 
 //                     <div className="myprofile-accordion-subheading-pricing">
 //                       <>
-//                         {" "}
+//                         {packagesText || (
+//                           <>
+//                             {viewProfile.packageFile
+//                               ? "Package Updated: Yes"
+//                               : "Package Updated: No"}
+//                           </>
+//                         )}
+//                         {/* {" "}
 //                         {viewProfile.package_file ||
 //                         (uploadedFileName && saveClicked)
 //                           ? "Package Updated: Yes"
-//                           : "Package Updated: No"}
+//                           : "Package Updated: No"} */}
 //                       </>
 
 //                       <br />
@@ -1666,25 +1743,23 @@
 //                       <br />
 
 //                       <div className="flex justify-start items-center gap-[1rem]">
-//                         <label
-//                           htmlFor="upload-files"
-//                           className="text-[14px] cursor-pointer"
-//                         >
-//                           {uploadedFileName
-//                             ? `File Uploaded: ${uploadedFileName}`
-//                             : viewProfile.package_file}
-//                         </label>
-//                         {(viewProfile.package_file ||
-//                           (uploadedFileName && saveClicked)) && (
-//                           <>
-//                             <NavLink to={viewFile.packageFile} title="View">
-//                               <HiOutlineViewfinderCircle size={24} />
-//                             </NavLink>
-//                             <button title="Delete" onClick={deletePackage}>
-//                               <MdDelete size={24} />
-//                             </button>
-//                           </>
-//                         )}
+//                         {viewProfile.package_file ||
+//                           (uploadedFileName && (
+//                             <>
+//                               <label
+//                                 htmlFor="upload-files"
+//                                 className="text-[14px] cursor-pointer"
+//                               >
+//                                 File Uploaded: {uploadedFileName}
+//                               </label>
+//                               <NavLink to={viewFile.packageFile} title="View">
+//                                 <HiOutlineViewfinderCircle size={24} />
+//                               </NavLink>
+//                               <button title="Delete" onClick={deletePackage}>
+//                                 <MdDelete size={24} />
+//                               </button>
+//                             </>
+//                           ))}
 //                       </div>
 
 //                       <div className="myprofile-button-group relative">

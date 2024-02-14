@@ -1450,6 +1450,7 @@ export const PaymentInput = styled(TextField)(({ theme }) => ({
   },
 }));
 
+
 export const CheckBoxStyle2 = styled(Checkbox)({
   "& .MuiSvgIcon-root": {
     fontSize: "24px",
