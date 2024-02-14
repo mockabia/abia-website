@@ -1,9 +1,10 @@
-import * as apiService from "../../api/apiServices";
-import * as apiUrls from "../../api/apiUrls";
+import * as apiService from "../api/apiServices";
+import * as apiUrls from "../api/apiUrls";
 
-export const MAIN_API = apiUrls.COUPLE_API;
+export const MAIN_API       = apiUrls.COUPLE_API;
+export const CONTENTS_API   = apiUrls.CONTENT_API;
 
-export async function login(postData) {
+export async function coupleLogin(postData) {
   return await apiService.apiCall(MAIN_API["LOGIN"], "POST", postData);
 }
 export async function coupleSignup(postData) {
@@ -31,6 +32,10 @@ export async function marketCategory(postData) {
 // STATE + REGION
 export async function stateRegionDropdwon(state) {
   return await apiService.apiCall(apiUrls.REGIONS_BY_STATE  +'/'+ state, "GET");
+}
+
+export async function fetchBridePage(url) {
+  return await apiService.apiCall(CONTENTS_API["LOGIN_MENU_DETAILS"] + "/wedding/" + url, "GET");
 }
 
 

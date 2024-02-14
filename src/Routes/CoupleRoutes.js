@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import loadable from "@loadable/component";
 import LayoutCouple from "../layouts/Layout/LayoutCouple";
-import LayoutGeneral from "../layouts/Layout/LayoutGeneral";
 
 import * as RoutesJS from "./RoutesJS";
 
@@ -11,7 +10,7 @@ const CoupleRoutes = (props) => {
   const [loginMenu, setLoginMenu]     = useState([]);
   const [loginedMenu, setLoginedMenu] = useState([]);
 
-  const LoadablePage = loadable((props) =>
+  const LoadablePage = loadable((props) => 
     import(`../pages/Couple/${props.page}`)
   );
 
@@ -20,8 +19,9 @@ const CoupleRoutes = (props) => {
       props.menu.map(function (MainMenu, i) {
         if (MainMenu.Sub_content.length <= 0) {
           let newArray1 = [];
-          newArray1['url'] = MainMenu.url;
+          newArray1['url']      = MainMenu.url;
           newArray1['pagename'] = MainMenu.pagename;
+          newArray1['title']    = MainMenu.title;
           if (MainMenu.id == '1') {
             setLoginMenu(oldArray => [...oldArray, newArray1]);
           } else {
@@ -30,8 +30,9 @@ const CoupleRoutes = (props) => {
         } else {
           MainMenu.Sub_content.map(function (SubMenu, i) {
             let newArray1 = [];
-            newArray1['url'] = SubMenu.url;
+            newArray1['url']      = SubMenu.url;
             newArray1['pagename'] = SubMenu.pagename;
+            newArray1['title']    = SubMenu.title;
             if (MainMenu.id == '1') {
               setLoginMenu(oldArray => [...oldArray, newArray1]);
             } else {
@@ -48,31 +49,30 @@ const CoupleRoutes = (props) => {
       {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(routeMenu, null, 2)}</pre>  */}
       {!RoutesJS.hasCoupleJWT() ? (
       <>
-        <LayoutGeneral {...props}>
           <Routes>
             {loginMenu.map((routeMenus, i) => (
               <Route
                 path={`/${routeMenus.url}`}
-                element={<LoadablePage page={routeMenus.pagename} {...props} />}
+                element={<LoadablePage page={routeMenus.pagename} {...props} pageData={routeMenus} />}
               />
-
             ))}
           </Routes>
-        </LayoutGeneral>
       </>
       ) : (
       <>
-        <LayoutCouple {...props}>
           <Routes>
             {loginedMenu.map((routeMenus, i) => (
               <Route
                 path={`/${routeMenus.url}`}
-                element={<LoadablePage page={routeMenus.pagename} {...props} />}
+                element={
+                  <LayoutCouple {...props} title={routeMenus.title}>
+                    <LoadablePage page={routeMenus.pagename} {...props} pageData={routeMenus}/>
+                  </LayoutCouple>
+                  }
               />
 
             ))}
           </Routes>
-        </LayoutCouple>
       </>
       )}
     </>

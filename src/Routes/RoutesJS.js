@@ -22,9 +22,7 @@ export const fetchBlogRoutes = async (setBlogMenu) => {
 export const fetchBusinessRoutes = async (setBusinessMenu, setShowLoader) => {
   await servicesPage.fetchBusinessRoutes().then(function (response) {
     if (response.statuscode == 200) {
-      //alert();console.log(response.result)
       setBusinessMenu(response.result);
-      console.log("Business menus :", response.result);
       const loginMenu = response.result.filter((menus) => {
         return menus.id == "1";
       });
@@ -101,7 +99,7 @@ export const fetchCoupleRoutes = async (setCoupleMenu, setShowLoader) => {
         return menus.id == "1";
       });
       const dashboardMenu = response.result.filter((menus) => {
-        return menus.id == "4";
+        return menus.id == "2";
       });
       let signup = loginMenu[0].Sub_content.filter((subs) => {
         return subs.id == "1";
@@ -109,13 +107,14 @@ export const fetchCoupleRoutes = async (setCoupleMenu, setShowLoader) => {
       let login = loginMenu[0].Sub_content.filter((subs) => {
         return subs.id == "2";
       });
+      let thankyou = loginMenu[0].Sub_content.filter((subs) => {
+        return subs.id == "6";
+      });
       
       const associateMenu = response.result.filter((menus) => {
         return menus.id == "3";
       });
-      let thankyou = associateMenu[0].Sub_content.filter((subs) => {
-        return subs.id == "5";
-      });
+
       
       window.CSIGNUP = process.env.REACT_APP_COUPLE_URL + "/" + signup[0].url;
       window.CLOGIN = process.env.REACT_APP_COUPLE_URL + "/" + login[0].url;

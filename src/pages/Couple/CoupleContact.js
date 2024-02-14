@@ -11,8 +11,8 @@ import "../Style/CoupleProfile.css";
 import { Link } from "react-router-dom";
 import { AiFillWarning } from "react-icons/ai";
 
-const CoupleContact = () => {
-  const title = "Account Settings";
+const CoupleContact = (props) => {
+
   const [formValues, setFormValues] = useState({
     bride: "",
     groom: "",
@@ -82,7 +82,6 @@ const CoupleContact = () => {
   };
 
   return (
-    <LayoutCouple title={title}>
       <section>
         <div className="couple-contact-container">
           <Box
@@ -108,7 +107,7 @@ const CoupleContact = () => {
               }}
               spacing={2}
             >
-              <h2>Contact Details</h2>
+              <h2>{props.pageData.title}</h2>
               {/* FULL NAME */}
               <Box sx={MuiBoxStyles}>
                 <label className="mb-[5px]">
@@ -189,7 +188,6 @@ const CoupleContact = () => {
           </Box>
         </div>
       </section>
-    </LayoutCouple>
   );
 };
 

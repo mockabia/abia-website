@@ -72,12 +72,12 @@ const App = () => {
             />
           }
         />
-        <Route path="/wedding/dashboard" element={<CoupleProfile />} />
+        {/* <Route path="/wedding/dashboard" element={<CoupleProfile />} />
         <Route path="/wedding/contact-details" element={<CoupleContact />} />
         <Route path="/wedding/details" element={<CoupleWeddingDetails />} />
         <Route path="/wedding/settings" element={<CoupleAccountSetting />} />
         <Route path="/wedding/wedding-budget" element={<CoupleCatBudget />} />
-        <Route path="/wedding/enquiry" element={<CoupleEnquiry />} />
+        <Route path="/wedding/enquiry" element={<CoupleEnquiry />} /> */}
         {/* test */}
         <Route path="/fonts" element={<BlogFonts />} />
         {/* Partnership */}

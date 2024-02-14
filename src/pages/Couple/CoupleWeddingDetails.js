@@ -46,8 +46,8 @@ const customStyles = {
   }),
 };
 
-const CoupleWeddingDetails = () => {
-  const title = "Account Settings";
+const CoupleWeddingDetails = (props) => {
+
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 550);
   const [formValues, setFormValues] = useState({
     wedding_date: null,
@@ -163,7 +163,6 @@ const CoupleWeddingDetails = () => {
   };
 
   return (
-    <LayoutCouple title={title}>
       <section>
         <div className="couple-contact-container">
           <Box
@@ -191,7 +190,7 @@ const CoupleWeddingDetails = () => {
               }}
               spacing={2}
             >
-              <h2>Wedding Details</h2>
+              <h2>{props.pageData.title}</h2>
               <Stack
                 direction={isMobile ? "column" : "row"}
                 spacing={
@@ -509,7 +508,6 @@ const CoupleWeddingDetails = () => {
           </Box>
         </div>
       </section>
-    </LayoutCouple>
   );
 };
 

@@ -71,7 +71,6 @@ export default function CouplesSignUp() {
   const [marketingOptions, setMarketingOptions] = React.useState([]);
   const [marketingSelect, setMarketingSelect]   = React.useState([]);
 
-  console.log(marketingSelect);
 
   useEffect(() => {
     CoupleJS.fetchState(setLocation);
@@ -130,42 +129,6 @@ export default function CouplesSignUp() {
     window.history.back();
   };
 
-  const validateForm = () => {
-    const errors = {};
-    if (activeStep === 0) {
-      if (!formValues.bride_message) {
-        errors.bride_message = "Please Select an Option";
-      }
-    } else if (activeStep === 1) {
-      if (!formValues.bride) {
-        errors.bride = "Full Name is required";
-      }
-      if (!formValues.groom) {
-        errors.groom = "Partner's Name is required";
-      }
-      if ((formValues.decision == false || formValues.decision == undefined) && !formValues.wedding_date) {
-        errors.wedding_date = "Date is required";
-      }
-      if (!formValues.wedding_state) {
-        errors.wedding_state = "State is required";
-      }
-      // Add more validation rules as needed
-    } else if (activeStep === 2) {
-      if (!formValues.email) {
-        // Validate Email
-        errors.email = "Email is required";
-      } else if (!/\S+@\S+\.\S+/.test(formValues.email)) {
-        errors.email = "Invalid Email";
-      }
-      // Validate Password
-      if (!formValues.password) {
-        errors.password = "Password is required";
-      } else if (formValues.password.length < 6) {
-        errors.password = "Minimum 6 characters";
-      }
-    }
-    return errors;
-  };
   useEffect(() => {
     setFormValues((values) => ({
       ...values,
@@ -185,21 +148,7 @@ export default function CouplesSignUp() {
   };
 
   const handleFormNext = () => {
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length === 0) {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      if(activeStep==3){handleFormSubmit()}
-    } else {
-      setErrors(validationErrors);
-    }
-  };
-  const handleFormSubmit = () => {
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length === 0) {
-      CoupleJS.coupleSignup(formValues, setErrors,navigate)
-    } else {
-      setErrors(validationErrors);
-    }
+    CoupleJS.coupleSignup(activeStep,setActiveStep,formValues, setErrors,navigate)
   };
 
   return (
@@ -220,7 +169,6 @@ export default function CouplesSignUp() {
               sx={{ width: "100%" }}
               className="cs-signup-form"
             >
-              activeStep=={activeStep}
               <StepperStyle activeStep={activeStep}>
                 {steps.map((label, index) => {
                   const stepProps = {};
