@@ -25,7 +25,6 @@ export const fetchbusiness = async (setInputs, setpreviewSet) => {
   await servicesPage.editData(userId).then(function (response) {
     if (response.statuscode == 200) {
       setInputs(response.result);
-
       setpreviewSet(true);
     }
   });

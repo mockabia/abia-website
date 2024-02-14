@@ -121,7 +121,7 @@ const Reviews = () => {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
       setFormValues((updatedFormValues) => {
-        console.log("Current form values:", { formValues: updatedFormValues });
+        // console.log("Current form values:", { formValues: updatedFormValues });
         return updatedFormValues;
       });
     } else {

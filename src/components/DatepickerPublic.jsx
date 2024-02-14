@@ -8,6 +8,7 @@ import {
   SelectTextField,
 } from "../components/FormStyle";
 import { TextField, Typography, styled } from "@mui/material";
+import { parseISO } from "date-fns";
 
 const DatePickerStype = styled(MobileDatePicker)(({ theme }) => ({
   "& .MuiSvgIcon-root": {
@@ -113,9 +114,11 @@ export const VendorInput = styled(TextField)(({ theme }) => ({
     borderRadius: "10px",
     fontFamily: "Raleway",
     fontSize: "14px",
+    fontWeight: "600",
     width: "100%",
     maxWidth: "100%",
-    "& > fieldset": { borderColor: "#c3bebe", backgroundColor: "#fafafa" },
+    backgroundColor: "#fafafa",
+    "& > fieldset": { borderColor: "#c3bebe" },
     "&:hover fieldset": {
       borderColor: "#c3bebe",
     },
@@ -273,16 +276,49 @@ export function VendorDatePicker({
   checkboxChecked,
   value,
 }) {
+  const dateValue = typeof value === "string" ? parseISO(value) : value;
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePickerStype
-        value={value}
+        value={dateValue}
         name={name}
         format="dd/MM/yyyy"
-        // label={label}
         onChange={(date) => handleDateChange(name, date)}
         // disabled="true"
         disableFuture
+        disabled={checkboxChecked}
+        slots={{
+          textField: (params) => (
+            <VendorInput
+              variant="outlined"
+              {...params}
+              error={Boolean(dateError)}
+              helperText={dateError}
+            />
+          ),
+        }}
+      />
+    </LocalizationProvider>
+  );
+}
+export function VendorFutureDatePicker({
+  name,
+  label,
+  dateError,
+  handleDateChange,
+  checkboxChecked,
+  value,
+}) {
+  const dateValue = typeof value === "string" ? parseISO(value) : value;
+  return (
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <DatePickerStype
+        value={dateValue}
+        name={name}
+        format="dd/MM/yyyy"
+        onChange={(date) => handleDateChange(name, date)}
+        // disabled="true"
+        disablePast
         disabled={checkboxChecked}
         slots={{
           textField: (params) => (
