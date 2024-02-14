@@ -153,7 +153,7 @@ const CoupleEnquiry = () => {
   ];
 
   return (
-    <LayoutCouple title={title}>
+    <>
         {/* main menu */}
         <div className="main-menu-section  ">
           <ul className="enquiry-page-header ">
@@ -504,7 +504,7 @@ const CoupleEnquiry = () => {
           )}
           {activeTab === "Archive" && <div>Archive Content</div>}
         </main>
-    </LayoutCouple>
+    </>
   );
 };
 

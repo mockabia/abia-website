@@ -3,8 +3,7 @@ import LayoutCouple from "../../layouts/Layout/LayoutCouple";
 import { Box, Stack, useMediaQuery } from "@mui/material";
 import { CSTextfield, CoupleInput } from "../../components/FormStyle";
 
-const CoupleAccountSetting = () => {
-  const title = "Account Settings";
+const CoupleAccountSetting = (props) => {
 
   const [formValues, setFormValues] = useState({
     password: "",
@@ -48,7 +47,6 @@ const CoupleAccountSetting = () => {
     }
   };
   return (
-    <LayoutCouple title={title}>
       <section>
         <div className="couple-contact-container">
           <Box
@@ -72,7 +70,7 @@ const CoupleAccountSetting = () => {
               }}
               spacing={2}
             >
-              <h2>Account settings</h2>
+              <h2>{props.pageData.title}</h2>
               {/* FULL NAME */}
               <Stack spacing={3}>
                 <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -140,7 +138,6 @@ const CoupleAccountSetting = () => {
           </Box>
         </div>
       </section>
-    </LayoutCouple>
   );
 };
 

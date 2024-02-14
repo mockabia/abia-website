@@ -14,13 +14,14 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { useState } from "react";
 import CoupleForgotPwd from "./CoupleForgotPwd";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { useNavigate,Link } from "react-router-dom";
+import * as CoupleJS from "../Couple/Couple";
 
 const CouplesLogin = ({ handleClosePage }) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [formValues, setFormValues] = useState({ email: "", password: "" });
-  const [errors, setErrors] = React.useState({});
+  let navigate                                      = useNavigate();
+  const [showPassword, setShowPassword]             = useState(false);
+  const [formValues, setFormValues]                 = useState({ email: "", password: "" });
+  const [errors, setErrors]                         = React.useState({});
   const [showVisibilityIcon, setShowVisibilityIcon] = useState(false);
 
   const togglePasswordVisibility = (e) => {
@@ -33,42 +34,16 @@ const CouplesLogin = ({ handleClosePage }) => {
     }
   };
 
-  const validateForm = () => {
-    const errors = {};
-
-    if (!formValues.email) {
-      // Validate Email
-      errors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formValues.email)) {
-      errors.email = "Invalid Email";
-    }
-    // Validate Password
-    if (!formValues.password) {
-      errors.password = "Password is required";
-    } else if (formValues.password.length < 6) {
-      errors.password = "Minimum 6 characters";
-    }
-
-    return errors;
-  };
-
-  const handleInputChange = (fieldName, value) => {
-    setFormValues({ ...formValues, [fieldName]: value });
-    setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+  const handleInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
     setShowVisibilityIcon(true);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length === 0) {
-      setFormValues({ ...formValues });
-      console.log("Current form values:", {
-        formValues,
-      });
-    } else {
-      setErrors(validationErrors);
-    }
+    CoupleJS.coupleLogin(formValues, setErrors,navigate)
   };
 
   return (
@@ -92,8 +67,7 @@ const CouplesLogin = ({ handleClosePage }) => {
               variant="outlined"
               name="email"
               type="email"
-              onChange={(e) => handleInputChange("email", e.target.value)}
-              // error={errors.email}
+              onChange={handleInputChange}
             />
             {errors.email && <div className="error-text">{errors.email}</div>}
           </div>
@@ -106,7 +80,7 @@ const CouplesLogin = ({ handleClosePage }) => {
               name="password"
               type={showPassword ? "text" : "password"}
               // label="Password*"
-              onChange={(e) => handleInputChange("password", e.target.value)}
+              onChange={handleInputChange}
               InputProps={{
                 endAdornment: showVisibilityIcon && (
                   <IconButton onClick={togglePasswordVisibility}>
@@ -172,7 +146,7 @@ const CouplesLogin = ({ handleClosePage }) => {
           </div>
         </form>
       </Box>
-      //{" "}
+      {" "}
     </div>
   );
 };

@@ -134,7 +134,7 @@ const CoupleTopbar = (props) => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-
+  document.title = title;
   return (
     <div className="gap-[4px] md:gap-0 bg-[#6cc2bc] md:bg-[#fff]  h-[6rem] fixed top-0 left-0 right-0 z-40 border-b border-[#6cc2bc] flex items-center justify-between p-4">
       <div className="flex justify-center items-center gap-1">
