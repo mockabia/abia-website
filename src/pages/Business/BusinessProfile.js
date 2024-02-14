@@ -129,8 +129,7 @@ const Profile = ({ preview }) => {
   useEffect(() => {
     BusinessJS.viewProfileSettings(vendorID, setViewProfile);
   }, [vendorID]);
-    console.log("View profile:", viewProfile);
-
+  console.log("View profile:", viewProfile);
 
   const skeletonLines = [
     { variant: "text", height: "1rem" },
@@ -238,7 +237,22 @@ const Profile = ({ preview }) => {
     setSaveClicked(true);
     setExpanded(false);
 
-    console.log("Selected Inclusions:", selectedInclusions);
+    const inclusionFromValues = {
+      vid: vendorID,
+      inclusionValues: Object.values(selectedInclusions)
+        .map((data) => Object.keys(data.selectedValues))
+        .flat(),
+    };
+    BusinessJS.updateBusinessMyProfile(
+      inclusionFromValues,
+      vendorID,
+      8,
+      setInputsErrors,
+      setVendorInputs
+    );
+    console.log("Selected inclusion:", inclusionFromValues);
+
+    // The rest of your logic...
   };
 
   return (
@@ -363,7 +377,10 @@ const Profile = ({ preview }) => {
                 <div>
                   {viewProfile.Category &&
                     viewProfile.Category.map((item) => (
-                      <div className="mt-[0px]" key={item.Categoryid}>
+                      <div
+                        className="mt-[1rem] mb-[3rem]"
+                        key={item.Categoryid}
+                      >
                         <div>
                           <div className="pricing-category-label-section">
                             <span className="pricing-cate-label">
@@ -519,7 +536,6 @@ const Profile = ({ preview }) => {
                         </div>
                       </div>
                     ))}
-                  <br />
 
                   <div
                     className="flex justify-center"
