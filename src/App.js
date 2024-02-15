@@ -90,6 +90,8 @@ const App = () => {
         <Route path="/edit-subscrption" element={<EditSubscription />} />
         <Route path="/edit-payment" element={<EditPayment />} />
         <Route path="/partnerhsip-payment" element={<ExistingUserPayment />} />
+
+        
       </Routes>
     </>
   );
