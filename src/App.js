@@ -7,12 +7,12 @@ import Loader from "./plugins/Loader/Loader";
 import CoupleRoutes from "./Routes/CoupleRoutes";
 
 import * as RoutesJS from "./Routes/RoutesJS";
-import CoupleProfile from "./pages/Couple/CoupleProfile";
+/* import CoupleProfile from "./pages/Couple/CoupleProfile";
 import CoupleContact from "./pages/Couple/CoupleContact";
 import CoupleWeddingDetails from "./pages/Couple/CoupleWeddingDetails";
 import CoupleAccountSetting from "./pages/Couple/CoupleAccountSetting";
 import CoupleCatBudget from "./pages/Couple/CoupleCatBudget";
-import CoupleEnquiry from "./pages/Couple/CoupleEnquiry";
+import CoupleEnquiry from "./pages/Couple/CoupleEnquiry"; */
 import Partnership from "./pages/General/Partnership";
 import Reviews from "./pages/General/Reviews";
 import BlogFonts from "./pages/General/Blog-font/fonts";

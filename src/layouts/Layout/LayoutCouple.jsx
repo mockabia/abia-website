@@ -7,12 +7,11 @@ import CoupleMenuList from "../sidebar/CoupleMenuList";
 import BusinessMenu from "../sidebar/BusinessMenu";
 
 const LayoutCouple = (props) => {
-  const { title } = props;
 
   return (
     <div className="relative flex">
       <div className="flex flex-1">
-        <CoupleTopbar title={title} />
+        <CoupleTopbar {...props}/>
         <CoupleMenu />
         <main className="cRootLayout">
           <CoupleMenuList />
