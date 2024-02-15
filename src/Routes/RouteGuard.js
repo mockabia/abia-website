@@ -4,6 +4,9 @@ import { Navigate } from "react-router-dom";
 function hasJWT() {
   let flag = false;
   localStorage.getItem("vendorToken") ? (flag = true) : (flag = false);
+  if(flag==false){
+    localStorage.getItem("coupleToken") ? (flag = true) : (flag = false);
+  }
   return flag;
 }
 

@@ -1,18 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation,useNavigate } from "react-router-dom";
 import loadable from "@loadable/component";
 import LayoutCouple from "../layouts/Layout/LayoutCouple";
 
 import * as RoutesJS from "./RoutesJS";
 
 const CoupleRoutes = (props) => {
-  const location = useLocation();
+  const location                      = useLocation();
+  let navigate                        = useNavigate();
   const [loginMenu, setLoginMenu]     = useState([]);
   const [loginedMenu, setLoginedMenu] = useState([]);
+  const url                           = location.pathname.split("/").pop();
 
   const LoadablePage = loadable((props) => 
     import(`../pages/Couple/${props.page}`)
   );
+  useEffect(() => {
+    const isFoundInLoginmenu = loginMenu.some(element => {
+      if (element.url === url) {
+        return true;
+      }
+      return false;
+    });
+    const isFoundInLoginedmenu = loginedMenu.some(element => {
+      if (element.url === url) {
+        return true;
+      }
+      return false;
+    });
+    if (isFoundInLoginmenu && RoutesJS.hasCoupleJWT()) {
+      navigate(window.CDASHBOARD);
+    }
+    if (isFoundInLoginedmenu && !RoutesJS.hasCoupleJWT()) {
+      navigate(window.CLOGIN);
+    }
+  }, [url,loginMenu,loginedMenu]);
 
   useEffect(() => {
     if (props.menu.length > 0) {

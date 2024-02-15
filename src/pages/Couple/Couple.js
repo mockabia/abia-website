@@ -75,9 +75,37 @@ export const coupleSignup = async (activeStep,setActiveStep,formValues, setError
     }
   }
 };
+const setLoginTemp = async (navigate) => {
+  let token = {
+      "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FiaWEuYWJpYS10ZXN0LmNvbS93ZWIvV2ViQnVzaW5lc3NMb2dpbiIsImlhdCI6MTcwNzk3NDI3NiwiZXhwIjoxNzA3OTc3ODc2LCJuYmYiOjE3MDc5NzQyNzYsImp0aSI6ImFGUEZ1d2l2M1lPdmpxODkiLCJzdWIiOiIxIiwicHJ2IjoiY2U0YWQ4MGEwYmUwMzY0YWI5ZDI3YTdkZWE3M2EwODBkZThlNzY1MCJ9.AcDOsDArxxFZtyX7Gfm7HCixiSYd5wUE3AXrBs9gVr8",
+      "token_type": "bearer",
+      "expires_in": 60000,
+      "user": {
+          "id": 1,
+          "abn": "",
+          "name": "Arnold A",
+          "address": "Arnold A",
+          "suburb": "Arnold A",
+          "state": "QLD"
+      }
+  };
+  localStorage.setItem("coupleToken", JSON.stringify(token));
+  localStorage.setItem("abiaType", "C");
+  let expiresInMS = token.expires_in;
+  let currentTime = new Date();
+  let expireTime = new Date(currentTime.getTime() + expiresInMS);
+
+  localStorage.setItem("cexpireTime", expireTime);
+  localStorage.removeItem("cusername");
+  localStorage.removeItem("cpassword");
+  localStorage.removeItem("cremember_me");
+  apiService.setAuthToken(token);
+  navigate(window.CDASHBOARD)
+}
 export const coupleLogin = async (formValues, setErrors,navigate) => {
   if (customValidator.validateCoupleLogin(formValues, setErrors)) {
-    navigate(window.CDASHBOARD)
+    setLoginTemp(navigate)
+    
     await servicesPage.coupleLogin(formValues).then(function (response) {
       if (response.statuscode == 200) {
         const token = response.token;
