@@ -46,6 +46,7 @@ export const checkCoupleRememberMe = (setInputs) => {
   });
 };
 export const logout = async (navigate) => {
+  setLogoutTemp(navigate)
   await servicesPage.logout().then(function (response) {
     if (response) {
       if (response.statuscode == 200) {
@@ -75,6 +76,12 @@ export const coupleSignup = async (activeStep,setActiveStep,formValues, setError
     }
   }
 };
+const setLogoutTemp = async (navigate) => {
+  apiService.setAuthToken(null);
+  localStorage.removeItem("coupleToken");
+  localStorage.removeItem("user");
+  navigate(window.CLOGIN);
+}
 const setLoginTemp = async (navigate) => {
   let token = {
       "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2FiaWEuYWJpYS10ZXN0LmNvbS93ZWIvV2ViQnVzaW5lc3NMb2dpbiIsImlhdCI6MTcwNzk3NDI3NiwiZXhwIjoxNzA3OTc3ODc2LCJuYmYiOjE3MDc5NzQyNzYsImp0aSI6ImFGUEZ1d2l2M1lPdmpxODkiLCJzdWIiOiIxIiwicHJ2IjoiY2U0YWQ4MGEwYmUwMzY0YWI5ZDI3YTdkZWE3M2EwODBkZThlNzY1MCJ9.AcDOsDArxxFZtyX7Gfm7HCixiSYd5wUE3AXrBs9gVr8",

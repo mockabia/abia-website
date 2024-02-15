@@ -25,15 +25,17 @@ import "../../css/CoupleTopbar.css";
 import { SearchInputStyle } from "../../../components/FormStyle";
 import CoupleSideMenu from "../../sidebar/CoupleSideMenu";
 import { FiSearch } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link,NavLink,useNavigate } from "react-router-dom";
+import * as CoupleJS from "../../../pages/Couple/Couple";
 
 const CoupleTopbar = (props) => {
-  const { title } = props;
+  const { title }                     = props.title;
+  let navigate                        = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [menuOpen, setMenuOpen]       = useState(false);
+  const [anchorEl, setAnchorEl]       = useState(null);
   const [searchValue, setSearchValue] = useState("");
-  const [options, setOptions] = useState([
+  const [options, setOptions]         = useState([
     "Wedding Venues",
     "Wedding Dresses",
     "Celebrants",
@@ -95,6 +97,9 @@ const CoupleTopbar = (props) => {
 
   const handleInputChange = (event) => {
     setSearchValue(event.target.value);
+  };
+  const handleCoupleLogout = () => {
+    CoupleJS.logout(navigate);
   };
 
   const filteredOptions = options.filter((option) =>
@@ -207,22 +212,18 @@ const CoupleTopbar = (props) => {
                   <span className="text-[12px]"> test.email.com</span>
                 </li>
                 <Divider />
-                <li className="px-4  text-[14px] cursor-pointer">
-                  <Link to="/wedding/contact-details">Contact Details</Link>
-                  {/* <Link to={`${window.VDASHBOARD}`}> DASHBOARD </Link> */}
-                </li>
-                <li className="px-4  text-[14px] cursor-pointer">
-                  <Link to="/wedding/details">Wedding Details</Link>
-                  {/* <Link to={`${window.VDASHBOARD}`}> DASHBOARD </Link> */}
-                </li>
-                <li className="px-4  text-[14px] cursor-pointer">
-                  <Link to="/wedding/settings">Account Details</Link>
-                  {/* <Link to={`${window.VDASHBOARD}`}> DASHBOARD </Link> */}
-                </li>
+                {props.topMenu && props.topMenu.length > 0 && (
+                  <>
+                    {props.topMenu.map((topMenu, i) => (
+                      <li className="px-4  text-[14px] cursor-pointer">
+                        <NavLink to={topMenu.url} > {topMenu.title} </NavLink>
+                      </li>
+                    ))}
+                  </>
+                )}
                 <Divider />
                 <li
-                  className="px-4 text-[14px] cursor-pointer flex items-center font-semibold"
-                  // onClick={handleVendorLogout}
+                  className="px-4 text-[14px] cursor-pointer flex items-center font-semibold" onClick={handleCoupleLogout}
                 >
                   <button>Log Out</button>
                 </li>
