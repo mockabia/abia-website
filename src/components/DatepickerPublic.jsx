@@ -1,5 +1,5 @@
 import * as React from "react";
-import { LocalizationProvider } from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import {
@@ -112,9 +112,9 @@ export const VendorInput = styled(TextField)(({ theme }) => ({
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     fontSize: "14px",
-    fontWeight: "600",
+    fontWeight: "400",
     width: "100%",
     maxWidth: "100%",
     backgroundColor: "#fafafa",
@@ -137,6 +137,7 @@ export const VendorInput = styled(TextField)(({ theme }) => ({
     width: "97%",
   },
 }));
+
 export const PublicMessageInput = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
     fontFamily: "Manrope",
@@ -315,14 +316,14 @@ export function VendorDatePicker({
   checkboxChecked,
   value,
 }) {
-  const dateValue = typeof value === "string" ? parseISO(value) : value;
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePickerStype
-        value={dateValue}
+        value={value ? new Date(value) : null}
         name={name}
         format="dd/MM/yyyy"
-        onChange={(date) => handleDateChange(name, date)}
+        // label={label}
+        onChange={(date) => handleDateChange(date)}
         // disabled="true"
         disableFuture
         disabled={checkboxChecked}
@@ -340,6 +341,7 @@ export function VendorDatePicker({
     </LocalizationProvider>
   );
 }
+
 export function VendorFutureDatePicker({
   name,
   label,
@@ -348,14 +350,15 @@ export function VendorFutureDatePicker({
   checkboxChecked,
   value,
 }) {
-  const dateValue = typeof value === "string" ? parseISO(value) : value;
+  // const parsedDate = parseISO(value);
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePickerStype
-        value={dateValue}
+        value={value ? new Date(value) : null}
         name={name}
         format="dd/MM/yyyy"
-        onChange={(date) => handleDateChange(name, date)}
+        onChange={(date) => handleDateChange(date)}
         // disabled="true"
         disablePast
         disabled={checkboxChecked}
@@ -373,6 +376,7 @@ export function VendorFutureDatePicker({
     </LocalizationProvider>
   );
 }
+
 // PP - Message
 export function PublicProfileDate({
   name,

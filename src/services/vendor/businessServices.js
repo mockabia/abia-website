@@ -11,6 +11,13 @@ export async function storeData(postData) {
 export async function editData(id) {
   return await apiService.apiCall(MAIN_API["EDIT"] + "/" + id, "GET");
 }
+
+export async function Businessservices(id) {
+  return await apiService.apiCall(
+    apiUrls.BUSINESS_API["BUSINESSSERVICES_DROPDOWN"] + "/" + id,
+    "GET"
+  );
+}
 export async function showData(id) {
   return await apiService.apiCall(MAIN_API["SHOW"] + "/" + id, "GET");
 }
@@ -144,7 +151,7 @@ export async function delete_qandA(vendorID, qid) {
   );
 }
 
-export async function view_QandA (id) {
+export async function view_QandA(id) {
   return await apiService.apiCall(MAIN_API["VIEW_QA"] + "/" + id, "GET");
 }
 

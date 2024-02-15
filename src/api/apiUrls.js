@@ -31,11 +31,11 @@ export const ADDITIONAL_CATEGORY_DROPDOWN = `${baseUrl}WebAdditionalVCategoryDro
 export const MARKETING_CATEGORY = `${baseUrl}MarketingCategoryDropdown`;
 
 export const CONTENT_API = {
-  HEADER_MENUS      : `${baseUrl}WebCommonHeaderMenu`,
-  FOOTER_MENUS      : `${baseUrl}WebCommonFooterMenu`,
-  CONTENT_DETAILS   : `${baseUrl}Page_ContentDetails`,
-  BLOG              : `${baseUrl}page_BlogsubcategorVsBlog`,
-  BLOG_DETAIL       : `${baseUrl}View_BlogRecord`,
+  HEADER_MENUS: `${baseUrl}WebCommonHeaderMenu`,
+  FOOTER_MENUS: `${baseUrl}WebCommonFooterMenu`,
+  CONTENT_DETAILS: `${baseUrl}Page_ContentDetails`,
+  BLOG: `${baseUrl}page_BlogsubcategorVsBlog`,
+  BLOG_DETAIL: `${baseUrl}View_BlogRecord`,
   LOGIN_MENU_DETAILS: `${baseUrl}Page_LoginMenuDetails`,
 };
 export const ROUTES_API = {
@@ -75,12 +75,13 @@ export const BUSINESS_API = {
   DELETE_PACKAGE: `https://abia.abia-test.com/web/WebdeletePackage`,
   DELETE_QA: `https://abia.abia-test.com/web/Webdelete_QuestionAnsRecord`,
   VIEW_QA: `https://abia.abia-test.com/web/WebView_QuestionAnsRecord`,
+  BUSINESSSERVICES_DROPDOWN: `${baseUrl}WebBusinessServicesDropdown`,
 };
 
 export const COUPLE_API = {
-  SIGNUP    : `${baseUrl}WebCoupleSignup`,
-  LOGIN     : `${baseUrl}WebCoupleLogin`,
-  FORGOT    : `${baseUrl}WebCoupleForgot`,
-  LOGOUT    : `${baseUrl}WebCoupleLogout`,
-  REFRESH   : `${baseUrl}couple-refresh`,
+  SIGNUP: `${baseUrl}WebCoupleSignup`,
+  LOGIN: `${baseUrl}WebCoupleLogin`,
+  FORGOT: `${baseUrl}WebCoupleForgot`,
+  LOGOUT: `${baseUrl}WebCoupleLogout`,
+  REFRESH: `${baseUrl}couple-refresh`,
 };

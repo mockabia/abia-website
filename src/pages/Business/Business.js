@@ -45,6 +45,14 @@ export const fetchState = async (setStateOptions) => {
   });
 };
 
+export const fetchBusinessServices = async (setCategoryOptions, id) => {
+  await servicesPage.Businessservices(id).then(function (response) {
+    if (response.statuscode === 200) {
+      setCategoryOptions(response.result);
+    }
+  });
+};
+
 export const fetchCategory = async (setCategoryOption) => {
   await servicesPage.categoryDropdown().then(function (response) {
     if (response.statuscode === 200) {
@@ -240,7 +248,6 @@ export const viewVendorQandA = async (vendorID, setViewQandA) => {
   await servicesPage.view_QandA(vendorID).then(function (response) {
     if (response.statuscode == 200) {
       setViewQandA(response.result);
-      
     }
   });
 };

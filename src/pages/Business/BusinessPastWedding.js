@@ -19,9 +19,11 @@ import {
   RatingDatePicker,
   VendorDatePicker,
 } from "../../components/DatepickerPublic";
-import { date } from "yup";
+import { format } from "date-fns";
 
 const PastWedding = () => {
+  const [vendorInput, setVendorInputs] = useState({});
+  const vendorId = vendorInput.vid;
   const [formValues, setFormValues] = useState({
     bride: "",
     groom: "",
@@ -38,13 +40,24 @@ const PastWedding = () => {
   const [selectedState, setSelectedState] = useState([]);
   const [inputsErrors, setInputsErrors] = useState({});
   // const [errors, setInputsErrors] = React.useState({});
-  // const [dataSet, setDataSet] = useState(false);
+  const [dataSet, setDataSet] = useState(false);
   const [apiErrors, setApiErrors] = useState({});
 
-  const location = useLocation();
-  const vendorInput = location.state?.vendorInput || {};
+  // vendor inputs for vid
   useEffect(() => {
-    // Example of using vendorInput in useEffect
+    BusinessJS.fetchbusiness(setVendorInputs, setDataSet);
+  }, []);
+
+  // Vendor services
+  useEffect(() => {
+    if (vendorInput && vendorInput.vid) {
+      BusinessJS.fetchBusinessServices(setCategoryOptions, vendorInput.vid);
+    }
+  }, [vendorInput]);
+
+  // state fetch
+  useEffect(() => {
+    BusinessJS.fetchState(setStateOptions);
   }, []);
 
   const registrationGuidelines = [
@@ -60,18 +73,6 @@ const PastWedding = () => {
   }, []);
 
   //Select option data
-
-  useEffect(() => {
-    BusinessJS.fetchState(setStateOptions);
-    BusinessJS.fetchCategory(setCategoryOptions);
-  }, []);
-
-  useEffect(() => {
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      vid: vendorInput.vid || "",
-    }));
-  }, [vendorInput]);
 
   const handleInputChange = (fieldName, value) => {
     // console.log(`Updating ${fieldName} with value: ${value}`);
@@ -93,10 +94,13 @@ const PastWedding = () => {
   };
 
   const handleDateChange = (fieldName, date) => {
-    setFormValues({ ...formValues, [fieldName]: date });
-    setInputsErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+    if (date instanceof Date && !isNaN(date)) {
+      const formattedDate = format(date, "yyyy-MM-dd");
+      console.log("Selected Date:", formattedDate);
+      setFormValues({ ...formValues, [fieldName]: formattedDate });
+      setInputsErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+    }
   };
-
   const handleServicesChange = (selectedOptions) => {
     const selectedVcid = selectedOptions.map((option) => option.value);
     setFormValues({ ...formValues, vcid: selectedVcid });
@@ -139,23 +143,29 @@ const PastWedding = () => {
     }
     if (!formValues.vcid || formValues.vcid.length === 0) {
       errors.vcid = "Service booked is required";
-    } 
+    }
     // console.log("Validation Errors:", errors);
     return errors;
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // console.log("Form submitted!"); // Add this line
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
-      BusinessJS.updateManageWedding(1, formValues, setApiErrors);
-      // console.log("Current form values:", { formValues });
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        vid: vendorId,
+      }));
+      // Use the updated formValues returned by setFormValues
+      setFormValues((updatedFormValues) => {
+        BusinessJS.updateManageWedding(1, updatedFormValues, setApiErrors);
+        // console.log("Current form values:", { updatedFormValues });
+        return updatedFormValues; // Ensure the state is correctly updated
+      });
     } else {
       setInputsErrors(validationErrors);
     }
   };
-
   return (
     <>
       {/* <pre>{JSON.stringify(inputs, null, 2)}</pre> */}

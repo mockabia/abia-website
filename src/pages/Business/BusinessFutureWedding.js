@@ -1,46 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "../Style/BusinessGetReviews.css";
-import { Controller, useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import ContentHeader from "../../layouts/sidebar/ContentHeader";
-
 import Select, { components } from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { customSelectStyles2 } from "../../components/FormStyle";
-
-import Calendar from "../../third-party-packs/Calendar";
 import * as BusinessJS from "./Business";
-import ReactDatePicker from "react-datepicker";
-import {
-  VendorDatePicker,
-  VendorFutureDatePicker,
-} from "../../components/DatepickerPublic";
+import { VendorFutureDatePicker } from "../../components/DatepickerPublic";
 import { useLocation } from "react-router-dom";
-
-const schema = yup.object().shape({
-  bride: yup.string().required("Client's name is required"),
-  groom: yup.string().required("Partner's name is required"),
-  date_of_wedding: yup.date().required("Date of wedding is required"),
-  email: yup
-    .string()
-    .required("Email is required")
-    .email("Invalid email address"),
-  confirm_email: yup
-    .string()
-    .required("Confirm email is required")
-    .email("Invalid email address")
-    .oneOf([yup.ref("email"), null], "Emails must match"),
-  phone: yup.number(),
-  phone: yup.number().required("Phone no: is required"),
-  wedding_state: yup.string().required("The state field is required."),
-  state: yup.string().required("The Resident state is required."),
-  vcid: yup.array().required("Services Booked is required."),
-});
+import { format } from "date-fns";
 
 const FutureWedding = () => {
+  const [vendorInput, setVendorInputs] = useState({});
+  const vendorId = vendorInput.vid;
   const [formValues, setFormValues] = useState({
     bride: "",
     groom: "",
@@ -58,32 +31,31 @@ const FutureWedding = () => {
   const [reseidentState, setResidentState] = useState([]);
   const [inputsErrors, setInputsErrors] = useState({});
   const [apiErrors, setApiErrors] = useState({});
+  const [dataSet, setDataSet] = useState(false);
 
-  const location = useLocation();
-  const vendorInput = location.state?.vendorInput || {};
+  // const location = useLocation();
+  // const vendorInput = location.state?.vendorInput || {};
+
+  // vendor inputs for vid
   useEffect(() => {
-    // Example of using vendorInput in useEffect
-    console.log("Vendor Input from Get review:", vendorInput.vid);
+    BusinessJS.fetchbusiness(setVendorInputs, setDataSet);
+  }, []);
+
+  // Vendor services
+  useEffect(() => {
+    if (vendorInput && vendorInput.vid) {
+      BusinessJS.fetchBusinessServices(setCategoryOptions, vendorInput.vid);
+    }
   }, [vendorInput]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  //Select option data
-
+  // state fetch
   useEffect(() => {
     BusinessJS.fetchState(setStateOptions);
-    BusinessJS.fetchCategory(setCategoryOptions);
   }, []);
-
-  // effect on the basis of vendorId from  vendropinput-get reviews
-  useEffect(() => {
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      vid: vendorInput.vid || "",
-    }));
-  }, [vendorInput]);
 
   const registrationGuidelines = [
     "1. ABIA will not release registered details to any third parties.",
@@ -120,9 +92,18 @@ const FutureWedding = () => {
     setInputsErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
   };
 
+  // const handleDateChange = (fieldName, date) => {
+  //   setFormValues({ ...formValues, [fieldName]: date });
+  //   setInputsErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+  // };
+
   const handleDateChange = (fieldName, date) => {
-    setFormValues({ ...formValues, [fieldName]: date });
-    setInputsErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+    if (date instanceof Date && !isNaN(date)) {
+      const formattedDate = format(date, "yyyy-MM-dd");
+      console.log("Selected Date:", formattedDate);
+      setFormValues({ ...formValues, [fieldName]: formattedDate });
+      setInputsErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+    }
   };
 
   const handleServicesChange = (selectedOptions) => {
@@ -179,14 +160,19 @@ const FutureWedding = () => {
     e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
-      BusinessJS.updateManageWedding(2, formValues, setApiErrors);
-      // console.log("Current form values:", { formValues });
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        vid: vendorId,
+      }));
+      setFormValues((updatedFormValues) => {
+        BusinessJS.updateManageWedding(2, updatedFormValues, setApiErrors);
+        return updatedFormValues;
+      });
     } else {
       setInputsErrors(validationErrors);
     }
   };
 
-  // const onInvalid = (errors) => console.error(errors);
   return (
     <>
       <div className="md:hidden">
@@ -282,9 +268,9 @@ const FutureWedding = () => {
                 <VendorFutureDatePicker
                   name="date_of_wedding"
                   value={formValues.date_of_wedding}
-                  handleDateChange={(date) =>
-                    handleDateChange("date_of_wedding", date)
-                  }
+                  handleDateChange={(date) => {
+                    handleDateChange("date_of_wedding", date);
+                  }}
                 />
                 {inputsErrors.date_of_wedding && (
                   <p className="text-[12px] text-red-500 font-semibold mt-1">
@@ -400,9 +386,9 @@ const FutureWedding = () => {
                   }
                 />
               </div>
-              {inputsErrors.groom && (
+              {inputsErrors.confirm_email && (
                 <p className="text-[12px] text-red-500 font-semibold mt-1">
-                  {inputsErrors.groom}
+                  {inputsErrors.confirm_email}
                 </p>
               )}
               <br />
@@ -509,7 +495,7 @@ const MoreSelectedBadge = ({ items }) => {
 };
 
 const MultiValue = ({ index, getValue, ...props }) => {
-  const maxToShow = 2;
+  const maxToShow = 1;
   const overflow = getValue()
     .slice(maxToShow)
     .map((x) => x.label);
