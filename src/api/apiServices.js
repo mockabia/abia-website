@@ -10,7 +10,14 @@ export const setAuthToken = (token) => {
 };
 //export async function apiCall(url, method, data, userId = null) {
 export async function apiCall(url, method, data) {
-  let token = localStorage.getItem("vendorToken");
+  let vtoken = localStorage.getItem("vendorToken");
+  let ctoken = localStorage.getItem("coupleToken");
+  let token  = null; 
+  if (vtoken !== undefined && vtoken !== "undefined" && vtoken !== null) {
+     token = localStorage.getItem("vendorToken");
+  }else if(ctoken !== undefined && ctoken !== "undefined" && ctoken !== null){
+     token = localStorage.getItem("coupleToken");
+  }
   if (token !== undefined && token !== "undefined") {
     token = JSON.parse(token);
     let userSession = token && token.user ? token.user : null;
@@ -49,24 +56,44 @@ export async function apiCall(url, method, data) {
       return response.data;
     } catch (err) {
       if (err.response.statuscode == 401) {
-        refreshToken();
+        if (vtoken !== undefined && vtoken !== "undefined" && vtoken !== null) {
+          refreshVendorToken();
+       }else if(ctoken !== undefined && ctoken !== "undefined" && ctoken !== null){
+          refreshCoupleToken();
+       }
       } else if (
         err.response.data.message == "Token has expired" ||
         err.response.data.message ==
           "Token could not be parsed from the request."
       ) {
-        if (
-          localStorage.vusername &&
-          localStorage.vusername !== "" &&
-          localStorage.vpassword &&
-          localStorage.vpassword !== ""
-        ) {
-          refreshToken();
-        } else {
-          setAuthToken(null);
-          localStorage.removeItem("vendorToken");
-          localStorage.removeItem("user");
-          window.location = window.VLOGIN;
+        if (vtoken !== undefined && vtoken !== "undefined" && vtoken !== null) {
+          if (
+            localStorage.vusername &&
+            localStorage.vusername !== "" &&
+            localStorage.vpassword &&
+            localStorage.vpassword !== ""
+          ) {
+            refreshVendorToken();
+          } else {
+            setAuthToken(null);
+            localStorage.removeItem("vendorToken");
+            localStorage.removeItem("user");
+            window.location = window.VLOGIN;
+          }
+        }else if(ctoken !== undefined && ctoken !== "undefined" && ctoken !== null){
+          if (
+            localStorage.cusername &&
+            localStorage.cusername !== "" &&
+            localStorage.cpassword &&
+            localStorage.cpassword !== ""
+          ) {
+            refreshCoupleToken();
+          } else {
+            setAuthToken(null);
+            localStorage.removeItem("coupleToken");
+            localStorage.removeItem("user");
+            window.location = window.CLOGIN;
+          }
         }
       }
     }
@@ -78,7 +105,7 @@ export async function apiCall(url, method, data) {
   }
 }
 
-export async function refreshToken() {
+export async function refreshVendorToken() {
   var requestData = {
     username: localStorage.vusername,
     password: localStorage.vpassword,
@@ -104,6 +131,37 @@ export async function refreshToken() {
         localStorage.vusername = requestData.username;
         localStorage.vpassword = requestData.password;
         localStorage.vremember_me = requestData.remember_me;
+      }
+      setAuthToken(token);
+    }
+  });
+}
+export async function refreshCoupleToken() {
+  var requestData = {
+    username: localStorage.cusername,
+    password: localStorage.cpassword,
+    remember_me: localStorage.cremember_me,
+  };
+  await loginServices.login(requestData).then(function (response) {
+    if (response.statuscode == 401) {
+      setAuthToken(null);
+      localStorage.removeItem("coupleToken");
+      localStorage.removeItem("cuser");
+      window.location = window.VLOGIN;
+    } else {
+      const token = response.token;
+      localStorage.setItem("coupleToken", JSON.stringify(token));
+      let expiresInMS = token.expires_in;
+      let currentTime = new Date();
+      let expireTime = new Date(currentTime.getTime() + expiresInMS);
+      localStorage.setItem("cexpireTime", expireTime);
+      localStorage.removeItem("cusername");
+      localStorage.removeItem("cpassword");
+      localStorage.removeItem("cremember_me");
+      if (requestData.remember_me && requestData.remember_me !== "") {
+        localStorage.cusername = requestData.username;
+        localStorage.cpassword = requestData.password;
+        localStorage.cremember_me = requestData.remember_me;
       }
       setAuthToken(token);
     }

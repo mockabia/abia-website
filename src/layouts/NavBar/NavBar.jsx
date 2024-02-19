@@ -77,10 +77,16 @@ const NavBar = (props) => {
   }, []);
 
   useEffect(() => {
-    let token = localStorage.getItem("vendorToken");
-    if (token !== undefined && token !== "undefined") {
-      token = JSON.parse(token);
-      let userSession = token && token.user ? token.user : null;
+    let vtoken = localStorage.getItem("vendorToken");
+    let ctoken = localStorage.getItem("coupleToken");
+
+    if (vtoken !== undefined && vtoken !== "undefined" && vtoken !== null) {
+      vtoken = JSON.parse(vtoken);
+      let userSession = vtoken && vtoken.user ? vtoken.user : null;
+      setUserProfile(userSession);
+    }else if(ctoken !== undefined && ctoken !== "undefined" && ctoken !== null){
+      ctoken = JSON.parse(ctoken);
+      let userSession = ctoken && ctoken.user ? ctoken.user : null;
       setUserProfile(userSession);
     }
   }, []);
