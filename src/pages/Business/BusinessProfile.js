@@ -391,9 +391,6 @@ const Profile = ({ preview }) => {
                           {/* pricing input */}
                           <div className="mt-[10px] relative">
                             <h5 className="font-semibold flex flex-col">
-                              {/* {item.id === "Wedding_Venues"
-                            ? "Price per Head:"
-                            : "Starting Price:"} */}
                               Price per Head
                             </h5>
                             <div className="">

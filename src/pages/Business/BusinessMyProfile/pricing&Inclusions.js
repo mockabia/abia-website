@@ -48,6 +48,8 @@
 // };
 
 // const Profile = ({ preview }) => {
+//   const [viewProfile, setViewProfile] = useState("");
+
 //   const [previewListing, setPreviewListing] = useState("");
 //   const [vendorinputs, setVendorInputs] = useState("");
 //   const vendorID = vendorinputs.vid;
@@ -55,37 +57,61 @@
 //   const isScreenSizeAbove1250px = window.innerWidth > 1250;
 //   const [expanded, setExpanded] = useState(false);
 
+//   const [quickText, setQuickText] = useState("");
 //   const [saveClicked, setSaveClicked] = useState(false);
+//   const [wordCount, setWordCount] = useState(0);
+//   const [inputsErrors, setInputsErrors] = useState({});
 
 //   const [previewSet, setpreviewSet] = useState(false);
-
+//   // Full desc
+//   const [editorState, setEditorState] = useState(() =>
+//     EditorState.createEmpty()
+//   );
+//   const [convertedContent, setConvertedContent] = useState(null);
+//   const [fullText, setFullText] = useState("");
+//   const [fulldesccount, setFulldesccount] = useState(0);
 //   // Owner and Team
-
-//   const [viewProfile, setViewProfile] = useState([]);
-
-//   //Pricing
+//   const [ownerText, setOWnerText] = useState("");
+//   const [ownerContent, setOwnerContent] = useState("");
+//   const [defaultContent, setDefaultcontent] = useState("");
+//   const [ownerRadioOption, setOwnerRadioOption] = useState(1);
+//   const [croppedImage, setCroppedImage] = useState("");
+//   const [imageTypes, setImageTypes] = useState({});
+//   const [ownerImage, setOwnerImage] = useState(viewProfile.teamownerpic || "");
+//   // Packages
+//   const [pfile, setPfile] = useState();
+//   const [fileUploaded, setFileUploaded] = useState(false);
+//   const [packagesText, setPackagesText] = useState("");
+//   const [uploadedFileName, setUploadedFileName] = useState("");
+//   const [viewFile, setViewFile] = useState("");
+//   const [delPackage, setDelPackages] = useState(false);
+//   // QandA
+//   const [questions, setQuestions] = useState([
+//     { id: 1, question: "", answer: "" },
+//   ]);
+//   const [questionDisplay, setQuestionDisplay] = useState([]);
+//   const [qwordCount, setQwordCount] = useState(0);
+//   const [qandaWordCountError, setqandaWordCountError] = useState(false);
+//   // const [inputsErrors, setInputsErrors] = useState({});
+//   const [questionRes, setQuestionRes] = useState({});
+//   const [deleteQA, setDeleteQA] = useState("");
+//   const [viewQandA, setViewQandA] = useState({});
+//   // Pricing
 //   const [pricingInputs, setPricingInputs] = useState({});
 //   const [pricingDisplayStates, setPricingDisplayStates] = useState({});
 //   const [accomState, setAccomState] = useState({});
 //   const [capacity, setCapacity] = useState({});
 //   const [cockTail, setCockTail] = useState({});
 //   const [seated, setSeated] = useState({});
-//   const [inputsErrors, setInputsErrors] = useState({});
+//   // const [inputsErrors, setInputsErrors] = useState({});
 //   const [pricingFormValue, setPricingFormValue] = useState({});
 //   const [pformValues, setPFormValues] = useState({});
 //   // Inclusion
 //   const [selectedInclusions, setSelectedInclusions] = useState({});
-
 //   // expansion handling
 //   const handleChange = (isExpanded: boolean, panel: string) => {
 //     setExpanded(isExpanded ? panel : false);
 //   };
-
-//   // viewprofile
-//   useEffect(() => {
-//     BusinessJS.viewProfileSettings(vendorID, setViewProfile);
-//     console.log("View profile:", viewProfile);
-//   }, [vendorID]);
 
 //   //preview listing
 //   useEffect(() => {
@@ -98,6 +124,17 @@
 //     };
 //     fetchData();
 //   }, [vendorID]);
+
+//   // viewprofile
+//   useEffect(() => {
+//     BusinessJS.viewProfileSettings(vendorID, setViewProfile);
+//   }, [vendorID]);
+//   console.log("View profile:", viewProfile);
+
+//   const skeletonLines = [
+//     { variant: "text", height: "1rem" },
+//     { variant: "rectangular", width: "100%", height: "5rem" },
+//   ];
 
 //   /*****Pricing  ***********/
 //   // Handle pricing input change
@@ -200,22 +237,30 @@
 //     setSaveClicked(true);
 //     setExpanded(false);
 
-//     console.log("Selected Inclusions:", selectedInclusions);
+//     const inclusionFromValues = {
+//       vid: vendorID,
+//       inclusionValues: Object.values(selectedInclusions)
+//         .map((data) => Object.keys(data.selectedValues))
+//         .flat(),
+//     };
+//     BusinessJS.updateBusinessMyProfile(
+//       inclusionFromValues,
+//       vendorID,
+//       8,
+//       setInputsErrors,
+//       setVendorInputs
+//     );
+//     console.log("Selected inclusion:", inclusionFromValues);
+
+//     // The rest of your logic...
 //   };
 
-//   const skeletonLines = [
-//     { variant: "text", height: "1rem" },
-//     { variant: "rectangular", width: "100%", height: "5rem" },
-//   ];
-
-//   // console.log("Display pricing:", pricingFormValue);
-//   console.log("View vendor profile:", viewProfile);
 //   return (
 //     <div className="preview-listing-container">
 //       {/* <pre>{JSON.stringify(previewListing, null, 2)}</pre> */}
 
 //       {/* PROFILE BASICS */}
-//       <div>
+//       <div className="grid grid-cols-1" style={{ justifyItems: "end" }}>
 //         <div className="preview-listing-div">
 //           <h4 className="font-bold">Preview Listing</h4>
 //         </div>
@@ -225,294 +270,450 @@
 //       <>
 //         <h2 className="profile-listing-header">Profile Basics</h2>
 //       </>
-
+//       <br />
 //       <div>
-//         <div className="grid grid-cols-1">
-//           {/* PRICING */}
-//           <div>
-//             {viewProfile ? (
-//               <StyledAccordion
-//                 expanded={expanded === "panel4"}
-//                 onChange={(e, isExpanded) => handleChange(isExpanded, "panel4")}
-//               >
-//                 <AccordionSummary
-//                   style={{
-//                     paddingLeft:
-//                       expanded === "panel4"
-//                         ? isScreenSizeAbove1250px
-//                           ? "2rem"
-//                           : "1rem"
-//                         : "0",
-//                   }}
-//                   id="panel4-header"
-//                   aria-controls="panel4-content"
-//                   expandIcon={
-//                     <Typography
-//                       sx={{
-//                         color: "black",
-//                         fontFamily: "inherit",
-//                         fontSize: "14px",
-//                         fontWeight: "600",
-//                       }}
-//                     >
-//                       {expanded === "panel4" ? (
-//                         <RxTriangleUp size={30} color="#6cc2bc" />
-//                       ) : (
-//                         "Edit"
-//                       )}
-//                     </Typography>
-//                   }
-//                   sx={{
-//                     "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-//                       transform: "rotate(0deg)",
+//         {/* PRICING */}
+//         <div>
+//           {viewProfile ? (
+//             <StyledAccordion
+//               expanded={expanded === "panel4"}
+//               onChange={(e, isExpanded) => handleChange(isExpanded, "panel4")}
+//             >
+//               <AccordionSummary
+//                 style={{
+//                   paddingLeft:
+//                     expanded === "panel4"
+//                       ? isScreenSizeAbove1250px
+//                         ? "2rem"
+//                         : "1rem"
+//                       : "0",
+//                 }}
+//                 id="panel4-header"
+//                 aria-controls="panel4-content"
+//                 expandIcon={
+//                   <Typography
+//                     sx={{
 //                       color: "black",
-//                     },
-//                   }}
-//                 >
-//                   <div>
-//                     <h4 className="profile-listing-header">Pricing</h4>
-//                     {saveClicked && !expanded ? (
-//                       <>
-//                         {Object.keys(pformValues).map((categoryId) => (
-//                           <div key={categoryId}>
-//                             {pformValues[categoryId].display_price === "1" ? (
-//                               <div className="myprofile-accordion-subheading">
-//                                 <p>
-//                                   Display Price:{" "}
-//                                   {pformValues[categoryId].display_price === "1"
-//                                     ? "Yes"
-//                                     : "No"}
-//                                 </p>
-//                                 <p>
-//                                   Price per Head:{" "}
-//                                   {pformValues[categoryId].pricepp}
-//                                 </p>
-//                                 <p>
-//                                   Accommodation:{" "}
-//                                   {pformValues[categoryId].accomodation === "1"
-//                                     ? "Yes"
-//                                     : "No"}
-//                                 </p>
-//                                 <p>
-//                                   Capacity: {pformValues[categoryId].capacity}
-//                                 </p>
-//                                 <p>
-//                                   Cocktail: {pformValues[categoryId].cockTail}
-//                                 </p>
-//                                 <p>
-//                                   Seated Style: {pformValues[categoryId].seated}
-//                                 </p>
-//                               </div>
-//                             ) : (
-//                               <p className="myprofile-accordion-subheading">
-//                                 Display Price: No
-//                               </p>
-//                             )}
-//                           </div>
-//                         ))}
-//                       </>
+//                       fontFamily: "inherit",
+//                       fontSize: "14px",
+//                       fontWeight: "600",
+//                     }}
+//                   >
+//                     {expanded === "panel4" ? (
+//                       <RxTriangleUp size={30} color="#6cc2bc" />
 //                     ) : (
-//                       // If not saved or not expanded, display the default comment
-//                       <p className="myprofile-accordion-subheading">
-//                         Add a Starting Price. It is not mandatory to display
-//                         your prices.
-//                       </p>
+//                       "Edit"
 //                     )}
-//                   </div>
-//                 </AccordionSummary>
-//                 <AccordionDetails
-//                   style={{
-//                     paddingLeft:
-//                       expanded === "panel4"
-//                         ? isScreenSizeAbove1250px
-//                           ? "2rem"
-//                           : "1rem"
-//                         : "0",
-//                   }}
-//                 >
-//                   <div>
-//                     {viewProfile.Category &&
-//                       viewProfile.Category.map((item) => (
-//                         <div className="mt-[0px]" key={item.Categoryid}>
-//                           <div>
-//                             <div className="pricing-category-label-section">
-//                               <span className="pricing-cate-label">
-//                                 {" "}
-//                                 {item.CategoryName}
-//                               </span>
+//                   </Typography>
+//                 }
+//                 sx={{
+//                   "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+//                     transform: "rotate(0deg)",
+//                     color: "black",
+//                   },
+//                 }}
+//               >
+//                 <div>
+//                   <h4 className="profile-listing-header">Pricing</h4>
+//                   {saveClicked && !expanded ? (
+//                     <>
+//                       {Object.keys(pformValues).map((categoryId) => (
+//                         <div key={categoryId}>
+//                           {pformValues[categoryId].display_price === "1" ? (
+//                             <div className="myprofile-accordion-subheading">
+//                               <p>
+//                                 Display Price:{" "}
+//                                 {pformValues[categoryId].display_price === "1"
+//                                   ? "Yes"
+//                                   : "No"}
+//                               </p>
+//                               <p>
+//                                 Price per Head:{" "}
+//                                 {pformValues[categoryId].pricepp}
+//                               </p>
+//                               <p>
+//                                 Accommodation:{" "}
+//                                 {pformValues[categoryId].accomodation === "1"
+//                                   ? "Yes"
+//                                   : "No"}
+//                               </p>
+//                               <p>
+//                                 Capacity: {pformValues[categoryId].capacity}
+//                               </p>
+//                               <p>
+//                                 Cocktail: {pformValues[categoryId].cockTail}
+//                               </p>
+//                               <p>
+//                                 Seated Style: {pformValues[categoryId].seated}
+//                               </p>
 //                             </div>
-//                             {/* pricing input */}
-//                             <div className="mt-[10px] relative">
-//                               <h5 className="font-semibold flex flex-col">
-//                                 {/* {item.id === "Wedding_Venues"
-//                             ? "Price per Head:"
-//                             : "Starting Price:"} */}
-//                                 Price per Head
-//                               </h5>
-//                               <div className="">
-//                                 <span className="dollar-icon"></span>
-//                                 <input
-//                                   name="pricepp"
-//                                   type="number"
-//                                   required
-//                                   className="pricing-input-style"
-//                                   onChange={(e) =>
-//                                     handlePricingInputChange(
-//                                       item.Categoryid,
-//                                       e.target.value
-//                                     )
-//                                   }
-//                                 />
-//                               </div>
-//                             </div>
-//                             {/* display price status */}
-//                             <div className="myprofile-button-group relative">
-//                               {/* quickdec-button-group */}
-//                               <div className="mt-[15px]">
-//                                 <h5 className="font-semibold">
-//                                   Display Price ?
-//                                 </h5>
-//                                 <div className="mt-[10px] space-x-2">
-//                                   <button
-//                                     className={`yes-button ${
-//                                       pricingDisplayStates[item.Categoryid]
-//                                         ? "selected"
-//                                         : ""
-//                                     }`}
-//                                     onClick={() =>
-//                                       handleDisplayChange(item.Categoryid, 1)
-//                                     }
-//                                   >
-//                                     Yes
-//                                   </button>
-//                                   <button
-//                                     className={`no-button ${
-//                                       pricingDisplayStates[item.Categoryid] ===
-//                                       0
-//                                         ? "selected"
-//                                         : ""
-//                                     }`}
-//                                     onClick={() =>
-//                                       handleDisplayChange(item.Categoryid, 0)
-//                                     }
-//                                   >
-//                                     No
-//                                   </button>
-//                                 </div>
-//                               </div>
-//                             </div>
-//                             {/* Additional */}
-//                             {/* Accomodation Availability */}
-//                             <div className="myprofile-button-group relative">
-//                               <div className="mt-[15px]">
-//                                 <h5 className="font-semibold">
-//                                   Accomodation Availability
-//                                 </h5>
-//                                 <div className="mt-[15px] space-x-2">
-//                                   <button
-//                                     className={`yes-button ${
-//                                       accomState[item.Categoryid]
-//                                         ? "selected"
-//                                         : ""
-//                                     }`}
-//                                     onClick={() =>
-//                                       handleAccomodationChange(
-//                                         item.Categoryid,
-//                                         1
-//                                       )
-//                                     }
-//                                   >
-//                                     Yes
-//                                   </button>
-//                                   <button
-//                                     className={`no-button ${
-//                                       accomState[item.Categoryid] === 0
-//                                         ? "selected"
-//                                         : ""
-//                                     }`}
-//                                     onClick={() =>
-//                                       handleAccomodationChange(
-//                                         item.Categoryid,
-//                                         0
-//                                       )
-//                                     }
-//                                   >
-//                                     No
-//                                   </button>
-//                                 </div>
-//                               </div>
-//                             </div>
-//                             {/* Capacity */}
-//                             <div className="pricing-addons-container">
-//                               <div className="pricing-addon-label ">
-//                                 <h5 className="l">Capacity:</h5>
-//                               </div>
-//                               <input
-//                                 name="capacity"
-//                                 type="number"
-//                                 required
-//                                 className="capacity-input-style"
-//                                 onChange={(e) =>
-//                                   handleCapacityChange(
-//                                     item.Categoryid,
-//                                     e.target.value
-//                                   )
-//                                 }
-//                               />
-//                             </div>
-//                             {/* Cocktail */}
-//                             <div className="pricing-addons-container">
-//                               <div className="pricing-addon-label ">
-//                                 <h5 className="l">Cocktail:</h5>
-//                               </div>
-//                               <input
-//                                 name="cockTail"
-//                                 type="number"
-//                                 required
-//                                 className="capacity-input-style"
-//                                 onChange={(e) =>
-//                                   handleCocktailChange(
-//                                     item.Categoryid,
-//                                     e.target.value
-//                                   )
-//                                 }
-//                               />
-//                             </div>
-//                             {/* Seated Style */}
-//                             <div className="pricing-addons-container">
-//                               <div className="pricing-addon-label ">
-//                                 <h5 className="l">Seated Style</h5>
-//                               </div>
-//                               <input
-//                                 type="number"
-//                                 required
-//                                 className="capacity-input-style"
-//                                 onChange={(e) =>
-//                                   handleSeatedStyleChange(
-//                                     item.Categoryid,
-//                                     e.target.value
-//                                   )
-//                                 }
-//                               />
-//                             </div>
-//                           </div>
+//                           ) : (
+//                             <p className="myprofile-accordion-subheading">
+//                               Display Price: No
+//                             </p>
+//                           )}
 //                         </div>
 //                       ))}
-//                     <br />
+//                     </>
+//                   ) : (
+//                     // If not saved or not expanded, display the default comment
+//                     <p className="myprofile-accordion-subheading">
+//                       Add a Starting Price. It is not mandatory to display your
+//                       prices.
+//                     </p>
+//                   )}
+//                 </div>
+//               </AccordionSummary>
+//               <AccordionDetails
+//                 style={{
+//                   paddingLeft:
+//                     expanded === "panel4"
+//                       ? isScreenSizeAbove1250px
+//                         ? "2rem"
+//                         : "1rem"
+//                       : "0",
+//                 }}
+//               >
+//                 <div>
+//                   {viewProfile.Category &&
+//                     viewProfile.Category.map((item) => (
+//                       <div
+//                         className="mt-[1rem] mb-[3rem]"
+//                         key={item.Categoryid}
+//                       >
+//                         <div>
+//                           <div className="pricing-category-label-section">
+//                             <span className="pricing-cate-label">
+//                               {" "}
+//                               {item.CategoryName}
+//                             </span>
+//                           </div>
+//                           {/* pricing input */}
+//                           <div className="mt-[10px] relative">
+//                             <h5 className="font-semibold flex flex-col">
+//                               {/* {item.id === "Wedding_Venues"
+//                             ? "Price per Head:"
+//                             : "Starting Price:"} */}
+//                               Price per Head
+//                             </h5>
+//                             <div className="">
+//                               <span className="dollar-icon"></span>
+//                               <input
+//                                 name="pricepp"
+//                                 type="number"
+//                                 required
+//                                 className="pricing-input-style"
+//                                 onChange={(e) =>
+//                                   handlePricingInputChange(
+//                                     item.Categoryid,
+//                                     e.target.value
+//                                   )
+//                                 }
+//                               />
+//                             </div>
+//                           </div>
+//                           {/* display price status */}
+//                           <div className="myprofile-button-group relative">
+//                             {/* quickdec-button-group */}
+//                             <div className="mt-[15px]">
+//                               <h5 className="font-semibold">Display Price ?</h5>
+//                               <div className="mt-[10px] space-x-2">
+//                                 <button
+//                                   className={`yes-button ${
+//                                     pricingDisplayStates[item.Categoryid]
+//                                       ? "selected"
+//                                       : ""
+//                                   }`}
+//                                   onClick={() =>
+//                                     handleDisplayChange(item.Categoryid, 1)
+//                                   }
+//                                 >
+//                                   Yes
+//                                 </button>
+//                                 <button
+//                                   className={`no-button ${
+//                                     pricingDisplayStates[item.Categoryid] === 0
+//                                       ? "selected"
+//                                       : ""
+//                                   }`}
+//                                   onClick={() =>
+//                                     handleDisplayChange(item.Categoryid, 0)
+//                                   }
+//                                 >
+//                                   No
+//                                 </button>
+//                               </div>
+//                             </div>
+//                           </div>
+//                           {/* Additional */}
+//                           {/* Accomodation Availability */}
+//                           <div className="myprofile-button-group relative">
+//                             <div className="mt-[15px]">
+//                               <h5 className="font-semibold">
+//                                 Accomodation Availability
+//                               </h5>
+//                               <div className="mt-[15px] space-x-2">
+//                                 <button
+//                                   className={`yes-button ${
+//                                     accomState[item.Categoryid]
+//                                       ? "selected"
+//                                       : ""
+//                                   }`}
+//                                   onClick={() =>
+//                                     handleAccomodationChange(item.Categoryid, 1)
+//                                   }
+//                                 >
+//                                   Yes
+//                                 </button>
+//                                 <button
+//                                   className={`no-button ${
+//                                     accomState[item.Categoryid] === 0
+//                                       ? "selected"
+//                                       : ""
+//                                   }`}
+//                                   onClick={() =>
+//                                     handleAccomodationChange(item.Categoryid, 0)
+//                                   }
+//                                 >
+//                                   No
+//                                 </button>
+//                               </div>
+//                             </div>
+//                           </div>
+//                           {/* Capacity */}
+//                           <div className="pricing-addons-container">
+//                             <div className="pricing-addon-label ">
+//                               <h5 className="l">Capacity:</h5>
+//                             </div>
+//                             <input
+//                               name="capacity"
+//                               type="number"
+//                               required
+//                               className="capacity-input-style"
+//                               onChange={(e) =>
+//                                 handleCapacityChange(
+//                                   item.Categoryid,
+//                                   e.target.value
+//                                 )
+//                               }
+//                             />
+//                           </div>
+//                           {/* Cocktail */}
+//                           <div className="pricing-addons-container">
+//                             <div className="pricing-addon-label ">
+//                               <h5 className="l">Cocktail:</h5>
+//                             </div>
+//                             <input
+//                               name="cockTail"
+//                               type="number"
+//                               required
+//                               className="capacity-input-style"
+//                               onChange={(e) =>
+//                                 handleCocktailChange(
+//                                   item.Categoryid,
+//                                   e.target.value
+//                                 )
+//                               }
+//                             />
+//                           </div>
+//                           {/* Seated Style */}
+//                           <div className="pricing-addons-container">
+//                             <div className="pricing-addon-label ">
+//                               <h5 className="l">Seated Style</h5>
+//                             </div>
+//                             <input
+//                               type="number"
+//                               required
+//                               className="capacity-input-style"
+//                               onChange={(e) =>
+//                                 handleSeatedStyleChange(
+//                                   item.Categoryid,
+//                                   e.target.value
+//                                 )
+//                               }
+//                             />
+//                           </div>
+//                         </div>
+//                       </div>
+//                     ))}
 
-//                     <div
-//                       className="flex justify-center"
-//                       onClick={handlePricingSubmit}
-//                     >
-//                       <button className="mt-[2rem] flex justify-center items-center w-[120px] h-[40px] rounded-full bg-[#6cc2bc] text-[16px] text-white font-bold cursor-pointer">
+//                   <div
+//                     className="flex justify-center"
+//                     onClick={handlePricingSubmit}
+//                   >
+//                     <button className="mt-[2rem] flex justify-center items-center w-[120px] h-[40px] rounded-full bg-[#6cc2bc] text-[16px] text-white font-bold cursor-pointer">
+//                       Save
+//                     </button>
+//                   </div>
+//                 </div>
+//               </AccordionDetails>
+//             </StyledAccordion>
+//           ) : (
+//             skeletonLines.map((line, index) => (
+//               <div key={index}>
+//                 <Skeleton
+//                   variant={line.variant}
+//                   sx={{ width: line.width, height: line.height }}
+//                 />
+//                 <br />
+//               </div>
+//             ))
+//           )}
+//         </div>
+
+//         {/* Venue inclusion */}
+//         {/* Venue Amenities and Service */}
+//         <div>
+//           {viewProfile
+//             ? viewProfile.inclusions && (
+//                 <StyledAccordion
+//                   expanded={expanded === "venueAmenities"}
+//                   onChange={(e, isExpanded) =>
+//                     handleChange(isExpanded, "venueAmenities")
+//                   }
+//                 >
+//                   <AccordionSummary
+//                     style={{
+//                       paddingLeft:
+//                         expanded === "venueAmenities"
+//                           ? isScreenSizeAbove1250px
+//                             ? "2rem"
+//                             : "1rem"
+//                           : "0",
+//                     }}
+//                     id="venueAmenities-header"
+//                     aria-controls="venueAmenities-content"
+//                     expandIcon={
+//                       <Typography
+//                         sx={{
+//                           color: "black",
+//                           fontFamily: "inherit",
+//                           fontSize: "14px",
+//                           fontWeight: "600",
+//                         }}
+//                       >
+//                         {expanded === "venueAmenities" ? (
+//                           <RxTriangleUp size={30} color="#6cc2bc" />
+//                         ) : (
+//                           "Edit"
+//                         )}
+//                       </Typography>
+//                     }
+//                     sx={{
+//                       "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+//                         transform: "rotate(0deg)",
+//                         color: "black",
+//                       },
+//                     }}
+//                   >
+//                     <div>
+//                       <h4 className="profile-listing-header">
+//                         Venue Inclusions
+//                       </h4>
+//                       {saveClicked && !expanded ? (
+//                         <>
+//                           {Object.entries(selectedInclusions).map(
+//                             ([inchid, data]) => (
+//                               <p
+//                                 key={inchid}
+//                                 className="myprofile-accordion-subheading"
+//                               >
+//                                 {data.incTitle}:{" "}
+//                                 {Object.values(data.selectedValues).join(", ")}
+//                               </p>
+//                             )
+//                           )}
+//                         </>
+//                       ) : (
+//                         <p className="myprofile-accordion-subheading">
+//                           Add Your Venue Inclusions
+//                         </p>
+//                       )}
+//                     </div>
+//                   </AccordionSummary>
+
+//                   <AccordionDetails
+//                     style={{
+//                       paddingLeft:
+//                         expanded === "venueAmenities"
+//                           ? isScreenSizeAbove1250px
+//                             ? "2rem"
+//                             : "1rem"
+//                           : "0",
+//                     }}
+//                   >
+//                     {viewProfile.inclusions.map((inclusion, index) => (
+//                       <div className="mt-[0px]" key={inclusion.inchid}>
+//                         <div>
+//                           {/* Additional fields for "wedding_venue" */}
+//                           <>
+//                             <br />
+//                             {/* Venue Amenities */}
+//                             <Stack spacing={1} direction="row">
+//                               <div className="pricing-addon-label ">
+//                                 <span className="l">{inclusion.title}:</span>
+//                               </div>
+//                               <FormControl>
+//                                 <FormGroup
+//                                   sx={{
+//                                     width: {
+//                                       xs: "100%",
+//                                       md: "31rem",
+//                                     },
+//                                   }}
+//                                 >
+//                                   <Grid container spacing={1} container={false}>
+//                                     {inclusion.values.map((value) => (
+//                                       <Grid item key={index} direction="column">
+//                                         <FormControlLabel
+//                                           control={
+//                                             <Checkbox
+//                                               checked={
+//                                                 selectedInclusions[
+//                                                   inclusion.inchid
+//                                                 ]?.selectedValues?.[value.incid]
+//                                               }
+//                                               onChange={(e) =>
+//                                                 handleInclusionChange(
+//                                                   inclusion.inchid,
+//                                                   inclusion.title,
+//                                                   value.incid,
+//                                                   value.title,
+//                                                   e.target.checked
+//                                                 )
+//                                               }
+//                                             />
+//                                           }
+//                                           label={
+//                                             <Typography
+//                                               sx={{ whiteSpace: "normal" }}
+//                                             >
+//                                               {value.title}
+//                                             </Typography>
+//                                           }
+//                                         />
+//                                       </Grid>
+//                                     ))}
+//                                   </Grid>
+//                                 </FormGroup>
+//                               </FormControl>
+//                             </Stack>
+//                           </>
+//                         </div>
+//                       </div>
+//                     ))}
+//                     <div className="flex justify-center">
+//                       <button
+//                         className="mt-[2rem] flex justify-center items-center w-[120px] h-[40px] rounded-full bg-[#6cc2bc] text-[16px] text-white font-bold cursor-pointer"
+//                         onClick={handleInclusionSubmit}
+//                       >
 //                         Save
 //                       </button>
 //                     </div>
-//                   </div>
-//                 </AccordionDetails>
-//               </StyledAccordion>
-//             ) : (
-//               skeletonLines.map((line, index) => (
+//                   </AccordionDetails>
+//                 </StyledAccordion>
+//               )
+//             : skeletonLines.map((line, index) => (
 //                 <div key={index}>
 //                   <Skeleton
 //                     variant={line.variant}
@@ -520,185 +721,7 @@
 //                   />
 //                   <br />
 //                 </div>
-//               ))
-//             )}
-//           </div>
-
-//           {/* Venue inclusion */}
-//           {/* Venue Amenities and Service */}
-//           <div>
-//             {viewProfile
-//               ? viewProfile.inclusions && (
-//                   <StyledAccordion
-//                     expanded={expanded === "venueAmenities"}
-//                     onChange={(e, isExpanded) =>
-//                       handleChange(isExpanded, "venueAmenities")
-//                     }
-//                   >
-//                     <AccordionSummary
-//                       style={{
-//                         paddingLeft:
-//                           expanded === "venueAmenities"
-//                             ? isScreenSizeAbove1250px
-//                               ? "2rem"
-//                               : "1rem"
-//                             : "0",
-//                       }}
-//                       id="venueAmenities-header"
-//                       aria-controls="venueAmenities-content"
-//                       expandIcon={
-//                         <Typography
-//                           sx={{
-//                             color: "black",
-//                             fontFamily: "inherit",
-//                             fontSize: "14px",
-//                             fontWeight: "600",
-//                           }}
-//                         >
-//                           {expanded === "venueAmenities" ? (
-//                             <RxTriangleUp size={30} color="#6cc2bc" />
-//                           ) : (
-//                             "Edit"
-//                           )}
-//                         </Typography>
-//                       }
-//                       sx={{
-//                         "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded":
-//                           {
-//                             transform: "rotate(0deg)",
-//                             color: "black",
-//                           },
-//                       }}
-//                     >
-//                       <div>
-//                         <h4 className="profile-listing-header">
-//                           Venue Inclusions
-//                         </h4>
-//                         {saveClicked && !expanded ? (
-//                           <>
-//                             {Object.entries(selectedInclusions).map(
-//                               ([inchid, data]) => (
-//                                 <p
-//                                   key={inchid}
-//                                   className="myprofile-accordion-subheading"
-//                                 >
-//                                   {data.incTitle}:{" "}
-//                                   {Object.values(data.selectedValues).join(
-//                                     ", "
-//                                   )}
-//                                 </p>
-//                               )
-//                             )}
-//                           </>
-//                         ) : (
-//                           <p className="myprofile-accordion-subheading">
-//                             Add Your Venue Inclusions
-//                           </p>
-//                         )}
-//                       </div>
-//                     </AccordionSummary>
-
-//                     <AccordionDetails
-//                       style={{
-//                         paddingLeft:
-//                           expanded === "venueAmenities"
-//                             ? isScreenSizeAbove1250px
-//                               ? "2rem"
-//                               : "1rem"
-//                             : "0",
-//                       }}
-//                     >
-//                       {viewProfile.inclusions.map((inclusion, index) => (
-//                         <div className="mt-[0px]" key={inclusion.inchid}>
-//                           <div>
-//                             {/* Additional fields for "wedding_venue" */}
-//                             <>
-//                               <br />
-//                               {/* Venue Amenities */}
-//                               <Stack spacing={1} direction="row">
-//                                 <div className="pricing-addon-label ">
-//                                   <span className="l">{inclusion.title}:</span>
-//                                 </div>
-//                                 <FormControl>
-//                                   <FormGroup
-//                                     sx={{
-//                                       width: {
-//                                         xs: "100%",
-//                                         md: "31rem",
-//                                       },
-//                                     }}
-//                                   >
-//                                     <Grid
-//                                       container
-//                                       spacing={1}
-//                                       container={false}
-//                                     >
-//                                       {inclusion.values.map((value) => (
-//                                         <Grid
-//                                           item
-//                                           key={index}
-//                                           direction="column"
-//                                         >
-//                                           <FormControlLabel
-//                                             control={
-//                                               <Checkbox
-//                                                 checked={
-//                                                   selectedInclusions[
-//                                                     inclusion.inchid
-//                                                   ]?.selectedValues?.[
-//                                                     value.incid
-//                                                   ]
-//                                                 }
-//                                                 onChange={(e) =>
-//                                                   handleInclusionChange(
-//                                                     inclusion.inchid,
-//                                                     inclusion.title,
-//                                                     value.incid,
-//                                                     value.title,
-//                                                     e.target.checked
-//                                                   )
-//                                                 }
-//                                               />
-//                                             }
-//                                             label={
-//                                               <Typography
-//                                                 sx={{ whiteSpace: "normal" }}
-//                                               >
-//                                                 {value.title}
-//                                               </Typography>
-//                                             }
-//                                           />
-//                                         </Grid>
-//                                       ))}
-//                                     </Grid>
-//                                   </FormGroup>
-//                                 </FormControl>
-//                               </Stack>
-//                             </>
-//                           </div>
-//                         </div>
-//                       ))}
-//                       <div className="flex justify-center">
-//                         <button
-//                           className="mt-[2rem] flex justify-center items-center w-[120px] h-[40px] rounded-full bg-[#6cc2bc] text-[16px] text-white font-bold cursor-pointer"
-//                           onClick={handleInclusionSubmit}
-//                         >
-//                           Save
-//                         </button>
-//                       </div>
-//                     </AccordionDetails>
-//                   </StyledAccordion>
-//                 )
-//               : skeletonLines.map((line, index) => (
-//                   <div key={index}>
-//                     <Skeleton
-//                       variant={line.variant}
-//                       sx={{ width: line.width, height: line.height }}
-//                     />
-//                     <br />
-//                   </div>
-//                 ))}
-//           </div>
+//               ))}
 //         </div>
 //       </div>
 //     </div>
@@ -706,4 +729,3 @@
 // };
 
 // export default Profile;
-

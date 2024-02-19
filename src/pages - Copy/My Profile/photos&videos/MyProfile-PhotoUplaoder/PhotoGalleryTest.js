@@ -11,7 +11,9 @@ import { ReactComponent as CloseButton } from "../../../../icons/x-solid.svg";
 import { MdModeEdit } from "react-icons/md";
 import "./PhotoGalleryTest.css";
 import * as BusinessJs from "../../../../pages/Business/Business";
-import e from "cors";
+import DraggablePhoto from "../../../../components/Drag and Drop/DraggablePhoto";
+import { useDrop } from "react-dnd";
+import { ItemTypes } from "../../../../components/Drag and Drop/Constants";
 
 const Image = styled.img`
   width: 100% !important;
@@ -42,6 +44,7 @@ const PhotoGalleryTest = (vendorID) => {
   const [viewPhotoGallery, setViewPhotoGallery] = useState([]);
   const [deletePhoto, setDeletePhoto] = useState("");
   const [selectedPhoto, setSelectedPhoto] = useState(null); // FOR EDIT
+
   // vendor inputs
   useEffect(() => {
     const fetchData = async () => {
@@ -52,7 +55,7 @@ const PhotoGalleryTest = (vendorID) => {
 
   useEffect(() => {
     BusinessJs.V_viewPhotoGallery(setViewPhotoGallery, vendorID2);
-    // console.log("View photo gallery:", viewPhotoGallery);
+    console.log("View photo gallery:", viewPhotoGallery);
   }, [vendorID2]);
 
   // Modal disable image
@@ -344,7 +347,7 @@ const PhotoGalleryTest = (vendorID) => {
             </div>
           </div>
         </form>
-        {/* preview images */}
+        {/* uploaded image are preview images */}
         {viewPhotoGallery.map((element) => (
           <div className="photopreview-wrapper " onDragEnd={() => {}}>
             <div
@@ -380,6 +383,9 @@ const PhotoGalleryTest = (vendorID) => {
             </div>
           </div>
         ))}
+        {/* {viewPhotoGallery.map((element, index) => (
+          <DraggablePhoto key={element.pid} photo={element} index={index} />
+        ))} */}
         {/* )} */}
       </div>
     </div>
