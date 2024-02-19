@@ -14,14 +14,14 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { useState } from "react";
 import CoupleForgotPwd from "./CoupleForgotPwd";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import * as CoupleJS from "../Couple/Couple";
 
 const CouplesLogin = ({ handleClosePage }) => {
-  let navigate                                      = useNavigate();
-  const [showPassword, setShowPassword]             = useState(false);
-  const [formValues, setFormValues]                 = useState({ email: "", password: "" });
-  const [errors, setErrors]                         = React.useState({});
+  let navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [formValues, setFormValues] = useState({ email: "", password: "" });
+  const [errors, setErrors] = React.useState({});
   const [showVisibilityIcon, setShowVisibilityIcon] = useState(false);
 
   const togglePasswordVisibility = (e) => {
@@ -43,8 +43,12 @@ const CouplesLogin = ({ handleClosePage }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    CoupleJS.coupleLogin(formValues, setErrors,navigate)
+    CoupleJS.coupleLogin(formValues, setErrors, navigate)
   };
+  
+  const hasErrors = Object.values(errors).some(
+    (error) => typeof error !== "undefined"
+  );
 
   return (
     <div className="cl-container">
@@ -106,6 +110,12 @@ const CouplesLogin = ({ handleClosePage }) => {
               marginTop: "2rem",
             }}
           ></Box>
+
+          {hasErrors && (
+            <div className="flex font-bold text-red-600 text-[12px]">
+              {errors}
+            </div>
+          )}
 
           <button
             onClick={handleSubmit}

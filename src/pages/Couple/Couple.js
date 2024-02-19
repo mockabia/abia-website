@@ -46,7 +46,7 @@ export const checkCoupleRememberMe = (setInputs) => {
   });
 };
 export const logout = async (navigate) => {
-  setLogoutTemp(navigate)
+  //setLogoutTemp(navigate)
   await servicesPage.logout().then(function (response) {
     if (response) {
       if (response.statuscode == 200) {
@@ -111,7 +111,7 @@ const setLoginTemp = async (navigate) => {
 }
 export const coupleLogin = async (formValues, setErrors,navigate) => {
   if (customValidator.validateCoupleLogin(formValues, setErrors)) {
-    setLoginTemp(navigate)
+    //setLoginTemp(navigate)
     
     await servicesPage.coupleLogin(formValues).then(function (response) {
       if (response.statuscode == 200) {
