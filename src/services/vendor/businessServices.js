@@ -64,7 +64,7 @@ export async function business_signup(postData) {
 
 export async function manage_wedding(options, postData) {
   return await apiService.apiCall(
-    MAIN_API["MANAGE_WEDDING"] + "/" + "0" + "/" + options,
+    MAIN_API["MANAGE_WEDDING"] + "/0/" + options + "/1",
     "POST",
     postData
   );

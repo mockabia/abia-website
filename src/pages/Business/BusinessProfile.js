@@ -199,39 +199,39 @@ const Profile = ({ preview }) => {
     }));
   };
 
-  const handlePricingSubmit = () => {
-    setSaveClicked(true);
-    setExpanded(false);
+  // const handlePricingSubmit = () => {
+  //   setSaveClicked(true);
+  //   setExpanded(false);
 
-    // Create the output object
-    const newFormValues = {};
-    viewProfile.Category.forEach((category) => {
-      const categoryId = category.Categoryid;
-      newFormValues[categoryId] = {
-        display_price: pricingDisplayStates[categoryId] === 1 ? "1" : "0",
-        pricepp: pricingInputs[categoryId] || "0",
-        accomodation: accomState[categoryId] === 1 ? "1" : "0",
-        capacity: capacity[categoryId] || "0",
-        cockTail: cockTail[categoryId] || "0",
-        seated: seated[categoryId] || "0",
-      };
-    });
+  //   // Create the output object
+  //   const newFormValues = {};
+  //   viewProfile.Category.forEach((category) => {
+  //     const categoryId = category.Categoryid;
+  //     newFormValues[categoryId] = {
+  //       display_price: pricingDisplayStates[categoryId] === 1 ? "1" : "0",
+  //       pricepp: pricingInputs[categoryId] || "0",
+  //       accomodation: accomState[categoryId] === 1 ? "1" : "0",
+  //       capacity: capacity[categoryId] || "0",
+  //       cockTail: cockTail[categoryId] || "0",
+  //       seated: seated[categoryId] || "0",
+  //     };
+  //   });
 
-    // Set formValues state
-    setPFormValues(newFormValues);
+  //   // Set formValues state
+  //   setPFormValues(newFormValues);
 
-    // Log the formValues
-    console.log("Formvalues:", newFormValues);
+  //   // Log the formValues
+  //   console.log("Formvalues:", newFormValues);
 
-    // Update business profile
-    BusinessJS.updateBusinessMyProfile(
-      newFormValues,
-      vendorID,
-      3,
-      setInputsErrors,
-      setVendorInputs
-    );
-  };
+  //   // Update business profile
+  //   BusinessJS.updateBusinessMyProfile(
+  //     newFormValues,
+  //     vendorID,
+  //     3,
+  //     setInputsErrors,
+  //     setVendorInputs
+  //   );
+  // };
 
   const handleInclusionSubmit = () => {
     setSaveClicked(true);
@@ -253,6 +253,82 @@ const Profile = ({ preview }) => {
     console.log("Selected inclusion:", inclusionFromValues);
 
     // The rest of your logic...
+  };
+
+  const handlePricingSubmit = () => {
+    setSaveClicked(true);
+    setExpanded(false);
+
+    // Create the output array
+    const newFormValues = viewProfile.Category.map((category) => {
+      const categoryId = category.Categoryid;
+
+      // Map each category setting to the new structure
+      const categorySettings = category.CategorySettings.map((setting) => {
+        const csid = setting.csid;
+        const hid = setting.hid;
+        const vcids = setting.vcids;
+        const grpcid = setting.grpcid;
+
+        // Determine the type_val based on the setting type
+        let type_val;
+        switch (setting.head_title) {
+          case "Price per head":
+            type_val = pricingInputs[categoryId] || "0";
+            break;
+          case "Enable Seated":
+            type_val = seated[categoryId] || "0";
+            break;
+          case "Capacity":
+            type_val = capacity[categoryId] || "0";
+            break;
+          // Add cases for other settings as needed
+          default:
+            type_val = "0";
+        }
+
+        // Determine the subtype_val based on the setting subtype
+        let subtype_val;
+        switch (setting.head_subtype) {
+          case "1":
+            subtype_val = 1;
+            break;
+          case "2":
+            subtype_val = pricingInputs[categoryId] || "0";
+            break;
+          // Add cases for other subtypes as needed
+          default:
+            subtype_val = 1; // Set to 1 by default
+        }
+
+        return {
+          csid,
+          hid,
+          vcids,
+          grpcid,
+          type_val,
+          subtype_val,
+        };
+      });
+
+      return {
+        categoryid: categoryId,
+        CategorySettings: categorySettings,
+      };
+    });
+
+    // Log the formValues
+    console.log("Formvalues:", newFormValues);
+
+    // Update business profile
+    BusinessJS.updateBusinessMyProfile(
+      newFormValues,
+      vendorID,
+      3,
+      setInputsErrors,
+      setVendorInputs
+    );
+    setPricingFormValue(newFormValues);
   };
 
   return (
@@ -317,46 +393,35 @@ const Profile = ({ preview }) => {
                   <h4 className="profile-listing-header">Pricing</h4>
                   {saveClicked && !expanded ? (
                     <>
-                      {Object.keys(pformValues).map((categoryId) => (
-                        <div key={categoryId}>
-                          {pformValues[categoryId].display_price === "1" ? (
-                            <div className="myprofile-accordion-subheading">
-                              <p>
-                                Display Price:{" "}
-                                {pformValues[categoryId].display_price === "1"
-                                  ? "Yes"
-                                  : "No"}
+                      {Array.isArray(pricingFormValue) &&
+                      pricingFormValue.length > 0 ? (
+                        pricingFormValue.map((category) => (
+                          <div key={category.categoryid}>
+                            {category.CategorySettings.some(
+                              (setting) => setting.type_val !== "0"
+                            ) ? (
+                              <div className="myprofile-accordion-subheading">
+                                {category.CategorySettings.map((setting) => (
+                                  <p key={setting.csid}>
+                                    {setting.head_title}: {setting.type_val}
+                                  </p>
+                                ))}
+                              </div>
+                            ) : (
+                              <p className="myprofile-accordion-subheading">
+                                Display Price: No
                               </p>
-                              <p>
-                                Price per Head:{" "}
-                                {pformValues[categoryId].pricepp}
-                              </p>
-                              <p>
-                                Accommodation:{" "}
-                                {pformValues[categoryId].accomodation === "1"
-                                  ? "Yes"
-                                  : "No"}
-                              </p>
-                              <p>
-                                Capacity: {pformValues[categoryId].capacity}
-                              </p>
-                              <p>
-                                Cocktail: {pformValues[categoryId].cockTail}
-                              </p>
-                              <p>
-                                Seated Style: {pformValues[categoryId].seated}
-                              </p>
-                            </div>
-                          ) : (
-                            <p className="myprofile-accordion-subheading">
-                              Display Price: No
-                            </p>
-                          )}
-                        </div>
-                      ))}
+                            )}
+                          </div>
+                        ))
+                      ) : (
+                        <p className="myprofile-accordion-subheading">
+                          Add a Starting Price. It is not mandatory to display
+                          your prices.
+                        </p>
+                      )}
                     </>
                   ) : (
-                    // If not saved or not expanded, display the default comment
                     <p className="myprofile-accordion-subheading">
                       Add a Starting Price. It is not mandatory to display your
                       prices.
@@ -364,6 +429,7 @@ const Profile = ({ preview }) => {
                   )}
                 </div>
               </AccordionSummary>
+
               <AccordionDetails
                 style={{
                   paddingLeft:
@@ -388,8 +454,203 @@ const Profile = ({ preview }) => {
                               {item.CategoryName}
                             </span>
                           </div>
+                          {item.CategorySettings.map(
+                            (categorySetting, index) => {
+                              return (
+                                <React.Fragment key={index}>
+                                  {categorySetting.min_max === "1" ? (
+                                    <p>{categorySetting.head_title}</p>
+                                  ) : categorySetting.head_titletype === "1" ? (
+                                    <React.Fragment>
+                                      {/* price per head */}
+                                      {categorySetting.head_title ===
+                                      "Price per head" ? (
+                                        <>
+                                          <div className="mt-[10px] relative">
+                                            <h5 className="font-semibold flex flex-col">
+                                              {categorySetting.head_title}
+                                            </h5>
+                                            <div className="">
+                                              <span className="dollar-icon"></span>
+                                              <input
+                                                name="pricepp"
+                                                type="number"
+                                                required
+                                                className="pricing-input-style"
+                                                onChange={(e) =>
+                                                  handlePricingInputChange(
+                                                    item.Categoryid,
+                                                    e.target.value
+                                                  )
+                                                }
+                                              />
+                                            </div>
+                                          </div>
+
+                                          <div className="myprofile-button-group relative">
+                                            <div>
+                                              <h5 className="font-semibold">
+                                                Display Price ?
+                                              </h5>
+                                              <div className="mt-[10px] space-x-2">
+                                                <button
+                                                  className={`yes-button ${
+                                                    pricingDisplayStates[
+                                                      item.Categoryid
+                                                    ]
+                                                      ? "selected"
+                                                      : ""
+                                                  }`}
+                                                  onClick={() =>
+                                                    handleDisplayChange(
+                                                      item.Categoryid,
+                                                      1
+                                                    )
+                                                  }
+                                                >
+                                                  Yes
+                                                </button>
+                                                <button
+                                                  className={`no-button ${
+                                                    pricingDisplayStates[
+                                                      item.Categoryid
+                                                    ] === 0
+                                                      ? "selected"
+                                                      : ""
+                                                  }`}
+                                                  onClick={() =>
+                                                    handleDisplayChange(
+                                                      item.Categoryid,
+                                                      0
+                                                    )
+                                                  }
+                                                >
+                                                  No
+                                                </button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </>
+                                      ) : null}
+                                      {/* Seated style */}
+                                      {categorySetting.head_title ===
+                                      "Enable Seated" ? (
+                                        <div className="pricing-addons-container">
+                                          <div className="pricing-addon-label ">
+                                            <h5 className="l">Seated Style</h5>
+                                          </div>
+                                          <input
+                                            type="number"
+                                            required
+                                            className="capacity-input-style"
+                                            onChange={(e) =>
+                                              handleSeatedStyleChange(
+                                                item.Categoryid,
+                                                e.target.value
+                                              )
+                                            }
+                                          />
+                                        </div>
+                                      ) : null}
+                                      {/* Capacity */}
+                                      {categorySetting.head_title ===
+                                      "Capacity" ? (
+                                        <div className="pricing-addons-container">
+                                          <div className="pricing-addon-label ">
+                                            <h5 className="l">Capacity:</h5>
+                                          </div>
+                                          <input
+                                            name="capacity"
+                                            type="number"
+                                            required
+                                            className="capacity-input-style"
+                                            onChange={(e) =>
+                                              handleCapacityChange(
+                                                item.Categoryid,
+                                                e.target.value
+                                              )
+                                            }
+                                          />
+                                        </div>
+                                      ) : null}
+                                      {/* Accomodation */}
+                                      {categorySetting.head_title ===
+                                      "Accomodation Availability" ? (
+                                        <div className="myprofile-button-group relative">
+                                          <div className="mt-[15px]">
+                                            <h5 className="font-semibold">
+                                              Accomodation Availability
+                                            </h5>
+                                            <div className="mt-[15px] space-x-2">
+                                              <button
+                                                className={`yes-button ${
+                                                  accomState[item.Categoryid]
+                                                    ? "selected"
+                                                    : ""
+                                                }`}
+                                                onClick={() =>
+                                                  handleAccomodationChange(
+                                                    item.Categoryid,
+                                                    1
+                                                  )
+                                                }
+                                              >
+                                                Yes
+                                              </button>
+                                              <button
+                                                className={`no-button ${
+                                                  accomState[
+                                                    item.Categoryid
+                                                  ] === 0
+                                                    ? "selected"
+                                                    : ""
+                                                }`}
+                                                onClick={() =>
+                                                  handleAccomodationChange(
+                                                    item.Categoryid,
+                                                    0
+                                                  )
+                                                }
+                                              >
+                                                No
+                                              </button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      ) : null}
+                                      {categorySetting.head_title ===
+                                      "Cocktail" ? (
+                                        <div className="pricing-addons-container">
+                                          <div className="pricing-addon-label ">
+                                            <h5 className="l">Cocktail:</h5>
+                                          </div>
+                                          <input
+                                            name="cockTail"
+                                            type="number"
+                                            required
+                                            className="capacity-input-style"
+                                            onChange={(e) =>
+                                              handleCocktailChange(
+                                                item.Categoryid,
+                                                e.target.value
+                                              )
+                                            }
+                                          />
+                                        </div>
+                                      ) : null}
+                                    </React.Fragment>
+                                  ) : categorySetting.head_titletype === "2" ? (
+                                    <p>{categorySetting.head_title}</p>
+                                  ) : null}
+                                </React.Fragment>
+                              );
+                            }
+                          )}
+
+                          {/* <hr /> */}
+
                           {/* pricing input */}
-                          <div className="mt-[10px] relative">
+                          {/* <div className="mt-[10px] relative">
                             <h5 className="font-semibold flex flex-col">
                               Price per Head
                             </h5>
@@ -408,10 +669,10 @@ const Profile = ({ preview }) => {
                                 }
                               />
                             </div>
-                          </div>
+                          </div> */}
+
                           {/* display price status */}
-                          <div className="myprofile-button-group relative">
-                            {/* quickdec-button-group */}
+                          {/* <div className="myprofile-button-group relative">
                             <div className="mt-[15px]">
                               <h5 className="font-semibold">Display Price ?</h5>
                               <div className="mt-[10px] space-x-2">
@@ -441,10 +702,10 @@ const Profile = ({ preview }) => {
                                 </button>
                               </div>
                             </div>
-                          </div>
+                          </div> */}
                           {/* Additional */}
                           {/* Accomodation Availability */}
-                          <div className="myprofile-button-group relative">
+                          {/* <div className="myprofile-button-group relative">
                             <div className="mt-[15px]">
                               <h5 className="font-semibold">
                                 Accomodation Availability
@@ -476,9 +737,9 @@ const Profile = ({ preview }) => {
                                 </button>
                               </div>
                             </div>
-                          </div>
+                          </div> */}
                           {/* Capacity */}
-                          <div className="pricing-addons-container">
+                          {/* <div className="pricing-addons-container">
                             <div className="pricing-addon-label ">
                               <h5 className="l">Capacity:</h5>
                             </div>
@@ -494,7 +755,7 @@ const Profile = ({ preview }) => {
                                 )
                               }
                             />
-                          </div>
+                          </div> */}
                           {/* Cocktail */}
                           <div className="pricing-addons-container">
                             <div className="pricing-addon-label ">
@@ -514,7 +775,7 @@ const Profile = ({ preview }) => {
                             />
                           </div>
                           {/* Seated Style */}
-                          <div className="pricing-addons-container">
+                          {/* <div className="pricing-addons-container">
                             <div className="pricing-addon-label ">
                               <h5 className="l">Seated Style</h5>
                             </div>
@@ -529,7 +790,7 @@ const Profile = ({ preview }) => {
                                 )
                               }
                             />
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     ))}
