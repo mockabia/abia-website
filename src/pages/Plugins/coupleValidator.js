@@ -55,20 +55,20 @@ export function validateName(name, errors) {
 export const validateCoupleLogin = (inputs, setInputsErrors) => {
   setInputsErrors({});
   let validate = true;
-  if (!inputs.email) {
+  if (!inputs.cemail) {
     validate = false;
-    setInputsErrors((values) => ({...values,["email"]: "Email is required"}));
-  } else if (!/\S+@\S+\.\S+/.test(inputs.email)) {
+    setInputsErrors((values) => ({...values,["cemail"]: "Email is required"}));
+  } else if (!/\S+@\S+\.\S+/.test(inputs.cemail)) {
     validate = false;
-    setInputsErrors((values) => ({...values,["email"]: "Invalid Email"}));
+    setInputsErrors((values) => ({...values,["cemail"]: "Invalid Email"}));
   }
   // Validate Password
-  if (!inputs.password) {
+  if (!inputs.cpassword) {
     validate = false;
-    setInputsErrors((values) => ({...values,["password"]: "Password is required"}));
-  } else if (inputs.password.length < 6) {
+    setInputsErrors((values) => ({...values,["cpassword"]: "Password is required"}));
+  } else if (inputs.cpassword.length < 6) {
     validate = false;
-    setInputsErrors((values) => ({...values,["password"]: "Minimum 6 characters"}));
+    setInputsErrors((values) => ({...values,["cpassword"]: "Minimum 6 characters"}));
   }
   return validate;
 };

@@ -40,9 +40,9 @@ export const hasCoupleJWT = async (navigate) => {
 };
 export const checkCoupleRememberMe = (setInputs) => {
   setInputs({
-    ["username"]: localStorage.cusername,
-    ["password"]: localStorage.cpassword,
-    ["remember_me"]: localStorage.cremember_me,
+    ["cusername"]: localStorage.cusername,
+    ["cpassword"]: localStorage.cpassword,
+    ["cremember_me"]: localStorage.cremember_me,
   });
 };
 export const logout = async (setLoginStatus,navigate) => {

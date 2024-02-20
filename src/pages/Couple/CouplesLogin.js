@@ -24,14 +24,14 @@ const CouplesLogin = (props) => {
   let navigate                                      = useNavigate();
   const [showPassword, setShowPassword]             = useState(true);
   const [passwordType, setPasswordType]             = useState("text");
-  const [formValues, setFormValues]                 = useState({ email: "", password: "" });
+  const [formValues, setFormValues]                 = useState({});
   const [errors, setErrors]                         = React.useState({});
   const [showVisibilityIcon, setShowVisibilityIcon] = useState(false);
 
   const togglePasswordVisibility = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword);
-    if (formValues.password.trim() !== "" && showPassword) {
+    if (formValues.cpassword.trim() !== "" && showPassword) {
       setShowVisibilityIcon(!showPassword);
     } else {
       setShowVisibilityIcon(false);
@@ -96,7 +96,6 @@ const CouplesLogin = (props) => {
                   name="cemail"
                   type="text"
                   onChange={handleInputChange}
-                  autoComplete="off"
                 />
                 {errors.email && <div className="error-text">{errors.email}</div>}
               </div>
@@ -112,7 +111,6 @@ const CouplesLogin = (props) => {
                   onKeyDown={handleKeyPress}
                   // label="Password*"
                   onChange={handleInputChange}
-                  autoComplete="off"
                   InputProps={{
                     endAdornment: showVisibilityIcon && (
                       <IconButton onClick={togglePasswordVisibility}>
