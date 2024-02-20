@@ -48,8 +48,7 @@ const Reviews = () => {
   const [selectedVendor, setSelectedVendor] = useState("");
   const [errors, setErrors] = React.useState({});
   const [researchErrors, setResearchErrors] = useState({});
-  // const [best, setBest] = useState(0);
-  // const [isBestVendorClicked, setIsBestVendorClicked] = useState(0);
+
 
   useEffect(() => {
     BusinessJS.fetchVServices(setServices);

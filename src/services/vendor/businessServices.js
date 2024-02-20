@@ -54,6 +54,14 @@ export async function update_settings(settings, postData) {
   );
 }
 
+export async function business_signup(postData) {
+  return await apiService.apiCall(
+    apiUrls.BUSINESS_API["STORE"],
+    "POST",
+    postData
+  );
+}
+
 export async function manage_wedding(options, postData) {
   return await apiService.apiCall(
     MAIN_API["MANAGE_WEDDING"] + "/" + "0" + "/" + options,
@@ -64,6 +72,18 @@ export async function manage_wedding(options, postData) {
 
 export async function stateDropdown(postData) {
   return await apiService.apiCall(apiUrls.STATE_DROPDOWN, "GET", postData);
+}
+
+export async function bookingsPerYearDropdown(postData) {
+  return await apiService.apiCall(
+    apiUrls.SERVICEYEAR_DROPDOWN,
+    "GET",
+    postData
+  );
+}
+
+export async function findUsDropdown(postData) {
+  return await apiService.apiCall(apiUrls.FINDUS_DROPDOWN, "GET", postData);
 }
 
 export async function categoryDropdown(postData) {

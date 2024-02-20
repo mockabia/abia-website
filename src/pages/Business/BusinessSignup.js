@@ -10,36 +10,16 @@ import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { default as Select } from "react-select";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { CustomDropdownSelectStyles } from "../../components/FormStyle";
 import axios from "axios";
 import * as apiurls from "../../api/apiUrls";
 import { useNavigate } from "react-router-dom";
-export const MAIN_API = apiurls.BUSINESS_API;
-
-const schema = yup.object().shape({
-  name: yup.string().required("Business name is required"),
-  email: yup
-    .string()
-    .required("Email is required")
-    .email("Invalid email address"),
-  mobile_phone: yup.string().required("Phone no: is required"),
-  website: yup.string().required("Website is required"),
-  contact_person: yup.string().required("Contact name is required"),
-  state: yup.string().required("Please select an option"),
-  first_category: yup.string().required("Please select an option"),
-  avgperyear: yup.string().required("Please select an option"),
-  findus: yup.string().required("Please select an option"),
-  password: yup
-    .string()
-    .required("Password is required")
-    .min(6, "Password should be 6 chars minimum"),
-  confirm_password: yup
-    .string()
-    .required("Confirm Password is required.")
-    .oneOf([yup.ref("password")], "Passwords must match"),
-});
+import {
+  CommonInput,
+  CommonSelect,
+} from "../../components/Login and Signup/business-Signup/VSignuPComponents";
+import * as BusinessJS from "../Business/Business";
+import { validateBusinessSignupForm } from "../Plugins/customValidator";
 
 const BusinessSignup = () => {
   const [formStep, setFormStep] = useState(0);
@@ -56,6 +36,8 @@ const BusinessSignup = () => {
     password: "",
     confirm_password: "",
   });
+  const [errors, setErrors] = useState({});
+  const [inputErrors, setInputErrors] = useState({});
   const [registerLocation, setRegisterLocation] = useState([]);
   const [registerService, setRegisterService] = useState([]);
   const [registerBooking, setRegisterBooking] = useState([]);
@@ -67,85 +49,101 @@ const BusinessSignup = () => {
 
   const navigate = useNavigate();
 
-  const {
-    watch,
-    register,
-    handleSubmit,
-    formState: { errors, isDirty, isValid, isSubmitting, submitCount },
-    control,
-    setValue,
-    reset,
-  } = useForm({
-    mode: "onChange", //isValid works on mode=onChange
+  //handlechange
+  const handleChange = (name, value) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "", // Clear the error for the current field
+    }));
+  };
 
-    resolver: yupResolver(schema),
-  });
+  // handle select
+  const handleSelectChange = (name, selectedOption) => {
+    if (name === "state") {
+      setSelectedState(selectedOption.label);
+      // console.log("Selected state URL:", selectedOption.url);
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        state: selectedOption.url,
+      }));
+    }
+    if (name === "first_category") {
+      setSelectedCategory(selectedOption.label);
+      console.log("Selected services:", selectedOption.value);
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        first_category: selectedOption.value,
+      }));
+    }
+    if (name === "avgperyear") {
+      setSelectedBooking(selectedOption.label);
+      console.log("Selected booking:", selectedOption.value);
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        avgperyear: selectedOption.value,
+      }));
+    }
+    if (name === "findus") {
+      setSelectedFindUs(selectedOption.label);
+      console.log("Selected findus:", selectedOption.value);
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        findus: selectedOption.value,
+      }));
+    }
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "",
+    }));
+  };
 
   // next page
   const compleTeFormStep = (data) => {
-    setFormValues({ ...formValues, ...data });
-    setFormStep((current) => current + 1);
+    const validationErrors = validateBusinessSignupForm(formValues, formStep);
+    setErrors(validationErrors);
+
+    // If there are errors, do not proceed to the next step
+    if (Object.keys(validationErrors).length === 0) {
+      setFormValues({ ...formValues, ...data });
+      setFormStep((current) => current + 1);
+    }
   };
+  // const compleTeFormStep = (data) => {
+  //   setFormValues({ ...formValues, ...data });
+  //   setFormStep((current) => current + 1);
+  // };
   // previous page
   const prevStep = () => {
     setFormStep((current) => current - 1);
   };
 
-  //api
-  const fetchState = async () => {
-    await servicesPage.stateDropdown().then(function (response) {
-      if (response.statuscode == 200) {
-        setRegisterLocation(response.result);
-      }
-    });
-  };
-  const fetchCategory = async () => {
-    await servicesPage.categoryDropdwon().then(function (response) {
-      if (response.statuscode == 200) {
-        setRegisterService(response.result);
-      }
-    });
-  };
-  const fetchBookingsPerYear = async () => {
-    await servicesPage.bookingsPerYearDropdown().then(function (response) {
-      if (response.statuscode == 200) {
-        setRegisterBooking(response.result);
-      }
-    });
-  };
-
-  const fetchFindUS = async () => {
-    await servicesPage.findUsDropdown().then(function (response) {
-      if (response.statuscode == 200) {
-        setRegisterFindUs(response.result);
-      }
-    });
-  };
-
-  const onSubmit = async (formData) => {
-    try {
-      const response = await axios.post(MAIN_API["STORE"], formData);
-      if (response.status === 200) {
-        navigate("/my-profile");
-        console.log("Data Successfully Submitted:", response.data);
-      } else {
-        console.log("Failed to submit data. Status code:", response.status);
-      }
-    } catch (error) {
-      console.error("Error submitting data:", error);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validateBusinessSignupForm(formValues, formStep);
+    setErrors(validationErrors);
+    // If there are errors, prevent form submission
+    if (Object.keys(validationErrors).length > 0) {
+      return;
     }
+    BusinessJS.vendorBusinessSubmit(formValues, setInputErrors);
+    console.log("formValues submitted:", formValues);
   };
 
+  // Api
   useEffect(() => {
-    fetchState();
-    fetchCategory();
-    fetchBookingsPerYear();
-    fetchFindUS();
+    BusinessJS.fetchState(setRegisterLocation);
+    BusinessJS.fetchCategory(setRegisterService);
+    BusinessJS.fetchBookingsPerYear(setRegisterBooking);
+    BusinessJS.fetchFindUS(setRegisterFindUs);
   }, []);
   return (
     <>
       <div className=" desktop-form">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit}>
           {formStep === 0 && (
             <section className="register-container register-container-1  relative">
               <div class=" register-page1-div1 ">
@@ -155,76 +153,54 @@ const BusinessSignup = () => {
 
                   <div className="register-signup-header">
                     Let's get started.
-                    <span className="register-position-adjust">fef01</span>{" "}
+                    {/* <span className="register-position-adjust">fef01</span>{" "} */}
                   </div>
                   <br />
+                  {/* business name */}
 
+                  <CommonInput
+                    label="Business Name*"
+                    type="text"
+                    name="name"
+                    id="bname"
+                    value={formValues.name}
+                    onChange={(name, value) => handleChange(name, value)}
+                  />
+                  {errors.name && (
+                    <div className="error-message">{errors.name}</div>
+                  )}
+                  {/* Email */}
+                  <CommonInput
+                    label="Email*"
+                    type="text"
+                    name="email"
+                    id="email"
+                    value={formValues.email}
+                    onChange={(name, value) => handleChange(name, value)}
+                    // onChange={(e) => handleChange("email", e.target.value)}
+                  />
+                  {errors.email && (
+                    <div className="error-message">{errors.email}</div>
+                  )}
+                  {/* Phone */}
+                  <CommonInput
+                    label="Phone*"
+                    type="number"
+                    name="mobile_phone"
+                    id="mobile_phone"
+                    inputMode="tel"
+                    value={formValues.mobile_phone}
+                    onChange={(name, value) => handleChange(name, value)}
+                    // onChange={(e) => handleChange("phone", e.target.value)}
+                  />
+                  {errors.mobile_phone && (
+                    <div className="error-message">{errors.mobile_phone}</div>
+                  )}
                   <div>
-                    <label className="text-[14px] font-bold">
-                      Business Name*
-                    </label>
-                    <input
-                      type="text"
-                      id="bname"
-                      name="name"
-                      className={`signup-input-style ${
-                        errors.name ? "signup-error-border" : ""
-                      }`}
-                      {...register("name")}
-                    />
-                    <p className="text-[12px] text-red-500 font-semibold mt-1">
-                      {errors.name?.message}
-                    </p>
-                  </div>
-                  <div className="mt-2">
-                    <label className="text-[14px] font-bold">
-                      Email*
-                      <span className="register-position-adjust">
-                        fefeefefef
-                      </span>{" "}
-                    </label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="text"
-                      className={`signup-input-style ${
-                        errors.email ? "signup-error-border" : ""
-                      }`}
-                      {...register("email")}
-                    />
-                    <p className="text-[12px] text-red-500 font-semibold mt-1">
-                      {errors.email?.message}
-                    </p>
-                  </div>
-
-                  <div className="mt-2">
-                    <label className="text-[14px] font-bold">
-                      Phone*
-                      <span className="register-position-adjust">
-                        fefeefefe
-                      </span>{" "}
-                    </label>
-                    <input
-                      id="phone"
-                      inputMode="tel"
-                      type="number"
-                      name="mobile_phone"
-                      className={`signup-input-style ${
-                        errors.mobile_phone ? "signup-error-border" : ""
-                      }`}
-                      {...register("mobile_phone")}
-                    />
-                    <p className="text-[12px] text-red-500 font-semibold mt-1">
-                      {errors.mobile_phone?.message}
-                    </p>
-                  </div>
-                  <br />
-                  <div>
+                    <br />
                     <button
                       type="button"
-                      className={`register-next-button ${
-                        !isValid ? "disabled" : ""
-                      }`}
+                      className="register-next-button"
                       onClick={compleTeFormStep}
                     >
                       Next
@@ -251,125 +227,52 @@ const BusinessSignup = () => {
                     Let'smake it personal
                   </div>
                   <br />
-                  <div>
-                    <label className="text-[14px] font-bold">
-                      Contact Name*
-                    </label>
-                    <input
-                      id="contact_person"
-                      type="text"
-                      name="contact_person"
-                      className={`signup-input-style ${
-                        errors.contact_person ? "signup-error-border" : ""
-                      }`}
-                      {...register("contact_person")}
-                    />
-                    <p className="text-[12px] text-red-500 font-semibold mt-1">
-                      {errors.contact_person?.message}
-                    </p>
-                  </div>
-                  {/* lcoation */}
-                  <div className="mt-2">
-                    <label className="text-[14px] font-bold whitespace-nowrap">
-                      Where are you based?*
-                      <span className="register-position-adjust">
-                        fefeefefedededdd
-                      </span>{" "}
-                    </label>
-                    <div className="text-[14px]">
-                      <Controller
-                        name="state"
-                        control={control}
-                        render={({ field }) => (
-                          <Select
-                            id="state"
-                            name="state"
-                            options={registerLocation}
-                            {...field}
-                            value={selectedState}
-                            onChange={(selectedLocation) => {
-                              setSelectedState(selectedLocation);
-                              field.onChange(
-                                selectedLocation ? selectedLocation.url : ""
-                              );
-                            }}
-                            className={`signup-input-style ${
-                              errors.state ? "signup-error-border" : ""
-                            }`}
-                            styles={CustomDropdownSelectStyles}
-                            components={{
-                              DropdownIndicator: () => (
-                                <div>
-                                  <FontAwesomeIcon
-                                    icon={faCaretDown}
-                                    className="dropDown-position"
-                                    style={{ color: "#7c7c7c" }}
-                                  />
-                                </div>
-                              ),
-                            }}
-                          />
-                        )}
-                      />
-                      {errors.state && (
-                        <p className="text-[12px] text-red-500 font-semibold mt-1">
-                          {errors.state.message}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  {/* services */}
-                  <div className="mt-2">
-                    <label className="text-[14px] font-bold whitespace-nowrap">
-                      Primary Services*
-                      <span className="register-position-adjust">
-                        fefeefefedededdeeded
-                      </span>{" "}
-                    </label>
-                    <div className="text-[14px]">
-                      <Controller
-                        name="first_category"
-                        control={control}
-                        render={({ field }) => (
-                          <Select
-                            id="first_category"
-                            name="first_category"
-                            options={registerService}
-                            {...field}
-                            value={selectedCategory}
-                            onChange={(selectedOption) => {
-                              setSelectedCategory(selectedOption);
-                              field.onChange(
-                                selectedOption ? selectedOption.value : ""
-                              );
-                            }}
-                            className={`signup-input-style ${
-                              errors.first_category ? "signup-error-border" : ""
-                            }`}
-                            styles={CustomDropdownSelectStyles}
-                            components={{
-                              DropdownIndicator: () => (
-                                <div>
-                                  <FontAwesomeIcon
-                                    icon={faCaretDown}
-                                    className="dropDown-position"
-                                    style={{ color: "#7c7c7c" }}
-                                  />
-                                </div>
-                              ),
-                            }}
-                          />
-                        )}
-                      />
-                      {errors.first_category && (
-                        <p className="text-[12px] text-red-500 font-semibold mt-1">
-                          {errors.first_category.message}
-                        </p>
-                      )}
-                    </div>
-                    {/* <input id="number" type="tel" className="signup-input-style" /> */}
-                  </div>
 
+                  <CommonInput
+                    label=" Contact Name*"
+                    type="text"
+                    name="contact_person"
+                    id="contact_person"
+                    value={formValues.contact_person}
+                    onChange={(name, value) => handleChange(name, value)}
+                    // onChange={(e) =>
+                    //   handleChange("contact_person", e.target.value)
+                    // }
+                  />
+                  {errors.contact_person && (
+                    <div className="error-message">{errors.contact_person}</div>
+                  )}
+
+                  {/* lcoation */}
+                  <CommonSelect
+                    name="state"
+                    id="state"
+                    label="Where are you based?*"
+                    options={registerLocation}
+                    value={registerLocation.find(
+                      (option) => option.label === selectedState
+                    )}
+                    onChange={handleSelectChange}
+                    // value={selectedState}
+                  />
+                  {errors.state && (
+                    <div className="error-message">{errors.state}</div>
+                  )}
+                  {/* services */}
+                  <CommonSelect
+                    id="first_category"
+                    name="first_category"
+                    label="Primary Services*"
+                    options={registerService}
+                    value={registerService.find(
+                      (option) => option.label === selectedCategory
+                    )}
+                    onChange={handleSelectChange}
+                    // value={selectedCategory}
+                  />
+                  {errors.first_category && (
+                    <div className="error-message">{errors.first_category}</div>
+                  )}
                   <br />
                   <div className="flex items-center gap-3">
                     <AiOutlineArrowLeft
@@ -411,154 +314,77 @@ const BusinessSignup = () => {
                   </div>
                   <br />
                   {/* webiste */}
-                  <div>
-                    <label className="text-[14px] font-bold">
-                      Website
-                      <span className="register-position-adjust">
-                        fefeef
-                      </span>{" "}
-                    </label>
-                    <input
-                      id="website"
-                      type="text"
-                      name="website"
-                      className="signup-input-style"
-                      {...register("website")}
-                    />
-                  </div>
+
+                  <CommonInput
+                    label="Website"
+                    id="website"
+                    type="text"
+                    name="website"
+                    value={formValues.website}
+                    onChange={(name, value) => handleChange(name, value)}
+                    // onChange={(e) => handleChange("website", e.target.value)}
+                  />
+
                   {/* bookings */}
-                  <div className="mt-2">
-                    <label className="text-[14px] font-bold">
-                      # of weddings booked this year?
-                      <span className="register-position-adjust">
-                        fefeedl
-                      </span>{" "}
-                    </label>
-                    <div className="text-[14px]">
-                      <Controller
-                        name="avgperyear"
-                        control={control}
-                        render={({ field }) => (
-                          <Select
-                            id="avgperyear"
-                            name="avgperyear"
-                            options={registerBooking}
-                            {...field}
-                            value={selectedBooking}
-                            onChange={(selectedLocation) => {
-                              setSelectedBooking(selectedLocation);
-                              field.onChange(
-                                selectedLocation ? selectedLocation.value : ""
-                              );
-                            }}
-                            className={`signup-input-style ${
-                              errors.avgperyear ? "signup-error-border" : ""
-                            }`}
-                            styles={CustomDropdownSelectStyles}
-                            components={{
-                              DropdownIndicator: () => (
-                                <div>
-                                  <FontAwesomeIcon
-                                    icon={faCaretDown}
-                                    className="dropDown-position"
-                                    style={{ color: "#7c7c7c" }}
-                                  />
-                                </div>
-                              ),
-                            }}
-                          />
-                        )}
-                      />
-                    </div>
-                  </div>
+                  <CommonSelect
+                    id="avgperyear"
+                    name="avgperyear"
+                    label=" # of weddings booked this year?"
+                    options={registerBooking}
+                    value={registerBooking.find(
+                      (option) => option.label === selectedBooking
+                    )}
+                    onChange={handleSelectChange}
+
+                    // value={selectedCategory}
+                  />
 
                   {/* find us */}
-                  <div className="mt-2">
-                    <label className="text-[14px] font-bold">
-                      How did you find us?
-                      <span className="register-position-adjust">
-                        fefeefefefefelelee
-                      </span>{" "}
-                    </label>
-                    <div className="text-[14px]">
-                      <Controller
-                        name="findus"
-                        control={control}
-                        render={({ field }) => (
-                          <Select
-                            id="findus"
-                            name="findus"
-                            options={registerFindUs}
-                            {...field} // This spreads the field object to control the input
-                            value={selectedFindUs}
-                            onChange={(selectedLocation) => {
-                              setSelectedFindUs(selectedLocation);
-                              field.onChange(
-                                selectedLocation ? selectedLocation.value : ""
-                              );
-                            }}
-                            className={`signup-input-style ${
-                              errors.findus ? "signup-error-border" : ""
-                            }`}
-                            styles={CustomDropdownSelectStyles}
-                            components={{
-                              DropdownIndicator: () => (
-                                <div>
-                                  <FontAwesomeIcon
-                                    icon={faCaretDown}
-                                    className="dropDown-position"
-                                    style={{ color: "#7c7c7c" }}
-                                  />
-                                </div>
-                              ),
-                            }}
-                          />
-                        )}
-                      />
-                    </div>
-                  </div>
+                  <CommonSelect
+                    id="findus"
+                    name="findus"
+                    label=" How did you find us?"
+                    options={registerFindUs}
+                    value={registerFindUs.find(
+                      (option) => option.label === selectedFindUs
+                    )}
+                    onChange={handleSelectChange}
+                    // value={selectedCategory}
+                  />
+
                   {/* password */}
-                  <div className="mt-2">
-                    <label className="text-[14px] font-bold">
-                      Password*
-                      <span className="register-position-adjust">
-                        fefeef
-                      </span>{" "}
-                    </label>
-                    <input
-                      type="password"
-                      name="password"
-                      className="signup-input-style"
-                      {...register("password")}
-                    />
-                    <p className="text-[14px] text-red-500 font-semibold mt-1">
-                      {errors.password?.message}
-                    </p>
-                  </div>
-                  {/*repeat password */}
-                  <div className="mt-2">
-                    <label className="text-[14px] font-bold">
-                      Repeat Password*
-                      <span className="register-position-adjust">
-                        fefeef
-                      </span>{" "}
-                    </label>
-                    <input
-                      type="password"
-                      name="confirm_password"
-                      className="signup-input-style"
-                      {...register("confirm_password")}
-                    />
-                    <p className="text-[14px] text-red-500 font-semibold mt-1">
-                      {errors.confirm_password?.message}
-                    </p>
-                  </div>
-                  <br />
-                  {submitCount > 0 && !isValid && (
-                    <p className="text-red-500 font-semibold">
-                      ! Please enter the valid details.
-                    </p>
+                  <CommonInput
+                    label="Password*"
+                    type="password"
+                    name="password"
+                    id="password"
+                    value={formValues.password}
+                    onChange={(name, value) => handleChange(name, value)}
+                    // onChange={(e) => handleChange("password", e.target.value)}
+                  />
+                  {errors.password && (
+                    <div className="error-message">{errors.password}</div>
                   )}
+                  {/*repeat password */}
+                  <CommonInput
+                    label=" Repeat Password*"
+                    type="password"
+                    name="confirm_password"
+                    id="confirm_password"
+                    value={formValues.confirm_password}
+                    onChange={(name, value) => handleChange(name, value)}
+                    // onChange={(e) =>
+                    //   handleChange("confirm_password", e.target.value)
+                    // }
+                  />
+                  {errors.confirm_password && (
+                    <div className="error-message">
+                      {errors.confirm_password}
+                    </div>
+                  )}
+
+                  <br />
+
                   <br />
 
                   <div className="flex items-center gap-3">
@@ -568,9 +394,7 @@ const BusinessSignup = () => {
                       className="cursor-pointer"
                       onClick={prevStep}
                     />
-                    <button type="submit" className="register-next-button">
-                      Submit
-                    </button>
+                    <button className="register-next-button">Submit</button>
                     <div className="blank-div ">ABCD</div>
                   </div>
                 </div>

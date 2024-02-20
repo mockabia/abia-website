@@ -26,13 +26,15 @@ const Public = () => {
     });
   };
 
+  console.log("Blog results:", blogResults);
+
   const firstBlog = blogResults.slice(0, 1);
   const threeColumnBlog = blogResults.slice(1);
   // const fourColumnblogs = blogResults.slice(5);
   return (
     <div className="blog-background">
       <div className="mobile-content">
-        <div className="flex flex-col gap-[10px] mb-[1rem]" >
+        <div className="flex flex-col gap-[10px] mb-[1rem]">
           <h2 className="blog-main-header">{pageTitle}</h2>
           <div
             className="sub-description"
