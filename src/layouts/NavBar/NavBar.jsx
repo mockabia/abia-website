@@ -79,12 +79,11 @@ const NavBar = (props) => {
   useEffect(() => {
     let vtoken = localStorage.getItem("vendorToken");
     let ctoken = localStorage.getItem("coupleToken");
-
-    if (vtoken !== undefined && vtoken !== "undefined" && vtoken !== null) {
+    if (vtoken !== undefined && vtoken !== "undefined" && vtoken !== null) {console.log('vendorToken')
       vtoken = JSON.parse(vtoken);
       let userSession = vtoken && vtoken.user ? vtoken.user : null;
       setUserProfile(userSession);
-    }else if(ctoken !== undefined && ctoken !== "undefined" && ctoken !== null){
+    }else if(ctoken !== undefined && ctoken !== "undefined" && ctoken !== null){console.log('coupleToken')
       ctoken = JSON.parse(ctoken);
       let userSession = ctoken && ctoken.user ? ctoken.user : null;
       setUserProfile(userSession);
@@ -301,7 +300,7 @@ const NavBar = (props) => {
           ))}
         </ul>
         <div className="login-signup-group">
-          {userProfile && userProfile.name != "" ? (
+          {Object.keys(userProfile).length>0 && userProfile && userProfile.name != "" ? (
             <>
               <button
                 className="mr-4 focus:outline-none"

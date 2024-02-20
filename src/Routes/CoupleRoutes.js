@@ -36,7 +36,7 @@ const CoupleRoutes = (props) => {
       navigate(window.CDASHBOARD);
     }
     if (isFoundInLoginedmenu && !RoutesJS.hasCoupleJWT()) {
-      navigate(window.CLOGIN);
+      navigate(window.HOME);
     }
   }, [url,loginMenu,loginedMenu]);
 

@@ -2,6 +2,7 @@ import * as servicesPage from "../services/contentServices";
 /* public routes */
 
 export const fetchContentRoutes = async (setPublicMenu, setBlogMenu) => {
+  window.HOME = process.env.REACT_APP;
   await servicesPage.fetchContentRoutes().then(function (response) {
     if (response.statuscode == 200) {
       setPublicMenu(response.result);
@@ -117,7 +118,7 @@ export const fetchCoupleRoutes = async (setCoupleMenu, setShowLoader) => {
 
       
       window.CSIGNUP = process.env.REACT_APP_COUPLE_URL + "/" + signup[0].url;
-      window.CLOGIN = process.env.REACT_APP_COUPLE_URL + "/" + login[0].url;
+      //window.CLOGIN = process.env.REACT_APP_COUPLE_URL + "/" + login[0].url;
       window.CDASHBOARD =
         process.env.REACT_APP_COUPLE_URL + "/" + dashboardMenu[0].url;
       window.CTHANKYOU =
