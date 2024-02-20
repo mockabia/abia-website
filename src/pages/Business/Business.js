@@ -11,7 +11,7 @@ export const logout = async (navigate) => {
         apiService.setAuthToken(null);
         localStorage.removeItem("vendorToken");
         localStorage.removeItem("user");
-        navigate(window.VLOGIN);
+        navigate(window.HOME);
       }
     }
   });

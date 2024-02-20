@@ -78,7 +78,7 @@ export async function apiCall(url, method, data) {
             setAuthToken(null);
             localStorage.removeItem("vendorToken");
             localStorage.removeItem("user");
-            window.location = window.VLOGIN;
+            window.location = window.HOME;
           }
         }else if(ctoken !== undefined && ctoken !== "undefined" && ctoken !== null){
           if (
@@ -92,7 +92,7 @@ export async function apiCall(url, method, data) {
             setAuthToken(null);
             localStorage.removeItem("coupleToken");
             localStorage.removeItem("user");
-            window.location = window.CLOGIN;
+            window.location = window.HOME;
           }
         }
       }
@@ -101,7 +101,7 @@ export async function apiCall(url, method, data) {
     setAuthToken(null);
     localStorage.removeItem("vendorToken");
     localStorage.removeItem("vuser");
-    window.location = window.VLOGIN;
+    window.location = window.HOME;
   }
 }
 
@@ -116,7 +116,7 @@ export async function refreshVendorToken() {
       setAuthToken(null);
       localStorage.removeItem("vendorToken");
       localStorage.removeItem("vuser");
-      window.location = window.VLOGIN;
+      window.location = window.HOME;
     } else {
       const token = response.token;
       localStorage.setItem("vendorToken", JSON.stringify(token));
@@ -147,7 +147,7 @@ export async function refreshCoupleToken() {
       setAuthToken(null);
       localStorage.removeItem("coupleToken");
       localStorage.removeItem("cuser");
-      window.location = window.VLOGIN;
+      window.location = window.HOME;
     } else {
       const token = response.token;
       localStorage.setItem("coupleToken", JSON.stringify(token));

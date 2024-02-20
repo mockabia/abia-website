@@ -8,16 +8,14 @@ import { ReactComponent as PlanningIcon } from "../../icons/Couples/planning.svg
 import { ReactComponent as Planning2Icon } from "../../icons/Couples/bookVenue.svg";
 import { ReactComponent as FormICon4 } from "../../icons/Couples/formIcon4.svg";
 import CloseIcon from "@mui/icons-material/Close";
+import CouplesLogin from "./CouplesLogin";
 
 import {
-  Checkbox,
   FormControl,
   FormControlLabel,
   FormGroup,
-  Grid,
   MenuItem,
   Stack,
-  TextField,
 } from "@mui/material";
 import {
   DatePickerCouple,
@@ -34,7 +32,6 @@ import {
   CheckBoxStyle,
   CSTextfield,
   CSmenuItemStyle,
-  CoupleCommonInput,
 } from "../../components/FormStyle";
 import * as CoupleJS from "../Couple/Couple";
 
@@ -70,33 +67,32 @@ export default function CouplesSignUp() {
   const [errors, setErrors]                     = React.useState({});
   const [marketingOptions, setMarketingOptions] = React.useState([]);
   const [marketingSelect, setMarketingSelect]   = React.useState([]);
+  const [imageClass, setImageClass]             = React.useState(false);
 
+  const [loginOpen, setLoginOpen]               = React.useState(false);
 
   useEffect(() => {
     CoupleJS.fetchState(setLocation);
     CoupleJS.fetchMarketingCategory(setMarketingOptions);
     // setIsOptionSelected(true);
   }, []);
+  
+  useEffect(() => {
+    let imageClass = 'cs-image-container-3';
+    if(activeStep==0){
+      imageClass = 'cs-image-container-1';
+    }else if(activeStep==1){
+      imageClass = 'cs-image-container-2';
+    }else if(activeStep==2){
+      imageClass = 'cs-image-container-3';
+    }
+    setImageClass(imageClass)
+  }, [activeStep]);
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };
 
-  const handleNext = () => {
-    if (selectedOption === null) {
-      setIsOptionSelected(false);
-    } else {
-      setIsOptionSelected(true);
-      setFormValues((prevFormValues) => ({
-        ...prevFormValues,
-        bride_message: selectedOption,
-      }));
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      console.log("Current form values:", {
-        formValues,
-      });
-    }
-  };
   const handleInputChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -150,7 +146,7 @@ export default function CouplesSignUp() {
   const handleFormNext = () => {
     CoupleJS.coupleSignup(activeStep,setActiveStep,formValues, setErrors,navigate)
   };
-
+  
   return (
     <div>
       <form>
@@ -158,9 +154,15 @@ export default function CouplesSignUp() {
         
           <section className="couples-singup-container">
             <div className="couples-signup-image">
-              <div className="cs-image-container-1 cs-image-container"></div>
+              <div className={`cs-image-container ${imageClass} `}></div>
             </div>
-
+            {activeStep !== 0 && (
+               <div className="cs-back-button" onClick={handleBack}>
+                  <ArrowBackIcon />
+                  <p className="text-[12px] text-black font-[800]">Back</p>
+                </div> 
+            )}
+            
             <div className="cs-close-icon" onClick={handleClosePage}>
               <CloseIcon />
             </div>
@@ -195,6 +197,7 @@ export default function CouplesSignUp() {
                 </div>
                 {/* Option buttons */}
                 {/* 1 */}
+                <pre>{JSON.stringify(selectedOption, null, 2)}</pre>
                 {options.map((option, index) => (
                   <div key={index}>
                     <ButtonStyle
@@ -487,9 +490,9 @@ export default function CouplesSignUp() {
                 <div className="flex justify-center">
                   <h5 className="text-[12px]">
                     Already have an account?{" "}
-                    <Link to={window.CLOGIN}>
+                    <span onClick={() => setLoginOpen(true)}>
                       <span className="font-bold text-[#6cc2bc]">Log in</span>
-                    </Link>
+                    </span>
                   </h5>
                 </div>
 
@@ -509,7 +512,7 @@ export default function CouplesSignUp() {
               </React.Fragment>
             </Box>
           </section>
-        
+          <CouplesLogin modalOpen={loginOpen} setModalOpen={setLoginOpen} />
       </form>
     </div>
   );

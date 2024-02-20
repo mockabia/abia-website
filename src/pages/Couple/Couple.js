@@ -1,7 +1,7 @@
 import * as apiService from "../../api/apiServices";
 import * as reactUrls from "../../api/reactUrls";
 import * as servicesPage from "../../services/coupleService";
-import * as customValidator from "../Plugins/customValidator";
+import * as customValidator from "../Plugins/coupleValidator";
 import * as customJS from "../../plugins/custom/custom";
 export {customJS};
 
@@ -52,7 +52,7 @@ export const logout = async (navigate) => {
         apiService.setAuthToken(null);
         localStorage.removeItem("coupleToken");
         localStorage.removeItem("user");
-        navigate(window.CLOGIN);
+        navigate(window.HOME);
       }
     }
   });
@@ -60,10 +60,11 @@ export const logout = async (navigate) => {
 export const coupleSignup = async (activeStep,setActiveStep,formValues, setErrors,navigate) => {
   if (customValidator.validateCoupleSignup(activeStep,formValues, setErrors)) {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    if(activeStep==3){navigate(window.CTHANKYOU)
+    if(activeStep==3){
       await servicesPage.coupleSignup(formValues).then(function (response) {
         if (response.statuscode == 200) {
-          navigate(window.CTHANKYOU)
+          const token = response.token;
+          setLogin(token,navigate)
         } else {
           if (response.errors) {
             setErrors(response.errors);
@@ -80,18 +81,7 @@ export const coupleLogin = async (formValues, setErrors,navigate) => {
     await servicesPage.coupleLogin(formValues).then(function (response) {
       if (response.statuscode == 200) {
         const token = response.token;
-        localStorage.setItem("coupleToken", JSON.stringify(token));
-        localStorage.setItem("abiaType", "C");
-        let expiresInMS = token.expires_in;
-        let currentTime = new Date();
-        let expireTime = new Date(currentTime.getTime() + expiresInMS);
-
-        localStorage.setItem("cexpireTime", expireTime);
-        localStorage.removeItem("cusername");
-        localStorage.removeItem("cpassword");
-        localStorage.removeItem("cremember_me");
-        apiService.setAuthToken(token);
-        navigate(window.CDASHBOARD)
+        setLogin(token,navigate)
       } else {
         if (response.errors) {
           setErrors(response.errors);
@@ -101,4 +91,18 @@ export const coupleLogin = async (formValues, setErrors,navigate) => {
       }
     });
   }
+};
+export const setLogin = async (token,navigate) => {
+  localStorage.setItem("coupleToken", JSON.stringify(token));
+  localStorage.setItem("abiaType", "C");
+  let expiresInMS = token.expires_in;
+  let currentTime = new Date();
+  let expireTime = new Date(currentTime.getTime() + expiresInMS);
+
+  localStorage.setItem("cexpireTime", expireTime);
+  localStorage.removeItem("cusername");
+  localStorage.removeItem("cpassword");
+  localStorage.removeItem("cremember_me");
+  apiService.setAuthToken(token);
+  navigate(window.CDASHBOARD)
 };

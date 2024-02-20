@@ -79,7 +79,7 @@ export const BUSINESS_API = {
 };
 
 export const COUPLE_API = {
-  SIGNUP    : `${baseUrl}WebWeddingSignup`,
+  SIGNUP    : `${baseUrl}WebManageWedding/0/3/1`,
   LOGIN     : `${baseUrl}WebWeddingLogin`,
   FORGOT    : `${baseUrl}WebWeddingForgot`,
   LOGOUT    : `${baseUrl}WebWeddingLogout`,

@@ -2,40 +2,19 @@ import React, { useEffect, useRef } from "react";
 import "./LoginDropdown.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Modal from "@mui/material/Modal";
-import { Box } from "@mui/material";
 import CouplesLogin from "../../pages/Couple/CouplesLogin";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 450,
-};
-
 const LoginDropdown = () => {
-  const [buttonClicked, setButtonClicked] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [modalOpen, seetModalOpen] = useState(false);
+  const [buttonClicked, setButtonClicked]   = useState(false);
+  const [open, setOpen]                     = useState(false);
+  const [loginOpen, setLoginOpen]           = useState(false);
 
-  const handleModalOpen = () => {
-    seetModalOpen(true);
+  const handleLoginOpen = () => {
+    setLoginOpen(true);
     setButtonClicked(false);
     setOpen(false);
   };
-  const handleModalClose = () => seetModalOpen(false);
 
-  const menuItem = [
-    {
-      title: "Couple",
-      path: window.CLOGIN,
-    },
-    {
-      title: "Vendor",
-      path: window.VLOGIN,
-    },
-  ];
   const dropdownRef = useRef(null);
   //css change
   const handleButtonClick = () => {
@@ -75,14 +54,14 @@ const LoginDropdown = () => {
               <Link to={window.VLOGIN}>Vendor</Link>
             </li>
             <li className="loginnav-menu-item">
-              <div onClick={handleModalOpen}>Couple</div>
+              <div onClick={handleLoginOpen}>Couple</div>
             </li>
           </ul>
         </div>
       )}
 
-      <Modal
-        open={modalOpen}
+      {/* <Modal
+        open={loginOpen}
         onClose={handleModalClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -90,7 +69,8 @@ const LoginDropdown = () => {
         <Box sx={style}>
           <CouplesLogin handleClosePage={handleModalClose} />
         </Box>
-      </Modal>
+      </Modal> */}
+      <CouplesLogin modalOpen={loginOpen} setModalOpen={setLoginOpen} />
     </div>
   );
 };
