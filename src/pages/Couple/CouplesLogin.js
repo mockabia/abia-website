@@ -22,7 +22,8 @@ const style = {
 
 const CouplesLogin = (props) => {
   let navigate                                      = useNavigate();
-  const [showPassword, setShowPassword]             = useState(false);
+  const [showPassword, setShowPassword]             = useState(true);
+  const [passwordType, setPasswordType]             = useState("text");
   const [formValues, setFormValues]                 = useState({ email: "", password: "" });
   const [errors, setErrors]                         = React.useState({});
   const [showVisibilityIcon, setShowVisibilityIcon] = useState(false);
@@ -37,6 +38,18 @@ const CouplesLogin = (props) => {
     }
   };
 
+  useEffect(() => {
+    if(showPassword){
+      setPasswordType("text")
+    }else{
+      setPasswordType("password")
+    }
+  }, [showPassword]);
+
+  const handleKeyPress = (e) => {
+    setShowPassword(false);
+    setPasswordType("password")
+  };
   const handleInputChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -80,9 +93,10 @@ const CouplesLogin = (props) => {
                 <label className="cl-label">Email</label>
                 <CoupleCommonInput
                   variant="outlined"
-                  name="email"
-                  type="email"
+                  name="cemail"
+                  type="text"
                   onChange={handleInputChange}
+                  autoComplete="off"
                 />
                 {errors.email && <div className="error-text">{errors.email}</div>}
               </div>
@@ -92,10 +106,13 @@ const CouplesLogin = (props) => {
                 <label className="cl-label">Password</label>
                 <CoupleCommonInput
                   variant="outlined"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
+                  name="cpassword"
+                  type={passwordType}
+                  onKeyUp={handleKeyPress}
+                  onKeyDown={handleKeyPress}
                   // label="Password*"
                   onChange={handleInputChange}
+                  autoComplete="off"
                   InputProps={{
                     endAdornment: showVisibilityIcon && (
                       <IconButton onClick={togglePasswordVisibility}>

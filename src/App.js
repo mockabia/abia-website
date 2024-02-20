@@ -24,12 +24,12 @@ import EditPayment from "./pages/General/Payments/EditPayment";
 import ExistingUserPayment from "./pages/General/Payments/ExistingUserPayment";
 
 const App = () => {
-  const [showLoader, setShowLoader] = useState(false);
-
-  const [publicMenu, setPublicMenu] = useState([]);
-  const [blogMenu, setBlogMenu] = useState([]);
+  const [showLoader, setShowLoader]     = useState(false);
+  const [publicMenu, setPublicMenu]     = useState([]);
+  const [blogMenu, setBlogMenu]         = useState([]);
   const [businessMenu, setBusinessMenu] = useState([]);
-  const [coupleMenu, setCoupleMenu] = useState([]);
+  const [coupleMenu, setCoupleMenu]     = useState([]);
+  const [loginStatus, setLoginStatus]   = useState(true);
 
   useEffect(() => {
     RoutesJS.fetchContentRoutes(setPublicMenu, setBlogMenu);
@@ -48,6 +48,7 @@ const App = () => {
               showLoader={showLoader}
               setShowLoader={setShowLoader}
               menu={businessMenu}
+              setLoginStatus={setLoginStatus} loginStatus={loginStatus}
             />
           }
         />
@@ -58,6 +59,7 @@ const App = () => {
               showLoader={showLoader}
               setShowLoader={setShowLoader}
               menu={coupleMenu}
+              setLoginStatus={setLoginStatus} loginStatus={loginStatus}
             />
           }
         />
@@ -69,6 +71,7 @@ const App = () => {
               setShowLoader={setShowLoader}
               publicMenu={publicMenu}
               blogMenu={blogMenu}
+              setLoginStatus={setLoginStatus} loginStatus={loginStatus}
             />
           }
         />

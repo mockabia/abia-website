@@ -45,13 +45,14 @@ export const checkCoupleRememberMe = (setInputs) => {
     ["remember_me"]: localStorage.cremember_me,
   });
 };
-export const logout = async (navigate) => {
+export const logout = async (setLoginStatus,navigate) => {
   await servicesPage.logout().then(function (response) {
     if (response) {
       if (response.statuscode == 200) {
         apiService.setAuthToken(null);
         localStorage.removeItem("coupleToken");
         localStorage.removeItem("user");
+        setLoginStatus(false)
         navigate(window.HOME);
       }
     }
