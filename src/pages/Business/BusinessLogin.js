@@ -69,6 +69,7 @@ const LoginPage = () => {
           <div className="flex flex-col justify-center items-center p-[20px] relative">
             {/* error message */}
             <h1 className="login-loginbox-header">Vendor Login</h1>
+            
             <form onSubmit={handleSubmit} className="lg:mt-[20px] ">
               <Stack spacing={2}>
                 {/* email */}

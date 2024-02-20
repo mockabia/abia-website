@@ -4,6 +4,10 @@
 /* Mantope */
 @import url('https://fonts.googleapis.com/css2?family=Manrope&family=Raleway&family=Source+Sans+3&display=swap');
 
+/* .font-manrope {
+  font-family: 'Manrope', sans-serif;
+  font-size: 20px;
+} */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,7 +22,7 @@
     background: #ffffff;
     letter-spacing: 0.25px;
     line-height: 1.5;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Manrope', sans-serif;
   }
 
   h1 {

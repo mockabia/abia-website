@@ -13,13 +13,19 @@ import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
 import { Stack } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
-import * as apiurls from "../../api/apiUrls_old";
+import * as apiurls from "../../api/apiUrls";
 import * as GeneralJS from "./General";
 
 const ForgetPassword = () => {
   const [open, setOpen] = React.useState(false);
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState({
+    email: "",
+  });
+  const [errors, setErrors] = useState({});
   const [inputsErrors, setInputsErrors] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [responseMessage, setResponseMessage] = useState("");
+  const [responseEmail, setResponseEmail] = useState("");
 
   const handleOpen = () => setOpen(true);
 
@@ -33,46 +39,47 @@ const ForgetPassword = () => {
     GeneralJS.handleChange(e, setInputs, setInputsErrors);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const errors = GeneralJS.validateForm(inputs); // Validate the form inputs
-    if (Object.values(errors).some((error) => error !== "")) {
-      setInputsErrors(errors);
-    } else {
-      GeneralJS.vendorLoginForm(e, inputs, setInputsErrors);
-    }
+  const validateForgotEmail = (email) => {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
   };
 
-  // const validateForgotEmail = (userEmail) => {
-  //   const re =
-  //     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  //   return re.test(String(userEmail).toLowerCase());
-  // };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+    const { email } = inputs; // extract'email' from the Inputs
+    if (!email) {
+      setErrors({ email: "Email is Required" });
+    } else if (!validateForgotEmail(email)) {
+      setErrors({ email: "Invalid Email address" });
+    } else {
+      try {
+        const response = await axios.post(apiurls.BUSINESS_API.FORGOT, {
+          email: email,
+        });
+        if (response.status === 200) {
+          console.log("Password reset successful:", response.data);
+          setResponseMessage("Password reset successful:", response.data);
 
-  // const handleSubmit = async () => {
-  //   if (!userEmail) {
-  //     setErrors({ userEmail: "Email is Required" });
-  //   } else if (!validateForgotEmail(userEmail)) {
-  //     setErrors({ userEmail: "Invalid Email address" });
-  //   } else {
-  //     try {
-  //       const response = await axios.post(apiurls.BUSINESS_FORGOT, {
-  //         useremail: userEmail,
-  //       });
-  //       if (response.status === 200) {
-  //         console.log("Password reset successful:", response.data);
-  //         setOpen(false);
-  //       } else {
-  //         console.log(
-  //           "Failed to reset password. Status code:",
-  //           response.status
-  //         );
-  //       }
-  //     } catch (error) {
-  //       console.error("Error resetting password:", error);
-  //     }
-  //   }
-  // };
+          setResponseEmail(email);
+          // setOpen(false);
+        } else {
+          setResponseMessage(
+            "Failed to reset password. Status code:",
+            response.status
+          );
+          console.log(
+            "Failed to reset password. Status code:",
+            response.status
+          );
+        }
+      } catch (error) {
+        setResponseMessage("Error resetting password:", error);
+        console.error("Error resetting password:", error);
+      }
+    }
+  };
 
   return (
     <div>
@@ -108,58 +115,70 @@ const ForgetPassword = () => {
               <AiOutlineClose />
             </IconButton>
           </Box>
-          <form>
-            <h3 className="flex justify-center">Forgot Password. ?</h3>
-            <p className="flex justify-center">
-              You can reset your password here.
-            </p>
-            <div className="mt-[1rem]">
-              <TextField
-                label="Enter your Email"
-                id="email"
-                name="email"
-                value={inputs.email}
-                onChange={handleChange}
-                error={inputsErrors.email ? true : false}
-                helperText={inputsErrors.password}
-                sx={{ width: "100%" }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <UserIcons
-                        fill="#949494"
-                        style={{
-                          width: "18px",
-                          height: "18px",
-                        }}
-                      />
-                    </InputAdornment>
-                  ),
-                }}
-                // onChange={(e) => {
-                //   setUserEmail(e.target.value);
-                //   setErrors({ userEmail: "" }); // Clear the error when the input changes
-                // }}
-                // error={!!errors.userEmail}
-                // helperText={errors.userEmail} // Display the helper text
-              />
-              <Button
-                // type="submit"
-                variant="contained"
-                style={{
-                  backgroundColor: "#6cc2bc",
-                  color: "#ffffff",
-                  height: "40px",
-                  textTransform: "capitalize",
-                  width: "100%",
-                  marginTop: "1rem",
-                }}
-                onClick={handleSubmit}
-              >
-                Submit
-              </Button>
+          {isSubmitted && responseMessage ? (
+            <div>
+              <h3 className="flex justify-center items-center">Success!</h3>
+              <p className="flex flex-col justify-start md:justify-center items-center">
+                <h4>{responseMessage}</h4>
+                <p>
+                  Please check your email:{" "}
+                  <span style={{ color: "#6cc2bc", fontWeight: "600" }}>
+                    {responseEmail}
+                  </span>
+                </p>
+              </p>
             </div>
-          </form>
+          ) : (
+            <form>
+              <h3 className="flex justify-center">Forgot Password. ?</h3>
+              <p className="flex justify-center">
+                You can reset your password here.
+              </p>
+              <div className="mt-[1rem]">
+                <TextField
+                  label="Enter your Email"
+                  id="email"
+                  name="email"
+                  value={inputs.email}
+                  onChange={handleChange}
+                  error={inputsErrors.email ? true : false}
+                  helperText={inputsErrors.password}
+                  sx={{ width: "100%" }}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <UserIcons
+                          fill="#949494"
+                          style={{
+                            width: "18px",
+                            height: "18px",
+                          }}
+                        />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                {errors.email && (
+                  <p className="error-message">{errors.email}</p>
+                )}
+                <Button
+                  // type="submit"
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#6cc2bc",
+                    color: "#ffffff",
+                    height: "40px",
+                    textTransform: "capitalize",
+                    width: "100%",
+                    marginTop: "1rem",
+                  }}
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </Button>
+              </div>
+            </form>
+          )}
         </Box>
       </Modal>
     </div>

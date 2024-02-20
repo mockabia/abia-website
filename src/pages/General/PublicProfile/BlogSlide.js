@@ -3,7 +3,7 @@ import "../../Style/PublicProfile.css";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
-const AwardSlide = ({ awards }) => {
+const BlogSlide = ({ awards }) => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const containerRef = useRef();
 
@@ -60,4 +60,6 @@ const AwardSlide = ({ awards }) => {
   );
 };
 
-export default AwardSlide;
+export default BlogSlide;
+
+// export default BlogSlide

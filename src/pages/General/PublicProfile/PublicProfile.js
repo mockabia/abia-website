@@ -8,6 +8,8 @@ import Rating from "@mui/material/Rating";
 import { SiInstagram } from "react-icons/si";
 import { FaTiktok } from "react-icons/fa";
 import AwardSlide from "./AwardSlide";
+import PublicEnquiry from "./PublicEnquiry";
+import BlogSlide from "./BlogSlide";
 // import LeftFeather from "../../../icons/feather-right.jpg";
 // import RightFeather from "../../../icons/feather-left.jpg";
 
@@ -137,6 +139,33 @@ const PublicProfile = () => {
           award_name: "2023 Top 10 (NATIONAL)",
           award_category: "Function Coordinato",
           award_voting: "",
+        },
+      ],
+      blogs: [
+        {
+          id: 1,
+          title: "Best 26 Celebrants of Queensland",
+          pagephoto_val:
+            "https://abia.abia-test.com//blog/thumb/newimagecheck1383.webp",
+          main_url: "newimagecheck",
+          url: "wedding-blog/newimagecheck",
+        },
+        {
+          id: 2,
+          title: "Best Rustic & Country Wedding Venues in Australia",
+          pagephoto_val:
+            "https://abia.abia-test.com//blog/thumb/best-rustic-country-weddings-venues-in-australia3250.webp",
+          main_url: "best-rustic-country-weddings-venues-in-australia",
+          url: "wedding-blog/best-rustic-country-weddings-venues-in-australia",
+        },
+        {
+          id: 3,
+          title: "Best 14 Wedding Ceremony Venues in Victoria",
+          pagephoto_val:
+            "https://abia.abia-test.com//blog/thumb/best-wedding-ceremony-venues-in-melbourne-geelong-mornington-peninsula-victoria4031.webp",
+          main_url:
+            "best-wedding-ceremony-venues-in-melbourne-geelong-mornington-peninsula-victoria",
+          url: "wedding-blog/best-wedding-ceremony-venues-in-melbourne-geelong-mornington-peninsula-victoria",
         },
       ],
     },
@@ -273,8 +302,16 @@ const PublicProfile = () => {
                   <AwardSlide awards={vendorData.vendor.awards} />
                 </div>
               </div>
+              {/* BLOGS */}
+              <div>
+                <div>
+                  <BlogSlide awards={vendorData.vendor.awards} />
+                </div>
+              </div>
             </div>
-            <div className="pp-message-enq">Enquiry</div>
+            <div className="pp-message-enq">
+              <PublicEnquiry />
+            </div>
           </div>
         </div>
       </LayoutGeneral>

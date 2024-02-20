@@ -25,7 +25,6 @@ export const fetchbusiness = async (setInputs, setpreviewSet) => {
   await servicesPage.editData(userId).then(function (response) {
     if (response.statuscode == 200) {
       setInputs(response.result);
-
       setpreviewSet(true);
     }
   });
@@ -37,7 +36,7 @@ export const handleChange = (e, setInputs, setInputsErrors) => {
   setInputs((values) => ({ ...values, [name]: value }));
   setInputsErrors({});
 };
-
+// state
 export const fetchState = async (setStateOptions) => {
   await servicesPage.stateDropdown().then(function (response) {
     if (response.statuscode === 200) {
@@ -45,7 +44,31 @@ export const fetchState = async (setStateOptions) => {
     }
   });
 };
+export const fetchBookingsPerYear = async (setRegisterBooking) => {
+  await servicesPage.bookingsPerYearDropdown().then(function (response) {
+    if (response.statuscode == 200) {
+      setRegisterBooking(response.result);
+    }
+  });
+};
 
+export const fetchFindUS = async (setRegisterFindUs) => {
+  await servicesPage.findUsDropdown().then(function (response) {
+    if (response.statuscode == 200) {
+      setRegisterFindUs(response.result);
+    }
+  });
+};
+
+//services
+export const fetchBusinessServices = async (setCategoryOptions, id) => {
+  await servicesPage.Businessservices(id).then(function (response) {
+    if (response.statuscode === 200) {
+      setCategoryOptions(response.result);
+    }
+  });
+};
+//category
 export const fetchCategory = async (setCategoryOption) => {
   await servicesPage.categoryDropdown().then(function (response) {
     if (response.statuscode === 200) {
@@ -71,6 +94,21 @@ export const fetchRegion = async (selectedStates, setRegions) => {
         setRegions(response.result);
       }
     });
+};
+
+//VENDOR SIGNUP
+export const vendorBusinessSubmit = async (formValues, setInputsErrors) => {
+  await servicesPage.business_signup(formValues).then(function (response) {
+    if (response.statuscode == 200) {
+      console.log("response:", response.result);
+    } else {
+      if (response.errors) {
+        setInputsErrors(response.errors);
+      } else if (response.statusmessage) {
+        setInputsErrors(response.statusmessage);
+      }
+    }
+  });
 };
 
 // BUSINESS SETTINGS
@@ -241,7 +279,6 @@ export const viewVendorQandA = async (vendorID, setViewQandA) => {
   await servicesPage.view_QandA(vendorID).then(function (response) {
     if (response.statuscode == 200) {
       setViewQandA(response.result);
-      
     }
   });
 };

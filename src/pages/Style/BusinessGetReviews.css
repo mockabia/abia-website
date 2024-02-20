@@ -227,6 +227,8 @@
     grid-column: 2/15;
     cursor: pointer;
     font-size: 14px;
+    color: #575757;
+    font-weight: 400;
 
 }
 

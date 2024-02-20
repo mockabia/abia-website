@@ -736,11 +736,13 @@ export const customSelectStyles2 = {
     ...provided,
     border: "1px solid #c3bebe",
     boxShadow: "none",
-
+    fontFamily: "Manrope",
+    fontSize: "14px",
+    color: "#575757",
+    fontWeight: "400",
     borderRadius: "10px",
     background: "#fafafa",
     padding: "5px",
-    // width: "100%",
     height: "50px",
     // maxHeight: "50px",
     maxWidth: "100%",
@@ -819,7 +821,7 @@ export const MoreSelectedBadge = ({ items }) => {
 };
 
 export const MultiValue = ({ index, getValue, ...props }) => {
-  const maxToShow = 2;
+  const maxToShow = 1;
   const overflow = getValue()
     .slice(maxToShow)
     .map((x) => x.label);

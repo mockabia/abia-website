@@ -1,79 +1,60 @@
 import React, { useEffect, useState } from "react";
 import "../Style/BusinessGetReviews.css";
-import { Controller, useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import ContentHeader from "../../layouts/sidebar/ContentHeader";
-
 import Select, { components } from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { customSelectStyles2 } from "../../components/FormStyle";
-
-import Calendar from "../../third-party-packs/Calendar";
 import * as BusinessJS from "./Business";
-import ReactDatePicker from "react-datepicker";
-import { VendorDatePicker } from "../../components/DatepickerPublic";
-
-const schema = yup.object().shape({
-  bride: yup.string().required("Client's name is required"),
-  groom: yup.string().required("Partner's name is required"),
-  date_of_wedding: yup.date().required("Date of wedding is required"),
-  email: yup
-    .string()
-    .required("Email is required")
-    .email("Invalid email address"),
-  confirm_email: yup
-    .string()
-    .required("Confirm email is required")
-    .email("Invalid email address")
-    .oneOf([yup.ref("email"), null], "Emails must match"),
-  phone: yup.number(),
-  phone: yup.number().required("Phone no: is required"),
-  wedding_state: yup.string().required("The state field is required."),
-  state: yup.string().required("The Resident state is required."),
-  vcid: yup.array().required("Services Booked is required."),
-});
+import { VendorFutureDatePicker } from "../../components/DatepickerPublic";
+import { useLocation } from "react-router-dom";
+import { format } from "date-fns";
 
 const FutureWedding = () => {
+  const [vendorInput, setVendorInputs] = useState({});
+  const vendorId = vendorInput.vid;
+  const [formValues, setFormValues] = useState({
+    bride: "",
+    groom: "",
+    date_of_wedding: null,
+    wedding_state: "",
+    email: "",
+    confirm_email: "",
+    phone: "",
+    vcid: [],
+    vid: "",
+  });
   const [stateOptions, setStateOptions] = useState({});
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [selectedState, setSelectedState] = useState([]);
   const [reseidentState, setResidentState] = useState([]);
-  const {
-    watch,
-    register,
-    handleSubmit,
-    formState: { errors },
-    control,
-  } = useForm({
-    mode: "onChange",
-    resolver: yupResolver(schema),
-    defaultValues: {
-      birde: "",
-      groom: "",
-      date_of_wedding: null,
-      wedding_state: "",
-      state: "",
-      email: "",
-      confirm_email: "",
-      phone: null,
-      vcid: null,
-    },
-  });
+  const [inputsErrors, setInputsErrors] = useState({});
+  const [apiErrors, setApiErrors] = useState({});
+  const [dataSet, setDataSet] = useState(false);
 
-  console.log("useForm executed");
+  // const location = useLocation();
+  // const vendorInput = location.state?.vendorInput || {};
+
+  // vendor inputs for vid
+  useEffect(() => {
+    BusinessJS.fetchbusiness(setVendorInputs, setDataSet);
+  }, []);
+
+  // Vendor services
+  useEffect(() => {
+    if (vendorInput && vendorInput.vid) {
+      BusinessJS.fetchBusinessServices(setCategoryOptions, vendorInput.vid);
+    }
+  }, [vendorInput]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  //Select option data
-
+  // state fetch
   useEffect(() => {
     BusinessJS.fetchState(setStateOptions);
-    BusinessJS.fetchCategory(setCategoryOptions);
   }, []);
 
   const registrationGuidelines = [
@@ -83,34 +64,115 @@ const FutureWedding = () => {
     "4. ABIA will send an automated reminder to your Wedding Client at least '2' times.",
   ];
 
-  const handleStateChange = (selectedOption, field) => {
+  const handleInputChange = (fieldName, value) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [fieldName]: value,
+    }));
+    setInputsErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+  };
+
+  const handleStateChange = (fieldName, selectedOption) => {
     const stateValue = selectedOption ? selectedOption.label : "";
-    setSelectedState({ label: stateValue, value: stateValue });
-    field.onChange(stateValue);
+    setSelectedState(stateValue);
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [fieldName]: selectedOption.url,
+    }));
+    setInputsErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
   };
-  const handleResStateChange = (selectedOption, field) => {
+
+  const handleResStateChange = (fieldName, selectedOption) => {
     const stateValue = selectedOption ? selectedOption.label : "";
-    setResidentState({ label: stateValue, value: stateValue });
-    field.onChange(stateValue);
+    setResidentState(stateValue);
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [fieldName]: selectedOption.url,
+    }));
+    setInputsErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
   };
 
-  const onSubmitForm = (data) => {
-    const formValues = {
-      birde: watch("bride"),
-      groom: watch("groom"),
-      date_of_wedding: watch("date_of_wedding") || null,
-      wedding_state: watch("wedding_state"),
-      state: watch("state"),
-      email: watch("email"),
-      confirm_email: watch("confirm_email"),
-      phone: watch("phone") || null,
-      vcid: watch("vcid"),
-    };
+  // const handleDateChange = (fieldName, date) => {
+  //   setFormValues({ ...formValues, [fieldName]: date });
+  //   setInputsErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+  // };
 
-    console.log("Form data:", data);
+  const handleDateChange = (fieldName, date) => {
+    if (date instanceof Date && !isNaN(date)) {
+      const formattedDate = format(date, "yyyy-MM-dd");
+      console.log("Selected Date:", formattedDate);
+      setFormValues({ ...formValues, [fieldName]: formattedDate });
+      setInputsErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+    }
   };
 
-  const onInvalid = (errors) => console.error(errors);
+  const handleServicesChange = (selectedOptions) => {
+    const selectedVcid = selectedOptions.map((option) => option.value);
+    setFormValues({ ...formValues, vcid: selectedVcid });
+    setInputsErrors((prevErrors) => ({ ...prevErrors, vcid: "" }));
+  };
+
+  const validateForm = () => {
+    const errors = {};
+
+    if (!formValues.bride) {
+      errors.bride = "Full Name is required";
+    }
+    if (!formValues.groom) {
+      errors.groom = "Partner's Name is required";
+    }
+
+    if (!formValues.date_of_wedding) {
+      errors.date_of_wedding = "Wedding Date is required";
+    }
+    if (!formValues.wedding_state) {
+      errors.wedding_state = "Wedding state is required";
+    }
+    if (!formValues.state) {
+      errors.state = "Resident state is required";
+    }
+
+    if (!formValues.email) {
+      // Validate Email
+      errors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formValues.email)) {
+      errors.email = "Invalid Email";
+    }
+
+    if (!formValues.confirm_email) {
+      // Validate Email
+      errors.confirm_email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formValues.confirm_email)) {
+      errors.confirm_email = "Invalid Email";
+    }
+
+    if (!formValues.phone) {
+      errors.phone = "Partner's Name is required";
+    }
+    if (!formValues.vcid || formValues.vcid.length === 0) {
+      errors.vcid = "Service booked is required";
+    }
+    console.log("Validation Errors:", errors);
+    return errors;
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length === 0) {
+      setFormValues((prevValues) => ({
+        ...prevValues,
+        vid: vendorId,
+      }));
+      setFormValues((updatedFormValues) => {
+        BusinessJS.updateManageWedding(2, updatedFormValues, setApiErrors);
+        return updatedFormValues;
+      });
+    } else {
+      setInputsErrors(validationErrors);
+    }
+  };
+
   return (
     <>
       <div className="md:hidden">
@@ -163,7 +225,7 @@ const FutureWedding = () => {
           <div className="mt-[25px]">
             <form
               className="space-y-0 font-semibold"
-              onSubmit={handleSubmit(onSubmitForm, onInvalid)}
+              onSubmit={handleFormSubmit}
             >
               <label className="t">Client's Full Name*</label>
               {/* <br /> */}
@@ -173,12 +235,13 @@ const FutureWedding = () => {
                   name="bride"
                   type="text"
                   className="input-style"
-                  {...register("bride")}
+                  value={formValues.bride}
+                  onChange={(e) => handleInputChange("bride", e.target.value)}
                 />
               </div>
-              {errors.bride && (
+              {inputsErrors.bride && (
                 <p className="text-[12px] text-red-500 font-semibold mt-1">
-                  {errors.bride.message}
+                  {inputsErrors.bride}
                 </p>
               )}
               <br />
@@ -190,43 +253,28 @@ const FutureWedding = () => {
                   name="groom"
                   type="text"
                   className="input-style"
-                  {...register("groom")}
+                  value={formValues.groom}
+                  onChange={(e) => handleInputChange("groom", e.target.value)}
                 />
               </div>
-              {errors.groom && (
+              {inputsErrors.groom && (
                 <p className="text-[12px] text-red-500 font-semibold mt-1">
-                  {errors.groom.message}
+                  {inputsErrors.groom}
                 </p>
               )}
               <br />
               <div className="mt-[0px] flex flex-col gap-[5px]">
                 <label>Wedding Date*</label>
-                <VendorDatePicker />
-                {/* <Controller
-                    name="date_of_wedding"
-                    control={control}
-                    render={({ field }) => (
-                      <ReactDatePicker
-                        className="example-custom-input"
-                        {...field}
-                        selected={field.value}
-                        onChange={(date) => field.onChange(date)}
-                        dateFormat="MM/dd/yyyy" // Customize the date format
-                        placeholderText="Select date"
-                        minDate={new Date()}
-                      />
-                    )}
-                  />
-
-                  {errors.date_of_wedding && (
-                    <p className=" mt-[2rem] text-[12px] text-[#f20431] font-extrabold">
-                      {errors.date_of_wedding.message}
-                    </p>
-                  )} */}
-
-                {!errors.date_of_wedding && (
-                  <p className="text-[12px] text-[#f20431] font-extrabold">
-                    Wedding Date must be before 00-00-0000.{" "}
+                <VendorFutureDatePicker
+                  name="date_of_wedding"
+                  value={formValues.date_of_wedding}
+                  handleDateChange={(date) => {
+                    handleDateChange("date_of_wedding", date);
+                  }}
+                />
+                {inputsErrors.date_of_wedding && (
+                  <p className="text-[12px] text-red-500 font-semibold mt-1">
+                    {inputsErrors.date_of_wedding}
                   </p>
                 )}
               </div>
@@ -234,42 +282,36 @@ const FutureWedding = () => {
               <label className="header-text-past">Wedding State*</label>
               <br />
               <div className="relative">
-                <Controller
+                <Select
                   name="wedding_state"
-                  control={control}
-                  // rules={{ required: "Wedding State is required" }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      name="wedding_state"
-                      value={selectedState}
-                      options={stateOptions}
-                      onChange={(selectedOption) =>
-                        handleStateChange(selectedOption, field)
-                      }
-                      styles={customSelectStyles2}
-                      components={{
-                        MultiValue,
-                        IndicatorSeparator: null,
-                        DropdownIndicator: () => (
-                          <div>
-                            <FontAwesomeIcon
-                              icon={faCaretDown}
-                              className="dropDown-position"
-                              style={{
-                                color: "#7c7c7c",
-                                marginRight: "1.5rem",
-                              }}
-                            />
-                          </div>
-                        ),
-                      }}
-                    />
-                  )}
+                  placeholder=""
+                  value={{ label: selectedState, value: selectedState }}
+                  options={stateOptions}
+                  onChange={(selectedOption) =>
+                    handleStateChange("wedding_state", selectedOption)
+                  }
+                  styles={customSelectStyles2}
+                  components={{
+                    MultiValue,
+                    IndicatorSeparator: null,
+                    DropdownIndicator: () => (
+                      <div>
+                        <FontAwesomeIcon
+                          icon={faCaretDown}
+                          className="dropDown-position"
+                          style={{
+                            color: "#7c7c7c",
+                            marginRight: "1.5rem",
+                          }}
+                        />
+                      </div>
+                    ),
+                  }}
                 />
-                {errors.wedding_state && (
+
+                {inputsErrors.wedding_state && (
                   <p className="text-[12px] text-red-500 font-semibold mt-1">
-                    {errors.wedding_state.message}
+                    {inputsErrors.wedding_state}
                   </p>
                 )}
               </div>
@@ -277,42 +319,36 @@ const FutureWedding = () => {
               <label className="header-text-past">Resident State*</label>
               <br />
               <div className="relative">
-                <Controller
+                <Select
                   name="state"
-                  control={control}
-                  // rules={{ required: "Wedding State is required" }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      name="state"
-                      value={reseidentState}
-                      options={stateOptions}
-                      onChange={(selectedOption) =>
-                        handleResStateChange(selectedOption, field)
-                      }
-                      styles={customSelectStyles2}
-                      components={{
-                        MultiValue,
-                        IndicatorSeparator: null,
-                        DropdownIndicator: () => (
-                          <div>
-                            <FontAwesomeIcon
-                              icon={faCaretDown}
-                              className="dropDown-position"
-                              style={{
-                                color: "#7c7c7c",
-                                marginRight: "1.5rem",
-                              }}
-                            />
-                          </div>
-                        ),
-                      }}
-                    />
-                  )}
+                  placeholder=""
+                  value={{ label: reseidentState, value: reseidentState }}
+                  options={stateOptions}
+                  onChange={(selectedOption) =>
+                    handleResStateChange("state", selectedOption)
+                  }
+                  styles={customSelectStyles2}
+                  components={{
+                    MultiValue,
+                    IndicatorSeparator: null,
+                    DropdownIndicator: () => (
+                      <div>
+                        <FontAwesomeIcon
+                          icon={faCaretDown}
+                          className="dropDown-position"
+                          style={{
+                            color: "#7c7c7c",
+                            marginRight: "1.5rem",
+                          }}
+                        />
+                      </div>
+                    ),
+                  }}
                 />
-                {errors.state && (
+
+                {inputsErrors.state && (
                   <p className="text-[12px] text-red-500 font-semibold mt-1">
-                    {errors.state.message}
+                    {inputsErrors.state}
                   </p>
                 )}
               </div>
@@ -325,12 +361,14 @@ const FutureWedding = () => {
                   name="email"
                   type="email"
                   className="input-style"
-                  {...register("email")}
+                  email
+                  value={formValues.email}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
                 />
               </div>
-              {errors.email && (
+              {inputsErrors.email && (
                 <p className="text-[12px] text-red-500 font-semibold mt-1">
-                  {errors.email.message}
+                  {inputsErrors.email}
                 </p>
               )}
               <br />
@@ -342,12 +380,15 @@ const FutureWedding = () => {
                   name="confirm_email"
                   type="email"
                   className="input-style"
-                  {...register("confirm_email")}
+                  value={formValues.confirm_email}
+                  onChange={(e) =>
+                    handleInputChange("confirm_email", e.target.value)
+                  }
                 />
               </div>
-              {errors.confirm_email && (
+              {inputsErrors.confirm_email && (
                 <p className="text-[12px] text-red-500 font-semibold mt-1">
-                  {errors.confirm_email.message}
+                  {inputsErrors.confirm_email}
                 </p>
               )}
               <br />
@@ -359,54 +400,52 @@ const FutureWedding = () => {
                   name="phone"
                   type="number"
                   inputMode="tel"
-                  {...register("phone")}
                   className="input-style"
+                  value={formValues.phone}
+                  onChange={(e) => handleInputChange("phone", e.target.value)}
                 />
               </div>
-              {errors.phone && (
+              {inputsErrors.phone && (
                 <p className="text-[12px] text-red-500 font-semibold mt-1">
-                  {errors.phone.message}
+                  {inputsErrors.phone}
                 </p>
               )}
               <br />
               <label className="header-text-past">Services Booked*</label>
               <br />
               <div className="relative">
-                <Controller
+                <Select
                   name="vcid"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      isMulti
-                      options={categoryOptions}
-                      styles={customSelectStyles2}
-                      closeMenuOnSelect={false}
-                      blurInputOnSelect={false} //bug fixed
-                      hideSelectedOptions={false}
-                      isClearable={false}
-                      components={{
-                        MultiValue,
-                        IndicatorSeparator: null,
-                        DropdownIndicator: () => (
-                          <div>
-                            <FontAwesomeIcon
-                              icon={faCaretDown}
-                              className="dropDown-position"
-                              style={{
-                                color: "#7c7c7c",
-                                marginRight: "1.5rem",
-                              }}
-                            />
-                          </div>
-                        ),
-                      }}
-                    />
-                  )}
+                  isMulti
+                  placeholder={""}
+                  options={categoryOptions}
+                  styles={customSelectStyles2}
+                  closeMenuOnSelect={false}
+                  blurInputOnSelect={false}
+                  hideSelectedOptions={false}
+                  isClearable={false}
+                  onChange={handleServicesChange}
+                  components={{
+                    MultiValue,
+                    IndicatorSeparator: null,
+                    DropdownIndicator: () => (
+                      <div>
+                        <FontAwesomeIcon
+                          icon={faCaretDown}
+                          className="dropDown-position"
+                          style={{
+                            color: "#7c7c7c",
+                            marginRight: "1.5rem",
+                          }}
+                        />
+                      </div>
+                    ),
+                  }}
                 />
-                {errors.vcid && (
+
+                {inputsErrors.vcid && (
                   <p className="text-[12px] text-red-500 font-semibold mt-1">
-                    {errors.vcid.message}
+                    {inputsErrors.vcid}
                   </p>
                 )}
               </div>
@@ -432,6 +471,7 @@ const FutureWedding = () => {
 
 export default FutureWedding;
 
+//  SELECT BADGE
 const MoreSelectedBadge = ({ items }) => {
   const style = {
     marginLeft: "auto",
@@ -455,7 +495,7 @@ const MoreSelectedBadge = ({ items }) => {
 };
 
 const MultiValue = ({ index, getValue, ...props }) => {
-  const maxToShow = 2;
+  const maxToShow = 1;
   const overflow = getValue()
     .slice(maxToShow)
     .map((x) => x.label);

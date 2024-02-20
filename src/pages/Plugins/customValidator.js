@@ -134,6 +134,109 @@ export function validateName(name, errors) {
   }
   return obj;
 }
+export const validateCoupleLogin = (inputs, setInputsErrors) => {
+  setInputsErrors({});
+  let validate = true;
+  if (!inputs.email) {
+    validate = false;
+    setInputsErrors((values) => ({
+      ...values,
+      ["email"]: "Email is required",
+    }));
+  } else if (!/\S+@\S+\.\S+/.test(inputs.email)) {
+    validate = false;
+    setInputsErrors((values) => ({ ...values, ["email"]: "Invalid Email" }));
+  }
+  // Validate Password
+  if (!inputs.password) {
+    validate = false;
+    setInputsErrors((values) => ({
+      ...values,
+      ["password"]: "Password is required",
+    }));
+  } else if (inputs.password.length < 6) {
+    validate = false;
+    setInputsErrors((values) => ({
+      ...values,
+      ["password"]: "Minimum 6 characters",
+    }));
+  }
+  return validate;
+};
+export const validateCoupleSignup = (
+  activeStep,
+  formValues,
+  setInputsErrors
+) => {
+  setInputsErrors({});
+  let validate = true;
+  if (activeStep === 0) {
+    if (!formValues.bride_message) {
+      validate = false;
+      setInputsErrors((values) => ({
+        ...values,
+        ["bride_message"]: "Please Select an Option",
+      }));
+    }
+  } else if (activeStep === 1) {
+    if (!formValues.bride) {
+      validate = false;
+      setInputsErrors((values) => ({
+        ...values,
+        ["bride"]: "Full Name is required",
+      }));
+    }
+    if (!formValues.groom) {
+      validate = false;
+      setInputsErrors((values) => ({
+        ...values,
+        ["groom"]: "Partner's Name is required",
+      }));
+    }
+    if (
+      (formValues.decision == false || formValues.decision == undefined) &&
+      !formValues.wedding_date
+    ) {
+      validate = false;
+      setInputsErrors((values) => ({
+        ...values,
+        ["wedding_date"]: "Date is required",
+      }));
+    }
+    if (!formValues.wedding_state) {
+      validate = false;
+      setInputsErrors((values) => ({
+        ...values,
+        ["wedding_state"]: "State is required",
+      }));
+    }
+  } else if (activeStep === 2) {
+    if (!formValues.email) {
+      validate = false;
+      setInputsErrors((values) => ({
+        ...values,
+        ["email"]: "Email is required",
+      }));
+    } else if (!/\S+@\S+\.\S+/.test(formValues.email)) {
+      validate = false;
+      setInputsErrors((values) => ({ ...values, ["email"]: "Invalid Email" }));
+    }
+    if (!formValues.password) {
+      validate = false;
+      setInputsErrors((values) => ({
+        ...values,
+        ["password"]: "Password is required",
+      }));
+    } else if (formValues.password.length < 6) {
+      validate = false;
+      setInputsErrors((values) => ({
+        ...values,
+        ["password"]: "Minimum 6 characters",
+      }));
+    }
+  }
+  return validate;
+};
 
 // export function validateContact(contact_person, errors) {
 //   var result = [];
@@ -146,3 +249,54 @@ export function validateName(name, errors) {
 //   }
 //   return obj;
 // }
+
+// VENDOR SIGNUP
+// Validator.js
+export const validateBusinessSignupForm = (formValues, activeStep) => {
+  const errors = {};
+
+  if (activeStep === 0) {
+    if (!formValues.name) {
+      errors.name = "Business name is required.";
+    }
+
+    if (!formValues.email) {
+      errors.email = "Please provide a valid Email";
+    } else if (!/\S+@\S+\.\S+/.test(formValues.email)) {
+      errors.email = "Please provide a valid Email";
+    }
+
+    if (!formValues.mobile_phone) {
+      errors.mobile_phone = "Phone no: is required.";
+    } else if (isNaN(parseInt(formValues.mobile_phone))) {
+      errors.mobile_phone = "The mobile phone must be an integer.";
+    } else if (formValues.mobile_phone.length > 13) {
+      errors.mobile_phone =
+        "The mobile phone must not be greater than 13 digits.";
+    }
+  }
+  if (activeStep === 1) {
+    if (!formValues.contact_person) {
+      errors.contact_person = "Contact name is required.";
+    }
+    if (!formValues.state || formValues.state.length === 0) {
+      errors.state = "Please select Wedding State.";
+    }
+    if (!formValues.first_category || formValues.first_category.length === 0) {
+      errors.first_category = "Please select your services.";
+    }
+  }
+  if (activeStep === 2) {
+    if (!formValues.password) {
+      errors.password = "Password is required.";
+    }
+    if (!formValues.confirm_password) {
+      errors.confirm_password =
+        "Confirm password is required and should match the above.";
+    } else if (formValues.confirm_password !== formValues.password) {
+      errors.confirm_password = "Passwords do not match.";
+    }
+  }
+
+  return errors;
+};

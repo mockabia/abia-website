@@ -11,6 +11,13 @@ export async function storeData(postData) {
 export async function editData(id) {
   return await apiService.apiCall(MAIN_API["EDIT"] + "/" + id, "GET");
 }
+
+export async function Businessservices(id) {
+  return await apiService.apiCall(
+    apiUrls.BUSINESS_API["BUSINESSSERVICES_DROPDOWN"] + "/" + id,
+    "GET"
+  );
+}
 export async function showData(id) {
   return await apiService.apiCall(MAIN_API["SHOW"] + "/" + id, "GET");
 }
@@ -47,6 +54,14 @@ export async function update_settings(settings, postData) {
   );
 }
 
+export async function business_signup(postData) {
+  return await apiService.apiCall(
+    apiUrls.BUSINESS_API["STORE"],
+    "POST",
+    postData
+  );
+}
+
 export async function manage_wedding(options, postData) {
   return await apiService.apiCall(
     MAIN_API["MANAGE_WEDDING"] + "/" + "0" + "/" + options,
@@ -57,6 +72,18 @@ export async function manage_wedding(options, postData) {
 
 export async function stateDropdown(postData) {
   return await apiService.apiCall(apiUrls.STATE_DROPDOWN, "GET", postData);
+}
+
+export async function bookingsPerYearDropdown(postData) {
+  return await apiService.apiCall(
+    apiUrls.SERVICEYEAR_DROPDOWN,
+    "GET",
+    postData
+  );
+}
+
+export async function findUsDropdown(postData) {
+  return await apiService.apiCall(apiUrls.FINDUS_DROPDOWN, "GET", postData);
 }
 
 export async function categoryDropdown(postData) {
@@ -144,7 +171,7 @@ export async function delete_qandA(vendorID, qid) {
   );
 }
 
-export async function view_QandA (id) {
+export async function view_QandA(id) {
   return await apiService.apiCall(MAIN_API["VIEW_QA"] + "/" + id, "GET");
 }
 
