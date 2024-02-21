@@ -40,18 +40,19 @@ export const hasCoupleJWT = async (navigate) => {
 };
 export const checkCoupleRememberMe = (setInputs) => {
   setInputs({
-    ["username"]: localStorage.cusername,
-    ["password"]: localStorage.cpassword,
-    ["remember_me"]: localStorage.cremember_me,
+    ["cusername"]: localStorage.cusername,
+    ["cpassword"]: localStorage.cpassword,
+    ["cremember_me"]: localStorage.cremember_me,
   });
 };
-export const logout = async (navigate) => {
+export const logout = async (setLoginStatus,navigate) => {
   await servicesPage.logout().then(function (response) {
     if (response) {
       if (response.statuscode == 200) {
         apiService.setAuthToken(null);
         localStorage.removeItem("coupleToken");
         localStorage.removeItem("user");
+        setLoginStatus(false)
         navigate(window.HOME);
       }
     }

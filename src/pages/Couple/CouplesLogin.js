@@ -22,21 +22,34 @@ const style = {
 
 const CouplesLogin = (props) => {
   let navigate                                      = useNavigate();
-  const [showPassword, setShowPassword]             = useState(false);
-  const [formValues, setFormValues]                 = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword]             = useState(true);
+  const [passwordType, setPasswordType]             = useState("text");
+  const [formValues, setFormValues]                 = useState({});
   const [errors, setErrors]                         = React.useState({});
   const [showVisibilityIcon, setShowVisibilityIcon] = useState(false);
 
   const togglePasswordVisibility = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword);
-    if (formValues.password.trim() !== "" && showPassword) {
+    if (formValues.cpassword.trim() !== "" && showPassword) {
       setShowVisibilityIcon(!showPassword);
     } else {
       setShowVisibilityIcon(false);
     }
   };
 
+  useEffect(() => {
+    if(showPassword){
+      setPasswordType("text")
+    }else{
+      setPasswordType("password")
+    }
+  }, [showPassword]);
+
+  const handleKeyPress = (e) => {
+    setShowPassword(false);
+    setPasswordType("password")
+  };
   const handleInputChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -80,8 +93,8 @@ const CouplesLogin = (props) => {
                 <label className="cl-label">Email</label>
                 <CoupleCommonInput
                   variant="outlined"
-                  name="email"
-                  type="email"
+                  name="cemail"
+                  type="text"
                   onChange={handleInputChange}
                 />
                 {errors.email && <div className="error-text">{errors.email}</div>}
@@ -92,8 +105,10 @@ const CouplesLogin = (props) => {
                 <label className="cl-label">Password</label>
                 <CoupleCommonInput
                   variant="outlined"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
+                  name="cpassword"
+                  type={passwordType}
+                  onKeyUp={handleKeyPress}
+                  onKeyDown={handleKeyPress}
                   // label="Password*"
                   onChange={handleInputChange}
                   InputProps={{

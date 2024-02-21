@@ -2,7 +2,7 @@ import * as servicesPage from "../services/contentServices";
 /* public routes */
 
 export const fetchContentRoutes = async (setPublicMenu, setBlogMenu) => {
-  window.HOME = process.env.REACT_APP;
+  window.HOME = process.env.REACT_APP_URL;
   await servicesPage.fetchContentRoutes().then(function (response) {
     if (response.statuscode == 200) {
       setPublicMenu(response.result);
@@ -128,3 +128,46 @@ export const fetchCoupleRoutes = async (setCoupleMenu, setShowLoader) => {
     }
   });
 };
+
+export function coupleCheckLoginRedirect(url,loginMenu,loginedMenu,navigate) {
+  const isFoundInLoginmenu = loginMenu.some(element => {
+    if (element.url === url) {
+      return true;
+    }
+    return false;
+  });
+  const isFoundInLoginedmenu = loginedMenu.some(element => {
+    if (element.url === url) {
+      return true;
+    }
+    return false;
+  });
+  if (isFoundInLoginmenu && hasCoupleJWT()) {
+    navigate(window.CDASHBOARD);
+  }else if (isFoundInLoginedmenu && !hasCoupleJWT()) {
+    navigate(window.HOME);
+  }else if(hasVendorJWT()){
+    navigate(window.HOME);
+  }
+}
+export function vendorCheckLoginRedirect(url,loginMenu,loginedMenu,navigate) {
+  const isFoundInLoginmenu = loginMenu.some(element => {
+    if (element.url === url) {
+      return true;
+    }
+    return false;
+  });
+  const isFoundInLoginedmenu = loginedMenu.some(element => {
+    if (element.url === url) {
+      return true;
+    }
+    return false;
+  });
+  if (isFoundInLoginmenu && hasVendorJWT()) {
+    navigate(window.CDASHBOARD);
+  }else if (isFoundInLoginedmenu && !hasVendorJWT()) {
+    navigate(window.HOME);
+  }else if(hasCoupleJWT()){
+    navigate(window.HOME);
+  }
+}

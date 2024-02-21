@@ -74,7 +74,7 @@ const TopBar = (props) => {
     setMenuOpen(false);
   };
   const handleVendorLogout = () => {
-    BusinessJS.logout(navigate);
+    BusinessJS.logout(props.setLoginStatus,navigate);
   };
 
   const handleLogoClick = () => {

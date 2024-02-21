@@ -99,7 +99,7 @@ const CoupleTopbar = (props) => {
     setSearchValue(event.target.value);
   };
   const handleCoupleLogout = () => {
-    CoupleJS.logout(navigate);
+    CoupleJS.logout(props.setLoginStatus,navigate);
   };
 
   const filteredOptions = options.filter((option) =>

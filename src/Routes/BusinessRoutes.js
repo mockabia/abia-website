@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation,useNavigate } from "react-router-dom";
 import loadable from "@loadable/component";
 import LayoutVendor from "../layouts/Layout/LayoutVendor";
 import LayoutGeneral from "../layouts/Layout/LayoutGeneral";
@@ -7,13 +7,19 @@ import LayoutGeneral from "../layouts/Layout/LayoutGeneral";
 import * as RoutesJS from "./RoutesJS";
 
 const BusinessRoutes = (props) => {
-  const location = useLocation();
+  const location                      = useLocation();
+  let navigate                        = useNavigate();
   const [loginMenu, setLoginMenu]     = useState([]);
   const [loginedMenu, setLoginedMenu] = useState([]);
+  const url                           = location.pathname.split("/").pop();
 
   const LoadablePage = loadable((props) =>
     import(`../pages/Business/${props.page}`)
   );
+
+  useEffect(() => {
+    RoutesJS.vendorCheckLoginRedirect(url,loginMenu,loginedMenu,navigate)
+  }, [url,loginMenu,loginedMenu]);
 
   useEffect(() => {
     if (props.menu.length > 0) {

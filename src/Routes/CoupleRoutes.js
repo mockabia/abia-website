@@ -16,28 +16,9 @@ const CoupleRoutes = (props) => {
   const LoadablePage = loadable((props) => 
     import(`../pages/Couple/${props.page}`)
   );
+
   useEffect(() => {
-    console.log(topMenu)
-  }, [topMenu]);
-  useEffect(() => {
-    const isFoundInLoginmenu = loginMenu.some(element => {
-      if (element.url === url) {
-        return true;
-      }
-      return false;
-    });
-    const isFoundInLoginedmenu = loginedMenu.some(element => {
-      if (element.url === url) {
-        return true;
-      }
-      return false;
-    });
-    if (isFoundInLoginmenu && RoutesJS.hasCoupleJWT()) {
-      navigate(window.CDASHBOARD);
-    }
-    if (isFoundInLoginedmenu && !RoutesJS.hasCoupleJWT()) {
-      navigate(window.HOME);
-    }
+    RoutesJS.coupleCheckLoginRedirect(url,loginMenu,loginedMenu,navigate)
   }, [url,loginMenu,loginedMenu]);
 
   useEffect(() => {

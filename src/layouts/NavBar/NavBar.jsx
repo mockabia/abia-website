@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link,useLocation } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
 import { RxTriangleDown, RxTriangleUp } from "react-icons/rx";
@@ -32,9 +32,9 @@ import UseAutocomplete from "../../components/AsyncSearch";
 import styled from "@emotion/styled";
 
 const NavBar = (props) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [searchValue, setSearchValue] = useState("");
-  const [options, setOptions] = useState([
+  const [anchorEl, setAnchorEl]         = useState(null);
+  const [searchValue, setSearchValue]   = useState("");
+  const [options, setOptions]           = useState([
     "Wedding Venues",
     "Wedding Dresses",
     "Celebrants",
@@ -56,13 +56,15 @@ const NavBar = (props) => {
     "Hair Stylist",
     "1st Night Honeymoon",
   ]);
-  const navigate = useNavigate();
+  const navigate                        = useNavigate();
+  const location                        = useLocation();
+  const url                             = location.pathname.split("/").pop();
   const [menuAnchorEl, setMenuAnchorEl] = useState({});
-  const [menuItems, setMenuItems] = useState([]);
-  const profileRef = useRef(null);
-  const menuList = useRef(null);
-  const [profileOpen, setProfileOpen] = useState(false);
-  const [userProfile, setUserProfile] = useState({});
+  const [menuItems, setMenuItems]       = useState([]);
+  const profileRef                      = useRef(null);
+  const menuList                        = useRef(null);
+  const [profileOpen, setProfileOpen]   = useState(false);
+  const [userProfile, setUserProfile]   = useState({});
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -79,16 +81,18 @@ const NavBar = (props) => {
   useEffect(() => {
     let vtoken = localStorage.getItem("vendorToken");
     let ctoken = localStorage.getItem("coupleToken");
-    if (vtoken !== undefined && vtoken !== "undefined" && vtoken !== null) {console.log('vendorToken')
+    if (vtoken !== undefined && vtoken !== "undefined" && vtoken !== null) {
       vtoken = JSON.parse(vtoken);
       let userSession = vtoken && vtoken.user ? vtoken.user : null;
       setUserProfile(userSession);
-    }else if(ctoken !== undefined && ctoken !== "undefined" && ctoken !== null){console.log('coupleToken')
+    } else if (ctoken !== undefined && ctoken !== "undefined" && ctoken !== null) {
       ctoken = JSON.parse(ctoken);
       let userSession = ctoken && ctoken.user ? ctoken.user : null;
       setUserProfile(userSession);
+    }else{
+      setUserProfile({});
     }
-  }, []);
+  }, [props.loginStatus]);
 
   const fetchHeaderMenus = () => {
     servicesPage.fetchHeaderMenus().then(function (response) {
@@ -182,10 +186,10 @@ const NavBar = (props) => {
     setProfileOpen(!profileOpen);
   };
   const handleVendorLogout = () => {
-    BusinessJS.logout(navigate);
+    BusinessJS.logout(props.setLoginStatus,navigate);
   };
   const handleCoupleLogout = () => {
-    CoupleJS.logout(navigate);
+    CoupleJS.logout(props.setLoginStatus,navigate);
   };
 
   return (
@@ -250,9 +254,8 @@ const NavBar = (props) => {
         <ul className="login-subheaders absolute ">
           {menuItems.map((menuItem, index) => (
             <li
-              className={`nav-menu-list ${
-                menuItem.Sub_content.length > 0 ? "MainwithSub" : "MainOnly"
-              } `}
+              className={`nav-menu-list ${menuItem.Sub_content.length > 0 ? "MainwithSub" : "MainOnly"
+                } `}
               key={index}
               ref={menuList}
             >
@@ -272,9 +275,8 @@ const NavBar = (props) => {
 
                   {menuAnchorEl[menuItem.id] && (
                     <ul
-                      className={`subMenu ${
-                        menuAnchorEl[menuItem.id] ? "block" : "hidden"
-                      } `}
+                      className={`subMenu ${menuAnchorEl[menuItem.id] ? "block" : "hidden"
+                        } `}
                     >
                       {menuItem.Sub_content.map((subMenuItem, subIndex) => (
                         <MenuItem
@@ -300,7 +302,7 @@ const NavBar = (props) => {
           ))}
         </ul>
         <div className="login-signup-group">
-          {Object.keys(userProfile).length>0 && userProfile && userProfile.name != "" ? (
+          {Object.keys(userProfile).length > 0 && userProfile && userProfile.name != "" ? (
             <>
               <button
                 className="mr-4 focus:outline-none"
@@ -339,7 +341,7 @@ const NavBar = (props) => {
                           <button>Log Out</button>
                         </li>
                       </>
-                    ) : (
+                    ) : (localStorage.getItem("coupleToken") ? (
                       <>
                         <Link to={`${window.CDASHBOARD}`}>
                           <li className="px-4  text-[15px] cursor-pointer">
@@ -353,7 +355,7 @@ const NavBar = (props) => {
                           <button>Log Out</button>
                         </li>
                       </>
-                    )}
+                    ) : '')}
                   </ul>
                 </div>
               )}
