@@ -9,7 +9,7 @@ import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { useState } from "react";
 import CoupleForgotPwd from "./CoupleForgotPwd";
-import * as CoupleJS from "../Couple/Couple";
+import * as CoupleJS from "./Couple";
 
 
 const style = {
@@ -31,7 +31,7 @@ const CouplesLogin = (props) => {
   const togglePasswordVisibility = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword);
-    if (formValues.cpassword.trim() !== "" && showPassword) {
+    if (formValues.password.trim() !== "" && showPassword) {
       setShowVisibilityIcon(!showPassword);
     } else {
       setShowVisibilityIcon(false);
@@ -93,7 +93,7 @@ const CouplesLogin = (props) => {
                 <label className="cl-label">Email</label>
                 <CoupleCommonInput
                   variant="outlined"
-                  name="cemail"
+                  name="email"
                   type="text"
                   onChange={handleInputChange}
                 />
@@ -105,7 +105,7 @@ const CouplesLogin = (props) => {
                 <label className="cl-label">Password</label>
                 <CoupleCommonInput
                   variant="outlined"
-                  name="cpassword"
+                  name="password"
                   type={passwordType}
                   onKeyUp={handleKeyPress}
                   onKeyDown={handleKeyPress}

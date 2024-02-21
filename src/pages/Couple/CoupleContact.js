@@ -1,84 +1,30 @@
-import React, { useState } from "react";
-import LayoutCouple from "../../layouts/Layout/LayoutCouple";
-import { Box, Stack, TextField, useMediaQuery } from "@mui/material";
-import {
-  CoupleCommonInput,
-  CoupleInput,
-  CoupleSaveButton,
-  MuiBoxStyles,
-} from "../../components/FormStyle";
+import React, { useEffect, useState } from "react";
+import { Box, Stack, useMediaQuery } from "@mui/material";
+import {CoupleCommonInput, MuiBoxStyles,} from "../../components/FormStyle";
+import { useNavigate } from "react-router-dom";
 import "../Style/CoupleProfile.css";
-import { Link } from "react-router-dom";
-import { AiFillWarning } from "react-icons/ai";
+import * as CoupleJS from "./Couple";
 
 const CoupleContact = (props) => {
 
-  const [formValues, setFormValues] = useState({
-    bride: "",
-    groom: "",
-    phone: "",
-    email: "",
-  });
-  const [errors, setErrors] = React.useState({});
-  const isMobile = useMediaQuery("(max-width:550px)");
+  let navigate                        = useNavigate();
+  const [formValues, setFormValues]   = useState({});
+  const [errors, setErrors]           = React.useState({});
+  const isMobile                      = useMediaQuery("(max-width:550px)");
 
-  const handleInputChange = (fieldName, value) => {
-    setFormValues({ ...formValues, [fieldName]: value });
-    setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+  useEffect(() => {
+    CoupleJS.coupleDetails(setFormValues)
+  }, []);
+
+  const handleInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
   };
 
-  const validateForm = () => {
-    const errors = {};
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    if (!formValues.bride) {
-      errors.bride = "Full Name is required";
-    }
-    if (!formValues.groom) {
-      errors.groom = "Partner's Name is required";
-    }
-    if (!formValues.phone) {
-      errors.phone = "Phone no: is required";
-    }
-    if (!formValues.email) {
-      errors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.email)) {
-      errors.email = "Invalid Email";
-    }
-
-    return errors;
-  };
-  // console.log("Errors:", errors)
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validateForm();
-    console.log(validationErrors); // Log errors to console for inspection
-    if (Object.keys(validationErrors).length === 0) {
-      console.log("Form submitted:", formValues);
-      postData(formValues);
-    } else {
-      setErrors(validationErrors);
-      console.log("Form validation failed");
-    }
-  };
-
-  const postData = async (data) => {
-    try {
-      const response = await fetch("http://localhost:8000/contactDetails", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      console.log("Response:", response);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      console.log("Data posted successfully!");
-    } catch (error) {
-      console.error("Error posting data:", error.message);
-    }
+    CoupleJS.coupleContact(formValues, setErrors,navigate)
   };
 
   return (

@@ -17,8 +17,12 @@ import { RxTriangleDown, RxTriangleUp } from "react-icons/rx";
 import "./css/sideBar.css";
 import { Details, Home } from "@mui/icons-material";
 
-const CoupleSideMenu = () => {
+const CoupleSideMenu = (props) => {
   const [showSubMenu, setShowSubMenu] = useState({});
+  
+  useEffect(() => {
+    toggleSubMenu(props.mainMenuID)
+  }, [props.mainMenuID]);
 
   const toggleSubMenu = (id) => {
     setShowSubMenu({
@@ -62,9 +66,10 @@ const CoupleSideMenu = () => {
     { id: 5, title: "Blog", url: "/blog", Sub_content: [] },
   ];
 
+  let excludeArrays = [1, 2, 3];
   return (
     <>
-      {menuItems.map((MainMenu) => (
+      {/* {menuItems.map((MainMenu) => (
         <li key={MainMenu.id}>
           {MainMenu.Sub_content.length <= 0 ? (
             <div className="">
@@ -126,6 +131,80 @@ const CoupleSideMenu = () => {
             </div>
           )}
         </li>
+      ))} */}
+      {/* <pre>{JSON.stringify(props.menu, null, 2)}</pre> */}
+      {props.menu.map((MainMenu, i) => (
+        <>
+          {!excludeArrays.includes(MainMenu.id) && (
+            <li>
+              {MainMenu.Sub_content.length <= 0 ? (
+                <div className="">
+                  <NavLink
+                    to={`${process.env.REACT_APP_COUPLE_URL}/${MainMenu.url}`}
+                    className="sidebarMenuItem"
+                    onClick={props.onMenuLinkClick}
+                  >
+                    <div className="flex gap-[2rem] ml-[1rem]">
+                      {menuIcons[MainMenu.title] &&
+                        React.createElement(menuIcons[MainMenu.title], {
+                          className:
+                            "mt-[2px] w-[18px] h-[18px] fill-current text-[#fff]",
+                        })}
+                      <h5 className="truncate">{MainMenu.title}</h5>
+                    </div>
+                  </NavLink>
+                </div>
+              ) : (
+                <div
+                  className="flex justify-between  sidemenuwithSub"
+                  onClick={() => {
+                    toggleSubMenu(MainMenu.id);
+                  }}
+                >
+                  <div className="flex gap-[2rem] ml-[1rem]">
+                    {menuIcons[MainMenu.title] &&
+                      React.createElement(menuIcons[MainMenu.title], {
+                        className:
+                          "mt-[2px] w-[18px] h-[18px] fill-current text-[#fff]",
+                      })}
+                    <h5 className="truncate pt-[8px] pb-[8px]">
+                      {MainMenu.title}
+                    </h5>
+                  </div>
+                  <div className="">
+                    {showSubMenu[MainMenu.id] ? (
+                      <RxTriangleUp className="" size={25} />
+                    ) : (
+                      <RxTriangleDown className="" size={25} />
+                    )}
+                  </div>
+                </div>
+              )}
+              {showSubMenu[MainMenu.id] && MainMenu.Sub_content.length > 0 && (
+                <div>
+                  <ul className="ml-[3.5rem]  ">
+                    {MainMenu.Sub_content.map((SubMenu, i) => (
+                      <motion.li
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                        className="mb-0"
+                      >
+                        <NavLink
+                          className={`sublink`}
+                          to={`${process.env.REACT_APP_COUPLE_URL}/${SubMenu.url}`}
+                          //onClick={closeMenu}
+                        >
+                          <h5>{SubMenu.title}</h5>
+                        </NavLink>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </li>
+          )}
+        </>
       ))}
     </>
   );

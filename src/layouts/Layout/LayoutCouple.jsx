@@ -1,10 +1,8 @@
 import React from "react";
 import CoupleTopbar from "../Couples/Sidebar/CoupleTopbar";
-import CoupleMenu from "../sidebar/CoupleMenu";
-import { ProSidebarProvider } from "react-pro-sidebar";
 import "../css/LayoutCouple.css";
 import CoupleMenuList from "../sidebar/CoupleMenuList";
-import BusinessMenu from "../sidebar/BusinessMenu";
+import CoupleMenu from "../sidebar/CoupleMenu";
 
 const LayoutCouple = (props) => {
 
@@ -12,9 +10,9 @@ const LayoutCouple = (props) => {
     <div className="relative flex">
       <div className="flex flex-1">
         <CoupleTopbar {...props}/>
-        <CoupleMenu />
+        <CoupleMenu {...props} />
         <main className="cRootLayout">
-          <CoupleMenuList />
+          {props.leftMenuShow ? (<CoupleMenuList />) : ''}
           {props.children}
         </main>
       </div>

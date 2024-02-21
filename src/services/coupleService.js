@@ -20,6 +20,18 @@ export async function refresh() {
 export async function forgot(postData) {
   return await apiService.apiCall(MAIN_API["FORGOT"], "POST", postData);
 }
+export async function coupleDetails(id) {
+  return await apiService.apiCall(MAIN_API["FETCH"]+'/'+id, "GET");
+}
+export async function coupleContact(id,postData) {
+  return await apiService.apiCall(MAIN_API["CONTACT"]+'/'+id+'/4/1', "POST", postData);
+}
+export async function coupleWeddingDetails(id,postData) {
+  return await apiService.apiCall(MAIN_API["WEDDING_DETAILS"]+'/'+id+'/5/1', "POST", postData);
+}
+export async function coupleSettings(id,postData) {
+  return await apiService.apiCall(MAIN_API["SETTINGS"]+'/'+id+'/6/1', "POST", postData);
+}
 
 export async function stateDropdown(postData) {
   return await apiService.apiCall(apiUrls.STATE_DROPDOWN, "GET", postData);

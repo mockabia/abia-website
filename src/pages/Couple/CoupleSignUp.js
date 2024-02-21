@@ -8,32 +8,14 @@ import { ReactComponent as PlanningIcon } from "../../icons/Couples/planning.svg
 import { ReactComponent as Planning2Icon } from "../../icons/Couples/bookVenue.svg";
 import { ReactComponent as FormICon4 } from "../../icons/Couples/formIcon4.svg";
 import CloseIcon from "@mui/icons-material/Close";
-import CouplesLogin from "./CouplesLogin";
-
-import {
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  MenuItem,
-  Stack,
-} from "@mui/material";
-import {
-  DatePickerCouple,
-
-} from "../../components/DatepickerPublic";
+import {FormControl,FormControlLabel,FormGroup,MenuItem,Stack,} from "@mui/material";
+import {DatePickerCouple} from "../../components/DatepickerPublic";
 import { useNavigate,Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useEffect } from "react";
-import {
-  StepperStyle,
-  ButtonStyle,
-  NextButtonStyle,
-  LeftAlignedTypography,
-  CheckBoxStyle,
-  CSTextfield,
-  CSmenuItemStyle,
-} from "../../components/FormStyle";
-import * as CoupleJS from "../Couple/Couple";
+import {StepperStyle,ButtonStyle,NextButtonStyle,LeftAlignedTypography,CheckBoxStyle,CSTextfield,CSmenuItemStyle,} from "../../components/FormStyle";
+import CouplesLogin from "./CouplesLogin";
+import * as CoupleJS from "./Couple";
 
 const steps = ["Let’s Begin", "The Basics", "Final Touches"];
 
@@ -197,7 +179,7 @@ export default function CouplesSignUp() {
                 </div>
                 {/* Option buttons */}
                 {/* 1 */}
-                <pre>{JSON.stringify(selectedOption, null, 2)}</pre>
+                {/* <pre>{JSON.stringify(selectedOption, null, 2)}</pre> */}
                 {options.map((option, index) => (
                   <div key={index}>
                     <ButtonStyle

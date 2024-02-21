@@ -2,21 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import AbiaLogo from "../../../abiaLogo";
 import { ReactComponent as UserIcons } from "../../../icons/contact topbar.svg";
 import { ReactComponent as MenuIcon } from "../../../icons/menuIcon.svg";
-import {
-  Divider,
-  IconButton,
-  InputAdornment,
-  List,
-  ListItem,
-  ListItemText,
-  Paper,
-  Popper,
-  Stack,
-  TextField,
-  ThemeProvider,
-  createTheme,
-  useMediaQuery,
-} from "@mui/material";
+import {Divider,IconButton,InputAdornment,Stack,createTheme,useMediaQuery,} from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
@@ -24,12 +10,11 @@ import { AiOutlineClose } from "react-icons/ai";
 import "../../css/CoupleTopbar.css";
 import { SearchInputStyle } from "../../../components/FormStyle";
 import CoupleSideMenu from "../../sidebar/CoupleSideMenu";
-import { FiSearch } from "react-icons/fi";
 import { Link,NavLink,useNavigate } from "react-router-dom";
 import * as CoupleJS from "../../../pages/Couple/Couple";
 
 const CoupleTopbar = (props) => {
-  const { title }                     = props.title;
+
   let navigate                        = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false);
   const [menuOpen, setMenuOpen]       = useState(false);
@@ -57,12 +42,21 @@ const CoupleTopbar = (props) => {
     "Hair Stylist",
     "1st Night Honeymoon",
   ]);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const profileRef = useRef(null);
+  const [searchOpen, setSearchOpen]   = useState(false);
+  const profileRef                    = useRef(null);
 
-  const isMobile = useMediaQuery("(max-width:550px)");
-  const isTablet = useMediaQuery("(min-width:551px) and (max-width:800px)");
-  const isDesktop = useMediaQuery("(min-width:801px)");
+  const isMobile                      = useMediaQuery("(max-width:550px)");
+  const isTablet                      = useMediaQuery("(min-width:551px) and (max-width:800px)");
+  const isDesktop                     = useMediaQuery("(min-width:801px)");
+  const [userProfile, setUserProfile] = useState({});
+  useEffect(() => {
+    let token = localStorage.getItem("coupleToken");
+    if (token !== undefined && token !== "undefined") {
+      token = JSON.parse(token);
+      let userSession = token && token.user ? token.user : null;
+      setUserProfile(userSession);
+    }
+  }, []);
   const getSpacing = () => {
     if (isMobile) return 2;
     if (isTablet) return 2;
@@ -139,7 +133,7 @@ const CoupleTopbar = (props) => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-  document.title = title;
+  document.title = props.title;
   return (
     <div className="gap-[4px] md:gap-0 bg-[#6cc2bc] md:bg-[#fff]  h-[6rem] fixed top-0 left-0 right-0 z-40 border-b border-[#6cc2bc] flex items-center justify-between p-4">
       <div className="flex justify-center items-center gap-1">
@@ -147,8 +141,8 @@ const CoupleTopbar = (props) => {
           <MenuIcon size={20} />
         </button>
         <div className="relative lg:ml-[19rem] cursor-pointer ">
-          {title ? (
-            <h3 className="title-topbar">{title}</h3>
+          {props.title ? (
+            <h3 className="title-topbar">{props.title}</h3>
           ) : (
             <AbiaLogo alt="Abia-logo" />
           )}
@@ -163,6 +157,7 @@ const CoupleTopbar = (props) => {
             <SearchInputStyle
               variant="outlined"
               type="text"
+              name="search_category"
               placeholder="find wedding vendors...."
               InputProps={{
                 startAdornment: (
@@ -207,9 +202,9 @@ const CoupleTopbar = (props) => {
             <div className="couple-dropdown arrow-top" ref={profileRef}>
               <ul className="">
                 <li className="px-4 cursor-pointer">
-                  <span className=" text-[14px] font-bold">Test</span>
+                  <span className=" text-[14px] font-bold">{userProfile.bride}{" "}</span>
                   <br></br>
-                  <span className="text-[12px]"> test.email.com</span>
+                  <span className="text-[12px]"> {userProfile.email} </span>
                 </li>
                 <Divider />
                 {props.topMenu && props.topMenu.length > 0 && (
