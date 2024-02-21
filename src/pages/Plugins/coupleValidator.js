@@ -3,43 +3,29 @@ import { get } from "lodash";
 //*******************************
 
 //Email
-export function validateEmail(email, errors) {
-  var result = [];
-  var obj = {};
-  obj["valid"] = true;
-
-  if (!email) {
-    obj["error"] = "Email is Required";
-    obj["valid"] = false;
-  } else {
-    const re =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    var results = re.test(String(email).toLowerCase());
-    if (!results) {
-      obj["error"] = "Invalid Email address";
-      obj["valid"] = false;
-    }
+export function validateEmail(email, field,setInputsErrors) {
+  let validate = true;
+  if (!email,field) {
+    validate = false;
+    setInputsErrors((values) => ({...values,[field]: "Email is required"}));
+  } else if (!/\S+@\S+\.\S+/.test(email)) {
+    validate = false;
+    setInputsErrors((values) => ({...values,[field]: "Invalid Email"}));
   }
-  return obj;
+  return validate;
 }
 
 // valdate password
-export function validatePassword(password, errors) {
-  let result = [];
-  var obj = {};
-  obj["valid"] = true;
-
-  if (!password) {
-    obj["error"] = "Password is Required";
-    obj["valid"] = false;
-  } else {
-    let results = password.length >= 6;
-    if (!results) {
-      obj["error"] = "Your password has less than 6 characters.";
-      obj["valid"] = false;
-    }
+export function validatePassword(password, field,setInputsErrors) {
+  let validate = true;
+  if (password) {
+    validate = false;
+    setInputsErrors((values) => ({...values,[field]: "Password is required"}));
+  } else if (password.length < 6) {
+    validate = false;
+    setInputsErrors((values) => ({...values,[field]: "Minimum 6 characters"}));
   }
-  return obj;
+  return validate;
 }
 export function validateName(name, errors) {
   var result = [];
@@ -72,46 +58,117 @@ export const validateCoupleLogin = (inputs, setInputsErrors) => {
   }
   return validate;
 };
-export const validateCoupleSignup = (activeStep,formValues, setInputsErrors) => {
+export const validateCoupleSignup = (activeStep,inputs, setInputsErrors) => {
   setInputsErrors({});
   let validate = true;
   if (activeStep === 0) {
-    if (formValues.bride_message===null) {
+    if (inputs.bride_message===null) {
       validate = false;
       setInputsErrors((values) => ({...values,["bride_message"]: "Please Select an Option"}));
     }
   } else if (activeStep === 1) {
-    if (!formValues.bride) {
+    if (!inputs.bride) {
       validate = false;
       setInputsErrors((values) => ({...values,["bride"]: "Full Name is required"}));
     }
-    if (!formValues.groom) {
+    if (!inputs.groom) {
       validate = false;
       setInputsErrors((values) => ({...values,["groom"]: "Partner's Name is required"}));
     }
-    if ((formValues.decision == false || formValues.decision == undefined) && !formValues.wedding_date) {
+    if ((inputs.decision == false || inputs.decision == undefined) && !inputs.wedding_date) {
       validate = false;
       setInputsErrors((values) => ({...values,["wedding_date"]: "Date is required"}));
     }
-    if (!formValues.wedding_state) {
+    if (!inputs.wedding_state) {
       validate = false;
       setInputsErrors((values) => ({...values,["wedding_state"]: "State is required"}));
     }
   } else if (activeStep === 2) {
-    if (!formValues.email) {
+    if (!inputs.email) {
       validate = false;
       setInputsErrors((values) => ({...values,["email"]: "Email is required"}));
-    } else if (!/\S+@\S+\.\S+/.test(formValues.email)) {
+    } else if (!/\S+@\S+\.\S+/.test(inputs.email)) {
       validate = false;
       setInputsErrors((values) => ({...values,["email"]: "Invalid Email"}));
     }
-    if (!formValues.password) {
+    if (!inputs.password) {
       validate = false;
       setInputsErrors((values) => ({...values,["password"]: "Password is required"}));
-    } else if (formValues.password.length < 6) {
+    } else if (inputs.password.length < 6) {
       validate = false;
       setInputsErrors((values) => ({...values,["password"]: "Minimum 6 characters"}));
     }
+  }
+  return validate;
+};
+export const validateCoupleContact = (inputs,setInputsErrors) => {
+  setInputsErrors({});
+  let validate = true;
+  if (!inputs.bride) {
+    validate = false;
+    setInputsErrors((values) => ({...values,["bride"]: "Full Name is required"}));
+  }
+  if (!inputs.groom) {
+    validate = false;
+    setInputsErrors((values) => ({...values,["groom"]: "Partner's Name is required"}));
+  }
+  if (!inputs.phone) {
+    validate = false;
+    setInputsErrors((values) => ({...values,["phone"]: "Phone no: is required"}));
+  }
+  validate = validateEmail(inputs.email, 'email',setInputsErrors);
+  return validate;
+};
+
+export const validateCoupleWeddingDetails = (inputs,setInputsErrors) => {
+  setInputsErrors({});
+  let validate = true;
+  if (inputs.decision == false && !inputs.date_of_wedding) {
+    validate = false;
+    setInputsErrors((values) => ({...values,["date_of_wedding"]: "Date is required"}));
+  }
+  if (!inputs.wedding_state) {
+    validate = false;
+    setInputsErrors((values) => ({...values,["wedding_state"]: "State is required"}));
+  }
+  if (!inputs.wedding_location) {
+    validate = false;
+    setInputsErrors((values) => ({...values,["wedding_location"]: "Wedding Location is required"}));
+  }
+  if (!inputs.budget) {
+    validate = false;
+    setInputsErrors((values) => ({...values,["budget"]: "Budget is required"}));
+  }
+  if (!inputs.guests) {
+    validate = false;
+    setInputsErrors((values) => ({...values,["guests"]: "Guests is required"}));
+  }
+  if (!inputs.bridesmaids) {
+    validate = false;
+    setInputsErrors((values) => ({...values,["bridesmaids"]: "Bridesmaids is required"}));
+  }
+  if (!inputs.groomsmen) {
+    validate = false;
+    setInputsErrors((values) => ({...values,["groomsmen"]: "Groomsmen is required"}));
+  }
+  if (!inputs.travellingguests) {
+    validate = false;
+    setInputsErrors((values) => ({...values,["travellingguests"]: "Travelling guests is required"}));
+  }
+  if (!inputs.profile_desc) {
+    validate = false;
+    setInputsErrors((values) => ({...values,["profile_desc"]: "Profile description is required"}));
+  }
+  return validate;
+};
+export const validateCoupleSettings = (inputs,setInputsErrors) => {
+  setInputsErrors({});
+  let validate = true;
+  validate = validatePassword(inputs.password, 'password',setInputsErrors);
+  validate = validatePassword(inputs.new_password, 'new_password',setInputsErrors);
+  if (inputs.password!=inputs.new_password) {
+    validate = false;
+    setInputsErrors((values) => ({...values,["new_password"]: "Confirm new password"}));
   }
   return validate;
 };

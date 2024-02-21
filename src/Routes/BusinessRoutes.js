@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useLocation,useNavigate } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import loadable from "@loadable/component";
 import LayoutVendor from "../layouts/Layout/LayoutVendor";
 import LayoutGeneral from "../layouts/Layout/LayoutGeneral";
@@ -18,8 +18,8 @@ const BusinessRoutes = (props) => {
   );
 
   useEffect(() => {
-    RoutesJS.vendorCheckLoginRedirect(url,loginMenu,loginedMenu,navigate)
-  }, [url,loginMenu,loginedMenu]);
+    RoutesJS.vendorCheckLoginRedirect(url, loginMenu, loginedMenu, navigate)
+  }, [url, loginMenu, loginedMenu]);
 
   useEffect(() => {
     if (props.menu.length > 0) {
@@ -51,36 +51,35 @@ const BusinessRoutes = (props) => {
 
   return (
     <>
-      {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(routeMenu, null, 2)}</pre>  */}
-      {!RoutesJS.hasVendorJWT() ? (
-      <>
-        <LayoutGeneral {...props}>
-          <Routes>
-            {loginMenu.map((routeMenus, i) => (
-              <Route
-                path={`/${routeMenus.url}`}
-                element={<LoadablePage page={routeMenus.pagename} {...props} />}
-              />
-
-            ))}
-          </Routes>
-        </LayoutGeneral>
-      </>
-      ) : (
-      <>
-        <LayoutVendor {...props}>
-          <Routes>
-            {loginedMenu.map((routeMenus, i) => (
-              <Route
-                path={`/${routeMenus.url}`}
-                element={<LoadablePage page={routeMenus.pagename} {...props} />}
-              />
-
-            ))}
-          </Routes>
-        </LayoutVendor>
-      </>
-      )}
+        {!RoutesJS.hasVendorJWT() ? (
+          <>
+            <LayoutGeneral {...props}>
+              <Routes>
+                {loginMenu.map((routeMenus, i) => (
+                  <Route
+                    path={`/${routeMenus.url}`}
+                    element={<LoadablePage page={routeMenus.pagename} {...props} />}
+                  />
+                ))}
+              </Routes>
+            </LayoutGeneral>
+          </>
+        ) : (
+          <>
+            <Routes>
+              {loginedMenu.map((routeMenus, i) => (
+                <Route
+                  path={`/${routeMenus.url}`}
+                  element={
+                    <LayoutVendor {...props} title={routeMenus.title} >
+                      <LoadablePage page={routeMenus.pagename} {...props} pageData={routeMenus} />
+                    </LayoutVendor>
+                  }
+                />
+              ))}
+            </Routes>
+          </>
+        )}
     </>
   );
 };

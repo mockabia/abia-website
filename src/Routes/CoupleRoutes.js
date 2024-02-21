@@ -11,7 +11,9 @@ const CoupleRoutes = (props) => {
   const [loginMenu, setLoginMenu]     = useState([]);
   const [loginedMenu, setLoginedMenu] = useState([]);
   const [topMenu, setTopMenu]         = useState([]);
+  const [leftMenu, setLeftMenu]       = useState([]);
   const url                           = location.pathname.split("/").pop();
+  const [mainMenuID, setMainMenuID]   = useState(null);
 
   const LoadablePage = loadable((props) => 
     import(`../pages/Couple/${props.page}`)
@@ -23,7 +25,8 @@ const CoupleRoutes = (props) => {
 
   useEffect(() => {
     if (props.menu.length > 0) {
-      let topMenuIds = [7,8,9];
+      let topMenuIds  = [7,8,9];
+      let leftMenuIds = [7,8,9];
       props.menu.map(function (MainMenu, i) {
         if (MainMenu.Sub_content.length <= 0) {
           let newArray1 = [];
@@ -37,18 +40,21 @@ const CoupleRoutes = (props) => {
           }
         } else {
           setTopMenu([])
+          setLeftMenu([])
           MainMenu.Sub_content.map(function (SubMenu, i) {
             let newArray1 = [];
             newArray1['url']      = SubMenu.url;
             newArray1['pagename'] = SubMenu.pagename;
             newArray1['title']    = SubMenu.title;
+            if(url==SubMenu.url){setMainMenuID(MainMenu.id)}
             
             if (topMenuIds.find(topId => topId === SubMenu.id)){
               setTopMenu(oldArray => [...oldArray, newArray1]);
             }
-            if (SubMenu.id == '7') {
-              setTopMenu(oldArray => [...oldArray, newArray1]);
-            } 
+            if (leftMenuIds.find(leftId => leftId === SubMenu.id)){
+              newArray1['leftMenuShow'] = true;
+              setLeftMenu(oldArray => [...oldArray, newArray1]);
+            }
             if (MainMenu.id == '1') {
               setLoginMenu(oldArray => [...oldArray, newArray1]);
             } else {
@@ -81,7 +87,7 @@ const CoupleRoutes = (props) => {
               <Route
                 path={`/${routeMenus.url}`}
                 element={
-                  <LayoutCouple {...props} title={routeMenus.title} topMenu={topMenu}>
+                  <LayoutCouple {...props} mainMenuID={mainMenuID} title={routeMenus.title} topMenu={topMenu} leftMenu={leftMenu} leftMenuShow={routeMenus.leftMenuShow}>
                     <LoadablePage page={routeMenus.pagename} {...props} pageData={routeMenus}/>
                   </LayoutCouple>
                   }

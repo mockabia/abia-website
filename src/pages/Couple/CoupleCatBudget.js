@@ -308,7 +308,6 @@ const CoupleCatBudget = () => {
   const { totalCostTotal, unpaidTotal } = calculateTotals();
 
   return (
-    <LayoutCouple title={title}>
       <section className="budget-section">
         <div className="budget-add-section">
           <p className="add-section-header">
@@ -741,7 +740,6 @@ const CoupleCatBudget = () => {
           </>
         )}
       </section>
-    </LayoutCouple>
   );
 };
 

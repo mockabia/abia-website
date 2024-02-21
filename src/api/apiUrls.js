@@ -79,9 +79,13 @@ export const BUSINESS_API = {
 };
 
 export const COUPLE_API = {
-  SIGNUP    : `${baseUrl}WebManageWedding/0/3/1`,
-  LOGIN     : `${baseUrl}WebWeddingLogin`,
-  FORGOT    : `${baseUrl}WebWeddingForgot`,
-  LOGOUT    : `${baseUrl}WebWeddingLogout`,
-  REFRESH   : `${baseUrl}couple-refresh`,
+  SIGNUP          : `${baseUrl}WebManageWedding/0/3/1`,
+  LOGIN           : `${baseUrl}WebWeddingLogin`,
+  FORGOT          : `${baseUrl}WebWeddingForgot`,
+  LOGOUT          : `${baseUrl}WebWeddingLogout`,
+  REFRESH         : `${baseUrl}couple-refresh`,
+  FETCH           : `${baseUrl}WebWeddingBridal`,
+  CONTACT         : `${baseUrl}WebManageWedding`,
+  WEDDING_DETAILS : `${baseUrl}WebManageWedding`,
+  SETTINGS        : `${baseUrl}WebManageWedding`,
 };

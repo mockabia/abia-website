@@ -45,6 +45,20 @@ export const checkCoupleRememberMe = (setInputs) => {
     ["cremember_me"]: localStorage.cremember_me,
   });
 };
+export const setLogin = async (token,navigate) => {
+  localStorage.setItem("coupleToken", JSON.stringify(token));
+  localStorage.setItem("abiaType", "C");
+  let expiresInMS = token.expires_in;
+  let currentTime = new Date();
+  let expireTime = new Date(currentTime.getTime() + expiresInMS);
+
+  localStorage.setItem("cexpireTime", expireTime);
+  localStorage.removeItem("cusername");
+  localStorage.removeItem("cpassword");
+  localStorage.removeItem("cremember_me");
+  apiService.setAuthToken(token);
+  navigate(window.CDASHBOARD)
+};
 export const logout = async (setLoginStatus,navigate) => {
   await servicesPage.logout().then(function (response) {
     if (response) {
@@ -78,7 +92,7 @@ export const coupleSignup = async (activeStep,setActiveStep,formValues, setError
   }
 };
 export const coupleLogin = async (formValues, setErrors,navigate) => {
-  if (customValidator.validateCoupleLogin(formValues, setErrors)) {
+  //if (customValidator.validateCoupleLogin(formValues, setErrors)) {
     await servicesPage.coupleLogin(formValues).then(function (response) {
       if (response.statuscode == 200) {
         const token = response.token;
@@ -91,19 +105,61 @@ export const coupleLogin = async (formValues, setErrors,navigate) => {
         }
       }
     });
+ // }
+};
+export const coupleDetails = async (setFormValues) => {
+  let token       = localStorage.getItem("coupleToken");
+  token           = JSON.parse(token);
+  let userSession = token && token.user ? token.user : null;
+  let userId      = userSession && userSession.id ? userSession.id : null;
+  await servicesPage.coupleDetails(userId).then(function (response) {
+    if (response.statuscode == 200) {
+      setFormValues(response.result);
+    }
+  });
+};
+export const coupleContact = async (formValues, setErrors,navigate) => {
+  if (customValidator.validateCoupleContact(formValues, setErrors)) {
+    await servicesPage.coupleContact(formValues.id,formValues).then(function (response) {
+      if (response.statuscode == 200) {
+        
+      } else {
+        if (response.errors) {
+          setErrors(response.errors);
+        } else if (response.statusmessage) {
+          setErrors(response.statusmessage);
+        }
+      }
+    });
   }
 };
-export const setLogin = async (token,navigate) => {
-  localStorage.setItem("coupleToken", JSON.stringify(token));
-  localStorage.setItem("abiaType", "C");
-  let expiresInMS = token.expires_in;
-  let currentTime = new Date();
-  let expireTime = new Date(currentTime.getTime() + expiresInMS);
-
-  localStorage.setItem("cexpireTime", expireTime);
-  localStorage.removeItem("cusername");
-  localStorage.removeItem("cpassword");
-  localStorage.removeItem("cremember_me");
-  apiService.setAuthToken(token);
-  navigate(window.CDASHBOARD)
+export const coupleWeddingDetails = async (formValues, setErrors,navigate) => {
+  if (customValidator.validateCoupleWeddingDetails(formValues, setErrors)) {
+    await servicesPage.coupleWeddingDetails(formValues.id,formValues).then(function (response) {
+      if (response.statuscode == 200) {
+        
+      } else {
+        if (response.errors) {
+          setErrors(response.errors);
+        } else if (response.statusmessage) {
+          setErrors(response.statusmessage);
+        }
+      }
+    });
+  }
+};
+export const coupleSettings = async (formValues, setErrors,navigate) => {
+  if (customValidator.validateCoupleSettings(formValues, setErrors)) {
+    await servicesPage.coupleSettings(formValues.id,formValues).then(function (response) {
+      if (response.statuscode == 200) {
+        
+      } else {
+        if (response.errors) {
+          setErrors(response.errors);
+        } else if (response.statusmessage) {
+          setErrors(response.statusmessage);
+        }
+      }
+    });
+  }
 };

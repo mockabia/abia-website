@@ -1,50 +1,25 @@
-import React, { useState } from "react";
-import LayoutCouple from "../../layouts/Layout/LayoutCouple";
+import React, { useEffect, useState } from "react";
 import { Box, Stack, useMediaQuery } from "@mui/material";
-import { CSTextfield, CoupleInput } from "../../components/FormStyle";
+import { CoupleInput } from "../../components/FormStyle";
+import { useNavigate } from "react-router-dom";
+import * as CoupleJS from "./Couple";
 
 const CoupleAccountSetting = (props) => {
 
-  const [formValues, setFormValues] = useState({
-    password: "",
-    new_password: "",
-  });
-  const [errors, setErrors] = useState({});
-  const isMobile = useMediaQuery("(max-width:550px)");
+  let navigate                      = useNavigate();
+  const [formValues, setFormValues] = useState({});
+  const [errors, setErrors]         = useState({});
+  const isMobile                    = useMediaQuery("(max-width:550px)");
 
-  const handleInputChange = (fieldName, value) => {
-    setFormValues({ ...formValues, [fieldName]: value });
-    setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
-  };
-
-  const validateForm = () => {
-    const errors = {};
-    if (!formValues.password) {
-      errors.password = "Password is required";
-    } else if (formValues.password.length < 6) {
-      errors.password = "Minimum 6 characters";
-    }
-    if (!formValues.new_password) {
-      errors.new_password = "Password is required";
-    } else if (formValues.new_password.length < 6) {
-      errors.new_password = "Minimum 6 characters";
-    }
-    return errors;
+  const handleInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length === 0) {
-      setFormValues((updatedFormValues) => {
-        console.log("Current form values:", {
-          formValues: updatedFormValues,
-        });
-        return updatedFormValues;
-      });
-    } else {
-      setErrors(validationErrors);
-    }
+    CoupleJS.coupleSettings(formValues, setErrors,navigate)
   };
   return (
       <section>
