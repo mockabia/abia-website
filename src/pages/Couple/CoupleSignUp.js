@@ -54,6 +54,7 @@ export default function CouplesSignUp() {
   const [loginOpen, setLoginOpen]               = React.useState(false);
 
   useEffect(() => {
+    setFormValues(values => ({...values,['wedding']: '1' }))
     CoupleJS.fetchState(setLocation);
     CoupleJS.fetchMarketingCategory(setMarketingOptions);
     // setIsOptionSelected(true);
@@ -281,13 +282,13 @@ export default function CouplesSignUp() {
                     {/* )} */}
 
                     <FormControlLabel
-                      value="0"
+                      value={formValues.wedding}
                       control={
                         <CheckBoxStyle
-                          name="decision"
-                          checked={formValues.decision}
+                          name="wedding"
+                          checked={formValues.wedding=='1' ? false : true}
                           onChange={(e) => {
-                            handleInputChangeVal('decision', e.target.checked ? 1 : 0)
+                            handleInputChangeVal('wedding', e.target.checked ? 0 : 1)
                           }}
                           inputProps={{ "aria-label": "controlled" }}
                           sx={{

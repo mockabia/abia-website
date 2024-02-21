@@ -13,7 +13,7 @@ const CoupleContact = (props) => {
   const isMobile                      = useMediaQuery("(max-width:550px)");
 
   useEffect(() => {
-    CoupleJS.coupleDetails(setFormValues)
+    CoupleJS.coupleDetails('contact',setFormValues)
   }, []);
 
   const handleInputChange = (e) => {

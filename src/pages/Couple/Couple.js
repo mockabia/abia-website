@@ -107,14 +107,24 @@ export const coupleLogin = async (formValues, setErrors,navigate) => {
     });
   }
 };
-export const coupleDetails = async (setFormValues) => {
+export const coupleDetails = async (from,setFormValues) => {
   let token       = localStorage.getItem("coupleToken");
   token           = JSON.parse(token);
   let userSession = token && token.user ? token.user : null;
   let userId      = userSession && userSession.id ? userSession.id : null;
   await servicesPage.coupleDetails(userId).then(function (response) {
     if (response.statuscode == 200) {
-      setFormValues(response.result);
+      if(from=='contact'){
+        setFormValues(values => ({...values,['bride']: response.result.bride,['groom']:response.result.groom,
+                  ['phone']:response.result.phone,['email']:response.result.email, }))
+      }else if(from=='details'){
+        setFormValues(values => ({...values,['date_of_wedding']: response.result.date_of_wedding,
+                  ['wedding']:response.result.wedding,['wedding_state']:response.result.wedding_state,
+                  ['wedding_location']:response.result.wedding_location,['budget']:response.result.budget,
+                  ['guests']:response.result.guests,['bridesmaids']:response.result.bridesmaids,
+                  ['groomsmen']:response.result.groomsmen,['travellingguests']:response.result.travellingguests,
+                  ['profile_desc']:response.result.profile_desc, }))
+      }
     }
   });
 };

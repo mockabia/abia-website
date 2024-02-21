@@ -46,7 +46,7 @@ const CoupleWeddingDetails = (props) => {
   const isAbove1100px                         = useMediaQuery("(min-width: 1101px)");
 
   useEffect(() => {
-    //CoupleJS.coupleDetails(setFormValues)
+    CoupleJS.coupleDetails('details',setFormValues)
     CoupleJS.fetchState(setStateOptions);
   }, []);
 
@@ -131,13 +131,13 @@ const CoupleWeddingDetails = (props) => {
                 />
 
                 <FormControlLabel
-                  value="end"
+                  value={formValues.wedding}
                   control={
                     <CheckBoxStyle
-                      name="decision"
-                      checked={formValues.decision}
+                      name="wedding"
+                      checked={formValues.wedding=='1' ? false : true}
                       onChange={(e) =>
-                        handleInputChangeVal('decision', e.target.checked ? 1 : 0)
+                        handleInputChangeVal('wedding', e.target.checked ? 0 : 1)
                       }
                       inputProps={{ "aria-label": "controlled" }}
                     />
