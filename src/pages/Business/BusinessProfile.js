@@ -97,7 +97,8 @@ const Profile = ({ preview }) => {
   const [deleteQA, setDeleteQA] = useState("");
   const [viewQandA, setViewQandA] = useState({});
   // Pricing
-  const [pricingInputs, setPricingInputs] = useState({});
+  const [inputsPricing, setInputsPricing] = useState([]);
+  const [inputsPriceErrors, setInputsPriceErrors] = useState({});
   const [pricingDisplayStates, setPricingDisplayStates] = useState({});
   const [accomState, setAccomState] = useState({});
   const [capacity, setCapacity] = useState({});
@@ -138,11 +139,57 @@ const Profile = ({ preview }) => {
 
   /*****Pricing  ***********/
   // Handle pricing input change
-  const handlePricingInputChange = (categoryID, value) => {
-    setPricingInputs((prevInputs) => ({
-      ...prevInputs,
-      [categoryID]: value,
-    }));
+  // const handlePricingInputChange = (categoryID, value) => {
+  //   setPricingInputs((prevInputs) => ({
+  //     ...prevInputs,
+  //     [categoryID]: value,
+  //   }));
+  // };
+
+  const handlePricingInputChange = (name, value, props) => {
+    if (inputsPricing.length !== undefined && inputsPricing.length > 0) {
+      let pricingArray = [...inputsPricing];
+      let catKey = props.catKey;
+      let setKey = props.setKey;
+
+      if (typeof pricingArray[catKey] === "undefined") {
+        pricingArray[catKey] = {};
+      }
+
+      if (typeof pricingArray[catKey]["CategorySettings"] === "undefined") {
+        pricingArray[catKey]["CategorySettings"] = [];
+      }
+      if (
+        typeof pricingArray[catKey]["CategorySettings"][setKey] === "undefined"
+      ) {
+        pricingArray[catKey]["CategorySettings"][setKey] = {};
+      }
+
+      pricingArray[catKey]["categoryid"] = props.categoryid;
+      pricingArray[catKey]["CategorySettings"][setKey]["csid"] = props.csid;
+      pricingArray[catKey]["CategorySettings"][setKey]["hid"] = props.hid;
+      pricingArray[catKey]["CategorySettings"][setKey]["vcids"] = props.vcids;
+      pricingArray[catKey]["CategorySettings"][setKey]["grpcid"] = props.grpcid;
+      pricingArray[catKey]["CategorySettings"][setKey][name] = value;
+
+      setInputsPricing(pricingArray);
+    } else {
+      let catKey = props.catKey;
+      let setKey = props.setKey;
+      let pricingArray = [];
+
+      pricingArray[catKey] = {};
+      pricingArray[catKey]["categoryid"] = props.categoryid;
+      pricingArray[catKey]["CategorySettings"] = [];
+      pricingArray[catKey]["CategorySettings"][setKey] = {};
+      pricingArray[catKey]["CategorySettings"][setKey]["csid"] = props.csid;
+      pricingArray[catKey]["CategorySettings"][setKey]["hid"] = props.hid;
+      pricingArray[catKey]["CategorySettings"][setKey]["vcids"] = props.vcids;
+      pricingArray[catKey]["CategorySettings"][setKey]["grpcid"] = props.grpcid;
+      pricingArray[catKey]["CategorySettings"][setKey][name] = value;
+
+      setInputsPricing(pricingArray);
+    }
   };
   // Handle display status change
   const handleDisplayChange = (categoryID, value) => {
@@ -274,7 +321,7 @@ const Profile = ({ preview }) => {
         let type_val;
         switch (setting.head_title) {
           case "Price per head":
-            type_val = pricingInputs[categoryId] || "0";
+            // type_val = pricingInputs[categoryId] || "0";
             break;
           case "Enable Seated":
             type_val = seated[categoryId] || "0";
@@ -294,7 +341,7 @@ const Profile = ({ preview }) => {
             subtype_val = 1;
             break;
           case "2":
-            subtype_val = pricingInputs[categoryId] || "0";
+            // subtype_val = pricingInputs[categoryId] || "0";
             break;
           // Add cases for other subtypes as needed
           default:
@@ -442,213 +489,19 @@ const Profile = ({ preview }) => {
               >
                 <div>
                   {viewProfile.Category &&
-                    viewProfile.Category.map((item) => (
+                    viewProfile.Category.map((category, catKey) => (
                       <div
                         className="mt-[1rem] mb-[3rem]"
-                        key={item.Categoryid}
+                        key={category.Categoryid}
                       >
                         <div>
                           <div className="pricing-category-label-section">
                             <span className="pricing-cate-label">
                               {" "}
-                              {item.CategoryName}
+                              {category.CategoryName}
                             </span>
                           </div>
-                          {item.CategorySettings.map(
-                            (categorySetting, index) => {
-                              return (
-                                <React.Fragment key={index}>
-                                  {categorySetting.min_max === "1" ? (
-                                    <p>{categorySetting.head_title}</p>
-                                  ) : categorySetting.head_titletype === "1" ? (
-                                    <React.Fragment>
-                                      {/* price per head */}
-                                      {categorySetting.head_title ===
-                                      "Price per head" ? (
-                                        <>
-                                          <div className="mt-[10px] relative">
-                                            <h5 className="font-semibold flex flex-col">
-                                              {categorySetting.head_title}
-                                            </h5>
-                                            <div className="">
-                                              <span className="dollar-icon"></span>
-                                              <input
-                                                name="pricepp"
-                                                type="number"
-                                                required
-                                                className="pricing-input-style"
-                                                onChange={(e) =>
-                                                  handlePricingInputChange(
-                                                    item.Categoryid,
-                                                    e.target.value
-                                                  )
-                                                }
-                                              />
-                                            </div>
-                                          </div>
-
-                                          <div className="myprofile-button-group relative">
-                                            <div>
-                                              <h5 className="font-semibold">
-                                                Display Price ?
-                                              </h5>
-                                              <div className="mt-[10px] space-x-2">
-                                                <button
-                                                  className={`yes-button ${
-                                                    pricingDisplayStates[
-                                                      item.Categoryid
-                                                    ]
-                                                      ? "selected"
-                                                      : ""
-                                                  }`}
-                                                  onClick={() =>
-                                                    handleDisplayChange(
-                                                      item.Categoryid,
-                                                      1
-                                                    )
-                                                  }
-                                                >
-                                                  Yes
-                                                </button>
-                                                <button
-                                                  className={`no-button ${
-                                                    pricingDisplayStates[
-                                                      item.Categoryid
-                                                    ] === 0
-                                                      ? "selected"
-                                                      : ""
-                                                  }`}
-                                                  onClick={() =>
-                                                    handleDisplayChange(
-                                                      item.Categoryid,
-                                                      0
-                                                    )
-                                                  }
-                                                >
-                                                  No
-                                                </button>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </>
-                                      ) : null}
-                                      {/* Seated style */}
-                                      {categorySetting.head_title ===
-                                      "Enable Seated" ? (
-                                        <div className="pricing-addons-container">
-                                          <div className="pricing-addon-label ">
-                                            <h5 className="l">Seated Style</h5>
-                                          </div>
-                                          <input
-                                            type="number"
-                                            required
-                                            className="capacity-input-style"
-                                            onChange={(e) =>
-                                              handleSeatedStyleChange(
-                                                item.Categoryid,
-                                                e.target.value
-                                              )
-                                            }
-                                          />
-                                        </div>
-                                      ) : null}
-                                      {/* Capacity */}
-                                      {categorySetting.head_title ===
-                                      "Capacity" ? (
-                                        <div className="pricing-addons-container">
-                                          <div className="pricing-addon-label ">
-                                            <h5 className="l">Capacity:</h5>
-                                          </div>
-                                          <input
-                                            name="capacity"
-                                            type="number"
-                                            required
-                                            className="capacity-input-style"
-                                            onChange={(e) =>
-                                              handleCapacityChange(
-                                                item.Categoryid,
-                                                e.target.value
-                                              )
-                                            }
-                                          />
-                                        </div>
-                                      ) : null}
-                                      {/* Accomodation */}
-                                      {categorySetting.head_title ===
-                                      "Accomodation Availability" ? (
-                                        <div className="myprofile-button-group relative">
-                                          <div className="mt-[15px]">
-                                            <h5 className="font-semibold">
-                                              Accomodation Availability
-                                            </h5>
-                                            <div className="mt-[15px] space-x-2">
-                                              <button
-                                                className={`yes-button ${
-                                                  accomState[item.Categoryid]
-                                                    ? "selected"
-                                                    : ""
-                                                }`}
-                                                onClick={() =>
-                                                  handleAccomodationChange(
-                                                    item.Categoryid,
-                                                    1
-                                                  )
-                                                }
-                                              >
-                                                Yes
-                                              </button>
-                                              <button
-                                                className={`no-button ${
-                                                  accomState[
-                                                    item.Categoryid
-                                                  ] === 0
-                                                    ? "selected"
-                                                    : ""
-                                                }`}
-                                                onClick={() =>
-                                                  handleAccomodationChange(
-                                                    item.Categoryid,
-                                                    0
-                                                  )
-                                                }
-                                              >
-                                                No
-                                              </button>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      ) : null}
-                                      {categorySetting.head_title ===
-                                      "Cocktail" ? (
-                                        <div className="pricing-addons-container">
-                                          <div className="pricing-addon-label ">
-                                            <h5 className="l">Cocktail:</h5>
-                                          </div>
-                                          <input
-                                            name="cockTail"
-                                            type="number"
-                                            required
-                                            className="capacity-input-style"
-                                            onChange={(e) =>
-                                              handleCocktailChange(
-                                                item.Categoryid,
-                                                e.target.value
-                                              )
-                                            }
-                                          />
-                                        </div>
-                                      ) : null}
-                                    </React.Fragment>
-                                  ) : categorySetting.head_titletype === "2" ? (
-                                    <p>{categorySetting.head_title}</p>
-                                  ) : null}
-                                </React.Fragment>
-                              );
-                            }
-                          )}
-
                           {/* <hr /> */}
-
                           {/* pricing input */}
                           {/* <div className="mt-[10px] relative">
                             <h5 className="font-semibold flex flex-col">
@@ -670,7 +523,6 @@ const Profile = ({ preview }) => {
                               />
                             </div>
                           </div> */}
-
                           {/* display price status */}
                           {/* <div className="myprofile-button-group relative">
                             <div className="mt-[15px]">
@@ -757,7 +609,7 @@ const Profile = ({ preview }) => {
                             />
                           </div> */}
                           {/* Cocktail */}
-                          <div className="pricing-addons-container">
+                          {/* <div className="pricing-addons-container">
                             <div className="pricing-addon-label ">
                               <h5 className="l">Cocktail:</h5>
                             </div>
@@ -773,7 +625,7 @@ const Profile = ({ preview }) => {
                                 )
                               }
                             />
-                          </div>
+                          </div> */}
                           {/* Seated Style */}
                           {/* <div className="pricing-addons-container">
                             <div className="pricing-addon-label ">
