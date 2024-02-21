@@ -56,6 +56,7 @@ export default function CouplesSignUp() {
   useEffect(() => {
     CoupleJS.fetchState(setLocation);
     CoupleJS.fetchMarketingCategory(setMarketingOptions);
+    // setIsOptionSelected(true);
   }, []);
   
   useEffect(() => {
