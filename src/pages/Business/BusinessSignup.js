@@ -52,7 +52,7 @@ const BusinessSignup = () => {
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [selectedFindUs, setSelectedFindUs] = useState(null);
   const [modalState, setModalState] = useState(false);
-
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
   //handlechange
@@ -79,7 +79,7 @@ const BusinessSignup = () => {
     }
     if (name === "first_category") {
       setSelectedCategory(selectedOption.label);
-      console.log("Selected services:", selectedOption.value);
+      // console.log("Selected services:", selectedOption.value);
       setFormValues((prevValues) => ({
         ...prevValues,
         first_category: selectedOption.value,
@@ -87,7 +87,7 @@ const BusinessSignup = () => {
     }
     if (name === "avgperyear") {
       setSelectedBooking(selectedOption.label);
-      console.log("Selected booking:", selectedOption.value);
+      // console.log("Selected booking:", selectedOption.value);
       setFormValues((prevValues) => ({
         ...prevValues,
         avgperyear: selectedOption.value,
@@ -95,7 +95,7 @@ const BusinessSignup = () => {
     }
     if (name === "findus") {
       setSelectedFindUs(selectedOption.label);
-      console.log("Selected findus:", selectedOption.value);
+      // console.log("Selected findus:", selectedOption.value);
       setFormValues((prevValues) => ({
         ...prevValues,
         findus: selectedOption.value,
@@ -118,11 +118,7 @@ const BusinessSignup = () => {
       setFormStep((current) => current + 1);
     }
   };
-  // const compleTeFormStep = (data) => {
-  //   setFormValues({ ...formValues, ...data });
-  //   setFormStep((current) => current + 1);
-  // };
-  // previous page
+
   const prevStep = () => {
     setFormStep((current) => current - 1);
   };
@@ -130,6 +126,7 @@ const BusinessSignup = () => {
   // Modal
   const handleClose = () => {
     setModalState(false);
+    navigate("/")
   };
 
   const handleSubmit = async (e) => {
@@ -140,12 +137,29 @@ const BusinessSignup = () => {
     if (Object.keys(validationErrors).length > 0) {
       return;
     }
+    const newFormValues = {
+      name: formValues.name,
+      email: formValues.email,
+      mobile_phone: formValues.mobile_phone,
+      website: formValues.website,
+      contact_person: formValues.contact_person,
+      state: formValues.state,
+      first_category: formValues.first_category,
+      avgperyear: formValues.avgperyear,
+      findus: formValues.findus,
+      password: formValues.password,
+      confirm_password: formValues.confirm_password,
+      // Add other relevant properties here...
+    };
+    console.log("formValues before serialization:", newFormValues);
+
     const submissionResult = await BusinessJS.vendorBusinessSubmit(
-      formValues,
-      setInputErrors
+      newFormValues,
+      setInputErrors,
+      setSuccess
     );
     // If the submission is successful, set modalState to true
-    if (submissionResult.success) {
+    if (submissionResult) {
       setModalState(true);
     }
     console.log("formValues submitted:", formValues);
@@ -158,6 +172,12 @@ const BusinessSignup = () => {
     BusinessJS.fetchBookingsPerYear(setRegisterBooking);
     BusinessJS.fetchFindUS(setRegisterFindUs);
   }, []);
+
+  useEffect(() => {
+    if (success) {
+      setModalState(true);
+    }
+  }, [success]);
   return (
     <>
       <div className=" desktop-form">
@@ -403,7 +423,10 @@ const BusinessSignup = () => {
 
                   <br />
 
-                  <br />
+                  <div className="error-message">
+                    {" "}
+                    {inputErrors.statusmessage}
+                  </div>
 
                   <div className="flex items-center gap-3">
                     <AiOutlineArrowLeft
@@ -460,13 +483,16 @@ const BusinessSignup = () => {
               </Box>
 
               <form>
-                <h3 className="flex justify-center">
-                  Thanks for your application! ?
-                </h3>
-                <p className="flex justify-center">
-                  An ABIA Representative will be in contact within the next 48
-                  business hours to discuss your ABIA Application.
-                </p>
+                <div className="flex flex-col gap-[10px]">
+                  <h2 className="flex justify-center"> {success}</h2>
+                  <h3 className="flex justify-center">
+                    Thanks for your application!
+                  </h3>
+                  <p className="flex justify-center">
+                    An ABIA Representative will be in contact within the next 48
+                    business hours to discuss your ABIA Application.
+                  </p>
+                </div>
               </form>
             </Box>
           </Modal>

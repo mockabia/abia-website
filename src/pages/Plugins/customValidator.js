@@ -161,14 +161,16 @@ export const validateBusinessSignupForm = (formValues, activeStep) => {
     } else if (!/\S+@\S+\.\S+/.test(formValues.email)) {
       errors.email = "Please provide a valid Email";
     }
-
     if (!formValues.mobile_phone) {
       errors.mobile_phone = "Phone no: is required.";
-    } else if (isNaN(parseInt(formValues.mobile_phone))) {
-      errors.mobile_phone = "The mobile phone must be an integer.";
-    } else if (formValues.mobile_phone.length > 13) {
+    } else if (!/^[0-9]\d*$/.test(formValues.mobile_phone)) {
+      errors.mobile_phone = "Phone no should be number format.";
+    } else if (formValues.mobile_phone.length < 10) {
       errors.mobile_phone =
-        "The mobile phone must not be greater than 13 digits.";
+        "Phone number must be minimum 10 digit and maximum upto 13 digits";
+    } else if (formValues.mobile_phone.length >= 13) {
+      errors.mobile_phone =
+        "Phone number must be minimum 10 digit and maximum upto 13 digits.";
     }
   }
   if (activeStep === 1) {

@@ -12,11 +12,15 @@ export const setAuthToken = (token) => {
 export async function apiCall(url, method, data) {
   let vtoken = localStorage.getItem("vendorToken");
   let ctoken = localStorage.getItem("coupleToken");
-  let token  = null; 
+  let token = null;
   if (vtoken !== undefined && vtoken !== "undefined" && vtoken !== null) {
-     token = localStorage.getItem("vendorToken");
-  }else if(ctoken !== undefined && ctoken !== "undefined" && ctoken !== null){
-     token = localStorage.getItem("coupleToken");
+    token = localStorage.getItem("vendorToken");
+  } else if (
+    ctoken !== undefined &&
+    ctoken !== "undefined" &&
+    ctoken !== null
+  ) {
+    token = localStorage.getItem("coupleToken");
   }
   if (token !== undefined && token !== "undefined") {
     token = JSON.parse(token);
@@ -45,6 +49,7 @@ export async function apiCall(url, method, data) {
         "X-Request-WID": userId,
       };
     }
+    console.log(headers);
     try {
       const response = await axios({
         url,
@@ -55,12 +60,18 @@ export async function apiCall(url, method, data) {
       });
       return response.data;
     } catch (err) {
+      console.log(err);
+
       if (err.response.statuscode == 401) {
         if (vtoken !== undefined && vtoken !== "undefined" && vtoken !== null) {
           refreshVendorToken();
-       }else if(ctoken !== undefined && ctoken !== "undefined" && ctoken !== null){
+        } else if (
+          ctoken !== undefined &&
+          ctoken !== "undefined" &&
+          ctoken !== null
+        ) {
           refreshCoupleToken();
-       }
+        }
       } else if (
         err.response.data.message == "Token has expired" ||
         err.response.data.message ==
@@ -80,7 +91,11 @@ export async function apiCall(url, method, data) {
             localStorage.removeItem("user");
             window.location = window.HOME;
           }
-        }else if(ctoken !== undefined && ctoken !== "undefined" && ctoken !== null){
+        } else if (
+          ctoken !== undefined &&
+          ctoken !== "undefined" &&
+          ctoken !== null
+        ) {
           if (
             localStorage.cusername &&
             localStorage.cusername !== "" &&

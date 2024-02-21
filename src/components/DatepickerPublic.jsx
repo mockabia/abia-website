@@ -202,11 +202,12 @@ export function DatePickerCouple({
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePickerStype
-        value={value}
+        // value={value}
+        value={value ? new Date(value) : null}
         name={name}
         format="dd/MM/yyyy"
         // label={label}
-        onChange={(date) => handleDateChange(name, date)}
+        onChange={(date) => handleDateChange(date)}
         // disabled="true"
         disablePast
         disabled={checkboxChecked}

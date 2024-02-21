@@ -4,14 +4,14 @@ import * as reactUrls from "../../api/reactUrls";
 import * as servicesPage from "../../services/vendor/businessServices";
 import * as customValidator from "../Plugins/customValidator";
 
-export const logout = async (setLoginStatus,navigate) => {
+export const logout = async (setLoginStatus, navigate) => {
   await servicesPage.logout().then(function (response) {
     if (response) {
       if (response.statuscode == 200) {
         apiService.setAuthToken(null);
         localStorage.removeItem("vendorToken");
         localStorage.removeItem("user");
-        setLoginStatus(false)
+        setLoginStatus(false);
         navigate(window.HOME);
       }
     }
@@ -98,9 +98,10 @@ export const fetchRegion = async (selectedStates, setRegions) => {
 };
 
 //VENDOR SIGNUP
-export const vendorBusinessSubmit = async (formValues, setInputsErrors) => {
+export const vendorBusinessSubmit = async (formValues, setInputsErrors, setSuccess) => {
   await servicesPage.business_signup(formValues).then(function (response) {
     if (response.statuscode == 200) {
+      setSuccess(response.statusmessage);
       console.log("response:", response.result);
     } else {
       if (response.errors) {
