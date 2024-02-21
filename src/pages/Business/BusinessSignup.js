@@ -5,12 +5,16 @@ import "../Style/BusinessSignup.css";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 import * as servicesPage from "../../services/vendor/signupPageService";
 import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { default as Select } from "react-select";
-import { CustomDropdownSelectStyles } from "../../components/FormStyle";
+import {
+  CustomDropdownSelectStyles,
+  ForgetBox,
+} from "../../components/FormStyle";
 import axios from "axios";
 import * as apiurls from "../../api/apiUrls";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +24,7 @@ import {
 } from "../../components/Login and Signup/business-Signup/VSignuPComponents";
 import * as BusinessJS from "../Business/Business";
 import { validateBusinessSignupForm } from "../Plugins/customValidator";
+import { Box, IconButton, Modal } from "@mui/material";
 
 const BusinessSignup = () => {
   const [formStep, setFormStep] = useState(0);
@@ -46,6 +51,7 @@ const BusinessSignup = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [selectedFindUs, setSelectedFindUs] = useState(null);
+  const [modalState, setModalState] = useState(false);
 
   const navigate = useNavigate();
 
@@ -121,7 +127,12 @@ const BusinessSignup = () => {
     setFormStep((current) => current - 1);
   };
 
-  const handleSubmit = (e) => {
+  // Modal
+  const handleClose = () => {
+    setModalState(false);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateBusinessSignupForm(formValues, formStep);
     setErrors(validationErrors);
@@ -129,7 +140,14 @@ const BusinessSignup = () => {
     if (Object.keys(validationErrors).length > 0) {
       return;
     }
-    BusinessJS.vendorBusinessSubmit(formValues, setInputErrors);
+    const submissionResult = await BusinessJS.vendorBusinessSubmit(
+      formValues,
+      setInputErrors
+    );
+    // If the submission is successful, set modalState to true
+    if (submissionResult.success) {
+      setModalState(true);
+    }
     console.log("formValues submitted:", formValues);
   };
 
@@ -409,6 +427,50 @@ const BusinessSignup = () => {
             </section>
           )}
         </form>
+        {/* Modal */}
+        {modalState && (
+          <Modal
+            open={modalState}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box
+              component="form"
+              sx={ForgetBox}
+              noValidate
+              autoComplete="off"
+              className="request-box-style"
+            >
+              <Box>
+                <IconButton
+                  type="button"
+                  style={{
+                    position: "absolute",
+                    top: "10px",
+                    right: "10px",
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Stop the event propagation
+                    handleClose();
+                  }}
+                >
+                  <AiOutlineClose />
+                </IconButton>
+              </Box>
+
+              <form>
+                <h3 className="flex justify-center">
+                  Thanks for your application! ?
+                </h3>
+                <p className="flex justify-center">
+                  An ABIA Representative will be in contact within the next 48
+                  business hours to discuss your ABIA Application.
+                </p>
+              </form>
+            </Box>
+          </Modal>
+        )}
       </div>
     </>
   );
