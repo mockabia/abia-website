@@ -64,7 +64,7 @@ const CoupleContact = (props) => {
                   name="bride"
                   type="text"
                   value={formValues.bride}
-                  onChange={(e) => handleInputChange("bride", e.target.value)}
+                  onChange={(e) => handleInputChange(e)}
                 />
                 {errors.bride && (
                   <div style={{ color: "red", fontSize: "12px" }}>
@@ -82,7 +82,7 @@ const CoupleContact = (props) => {
                   name="groom"
                   type="text"
                   value={formValues.groom}
-                  onChange={(e) => handleInputChange("groom", e.target.value)}
+                  onChange={(e) => handleInputChange(e)}
                 />
                 {errors.groom && (
                   <div style={{ color: "red", fontSize: "12px" }}>
@@ -101,7 +101,7 @@ const CoupleContact = (props) => {
                   inputMode="tel"
                   type="number"
                   value={formValues.phone}
-                  onChange={(e) => handleInputChange("phone", e.target.value)}
+                  onChange={(e) => handleInputChange(e)}
                 />
                 {errors.phone && (
                   <div style={{ color: "red", fontSize: "12px" }}>
@@ -119,7 +119,7 @@ const CoupleContact = (props) => {
                   name="email"
                   type="email"
                   value={formValues.email}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  onChange={(e) => handleInputChange(e)}
                 />
                 {errors.email && (
                   <div style={{ color: "red", fontSize: "12px" }}>

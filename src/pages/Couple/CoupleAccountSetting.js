@@ -58,7 +58,7 @@ const CoupleAccountSetting = (props) => {
                     type="password"
                     value={formValues.password}
                     onChange={(e) =>
-                      handleInputChange("password", e.target.value)
+                      handleInputChange(e)
                     }
                   />
                   {errors.password && (
@@ -77,7 +77,7 @@ const CoupleAccountSetting = (props) => {
                     type="password"
                     value={formValues.new_password}
                     onChange={(e) =>
-                      handleInputChange("new_password", e.target.value)
+                      handleInputChange(e)
                     }
                   />
                   {errors.new_password && (

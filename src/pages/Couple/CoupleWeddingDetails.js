@@ -46,21 +46,20 @@ const CoupleWeddingDetails = (props) => {
   const isAbove1100px                         = useMediaQuery("(min-width: 1101px)");
 
   useEffect(() => {
-    CoupleJS.coupleDetails(setFormValues)
+    //CoupleJS.coupleDetails(setFormValues)
+    CoupleJS.fetchState(setStateOptions);
   }, []);
 
   const handleInputChange = (e) => {
+    console.log(e)
     const name = e.target.name;
     const value = e.target.value;
+    console.log(name+'=='+value)
     CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
   };
   const handleInputChangeVal = (name, value) => {
     CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
   };
-
-  useEffect(() => {
-    CoupleJS.fetchState(setStateOptions);
-  }, []);
 
   useEffect(() => {
     CoupleJS.fetchRegion(selectedState.url, setRegions);
@@ -138,7 +137,7 @@ const CoupleWeddingDetails = (props) => {
                       name="decision"
                       checked={formValues.decision}
                       onChange={(e) =>
-                        handleInputChange("decision", e.target.checked)
+                        handleInputChangeVal('decision', e.target.checked ? 1 : 0)
                       }
                       inputProps={{ "aria-label": "controlled" }}
                     />
@@ -183,10 +182,10 @@ const CoupleWeddingDetails = (props) => {
                     sx={{ width: "100%", fontSize: "14px" }}
                     styles={{ ...CoupleSelectStyle, ...customStyles }}
                     options={stateOptions}
-                    onChange={handleInputChange}
-                    // onChange={(selectedOptions) =>
-                    //   handleInputChange("wedding_state", selectedOptions)
-                    // }
+                    //onChange={handleInputChangeVal}
+                    onChange={(selectedOptions) =>
+                      handleInputChangeVal("wedding_state", selectedOptions.url)
+                    }
                     value={formValues.wedding_state}
                     components={{
                       Menu,
@@ -274,7 +273,7 @@ const CoupleWeddingDetails = (props) => {
                     type="number"
                     value={formValues.budget}
                     onChange={(e) =>
-                      handleInputChange("budget", e.target.value)
+                      handleInputChange(e)
                     }
                   />
                   {errors.budget && (
@@ -294,7 +293,7 @@ const CoupleWeddingDetails = (props) => {
                     type="number"
                     value={formValues.guests}
                     onChange={(e) =>
-                      handleInputChange("guests", e.target.value)
+                      handleInputChange(e)
                     }
                   />
                   {errors.guests && (
@@ -319,7 +318,7 @@ const CoupleWeddingDetails = (props) => {
                     type="number"
                     value={formValues.bridesmaids}
                     onChange={(e) =>
-                      handleInputChange("bridesmaids", e.target.value)
+                      handleInputChange(e)
                     }
                   />
                   {errors.bridesmaids && (
@@ -338,7 +337,7 @@ const CoupleWeddingDetails = (props) => {
                     type="number"
                     value={formValues.groomsmen}
                     onChange={(e) =>
-                      handleInputChange("groomsmen", e.target.value)
+                      handleInputChange(e)
                     }
                   />
                   {errors.groomsmen && (
@@ -363,7 +362,7 @@ const CoupleWeddingDetails = (props) => {
                     type="text"
                     value={formValues.travellingguests}
                     onChange={(e) =>
-                      handleInputChange("travellingguests", e.target.value)
+                      handleInputChange(e)
                     }
                   />
                   {errors.travellingguests && (
@@ -393,7 +392,7 @@ const CoupleWeddingDetails = (props) => {
                   type="text"
                   value={formValues.profile_desc}
                   onChange={(e) =>
-                    handleInputChange("profile_desc", e.target.value)
+                    handleInputChange(e)
                   }
                   width="100%"
                   maxWidth="23rem"
