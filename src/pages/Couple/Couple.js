@@ -92,7 +92,7 @@ export const coupleSignup = async (activeStep,setActiveStep,formValues, setError
   }
 };
 export const coupleLogin = async (formValues, setErrors,navigate) => {
-  //if (customValidator.validateCoupleLogin(formValues, setErrors)) {
+  if (customValidator.validateCoupleLogin(formValues, setErrors)) {
     await servicesPage.coupleLogin(formValues).then(function (response) {
       if (response.statuscode == 200) {
         const token = response.token;
@@ -105,7 +105,7 @@ export const coupleLogin = async (formValues, setErrors,navigate) => {
         }
       }
     });
- // }
+  }
 };
 export const coupleDetails = async (setFormValues) => {
   let token       = localStorage.getItem("coupleToken");

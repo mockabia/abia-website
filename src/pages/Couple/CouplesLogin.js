@@ -31,7 +31,7 @@ const CouplesLogin = (props) => {
   const togglePasswordVisibility = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword);
-    if (formValues.cpassword.trim() !== "" && showPassword) {
+    if (formValues.password.trim() !== "" && showPassword) {
       setShowVisibilityIcon(!showPassword);
     } else {
       setShowVisibilityIcon(false);
