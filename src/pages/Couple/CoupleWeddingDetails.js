@@ -47,7 +47,6 @@ const customStyles = {
 };
 
 const CoupleWeddingDetails = (props) => {
-
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 550);
   const [formValues, setFormValues] = useState({
     wedding_date: null,
@@ -70,16 +69,16 @@ const CoupleWeddingDetails = (props) => {
   const isAbove1100px = useMediaQuery("(min-width: 1101px)");
 
   useEffect(() => {
-    CoupleJS.coupleDetails('details',setFormValues)
+    CoupleJS.coupleDetails("details", setFormValues);
     CoupleJS.fetchState(setStateOptions);
   }, []);
 
   const handleInputChange = (e) => {
-    console.log(e)
+    console.log(e);
     const name = e.target.name;
     const value = e.target.value;
-    console.log(name+'=='+value)
-    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
+    console.log(name + "==" + value);
+    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors);
   };
   const handleDateChange = (fieldName, date) => {
     setFormValues({ ...formValues, [fieldName]: date });
@@ -89,9 +88,9 @@ const CoupleWeddingDetails = (props) => {
   useEffect(() => {
     CoupleJS.fetchRegion(selectedState.url, setRegions);
   }, [selectedState.url]);
-  
+
   useEffect(() => {
-    setCheckboxChecked(formValues.wedding=='0' ? true : false)
+    setCheckboxChecked(formValues.wedding == "0" ? true : false);
   }, [formValues.wedding]);
 
   useEffect(() => {
@@ -159,351 +158,334 @@ const CoupleWeddingDetails = (props) => {
   };
 
   return (
-      <section>
-        <div className="couple-contact-container">
-          <Box
-            component="form"
+    <section>
+      <div className="couple-contact-container">
+        <Box
+          component="form"
+          sx={{
+            width: "100%",
+            margin: isMobilesize ? "0 1.5rem" : "auto",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Stack
+            width="100%"
+            maxWidth="23rem"
             sx={{
-              width: "100%",
-              margin: isMobilesize ? "0 1.5rem" : "auto",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              "@media (min-width: 600px)": {
+                width: "24rem",
+                maxWidth: "30rem",
+              },
+              "@media (min-width: 1100px)": {
+                width: "40rem",
+                maxWidth: "100%",
+              },
             }}
+            spacing={2}
           >
+            <h2>{props.pageData.title}</h2>
             <Stack
-              width="100%"
-              maxWidth="23rem"
-              sx={{
-                "@media (min-width: 600px)": {
-                  width: "24rem",
-                  maxWidth: "30rem",
-                },
-                "@media (min-width: 1100px)": {
-                  width: "40rem",
-                  maxWidth: "100%",
-                },
-              }}
-              spacing={2}
+              direction={isMobile ? "column" : "row"}
+              spacing={isMobile ? 2 : isAbove1100px ? "3rem" : "defaultSpacing"}
             >
-              <h2>{props.pageData.title}</h2>
-              <Stack
-                direction={isMobile ? "column" : "row"}
-                spacing={
-                  isMobile ? 2 : isAbove1100px ? "3rem" : "defaultSpacing"
-                }
-              >
-                <DatePickerProfile2
-                  name="wedding_date"
-                  label="Wedding Date"
-                  value={formValues.wedding_date}
-                  dateError={checkboxChecked ? "" : errors.wedding_date}
-                  handleDateChange={handleDateChange}
-                  checkboxChecked={checkboxChecked}
-                />
+              <DatePickerProfile2
+                name="wedding_date"
+                label="Wedding Date"
+                value={formValues.wedding_date}
+                dateError={checkboxChecked ? "" : errors.wedding_date}
+                handleDateChange={handleDateChange}
+                checkboxChecked={checkboxChecked}
+              />
 
-                <FormControlLabel
-                  value={formValues.wedding}
-                  control={
-                    <CheckBoxStyle
-                      name="wedding"
-                      checked={formValues.wedding=='1' ? false : true}
-                      onChange={(e) =>
-                        handleInputChangeVal('wedding', e.target.checked ? 0 : 1)
-                      }
-                      inputProps={{ "aria-label": "controlled" }}
-                    />
-                  }
-                  label={
-                    <span style={{ fontFamily: "raleway", fontSize: "14px" }}>
-                      Haven’t decided yet
-                    </span>
-                  }
-                  labelPlacement="end"
-                />
-              </Stack>
-              <Box>
-                {errors.wedding_date && (
-                  <div
-                    style={{
-                      color: "red",
-                      fontSize: "12px",
-                      marginTop: -"1rem",
-                    }}
-                  >
-                    {errors.wedding_date}
-                  </div>
-                )}
-              </Box>
-              <Stack
-                direction={isMobile ? "column" : "row"}
-                justifyContent="space-between"
-                alignItems={isMobile ? "" : "center"}
-                gap={0}
-              >
-                <Box sx={MuiBoxStyles}>
-                  <label>
-                    Wedding State
-                    <span style={{ color: "red", fontSize: "16px" }}>*</span>
-                  </label>
-                  <Select
-                    className="custom-select-dropdown"
-                    name="wedding_state"
-                    placeholder=""
-                    type="select"
-                    sx={{ width: "100%", fontSize: "14px" }}
-                    styles={{ ...CoupleSelectStyle, ...customStyles }}
-                    options={stateOptions}
-                    //onChange={handleInputChangeVal}
-                    onChange={(selectedOptions) =>
-                      handleInputChangeVal("wedding_state", selectedOptions.url)
-                    }
-                    value={formValues.wedding_state}
-                    components={{
-                      Menu,
-                      MultiValue,
-                      IndicatorSeparator: null,
-                      DropdownIndicator: () => (
-                        <div>
-                          <FontAwesomeIcon
-                            icon={faCaretDown}
-                            className="dropDown-position"
-                            style={{ color: "#6cc2bc", marginRight: "0.5rem" }}
-                          />
-                        </div>
-                      ),
-                    }}
-                  />
-                  {errors.wedding_state && (
-                    <div style={{ color: "red", fontSize: "12px" }}>
-                      {errors.wedding_state}
-                    </div>
-                  )}
-                </Box>
-                <Box sx={MuiBoxStyles}>
-                  <label>
-                    Wedding Location
-                    <span style={{ color: "red", fontSize: "16px" }}>*</span>
-                  </label>
-                  <Select
-                    name="wedding_location"
-                    placeholder=""
-                    isMulti={true}
-                    type="select"
-                    sx={{ width: "100%" }}
-                    value={formValues.wedding_location}
-                    styles={CoupleSelectStyle}
-                    options={regions}
-                    onChange={(selectedOptions) =>
-                      handleInputChange("wedding_location", selectedOptions)
-                    }
-                    isClearable={false}
-                    closeMenuOnSelect={false}
-                    hideSelectedOptions={false}
-                    components={{
-                      Menu,
-                      MultiValue,
-                      IndicatorSeparator: null,
-                      DropdownIndicator: () => (
-                        <div>
-                          <FontAwesomeIcon
-                            icon={faCaretDown}
-                            className="dropDown-position"
-                            style={{ color: "#6cc2bc", marginRight: "0.5rem" }}
-                          />
-                        </div>
-                      ),
-                      Option: ({ innerProps, label, isSelected }) => (
-                        <CheckboxOption
-                          innerProps={innerProps}
-                          label={label}
-                          isSelected={isSelected}
-                        />
-                      ),
-                    }}
-                  />
-                  {errors.wedding_location && (
-                    <div style={{ color: "red", fontSize: "12px" }}>
-                      {errors.wedding_location}
-                    </div>
-                  )}
-                </Box>
-              </Stack>
-              <Stack
-                direction={isMobile ? "column" : "row"}
-                justifyContent="space-between"
-                gap={2}
-              >
-                {/* Budget */}
-                <Box sx={MuiBoxStyles}>
-                  <label>
-                    Estimate Budget
-                    <span className="star">*</span>
-                  </label>
-                  <CoupleInput
-                    name="budget"
-                    type="number"
-                    value={formValues.budget}
+              <FormControlLabel
+                value={formValues.wedding}
+                control={
+                  <CheckBoxStyle
+                    name="wedding"
+                    checked={formValues.wedding == "1" ? false : true}
                     onChange={(e) =>
-                      handleInputChange(e)
+                      handleInputChangeVal("wedding", e.target.checked ? 0 : 1)
                     }
+                    inputProps={{ "aria-label": "controlled" }}
                   />
-                  {errors.budget && (
-                    <div style={{ color: "red", fontSize: "12px" }}>
-                      {errors.budget}
-                    </div>
-                  )}
-                </Box>
-                {/* wedding guest */}
-                <Box sx={MuiBoxStyles}>
-                  <label>
-                    # of Wedding Guests
-                    <span style={{ color: "red", fontSize: "16px" }}>*</span>
-                  </label>
-                  <CoupleInput
-                    name="guests"
-                    type="number"
-                    value={formValues.guests}
-                    onChange={(e) =>
-                      handleInputChange(e)
-                    }
-                  />
-                  {errors.guests && (
-                    <div style={{ color: "red", fontSize: "12px" }}>
-                      {errors.guests}
-                    </div>
-                  )}
-                </Box>
-              </Stack>
-              <Stack
-                direction={isMobile ? "column" : "row"}
-                justifyContent="space-between"
-                gap={2}
-              >
-                <Box sx={MuiBoxStyles}>
-                  <label>
-                    # of Bridesmaids
-                    <span style={{ color: "red", fontSize: "16px" }}>*</span>
-                  </label>
-                  <CoupleInput
-                    name="bridesmaids"
-                    type="number"
-                    value={formValues.bridesmaids}
-                    onChange={(e) =>
-                      handleInputChange(e)
-                    }
-                  />
-                  {errors.bridesmaids && (
-                    <div style={{ color: "red", fontSize: "12px" }}>
-                      {errors.bridesmaids}
-                    </div>
-                  )}
-                </Box>
-                <Box sx={MuiBoxStyles}>
-                  <label>
-                    # of Groomsmen
-                    <span style={{ color: "red", fontSize: "16px" }}>*</span>
-                  </label>
-                  <CoupleInput
-                    name="groomsmen"
-                    type="number"
-                    value={formValues.groomsmen}
-                    onChange={(e) =>
-                      handleInputChange(e)
-                    }
-                  />
-                  {errors.groomsmen && (
-                    <div style={{ color: "red", fontSize: "12px" }}>
-                      {errors.groomsmen}
-                    </div>
-                  )}
-                </Box>
-              </Stack>
-              <Stack
-                direction={isMobile ? "column" : "row"}
-                justifyContent="space-between"
-                gap={2}
-              >
-                <Box sx={MuiBoxStyles}>
-                  <label>
-                    # of Travelling Guests
-                    <span style={{ color: "red", fontSize: "16px" }}>*</span>
-                  </label>
-                  <CoupleInput
-                    name="travellingguests"
-                    type="text"
-                    value={formValues.travellingguests}
-                    onChange={(e) =>
-                      handleInputChange(e)
-                    }
-                  />
-                  {errors.travellingguests && (
-                    <div style={{ color: "red", fontSize: "12px" }}>
-                      {errors.travellingguests}
-                    </div>
-                  )}
-                </Box>
-              </Stack>
-              <Box
-                sx={{
-                  width: "100%",
-                  margin: "auto",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-                gap="5px"
-              >
+                }
+                label={
+                  <span style={{ fontFamily: "raleway", fontSize: "14px" }}>
+                    Haven’t decided yet
+                  </span>
+                }
+                labelPlacement="end"
+              />
+            </Stack>
+            <Box>
+              {errors.wedding_date && (
+                <div
+                  style={{
+                    color: "red",
+                    fontSize: "12px",
+                    marginTop: -"1rem",
+                  }}
+                >
+                  {errors.wedding_date}
+                </div>
+              )}
+            </Box>
+            <Stack
+              direction={isMobile ? "column" : "row"}
+              justifyContent="space-between"
+              alignItems={isMobile ? "" : "center"}
+              gap={0}
+            >
+              <Box sx={MuiBoxStyles}>
                 <label>
-                  Your Wedding Vision
+                  Wedding State
                   <span style={{ color: "red", fontSize: "16px" }}>*</span>
                 </label>
-                <TextAreaInput
-                  name="profile_desc"
-                  multiline
-                  rows={4}
-                  type="text"
-                  value={formValues.profile_desc}
-                  onChange={(e) =>
-                    handleInputChange(e)
+                <Select
+                  className="custom-select-dropdown"
+                  name="wedding_state"
+                  placeholder=""
+                  type="select"
+                  sx={{ width: "100%", fontSize: "14px" }}
+                  styles={{ ...CoupleSelectStyle, ...customStyles }}
+                  options={stateOptions}
+                  //onChange={handleInputChangeVal}
+                  onChange={(selectedOptions) =>
+                    handleInputChangeVal("wedding_state", selectedOptions.url)
                   }
-                  width="100%"
-                  maxWidth="23rem"
-                  sx={{
-                    "@media (min-width: 600px)": {
-                      width: "24rem",
-                      maxWidth: "30rem",
-                    },
-                    "@media (min-width: 1100px)": {
-                      width: "100%",
-                      maxWidth: "100%",
-                    },
+                  value={formValues.wedding_state}
+                  components={{
+                    Menu,
+                    MultiValue,
+                    IndicatorSeparator: null,
+                    DropdownIndicator: () => (
+                      <div>
+                        <FontAwesomeIcon
+                          icon={faCaretDown}
+                          className="dropDown-position"
+                          style={{ color: "#6cc2bc", marginRight: "0.5rem" }}
+                        />
+                      </div>
+                    ),
                   }}
                 />
-                {errors.profile_desc && (
+                {errors.wedding_state && (
                   <div style={{ color: "red", fontSize: "12px" }}>
-                    {errors.profile_desc}
+                    {errors.wedding_state}
                   </div>
                 )}
               </Box>
-              <br />
-
-              <Box>
-                <button
-                  className="couple-save-button"
-                  onClick={handleFormSubmit}
-                >
-                  Save Changes
-                </button>
+              <Box sx={MuiBoxStyles}>
+                <label>
+                  Wedding Location
+                  <span style={{ color: "red", fontSize: "16px" }}>*</span>
+                </label>
+                <Select
+                  name="wedding_location"
+                  placeholder=""
+                  isMulti={true}
+                  type="select"
+                  sx={{ width: "100%" }}
+                  value={formValues.wedding_location}
+                  styles={CoupleSelectStyle}
+                  options={regions}
+                  onChange={(selectedOptions) =>
+                    handleInputChange("wedding_location", selectedOptions)
+                  }
+                  isClearable={false}
+                  closeMenuOnSelect={false}
+                  hideSelectedOptions={false}
+                  components={{
+                    Menu,
+                    MultiValue,
+                    IndicatorSeparator: null,
+                    DropdownIndicator: () => (
+                      <div>
+                        <FontAwesomeIcon
+                          icon={faCaretDown}
+                          className="dropDown-position"
+                          style={{ color: "#6cc2bc", marginRight: "0.5rem" }}
+                        />
+                      </div>
+                    ),
+                    Option: ({ innerProps, label, isSelected }) => (
+                      <CheckboxOption
+                        innerProps={innerProps}
+                        label={label}
+                        isSelected={isSelected}
+                      />
+                    ),
+                  }}
+                />
+                {errors.wedding_location && (
+                  <div style={{ color: "red", fontSize: "12px" }}>
+                    {errors.wedding_location}
+                  </div>
+                )}
               </Box>
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
             </Stack>
-          </Box>
-        </div>
-      </section>
+            <Stack
+              direction={isMobile ? "column" : "row"}
+              justifyContent="space-between"
+              gap={2}
+            >
+              {/* Budget */}
+              <Box sx={MuiBoxStyles}>
+                <label>
+                  Estimate Budget
+                  <span className="star">*</span>
+                </label>
+                <CoupleInput
+                  name="budget"
+                  type="number"
+                  value={formValues.budget}
+                  onChange={(e) => handleInputChange(e)}
+                />
+                {errors.budget && (
+                  <div style={{ color: "red", fontSize: "12px" }}>
+                    {errors.budget}
+                  </div>
+                )}
+              </Box>
+              {/* wedding guest */}
+              <Box sx={MuiBoxStyles}>
+                <label>
+                  # of Wedding Guests
+                  <span style={{ color: "red", fontSize: "16px" }}>*</span>
+                </label>
+                <CoupleInput
+                  name="guests"
+                  type="number"
+                  value={formValues.guests}
+                  onChange={(e) => handleInputChange(e)}
+                />
+                {errors.guests && (
+                  <div style={{ color: "red", fontSize: "12px" }}>
+                    {errors.guests}
+                  </div>
+                )}
+              </Box>
+            </Stack>
+            <Stack
+              direction={isMobile ? "column" : "row"}
+              justifyContent="space-between"
+              gap={2}
+            >
+              <Box sx={MuiBoxStyles}>
+                <label>
+                  # of Bridesmaids
+                  <span style={{ color: "red", fontSize: "16px" }}>*</span>
+                </label>
+                <CoupleInput
+                  name="bridesmaids"
+                  type="number"
+                  value={formValues.bridesmaids}
+                  onChange={(e) => handleInputChange(e)}
+                />
+                {errors.bridesmaids && (
+                  <div style={{ color: "red", fontSize: "12px" }}>
+                    {errors.bridesmaids}
+                  </div>
+                )}
+              </Box>
+              <Box sx={MuiBoxStyles}>
+                <label>
+                  # of Groomsmen
+                  <span style={{ color: "red", fontSize: "16px" }}>*</span>
+                </label>
+                <CoupleInput
+                  name="groomsmen"
+                  type="number"
+                  value={formValues.groomsmen}
+                  onChange={(e) => handleInputChange(e)}
+                />
+                {errors.groomsmen && (
+                  <div style={{ color: "red", fontSize: "12px" }}>
+                    {errors.groomsmen}
+                  </div>
+                )}
+              </Box>
+            </Stack>
+            <Stack
+              direction={isMobile ? "column" : "row"}
+              justifyContent="space-between"
+              gap={2}
+            >
+              <Box sx={MuiBoxStyles}>
+                <label>
+                  # of Travelling Guests
+                  <span style={{ color: "red", fontSize: "16px" }}>*</span>
+                </label>
+                <CoupleInput
+                  name="travellingguests"
+                  type="text"
+                  value={formValues.travellingguests}
+                  onChange={(e) => handleInputChange(e)}
+                />
+                {errors.travellingguests && (
+                  <div style={{ color: "red", fontSize: "12px" }}>
+                    {errors.travellingguests}
+                  </div>
+                )}
+              </Box>
+            </Stack>
+            <Box
+              sx={{
+                width: "100%",
+                margin: "auto",
+                display: "flex",
+                flexDirection: "column",
+              }}
+              gap="5px"
+            >
+              <label>
+                Your Wedding Vision
+                <span style={{ color: "red", fontSize: "16px" }}>*</span>
+              </label>
+              <TextAreaInput
+                name="profile_desc"
+                multiline
+                rows={4}
+                type="text"
+                value={formValues.profile_desc}
+                onChange={(e) => handleInputChange(e)}
+                width="100%"
+                maxWidth="23rem"
+                sx={{
+                  "@media (min-width: 600px)": {
+                    width: "24rem",
+                    maxWidth: "30rem",
+                  },
+                  "@media (min-width: 1100px)": {
+                    width: "100%",
+                    maxWidth: "100%",
+                  },
+                }}
+              />
+              {errors.profile_desc && (
+                <div style={{ color: "red", fontSize: "12px" }}>
+                  {errors.profile_desc}
+                </div>
+              )}
+            </Box>
+            <br />
+
+            <Box>
+              <button className="couple-save-button" onClick={handleFormSubmit}>
+                Save Changes
+              </button>
+            </Box>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+          </Stack>
+        </Box>
+      </div>
+    </section>
   );
 };
 
