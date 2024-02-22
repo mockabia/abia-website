@@ -45,7 +45,7 @@ const SideMenu = (props) => {
               {MainMenu.Sub_content.length <= 0 ? (
                 <div className="">
                   <NavLink
-                    to={MainMenu.url}
+                    to={`${process.env.REACT_APP_BUSINESS_URL}/${MainMenu.url}`}
                     className="sidebarMenuItem"
                     onClick={props.onMenuLinkClick}
                   >
@@ -97,7 +97,7 @@ const SideMenu = (props) => {
                       >
                         <NavLink
                           className="sublink"
-                          to={SubMenu.url}
+                          to={`${process.env.REACT_APP_BUSINESS_URL}/${SubMenu.url}`}
                           onClick={closeMenu}
                         >
                           <h5>{SubMenu.title}</h5>

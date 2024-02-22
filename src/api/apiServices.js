@@ -49,7 +49,7 @@ export async function apiCall(url, method, data) {
         "X-Request-WID": userId,
       };
     }
-    console.log(headers);
+    // console.log(headers);
     try {
       const response = await axios({
         url,
@@ -60,7 +60,7 @@ export async function apiCall(url, method, data) {
       });
       return response.data;
     } catch (err) {
-      console.log(err);
+      // console.log(err);
 
       if (err.response.statuscode == 401) {
         if (vtoken !== undefined && vtoken !== "undefined" && vtoken !== null) {

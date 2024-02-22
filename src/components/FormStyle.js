@@ -1465,3 +1465,24 @@ export const CheckBoxStyle2 = styled(Checkbox)({
     fontFamily: "Raleway",
   },
 });
+
+// Pricing Checkbox
+export const PricingCheckbox = styled(Checkbox)({
+  " & .MuiSvgIcon-root path": {
+    display: "hidden",
+  },
+  "& .MuiSvgIcon-root": {
+    width: "4rem",
+    height: "2rem",
+    borderRadius: "10px",
+    backgroundColor: "#ced6d2",
+    color: "",
+    fontWeight: 500,
+    fontSize: "14px",
+    outline: "none",
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#ced6d2", // Adjust the color on hover if needed
+    },
+  },
+});
