@@ -30,7 +30,7 @@ import { MdDelete } from "react-icons/md";
 
 import PhotoGalleryTest from "../../pages - Copy/My Profile/photos&videos/MyProfile-PhotoUplaoder/PhotoGalleryTest";
 import VideoGallery from "../../pages - Copy/My Profile/photos&videos/myProfileVideo";
-import { StyledAccordion } from "../../components/FormStyle";
+import { PricingCheckbox, StyledAccordion } from "../../components/FormStyle";
 import * as BusinessJS from "../Business/Business";
 import Skeleton from "@mui/material/Skeleton";
 import { Preview } from "@mui/icons-material";
@@ -63,47 +63,11 @@ const Profile = ({ preview }) => {
   const [inputsErrors, setInputsErrors] = useState({});
 
   const [previewSet, setpreviewSet] = useState(false);
-  // Full desc
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
-  );
-  const [convertedContent, setConvertedContent] = useState(null);
-  const [fullText, setFullText] = useState("");
-  const [fulldesccount, setFulldesccount] = useState(0);
-  // Owner and Team
-  const [ownerText, setOWnerText] = useState("");
-  const [ownerContent, setOwnerContent] = useState("");
-  const [defaultContent, setDefaultcontent] = useState("");
-  const [ownerRadioOption, setOwnerRadioOption] = useState(1);
-  const [croppedImage, setCroppedImage] = useState("");
-  const [imageTypes, setImageTypes] = useState({});
-  const [ownerImage, setOwnerImage] = useState(viewProfile.teamownerpic || "");
-  // Packages
-  const [pfile, setPfile] = useState();
-  const [fileUploaded, setFileUploaded] = useState(false);
-  const [packagesText, setPackagesText] = useState("");
-  const [uploadedFileName, setUploadedFileName] = useState("");
-  const [viewFile, setViewFile] = useState("");
-  const [delPackage, setDelPackages] = useState(false);
-  // QandA
-  const [questions, setQuestions] = useState([
-    { id: 1, question: "", answer: "" },
-  ]);
-  const [questionDisplay, setQuestionDisplay] = useState([]);
-  const [qwordCount, setQwordCount] = useState(0);
-  const [qandaWordCountError, setqandaWordCountError] = useState(false);
-  // const [inputsErrors, setInputsErrors] = useState({});
-  const [questionRes, setQuestionRes] = useState({});
-  const [deleteQA, setDeleteQA] = useState("");
-  const [viewQandA, setViewQandA] = useState({});
+
   // Pricing
   const [inputsPricing, setInputsPricing] = useState([]);
   const [inputsPriceErrors, setInputsPriceErrors] = useState({});
-  const [pricingDisplayStates, setPricingDisplayStates] = useState({});
-  const [accomState, setAccomState] = useState({});
-  const [capacity, setCapacity] = useState({});
-  const [cockTail, setCockTail] = useState({});
-  const [seated, setSeated] = useState({});
+
   // const [inputsErrors, setInputsErrors] = useState({});
   const [pricingFormValue, setPricingFormValue] = useState({});
   const [pformValues, setPFormValues] = useState({});
@@ -130,7 +94,7 @@ const Profile = ({ preview }) => {
   useEffect(() => {
     BusinessJS.viewProfileSettings(vendorID, setViewProfile);
   }, [vendorID]);
-  console.log("View profile:", viewProfile);
+  // console.log("View profile:", viewProfile);
 
   const skeletonLines = [
     { variant: "text", height: "1rem" },
@@ -171,6 +135,7 @@ const Profile = ({ preview }) => {
       pricingArray[catKey]["CategorySettings"][setKey]["vcids"] = props.vcids;
       pricingArray[catKey]["CategorySettings"][setKey]["grpcid"] = props.grpcid;
       pricingArray[catKey]["CategorySettings"][setKey][name] = value;
+      // pricingArray[catKey]["CategorySettings"][setKey]["subtype_val"] = value;
 
       setInputsPricing(pricingArray);
     } else {
@@ -192,158 +157,16 @@ const Profile = ({ preview }) => {
     }
   };
 
-  const handleInclusionChange = (
-    inchid,
-    incTitle,
-    valueId,
-    valueTitle,
-    checked
-  ) => {
-    setSelectedInclusions((prevSelected) => ({
-      ...prevSelected,
-      [inchid]: {
-        inchid,
-        incTitle,
-        selectedValues: {
-          ...(prevSelected[inchid]?.selectedValues || {}),
-          [valueId]: checked ? valueTitle : undefined,
-        },
-      },
-    }));
-  };
-
-  // const handlePricingSubmit = () => {
-  //   setSaveClicked(true);
-  //   setExpanded(false);
-
-  //   // Create the output object
-  //   const newFormValues = {};
-  //   viewProfile.Category.forEach((category) => {
-  //     const categoryId = category.Categoryid;
-  //     newFormValues[categoryId] = {
-  //       display_price: pricingDisplayStates[categoryId] === 1 ? "1" : "0",
-  //       pricepp: pricingInputs[categoryId] || "0",
-  //       accomodation: accomState[categoryId] === 1 ? "1" : "0",
-  //       capacity: capacity[categoryId] || "0",
-  //       cockTail: cockTail[categoryId] || "0",
-  //       seated: seated[categoryId] || "0",
-  //     };
-  //   });
-
-  //   // Set formValues state
-  //   setPFormValues(newFormValues);
-
-  //   // Log the formValues
-  //   console.log("Formvalues:", newFormValues);
-
-  //   // Update business profile
-  //   BusinessJS.updateBusinessMyProfile(
-  //     newFormValues,
-  //     vendorID,
-  //     3,
-  //     setInputsErrors,
-  //     setVendorInputs
-  //   );
-  // };
-
-  const handleInclusionSubmit = () => {
-    setSaveClicked(true);
-    setExpanded(false);
-
-    const inclusionFromValues = {
-      vid: vendorID,
-      inclusionValues: Object.values(selectedInclusions)
-        .map((data) => Object.keys(data.selectedValues))
-        .flat(),
-    };
+  const handlePricingSubmit = async () => {
+    console.log("PRicing inputs:", inputsPricing);
     BusinessJS.updateBusinessMyProfile(
-      inclusionFromValues,
-      vendorID,
-      8,
-      setInputsErrors,
-      setVendorInputs
-    );
-    console.log("Selected inclusion:", inclusionFromValues);
-
-    // The rest of your logic...
-  };
-
-  const handlePricingSubmit = () => {
-    setSaveClicked(true);
-    setExpanded(false);
-
-    // Create the output array
-    const newFormValues = viewProfile.Category.map((category) => {
-      const categoryId = category.Categoryid;
-
-      // Map each category setting to the new structure
-      const categorySettings = category.CategorySettings.map((setting) => {
-        const csid = setting.csid;
-        const hid = setting.hid;
-        const vcids = setting.vcids;
-        const grpcid = setting.grpcid;
-
-        // Determine the type_val based on the setting type
-        let type_val;
-        switch (setting.head_title) {
-          case "Price per head":
-            // type_val = pricingInputs[categoryId] || "0";
-            break;
-          case "Enable Seated":
-            type_val = seated[categoryId] || "0";
-            break;
-          case "Capacity":
-            type_val = capacity[categoryId] || "0";
-            break;
-          // Add cases for other settings as needed
-          default:
-            type_val = "0";
-        }
-
-        // Determine the subtype_val based on the setting subtype
-        let subtype_val;
-        switch (setting.head_subtype) {
-          case "1":
-            subtype_val = 1;
-            break;
-          case "2":
-            // subtype_val = pricingInputs[categoryId] || "0";
-            break;
-          // Add cases for other subtypes as needed
-          default:
-            subtype_val = 1; // Set to 1 by default
-        }
-
-        return {
-          csid,
-          hid,
-          vcids,
-          grpcid,
-          type_val,
-          subtype_val,
-        };
-      });
-
-      return {
-        categoryid: categoryId,
-        CategorySettings: categorySettings,
-      };
-    });
-
-    // Log the formValues
-    console.log("Formvalues:", newFormValues);
-
-    // Update business profile
-    BusinessJS.updateBusinessMyProfile(
-      newFormValues,
+      inputsPricing,
       vendorID,
       3,
       setInputsErrors,
       setVendorInputs
     );
-    setPricingFormValue(newFormValues);
   };
-
   return (
     <div className="preview-listing-container">
       {/* <pre>{JSON.stringify(previewListing, null, 2)}</pre> */}
@@ -503,7 +326,21 @@ const Profile = ({ preview }) => {
                                         vcids={category.Categoryid}
                                         grpcid={categorySettings.grpcid}
                                         propsValue={true}
-                                        handleChange={handlePricingInputChange}
+                                        onChange={(e) =>
+                                          handlePricingInputChange(
+                                            "type_val",
+                                            e.target.value,
+                                            {
+                                              catKey,
+                                              setKey,
+                                              categoryid: category.Categoryid,
+                                              csid: categorySettings.csid,
+                                              hid: categorySettings.hid,
+                                              vcids: category.Categoryid,
+                                              grpcid: categorySettings.grpcid,
+                                            }
+                                          )
+                                        }
                                       />
                                       <input
                                         type="text"
@@ -530,7 +367,21 @@ const Profile = ({ preview }) => {
                                         vcids={category.Categoryid}
                                         grpcid={categorySettings.grpcid}
                                         propsValue={true}
-                                        handleChange={handlePricingInputChange}
+                                        onChange={(e) =>
+                                          handlePricingInputChange(
+                                            "type_val",
+                                            e.target.value,
+                                            {
+                                              catKey,
+                                              setKey,
+                                              categoryid: category.Categoryid,
+                                              csid: categorySettings.csid,
+                                              hid: categorySettings.hid,
+                                              vcids: category.Categoryid,
+                                              grpcid: categorySettings.grpcid,
+                                            }
+                                          )
+                                        }
                                       />
                                     </div>
                                   </>
@@ -559,7 +410,21 @@ const Profile = ({ preview }) => {
                                       vcids={category.Categoryid}
                                       grpcid={categorySettings.grpcid}
                                       propsValue={true}
-                                      handleChange={handlePricingInputChange}
+                                      onChange={(e) =>
+                                        handlePricingInputChange(
+                                          "type_val",
+                                          e.target.value,
+                                          {
+                                            catKey,
+                                            setKey,
+                                            categoryid: category.Categoryid,
+                                            csid: categorySettings.csid,
+                                            hid: categorySettings.hid,
+                                            vcids: category.Categoryid,
+                                            grpcid: categorySettings.grpcid,
+                                          }
+                                        )
+                                      }
                                     />
                                   </>
                                 ) : categorySettings.head_titletype === "2" ? (
@@ -567,8 +432,8 @@ const Profile = ({ preview }) => {
                                     <h5 className="font-semibold flex flex-col">
                                       {categorySettings.head_title}
                                     </h5>
-                                    <Checkbox
-                                      className=""
+                                    <PricingCheckbox
+                                      className="yes-button"
                                       containerClass=""
                                       label={categorySettings.head_title}
                                       placeholder={categorySettings.head_title}
@@ -592,10 +457,26 @@ const Profile = ({ preview }) => {
                                       vcids={category.Categoryid}
                                       grpcid={categorySettings.grpcid}
                                       propsValue={true}
-                                      handleChange={handlePricingInputChange}
+                                      onChange={(e) =>
+                                        handlePricingInputChange(
+                                          "subtype_val",
+                                          e.target.value ? 0 : 1,
+                                          {
+                                            catKey,
+                                            setKey,
+                                            categoryid: category.Categoryid,
+                                            csid: categorySettings.csid,
+                                            hid: categorySettings.hid,
+                                            vcids: category.Categoryid,
+                                            grpcid: categorySettings.grpcid,
+                                          }
+                                        )
+                                      }
                                     />
                                   </>
-                                ) : null}
+                                ) : (
+                                  <></>
+                                )}
                                 {categorySettings.head_subtype === "1" ? (
                                   <>
                                     <h5 className="font-semibold flex flex-col">
@@ -629,7 +510,21 @@ const Profile = ({ preview }) => {
                                       vcids={category.Categoryid}
                                       grpcid={categorySettings.grpcid}
                                       propsValue={true}
-                                      handleChange={handlePricingInputChange}
+                                      onChange={(e) =>
+                                        handlePricingInputChange(
+                                          "type_val",
+                                          e.target.value,
+                                          {
+                                            catKey,
+                                            setKey,
+                                            categoryid: category.Categoryid,
+                                            csid: categorySettings.csid,
+                                            hid: categorySettings.hid,
+                                            vcids: category.Categoryid,
+                                            grpcid: categorySettings.grpcid,
+                                          }
+                                        )
+                                      }
                                     />
                                   </>
                                 ) : categorySettings.head_subtype === "2" ? (
@@ -638,7 +533,8 @@ const Profile = ({ preview }) => {
                                       <h5 className="font-semibold flex flex-col">
                                         {categorySettings.head_subtitle}
                                       </h5>
-                                      <Checkbox
+                                      {/* price per head */}
+                                      <PricingCheckbox
                                         className="yes-button"
                                         containerClass=""
                                         label={categorySettings.head_subtitle}
@@ -650,10 +546,14 @@ const Profile = ({ preview }) => {
                                           inputsPricing[catKey]
                                             ? inputsPricing[catKey][
                                                 "CategorySettings"
-                                              ][setKey]
+                                              ]
                                               ? inputsPricing[catKey][
                                                   "CategorySettings"
-                                                ][setKey]["subtype_val"]
+                                                ][setKey]
+                                                ? inputsPricing[catKey][
+                                                    "CategorySettings"
+                                                  ][setKey]["subtype_val"]
+                                                : ""
                                               : ""
                                             : ""
                                         }
@@ -665,7 +565,27 @@ const Profile = ({ preview }) => {
                                         vcids={category.Categoryid}
                                         grpcid={categorySettings.grpcid}
                                         propsValue={true}
-                                        handleChange={handlePricingInputChange}
+                                        onChange={(e) =>
+                                          handlePricingInputChange(
+                                            "subtype_val",
+                                            e.target.value ? 0 : 1,
+                                            {
+                                              catKey,
+                                              setKey,
+                                              categoryid: category.Categoryid,
+                                              csid: categorySettings.csid,
+                                              hid: categorySettings.hid,
+                                              vcids: category.Categoryid,
+                                              grpcid: categorySettings.grpcid,
+                                            }
+                                          )
+                                        }
+                                        onClick={(e) =>
+                                          console.log(
+                                            "PricingCheckbox clicked:",
+                                            e
+                                          )
+                                        }
                                       />
                                       <div className="mt-[10px] space-x-2">
                                         <button className="yes-button">
@@ -677,7 +597,9 @@ const Profile = ({ preview }) => {
                                       </div>
                                     </div>
                                   </>
-                                ) : null}
+                                ) : (
+                                  <></>
+                                )}
                               </div>
                             )
                           )}
@@ -708,172 +630,51 @@ const Profile = ({ preview }) => {
             ))
           )}
         </div>
-
-        {/* Venue inclusion */}
-        {/* Venue Amenities and Service */}
-        <div>
-          {viewProfile
-            ? viewProfile.inclusions && (
-                <StyledAccordion
-                  expanded={expanded === "venueAmenities"}
-                  onChange={(e, isExpanded) =>
-                    handleChange(isExpanded, "venueAmenities")
-                  }
-                >
-                  <AccordionSummary
-                    style={{
-                      paddingLeft:
-                        expanded === "venueAmenities"
-                          ? isScreenSizeAbove1250px
-                            ? "2rem"
-                            : "1rem"
-                          : "0",
-                    }}
-                    id="venueAmenities-header"
-                    aria-controls="venueAmenities-content"
-                    expandIcon={
-                      <Typography
-                        sx={{
-                          color: "black",
-                          fontFamily: "inherit",
-                          fontSize: "14px",
-                          fontWeight: "600",
-                        }}
-                      >
-                        {expanded === "venueAmenities" ? (
-                          <RxTriangleUp size={30} color="#6cc2bc" />
-                        ) : (
-                          "Edit"
-                        )}
-                      </Typography>
-                    }
-                    sx={{
-                      "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-                        transform: "rotate(0deg)",
-                        color: "black",
-                      },
-                    }}
-                  >
-                    <div>
-                      <h4 className="profile-listing-header">
-                        Venue Inclusions
-                      </h4>
-                      {saveClicked && !expanded ? (
-                        <>
-                          {Object.entries(selectedInclusions).map(
-                            ([inchid, data]) => (
-                              <p
-                                key={inchid}
-                                className="myprofile-accordion-subheading"
-                              >
-                                {data.incTitle}:{" "}
-                                {Object.values(data.selectedValues).join(", ")}
-                              </p>
-                            )
-                          )}
-                        </>
-                      ) : (
-                        <p className="myprofile-accordion-subheading">
-                          Add Your Venue Inclusions
-                        </p>
-                      )}
-                    </div>
-                  </AccordionSummary>
-
-                  <AccordionDetails
-                    style={{
-                      paddingLeft:
-                        expanded === "venueAmenities"
-                          ? isScreenSizeAbove1250px
-                            ? "2rem"
-                            : "1rem"
-                          : "0",
-                    }}
-                  >
-                    {viewProfile.inclusions.map((inclusion, index) => (
-                      <div className="mt-[0px]" key={inclusion.inchid}>
-                        <div>
-                          {/* Additional fields for "wedding_venue" */}
-                          <>
-                            <br />
-                            {/* Venue Amenities */}
-                            <Stack spacing={1} direction="row">
-                              <div className="pricing-addon-label ">
-                                <span className="l">{inclusion.title}:</span>
-                              </div>
-                              <FormControl>
-                                <FormGroup
-                                  sx={{
-                                    width: {
-                                      xs: "100%",
-                                      md: "31rem",
-                                    },
-                                  }}
-                                >
-                                  <Grid container spacing={1} container={false}>
-                                    {inclusion.values.map((value) => (
-                                      <Grid item key={index} direction="column">
-                                        <FormControlLabel
-                                          control={
-                                            <Checkbox
-                                              checked={
-                                                selectedInclusions[
-                                                  inclusion.inchid
-                                                ]?.selectedValues?.[value.incid]
-                                              }
-                                              onChange={(e) =>
-                                                handleInclusionChange(
-                                                  inclusion.inchid,
-                                                  inclusion.title,
-                                                  value.incid,
-                                                  value.title,
-                                                  e.target.checked
-                                                )
-                                              }
-                                            />
-                                          }
-                                          label={
-                                            <Typography
-                                              sx={{ whiteSpace: "normal" }}
-                                            >
-                                              {value.title}
-                                            </Typography>
-                                          }
-                                        />
-                                      </Grid>
-                                    ))}
-                                  </Grid>
-                                </FormGroup>
-                              </FormControl>
-                            </Stack>
-                          </>
-                        </div>
-                      </div>
-                    ))}
-                    <div className="flex justify-center">
-                      <button
-                        className="mt-[2rem] flex justify-center items-center w-[120px] h-[40px] rounded-full bg-[#6cc2bc] text-[16px] text-white font-bold cursor-pointer"
-                        onClick={handleInclusionSubmit}
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </AccordionDetails>
-                </StyledAccordion>
-              )
-            : skeletonLines.map((line, index) => (
-                <div key={index}>
-                  <Skeleton
-                    variant={line.variant}
-                    sx={{ width: line.width, height: line.height }}
-                  />
-                  <br />
-                </div>
-              ))}
-        </div>
       </div>
     </div>
   );
 };
 
 export default Profile;
+
+// const handlePricingInputChange = (name, value, props) => {
+//   setInputsPricing((prevInputs) => {
+//     const catKey = props.catKey;
+//     const setKey = props.setKey;
+
+//     // Create a copy of the previous state
+//     const updatedInputs = [...prevInputs];
+
+//     // Check if the array at catKey exists, if not, initialize it
+//     if (!updatedInputs[catKey]) {
+//       updatedInputs[catKey] = {
+//         categoryid: props.categoryid,
+//         CategorySettings: [],
+//       };
+//     }
+
+//     // Check if the array at setKey exists, if not, initialize it
+//     if (!updatedInputs[catKey].CategorySettings[setKey]) {
+//       updatedInputs[catKey].CategorySettings[setKey] = {
+//         csid: props.csid,
+//         hid: props.hid,
+//         vcids: props.vcids,
+//         grpcid: props.grpcid,
+//       };
+//     }
+
+//     // Update the specific value in the state based on the checkbox name
+//     if (name === "subtype_val") {
+//       // Set subtype_val based on the checkbox value
+//       updatedInputs[catKey].CategorySettings[setKey][name] = value ? 1 : 0;
+//     } else {
+//       // For other fields, use the provided value
+//       updatedInputs[catKey].CategorySettings[setKey][name] = value;
+//     }
+
+//     // Update the specific value in the state
+//     updatedInputs[catKey].CategorySettings[setKey][name] = value;
+//     console.log("Updated inputsPricing:", inputsPricing);
+//     return updatedInputs;
+//   });
+// };

@@ -154,7 +154,8 @@ const CoupleEnquiry = () => {
 
   return (
     <>
-        {/* main menu */}
+      {/* main menu */}
+      <div className="w-[100%]">
         <div className="main-menu-section  ">
           <ul className="enquiry-page-header ">
             {mainMenus.map((menuItem) => (
@@ -504,6 +505,7 @@ const CoupleEnquiry = () => {
           )}
           {activeTab === "Archive" && <div>Archive Content</div>}
         </main>
+      </div>
     </>
   );
 };
