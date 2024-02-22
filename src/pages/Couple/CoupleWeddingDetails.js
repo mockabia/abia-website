@@ -54,7 +54,6 @@ const CoupleWeddingDetails = (props) => {
     console.log(e)
     const name = e.target.name;
     const value = e.target.value;
-    console.log(name+'=='+value)
     CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
   };
   const handleInputChangeVal = (name, value) => {
@@ -62,8 +61,8 @@ const CoupleWeddingDetails = (props) => {
   };
 
   useEffect(() => {
-    CoupleJS.fetchRegion(selectedState.url, setRegions);
-  }, [selectedState.url]);
+    CoupleJS.fetchRegion(formValues.wedding_state, setRegions);
+  }, [formValues.wedding_state]);
   
   useEffect(() => {
     setCheckboxChecked(formValues.wedding=='0' ? true : false)
@@ -190,7 +189,10 @@ const CoupleWeddingDetails = (props) => {
                     onChange={(selectedOptions) =>
                       handleInputChangeVal("wedding_state", selectedOptions.url)
                     }
-                    value={formValues.wedding_state}
+                    value = {
+                      stateOptions.filter(option => 
+                         option.url === formValues.wedding_state)
+                    }
                     components={{
                       Menu,
                       MultiValue,
@@ -223,11 +225,16 @@ const CoupleWeddingDetails = (props) => {
                     isMulti={true}
                     type="select"
                     sx={{ width: "100%" }}
-                    value={formValues.wedding_location}
+                    //value={formValues.wedding_location}
+                    value = {
+                      stateOptions.filter(option => 
+                         option.url === formValues.wedding_location)
+                    }
                     styles={CoupleSelectStyle}
                     options={regions}
                     onChange={(selectedOptions) =>
-                      handleInputChange("wedding_location", selectedOptions)
+                      console.log(selectedOptions)
+                      //handleInputChange("wedding_location", selectedOptions)
                     }
                     isClearable={false}
                     closeMenuOnSelect={false}
