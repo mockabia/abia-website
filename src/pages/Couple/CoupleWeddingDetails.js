@@ -38,31 +38,39 @@ const CoupleWeddingDetails = (props) => {
   const [isMobile, setIsMobile]               = useState(window.innerWidth <= 550);
   const [formValues, setFormValues]           = useState({});
   const [stateOptions, setStateOptions]       = useState([]);
-  const [selectedState, setSelectedState]     = useState([]);
+  const [selectedRegion, setSelectedRegion]   = useState([]);
   const [regions, setRegions]                 = useState([]);
   const [errors, setErrors]                   = React.useState({});
   const [checkboxChecked, setCheckboxChecked] = useState(false);
+  const [load, setLoad]                       = useState(false);
   const isMobilesize                          = useMediaQuery("(max-width:550px)");
   const isAbove1100px                         = useMediaQuery("(min-width: 1101px)");
 
   useEffect(() => {
-    CoupleJS.coupleDetails('details',setFormValues)
     CoupleJS.fetchState(setStateOptions);
+    alert(1)
+    CoupleJS.coupleDetails('details',setFormValues)
   }, []);
 
-  const handleInputChange = (e) => {
-    console.log(e)
-    const name = e.target.name;
-    const value = e.target.value;
-    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
-  };
-  const handleInputChangeVal = (name, value) => {
-    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
-  };
+  useEffect(() => {
+    if(formValues.wedding_state!=undefined){
+      CoupleJS.fetchRegion(formValues.wedding_state, setRegions);
+    }
+  }, [formValues.wedding_state]);
 
   useEffect(() => {
-    CoupleJS.fetchRegion(formValues.wedding_state, setRegions);
-  }, [formValues.wedding_state]);
+    if(formValues.wedding_location!=undefined){
+      var selectedRegion = formValues.wedding_location.split(',');
+      const myArrayFiltered = regions.filter((el) => selectedRegion.includes(el.url));
+      setSelectedRegion(myArrayFiltered);
+    }
+  }, [regions,formValues.wedding_location]);
+    
+  useEffect(() => {
+    if(selectedRegion.length>0){
+      setLoad(true);
+    }
+  }, [selectedRegion]);
   
   useEffect(() => {
     setCheckboxChecked(formValues.wedding=='0' ? true : false)
@@ -78,6 +86,15 @@ const CoupleWeddingDetails = (props) => {
     };
   }, []);
 
+  const handleInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
+  };
+  const handleInputChangeVal = (name, value) => {
+    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     CoupleJS.coupleWeddingDetails(formValues, setErrors,navigate)
@@ -91,7 +108,8 @@ const CoupleWeddingDetails = (props) => {
 
   return (
       <section>
-        <div className="couple-contact-container">
+        {load==true ? (
+          <div className="couple-contact-container">
           <Box
             component="form"
             sx={{
@@ -185,13 +203,11 @@ const CoupleWeddingDetails = (props) => {
                     sx={{ width: "100%", fontSize: "14px" }}
                     styles={{ ...CoupleSelectStyle, ...customStyles }}
                     options={stateOptions}
-                    //onChange={handleInputChangeVal}
                     onChange={(selectedOptions) =>
                       handleInputChangeVal("wedding_state", selectedOptions.url)
                     }
                     value = {
-                      stateOptions.filter(option => 
-                         option.url === formValues.wedding_state)
+                      stateOptions.filter(option => option.url === formValues.wedding_state)
                     }
                     components={{
                       Menu,
@@ -225,17 +241,13 @@ const CoupleWeddingDetails = (props) => {
                     isMulti={true}
                     type="select"
                     sx={{ width: "100%" }}
-                    //value={formValues.wedding_location}
-                    value = {
-                      stateOptions.filter(option => 
-                         option.url === formValues.wedding_location)
-                    }
+                    value={selectedRegion} 
                     styles={CoupleSelectStyle}
                     options={regions}
-                    onChange={(selectedOptions) =>
-                      console.log(selectedOptions)
-                      //handleInputChange("wedding_location", selectedOptions)
-                    }
+                    onChange={(selectedOptions) => {
+                      const commaSep = selectedOptions.map(item => item.url).join(',');
+                      handleInputChangeVal("wedding_location", commaSep)
+                    }} 
                     isClearable={false}
                     closeMenuOnSelect={false}
                     hideSelectedOptions={false}
@@ -442,6 +454,7 @@ const CoupleWeddingDetails = (props) => {
             </Stack>
           </Box>
         </div>
+        ) : ''}
       </section>
   );
 };
