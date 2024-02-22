@@ -130,7 +130,11 @@ export const coupleDetails = async (from,setFormValues) => {
 };
 export const coupleContact = async (formValues, setErrors,navigate) => {
   if (customValidator.validateCoupleContact(formValues, setErrors)) {
-    await servicesPage.coupleContact(formValues.id,formValues).then(function (response) {
+    let token       = localStorage.getItem("coupleToken");
+    token           = JSON.parse(token);
+    let userSession = token && token.user ? token.user : null;
+    let userId      = userSession && userSession.id ? userSession.id : null;
+    await servicesPage.coupleContact(userId,formValues).then(function (response) {
       if (response.statuscode == 200) {
         
       } else {
@@ -145,7 +149,11 @@ export const coupleContact = async (formValues, setErrors,navigate) => {
 };
 export const coupleWeddingDetails = async (formValues, setErrors,navigate) => {
   if (customValidator.validateCoupleWeddingDetails(formValues, setErrors)) {
-    await servicesPage.coupleWeddingDetails(formValues.id,formValues).then(function (response) {
+    let token       = localStorage.getItem("coupleToken");
+    token           = JSON.parse(token);
+    let userSession = token && token.user ? token.user : null;
+    let userId      = userSession && userSession.id ? userSession.id : null;
+    await servicesPage.coupleWeddingDetails(userId,formValues).then(function (response) {
       if (response.statuscode == 200) {
         
       } else {
@@ -160,7 +168,11 @@ export const coupleWeddingDetails = async (formValues, setErrors,navigate) => {
 };
 export const coupleSettings = async (formValues, setErrors,navigate) => {
   if (customValidator.validateCoupleSettings(formValues, setErrors)) {
-    await servicesPage.coupleSettings(formValues.id,formValues).then(function (response) {
+    let token       = localStorage.getItem("coupleToken");
+    token           = JSON.parse(token);
+    let userSession = token && token.user ? token.user : null;
+    let userId      = userSession && userSession.id ? userSession.id : null;
+    await servicesPage.coupleSettings(userId,formValues).then(function (response) {
       if (response.statuscode == 200) {
         
       } else {

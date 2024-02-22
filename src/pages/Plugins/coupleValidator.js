@@ -5,7 +5,7 @@ import { get } from "lodash";
 //Email
 export function validateEmail(email, field,setInputsErrors) {
   let validate = true;
-  if (!email,field) {
+  if (!email) {
     validate = false;
     setInputsErrors((values) => ({...values,[field]: "Email is required"}));
   } else if (!/\S+@\S+\.\S+/.test(email)) {
@@ -18,7 +18,7 @@ export function validateEmail(email, field,setInputsErrors) {
 // valdate password
 export function validatePassword(password, field,setInputsErrors) {
   let validate = true;
-  if (password) {
+  if (!password) {
     validate = false;
     setInputsErrors((values) => ({...values,[field]: "Password is required"}));
   } else if (password.length < 6) {

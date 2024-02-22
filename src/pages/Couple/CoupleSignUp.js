@@ -72,6 +72,10 @@ export default function CouplesSignUp() {
     setImageClass(imageClass)
   }, [activeStep]);
 
+  useEffect(() => {
+    setCheckboxChecked(formValues.wedding=='0' ? true : false)
+  }, [formValues.wedding]);
+
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };

@@ -64,6 +64,10 @@ const CoupleWeddingDetails = (props) => {
   useEffect(() => {
     CoupleJS.fetchRegion(selectedState.url, setRegions);
   }, [selectedState.url]);
+  
+  useEffect(() => {
+    setCheckboxChecked(formValues.wedding=='0' ? true : false)
+  }, [formValues.wedding]);
 
   useEffect(() => {
     const handleResize = () => {
