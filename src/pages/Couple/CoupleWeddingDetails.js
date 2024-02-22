@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from "react";
-import LayoutCouple from "../../layouts/Layout/LayoutCouple";
-import {
-  Box,
-  FormControlLabel,
-  Stack,
-  TextField,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, FormControlLabel, Stack, useMediaQuery } from "@mui/material";
 import Select, { components } from "react-select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-
 import {
   CheckBoxStyle,
   CoupleInput,
@@ -19,10 +11,10 @@ import {
   TextAreaInput,
 } from "../../components/FormStyle";
 import "../Style/CoupleProfile.css";
-import * as CoupleJS from "../Couple/Couple";
 import { CheckboxOption } from "../../components/CustomerSelect";
-import { Title } from "@mui/icons-material";
 import { DatePickerProfile2 } from "../../components/DatepickerPublic";
+import { useNavigate } from "react-router-dom";
+import * as CoupleJS from "./Couple";
 
 const customStyles = {
   menuList: (provided) => ({
@@ -47,19 +39,9 @@ const customStyles = {
 };
 
 const CoupleWeddingDetails = (props) => {
+  let navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 550);
-  const [formValues, setFormValues] = useState({
-    wedding_date: null,
-    decision: false,
-    wedding_state: "",
-    wedding_location: "",
-    budget: "",
-    guests: "",
-    bridesmaids: "",
-    groomsmen: "",
-    travellingguests: "",
-    profile_desc: "",
-  });
+  const [formValues, setFormValues] = useState({});
   const [stateOptions, setStateOptions] = useState([]);
   const [selectedState, setSelectedState] = useState([]);
   const [regions, setRegions] = useState([]);
@@ -73,21 +55,21 @@ const CoupleWeddingDetails = (props) => {
     CoupleJS.fetchState(setStateOptions);
   }, []);
 
+  console.log("Couple-details:", formValues);
+
   const handleInputChange = (e) => {
     console.log(e);
     const name = e.target.name;
     const value = e.target.value;
-    console.log(name + "==" + value);
     CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors);
   };
-  const handleDateChange = (fieldName, date) => {
-    setFormValues({ ...formValues, [fieldName]: date });
-    setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+  const handleInputChangeVal = (name, value) => {
+    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors);
   };
 
   useEffect(() => {
-    CoupleJS.fetchRegion(selectedState.url, setRegions);
-  }, [selectedState.url]);
+    CoupleJS.fetchRegion(formValues.wedding_state, setRegions);
+  }, [formValues.wedding_state]);
 
   useEffect(() => {
     setCheckboxChecked(formValues.wedding == "0" ? true : false);
@@ -97,65 +79,18 @@ const CoupleWeddingDetails = (props) => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 550);
     };
-
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  //
-  const validateForm = () => {
-    const errors = {};
-    if (formValues.decision == false && !formValues.wedding_date) {
-      errors.wedding_date = "Date is required";
-    }
-    if (!formValues.wedding_state) {
-      errors.wedding_state = "State is required";
-    }
-    if (!formValues.wedding_location) {
-      errors.wedding_location = "Weddiing Location is required";
-    }
-    if (!formValues.budget) {
-      errors.budget = "Budget is required";
-    }
-    if (!formValues.guests) {
-      errors.guests = "Guests count is required";
-    }
-    if (!formValues.bridesmaids) {
-      errors.bridesmaids = "Bridesmaids no: is required";
-    }
-    if (!formValues.groomsmen) {
-      errors.groomsmen = "Groomsmen no: is required";
-    }
-    if (!formValues.travellingguests) {
-      errors.travellingguests = "Travelling guests no: is required";
-    }
-    if (!formValues.profile_desc) {
-      errors.profile_desc = "Profile description is required";
-    }
-    return errors;
-  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length === 0) {
-      setFormValues((updatedFormValues) => {
-        console.log("Current form values:", {
-          formValues: updatedFormValues,
-        });
-        return updatedFormValues;
-      });
-    } else {
-      setErrors(validationErrors);
-    }
+    CoupleJS.coupleWeddingDetails(formValues, setErrors, navigate);
   };
 
-  const handleStateChange = (selectedOptions) => {
-    //  console.log("Selected State:", selectedOptions);
-    setFormValues({ ...formValues, wedding_state: selectedOptions });
-    setSelectedState(selectedOptions);
-  };
+  // wedding location
 
   return (
     <section>
@@ -191,11 +126,11 @@ const CoupleWeddingDetails = (props) => {
               spacing={isMobile ? 2 : isAbove1100px ? "3rem" : "defaultSpacing"}
             >
               <DatePickerProfile2
-                name="wedding_date"
+                name="date_of_wedding"
                 label="Wedding Date"
-                value={formValues.wedding_date}
-                dateError={checkboxChecked ? "" : errors.wedding_date}
-                handleDateChange={handleDateChange}
+                value={formValues.date_of_wedding}
+                dateError={checkboxChecked ? "" : errors.date_of_wedding}
+                handleDateChange={handleInputChangeVal}
                 checkboxChecked={checkboxChecked}
               />
 
@@ -255,7 +190,9 @@ const CoupleWeddingDetails = (props) => {
                   onChange={(selectedOptions) =>
                     handleInputChangeVal("wedding_state", selectedOptions.url)
                   }
-                  value={formValues.wedding_state}
+                  value={stateOptions.filter(
+                    (option) => option.url === formValues.wedding_state
+                  )}
                   components={{
                     Menu,
                     MultiValue,
@@ -288,11 +225,15 @@ const CoupleWeddingDetails = (props) => {
                   isMulti={true}
                   type="select"
                   sx={{ width: "100%" }}
-                  value={formValues.wedding_location}
+                  //value={formValues.wedding_location}
+                  value={stateOptions.filter(
+                    (option) => option.url === formValues.wedding_location
+                  )}
                   styles={CoupleSelectStyle}
                   options={regions}
-                  onChange={(selectedOptions) =>
-                    handleInputChange("wedding_location", selectedOptions)
+                  onChange={
+                    (selectedOptions) => console.log(selectedOptions)
+                    //handleInputChange("wedding_location", selectedOptions)
                   }
                   isClearable={false}
                   closeMenuOnSelect={false}

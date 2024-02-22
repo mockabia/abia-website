@@ -1192,31 +1192,31 @@
 //                                   Display Price ?
 //                                 </h5>
 //                                 <div className="mt-[10px] space-x-2">
-//                                   <button
-//                                     className={`yes-button ${
-//                                       pricingDisplayStates[item.Categoryid]
-//                                         ? "selected"
-//                                         : ""
-//                                     }`}
-//                                     onClick={() =>
-//                                       handleDisplayChange(item.Categoryid, 1)
-//                                     }
-//                                   >
-//                                     Yes
-//                                   </button>
-//                                   <button
-//                                     className={`no-button ${
-//                                       pricingDisplayStates[item.Categoryid] ===
-//                                       0
-//                                         ? "selected"
-//                                         : ""
-//                                     }`}
-//                                     onClick={() =>
-//                                       handleDisplayChange(item.Categoryid, 0)
-//                                     }
-//                                   >
-//                                     No
-//                                   </button>
+//   <button
+//     className={`yes-button ${
+//       pricingDisplayStates[item.Categoryid]
+//         ? "selected"
+//         : ""
+//     }`}
+//     onClick={() =>
+//       handleDisplayChange(item.Categoryid, 1)
+//     }
+//   >
+//     Yes
+//   </button>
+//   <button
+//     className={`no-button ${
+//       pricingDisplayStates[item.Categoryid] ===
+//       0
+//         ? "selected"
+//         : ""
+//     }`}
+//     onClick={() =>
+//       handleDisplayChange(item.Categoryid, 0)
+//     }
+//   >
+//     No
+//   </button>
 //                                 </div>
 //                               </div>
 //                             </div>

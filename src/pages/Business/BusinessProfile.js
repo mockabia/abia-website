@@ -67,12 +67,9 @@ const Profile = ({ preview }) => {
   // Pricing
   const [inputsPricing, setInputsPricing] = useState([]);
   const [inputsPriceErrors, setInputsPriceErrors] = useState({});
-
-  // const [inputsErrors, setInputsErrors] = useState({});
+  const [isActive, setIsActive] = useState({});
   const [pricingFormValue, setPricingFormValue] = useState({});
-  const [pformValues, setPFormValues] = useState({});
-  // Inclusion
-  const [selectedInclusions, setSelectedInclusions] = useState({});
+
   // expansion handling
   const handleChange = (isExpanded: boolean, panel: string) => {
     setExpanded(isExpanded ? panel : false);
@@ -109,6 +106,13 @@ const Profile = ({ preview }) => {
   //     [categoryID]: value,
   //   }));
   // };
+  const handleDisplayChange = (categoryID, value) => {
+    setIsActive((prevDisplayStates) => ({
+      ...prevDisplayStates,
+      [categoryID]: value ? 1 : 0,
+    }));
+    // setSelectedDisplayState(categoryID, value);
+  };
 
   const handlePricingInputChange = (name, value, props) => {
     if (inputsPricing.length !== undefined && inputsPricing.length > 0) {
@@ -155,17 +159,27 @@ const Profile = ({ preview }) => {
 
       setInputsPricing(pricingArray);
     }
+
+    // Call handleDisplayChange when "Yes" button is clicked
+    if (name === "subtype_val" && value === 1) {
+      handleDisplayChange(props.categoryid, 1);
+    }
+
+    // Call handleDisplayChange when "No" button is clicked
+    if (name === "subtype_val" && value === 0) {
+      handleDisplayChange(props.categoryid, 0);
+    }
   };
 
   const handlePricingSubmit = async () => {
-    console.log("PRicing inputs:", inputsPricing);
-    // BusinessJS.updateBusinessMyProfile(
-    //   inputsPricing,
-    //   vendorID,
-    //   3,
-    //   setInputsErrors,
-    //   setVendorInputs
-    // );
+    // console.log("PRicing inputs:", inputsPricing);
+    BusinessJS.updateBusinessMyProfile(
+      inputsPricing,
+      vendorID,
+      3,
+      setInputsErrors,
+      setVendorInputs
+    );
   };
   return (
     <div className="preview-listing-container">
@@ -293,11 +307,105 @@ const Profile = ({ preview }) => {
                           {/* Category fields */}
                           {category.CategorySettings.map(
                             (categorySettings, setKey) => (
-                              <div key={setKey}>
+                              <div key={setKey} className="flex flex-col ">
                                 {categorySettings.min_max == "1" ? (
                                   <>
-                                    <p>{categorySettings.head_title}</p>
-                                    <div className="flex">
+                                    <div className="flex flex-col gap-[5px]">
+                                      <h5 className="font-semibold flex flex-col">
+                                        {categorySettings.head_title}
+                                      </h5>
+                                      <div className="flex gap-[1rem]">
+                                        {/* <h5 className="font-semibold flex flex-col">
+                                        {categorySettings.head_title}
+                                      </h5> */}
+                                        <input
+                                          type="text"
+                                          className="pricing-input-style"
+                                          containerClass=""
+                                          placeholder={`${categorySettings.head_title} min`}
+                                          name="type_val"
+                                          value={
+                                            inputsPricing[catKey]
+                                              ? inputsPricing[catKey][
+                                                  "CategorySettings"
+                                                ][setKey]
+                                                ? inputsPricing[catKey][
+                                                    "CategorySettings"
+                                                  ][setKey]["type_val"]
+                                                : ""
+                                              : ""
+                                          }
+                                          catKey={catKey}
+                                          setKey={setKey}
+                                          categoryid={category.Categoryid}
+                                          csid={categorySettings.csid}
+                                          hid={categorySettings.hid}
+                                          vcids={category.Categoryid}
+                                          grpcid={categorySettings.grpcid}
+                                          propsValue={true}
+                                          onChange={(e) =>
+                                            handlePricingInputChange(
+                                              "type_val",
+                                              e.target.value,
+                                              {
+                                                catKey,
+                                                setKey,
+                                                categoryid: category.Categoryid,
+                                                csid: categorySettings.csid,
+                                                hid: categorySettings.hid,
+                                                vcids: category.Categoryid,
+                                                grpcid: categorySettings.grpcid,
+                                              }
+                                            )
+                                          }
+                                        />
+                                        <input
+                                          type="text"
+                                          className="pricing-input-style"
+                                          containerClass=""
+                                          placeholder={`${categorySettings.head_title} max`}
+                                          name="subtype_val"
+                                          value={
+                                            inputsPricing[catKey]
+                                              ? inputsPricing[catKey][
+                                                  "CategorySettings"
+                                                ][setKey]
+                                                ? inputsPricing[catKey][
+                                                    "CategorySettings"
+                                                  ][setKey]["subtype_val"]
+                                                : ""
+                                              : ""
+                                          }
+                                          catKey={catKey}
+                                          setKey={setKey}
+                                          categoryid={category.Categoryid}
+                                          csid={categorySettings.csid}
+                                          hid={categorySettings.hid}
+                                          vcids={category.Categoryid}
+                                          grpcid={categorySettings.grpcid}
+                                          propsValue={true}
+                                          onChange={(e) =>
+                                            handlePricingInputChange(
+                                              "type_val",
+                                              e.target.value,
+                                              {
+                                                catKey,
+                                                setKey,
+                                                categoryid: category.Categoryid,
+                                                csid: categorySettings.csid,
+                                                hid: categorySettings.hid,
+                                                vcids: category.Categoryid,
+                                                grpcid: categorySettings.grpcid,
+                                              }
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </>
+                                ) : categorySettings.head_titletype === "1" ? (
+                                  <>
+                                    <div>
                                       <h5 className="font-semibold flex flex-col">
                                         {categorySettings.head_title}
                                       </h5>
@@ -305,18 +413,15 @@ const Profile = ({ preview }) => {
                                         type="text"
                                         className="pricing-input-style"
                                         containerClass=""
-                                        placeholder={`${categorySettings.head_title} min`}
+                                        label={categorySettings.head_title}
+                                        placeholder={
+                                          categorySettings.head_title
+                                        }
                                         name="type_val"
                                         value={
                                           inputsPricing[catKey]
-                                            ? inputsPricing[catKey][
-                                                "CategorySettings"
-                                              ][setKey]
-                                              ? inputsPricing[catKey][
-                                                  "CategorySettings"
-                                                ][setKey]["type_val"]
-                                              : ""
-                                            : ""
+                                            ?.CategorySettings[setKey]
+                                            ?.type_val || ""
                                         }
                                         catKey={catKey}
                                         setKey={setKey}
@@ -342,11 +447,76 @@ const Profile = ({ preview }) => {
                                           )
                                         }
                                       />
+                                    </div>
+                                  </>
+                                ) : categorySettings.head_titletype === "2" ? (
+                                  <>
+                                    <div>
+                                      <h5 className="font-semibold flex flex-col">
+                                        {categorySettings.head_title}
+                                      </h5>
+                                      <PricingCheckbox
+                                        className="yes-button"
+                                        containerClass=""
+                                        label={categorySettings.head_title}
+                                        placeholder={
+                                          categorySettings.head_title
+                                        }
+                                        name="type_val"
+                                        value={
+                                          inputsPricing[catKey]
+                                            ? inputsPricing[catKey][
+                                                "CategorySettings"
+                                              ][setKey]
+                                              ? inputsPricing[catKey][
+                                                  "CategorySettings"
+                                                ][setKey]["type_val"]
+                                              : ""
+                                            : ""
+                                        }
+                                        catKey={catKey}
+                                        setKey={setKey}
+                                        categoryid={category.Categoryid}
+                                        csid={categorySettings.csid}
+                                        hid={categorySettings.hid}
+                                        vcids={category.Categoryid}
+                                        grpcid={categorySettings.grpcid}
+                                        propsValue={true}
+                                        onChange={(e) =>
+                                          handlePricingInputChange(
+                                            "subtype_val",
+                                            e.target.value ? 0 : 1,
+                                            {
+                                              catKey,
+                                              setKey,
+                                              categoryid: category.Categoryid,
+                                              csid: categorySettings.csid,
+                                              hid: categorySettings.hid,
+                                              vcids: category.Categoryid,
+                                              grpcid: categorySettings.grpcid,
+                                            }
+                                          )
+                                        }
+                                      />
+                                    </div>
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
+                                {categorySettings.head_subtype === "1" ? (
+                                  <>
+                                    <div>
+                                      <h5 className="font-semibold flex flex-col">
+                                        {categorySettings.head_subtitle}
+                                      </h5>
                                       <input
                                         type="text"
                                         className="pricing-input-style"
                                         containerClass=""
-                                        placeholder={`${categorySettings.head_title} max`}
+                                        label={categorySettings.head_subtitle}
+                                        placeholder={
+                                          categorySettings.head_subtitle
+                                        }
                                         name="subtype_val"
                                         value={
                                           inputsPricing[catKey]
@@ -385,157 +555,19 @@ const Profile = ({ preview }) => {
                                       />
                                     </div>
                                   </>
-                                ) : categorySettings.head_titletype === "1" ? (
-                                  <>
-                                    <h5 className="font-semibold flex flex-col">
-                                      {categorySettings.head_title}
-                                    </h5>
-                                    <input
-                                      type="text"
-                                      className="pricing-input-style"
-                                      containerClass=""
-                                      label={categorySettings.head_title}
-                                      placeholder={categorySettings.head_title}
-                                      name="type_val"
-                                      value={
-                                        inputsPricing[catKey]?.CategorySettings[
-                                          setKey
-                                        ]?.type_val || ""
-                                      }
-                                      catKey={catKey}
-                                      setKey={setKey}
-                                      categoryid={category.Categoryid}
-                                      csid={categorySettings.csid}
-                                      hid={categorySettings.hid}
-                                      vcids={category.Categoryid}
-                                      grpcid={categorySettings.grpcid}
-                                      propsValue={true}
-                                      onChange={(e) =>
-                                        handlePricingInputChange(
-                                          "type_val",
-                                          e.target.value,
-                                          {
-                                            catKey,
-                                            setKey,
-                                            categoryid: category.Categoryid,
-                                            csid: categorySettings.csid,
-                                            hid: categorySettings.hid,
-                                            vcids: category.Categoryid,
-                                            grpcid: categorySettings.grpcid,
-                                          }
-                                        )
-                                      }
-                                    />
-                                  </>
-                                ) : categorySettings.head_titletype === "2" ? (
-                                  <>
-                                    <h5 className="font-semibold flex flex-col">
-                                      {categorySettings.head_title}
-                                    </h5>
-                                    <PricingCheckbox
-                                      className="yes-button"
-                                      containerClass=""
-                                      label={categorySettings.head_title}
-                                      placeholder={categorySettings.head_title}
-                                      name="type_val"
-                                      value={
-                                        inputsPricing[catKey]
-                                          ? inputsPricing[catKey][
-                                              "CategorySettings"
-                                            ][setKey]
-                                            ? inputsPricing[catKey][
-                                                "CategorySettings"
-                                              ][setKey]["type_val"]
-                                            : ""
-                                          : ""
-                                      }
-                                      catKey={catKey}
-                                      setKey={setKey}
-                                      categoryid={category.Categoryid}
-                                      csid={categorySettings.csid}
-                                      hid={categorySettings.hid}
-                                      vcids={category.Categoryid}
-                                      grpcid={categorySettings.grpcid}
-                                      propsValue={true}
-                                      onChange={(e) =>
-                                        handlePricingInputChange(
-                                          "subtype_val",
-                                          e.target.value ? 0 : 1,
-                                          {
-                                            catKey,
-                                            setKey,
-                                            categoryid: category.Categoryid,
-                                            csid: categorySettings.csid,
-                                            hid: categorySettings.hid,
-                                            vcids: category.Categoryid,
-                                            grpcid: categorySettings.grpcid,
-                                          }
-                                        )
-                                      }
-                                    />
-                                  </>
-                                ) : (
-                                  <></>
-                                )}
-                                {categorySettings.head_subtype === "1" ? (
-                                  <>
-                                    <h5 className="font-semibold flex flex-col">
-                                      {categorySettings.head_subtitle}
-                                    </h5>
-                                    <input
-                                      type="text"
-                                      className="pricing-input-style"
-                                      containerClass=""
-                                      label={categorySettings.head_subtitle}
-                                      placeholder={
-                                        categorySettings.head_subtitle
-                                      }
-                                      name="subtype_val"
-                                      value={
-                                        inputsPricing[catKey]
-                                          ? inputsPricing[catKey][
-                                              "CategorySettings"
-                                            ][setKey]
-                                            ? inputsPricing[catKey][
-                                                "CategorySettings"
-                                              ][setKey]["subtype_val"]
-                                            : ""
-                                          : ""
-                                      }
-                                      catKey={catKey}
-                                      setKey={setKey}
-                                      categoryid={category.Categoryid}
-                                      csid={categorySettings.csid}
-                                      hid={categorySettings.hid}
-                                      vcids={category.Categoryid}
-                                      grpcid={categorySettings.grpcid}
-                                      propsValue={true}
-                                      onChange={(e) =>
-                                        handlePricingInputChange(
-                                          "type_val",
-                                          e.target.value,
-                                          {
-                                            catKey,
-                                            setKey,
-                                            categoryid: category.Categoryid,
-                                            csid: categorySettings.csid,
-                                            hid: categorySettings.hid,
-                                            vcids: category.Categoryid,
-                                            grpcid: categorySettings.grpcid,
-                                          }
-                                        )
-                                      }
-                                    />
-                                  </>
                                 ) : categorySettings.head_subtype === "2" ? (
                                   <>
-                                    <div className="flex items-center">
+                                    <div className="flex items-center gap-[1rem] my-[1rem]">
                                       <h5 className="font-semibold flex flex-col">
                                         {categorySettings.head_subtitle}
                                       </h5>
                                       {/* price per head */}
-                                      <CheckBox
-                                        className="yes-check-button"
+                                      <button
+                                        className={`yes-check-button ${
+                                          isActive[category.Categoryid]
+                                            ? "selected"
+                                            : ""
+                                        }`}
                                         containerClass=""
                                         label={categorySettings.head_subtitle}
                                         placeholder={
@@ -565,7 +597,11 @@ const Profile = ({ preview }) => {
                                         vcids={category.Categoryid}
                                         grpcid={categorySettings.grpcid}
                                         propsValue={true}
-                                        onChange={(e) =>
+                                        onClick={(e) => {
+                                          console.log(
+                                            "category.Categoryid:",
+                                            category.Categoryid
+                                          );
                                           handlePricingInputChange(
                                             "subtype_val",
                                             1,
@@ -578,23 +614,69 @@ const Profile = ({ preview }) => {
                                               vcids: category.Categoryid,
                                               grpcid: categorySettings.grpcid,
                                             }
-                                          )
+                                          );
+                                        }}
+                                      >
+                                        Yes
+                                      </button>
+                                      {/* No */}
+                                      <button
+                                        className={`no-check-button ${
+                                          isActive[category.Categoryid] === 0
+                                            ? "selected"
+                                            : ""
+                                        }`}
+                                        containerClass=""
+                                        label={categorySettings.head_subtitle}
+                                        placeholder={
+                                          categorySettings.head_subtitle
                                         }
-                                        onClick={(e) =>
+                                        name="subtype_val"
+                                        value={
+                                          inputsPricing[catKey]
+                                            ? inputsPricing[catKey][
+                                                "CategorySettings"
+                                              ]
+                                              ? inputsPricing[catKey][
+                                                  "CategorySettings"
+                                                ][setKey]
+                                                ? inputsPricing[catKey][
+                                                    "CategorySettings"
+                                                  ][setKey]["subtype_val"]
+                                                : ""
+                                              : ""
+                                            : ""
+                                        }
+                                        catKey={catKey}
+                                        setKey={setKey}
+                                        categoryid={category.Categoryid}
+                                        csid={categorySettings.csid}
+                                        hid={categorySettings.hid}
+                                        vcids={category.Categoryid}
+                                        grpcid={categorySettings.grpcid}
+                                        propsValue={true}
+                                        onClick={(e) => {
                                           console.log(
-                                            "PricingCheckbox clicked:",
-                                            e
-                                          )
-                                        }
-                                      />
-                                      {/* <div className="mt-[10px] space-x-2">
-                                        <button className="yes-button">
-                                          Yes
-                                        </button>
-                                        <button className="no-button">
-                                          No
-                                        </button>
-                                      </div> */}
+                                            "category.Categoryid:",
+                                            category.Categoryid
+                                          );
+                                          handlePricingInputChange(
+                                            "subtype_val",
+                                            0,
+                                            {
+                                              catKey,
+                                              setKey,
+                                              categoryid: category.Categoryid,
+                                              csid: categorySettings.csid,
+                                              hid: categorySettings.hid,
+                                              vcids: category.Categoryid,
+                                              grpcid: categorySettings.grpcid,
+                                            }
+                                          );
+                                        }}
+                                      >
+                                        No
+                                      </button>
                                     </div>
                                   </>
                                 ) : (
