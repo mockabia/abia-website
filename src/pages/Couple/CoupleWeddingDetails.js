@@ -69,21 +69,17 @@ const CoupleWeddingDetails = (props) => {
   const isMobilesize = useMediaQuery("(max-width:550px)");
   const isAbove1100px = useMediaQuery("(min-width: 1101px)");
 
-  const handleInputChange = (fieldName, value) => {
-    if (fieldName === "decision") {
-      setFormValues({ ...formValues, [fieldName]: !formValues.decision });
-      setCheckboxChecked(!formValues.decision);
-      console.log("Checkbox is ticked:", checkboxChecked);
-      if (!formValues.decision) {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          wedding_date: "", // Clear the error for the wedding date
-        }));
-      }
-    } else {
-      setFormValues({ ...formValues, [fieldName]: value });
-    }
-    setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
+  useEffect(() => {
+    CoupleJS.coupleDetails('details',setFormValues)
+    CoupleJS.fetchState(setStateOptions);
+  }, []);
+
+  const handleInputChange = (e) => {
+    console.log(e)
+    const name = e.target.name;
+    const value = e.target.value;
+    console.log(name+'=='+value)
+    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
   };
   const handleDateChange = (fieldName, date) => {
     setFormValues({ ...formValues, [fieldName]: date });
@@ -91,12 +87,12 @@ const CoupleWeddingDetails = (props) => {
   };
 
   useEffect(() => {
-    CoupleJS.fetchState(setStateOptions);
-  }, []);
-
-  useEffect(() => {
     CoupleJS.fetchRegion(selectedState.url, setRegions);
   }, [selectedState.url]);
+  
+  useEffect(() => {
+    setCheckboxChecked(formValues.wedding=='0' ? true : false)
+  }, [formValues.wedding]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -207,13 +203,13 @@ const CoupleWeddingDetails = (props) => {
                 />
 
                 <FormControlLabel
-                  value="end"
+                  value={formValues.wedding}
                   control={
                     <CheckBoxStyle
-                      name="decision"
-                      checked={formValues.decision}
+                      name="wedding"
+                      checked={formValues.wedding=='1' ? false : true}
                       onChange={(e) =>
-                        handleInputChange("decision", e.target.checked)
+                        handleInputChangeVal('wedding', e.target.checked ? 0 : 1)
                       }
                       inputProps={{ "aria-label": "controlled" }}
                     />
@@ -258,10 +254,10 @@ const CoupleWeddingDetails = (props) => {
                     sx={{ width: "100%", fontSize: "14px" }}
                     styles={{ ...CoupleSelectStyle, ...customStyles }}
                     options={stateOptions}
-                    onChange={handleStateChange}
-                    // onChange={(selectedOptions) =>
-                    //   handleInputChange("wedding_state", selectedOptions)
-                    // }
+                    //onChange={handleInputChangeVal}
+                    onChange={(selectedOptions) =>
+                      handleInputChangeVal("wedding_state", selectedOptions.url)
+                    }
                     value={formValues.wedding_state}
                     components={{
                       Menu,
@@ -349,7 +345,7 @@ const CoupleWeddingDetails = (props) => {
                     type="number"
                     value={formValues.budget}
                     onChange={(e) =>
-                      handleInputChange("budget", e.target.value)
+                      handleInputChange(e)
                     }
                   />
                   {errors.budget && (
@@ -369,7 +365,7 @@ const CoupleWeddingDetails = (props) => {
                     type="number"
                     value={formValues.guests}
                     onChange={(e) =>
-                      handleInputChange("guests", e.target.value)
+                      handleInputChange(e)
                     }
                   />
                   {errors.guests && (
@@ -394,7 +390,7 @@ const CoupleWeddingDetails = (props) => {
                     type="number"
                     value={formValues.bridesmaids}
                     onChange={(e) =>
-                      handleInputChange("bridesmaids", e.target.value)
+                      handleInputChange(e)
                     }
                   />
                   {errors.bridesmaids && (
@@ -413,7 +409,7 @@ const CoupleWeddingDetails = (props) => {
                     type="number"
                     value={formValues.groomsmen}
                     onChange={(e) =>
-                      handleInputChange("groomsmen", e.target.value)
+                      handleInputChange(e)
                     }
                   />
                   {errors.groomsmen && (
@@ -438,7 +434,7 @@ const CoupleWeddingDetails = (props) => {
                     type="text"
                     value={formValues.travellingguests}
                     onChange={(e) =>
-                      handleInputChange("travellingguests", e.target.value)
+                      handleInputChange(e)
                     }
                   />
                   {errors.travellingguests && (
@@ -468,7 +464,7 @@ const CoupleWeddingDetails = (props) => {
                   type="text"
                   value={formValues.profile_desc}
                   onChange={(e) =>
-                    handleInputChange("profile_desc", e.target.value)
+                    handleInputChange(e)
                   }
                   width="100%"
                   maxWidth="23rem"

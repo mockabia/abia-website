@@ -107,20 +107,34 @@ export const coupleLogin = async (formValues, setErrors,navigate) => {
     });
   }
 };
-export const coupleDetails = async (setFormValues) => {
+export const coupleDetails = async (from,setFormValues) => {
   let token       = localStorage.getItem("coupleToken");
   token           = JSON.parse(token);
   let userSession = token && token.user ? token.user : null;
   let userId      = userSession && userSession.id ? userSession.id : null;
   await servicesPage.coupleDetails(userId).then(function (response) {
     if (response.statuscode == 200) {
-      setFormValues(response.result);
+      if(from=='contact'){
+        setFormValues(values => ({...values,['bride']: response.result.bride,['groom']:response.result.groom,
+                  ['phone']:response.result.phone,['email']:response.result.email, }))
+      }else if(from=='details'){
+        setFormValues(values => ({...values,['date_of_wedding']: response.result.date_of_wedding,
+                  ['wedding']:response.result.wedding,['wedding_state']:response.result.wedding_state,
+                  ['wedding_location']:response.result.wedding_location,['budget']:response.result.budget,
+                  ['guests']:response.result.guests,['bridesmaids']:response.result.bridesmaids,
+                  ['groomsmen']:response.result.groomsmen,['travellingguests']:response.result.travellingguests,
+                  ['profile_desc']:response.result.profile_desc, }))
+      }
     }
   });
 };
 export const coupleContact = async (formValues, setErrors,navigate) => {
   if (customValidator.validateCoupleContact(formValues, setErrors)) {
-    await servicesPage.coupleContact(formValues.id,formValues).then(function (response) {
+    let token       = localStorage.getItem("coupleToken");
+    token           = JSON.parse(token);
+    let userSession = token && token.user ? token.user : null;
+    let userId      = userSession && userSession.id ? userSession.id : null;
+    await servicesPage.coupleContact(userId,formValues).then(function (response) {
       if (response.statuscode == 200) {
         
       } else {
@@ -135,7 +149,11 @@ export const coupleContact = async (formValues, setErrors,navigate) => {
 };
 export const coupleWeddingDetails = async (formValues, setErrors,navigate) => {
   if (customValidator.validateCoupleWeddingDetails(formValues, setErrors)) {
-    await servicesPage.coupleWeddingDetails(formValues.id,formValues).then(function (response) {
+    let token       = localStorage.getItem("coupleToken");
+    token           = JSON.parse(token);
+    let userSession = token && token.user ? token.user : null;
+    let userId      = userSession && userSession.id ? userSession.id : null;
+    await servicesPage.coupleWeddingDetails(userId,formValues).then(function (response) {
       if (response.statuscode == 200) {
         
       } else {
@@ -150,7 +168,11 @@ export const coupleWeddingDetails = async (formValues, setErrors,navigate) => {
 };
 export const coupleSettings = async (formValues, setErrors,navigate) => {
   if (customValidator.validateCoupleSettings(formValues, setErrors)) {
-    await servicesPage.coupleSettings(formValues.id,formValues).then(function (response) {
+    let token       = localStorage.getItem("coupleToken");
+    token           = JSON.parse(token);
+    let userSession = token && token.user ? token.user : null;
+    let userId      = userSession && userSession.id ? userSession.id : null;
+    await servicesPage.coupleSettings(userId,formValues).then(function (response) {
       if (response.statuscode == 200) {
         
       } else {

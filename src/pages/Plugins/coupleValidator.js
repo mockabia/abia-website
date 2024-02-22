@@ -5,7 +5,7 @@ import { get } from "lodash";
 //Email
 export function validateEmail(email, field,setInputsErrors) {
   let validate = true;
-  if (!email,field) {
+  if (!email) {
     validate = false;
     setInputsErrors((values) => ({...values,[field]: "Email is required"}));
   } else if (!/\S+@\S+\.\S+/.test(email)) {
@@ -18,7 +18,7 @@ export function validateEmail(email, field,setInputsErrors) {
 // valdate password
 export function validatePassword(password, field,setInputsErrors) {
   let validate = true;
-  if (password) {
+  if (!password) {
     validate = false;
     setInputsErrors((values) => ({...values,[field]: "Password is required"}));
   } else if (password.length < 6) {
@@ -75,7 +75,7 @@ export const validateCoupleSignup = (activeStep,inputs, setInputsErrors) => {
       validate = false;
       setInputsErrors((values) => ({...values,["groom"]: "Partner's Name is required"}));
     }
-    if ((inputs.decision == false || inputs.decision == undefined) && !inputs.wedding_date) {
+    if (inputs.wedding == '1' && !inputs.wedding_date) {
       validate = false;
       setInputsErrors((values) => ({...values,["wedding_date"]: "Date is required"}));
     }
@@ -123,7 +123,7 @@ export const validateCoupleContact = (inputs,setInputsErrors) => {
 export const validateCoupleWeddingDetails = (inputs,setInputsErrors) => {
   setInputsErrors({});
   let validate = true;
-  if (inputs.decision == false && !inputs.date_of_wedding) {
+  if (inputs.wedding == false && !inputs.date_of_wedding) {
     validate = false;
     setInputsErrors((values) => ({...values,["date_of_wedding"]: "Date is required"}));
   }
@@ -165,10 +165,10 @@ export const validateCoupleSettings = (inputs,setInputsErrors) => {
   setInputsErrors({});
   let validate = true;
   validate = validatePassword(inputs.password, 'password',setInputsErrors);
-  validate = validatePassword(inputs.new_password, 'new_password',setInputsErrors);
-  if (inputs.password!=inputs.new_password) {
+  validate = validatePassword(inputs.new_password, 'confirm_password',setInputsErrors);
+  if (inputs.password!=inputs.confirm_password) {
     validate = false;
-    setInputsErrors((values) => ({...values,["new_password"]: "Confirm new password"}));
+    setInputsErrors((values) => ({...values,["confirm_password"]: "Confirm new password"}));
   }
   return validate;
 };

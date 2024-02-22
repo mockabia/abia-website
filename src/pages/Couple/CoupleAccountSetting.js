@@ -58,7 +58,7 @@ const CoupleAccountSetting = (props) => {
                     type="password"
                     value={formValues.password}
                     onChange={(e) =>
-                      handleInputChange("password", e.target.value)
+                      handleInputChange(e)
                     }
                   />
                   {errors.password && (
@@ -73,16 +73,16 @@ const CoupleAccountSetting = (props) => {
                     <span style={{ color: "red", fontSize: "16px" }}>*</span>
                   </label>
                   <CoupleInput
-                    name="new_password"
+                    name="confirm_password"
                     type="password"
-                    value={formValues.new_password}
+                    value={formValues.confirm_password}
                     onChange={(e) =>
-                      handleInputChange("new_password", e.target.value)
+                      handleInputChange(e)
                     }
                   />
-                  {errors.new_password && (
+                  {errors.confirm_password && (
                     <div style={{ color: "red", fontSize: "12px" }}>
-                      {errors.new_password}
+                      {errors.confirm_password}
                     </div>
                   )}
                 </Box>
