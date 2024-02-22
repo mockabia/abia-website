@@ -18,10 +18,9 @@ const CoupleRoutes = (props) => {
   const LoadablePage = loadable((props) => 
     import(`../pages/Couple/${props.page}`)
   );
-
   useEffect(() => {
     RoutesJS.coupleCheckLoginRedirect(url,loginMenu,loginedMenu,navigate)
-  }, [url,loginMenu,loginedMenu]);
+  }, [url,loginMenu]);
 
   useEffect(() => {
     if (props.menu.length > 0) {

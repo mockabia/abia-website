@@ -48,7 +48,6 @@ const CoupleWeddingDetails = (props) => {
 
   useEffect(() => {
     CoupleJS.fetchState(setStateOptions);
-    alert(1)
     CoupleJS.coupleDetails('details',setFormValues)
   }, []);
 
