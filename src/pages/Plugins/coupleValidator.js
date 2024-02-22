@@ -165,7 +165,7 @@ export const validateCoupleSettings = (inputs,setInputsErrors) => {
   setInputsErrors({});
   let validate = true;
   validate = validatePassword(inputs.password, 'password',setInputsErrors);
-  validate = validatePassword(inputs.new_password, 'confirm_password',setInputsErrors);
+  validate = validatePassword(inputs.confirm_password, 'confirm_password',setInputsErrors);
   if (inputs.password!=inputs.confirm_password) {
     validate = false;
     setInputsErrors((values) => ({...values,["confirm_password"]: "Confirm new password"}));
