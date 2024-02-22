@@ -1469,7 +1469,7 @@ export const CheckBoxStyle2 = styled(Checkbox)({
 // Pricing Checkbox
 export const PricingCheckbox = styled(Checkbox)({
   " & .MuiSvgIcon-root path": {
-    display: "hidden",
+    visibility: "hidden",
   },
   "& .MuiSvgIcon-root": {
     width: "4rem",

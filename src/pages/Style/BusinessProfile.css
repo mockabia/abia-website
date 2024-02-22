@@ -998,3 +998,29 @@ input[type="radio"]:checked {
         padding: 1px 25px 25px 0px;
     }
 }
+
+.yes-check-button path {
+    visibility: hidden;
+}
+
+.yes-check-button {
+    width: 4rem !important;
+    height: 2rem !important;
+    border-radius: 10px;
+    background-color: #ced6d2;
+    color: "";
+    font-weight: 500;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+}
+
+.yes-check-button:checked,
+.yes-check-button[value="1"] {
+    background-color: #000;
+    /* Change background color when checked */
+}
+.yes-check-button:hover {
+    background-color: #ced6d2;
+    /* Adjust the color on hover if needed */
+}
