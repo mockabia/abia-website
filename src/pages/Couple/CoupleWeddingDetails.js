@@ -138,7 +138,9 @@ const CoupleWeddingDetails = (props) => {
                   label="Wedding Date"
                   value={formValues.date_of_wedding}
                   dateError={checkboxChecked ? "" : errors.date_of_wedding}
-                  handleDateChange={handleInputChangeVal}
+                  handleDateChange={(date) => 
+                    handleInputChangeVal('date_of_wedding', date)
+                  }
                   checkboxChecked={checkboxChecked}
                 />
 
