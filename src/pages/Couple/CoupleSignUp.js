@@ -86,7 +86,6 @@ export default function CouplesSignUp() {
     CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
   };
   const handleInputChangeVal = (name, value) => {
-    console.log(name+'=='+value)
     CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
   };
 
