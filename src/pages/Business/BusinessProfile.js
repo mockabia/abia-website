@@ -33,7 +33,7 @@ import VideoGallery from "../../pages - Copy/My Profile/photos&videos/myProfileV
 import { PricingCheckbox, StyledAccordion } from "../../components/FormStyle";
 import * as BusinessJS from "../Business/Business";
 import Skeleton from "@mui/material/Skeleton";
-import { Preview } from "@mui/icons-material";
+import { CheckBox, Preview } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa";
 
@@ -159,13 +159,13 @@ const Profile = ({ preview }) => {
 
   const handlePricingSubmit = async () => {
     console.log("PRicing inputs:", inputsPricing);
-    BusinessJS.updateBusinessMyProfile(
-      inputsPricing,
-      vendorID,
-      3,
-      setInputsErrors,
-      setVendorInputs
-    );
+    // BusinessJS.updateBusinessMyProfile(
+    //   inputsPricing,
+    //   vendorID,
+    //   3,
+    //   setInputsErrors,
+    //   setVendorInputs
+    // );
   };
   return (
     <div className="preview-listing-container">
@@ -294,7 +294,7 @@ const Profile = ({ preview }) => {
                           {category.CategorySettings.map(
                             (categorySettings, setKey) => (
                               <div key={setKey}>
-                                {categorySettings.min_max === "1" ? (
+                                {categorySettings.min_max == "1" ? (
                                   <>
                                     <p>{categorySettings.head_title}</p>
                                     <div className="flex">
@@ -534,8 +534,8 @@ const Profile = ({ preview }) => {
                                         {categorySettings.head_subtitle}
                                       </h5>
                                       {/* price per head */}
-                                      <PricingCheckbox
-                                        className="yes-button"
+                                      <CheckBox
+                                        className="yes-check-button"
                                         containerClass=""
                                         label={categorySettings.head_subtitle}
                                         placeholder={
@@ -568,7 +568,7 @@ const Profile = ({ preview }) => {
                                         onChange={(e) =>
                                           handlePricingInputChange(
                                             "subtype_val",
-                                            e.target.value ? 0 : 1,
+                                            1,
                                             {
                                               catKey,
                                               setKey,
@@ -587,14 +587,14 @@ const Profile = ({ preview }) => {
                                           )
                                         }
                                       />
-                                      <div className="mt-[10px] space-x-2">
+                                      {/* <div className="mt-[10px] space-x-2">
                                         <button className="yes-button">
                                           Yes
                                         </button>
                                         <button className="no-button">
                                           No
                                         </button>
-                                      </div>
+                                      </div> */}
                                     </div>
                                   </>
                                 ) : (
