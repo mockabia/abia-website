@@ -1,5 +1,6 @@
 import * as apiService from "../api/apiServices";
 import * as apiUrls from "../api/apiUrls";
+import categories from "./json/couples-categories-edit.json"
 
 export const MAIN_API       = apiUrls.COUPLE_API;
 export const CONTENTS_API   = apiUrls.CONTENT_API;
@@ -31,6 +32,19 @@ export async function coupleWeddingDetails(id,postData) {
 }
 export async function coupleSettings(id,postData) {
   return await apiService.apiCall(MAIN_API["SETTINGS"]+'/'+id+'/6/1', "POST", postData);
+}
+export async function coupleCategories(id) {
+  return categories;
+  //return await apiService.apiCall(MAIN_API["CATEGORIES"]+'/'+id, "GET");
+}
+export async function updateBudget(id,postData) {
+  return await apiService.apiCall(MAIN_API["UPDATE_BUDGET"]+'/'+id+'/1/1', "POST", postData);
+}
+export async function addCategories(id,postData) {
+  return await apiService.apiCall(MAIN_API["ADD_CATEGORIES"]+'/'+id+'/2/1', "POST", postData);
+}
+export async function updateBudgetCategory(id,postData) {
+  return await apiService.apiCall(MAIN_API["UPDATE_CATEGORIES"]+'/'+id+'/3/1', "POST", postData);
 }
 
 export async function stateDropdown(postData) {

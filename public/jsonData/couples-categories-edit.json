@@ -1,0 +1,187 @@
+{
+  "result": {
+    "services": [
+      {
+        "itemTitle": "Venue and Vendors",
+        "id":1,
+        "unpaid": "0.00",
+        "paid": "0.00",
+        "cost": "0.00",
+        "sub": [
+          {
+            "title": "Venue",
+            "id": 1,
+            "unpaid": "0.00",
+            "paid": "0.00",
+            "cost": "0.00"
+          },
+          {
+            "title": "Food and beverages",
+            "id": 2,
+            "unpaid": "0.00",
+            "paid": "0.00",
+            "cost": "0.00"
+          },
+          {
+            "title": "Photographer",
+            "id": 4,
+            "unpaid": "0.00",
+            "paid": "0.00",
+            "cost": "0.00"
+          },
+          {
+            "title": "Florist",
+            "id": 8,
+            "unpaid": "0.00",
+            "paid": "0.00",
+            "cost": "0.00"
+          }
+        ]
+      },
+      {
+        "itemTitle": "Invites and paper",
+        "id":2,
+        "unpaid": "0.00",
+        "paid": "0.00",
+        "cost": "0.00",
+        "sub": [
+          {
+            "title": "Save the dates",
+            "id": 6,
+            "unpaid": "0.00",
+            "paid": "0.00",
+            "cost": "0.00"
+          },
+          {
+            "title": "Invitations",
+            "id": 7,
+            "unpaid": "0.00",
+            "paid": "0.00",
+            "cost": "0.00"
+          },
+          {
+            "title": "Programs",
+            "id": 3,
+            "unpaid": "0.00",
+            "paid": "0.00",
+            "cost": "0.00"
+          },
+          {
+            "title": "Cards",
+            "id": 10,
+            "unpaid": "0.00",
+            "paid": "0.00",
+            "cost": "0.00"
+          }
+        ]
+      },
+      {
+        "itemTitle": "Attire",
+        "id":3,
+        "unpaid": "0.00",
+        "paid": "0.00",
+        "cost": "0.00",
+        "sub": [
+          {
+            "title": "Clothing",
+            "id": 9,
+            "unpaid": "0.00",
+            "paid": "0.00",
+            "cost": "0.00"
+          },
+          {
+            "title": "Accessories",
+            "id": 11,
+            "unpaid": "0.00",
+            "paid": "0.00",
+            "cost": "0.00"
+          }
+        ]
+      },
+      {
+        "itemTitle": "Other",
+        "id":4,
+        "unpaid": "0.00",
+        "paid": "0.00",
+        "cost": "0.00",
+        "sub": [
+          {
+            "title": "Accommodations",
+            "id": 12,
+            "unpaid": "0.00",
+            "paid": "0.00",
+            "cost": "0.00"
+          },
+          {
+            "title": "Gifts and favors",
+            "id": 13,
+            "unpaid": "0.00",
+            "paid": "0.00",
+            "cost": "0.00"
+          }
+        ]
+      }
+    ],
+    "unpaid": [
+      {
+        "title": "Venue",
+        "id": 1,
+        "unpaid": "60.00",
+        "paid": "0.00",
+        "cost": "60.00",
+        "itemTitle": "Venue and Vendors"
+      },
+      {
+        "title": "Food and beverages",
+        "id": 2,
+        "unpaid": "30.00",
+        "paid": "20.00",
+        "cost": "50.00",
+        "itemTitle": "Venue and Vendors"
+      },
+      {
+        "title": "Accommodations",
+        "id": 12,
+        "unpaid": "400.00",
+        "paid": "100.00",
+        "cost": "500.00",
+        "itemTitle": "Other"
+      },
+      {
+        "title": "Gifts and favors",
+        "id": 13,
+        "unpaid": "30.00",
+        "paid": "10.00",
+        "cost": "40.00",
+        "itemTitle": "Other"
+      }
+    ],
+    "weddingDetails": [
+      {
+        "vc_vcid": "48",
+        "vc_acid": "0",
+        "b_bid": "412187",
+        "v_vid": "146362",
+        "tempgrp": "48",
+        "fulbudget": "0",
+        "fullactbudget": "0",
+        "fulpaid": "0",
+        "fulunpaid": "0"
+      },
+      {
+        "vc_vcid": "75",
+        "vc_acid": "0",
+        "b_bid": "412187",
+        "v_vid": "146362",
+        "tempgrp": "75",
+        "fulbudget": "0",
+        "fullactbudget": "0",
+        "fulpaid": "0",
+        "fulunpaid": "0"
+      }
+    ],
+    "budget": false
+  },
+  "statuscode": 200,
+  "message": "Successful Request"
+}

@@ -185,3 +185,75 @@ export const coupleSettings = async (formValues, setErrors,navigate) => {
     });
   }
 };
+export const coupleCategories = async (setBudget,setData,setUnpaidList) => {
+  let token       = localStorage.getItem("coupleToken");
+  token           = JSON.parse(token);
+  let userSession = token && token.user ? token.user : null;
+  let userId      = userSession && userSession.id ? userSession.id : null;
+  await servicesPage.coupleCategories(userId).then(function (response) {
+    if (response.statuscode == 200) {
+      setData([]);
+      setBudget(response.result.budget);
+      setData(response.result);
+      setUnpaidList(response.result.unpaid);
+    } else {
+      setData([]);
+    }
+  });
+};
+export const updateBudget = async (budget, setShowBudget,setEdit) => {
+  let token       = localStorage.getItem("coupleToken");
+  token           = JSON.parse(token);
+  let userSession = token && token.user ? token.user : null;
+  let userId      = userSession && userSession.id ? userSession.id : null;
+  let requestData       = {};
+  requestData['budget'] = budget;
+  await servicesPage.updateBudget(userId,requestData).then(function (response) {
+    if (response.statuscode == 200) {
+      setShowBudget(Number(response.budget));
+      setEdit(false);
+    }
+  });
+};
+export const addCategories = async (formValues, setErrors,setData,setBudget,setUnpaidList,handleAddClose) => {
+  let token       = localStorage.getItem("coupleToken");
+  token           = JSON.parse(token);
+  let userSession = token && token.user ? token.user : null;
+  let userId      = userSession && userSession.id ? userSession.id : null;
+  await servicesPage.addCategories(userId,formValues).then(function (response) {
+    if (response.statuscode == 200) {
+      setData([]);
+      setBudget(response.result.budget);
+      setData(response.result);
+      setUnpaidList(response.result.unpaid);
+      handleAddClose();
+    } else {
+      if (response.errors) {
+        setErrors(response.errors);
+      } else if (response.statusmessage) {
+        setErrors(response.statusmessage);
+      }
+    }
+  });
+};
+export const updateBudgetCategory = async (formValues, setErrors,setData,setBudget,setUnpaidList,closeBudget) => {
+  let token       = localStorage.getItem("coupleToken");
+  token           = JSON.parse(token);
+  let userSession = token && token.user ? token.user : null;
+  let userId      = userSession && userSession.id ? userSession.id : null;
+  await servicesPage.updateBudgetCategory(userId,formValues).then(function (response) {
+    if (response.statuscode == 200) {
+      setData([]);
+      setBudget(response.result.budget);
+      setData(response.result);
+      setUnpaidList(response.result.unpaid);
+      closeBudget()
+    } else {
+      if (response.errors) {
+        setErrors(response.errors);
+      } else if (response.statusmessage) {
+        setErrors(response.statusmessage);
+      }
+    }
+  });
+};

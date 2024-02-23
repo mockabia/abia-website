@@ -88,4 +88,7 @@ export const COUPLE_API = {
   CONTACT         : `${baseUrl}WebManageWedding`,
   WEDDING_DETAILS : `${baseUrl}WebManageWedding`,
   SETTINGS        : `${baseUrl}WebManageWedding`,
+  UPDATE_BUDGET   : `${baseUrl}ManageSelcategories`,
+  CATEGORIES      : `${baseUrl}view_Selcategories`,
+  ADD_CATEGORIES  : `${baseUrl}ManageSelcategories`,
 };
