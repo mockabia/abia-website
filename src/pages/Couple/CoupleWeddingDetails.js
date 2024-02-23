@@ -42,7 +42,6 @@ const CoupleWeddingDetails = (props) => {
   const [regions, setRegions]                 = useState([]);
   const [errors, setErrors]                   = React.useState({});
   const [checkboxChecked, setCheckboxChecked] = useState(false);
-  const [load, setLoad]                       = useState(false);
   const isMobilesize                          = useMediaQuery("(max-width:550px)");
   const isAbove1100px                         = useMediaQuery("(min-width: 1101px)");
 
@@ -64,12 +63,6 @@ const CoupleWeddingDetails = (props) => {
       setSelectedRegion(myArrayFiltered);
     }
   }, [regions,formValues.wedding_location]);
-    
-  useEffect(() => {
-    if(selectedRegion.length>0){
-      setLoad(true);
-    }
-  }, [selectedRegion]);
   
   useEffect(() => {
     setCheckboxChecked(formValues.wedding=='0' ? true : false)
@@ -107,8 +100,7 @@ const CoupleWeddingDetails = (props) => {
 
   return (
       <section>
-        {load==true ? (
-          <div className="couple-contact-container">
+        <div className="couple-contact-container">
           <Box
             component="form"
             sx={{
@@ -453,7 +445,6 @@ const CoupleWeddingDetails = (props) => {
             </Stack>
           </Box>
         </div>
-        ) : ''}
       </section>
   );
 };
