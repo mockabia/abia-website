@@ -1,21 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  FormControlLabel,
-  Skeleton,
-  Stack,
-  useMediaQuery,
-} from "@mui/material";
+import {Box,FormControlLabel,Stack,useMediaQuery,} from "@mui/material";
 import Select, { components } from "react-select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import {
-  CheckBoxStyle,
-  CoupleInput,
-  CoupleSelectStyle,
-  MuiBoxStyles,
-  TextAreaInput,
-} from "../../components/FormStyle";
+import {CheckBoxStyle,CoupleInput,CoupleSelectStyle,MuiBoxStyles,TextAreaInput,} from "../../components/FormStyle";
 import "../Style/CoupleProfile.css";
 import { CheckboxOption } from "../../components/CustomerSelect";
 import { DatePickerProfile2 } from "../../components/DatepickerPublic";
@@ -45,17 +33,17 @@ const customStyles = {
 };
 
 const CoupleWeddingDetails = (props) => {
-  let navigate = useNavigate();
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 550);
-  const [formValues, setFormValues] = useState({});
-  const [stateOptions, setStateOptions] = useState([]);
-  const [selectedRegion, setSelectedRegion] = useState([]);
-  const [regions, setRegions] = useState([]);
-  const [errors, setErrors] = React.useState({});
+
+  let navigate                                = useNavigate();
+  const [isMobile, setIsMobile]               = useState(window.innerWidth <= 550);
+  const [formValues, setFormValues]           = useState({});
+  const [stateOptions, setStateOptions]       = useState([]);
+  const [selectedRegion, setSelectedRegion]   = useState([]);
+  const [regions, setRegions]                 = useState([]);
+  const [errors, setErrors]                   = React.useState({});
   const [checkboxChecked, setCheckboxChecked] = useState(false);
-  const [load, setLoad] = useState(false);
-  const isMobilesize = useMediaQuery("(max-width:550px)");
-  const isAbove1100px = useMediaQuery("(min-width: 1101px)");
+  const isMobilesize                          = useMediaQuery("(max-width:550px)");
+  const isAbove1100px                         = useMediaQuery("(min-width: 1101px)");
 
   useEffect(() => {
     CoupleJS.fetchState(setStateOptions);
@@ -63,7 +51,7 @@ const CoupleWeddingDetails = (props) => {
   }, []);
 
   useEffect(() => {
-    if (formValues.wedding_state != undefined) {
+    if(formValues.wedding_state!=undefined){
       CoupleJS.fetchRegion(formValues.wedding_state, setRegions);
     }
   }, [formValues.wedding_state]);
@@ -76,16 +64,10 @@ const CoupleWeddingDetails = (props) => {
       );
       setSelectedRegion(myArrayFiltered);
     }
-  }, [regions, formValues.wedding_location]);
-
+  }, [regions,formValues.wedding_location]);
+  
   useEffect(() => {
-    if (selectedRegion.length > 0) {
-      setLoad(true);
-    }
-  }, [selectedRegion]);
-
-  useEffect(() => {
-    setCheckboxChecked(formValues.wedding == "0" ? true : false);
+    setCheckboxChecked(formValues.wedding=='0' ? true : false)
   }, [formValues.wedding]);
 
   useEffect(() => {
@@ -109,23 +91,17 @@ const CoupleWeddingDetails = (props) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    CoupleJS.coupleWeddingDetails(formValues, setErrors, navigate);
+    CoupleJS.coupleWeddingDetails(formValues, setErrors,navigate)
   };
-  /* 
+/* 
   const handleStateChange = (selectedOptions) => {
     //  console.log("Selected State:", selectedOptions);
     setFormValues({ ...formValues, wedding_state: selectedOptions });
     setSelectedState(selectedOptions);
   }; */
 
-  const skeletonLines = [
-    { variant: "text", height: "1rem" },
-    { variant: "rectangular", width: "100%", height: "5rem" },
-  ];
-
   return (
-    <section>
-      {load == true ? (
+      <section>
         <div className="couple-contact-container">
           <Box
             component="form"
@@ -164,7 +140,9 @@ const CoupleWeddingDetails = (props) => {
                   label="Wedding Date"
                   value={formValues.date_of_wedding}
                   dateError={checkboxChecked ? "" : errors.date_of_wedding}
-                  handleDateChange={handleInputChangeVal}
+                  handleDateChange={(date) => 
+                    handleInputChangeVal('date_of_wedding', date)
+                  }
                   checkboxChecked={checkboxChecked}
                 />
 
@@ -317,7 +295,9 @@ const CoupleWeddingDetails = (props) => {
                     name="budget"
                     type="number"
                     value={formValues.budget}
-                    onChange={(e) => handleInputChange(e)}
+                    onChange={(e) =>
+                      handleInputChange(e)
+                    }
                   />
                   {errors.budget && (
                     <div style={{ color: "red", fontSize: "12px" }}>
@@ -335,7 +315,9 @@ const CoupleWeddingDetails = (props) => {
                     name="guests"
                     type="number"
                     value={formValues.guests}
-                    onChange={(e) => handleInputChange(e)}
+                    onChange={(e) =>
+                      handleInputChange(e)
+                    }
                   />
                   {errors.guests && (
                     <div style={{ color: "red", fontSize: "12px" }}>
@@ -358,7 +340,9 @@ const CoupleWeddingDetails = (props) => {
                     name="bridesmaids"
                     type="number"
                     value={formValues.bridesmaids}
-                    onChange={(e) => handleInputChange(e)}
+                    onChange={(e) =>
+                      handleInputChange(e)
+                    }
                   />
                   {errors.bridesmaids && (
                     <div style={{ color: "red", fontSize: "12px" }}>
@@ -375,7 +359,9 @@ const CoupleWeddingDetails = (props) => {
                     name="groomsmen"
                     type="number"
                     value={formValues.groomsmen}
-                    onChange={(e) => handleInputChange(e)}
+                    onChange={(e) =>
+                      handleInputChange(e)
+                    }
                   />
                   {errors.groomsmen && (
                     <div style={{ color: "red", fontSize: "12px" }}>
@@ -398,7 +384,9 @@ const CoupleWeddingDetails = (props) => {
                     name="travellingguests"
                     type="text"
                     value={formValues.travellingguests}
-                    onChange={(e) => handleInputChange(e)}
+                    onChange={(e) =>
+                      handleInputChange(e)
+                    }
                   />
                   {errors.travellingguests && (
                     <div style={{ color: "red", fontSize: "12px" }}>
@@ -426,7 +414,9 @@ const CoupleWeddingDetails = (props) => {
                   rows={4}
                   type="text"
                   value={formValues.profile_desc}
-                  onChange={(e) => handleInputChange(e)}
+                  onChange={(e) =>
+                    handleInputChange(e)
+                  }
                   width="100%"
                   maxWidth="23rem"
                   sx={{
@@ -464,41 +454,7 @@ const CoupleWeddingDetails = (props) => {
             </Stack>
           </Box>
         </div>
-      ) : (
-        <div className="mt-[3rem] flex flex-col gap-[3rem]">
-          {/* className={`mt-[3rem] ${isMobile ? "flex" : "flex-col"} gap-[3rem] */}
-          <div
-            className={`mt-[3rem] ${isMobile ? "flex-col" : "flex"} gap-[3rem]`}
-          >
-            <Skeleton variant="rectangular" width={270} height={40} />
-            <Skeleton variant="rectangular" width={270} height={40} />
-          </div>
-          <div className="flex gap-[3rem]">
-            <Skeleton variant="rectangular" width={270} height={40} />
-            <Skeleton variant="rectangular" width={270} height={40} />
-          </div>
-          <div className="flex gap-[3rem]">
-            <Skeleton variant="rectangular" width={270} height={40} />
-            <Skeleton variant="rectangular" width={270} height={40} />
-          </div>
-          <div className="flex gap-[3rem]">
-            <Skeleton variant="rectangular" width={270} height={40} />
-            <Skeleton variant="rectangular" width={270} height={40} />
-          </div>
-          <div className="flex gap-[3rem]">
-            <Skeleton variant="rectangular" width={270} height={40} />
-            <Skeleton variant="rectangular" width={270} height={40} />
-          </div>
-          <div>
-            <Skeleton variant="rectangular" width={600} height={120} />
-          </div>
-          <div>
-            {/* <Skeleton variant="rectangular" width={500} height={20} /> */}
-          </div>
-          <br />
-        </div>
-      )}
-    </section>
+      </section>
   );
 };
 

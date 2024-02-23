@@ -10,16 +10,11 @@ const CoupleContact = (props) => {
   let navigate                        = useNavigate();
   const [formValues, setFormValues]   = useState({});
   const [errors, setErrors]           = React.useState({});
-  const [load, setLoad]               = useState(false);
   const isMobile                      = useMediaQuery("(max-width:550px)");
 
   useEffect(() => {
     CoupleJS.coupleDetails('contact',setFormValues)
   }, []);
-
-  useEffect(() => {
-    if(formValues.bride!=''){setLoad(true)}
-  }, [formValues.bride]);
 
   const handleInputChange = (e) => {
     const name = e.target.name;
@@ -34,8 +29,7 @@ const CoupleContact = (props) => {
 
   return (
       <section>
-        {load==true ? (
-          <div className="couple-contact-container">
+        <div className="couple-contact-container">
           <Box
             component="form"
             sx={{
@@ -139,7 +133,6 @@ const CoupleContact = (props) => {
             </Stack>
           </Box>
         </div>
-        ) : ''}
       </section>
   );
 };

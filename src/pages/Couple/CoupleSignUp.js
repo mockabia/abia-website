@@ -274,11 +274,13 @@ export default function CouplesSignUp() {
                       </label>
                       {/* {!checkboxChecked && ( */}
                       <DatePickerCouple
-                        name="wedding_date"
+                        name="date_of_wedding"
                         label="Preferred Wedding Date"
-                        value={formValues.wedding_date}
-                        dateError={checkboxChecked ? "" : errors.wedding_date}
-                        handleDateChange={handleInputChangeVal}
+                        value={formValues.date_of_wedding}
+                        dateError={checkboxChecked ? "" : errors.date_of_wedding}
+                        handleDateChange={(date) => 
+                          handleInputChangeVal('date_of_wedding', date)
+                        }
                         checkboxChecked={checkboxChecked}
                       />
                     </div>
@@ -291,9 +293,9 @@ export default function CouplesSignUp() {
                         <CheckBoxStyle
                           name="wedding"
                           checked={formValues.wedding=='1' ? false : true}
-                          onChange={(e) => {
+                          onChange={(e) => 
                             handleInputChangeVal('wedding', e.target.checked ? 0 : 1)
-                          }}
+                          }
                           inputProps={{ "aria-label": "controlled" }}
                           sx={{
                             "&.Mui-checked": {

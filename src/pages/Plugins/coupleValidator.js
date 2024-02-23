@@ -75,9 +75,9 @@ export const validateCoupleSignup = (activeStep,inputs, setInputsErrors) => {
       validate = false;
       setInputsErrors((values) => ({...values,["groom"]: "Partner's Name is required"}));
     }
-    if (inputs.wedding == '1' && !inputs.wedding_date) {
+    if (inputs.wedding == '1' && !inputs.date_of_wedding) {
       validate = false;
-      setInputsErrors((values) => ({...values,["wedding_date"]: "Date is required"}));
+      setInputsErrors((values) => ({...values,["date_of_wedding"]: "Date is required"}));
     }
     if (!inputs.wedding_state) {
       validate = false;
