@@ -50,7 +50,7 @@ const CoupleAccountSetting = (props) => {
               <Stack spacing={3}>
                 <Box sx={{ display: "flex", flexDirection: "column" }}>
                   <label>
-                    Current Password
+                    New Password
                     <span style={{ color: "red", fontSize: "16px" }}>*</span>
                   </label>
                   <CoupleInput
@@ -69,7 +69,7 @@ const CoupleAccountSetting = (props) => {
                 </Box>
                 <Box sx={{ display: "flex", flexDirection: "column" }}>
                   <label>
-                    New Password
+                    Confirm Password
                     <span style={{ color: "red", fontSize: "16px" }}>*</span>
                   </label>
                   <CoupleInput
