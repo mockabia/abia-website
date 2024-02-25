@@ -114,7 +114,11 @@ const MenuItems = (props) => {
                 <span className="mobile-menu-login">Login</span>
               </AccordionSummary>
               <AccordionDetails className="mobile-menu-accordionPanel">
-                <Link to={window.VLOGIN} className="mobile-menu-option">
+                <Link
+                  to={window.VLOGIN}
+                  onClick={closeMenu}
+                  className="mobile-menu-option"
+                >
                   Vendor
                 </Link>
                 <div className="mobile-menu-option" onClick={handleModalOpen}>
@@ -131,7 +135,11 @@ const MenuItems = (props) => {
                 <span className="mobile-menu-signup">Sign Up</span>
               </AccordionSummary>
               <AccordionDetails className="mobile-menu-accordionPanel">
-                <Link to={window.VSIGNUP} className="mobile-menu-option">
+                <Link
+                  to={window.VSIGNUP}
+                  className="mobile-menu-option"
+                  onClick={closeMenu}
+                >
                   Vendor
                 </Link>
                 <Link to={window.CSIGNUP} className="mobile-menu-option">
@@ -140,16 +148,15 @@ const MenuItems = (props) => {
               </AccordionDetails>
             </Accordion>
           </div>
-          <Modal
-            open={modalOpen}
-            onClose={handleModalClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <CouplesLogin handleClosePage={handleModalClose} />
-            </Box>
-          </Modal>
+
+          <Box sx={style}>
+            <CouplesLogin
+              modalOpen={modalOpen}
+              setModalOpen={seetModalOpen}
+              handleClosePage={handleModalClose}
+            />
+            {/* <CouplesLogin modalOpen={loginOpen} setModalOpen={setLoginOpen} /> */}
+          </Box>
         </div>
       </Menu>
     </div>

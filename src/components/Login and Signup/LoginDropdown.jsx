@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import CouplesLogin from "../../pages/Couple/CouplesLogin";
 
 const LoginDropdown = () => {
-  const [buttonClicked, setButtonClicked]   = useState(false);
-  const [open, setOpen]                     = useState(false);
-  const [loginOpen, setLoginOpen]           = useState(false);
+  const [buttonClicked, setButtonClicked] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
 
   const handleLoginOpen = () => {
     setLoginOpen(true);
@@ -60,25 +60,9 @@ const LoginDropdown = () => {
         </div>
       )}
 
-      {/* <Modal
-        open={loginOpen}
-        onClose={handleModalClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <CouplesLogin handleClosePage={handleModalClose} />
-        </Box>
-      </Modal> */}
       <CouplesLogin modalOpen={loginOpen} setModalOpen={setLoginOpen} />
     </div>
   );
 };
 
 export default LoginDropdown;
-
-/* {menuItem.map((item) => (
-              <li className="loginnav-menu-item" key={item.title}>
-                <Link to={item.path}>{item.title}</Link>{" "}
-              </li>
-            ))} */

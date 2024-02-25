@@ -382,7 +382,7 @@ const CoupleWeddingDetails = (props) => {
                   </label>
                   <CoupleInput
                     name="travellingguests"
-                    type="text"
+                    type="number"
                     value={formValues.travellingguests}
                     onChange={(e) =>
                       handleInputChange(e)
