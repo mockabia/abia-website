@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import LayoutCouple from "../../layouts/Layout/LayourCouple2";
-import "../Style/CoupleCatBudget.css";
+import LayoutCouple from "../../../layouts/Layout/LayourCouple2";
+import "../../Style/CoupleCatBudget.css";
 import {
   BoxStyle,
   BoxStyle2,
@@ -10,7 +10,7 @@ import {
   CheckBoxTypo,
   CoupleAddButton,
   CoupleCommonInput,
-} from "../../components/FormStyle";
+} from "../../../components/FormStyle";
 import {
   Accordion,
   AccordionSummary,
