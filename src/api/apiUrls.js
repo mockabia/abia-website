@@ -91,4 +91,5 @@ export const COUPLE_API = {
   UPDATE_BUDGET   : `${baseUrl}ManageSelcategories`,
   CATEGORIES      : `${baseUrl}view_Selcategories`,
   ADD_CATEGORIES  : `${baseUrl}ManageSelcategories`,
+  ENQUIRIES       : `${baseUrl}ManageEnquiries`,
 };
