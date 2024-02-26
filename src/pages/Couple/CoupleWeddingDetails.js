@@ -47,7 +47,7 @@ const CoupleWeddingDetails = (props) => {
 
   useEffect(() => {
     CoupleJS.fetchState(setStateOptions);
-    CoupleJS.coupleDetails('details',setFormValues)
+    CoupleJS.coupleDetails("details", setFormValues);
   }, []);
 
   useEffect(() => {
@@ -57,9 +57,11 @@ const CoupleWeddingDetails = (props) => {
   }, [formValues.wedding_state]);
 
   useEffect(() => {
-    if(formValues.wedding_location!=undefined){
-      var selectedRegion = formValues.wedding_location.split(',');
-      const myArrayFiltered = regions.filter((el) => selectedRegion.includes(el.url));
+    if (formValues.wedding_location != undefined) {
+      var selectedRegion = formValues.wedding_location.split(",");
+      const myArrayFiltered = regions.filter((el) =>
+        selectedRegion.includes(el.url)
+      );
       setSelectedRegion(myArrayFiltered);
     }
   }, [regions,formValues.wedding_location]);
@@ -81,10 +83,10 @@ const CoupleWeddingDetails = (props) => {
   const handleInputChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
+    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors);
   };
   const handleInputChangeVal = (name, value) => {
-    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
+    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors);
   };
 
   const handleFormSubmit = (e) => {
@@ -149,9 +151,12 @@ const CoupleWeddingDetails = (props) => {
                   control={
                     <CheckBoxStyle
                       name="wedding"
-                      checked={formValues.wedding=='1' ? false : true}
+                      checked={formValues.wedding == "1" ? false : true}
                       onChange={(e) =>
-                        handleInputChangeVal('wedding', e.target.checked ? 0 : 1)
+                        handleInputChangeVal(
+                          "wedding",
+                          e.target.checked ? 0 : 1
+                        )
                       }
                       inputProps={{ "aria-label": "controlled" }}
                     />
@@ -199,9 +204,9 @@ const CoupleWeddingDetails = (props) => {
                     onChange={(selectedOptions) =>
                       handleInputChangeVal("wedding_state", selectedOptions.url)
                     }
-                    value = {
-                      stateOptions.filter(option => option.url === formValues.wedding_state)
-                    }
+                    value={stateOptions.filter(
+                      (option) => option.url === formValues.wedding_state
+                    )}
                     components={{
                       Menu,
                       MultiValue,
@@ -234,13 +239,15 @@ const CoupleWeddingDetails = (props) => {
                     isMulti={true}
                     type="select"
                     sx={{ width: "100%" }}
-                    value={selectedRegion} 
+                    value={selectedRegion}
                     styles={CoupleSelectStyle}
                     options={regions}
                     onChange={(selectedOptions) => {
-                      const commaSep = selectedOptions.map(item => item.url).join(',');
-                      handleInputChangeVal("wedding_location", commaSep)
-                    }} 
+                      const commaSep = selectedOptions
+                        .map((item) => item.url)
+                        .join(",");
+                      handleInputChangeVal("wedding_location", commaSep);
+                    }}
                     isClearable={false}
                     closeMenuOnSelect={false}
                     hideSelectedOptions={false}
@@ -375,7 +382,7 @@ const CoupleWeddingDetails = (props) => {
                   </label>
                   <CoupleInput
                     name="travellingguests"
-                    type="text"
+                    type="number"
                     value={formValues.travellingguests}
                     onChange={(e) =>
                       handleInputChange(e)

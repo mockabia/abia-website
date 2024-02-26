@@ -999,10 +999,7 @@ input[type="radio"]:checked {
     }
 }
 
-.yes-check-button path {
-    visibility: hidden;
-}
-
+.no-check-button,
 .yes-check-button {
     width: 4rem !important;
     height: 2rem !important;
@@ -1015,15 +1012,18 @@ input[type="radio"]:checked {
     cursor: pointer;
 }
 
-.yes-check-button:checked,
-.yes-check-button[value="1"] {
-    background-color: #000;
-    /* Change background color when checked */
+.yes-check-button.selected {
+    background-color: #15a75c;
+    color: #fff;
 }
-.yes-check-button:hover {
-    background-color: #ced6d2;
-    /* Adjust the color on hover if needed */
-}
+
+  .no-check-button.selected {
+      background-color: #ff0000;
+      color: #fff;
+  }
+
+
+
 
 
 

@@ -12,6 +12,7 @@ export const CommonInput = ({
   inputMode,
   value,
   onChange,
+  placeholder,
 }) => (
   <div className="flex flex-col gap-[5px] mb-[10px]" style={{ width: "100%" }}>
     <label className="text-[14px] font-bold">{label}</label>
@@ -27,13 +28,22 @@ export const CommonInput = ({
   </div>
 );
 
-export const CommonSelect = ({ label, options, value, id, name, onChange }) => (
+export const CommonSelect = ({
+  label,
+  options,
+  value,
+  id,
+  name,
+  onChange,
+  placeholder,
+}) => (
   <div className="flex flex-col gap-[5px] mb-[10px]" style={{ width: "100%" }}>
     <label className="text-[14px] font-bold whitespace-nowrap">{label}</label>
     <div className="text-[14px]">
       <Select
         id={id}
         name={name}
+        placeholder={placeholder}
         options={options}
         value={value}
         className="signup-input-style"

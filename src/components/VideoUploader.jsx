@@ -6,26 +6,6 @@ import * as BusinessJs from "../pages/Business/Business";
 import "./VideoUploader.css";
 
 import { AiOutlineClose } from "react-icons/ai";
-// Styles
-const boxStyle = {
-  width: "300px",
-  height: "400px",
-  display: "flex",
-  flexFlow: "column",
-  justifyContent: "center",
-  alignItems: "center",
-};
-const modalStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
-
-const previewStyles = {
-  videoPreviewBorder: {
-    borderRadius: "20px" /* Adjust the radius value to your preference */,
-  },
-};
 
 //IModal
 
@@ -40,6 +20,11 @@ const VideoUploader = ({ vendorID }) => {
   const [inputsErrors, setInputsErrors] = useState({});
   const [deleteVideo, setDeleteVideo] = useState("");
   const inputRef = useRef(null);
+  // drag and drop
+  // drag and drop
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragIndex, setDragIndex] = useState(-1);
+  const [dragOffset, setDragOffset] = useState(0);
 
   useEffect(() => {
     BusinessJs.V_viewVideoGallery(setVideoURLs, vendorID);
@@ -89,6 +74,76 @@ const VideoUploader = ({ vendorID }) => {
     }
   };
 
+  // DRAG AND DROP
+  const startDrag = (index, event) => {
+    setDragIndex(index);
+    setDragOffset(event.clientX - event.target.getBoundingClientRect().left);
+    setIsDragging(true);
+  };
+  const onDragOver = (event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  };
+
+  // extraction info to be passed with the new update data
+  const extractImageProperties = (image) => {
+    const { title, detail, thumbUrl } = image;
+
+    return {
+      vid: vendorID,
+      tempphoto: {
+        imageUrl: thumbUrl, // or image.photo if needed
+        thumbUrl: thumbUrl,
+        iconUrl: thumbUrl, // or some other property
+      },
+      title,
+      detail,
+    };
+  };
+
+ const onDrop = (index, event) => {
+   event.preventDefault();
+   setIsDragging(false);
+
+   if (dragIndex !== -1) {
+     const fromIndex = dragIndex;
+     const toIndex = index;
+
+     // Rearrange the videos array
+     const movedVideo = videoURLs[fromIndex];
+     const updatedVideos = [...videoURLs];
+     updatedVideos.splice(fromIndex, 1);
+     updatedVideos.splice(toIndex, 0, movedVideo);
+
+     setVideoURLs(updatedVideos);
+     console.log("Updated videoURLs:", updatedVideos);
+
+     // Map properties and update API
+     const reorderedVideos = updatedVideos.map((video, idx) => {
+       return {
+         ...video,
+         position: idx + 1, // assuming position starts from 1
+       };
+     });
+     console.log("reorderedVideos:", reorderedVideos);
+
+     // Uncomment and modify this part according to your API
+     // BusinessJS.updateBusinessMyProfile(
+     //   reorderedVideos,
+     //   vendorID,
+     //   5,
+     //   setInputsErrors,
+     //   setVendorInputs
+     // );
+   }
+
+   setDragIndex(-1);
+ };
+
+  const onDragEnd = () => {
+    setIsDragging(false);
+    setDragIndex(-1);
+  };
   return (
     <div>
       <div className="video-gallery-container gap-4 relative">
@@ -105,11 +160,19 @@ const VideoUploader = ({ vendorID }) => {
         </label>
         {/* Display */}
 
-        {videoURLs.map((element) => (
+        {videoURLs.map((element, index) => (
           <div
             key={element.vgid}
             id={element.vgid}
-            className="video-upload-preview"
+            // className="video-upload-preview"
+            className={`video-upload-preview ${
+              isDragging && index === dragIndex ? "dragging" : ""
+            }`}
+            draggable="true"
+            onDragStart={(event) => startDrag(index, event)}
+            onDragOver={(event) => onDragOver(event)}
+            onDrop={(event) => onDrop(index, event)}
+            onDragEnd={onDragEnd}
           >
             <div
               dangerouslySetInnerHTML={{

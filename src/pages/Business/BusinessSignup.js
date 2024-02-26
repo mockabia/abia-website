@@ -126,7 +126,7 @@ const BusinessSignup = () => {
   // Modal
   const handleClose = () => {
     setModalState(false);
-    navigate("/")
+    navigate("/");
   };
 
   const handleSubmit = async (e) => {
@@ -284,6 +284,7 @@ const BusinessSignup = () => {
                   {/* lcoation */}
                   <CommonSelect
                     name="state"
+                    placeholder=""
                     id="state"
                     label="Where are you based?*"
                     options={registerLocation}
@@ -300,6 +301,7 @@ const BusinessSignup = () => {
                   <CommonSelect
                     id="first_category"
                     name="first_category"
+                    placeholder=""
                     label="Primary Services*"
                     options={registerService}
                     value={registerService.find(
