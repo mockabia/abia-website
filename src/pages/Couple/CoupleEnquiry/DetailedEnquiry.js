@@ -17,6 +17,10 @@ function DetailedEnquiry(props) {
         setOpen(false);
     };
     
+    const formatDollar = (value) => {
+        let dollar = '$ ' + new Intl.NumberFormat().format(value);
+        return dollar;
+    };
 
     return (
         <>
@@ -41,14 +45,14 @@ function DetailedEnquiry(props) {
                   className="enquiry2-vendor-image"
                 />
                 <div className="flex flex-col gap-1">
-                  <h1 className="text-[#000]">{enquiry.vendorName}</h1>
+                  <h1 className="text-[#000]">{enquiry.vname}</h1>
                   <div className="detailbox-subheader">
-                    <h5>{enquiry.vendorType}</h5>
+                    <h5>{enquiry.category}</h5>
                     <div className="flex items-center">
                       <IoLocationOutline color="#000" size={18} />
                       <h5>
-                        <span>{enquiry.location}</span>,
-                        <span>{enquiry.stateurl}</span>{" "}
+                        <span>{enquiry.region}</span>,
+                        <span>{enquiry.state}</span>{" "}
                       </h5>
                     </div>
                   </div>
@@ -102,12 +106,12 @@ function DetailedEnquiry(props) {
                     <tbody>
                       <tr>
                         <td className="inquiry-td-style-digit">
-                          <h5>{enquiry.guestCount}</h5>
+                          <h5>{enquiry.guest}</h5>
                         </td>
                         <td className="inquiry-td-style">
                           <h5>
-                            {enquiry.location},{" "}
-                            <span>{enquiry.stateurl}</span>
+                            {enquiry.region},{" "}
+                            <span>{enquiry.state}</span>
                           </h5>
                         </td>
                       </tr>
@@ -132,24 +136,13 @@ function DetailedEnquiry(props) {
                         <td className="inquiry-td-style">
                           <span className="text-[14px]">Up to </span>
                           <span className="font-change">
-                            $
-                            {
-                              <span>
-                                {enquiry.WeddingBudget.toLocaleString()}
-                              </span>
-                            }
+                                {formatDollar(enquiry.budget)}
                           </span>{" "}
-                          {/* <span>(flexible)</span> */}
                         </td>
                         <td className="inquiry-td-style">
                           <span className="text-[14px]">Up to </span>
                           <span className="font-change">
-                            $
-                            {
-                              <span>
-                                {enquiry.VenueBudget.toLocaleString()}
-                              </span>
-                            }
+                                {formatDollar(enquiry.categoryBudget)}
                           </span>{" "}
                         </td>
                       </tr>

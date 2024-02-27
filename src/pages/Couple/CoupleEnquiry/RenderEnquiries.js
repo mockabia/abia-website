@@ -3,6 +3,7 @@ import { TfiEmail } from "react-icons/tfi";
 import { BlackLargeButton, BlackSmallButton, } from "../../../components/FormStyle";
 
 import DetailedEnquiry from "./DetailedEnquiry";
+import { Link } from "react-router-dom";
 
 function RenderEnquiries(props) {
     const data                                = props.data;
@@ -24,12 +25,9 @@ function RenderEnquiries(props) {
             {data?.map((enquiry) => {
                 return (
                     <div className="active-enquiry-mobile">
-                        <div
-                            className=" flex justify-between items-center gap-[1rem]"
-                            onClick={() => toggleOpen(enquiry)}
-                        >
+                        <div className=" flex justify-between items-center gap-[1rem]" >
                             {/* image section and Heading */}
-                            <div className="flex items-center gap-[1rem]">
+                            <div className="flex items-center gap-[1rem]" onClick={() => toggleOpen(enquiry)}>
                                 <img
                                     src={enquiry.imageUrl}
                                     className="enquiry-vendor-image"
@@ -47,9 +45,9 @@ function RenderEnquiries(props) {
                              <div className="cursor-pointer">
                                 <BlackSmallButton>
                                     {enquiry.status === "0" ? (
-                                        <h6>View </h6>
+                                        <h6 onClick={() => toggleOpen(enquiry)}>View </h6>
                                     ) : (
-                                        <h6>Reply</h6>
+                                        <h6><Link to={window.CHAT}>Reply</Link></h6>
                                     )}
                                 </BlackSmallButton>
                             </div>           
@@ -144,9 +142,9 @@ function RenderEnquiries(props) {
                                       <td>
                                         <BlackLargeButton>
                                             {enquiry.status === "0" ? (
-                                                <h6>View Enquiry</h6>
+                                                <h6 onClick={() => toggleOpen(enquiry)}>View Enquiry</h6>
                                             ) : (
-                                                <h6>Reply to Vendor</h6>
+                                                <h6><Link to={window.CHAT}>Reply to Vendor</Link></h6>
                                             )}
                                         </BlackLargeButton>
                                     </td>  

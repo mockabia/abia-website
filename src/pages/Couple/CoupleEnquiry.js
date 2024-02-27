@@ -35,7 +35,7 @@ const CoupleEnquiry = () => {
     {
       id: 1,
       item: "Wedding Directory",
-      // link: "/wedding-directory",
+      link: `${window.WEDDING_DIRECTORY}`,
     },
     {
       id: 2,
@@ -44,7 +44,7 @@ const CoupleEnquiry = () => {
     {
       id: 3,
       item: "Booked vendors",
-      // link: "/booked-vendors",
+      link: `${window.BOOKING}`,
     },
   ];
 
