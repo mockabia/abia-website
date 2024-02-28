@@ -177,9 +177,9 @@ const CoupleTopbar = (props) => {
           </div>
           <div className="cursor-pointer">
             {" "}
-            <ChatBubbleOutlineOutlinedIcon
+            <Link to={window.CHAT}><ChatBubbleOutlineOutlinedIcon
               sx={{ fill: "var(--navbar-icon-fill)", size: "20px" }}
-            />
+            /></Link>
           </div>
           <div className="cursor-pointer">
             <NotificationsOutlinedIcon
