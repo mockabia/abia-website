@@ -127,6 +127,12 @@ const CoupleContact = (props) => {
                   </div>
                 )}
               </Box>
+              {typeof errors != 'object' && errors !== null ? (
+                  <div className="error">
+                    <p dangerouslySetInnerHTML={{ __html: errors }} ></p>
+                    <a href="javascript:;" class="close" onClick={(e) => CoupleJS.customJS.errorClose(setErrors)} >X</a>
+                  </div>
+                ) :''}
               <Box>
                 <button className="couple-save-button">Save Changes</button>
               </Box>
