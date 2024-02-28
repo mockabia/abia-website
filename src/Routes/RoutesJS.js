@@ -6,6 +6,10 @@ export const fetchContentRoutes = async (setPublicMenu, setBlogMenu) => {
   await servicesPage.fetchContentRoutes().then(function (response) {
     if (response.statuscode == 200) {
       setPublicMenu(response.result);
+      const directoryMenu = response.result.filter((menus) => {
+        return menus.id == "2";
+      });
+      window.WEDDING_DIRECTORY = "/" + directoryMenu[0].url;
     }
     fetchBlogRoutes(setBlogMenu);
   });
@@ -115,13 +119,23 @@ export const fetchCoupleRoutes = async (setCoupleMenu, setShowLoader) => {
       const associateMenu = response.result.filter((menus) => {
         return menus.id == "3";
       });
-      
+      let booking = associateMenu[0].Sub_content.filter((subs) => {
+        return subs.id == "12";
+      });
+      let chat = associateMenu[0].Sub_content.filter((subs) => {
+        return subs.id == "13";
+      });
+
       window.CSIGNUP = process.env.REACT_APP_COUPLE_URL + "/" + signup[0].url;
       //window.CLOGIN = process.env.REACT_APP_COUPLE_URL + "/" + login[0].url;
       window.CDASHBOARD =
         process.env.REACT_APP_COUPLE_URL + "/" + dashboardMenu[0].url;
       window.CTHANKYOU =
         process.env.REACT_APP_COUPLE_URL + "/" + thankyou[0].url;
+      window.BOOKING =
+        process.env.REACT_APP_COUPLE_URL + "/" + booking[0].url;
+      window.CHAT =
+        process.env.REACT_APP_COUPLE_URL + "/" + chat[0].url;
 
       setShowLoader(false);
     }

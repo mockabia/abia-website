@@ -1,12 +1,12 @@
 import * as React from "react";
-import "../Style/CoupleSignUp.css";
+import "../../Style/CoupleSignUp.css";
 import Box from "@mui/material/Box";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Typography from "@mui/material/Typography";
-import { ReactComponent as PlanningIcon } from "../../icons/Couples/planning.svg";
-import { ReactComponent as Planning2Icon } from "../../icons/Couples/bookVenue.svg";
-import { ReactComponent as FormICon4 } from "../../icons/Couples/formIcon4.svg";
+import { ReactComponent as PlanningIcon } from "../../../icons/Couples/planning.svg";
+import { ReactComponent as Planning2Icon } from "../../../icons/Couples/bookVenue.svg";
+import { ReactComponent as FormICon4 } from "../../../icons/Couples/formIcon4.svg";
 import CloseIcon from "@mui/icons-material/Close";
 
 import {
@@ -22,7 +22,7 @@ import {
 import {
   DatePickerCouple,
 
-} from "../../components/DatepickerPublic";
+} from "../../../components/DatepickerPublic";
 import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useEffect } from "react";
@@ -35,8 +35,8 @@ import {
   CSTextfield,
   CSmenuItemStyle,
   CoupleCommonInput,
-} from "../../components/FormStyle";
-import * as CoupleJS from "../Couple/Couple";
+} from "../../../components/FormStyle";
+import * as CoupleJS from "../Couple";
 
 const steps = ["Let’s Begin", "The Basics", "Final Touches"];
 

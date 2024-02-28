@@ -322,7 +322,7 @@ const NavBar = (props) => {
                     <li className="px-4 cursor-pointer">
                       <span className=" text-[17px] font-bold">
                         {" "}
-                        {userProfile.name}{" "}
+                        {localStorage.getItem("vendorToken") ? userProfile.name : userProfile.bride }{" "}
                       </span>
                       <br></br>
                       <span className="text-[15px]"> {userProfile.email} </span>

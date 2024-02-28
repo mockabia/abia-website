@@ -257,3 +257,16 @@ export const updateBudgetCategory = async (formValues, setErrors,setData,setBudg
     }
   });
 };
+export const coupleEnquiries = async (setData) => {
+  let token       = localStorage.getItem("coupleToken");
+  token           = JSON.parse(token);
+  let userSession = token && token.user ? token.user : null;
+  let userId      = userSession && userSession.id ? userSession.id : null;
+  await servicesPage.coupleEnquiries(userId).then(function (response) {
+    if (response.statuscode == 200) {
+      setData(response.result);
+    } else {
+      setData([]);
+    }
+  });
+};
