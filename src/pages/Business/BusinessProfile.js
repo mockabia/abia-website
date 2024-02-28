@@ -121,6 +121,9 @@ const Profile = ({ preview }) => {
     };
     fetchData();
   }, [vendorID]);
+  console.log("Vendor Preview:", previewListing);
+
+  console.log("Vendor inputs:", vendorinputs);
 
   // viewprofile
   useEffect(() => {
@@ -188,7 +191,7 @@ const Profile = ({ preview }) => {
 
     // Use html directly instead of relying on state update
     setFullText(<div dangerouslySetInnerHTML={createMarkup(html)} />);
-  }, [editorState, convertedContent]);
+  }, []);
 
   function createMarkup(html) {
     return {
@@ -203,7 +206,7 @@ const Profile = ({ preview }) => {
 
     const formValues = {
       vid: vendorID,
-      profile_short_desc: previewListing.profile_short_desc,
+      // profile_short_desc: previewListing.profile_short_desc,
       profile_long_desc: convertedContent, // Include the full text in the formValues
     };
     console.log("Formvalues from full desc:", formValues);
@@ -600,13 +603,29 @@ const Profile = ({ preview }) => {
                       <p className="myprofile-accordion-subheading">
                         {vendorinputs.profile_short_desc}
                       </p>
+                    ) : expanded === "panel2" ? (
+                      <p className="myprofile-accordion-subheading">
+                        Give couples a sense of what is included when they book
+                        [insert business name]. Include information such as
+                        locations, inclusions, starting prices etc.
+                      </p>
+                    ) : saveClicked && quickText ? (
+                      typeof quickText === "string" ? (
+                        <div>{quickText}</div>
+                      ) : (
+                        <p className="myprofile-accordion-subheading">
+                          {quickText}
+                        </p>
+                      )
                     ) : (
                       <p className="myprofile-accordion-subheading">
-                        {expanded === "panel1"
-                          ? "Display a quick summary of your business. Tip includes what your service is and your location."
-                          : previewListing
-                          ? previewListing.profile_short_desc
-                          : "Display a quick summary of your business. Tip includes what your service is and your location."}
+                        {previewListing.profile_short_desc ||
+                          // <div
+                          //   dangerouslySetInnerHTML={{
+                          //     __html: previewListing.profile_long_desc,
+                          //   }}
+                          // />
+                          "Give couples a sense of what is included when they book [insert business name]. Include information such as locations, inclusions, starting prices etc."}
                       </p>
                     )}
                   </div>
@@ -760,12 +779,6 @@ const Profile = ({ preview }) => {
                           "Give couples a sense of what is included when they book [insert business name]. Include information such as locations, inclusions, starting prices etc."}
                       </p>
                     )}
-
-                    {/* {expanded === "panel2" && previewListing && (
-                      <p className="myprofile-accordion-subheading">
-                        {previewListing.profile_long_desc}
-                      </p>
-                    )} */}
                   </div>
                 </AccordionSummary>
                 <AccordionDetails
