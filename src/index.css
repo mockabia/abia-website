@@ -186,4 +186,8 @@ number {
   opacity: 0.2;
   filter: alpha(opacity=20);
 }
+.error p {
+  color: red;
+  font-size: 12px;
+}
 

@@ -12,13 +12,14 @@ import RenderSelectedCategories from "./CoupleCatBudget/RenderSelectedCategories
 
 const CoupleCatBudget = (props) => {
 
-  let navigate                          = useNavigate();
-  const [data, setData]                 = useState([]);
-  const [budget, setBudget]             = useState([]);
-  const [unpaidList, setUnpaidList]     = useState([]);
-  const [addOpen, setAddOpen]           = useState(false);
-  const [showBudget, setShowBudget]     = useState("");
-  const [edit, setEdit]                 = useState(false);
+  let navigate                                  = useNavigate();
+  const [data, setData]                         = useState([]);
+  const [budget, setBudget]                     = useState([]);
+  const [unpaidList, setUnpaidList]             = useState([]);
+  const [addOpen, setAddOpen]                   = useState(false);
+  const [showBudget, setShowBudget]             = useState("");
+  const [edit, setEdit]                         = useState(false);
+  const [showBudgetField, setShowBudgetField]   = useState(false);
 
   useEffect(() => {
     CoupleJS.coupleCategories(setBudget, setData, setUnpaidList);
@@ -27,13 +28,17 @@ const CoupleCatBudget = (props) => {
   const handleAddOpen = () => setAddOpen(true);
 
   //  Block 1
-  const handleSaveBudget = () => {
+  const saveBudget = () => {
     CoupleJS.updateBudget(budget,setShowBudget,setEdit);
   };
-  const handleEditBudget = () => {
-    setEdit(true);
-  };
 
+  const showHideBudgetField = () => {
+    setShowBudgetField(!showBudgetField)
+  }
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setBudget(value)
+  };
   const formatCurrency = (value) => {
     if (value === undefined) {
       return "";
@@ -70,51 +75,42 @@ const CoupleCatBudget = (props) => {
               <div className={`max-speed-section ${showBudget ? "filled" : ""}`} >
                 <div className="maxSpeed-1"></div>
                 <h5 className="maxspend-2">My Budget</h5>
-                {!edit ? (
-                  <div>
-                    {showBudget ? (
-                      <div className="flex gap-[6rem]">
-                        <Typography
-                          sx={{
-                            fontFamily: "Source-sans-pro",
-                            fontSize: "14px",
-                          }}
-                        >
-                          ${formatCurrency(showBudget)}
-                        </Typography>
-                        <button
-                          className="edit-button-block1 font-[800] underline"
-                          onClick={handleEditBudget}
-                        >
-                          <h5>Edit</h5>
-                        </button>
-                      </div>
-                    ) : (
-                      <button
-                        className="maxspend-3"
-                        onClick={handleEditBudget}
-                      >
-                        <h5>Click to add</h5>
-                      </button>
-                    )}
-                  </div>
-                ) : (
+                {showBudgetField ? (
                   <div className="flex gap-[1rem]">
                     <div className="relative">
                       <span className="absolute inset-y-0 left-0 flex items-center pl-2 text-gray-500">
                         $
                       </span>
-                      <input type="number" value={budget} onChange={(e) => setBudget(e.target.value)} className="pl-8 w-[5rem] font-change text-[14px]" />
+                      <input type="number" value={budget} onChange={(e) => handleChange(e)} className="pl-8 " />
                     </div>
                     <div className="flex gap-[1rem]">
-                      <button className="font-[800] underline" onClick={handleSaveBudget} >
+                      <button className="font-[800] underline" onClick={saveBudget} >
                         <h5>Save</h5>
                       </button>
-                      <button className="font-[800] underline" onClick={() => setEdit(false)} >
+                      <button className="font-[800] underline" onClick={() => { setBudget(data.budget);showHideBudgetField()}}>
                         <h5>Cancel</h5>
                       </button>
                     </div>
                   </div>
+                ) : (budget!='' && budget>0) ? (
+                  <div className="flex gap-[6rem]">
+                    <span
+                      sx={{
+                        fontFamily: "Source-sans-pro",
+                        fontSize: "14px",
+                      }}
+                    >
+                      ${formatCurrency(budget)}
+                    </span>
+                    <button
+                      className="edit-button-block1 font-[800] underline"
+                      onClick={showHideBudgetField}
+                    >
+                      <h5>Edit</h5>
+                    </button>
+                  </div>
+                ):(
+                  <button className="maxspend-3" onClick={showHideBudgetField} > <h5>Click to add</h5> </button>
                 )}
               </div>
               <div className="max-speed-section">
