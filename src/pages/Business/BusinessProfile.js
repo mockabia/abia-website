@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../Style/BusinessProfile.css";
 // ./Style/BusinessProfile.css
 // Accordion
@@ -48,7 +48,7 @@ const toolbarOptions = {
   },
 };
 
-const Profile = ({ preview }) => {
+const Profile = () => {
   const [viewProfile, setViewProfile] = useState("");
 
   const [previewListing, setPreviewListing] = useState("");
@@ -111,16 +111,18 @@ const Profile = ({ preview }) => {
   };
 
   //preview listing
-  useEffect(() => {
-    const fetchData = async () => {
-      // console.log("Fetching data...");
-      await BusinessJS.fetchbusiness(setVendorInputs, setpreviewSet);
-      if (vendorID) {
-        await BusinessJS.vendorView(setPreviewListing, vendorID, setpreviewSet);
-      }
-    };
-    fetchData();
+  const fetchData = useCallback(async () => {
+    // console.log("Fetching data...");
+    await BusinessJS.fetchbusiness(setVendorInputs, setpreviewSet);
+    if (vendorID) {
+      await BusinessJS.vendorView(setPreviewListing, vendorID, setpreviewSet);
+    }
   }, [vendorID]);
+
+  // Fetch data only when the component mounts or vendorID changes
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
   console.log("Vendor Preview:", previewListing);
 
   console.log("Vendor inputs:", vendorinputs);
@@ -181,9 +183,11 @@ const Profile = ({ preview }) => {
   ];
 
   // FULL DESC
-  useEffect(() => {
+
+  const updateStateAndAPI = useCallback((editorState) => {
     let html = convertToHTML(editorState.getCurrentContent());
     setConvertedContent(html);
+
     const plainText = editorState.getCurrentContent().getPlainText();
     const words = plainText.trim().split(/\s+/);
     const count = words.length;
@@ -191,6 +195,10 @@ const Profile = ({ preview }) => {
 
     // Use html directly instead of relying on state update
     setFullText(<div dangerouslySetInnerHTML={createMarkup(html)} />);
+  }, []);
+
+  useEffect(() => {
+    updateStateAndAPI(editorState);
   }, []);
 
   function createMarkup(html) {
@@ -544,7 +552,7 @@ const Profile = ({ preview }) => {
         <div className="grid grid-cols-1">
           {/* QUICK DESCRPTION */}
           <div>
-            {previewListing ? (
+            {vendorinputs ? (
               <StyledAccordion
                 expanded={expanded === "panel1"}
                 onChange={(e, isExpanded) => handleChange(isExpanded, "panel1")}
@@ -603,11 +611,10 @@ const Profile = ({ preview }) => {
                       <p className="myprofile-accordion-subheading">
                         {vendorinputs.profile_short_desc}
                       </p>
-                    ) : expanded === "panel2" ? (
+                    ) : expanded === "panel1" ? (
                       <p className="myprofile-accordion-subheading">
-                        Give couples a sense of what is included when they book
-                        [insert business name]. Include information such as
-                        locations, inclusions, starting prices etc.
+                        Display a quick summary of your business. Tip includes
+                        what your service is and your location.
                       </p>
                     ) : saveClicked && quickText ? (
                       typeof quickText === "string" ? (
@@ -695,7 +702,7 @@ const Profile = ({ preview }) => {
           </div>
           {/* Full desc */}
           <div>
-            {previewListing ? (
+            {vendorinputs ? (
               <StyledAccordion
                 expanded={expanded === "panel2"}
                 onChange={(e, isExpanded) => handleChange(isExpanded, "panel2")}
