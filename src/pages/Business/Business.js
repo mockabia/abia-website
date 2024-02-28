@@ -98,7 +98,11 @@ export const fetchRegion = async (selectedStates, setRegions) => {
 };
 
 //VENDOR SIGNUP
-export const vendorBusinessSubmit = async (formValues, setInputsErrors, setSuccess) => {
+export const vendorBusinessSubmit = async (
+  formValues,
+  setInputsErrors,
+  setSuccess
+) => {
   await servicesPage.business_signup(formValues).then(function (response) {
     if (response.statuscode == 200) {
       setSuccess(response.statusmessage);
@@ -115,11 +119,17 @@ export const vendorBusinessSubmit = async (formValues, setInputsErrors, setSucce
 
 // BUSINESS SETTINGS
 
-export const updateBusiness = async (settings, formValues, setInputsErrors) => {
+export const updateBusiness = async (
+  settings,
+  formValues,
+  setInputsErrors,
+  setSettingResponse
+) => {
   await servicesPage
     .update_settings(settings, formValues)
     .then(function (response) {
       if (response.statuscode == 200) {
+        setSettingResponse(response.message);
       } else {
         if (response.errors) {
           setInputsErrors(response.errors);
@@ -266,6 +276,29 @@ export const updateQandAProfile = async (
     .then(function (response) {
       if (response.statuscode == 200) {
         setQuestionRes(response.result);
+      } else {
+        if (response.errors) {
+          setInputsErrors(response.errors);
+          // console.log("Team input error:", response.errors);
+        } else if (response.statusmessage) {
+          setInputsErrors(response.statusmessage);
+        }
+      }
+    });
+};
+
+export const updateInclusions = async (
+  formValues,
+  id,
+  option,
+  setInputsErrors,
+  setIncResponse
+) => {
+  await servicesPage
+    .businessDescriotion1(id, option, formValues)
+    .then(function (response) {
+      if (response.statuscode == 200) {
+        setIncResponse(response.result);
       } else {
         if (response.errors) {
           setInputsErrors(response.errors);

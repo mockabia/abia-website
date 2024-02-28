@@ -839,9 +839,9 @@ export const StyledAccordion = styled(Accordion)(({ theme, expanded }) => ({
   padding: "1rem 0rem 2rem 0 ",
   paddingLeft: "0rem",
   boxShadow: "none !important",
-  border: "none !important",
+  borderTop: expanded ? "1px solid #D6D6D6" : "none",
   margin: "0px !important",
-  borderBottom: expanded ? "1px solid #D6D6D6" : "1px solid transparent",
+  borderBottom: expanded ? "1px solid #D6D6D6" : "none",
   width: {
     xs: "100%",
     md: "83%",
@@ -849,6 +849,7 @@ export const StyledAccordion = styled(Accordion)(({ theme, expanded }) => ({
 
   ...(expanded && {
     border: "1px solid #D6D6D6",
+    borderTop: "1px solid #000",
     borderRadius: "1rem 1rem 0 0",
   }),
   "@media (max-width: 500px)": {

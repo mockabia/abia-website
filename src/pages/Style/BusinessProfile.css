@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope&display=swap');
 
 /* PROFILE WHOLE */
 .headergroup-container {
@@ -71,7 +71,7 @@
     font-weight: 700;
     width: 160px;
     border-radius: 15px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Manrope', sans-serif;
     height: 40px;
     margin: 0 auto;
     border: 2px solid #525252;
@@ -149,7 +149,7 @@
 
 .profile-listing-header {
     font-size: 22px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-weight: 800;
     line-height: 26px;
     margin-top: 0px;
@@ -220,7 +220,7 @@
     font-size: 16px;
     font-weight: 400;
     color: #222222;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Manrope', sans-serif;
     line-height: 20px;
 }
 
@@ -239,7 +239,7 @@
     color: #222222;
     padding-top: 20px;
     /* padding-bottom: 20px; */
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Manrope', sans-serif;
 }
 
 .myprofile-accordion-subheading {
@@ -252,7 +252,7 @@
     padding-right: 45px;
     word-break: break-word;
     white-space: normal;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Manrope', sans-serif;
 }
 
 
@@ -261,7 +261,7 @@
     color: #8e8e8e;
     margin-top: 10px;
     font-size: 14px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-weight: 400;
     line-height: 18px;
     padding-right: 45px;
@@ -968,7 +968,7 @@ input[type="radio"]:checked {
 /*  pacakges */
 .package-panel-container {
     padding: 1px 25px 25px 0px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Manrope', sans-serif;
 }
 
 

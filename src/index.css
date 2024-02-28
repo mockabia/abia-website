@@ -187,3 +187,11 @@ number {
   filter: alpha(opacity=20);
 }
 
+/* Success */
+.success-message {
+  color: #6cc2bc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}

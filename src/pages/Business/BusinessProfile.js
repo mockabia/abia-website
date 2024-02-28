@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import "../Style/BusinessProfile.css";
 // ./Style/BusinessProfile.css
 // Accordion
@@ -57,7 +57,8 @@ const Profile = () => {
   const businessID = vendorinputs.id;
   const isScreenSizeAbove1250px = window.innerWidth > 1250;
   const [expanded, setExpanded] = useState(false);
-
+  // Quick desc
+  const quickRef = useRef();
   const [quickText, setQuickText] = useState("");
   const [saveClicked, setSaveClicked] = useState(false);
   const [wordCount, setWordCount] = useState(0);
@@ -105,6 +106,8 @@ const Profile = () => {
   const [pformValues, setPFormValues] = useState({});
   // Inclusion
   const [selectedInclusions, setSelectedInclusions] = useState({});
+  const [inclusionResult, setInclusionResult] = useState([]);
+  const [incResponse, setIncResponse] = useState([]);
   // expansion handling
   const handleChange = (isExpanded: boolean, panel: string) => {
     setExpanded(isExpanded ? panel : false);
@@ -123,9 +126,9 @@ const Profile = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-  console.log("Vendor Preview:", previewListing);
+  // console.log("Vendor Preview:", previewListing);
 
-  console.log("Vendor inputs:", vendorinputs);
+  // console.log("Vendor inputs:", vendorinputs);
 
   // viewprofile
   useEffect(() => {
@@ -136,14 +139,15 @@ const Profile = () => {
   useEffect(() => {
     BusinessJS.viewVendorQandA(vendorID, setViewQandA);
   }, [vendorID]);
-  console.log("View Qanda:", viewQandA);
+  // console.log("View Qanda:", viewQandA);
 
   useEffect(() => {
     setOwnerImage(viewProfile.teamownerpic || "");
     setDefaultcontent(viewProfile.team_owner_details);
   }, [viewProfile]);
-  console.log("Team owner detail:", viewProfile.team_owner_details);
+  // console.log("Team owner detail:", viewProfile.team_owner_details);
 
+  // quick desc
   const handleQuickTexChange = (e) => {
     const inputText = e.target.value;
     const currentWordCount = inputText.split(/\s+/).filter(Boolean).length;
@@ -152,14 +156,16 @@ const Profile = () => {
       setWordCount(currentWordCount);
     }
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
+    // e.preventDefault();
     setExpanded(false);
     setSaveClicked(true);
     //
+    const inputText = quickRef.current.value;
+
     const formValues = {
       vid: vendorID,
-      profile_short_desc: quickText,
+      profile_short_desc: inputText,
     };
 
     BusinessJS.updateBusinessMyProfile(
@@ -217,7 +223,7 @@ const Profile = () => {
       // profile_short_desc: previewListing.profile_short_desc,
       profile_long_desc: convertedContent, // Include the full text in the formValues
     };
-    console.log("Formvalues from full desc:", formValues);
+    // console.log("Formvalues from full desc:", formValues);
     BusinessJS.updateBusinessMyProfile(
       formValues,
       vendorID,
@@ -225,7 +231,7 @@ const Profile = () => {
       setInputsErrors,
       setVendorInputs
     );
-    console.log("Full Text entered:", convertedContent);
+    // console.log("Full Text entered:", convertedContent);
   };
 
   //   /********Meet the Team ********* */
@@ -516,7 +522,7 @@ const Profile = () => {
 
   const handlePricingSubmit = async () => {
     // console.log("PRicing inputs:", inputsPricing);
-    BusinessJS.updateBusinessMyProfile(
+    BusinessJS.updateQandAProfile(
       inputsPricing,
       vendorID,
       3,
@@ -530,6 +536,22 @@ const Profile = () => {
     setExpanded(false);
 
     console.log("Selected Inclusions:", selectedInclusions);
+    const selectedValuesIds = Object.values(selectedInclusions)
+      .map((inclusion) => Object.keys(inclusion.selectedValues)[0])
+      .filter(Boolean); // Filter out undefined values
+
+    const result = {
+      inclusionsValue: selectedValuesIds.join(","),
+    };
+    setInclusionResult(result);
+    console.log("inclusion:", result);
+    BusinessJS.updateInclusions(
+      inclusionResult,
+      vendorID,
+      8,
+      setInputsErrors,
+      setIncResponse
+    );
   };
 
   return (
@@ -552,501 +574,471 @@ const Profile = () => {
         <div className="grid grid-cols-1">
           {/* QUICK DESCRPTION */}
           <div>
-            {vendorinputs ? (
-              <StyledAccordion
-                expanded={expanded === "panel1"}
-                onChange={(e, isExpanded) => handleChange(isExpanded, "panel1")}
-              >
-                <AccordionSummary
-                  style={{
-                    paddingLeft:
-                      expanded === "panel1"
-                        ? isScreenSizeAbove1250px
-                          ? "2rem"
-                          : "1rem"
-                        : "0",
-                    paddingRight:
-                      expanded === "panel1"
-                        ? isScreenSizeAbove1250px
-                          ? "2rem"
-                          : "1rem"
-                        : "1rem",
-                  }}
-                  id="panel1-header"
-                  aria-controls="panel1-content"
-                  expandIcon={
-                    <Typography
-                      sx={{
-                        color: "black",
-                        fontFamily: "inherit",
-                        fontSize: "14px",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {expanded === "panel1" ? (
-                        <RxTriangleUp size={30} color="#6cc2bc" />
-                      ) : (
-                        "Edit"
-                      )}
-                    </Typography>
-                  }
-                  sx={{
-                    "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-                      transform: "rotate(0deg)",
+            <StyledAccordion
+              expanded={expanded === "panel1"}
+              onChange={(e, isExpanded) => handleChange(isExpanded, "panel1")}
+            >
+              <AccordionSummary
+                style={{
+                  paddingLeft:
+                    expanded === "panel1"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                  paddingRight:
+                    expanded === "panel1"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "1rem",
+                }}
+                id="panel1-header"
+                aria-controls="panel1-content"
+                expandIcon={
+                  <Typography
+                    sx={{
                       color: "black",
-                    },
-                  }}
-                >
-                  <div>
-                    <h4
-                      style={{
-                        fontWeight: expanded === "panel1" ? "bold" : "normal",
-                      }}
-                    >
-                      Quick Description
-                    </h4>
-                    {saveClicked &&
-                    vendorinputs.profile_short_desc &&
-                    !expanded === "panel1" ? (
-                      <p className="myprofile-accordion-subheading">
-                        {vendorinputs.profile_short_desc}
-                      </p>
-                    ) : expanded === "panel1" ? (
-                      <p className="myprofile-accordion-subheading">
-                        Display a quick summary of your business. Tip includes
-                        what your service is and your location.
-                      </p>
-                    ) : saveClicked && quickText ? (
-                      typeof quickText === "string" ? (
-                        <div>{quickText}</div>
-                      ) : (
-                        <p className="myprofile-accordion-subheading">
-                          {quickText}
-                        </p>
-                      )
+                      fontFamily: "inherit",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {expanded === "panel1" ? (
+                      <RxTriangleUp size={30} color="#6cc2bc" />
+                    ) : (
+                      "Edit"
+                    )}
+                  </Typography>
+                }
+                sx={{
+                  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+                    transform: "rotate(0deg)",
+                    color: "black",
+                  },
+                }}
+              >
+                <div>
+                  <h4
+                    style={{
+                      fontWeight: expanded === "panel1" ? "bold" : "normal",
+                    }}
+                  >
+                    Quick Description
+                  </h4>
+                  {saveClicked &&
+                  vendorinputs.profile_short_desc &&
+                  !expanded === "panel1" ? (
+                    <p className="myprofile-accordion-subheading">
+                      {vendorinputs.profile_short_desc}
+                    </p>
+                  ) : expanded === "panel1" ? (
+                    <p className="myprofile-accordion-subheading">
+                      Display a quick summary of your business. Tip includes
+                      what your service is and your location.
+                    </p>
+                  ) : saveClicked && quickText ? (
+                    typeof quickText === "string" ? (
+                      <div>{quickText}</div>
                     ) : (
                       <p className="myprofile-accordion-subheading">
-                        {previewListing.profile_short_desc ||
-                          // <div
-                          //   dangerouslySetInnerHTML={{
-                          //     __html: previewListing.profile_long_desc,
-                          //   }}
-                          // />
-                          "Give couples a sense of what is included when they book [insert business name]. Include information such as locations, inclusions, starting prices etc."}
+                        {quickText}
                       </p>
-                    )}
-                  </div>
-                </AccordionSummary>
-                <AccordionDetails
-                  style={{
-                    paddingLeft:
-                      expanded === "panel1"
-                        ? isScreenSizeAbove1250px
-                          ? "2rem"
-                          : "1rem"
-                        : "0",
-                  }}
-                >
-                  <div>
-                    <div className="myprofile-accordion-item-header"></div>
-                    <div className="mt-[0px]">
-                      <div className="profile-editor-position">
-                        <textarea
-                          name="profile_short_desc"
-                          id="text-area"
-                          // value={quickText}
-                          value={quickText || previewListing.profile_short_desc}
-                          onChange={handleQuickTexChange}
-                          className="myprofile-textarea-style"
-                        />
+                    )
+                  ) : (
+                    <p className="myprofile-accordion-subheading">
+                      {previewListing.profile_short_desc ||
+                        // <div
+                        //   dangerouslySetInnerHTML={{
+                        //     __html: previewListing.profile_long_desc,
+                        //   }}
+                        // />
+                        "Give couples a sense of what is included when they book [insert business name]. Include information such as locations, inclusions, starting prices etc."}
+                    </p>
+                  )}
+                </div>
+              </AccordionSummary>
+              <AccordionDetails
+                style={{
+                  paddingLeft:
+                    expanded === "panel1"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+              >
+                <div>
+                  <div className="myprofile-accordion-item-header"></div>
+                  <div className="mt-[0px]">
+                    <div className="profile-editor-position">
+                      <textarea
+                        ref={quickRef}
+                        name="profile_short_desc"
+                        id="text-area"
+                        // value={quickText}
+                        value={quickText || previewListing.profile_short_desc}
+                        onChange={handleQuickTexChange}
+                        className="myprofile-textarea-style"
+                      />
 
-                        <span className="text-[12px] mt-[5px]">
-                          {wordCount >= 100 ? (
-                            <p className="text-red-500 text-[12px] mt-2">
-                              Limit exceeded (100 words maximum)
-                            </p>
-                          ) : (
-                            `${wordCount}/100`
-                          )}
-                        </span>
-                        <div className="myprofile-button-group">
-                          <button
-                            className="myprofile-cancel-button"
-                            onClick={handleCancel}
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            className="myprofile-save-button"
-                            onClick={handleSubmit}
-                          >
-                            Save
-                          </button>
-                        </div>
+                      <span className="text-[12px] mt-[5px]">
+                        {wordCount >= 100 ? (
+                          <p className="text-red-500 text-[12px] mt-2">
+                            Limit exceeded (100 words maximum)
+                          </p>
+                        ) : (
+                          `${wordCount}/100`
+                        )}
+                      </span>
+                      <div className="myprofile-button-group">
+                        <button
+                          className="myprofile-cancel-button"
+                          onClick={handleCancel}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="myprofile-save-button"
+                          onClick={handleSubmit}
+                        >
+                          Save
+                        </button>
                       </div>
                     </div>
                   </div>
-                </AccordionDetails>
-              </StyledAccordion>
-            ) : (
-              skeletonLines.map((line, index) => (
-                <div key={index}>
-                  <Skeleton
-                    variant={line.variant}
-                    sx={{ width: line.width, height: line.height }}
-                  />
-                  <br />
                 </div>
-              ))
-            )}
+              </AccordionDetails>
+            </StyledAccordion>
           </div>
           {/* Full desc */}
           <div>
-            {vendorinputs ? (
-              <StyledAccordion
-                expanded={expanded === "panel2"}
-                onChange={(e, isExpanded) => handleChange(isExpanded, "panel2")}
-              >
-                <AccordionSummary
-                  style={{
-                    paddingLeft:
-                      expanded === "panel2"
-                        ? isScreenSizeAbove1250px
-                          ? "2rem"
-                          : "1rem"
-                        : "0",
-                  }}
-                  id="panel2-header"
-                  aria-controls="panel2-content"
-                  expandIcon={
-                    <Typography
-                      sx={{
-                        color: "black",
-                        fontFamily: "inherit",
-                        fontSize: "14px",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {expanded === "panel2" ? (
-                        <RxTriangleUp size={30} color="#6cc2bc" />
-                      ) : (
-                        "Edit"
-                      )}
-                    </Typography>
-                  }
-                  sx={{
-                    "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-                      transform: "rotate(0deg)",
+            <StyledAccordion
+              expanded={expanded === "panel2"}
+              onChange={(e, isExpanded) => handleChange(isExpanded, "panel2")}
+            >
+              <AccordionSummary
+                style={{
+                  paddingLeft:
+                    expanded === "panel2"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+                id="panel2-header"
+                aria-controls="panel2-content"
+                expandIcon={
+                  <Typography
+                    sx={{
                       color: "black",
-                    },
-                  }}
-                >
-                  <div>
-                    {/* <h4 className="myprofile-heading-expand">Full Description</h4> */}
-                    <h4
-                      style={{
-                        fontWeight: expanded === "panel2" ? "bold" : "normal",
-                      }}
-                    >
-                      Full Description
-                    </h4>
-                    {saveClicked &&
-                    vendorinputs.profile_long_desc &&
-                    !expanded === "panel2" ? (
-                      <p className="myprofile-accordion-subheading">
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: vendorinputs.profile_long_desc,
-                          }}
-                        />
-                      </p>
-                    ) : expanded === "panel2" ? (
-                      <p className="myprofile-accordion-subheading">
-                        Give couples a sense of what is included when they book
-                        [insert business name]. Include information such as
-                        locations, inclusions, starting prices etc.
-                      </p>
-                    ) : saveClicked && fullText ? (
-                      typeof fullText === "string" ? (
-                        <div dangerouslySetInnerHTML={{ __html: fullText }} />
-                      ) : (
-                        <p className="myprofile-accordion-subheading">
-                          {fullText}
-                        </p>
-                      )
+                      fontFamily: "inherit",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {expanded === "panel2" ? (
+                      <RxTriangleUp size={30} color="#6cc2bc" />
+                    ) : (
+                      "Edit"
+                    )}
+                  </Typography>
+                }
+                sx={{
+                  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+                    transform: "rotate(0deg)",
+                    color: "black",
+                  },
+                }}
+              >
+                <div>
+                  {/* <h4 className="myprofile-heading-expand">Full Description</h4> */}
+                  <h4
+                    style={{
+                      fontWeight: expanded === "panel2" ? "bold" : "normal",
+                    }}
+                  >
+                    Full Description
+                  </h4>
+                  {saveClicked &&
+                  vendorinputs.profile_long_desc &&
+                  !expanded === "panel2" ? (
+                    <p className="myprofile-accordion-subheading">
+                      <div
+                        className="myprofile-accordion-subheading"
+                        dangerouslySetInnerHTML={{
+                          __html: vendorinputs.profile_long_desc,
+                        }}
+                      />
+                    </p>
+                  ) : expanded === "panel2" ? (
+                    <p className="myprofile-accordion-subheading">
+                      Give couples a sense of what is included when they book
+                      [insert business name]. Include information such as
+                      locations, inclusions, starting prices etc.
+                    </p>
+                  ) : saveClicked && fullText ? (
+                    typeof fullText === "string" ? (
+                      <div
+                        className="myprofile-accordion-subheading"
+                        dangerouslySetInnerHTML={{ __html: fullText }}
+                      />
                     ) : (
                       <p className="myprofile-accordion-subheading">
-                        {(
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: previewListing.profile_long_desc,
-                            }}
-                          />
-                        ) ||
-                          "Give couples a sense of what is included when they book [insert business name]. Include information such as locations, inclusions, starting prices etc."}
+                        {fullText}
                       </p>
-                    )}
-                  </div>
-                </AccordionSummary>
-                <AccordionDetails
-                  style={{
-                    paddingLeft:
-                      expanded === "panel2"
-                        ? isScreenSizeAbove1250px
-                          ? "2rem"
-                          : "1rem"
-                        : "0",
-                  }}
-                >
-                  <div>
-                    <div className="myprofile-accordion-item-header"></div>
-                    {/* Editor */}
-                    <div>
-                      <div className="bprofile-editor-container">
-                        <Editor
-                          editorState={editorState}
-                          onEditorStateChange={setEditorState}
-                          toolbar={toolbarOptions}
+                    )
+                  ) : (
+                    <p className="myprofile-accordion-subheading">
+                      {(
+                        <div
+                          className="myprofile-accordion-subheading"
+                          dangerouslySetInnerHTML={{
+                            __html: previewListing.profile_long_desc,
+                          }}
                         />
-                      </div>
-                      <div
-                        className="hidden"
-                        dangerouslySetInnerHTML={createMarkup(convertedContent)}
+                      ) ||
+                        "Give couples a sense of what is included when they book [insert business name]. Include information such as locations, inclusions, starting prices etc."}
+                    </p>
+                  )}
+                </div>
+              </AccordionSummary>
+              <AccordionDetails
+                style={{
+                  paddingLeft:
+                    expanded === "panel2"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+              >
+                <div>
+                  <div className="myprofile-accordion-item-header"></div>
+                  {/* Editor */}
+                  <div>
+                    <div className="bprofile-editor-container">
+                      <Editor
+                        editorState={editorState}
+                        onEditorStateChange={setEditorState}
+                        toolbar={toolbarOptions}
                       />
-                      <span className="text-[12px] mt-[5px]">
-                        {fulldesccount >= 500 ? (
-                          <p className="text-red-500 text-[12px] mt-2">
-                            Limit exceeded (500 words maximum)
-                          </p>
-                        ) : (
-                          `${fulldesccount}/500`
-                        )}
-                      </span>
                     </div>
-                    <div className="mt-[0px]">
-                      <div className="profile-editor-position">
-                        <div className="myprofile-button-group">
-                          <button
-                            className="myprofile-cancel-button"
-                            onClick={handleCancel}
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            className="myprofile-save-button"
-                            onClick={handleFullSubmit}
-                          >
-                            Save
-                          </button>
-                        </div>
+                    <div
+                      className="hidden"
+                      dangerouslySetInnerHTML={createMarkup(convertedContent)}
+                    />
+                    <span className="text-[12px] mt-[5px]">
+                      {fulldesccount >= 500 ? (
+                        <p className="text-red-500 text-[12px] mt-2">
+                          Limit exceeded (500 words maximum)
+                        </p>
+                      ) : (
+                        `${fulldesccount}/500`
+                      )}
+                    </span>
+                  </div>
+                  <div className="mt-[0px]">
+                    <div className="profile-editor-position">
+                      <div className="myprofile-button-group">
+                        <button
+                          className="myprofile-cancel-button"
+                          onClick={handleCancel}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="myprofile-save-button"
+                          onClick={handleFullSubmit}
+                        >
+                          Save
+                        </button>
                       </div>
                     </div>
                   </div>
-                </AccordionDetails>
-              </StyledAccordion>
-            ) : (
-              skeletonLines.map((line, index) => (
-                <div key={index}>
-                  <Skeleton
-                    variant={line.variant}
-                    sx={{ width: line.width, height: line.height }}
-                  />
-                  <br />
                 </div>
-              ))
-            )}
+              </AccordionDetails>
+            </StyledAccordion>
           </div>
           {/* TEAM AND OWNER DETAILS*/}
           <div>
-            {viewProfile ? (
-              <StyledAccordion
-                expanded={expanded === "panel3"}
-                onChange={(e, isExpanded) => handleChange(isExpanded, "panel3")}
-              >
-                <AccordionSummary
-                  style={{
-                    paddingLeft:
-                      expanded === "panel3"
-                        ? isScreenSizeAbove1250px
-                          ? "2rem"
-                          : "1rem"
-                        : "0",
-                  }}
-                  id="panel3-header"
-                  aria-controls="panel3-content"
-                  expandIcon={
-                    <Typography
-                      sx={{
-                        color: "black",
-                        fontFamily: "inherit",
-                        fontSize: "14px",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {expanded === "panel3" ? (
-                        <RxTriangleUp size={30} color="#6cc2bc" />
-                      ) : (
-                        "Edit"
-                      )}
-                    </Typography>
-                  }
-                  sx={{
-                    "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-                      transform: "rotate(0deg)",
+            <StyledAccordion
+              expanded={expanded === "panel3"}
+              onChange={(e, isExpanded) => handleChange(isExpanded, "panel3")}
+            >
+              <AccordionSummary
+                style={{
+                  paddingLeft:
+                    expanded === "panel3"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+                id="panel3-header"
+                aria-controls="panel3-content"
+                expandIcon={
+                  <Typography
+                    sx={{
                       color: "black",
-                    },
-                  }}
-                >
-                  <div>
-                    <h4
-                      style={{
-                        fontWeight: expanded === "panel3" ? "bold" : "normal",
-                      }}
-                    >
-                      Meet the Owner/Team
-                    </h4>
+                      fontFamily: "inherit",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {expanded === "panel3" ? (
+                      <RxTriangleUp size={30} color="#6cc2bc" />
+                    ) : (
+                      "Edit"
+                    )}
+                  </Typography>
+                }
+                sx={{
+                  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+                    transform: "rotate(0deg)",
+                    color: "black",
+                  },
+                }}
+              >
+                <div>
+                  <h4
+                    style={{
+                      fontWeight: expanded === "panel3" ? "bold" : "normal",
+                    }}
+                  >
+                    Meet the Owner/Team
+                  </h4>
 
-                    {saveClicked && defaultContent && !expanded === "panel3" ? (
-                      <>
-                        <p className="myprofile-accordion-subheading">
-                          {ownerContent}
-                        </p>
-                        <p className="myprofile-accordion-subheading">
+                  {saveClicked && defaultContent && !expanded === "panel3" ? (
+                    <>
+                      <p className="myprofile-accordion-subheading">
+                        {ownerContent}
+                      </p>
+                      <p className="myprofile-accordion-subheading">
+                        Type:{" "}
+                        {ownerRadioOption === 1 || viewProfile.team_type === 1
+                          ? "The Owner"
+                          : ownerRadioOption === 2 ||
+                            viewProfile.team_type === 2
+                          ? "The Team"
+                          : "Other Type"}
+                      </p>
+                    </>
+                  ) : (
+                    <p className="myprofile-accordion-subheading">
+                      {expanded === "panel3" ? (
+                        "Add a personal touch by letting couples get to know you, add a photo, and let us know if you are a team or owner."
+                      ) : (
+                        <>
                           Type:{" "}
-                          {ownerRadioOption === 1 || viewProfile.team_type === 1
+                          {ownerRadioOption === 1 ||
+                          (viewProfile && viewProfile.team_type === 1)
                             ? "The Owner"
                             : ownerRadioOption === 2 ||
-                              viewProfile.team_type === 2
+                              (viewProfile && viewProfile.team_type === 2)
                             ? "The Team"
                             : "Other Type"}
-                        </p>
-                      </>
-                    ) : (
-                      <p className="myprofile-accordion-subheading">
-                        {expanded === "panel3" ? (
-                          "Add a personal touch by letting couples get to know you, add a photo, and let us know if you are a team or owner."
-                        ) : (
-                          <>
-                            Type:{" "}
-                            {ownerRadioOption === 1 ||
-                            (viewProfile && viewProfile.team_type === 1)
-                              ? "The Owner"
-                              : ownerRadioOption === 2 ||
-                                (viewProfile && viewProfile.team_type === 2)
-                              ? "The Team"
-                              : "Other Type"}
-                            <br />
-                            <br />
-                            {defaultContent}
-                          </>
-                        )}
-                      </p>
-                    )}
+                          <br />
+                          <br />
+                          {defaultContent}
+                        </>
+                      )}
+                    </p>
+                  )}
+                </div>
+              </AccordionSummary>
+              <AccordionDetails
+                style={{
+                  paddingLeft:
+                    expanded === "panel3"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+              >
+                <div>
+                  <div className="myprofile-accordion-item-header">
+                    {/* <span className="myprofile-edit-button">Edit</span> */}
                   </div>
-                </AccordionSummary>
-                <AccordionDetails
-                  style={{
-                    paddingLeft:
-                      expanded === "panel3"
-                        ? isScreenSizeAbove1250px
-                          ? "2rem"
-                          : "1rem"
-                        : "0",
-                  }}
-                >
-                  <div>
-                    <div className="myprofile-accordion-item-header">
-                      {/* <span className="myprofile-edit-button">Edit</span> */}
-                    </div>
-                    <div className="mt-[0px]">
-                      <div className="profile-editor-position">
-                        <textarea
-                          name="owner-desc"
-                          id="text-area"
-                          value={ownerText || viewProfile.team_owner_details}
-                          onChange={handleOwnerTextChange}
-                          className="myprofile-textarea-style"
-                        />
+                  <div className="mt-[0px]">
+                    <div className="profile-editor-position">
+                      <textarea
+                        name="owner-desc"
+                        id="text-area"
+                        value={ownerText || viewProfile.team_owner_details}
+                        onChange={handleOwnerTextChange}
+                        className="myprofile-textarea-style"
+                      />
 
-                        <span className="text-[12px] mt-[5px]">
-                          {wordCount >= 100 ? (
-                            <p className="text-red-500 text-[12px] mt-2">
-                              Limit exceeded (100 words maximum)
-                            </p>
-                          ) : (
-                            `${wordCount}/100`
-                          )}
-                        </span>
-                        <div className="myprofile-radio-group">
-                          <div className="owner-radio-inputs mt-[15px] space-y-3 ">
-                            <h4 className="text-[#222222] font-semibold">
-                              Who are we getting to know?
-                            </h4>
+                      <span className="text-[12px] mt-[5px]">
+                        {wordCount >= 100 ? (
+                          <p className="text-red-500 text-[12px] mt-2">
+                            Limit exceeded (100 words maximum)
+                          </p>
+                        ) : (
+                          `${wordCount}/100`
+                        )}
+                      </span>
+                      <div className="myprofile-radio-group">
+                        <div className="owner-radio-inputs mt-[15px] space-y-3 ">
+                          <h4 className="text-[#222222] font-semibold">
+                            Who are we getting to know?
+                          </h4>
 
-                            <div className="flex items-center ">
-                              <label className="space-x-2 flex items-center">
-                                <input
-                                  type="radio"
-                                  value="The Owner"
-                                  checked={ownerRadioOption === 1}
-                                  onChange={() => handleOwnerRadioChange(1)}
-                                />
-                                <span className="font-semibold">The Owner</span>
-                              </label>
-                            </div>
-
-                            <div>
-                              <label className="space-x-2 flex items-center">
-                                <input
-                                  type="radio"
-                                  value="The Team"
-                                  checked={ownerRadioOption === 2}
-                                  onChange={() => handleOwnerRadioChange(2)}
-                                />
-                                <span className="font-semibold">The Team</span>
-                              </label>
-                            </div>
+                          <div className="flex items-center ">
+                            <label className="space-x-2 flex items-center">
+                              <input
+                                type="radio"
+                                value="The Owner"
+                                checked={ownerRadioOption === 1}
+                                onChange={() => handleOwnerRadioChange(1)}
+                              />
+                              <span className="font-semibold">The Owner</span>
+                            </label>
                           </div>
-                          <div className="mb-[2rem]">
-                            <Cropper
-                              onImageCrop={handleImageCrop}
-                              onChangeCrop={handleImageChange}
-                              defaultImage={ownerImage}
-                            />
+
+                          <div>
+                            <label className="space-x-2 flex items-center">
+                              <input
+                                type="radio"
+                                value="The Team"
+                                checked={ownerRadioOption === 2}
+                                onChange={() => handleOwnerRadioChange(2)}
+                              />
+                              <span className="font-semibold">The Team</span>
+                            </label>
                           </div>
                         </div>
-
-                        {/* Submit and CAncel buttons */}
-                        <div className="myprofile-button-group-2 ">
-                          <button
-                            className="myprofile-cancel-button"
-                            onClick={handleCancel}
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            className="myprofile-save-button"
-                            onClick={handleOwnerSubmit}
-                          >
-                            Save
-                          </button>
+                        <div className="mb-[2rem]">
+                          <Cropper
+                            onImageCrop={handleImageCrop}
+                            onChangeCrop={handleImageChange}
+                            defaultImage={ownerImage}
+                          />
                         </div>
+                      </div>
+
+                      {/* Submit and CAncel buttons */}
+                      <div className="myprofile-button-group-2 ">
+                        <button
+                          className="myprofile-cancel-button"
+                          onClick={handleCancel}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="myprofile-save-button"
+                          onClick={handleOwnerSubmit}
+                        >
+                          Save
+                        </button>
                       </div>
                     </div>
                   </div>
-                </AccordionDetails>
-              </StyledAccordion>
-            ) : (
-              skeletonLines.map((line, index) => (
-                <div key={index}>
-                  <Skeleton
-                    variant={line.variant}
-                    sx={{ width: line.width, height: line.height }}
-                  />
-                  <br />
                 </div>
-              ))
-            )}
+              </AccordionDetails>
+            </StyledAccordion>
           </div>
 
           {/* PHOTO GALLERY */}
@@ -1106,7 +1098,10 @@ const Profile = () => {
                 >
                   <div>
                     <h4 className="profile-listing-header">Pricing</h4>
-                    {saveClicked && !expanded ? (
+                    <p className="myprofile-accordion-subheading">
+                      Display Price: {viewProfile.Category.CategorySettings}
+                    </p>
+                    {/* {saveClicked && !expanded ? (
                       <>
                         {Array.isArray(pricingFormValue) &&
                         pricingFormValue.length > 0 ? (
@@ -1141,7 +1136,7 @@ const Profile = () => {
                         Add a Starting Price. It is not mandatory to display
                         your prices.
                       </p>
-                    )}
+                    )} */}
                   </div>
                 </AccordionSummary>
 
@@ -1180,9 +1175,6 @@ const Profile = () => {
                                           {categorySettings.head_title}
                                         </h5>
                                         <div className="flex gap-[1rem]">
-                                          {/* <h5 className="font-semibold flex flex-col">
-                                        {categorySettings.head_title}
-                                      </h5> */}
                                           <input
                                             type="text"
                                             className="pricing-input-style"
@@ -1253,7 +1245,7 @@ const Profile = () => {
                                             propsValue={true}
                                             onChange={(e) =>
                                               handlePricingInputChange(
-                                                "type_val",
+                                                "subtype_val",
                                                 e.target.value,
                                                 {
                                                   catKey,
@@ -1590,15 +1582,15 @@ const Profile = () => {
             {viewProfile
               ? viewProfile.inclusions && (
                   <StyledAccordion
-                    expanded={expanded === "venueAmenities"}
+                    expanded={expanded === "panel5"}
                     onChange={(e, isExpanded) =>
-                      handleChange(isExpanded, "venueAmenities")
+                      handleChange(isExpanded, "panel5")
                     }
                   >
                     <AccordionSummary
                       style={{
                         paddingLeft:
-                          expanded === "venueAmenities"
+                          expanded === "panel5"
                             ? isScreenSizeAbove1250px
                               ? "2rem"
                               : "1rem"
@@ -1615,7 +1607,7 @@ const Profile = () => {
                             fontWeight: "600",
                           }}
                         >
-                          {expanded === "venueAmenities" ? (
+                          {expanded === "panel5" ? (
                             <RxTriangleUp size={30} color="#6cc2bc" />
                           ) : (
                             "Edit"
@@ -1661,7 +1653,7 @@ const Profile = () => {
                     <AccordionDetails
                       style={{
                         paddingLeft:
-                          expanded === "venueAmenities"
+                          expanded === "panel5"
                             ? isScreenSizeAbove1250px
                               ? "2rem"
                               : "1rem"
@@ -1761,20 +1753,21 @@ const Profile = () => {
           </div>
           {/* QandA */}
           <StyledAccordion
-            expanded={expanded === "panel5"}
-            onChange={(e, isExpanded) => handleChange(isExpanded, "panel5")}
+            expanded={expanded === "panel6"}
+            onChange={(e, isExpanded) => handleChange(isExpanded, "panel6")}
           >
             <AccordionSummary
               style={{
+                borderTop: "none",
                 paddingLeft:
-                  expanded === "panel5"
+                  expanded === "panel6"
                     ? isScreenSizeAbove1250px
                       ? "2rem"
                       : "1rem"
                     : "0",
               }}
-              id="panel5-header"
-              aria-controls="panel5-content"
+              id="panel6-header"
+              aria-controls="panel6-content"
               expandIcon={
                 <Typography
                   sx={{
@@ -1784,7 +1777,7 @@ const Profile = () => {
                     fontWeight: "600",
                   }}
                 >
-                  {expanded === "panel5" ? (
+                  {expanded === "panel6" ? (
                     <RxTriangleUp size={30} color="#6cc2bc" />
                   ) : (
                     "Edit"
@@ -1816,7 +1809,7 @@ const Profile = () => {
             <AccordionDetails
               style={{
                 paddingLeft:
-                  expanded === "panel5"
+                  expanded === "panel6"
                     ? isScreenSizeAbove1250px
                       ? "2rem"
                       : "1rem"
@@ -1897,155 +1890,143 @@ const Profile = () => {
           </StyledAccordion>
           {/* PACKAGES */}
           <div>
-            {viewProfile ? (
-              <StyledAccordion
-                expanded={expanded === "panel6"}
-                onChange={(e, isExpanded) => handleChange(isExpanded, "panel6")}
-              >
-                <AccordionSummary
-                  style={{
-                    paddingLeft:
-                      expanded === "panel6"
-                        ? isScreenSizeAbove1250px
-                          ? "2rem"
-                          : "1rem"
-                        : "0",
-                  }}
-                  id="panel6-header"
-                  aria-controls="panel6-content"
-                  expandIcon={
-                    <Typography
-                      sx={{
-                        color: "black",
-                        fontFamily: "inherit",
-                        fontSize: "14px",
-                        fontWeight: "600",
-                      }}
-                    >
-                      {expanded === "panel6" ? (
-                        <RxTriangleUp size={30} color="#6cc2bc" />
-                      ) : (
-                        "Edit"
-                      )}
-                    </Typography>
-                  }
-                  sx={{
-                    "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-                      transform: "rotate(0deg)",
+            <StyledAccordion
+              expanded={expanded === "panel7"}
+              onChange={(e, isExpanded) => handleChange(isExpanded, "panel7")}
+            >
+              <AccordionSummary
+                style={{
+                  paddingLeft:
+                    expanded === "panel7"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+                id="panel7-header"
+                aria-controls="panel7-content"
+                expandIcon={
+                  <Typography
+                    sx={{
                       color: "black",
-                    },
-                  }}
-                >
-                  <div>
-                    <h4 className="profile-listing-header">Packages</h4>
+                      fontFamily: "inherit",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {expanded === "panel7" ? (
+                      <RxTriangleUp size={30} color="#6cc2bc" />
+                    ) : (
+                      "Edit"
+                    )}
+                  </Typography>
+                }
+                sx={{
+                  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+                    transform: "rotate(0deg)",
+                    color: "black",
+                  },
+                }}
+              >
+                <div>
+                  <h4 className="profile-listing-header">Packages</h4>
 
-                    <div className="myprofile-accordion-subheading-pricing">
-                      <>
-                        {packagesText || (
-                          <>
-                            {viewProfile.packageFile
-                              ? "Package Updated: Yes"
-                              : "Package Updated: No"}
-                          </>
-                        )}
-                        {/* {" "}
+                  <div className="myprofile-accordion-subheading-pricing">
+                    <>
+                      {packagesText || (
+                        <>
+                          {viewProfile.packageFile
+                            ? "Package Updated: Yes"
+                            : "Package Updated: No"}
+                        </>
+                      )}
+                      {/* {" "}
                         {viewProfile.package_file ||
                         (uploadedFileName && saveClicked)
                           ? "Package Updated: Yes"
                           : "Package Updated: No"} */}
-                      </>
+                    </>
 
-                      <br />
-                      <br />
-                    </div>
+                    <br />
+                    <br />
                   </div>
-                </AccordionSummary>
-                <AccordionDetails
-                  style={{
-                    paddingLeft:
-                      expanded === "panel6"
-                        ? isScreenSizeAbove1250px
-                          ? "2rem"
-                          : "1rem"
-                        : "0",
-                  }}
-                >
-                  <div>
-                    <div className="myprofile-accordion-item-header">
-                      {/* <span className="myprofile-edit-button">Edit</span> */}
-                    </div>
-                    <div className="package-panel-container">
-                      <div>
-                        <span className="text-[14px] mt-[10px]">
-                          Add a PDF file, maximum 5MB. You are responsible to
-                          ensure the information in your PDF is up to date.
-                        </span>
-                      </div>
-                      <br />
-
-                      <div className="flex justify-start items-center gap-[1rem]">
-                        {viewProfile.package_file ||
-                          (uploadedFileName && (
-                            <>
-                              <label
-                                htmlFor="upload-files"
-                                className="text-[14px] cursor-pointer"
-                              >
-                                File Uploaded: {uploadedFileName}
-                              </label>
-                              <NavLink to={viewFile.packageFile} title="View">
-                                <HiOutlineViewfinderCircle size={24} />
-                              </NavLink>
-                              <button title="Delete" onClick={deletePackage}>
-                                <MdDelete size={24} />
-                              </button>
-                            </>
-                          ))}
-                      </div>
-
-                      <div className="myprofile-button-group relative">
-                        <div className="">
-                          <div className="packages-upload-button ">
-                            <input
-                              type="file"
-                              id="upload-files"
-                              className="hidden"
-                              onChange={handleFileChange}
-                            />
-                            <label
-                              htmlFor="upload-files"
-                              className="text-[14px] cursor-pointer"
-                            >
-                              Upload{" "}
-                            </label>
-                            <span className="package-upload-icons">
-                              <BiUpload />
-                            </span>
-                          </div>
-                        </div>
-                        <button
-                          className="myprofile-save-button"
-                          onClick={handlePackageSubmit}
-                        >
-                          Save
-                        </button>
-                      </div>
-                      <div id="displayText"></div>
-                    </div>
-                  </div>
-                </AccordionDetails>
-              </StyledAccordion>
-            ) : (
-              skeletonLines.map((line, index) => (
-                <div key={index}>
-                  <Skeleton
-                    variant={line.variant}
-                    sx={{ width: line.width, height: line.height }}
-                  />
-                  <br />
                 </div>
-              ))
-            )}
+              </AccordionSummary>
+              <AccordionDetails
+                style={{
+                  paddingLeft:
+                    expanded === "panel7"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+              >
+                <div>
+                  <div className="myprofile-accordion-item-header">
+                    {/* <span className="myprofile-edit-button">Edit</span> */}
+                  </div>
+                  <div className="package-panel-container">
+                    <div>
+                      <span className="text-[14px] mt-[10px]">
+                        Add a PDF file, maximum 5MB. You are responsible to
+                        ensure the information in your PDF is up to date.
+                      </span>
+                    </div>
+                    <br />
+
+                    <div className="flex justify-start items-center gap-[1rem]">
+                      {viewProfile.package_file && (
+                        <>
+                          <label
+                            htmlFor="upload-files"
+                            className="text-[14px] cursor-pointer"
+                          >
+                            File Uploaded:{" "}
+                            {uploadedFileName || viewProfile.package_file}
+                          </label>
+                          <NavLink to={viewFile.packageFile} title="View">
+                            <HiOutlineViewfinderCircle size={24} />
+                          </NavLink>
+                          <button title="Delete" onClick={deletePackage}>
+                            <MdDelete size={24} />
+                          </button>
+                        </>
+                      )}
+                    </div>
+
+                    <div className="myprofile-button-group relative">
+                      <div className="">
+                        <div className="packages-upload-button ">
+                          <input
+                            type="file"
+                            id="upload-files"
+                            className="hidden"
+                            onChange={handleFileChange}
+                          />
+                          <label
+                            htmlFor="upload-files"
+                            className="text-[14px] cursor-pointer"
+                          >
+                            Upload{" "}
+                          </label>
+                          <span className="package-upload-icons">
+                            <BiUpload />
+                          </span>
+                        </div>
+                      </div>
+                      <button
+                        className="myprofile-save-button"
+                        onClick={handlePackageSubmit}
+                      >
+                        Save
+                      </button>
+                    </div>
+                    <div id="displayText"></div>
+                  </div>
+                </div>
+              </AccordionDetails>
+            </StyledAccordion>
           </div>
         </div>
       </div>
