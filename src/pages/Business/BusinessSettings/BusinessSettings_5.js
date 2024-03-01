@@ -31,6 +31,8 @@ const MyLocation = ({ vendorDetails }) => {
   const [selectedRegions, setSelectedRegions] = useState([]);
 
   const [inputsErrors, setInputsErrors] = useState({});
+  const [settingResponse, setSettingResponse] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const regionChange = (selectedOption) => {
     setInitialRegion([selectedOption]);
@@ -77,17 +79,27 @@ const MyLocation = ({ vendorDetails }) => {
   // handleSubmit
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
+    setLoading(true);
     const formattedTargetRegion = selectedRegions.map((region) => region.value);
 
     const formValues = {
-      primaryLocation: initialRegion.length > 0 ? initialRegion[0].value : vendorDetails.primaryLocation,
+      primaryLocation:
+        initialRegion.length > 0
+          ? initialRegion[0].value
+          : vendorDetails.primaryLocation,
       target_region: formattedTargetRegion,
       vid: vendorDetails.vid,
     };
     console.log("Form data:", formValues);
-
-    BusinessJS.updateBusiness(5, formValues, setInputsErrors);
+    setTimeout(() => {
+      BusinessJS.updateBusiness(
+        5,
+        formValues,
+        setInputsErrors,
+        setSettingResponse
+      );
+      setLoading(false); // Set loading to false when the response is received
+    }, 1000);
   };
 
   const getFieldError = (fieldName) => {
@@ -195,12 +207,14 @@ const MyLocation = ({ vendorDetails }) => {
             </div>
             <br />
           </div>
-
+          {/* Submit */}
           <div
-            className="basicinfo-submit-button relative space-y-3"
+            className={`basicinfo-submit-button ${
+              settingResponse ? "focused" : ""
+            }`}
             onClick={handleSubmit}
           >
-            <button>Save</button>
+            <button>{loading ? "Loading..." : "Save"}</button>
           </div>
         </form>
       </div>

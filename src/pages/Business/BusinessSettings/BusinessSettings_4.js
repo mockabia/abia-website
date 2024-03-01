@@ -27,7 +27,8 @@ const Category = ({ vendorDetails }) => {
 
   const [additionaCatSelect, setAdditionaCatSelect] = useState([]);
   const [inputsErrors, setInputsErrors] = useState({});
-
+  const [settingResponse, setSettingResponse] = useState("");
+  const [loading, setLoading] = useState(false);
   // useforms
   const { control, handleSubmit } = useForm({
     mode: "onChange",
@@ -39,6 +40,7 @@ const Category = ({ vendorDetails }) => {
 
   const onSubmit = (data) => {
     setFormValues(data);
+    setLoading(true);
     const transformedOtherCategory = additionaCatSelect.map(
       (category) => category.value
     );
@@ -47,7 +49,16 @@ const Category = ({ vendorDetails }) => {
       other_category: transformedOtherCategory,
     };
     formValues.vid = vendorDetails.vid;
-    BusinessJS.updateBusiness(4, formValues, setInputsErrors);
+    setTimeout(() => {
+      BusinessJS.updateBusiness(
+        4,
+        formValues,
+        setInputsErrors,
+        setSettingResponse
+      );
+      setLoading(false); // Set loading to false when the response is received
+    }, 1000);
+
     console.log("Category:", formValues);
   };
 
@@ -169,8 +180,16 @@ const Category = ({ vendorDetails }) => {
             </div>
             <br />
           </div>
-          <div className="basicinfo-submit-button relative">
+          {/* <div className="basicinfo-submit-button relative">
             <button>Save</button>
+          </div> */}
+          <div
+            className={`basicinfo-submit-button ${
+              settingResponse ? "focused" : ""
+            }`}
+            onClick={handleSubmit}
+          >
+            <button>{loading ? "Loading..." : "Save"}</button>
           </div>
         </form>
       </div>

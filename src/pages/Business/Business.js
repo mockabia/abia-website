@@ -98,7 +98,11 @@ export const fetchRegion = async (selectedStates, setRegions) => {
 };
 
 //VENDOR SIGNUP
-export const vendorBusinessSubmit = async (formValues, setInputsErrors, setSuccess) => {
+export const vendorBusinessSubmit = async (
+  formValues,
+  setInputsErrors,
+  setSuccess
+) => {
   await servicesPage.business_signup(formValues).then(function (response) {
     if (response.statuscode == 200) {
       setSuccess(response.statusmessage);
@@ -115,11 +119,17 @@ export const vendorBusinessSubmit = async (formValues, setInputsErrors, setSucce
 
 // BUSINESS SETTINGS
 
-export const updateBusiness = async (settings, formValues, setInputsErrors) => {
+export const updateBusiness = async (
+  settings,
+  formValues,
+  setInputsErrors,
+  setSettingResponse
+) => {
   await servicesPage
     .update_settings(settings, formValues)
     .then(function (response) {
       if (response.statuscode == 200) {
+        setSettingResponse(response.message);
       } else {
         if (response.errors) {
           setInputsErrors(response.errors);
@@ -277,8 +287,42 @@ export const updateQandAProfile = async (
     });
 };
 
+//view Q and A Record
+export const viewqandaRecord = async (setViewQandA, id) => {
+  await servicesPage.viewQandA(id).then(function (response) {
+    if (response.statuscode === 200) {
+      setViewQandA(response.result);
+      console.log("REsponse from Q and A:", response.result);
+    }
+  });
+};
+
+export const updateInclusions = async (
+  formValues,
+  id,
+  option,
+  setInputsErrors,
+  setIncResponse
+) => {
+  await servicesPage
+    .businessDescriotion1(id, option, formValues)
+    .then(function (response) {
+      if (response.statuscode == 200) {
+        setIncResponse(response.result);
+      } else {
+        if (response.errors) {
+          setInputsErrors(response.errors);
+          // console.log("Team input error:", response.errors);
+        } else if (response.statusmessage) {
+          setInputsErrors(response.statusmessage);
+        }
+      }
+    });
+};
+
+// view Q and A Record
 export const viewVendorQandA = async (vendorID, setViewQandA) => {
-  await servicesPage.view_QandA(vendorID).then(function (response) {
+  await servicesPage.viewQandA(vendorID).then(function (response) {
     if (response.statuscode == 200) {
       setViewQandA(response.result);
     }

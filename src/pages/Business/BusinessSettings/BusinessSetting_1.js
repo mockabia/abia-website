@@ -29,7 +29,8 @@ const BasicInfo = ({ vendorDetails }) => {
   const [image, setImage] = useState(null);
   const VendorID = vendorDetails.vid;
   const [openSnackbar, setOpenSnackbar] = useState(false);
-
+  const [settingResponse, setSettingResponse] = useState("");
+  const [loading, setLoading] = useState(false);
   const openSuccessSnackbar = () => {
     setOpenSnackbar(true);
   };
@@ -69,6 +70,7 @@ const BasicInfo = ({ vendorDetails }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const updatedName = watch("name");
     const updatedWebsite = watch("website");
     const formValues = {
@@ -77,12 +79,18 @@ const BasicInfo = ({ vendorDetails }) => {
       photo: inputs.photo,
       vid: VendorID,
     };
-    // console.log("Form data:",formValues )
-    Business.updateBusiness(1, formValues, setInputsErrors);
-    // openSuccessSnackbar();
+    setTimeout(() => {
+      Business.updateBusiness(
+        1,
+        formValues,
+        setInputsErrors,
+        setSettingResponse
+      );
+      setLoading(false); // Set loading to false when the response is received
+    }, 1000);
   };
 
-  console.log("first");
+  console.log("settingResponse:", settingResponse);
   return (
     <div className="basic-info-container">
       <div className="basic-sub-header">
@@ -141,9 +149,15 @@ const BasicInfo = ({ vendorDetails }) => {
               <br />
               <span>Maximum file size 1MB</span>
             </div>
-            <div className="basicinfo-submit-button" onClick={handleSubmit}>
-              <button>Save</button>
+            <div
+              className={`basicinfo-submit-button ${
+                settingResponse ? "focused" : ""
+              }`}
+              onClick={handleSubmit}
+            >
+              <button>{loading ? "Loading..." : "Save"}</button>
             </div>
+            {/* <div className="success-message">{settingResponse}</div> */}
           </div>
         </form>
         {/* SNACKBAR */}

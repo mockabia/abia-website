@@ -29,6 +29,8 @@ const ContactDetails = ({ vendorDetails }) => {
   const [selectedState, setSelectedState] = useState(vendorDetails.state);
   const [stateOptions, setStateOptions] = useState([]);
   const [inputsErrors, setInputsErrors] = useState({});
+  const [settingResponse, setSettingResponse] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [formValues, setFormValues] = useState({
     contact_person: "",
@@ -117,6 +119,7 @@ const ContactDetails = ({ vendorDetails }) => {
 
   const onSubmit = (data) => {
     const formValues = {};
+    setLoading(true);
     for (const field of fieldConfig) {
       formValues[field.name] = data[field.name] || formValues[field.name];
     }
@@ -132,7 +135,15 @@ const ContactDetails = ({ vendorDetails }) => {
 
     const formValuesJSON = JSON.stringify(formValues);
     console.log("Console:", formValuesJSON);
-    BusinessJS.updateBusiness(2, formValuesJSON, setInputsErrors);
+    setTimeout(() => {
+      BusinessJS.updateBusiness(
+        2,
+        formValuesJSON,
+        setInputsErrors,
+        setSettingResponse
+      );
+      setLoading(false); // Set loading to false when the response is received
+    }, 1000);
   };
 
   useEffect(() => {
@@ -268,13 +279,13 @@ const ContactDetails = ({ vendorDetails }) => {
             </div>
           ))}
           {/*  */}
-          <div className="relative space-y-3">
-            <button
-              className="basicinfo-submit-button"
-              //   disabled={!isValid || isSubmitted}
-            >
-              Save
-            </button>
+          <div
+            className={`basicinfo-submit-button ${
+              settingResponse ? "focused" : ""
+            }`}
+            onClick={handleSubmit}
+          >
+            <button>{loading ? "Loading..." : "Save"}</button>
           </div>
         </form>
       </div>

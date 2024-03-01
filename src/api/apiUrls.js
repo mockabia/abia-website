@@ -67,29 +67,29 @@ export const BUSINESS_API = {
   MANAGE_WEDDING: `${baseUrl}WebManageWedding`,
   BUSINESSDESC: `${baseUrl}ManageprofileSettings`, // update
   BUSINESSDESCVIEW: `${baseUrl}Webview_VendorDescription`,
-  VIEWPROFILESETTINGS: `https://abia.abia-test.com/web/Webview_ProfileSettings`,
-  VIEW_GALLERY: `https://abia.abia-test.com/web/WebView_vendorPhotoGallery`, // to web  - Edit
-  DELETE_GALLERY: `https://abia.abia-test.com/web/Webdelete_vendorPhotoGallery`, //delete
-  DELETE_VIDEO: `https://abia.abia-test.com/web/Webdelete_vendorVideoGallery`,
-  VIEW_VIDEO: `https://abia.abia-test.com/web/WebView_vendorVideoGallery`,
-  DELETE_PACKAGE: `https://abia.abia-test.com/web/WebdeletePackage`,
-  DELETE_QA: `https://abia.abia-test.com/web/Webdelete_QuestionAnsRecord`,
-  VIEW_QA: `https://abia.abia-test.com/web/WebView_QuestionAnsRecord`,
+  VIEWPROFILESETTINGS: `${baseUrl}Webview_ProfileSettings`,
+  VIEW_GALLERY: `${baseUrl}WebView_vendorPhotoGallery`, // to web  - Edit
+  DELETE_GALLERY: `${baseUrl}Webdelete_vendorPhotoGallery`, //delete
+  DELETE_VIDEO: `${baseUrl}Webdelete_vendorVideoGallery`,
+  VIEW_VIDEO: `${baseUrl}WebView_vendorVideoGallery`,
+  DELETE_PACKAGE: `${baseUrl}WebdeletePackage`,
+  DELETE_QA: `${baseUrl}Webdelete_QuestionAnsRecord`,
+  VIEW_QA: `${baseUrl}WebView_QuestionAnsRecord`,
   BUSINESSSERVICES_DROPDOWN: `${baseUrl}WebBusinessServicesDropdown`,
 };
 
 export const COUPLE_API = {
-  SIGNUP          : `${baseUrl}WebManageWedding/0/3/1`,
-  LOGIN           : `${baseUrl}WebWeddingLogin`,
-  FORGOT          : `${baseUrl}WebWeddingForgot`,
-  LOGOUT          : `${baseUrl}WebWeddingLogout`,
-  REFRESH         : `${baseUrl}couple-refresh`,
-  FETCH           : `${baseUrl}WebWeddingBridal`,
-  CONTACT         : `${baseUrl}WebManageWedding`,
-  WEDDING_DETAILS : `${baseUrl}WebManageWedding`,
-  SETTINGS        : `${baseUrl}WebManageWedding`,
-  UPDATE_BUDGET   : `${baseUrl}ManageSelcategories`,
-  CATEGORIES      : `${baseUrl}view_Selcategories`,
-  ADD_CATEGORIES  : `${baseUrl}ManageSelcategories`,
-  ENQUIRIES       : `${baseUrl}ManageEnquiries`,
+  SIGNUP: `${baseUrl}WebManageWedding/0/3/1`,
+  LOGIN: `${baseUrl}WebWeddingLogin`,
+  FORGOT: `${baseUrl}WebWeddingForgot`,
+  LOGOUT: `${baseUrl}WebWeddingLogout`,
+  REFRESH: `${baseUrl}couple-refresh`,
+  FETCH: `${baseUrl}WebWeddingBridal`,
+  CONTACT: `${baseUrl}WebManageWedding`,
+  WEDDING_DETAILS: `${baseUrl}WebManageWedding`,
+  SETTINGS: `${baseUrl}WebManageWedding`,
+  UPDATE_BUDGET: `${baseUrl}ManageSelcategories`,
+  CATEGORIES: `${baseUrl}view_Selcategories`,
+  ADD_CATEGORIES: `${baseUrl}ManageSelcategories`,
+  ENQUIRIES: `${baseUrl}ManageEnquiries`,
 };

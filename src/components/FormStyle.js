@@ -138,7 +138,7 @@ export const RedditTextField = styled(TextField)(({ theme }) => ({
 
   "& .MuiFormLabel-root": {
     fontSize: "14px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
   },
   "& .MuiFilledInput-root": {
     overflow: "hidden",
@@ -185,7 +185,7 @@ export const SelectTextField = styled(TextField)(({ theme }) => ({
 
   "& .MuiFormLabel-root": {
     fontSize: "14px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
   },
   "& .MuiFilledInput-root": {
     overflow: "hidden",
@@ -229,7 +229,7 @@ export const DateTextField = styled(TextField)(({ theme }) => ({
 
   "& .MuiFormLabel-root": {
     fontSize: "14px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
   },
   "& .MuiFilledInput-root": {
     overflow: "hidden",
@@ -267,7 +267,7 @@ export const HeartIconTextField = styled(TextField)(({ theme }) => ({
   },
   "& .MuiFormLabel-root": {
     fontSize: "14px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
   },
   "& .MuiFilledInput-root": {
     overflow: "hidden",
@@ -307,7 +307,7 @@ export const MultiTLinedTextField = styled(TextField)(({ theme }) => ({
   },
   "& .MuiFormLabel-root": {
     fontSize: "14px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
   },
 }));
 
@@ -322,7 +322,7 @@ export const ColorSubmitButton = styled(Button)(({ theme }) => ({
 }));
 
 export const ColorSortButton = styled(Button)(({ theme }) => ({
-  fontFamily: "Raleway",
+  fontFamily: "Manrope",
   textTransform: "initial",
   color: "#515151", // Set text color to black
   backgroundColor: "white", // Set background color to white
@@ -413,7 +413,7 @@ export const StepperStyle = styled(Stepper)(({ theme }) => ({
     color: "#6cc2bc",
   },
   "& .MuiStepLabel-label": {
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
   },
   [`@media (max-width: 550px)`]: {
     "& .MuiStepLabel-root": {
@@ -483,14 +483,14 @@ export const LeftAlignedTypography = styled(Typography)({
   fontSize: "14px",
   textAlign: "left",
   paddingLeft: "1rem",
-  fontFamily: "Raleway",
+  fontFamily: "Manrope",
   textTransform: "initial",
   fontWeight: "600",
 });
 
 export const CheckBoxTypo = styled(Typography)({
   fontSize: "16px",
-  fontFamily: "Raleway",
+  fontFamily: "Manrope",
   color: "#0e0e0e",
   fontWeight: "600",
   whiteSpace: "normal",
@@ -505,24 +505,24 @@ export const CheckBoxStyle = styled(Checkbox)({
     color: "#6cc2bc",
   },
   "& .MuiFormControlLabel-label": {
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
   },
 });
 
 export const CSTextfield = styled(TextField)({
   "& .MuiTextField-root": {
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     height: "45px",
     width: "100%",
     maxWidth: "100%",
     boxShadow: "none",
     borderRadius: "10px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     // border: "1px solid #c3bebe",
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     width: "100%",
     maxWidth: "100%",
     fontSize: "14px",
@@ -542,7 +542,7 @@ export const CSTextfield = styled(TextField)({
     },
   },
   "& .MuiFormLabel-root ": {
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
   },
 });
 
@@ -606,7 +606,7 @@ export const VLTextField = styled(TextField)(({ theme }) => ({
     background: "#fafafa",
     cursor: "pointer",
     fontSize: "14px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     outline: "none",
   },
 
@@ -622,7 +622,7 @@ export const VendorLoginButton = styled(Button)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   margin: "auto",
-  fontFamily: "Raleway",
+  fontFamily: "Manrope",
   textTransform: "initial",
   color: "#fff", // Set text color to black
   backgroundColor: "#6cc2bc", // Set background color to white
@@ -661,7 +661,7 @@ export const NavMenuStyle = styled(Button)(({ theme }) => ({
 
 export const CSmenuItemStyle = {
   fontWeight: "500",
-  fontFamily: "Raleway",
+  fontFamily: "Manrope",
   fontSize: "14px",
 
   // Add other styles as needed
@@ -839,9 +839,9 @@ export const StyledAccordion = styled(Accordion)(({ theme, expanded }) => ({
   padding: "1rem 0rem 2rem 0 ",
   paddingLeft: "0rem",
   boxShadow: "none !important",
-  border: "none !important",
+  borderTop: expanded ? "1px solid #D6D6D6" : "none",
   margin: "0px !important",
-  borderBottom: expanded ? "1px solid #D6D6D6" : "1px solid transparent",
+  borderBottom: expanded ? "1px solid #D6D6D6" : "none",
   width: {
     xs: "100%",
     md: "83%",
@@ -849,6 +849,7 @@ export const StyledAccordion = styled(Accordion)(({ theme, expanded }) => ({
 
   ...(expanded && {
     border: "1px solid #D6D6D6",
+    borderTop: "1px solid #000",
     borderRadius: "1rem 1rem 0 0",
   }),
   "@media (max-width: 500px)": {
@@ -862,7 +863,7 @@ export const CoupleInput = styled(TextField)(({ theme }) => ({
     marginTop: theme.spacing(1),
   },
   "& .MuiTextField-root": {
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     height: "45px",
     width: "100%",
     maxWidth: "22rem",
@@ -872,7 +873,7 @@ export const CoupleInput = styled(TextField)(({ theme }) => ({
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     fontSize: "14px",
     width: "100%",
     "& > fieldset": { borderColor: "#c3bebe" },
@@ -906,7 +907,7 @@ export const TextAreaInput = styled(TextField)(({ theme }) => ({
     marginTop: theme.spacing(1),
   },
   "& .MuiTextField-root": {
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     height: "45px",
     width: "100%",
     maxWidth: "22rem",
@@ -916,7 +917,7 @@ export const TextAreaInput = styled(TextField)(({ theme }) => ({
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     fontSize: "14px",
     width: "100%",
     "& > fieldset": { borderColor: "#c3bebe" },
@@ -941,18 +942,18 @@ export const TextAreaInput = styled(TextField)(({ theme }) => ({
 
 export const CoupleCommonInput = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     height: "45px",
     width: "100%",
     maxWidth: "22rem",
     boxShadow: "none",
     borderRadius: "10px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     // border: "1px solid #c3bebe",
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     fontSize: "14px",
     "& > fieldset": { borderColor: "#c3bebe" },
     "&:hover fieldset": {
@@ -974,7 +975,7 @@ export const CoupleCommonInput = styled(TextField)(({ theme }) => ({
 // search field
 export const SearchInputStyle = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     boxShadow: "none",
     border: "1px solid #B7B7B7",
   },
@@ -983,7 +984,7 @@ export const SearchInputStyle = styled(TextField)(({ theme }) => ({
     maxWidth: "100%",
     height: "2.7rem",
     borderRadius: "1.5rem",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     "& > fieldset": { borderColor: "#B7B7B7" },
     "&:hover fieldset": {
       borderColor: "#B7B7B7", // Set the same color as normal state to prevent the black border during hovering
@@ -1017,7 +1018,7 @@ export const MuiBoxStyles = {
 export const CoupleSelectStyle = {
   control: (provided, state) => ({
     ...provided,
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     fontSize: "14px",
     border: "1px solid #c3bebe",
     boxShadow: "none",
@@ -1089,7 +1090,7 @@ export const CoupleSelectStyle = {
 
 // BUDGET
 export const CoupleAddButton = styled(Button)(({ theme }) => ({
-  fontFamily: "Raleway",
+  fontFamily: "Manrope",
   textTransform: "initial",
   color: "white", // Set text color to black
   backgroundColor: "#6cc2bc", // Set background color to white
@@ -1114,7 +1115,7 @@ export const CoupleAddButton = styled(Button)(({ theme }) => ({
 }));
 
 export const BudgetEditButton = styled(Button)(({ theme }) => ({
-  fontFamily: "Raleway",
+  fontFamily: "Manrope",
   textTransform: "initial",
   color: "white", // Set text color to black
   backgroundColor: "#000", // Set background color to white
@@ -1138,7 +1139,7 @@ export const BudgetEditButton = styled(Button)(({ theme }) => ({
   },
 }));
 export const CancelCoupleButton = styled(Button)(({ theme }) => ({
-  fontFamily: "Raleway",
+  fontFamily: "Manrope",
   textTransform: "initial",
   color: "#6cc2bc", // Set text color to black
   backgroundColor: "white", // Set background color to white
@@ -1153,7 +1154,7 @@ export const CancelCoupleButton = styled(Button)(({ theme }) => ({
 }));
 
 export const BlackLargeButton = styled(Button)(({ theme }) => ({
-  fontFamily: "Raleway",
+  fontFamily: "Manrope",
   textTransform: "initial",
   color: "#fff", // Set text color to black
   backgroundColor: "#6cc2bc", // Set background color to white
@@ -1173,7 +1174,7 @@ export const BlackLargeButton = styled(Button)(({ theme }) => ({
 }));
 
 export const BlackSmallButton = styled(Button)(({ theme }) => ({
-  fontFamily: "Raleway",
+  fontFamily: "Manrope",
   textTransform: "initial",
   color: "#fff", // Set text color to black
   backgroundColor: "#6cc2bc", // Set background color to white
@@ -1194,12 +1195,12 @@ export const BlackSmallButton = styled(Button)(({ theme }) => ({
 
 export const BudgetInput = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     width: "100%",
     maxWidth: "22rem",
     boxShadow: "none",
     borderRadius: "10px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     // border: "1px solid #c3bebe",
   },
   "& .MuiOutlinedInput-root": {
@@ -1227,18 +1228,18 @@ export const BudgetInput = styled(TextField)(({ theme }) => ({
 // RATING AND REVIEW IPUT
 export const RatingInput = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     height: "45px",
     width: "16rem",
     maxWidth: "100%",
     boxShadow: "none",
     borderRadius: "10px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     // border: "1px solid #c3bebe",
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     fontSize: "14px",
     width: "16rem",
     maxWidth: "100%",
@@ -1261,20 +1262,20 @@ export const RatingInput = styled(TextField)(({ theme }) => ({
 
 export const IndiRatingInput = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     height: "45px",
     // width: "16rem",
     width: "100%",
     maxWidth: "100%",
     boxShadow: "none",
     borderRadius: "10px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     textAlign: "center",
     // border: "1px solid #c3bebe",
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     fontSize: "14px",
     width: "7rem",
     maxWidth: "100%",
@@ -1420,17 +1421,17 @@ export const reactSelectScroll = {
 // PAYMENTS INPUT
 export const PaymentInput = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     height: "45px",
     width: "16rem",
     maxWidth: "100%",
     boxShadow: "none",
     borderRadius: "10px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
     backgroundColor: "#f5f5f5",
     fontSize: "14px",
     width: "100%",
@@ -1462,7 +1463,7 @@ export const CheckBoxStyle2 = styled(Checkbox)({
     backgroundColor: "#515151", // Set background color to black when checked
   },
   "& .MuiFormControlLabel-label": {
-    fontFamily: "Raleway",
+    fontFamily: "Manrope",
   },
 });
 

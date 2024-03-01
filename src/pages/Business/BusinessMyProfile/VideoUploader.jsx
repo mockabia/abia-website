@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Modal, Button, Input, TextField, Textarea } from "@mui/material";
-import { ReactComponent as CloseButton } from "../icons/x-solid.svg";
-import * as BusinessJs from "../pages/Business/Business";
-
+import { ReactComponent as CloseButton } from "../../../icons/x-solid.svg";
+import * as BusinessJs from "../Business";
 import "./VideoUploader.css";
 
 import { AiOutlineClose } from "react-icons/ai";
@@ -101,97 +100,104 @@ const VideoUploader = ({ vendorID }) => {
     };
   };
 
- const onDrop = (index, event) => {
-   event.preventDefault();
-   setIsDragging(false);
+  const onDrop = (index, event) => {
+    event.preventDefault();
+    setIsDragging(false);
 
-   if (dragIndex !== -1) {
-     const fromIndex = dragIndex;
-     const toIndex = index;
+    if (dragIndex !== -1) {
+      const fromIndex = dragIndex;
+      const toIndex = index;
 
-     // Rearrange the videos array
-     const movedVideo = videoURLs[fromIndex];
-     const updatedVideos = [...videoURLs];
-     updatedVideos.splice(fromIndex, 1);
-     updatedVideos.splice(toIndex, 0, movedVideo);
+      // Rearrange the videos array
+      const movedVideo = videoURLs[fromIndex];
+      const updatedVideos = [...videoURLs];
+      updatedVideos.splice(fromIndex, 1);
+      updatedVideos.splice(toIndex, 0, movedVideo);
 
-     setVideoURLs(updatedVideos);
-     console.log("Updated videoURLs:", updatedVideos);
+      setVideoURLs(updatedVideos);
+      console.log("Updated videoURLs:", updatedVideos);
 
-     // Map properties and update API
-     const reorderedVideos = updatedVideos.map((video, idx) => {
-       return {
-         ...video,
-         position: idx + 1, // assuming position starts from 1
-       };
-     });
-     console.log("reorderedVideos:", reorderedVideos);
+      // Map properties and update API
+      const reorderedVideos = updatedVideos.map((video, idx) => {
+        return {
+          ...video,
+          position: idx + 1, // assuming position starts from 1
+        };
+      });
+      console.log("reorderedVideos:", reorderedVideos);
 
-     // Uncomment and modify this part according to your API
-     // BusinessJS.updateBusinessMyProfile(
-     //   reorderedVideos,
-     //   vendorID,
-     //   5,
-     //   setInputsErrors,
-     //   setVendorInputs
-     // );
-   }
+      // Uncomment and modify this part according to your API
+      // BusinessJS.updateBusinessMyProfile(
+      //   reorderedVideos,
+      //   vendorID,
+      //   5,
+      //   setInputsErrors,
+      //   setVendorInputs
+      // );
+    }
 
-   setDragIndex(-1);
- };
+    setDragIndex(-1);
+  };
 
   const onDragEnd = () => {
     setIsDragging(false);
     setDragIndex(-1);
   };
   return (
-    <div>
-      <div className="video-gallery-container gap-4 relative">
-        <label htmlFor="video-upload-select">
-          <div className="video-upload-button">
-            <input
-              id="video-upload-select"
-              onClick={handleOpen}
-              className="hidden"
-              ref={inputRef}
-            />
-            <span className="video-upload-text">add video</span>
-          </div>
-        </label>
-        {/* Display */}
+    <div className="px-[1rem] md:px-[2rem] ">
+      <div className="flex flex-col gap-[3rem]">
+        <div className="video-gallery-container gap-4 relative">
+          <label htmlFor="video-upload-select">
+            <div className="video-upload-button">
+              <input
+                id="video-upload-select"
+                onClick={handleOpen}
+                className="hidden"
+                ref={inputRef}
+              />
+              <span className="video-upload-text">add video</span>
+            </div>
+          </label>
+          {/* Display */}
 
-        {videoURLs.map((element, index) => (
-          <div
-            key={element.vgid}
-            id={element.vgid}
-            // className="video-upload-preview"
-            className={`video-upload-preview ${
-              isDragging && index === dragIndex ? "dragging" : ""
-            }`}
-            draggable="true"
-            onDragStart={(event) => startDrag(index, event)}
-            onDragOver={(event) => onDragOver(event)}
-            onDrop={(event) => onDrop(index, event)}
-            onDragEnd={onDragEnd}
-          >
+          {videoURLs.map((element, index) => (
             <div
-              dangerouslySetInnerHTML={{
-                __html: element.video.replace(
-                  "<iframe ",
-                  '<iframe width="100%" height="100%" '
-                ),
-              }}
-            />
-            <div className="photopreview-desc">
-              <div className="photopreview-image-order">
-                <CloseButton
-                  className="myprofile-videos-close"
-                  onClick={() => handleDeleteVideo(element.vid, element.vgid)}
-                />
+              key={element.vgid}
+              id={element.vgid}
+              // className="video-upload-preview"
+              className={`video-upload-preview ${
+                isDragging && index === dragIndex ? "dragging" : ""
+              }`}
+              draggable="true"
+              onDragStart={(event) => startDrag(index, event)}
+              onDragOver={(event) => onDragOver(event)}
+              onDrop={(event) => onDrop(index, event)}
+              onDragEnd={onDragEnd}
+            >
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: element.video.replace(
+                    "<iframe ",
+                    '<iframe width="100%" height="100%" '
+                  ),
+                }}
+              />
+              <div className="photopreview-desc">
+                <div className="photopreview-image-order">
+                  <CloseButton
+                    className="myprofile-videos-close"
+                    onClick={() => handleDeleteVideo(element.vid, element.vgid)}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        {/* Submit and CAncel buttons */}
+        <div className="myprofile-button-group-2 ">
+          <button className="myprofile-cancel-button">Cancel</button>
+          <button className="myprofile-save-button">Save</button>
+        </div>
       </div>
 
       <Modal

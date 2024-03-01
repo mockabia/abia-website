@@ -5,7 +5,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as BusinessJS from "../Business";
 
-
 const schema = yup.object().shape({
   email: yup
     .string()
@@ -15,11 +14,11 @@ const schema = yup.object().shape({
     .string()
     .required("No password provided.")
     .min(6, "Password ishould be 6 chars minimum.")
-    .oneOf([yup.ref('confirm_password')], 'Passwords must match'),
+    .oneOf([yup.ref("confirm_password")], "Passwords must match"),
   confirm_password: yup
     .string()
     .required("Confirm Password is required.")
-    .oneOf([yup.ref('password')], 'Passwords must match'),
+    .oneOf([yup.ref("password")], "Passwords must match"),
 });
 
 const UsernamePassword = ({ vendorDetails }) => {
@@ -29,39 +28,53 @@ const UsernamePassword = ({ vendorDetails }) => {
     confirm_password: "",
     vid: vendorDetails.vid,
   });
- const [inputsErrors, setInputsErrors] = useState({});
+  const [inputsErrors, setInputsErrors] = useState({});
+  const [settingResponse, setSettingResponse] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
-     handleSubmit,
+    handleSubmit,
     formState: { errors, isDirty, isValid, isSubmitting, submitCount },
   } = useForm({
     mode: "onChange", //isValid works on mode=onChange
     resolver: yupResolver(schema),
-    defaultValues:{
+    defaultValues: {
       email: vendorDetails.email,
-    }
+    },
   });
 
   useEffect(() => {
-    window.scrollTo(0, 0); 
+    window.scrollTo(0, 0);
   }, []);
 
-  const onSubmit =  (data) => {
-  alert(JSON.stringify(data));
-  setFormValues()
+  const onSubmit = (data) => {
+    // alert(JSON.stringify(data));
+    setFormValues();
+    setLoading(true);
     const formValues = {
       email: data.email || vendorDetails.email,
       password: data.password,
       confirm_password: data.confirm_password,
     };
-    formValues.vid = vendorDetails.vid
-  BusinessJS.updateBusiness(3, formValues , setInputsErrors);
-  console.log("Form Data:", formValues)
+    formValues.vid = vendorDetails.vid;
+    setTimeout(() => {
+      BusinessJS.updateBusiness(
+        3,
+        formValues,
+        setInputsErrors,
+        setSettingResponse
+      );
+      setLoading(false); // Set loading to false when the response is received
+    }, 1000);
+
+    console.log("Form Data:", formValues);
   };
 
- const getFieldError = (fieldName) => {
-    return inputsErrors && inputsErrors[fieldName] ? inputsErrors[fieldName][0] : null;
+  const getFieldError = (fieldName) => {
+    return inputsErrors && inputsErrors[fieldName]
+      ? inputsErrors[fieldName][0]
+      : null;
   };
 
   return (
@@ -129,9 +142,17 @@ const UsernamePassword = ({ vendorDetails }) => {
               )}
             </div>
           </div>
-          <div className="usernamepassword-submit-button">
-            <button>Update</button>
+          <div
+            className={`basicinfo-submit-button ${
+              settingResponse ? "focused" : ""
+            }`}
+            onClick={handleSubmit}
+          >
+            <button>{loading ? "Loading..." : "Update"}</button>
           </div>
+          {/* <div className="usernamepassword-submit-button">
+            <button>Update</button>
+          </div> */}
         </form>
       </div>
     </div>

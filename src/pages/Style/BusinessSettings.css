@@ -229,13 +229,19 @@
     width: 250px;
     height: 50px;
     border-radius: 30px;
-    background-color: #6cc2bc;
+    background-color: #d7d7d7;
     color: white;
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
 }
+.basicinfo-submit-button:hover {
+    background-color: #6cc2bc;
+}
 
+.basicinfo-submit-button.focused {
+    background-color: #6cc2bc;
+}
 
 
 @media(min-width: 769px) {
