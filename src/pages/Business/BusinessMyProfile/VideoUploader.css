@@ -32,7 +32,7 @@
     border: 2px dashed #8e8e8e;
     border-radius: 12px;
     object-fit: cover;
-    background: url(../icons/video.svg) center no-repeat;
+    background: url(../../../icons/video.svg) center no-repeat;
     background-size: 50px;
     cursor: pointer;
     position: relative;
@@ -44,9 +44,15 @@
     height: 125px;
     border: 1px solid #fff;
     border-radius: 12px;
-    object-fit: cover;
+    object-fit: contain;
     overflow: hidden;
     margin-top: 10px;
+    /* background: url(../../../icons/abia-play.svg) center center no-repeat; */
+    /* background-size: 50%; */
+}
+
+.video-play-button {
+    
 }
 .video-upload-text {
     color: #8e8e8e;

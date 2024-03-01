@@ -31,9 +31,7 @@ const Card = ({ card, locationOptions, servicesOptions }) => {
         {/* Rating info */}
         <ThemeProvider theme={RatingComponent}>
           <div className="rating-ifno-div space-x-2">
-            <h5 className="font-semibold text-[16px] font-source-pro">
-              {card.rating}
-            </h5>
+            <h5 className="font-semibold text-[16px] ">{card.rating}</h5>
             <Rating
               name="half-rating-read"
               size="medium"
@@ -41,9 +39,7 @@ const Card = ({ card, locationOptions, servicesOptions }) => {
               value={card.rating}
               readOnly
             />
-            <span className="text-[#8e8e8e] font-source-pro ">
-              ({formattedVotes})
-            </span>
+            <span className="text-[#8e8e8e]  ">({formattedVotes})</span>
           </div>
         </ThemeProvider>
 

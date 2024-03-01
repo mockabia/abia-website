@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 // import { createObjectURL } from "file-saver";
-import "../../../../components/ImageUploader.css";
-import profile from "../../../../icons/add-image.svg";
+import "../../../components/ImageUploader.css";
+import profile from "../../../icons/add-image.svg";
 import Modal from "react-modal";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import styled from "styled-components";
 import { IoMdClose } from "react-icons/io";
-import { ReactComponent as CloseButton } from "../../../../icons/x-solid.svg";
+import { ReactComponent as CloseButton } from "../../../icons/x-solid.svg";
 import { MdModeEdit } from "react-icons/md";
 import "./PhotoGalleryTest.css";
-import * as BusinessJs from "../../../../pages/Business/Business";
+import * as BusinessJs from "../Business";
 
 const Image = styled.img`
   width: 100% !important;
@@ -22,7 +22,7 @@ const ThumbImage = styled.img`
   object-fit: contain;
 `;
 
-const PhotoGalleryTest = (vendorID) => {
+const PhotoGalleryTest = ({ vendorID }) => {
   const [vendorinputs, setVendorInputs] = useState("");
   const vendorID2 = vendorinputs.vid;
   const [previewSet, setpreviewSet] = useState(false);
@@ -45,6 +45,7 @@ const PhotoGalleryTest = (vendorID) => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragIndex, setDragIndex] = useState(-1);
   const [dragOffset, setDragOffset] = useState(0);
+
   // vendor inputs
   useEffect(() => {
     const fetchData = async () => {
@@ -279,10 +280,11 @@ const PhotoGalleryTest = (vendorID) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-[3rem]">
       <div className="myprofile-photogallerytest">
         <form onSubmit={handleSubmit} className="">
           <div>
+            {/* Add photo */}
             <div
               className="photo-uploader-img-container"
               onClick={handleBrowseClick}
@@ -462,6 +464,10 @@ const PhotoGalleryTest = (vendorID) => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="myprofile-button-group-2 ">
+        <button className="myprofile-cancel-button">Cancel</button>
+        <button className="myprofile-save-button">Save</button>
       </div>
     </div>
   );

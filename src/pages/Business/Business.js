@@ -287,6 +287,16 @@ export const updateQandAProfile = async (
     });
 };
 
+//view Q and A Record
+export const viewqandaRecord = async (setViewQandA, id) => {
+  await servicesPage.viewQandA(id).then(function (response) {
+    if (response.statuscode === 200) {
+      setViewQandA(response.result);
+      console.log("REsponse from Q and A:", response.result);
+    }
+  });
+};
+
 export const updateInclusions = async (
   formValues,
   id,
@@ -310,8 +320,9 @@ export const updateInclusions = async (
     });
 };
 
+// view Q and A Record
 export const viewVendorQandA = async (vendorID, setViewQandA) => {
-  await servicesPage.view_QandA(vendorID).then(function (response) {
+  await servicesPage.viewQandA(vendorID).then(function (response) {
     if (response.statuscode == 200) {
       setViewQandA(response.result);
     }

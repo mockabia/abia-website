@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import "../Style/BusinessProfile.css";
-// ./Style/BusinessProfile.css
 // Accordion
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -29,14 +28,16 @@ import { BiUpload } from "react-icons/bi";
 import { HiOutlineViewfinderCircle } from "react-icons/hi2";
 import { MdDelete } from "react-icons/md";
 
-import PhotoGalleryTest from "../../pages - Copy/My Profile/photos&videos/MyProfile-PhotoUplaoder/PhotoGalleryTest";
-import VideoGallery from "../../pages - Copy/My Profile/photos&videos/myProfileVideo";
+import PhotoGalleryTest from "./BusinessMyProfile/PhotoGalleryTest";
+import VideoGallery from "./BusinessMyProfile/myProfileVideo";
 import { PricingCheckbox, StyledAccordion } from "../../components/FormStyle";
 import * as BusinessJS from "../Business/Business";
 import Skeleton from "@mui/material/Skeleton";
 import { Preview } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
-import { FaSpinner } from "react-icons/fa";
+import _ from "lodash";
+import PhotoPreview from "./BusinessMyProfile/PhotoPreview";
+import VideoPreview from "./BusinessMyProfile/VideoPreview";
 
 const toolbarOptions = {
   options: ["inline", "list"],
@@ -91,13 +92,14 @@ const Profile = () => {
   const [questions, setQuestions] = useState([
     { id: 1, question: "", answer: "" },
   ]);
+  const [updateQanda, setUpdateQanda] = useState({});
   const [questionDisplay, setQuestionDisplay] = useState([]);
   const [qwordCount, setQwordCount] = useState(0);
   const [qandaWordCountError, setqandaWordCountError] = useState(false);
   // const [inputsErrors, setInputsErrors] = useState({});
   const [questionRes, setQuestionRes] = useState({});
   const [deleteQA, setDeleteQA] = useState("");
-  const [viewQandA, setViewQandA] = useState({});
+  const [viewQandA, setViewQandA] = useState([]);
   // Pricing
   const [inputsPricing, setInputsPricing] = useState([]);
   const [isActive, setIsActive] = useState({});
@@ -133,13 +135,8 @@ const Profile = () => {
   // viewprofile
   useEffect(() => {
     BusinessJS.viewProfileSettings(vendorID, setViewProfile);
-    console.log("View profile:", viewProfile);
   }, [vendorID]);
-
-  useEffect(() => {
-    BusinessJS.viewVendorQandA(vendorID, setViewQandA);
-  }, [vendorID]);
-  // console.log("View Qanda:", viewQandA);
+  console.log("view profile:", viewProfile);
 
   useEffect(() => {
     setOwnerImage(viewProfile.teamownerpic || "");
@@ -333,6 +330,23 @@ const Profile = () => {
   };
   //*****Q and A ***********/
   //*****Q and A ***********/
+  // view Q and A Record
+  useEffect(() => {
+    BusinessJS.viewqandaRecord(setViewQandA, vendorID).then(() => {
+      console.log("Q and A:", viewQandA);
+    });
+  }, [vendorID]);
+
+  // to update the question state from the backend data
+  useEffect(() => {
+    const newQuestions = viewQandA.map((question) => ({
+      id: question.qid,
+      question: question.question,
+      answer: question.answer,
+    }));
+    setQuestions(newQuestions);
+  }, [viewQandA]);
+
   const handleQandAWordCount = (text) => {
     const words = text.trim().split(/\s+/);
     const count = words.length;
@@ -350,13 +364,13 @@ const Profile = () => {
     setQuestions([...questions, { id: newId, question: "", answer: "" }]);
   };
 
-  const handleQuestionChange = (e, questionId) => {
+  const handleQandAhandleChange = (value, questionId, field) => {
     const updatedQuestions = questions.map((q) =>
-      q.id === questionId ? { ...q, question: e.target.value } : q
+      q.id === questionId ? { ...q, [field]: value } : q
     );
     setQuestions(updatedQuestions);
-    // onQandAType(e.target.value);
   };
+
   // DELETE Q AND A
   const handleRemoveQuestion = (questionId) => {
     const updatedQuestions = questions.filter((q) => q.id !== questionId);
@@ -385,18 +399,21 @@ const Profile = () => {
     BusinessJS.V_deeleteQA(vendorID, qid, setDeleteQA);
   };
 
-  const handleAnswerChange = (e, questionId) => {
-    e.preventDefault();
-    const updatedQuestions = questions.map((q) =>
-      q.id === questionId ? { ...q, answer: e.target.value } : q
-    );
-    setQuestions(updatedQuestions);
-  };
+  // formted view Q and A to display
+  const formattedQandADisplay = viewQandA.map((question) => (
+    <React.Fragment key={question.qid}>
+      {`${question.qid}: ${question.question}`}
+      <br />
+      {`${question.qid}: ${question.answer}`}
+      <br />
+      <br />
+    </React.Fragment>
+  ));
 
   const handleQuestionSubmit = async () => {
     setExpanded(false);
     setSaveClicked(true);
-
+    setQuestions(updateQanda);
     // Check if any question or answer is not blank
     const hasNonBlankQandA = questions.some(
       (question) =>
@@ -525,7 +542,7 @@ const Profile = () => {
     BusinessJS.updateQandAProfile(
       inputsPricing,
       vendorID,
-      3,
+      8,
       setInputsErrors,
       setVendorInputs
     );
@@ -1041,8 +1058,193 @@ const Profile = () => {
             </StyledAccordion>
           </div>
 
-          {/* PHOTO GALLERY */}
+          {/* PHOTOS AND VIDEOS */}
           <h2 className="profile-listing-header">Photos/Videos</h2>
+          {/* Photos */}
+          <div>
+            <StyledAccordion
+              expanded={expanded === "panel8"}
+              onChange={(e, isExpanded) => handleChange(isExpanded, "panel8")}
+            >
+              <AccordionSummary
+                style={{
+                  paddingLeft:
+                    expanded === "panel8"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+                id="panel8-header"
+                aria-controls="panel8-content"
+                expandIcon={
+                  <Typography
+                    sx={{
+                      color: "black",
+                      fontFamily: "inherit",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {expanded === "panel8" ? (
+                      <RxTriangleUp size={30} color="#6cc2bc" />
+                    ) : (
+                      "Edit"
+                    )}
+                  </Typography>
+                }
+                sx={{
+                  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+                    transform: "rotate(0deg)",
+                    color: "black",
+                  },
+                }}
+              >
+                <div>
+                  <h4
+                    style={{
+                      fontWeight: expanded === "panel8" ? "bold" : "normal",
+                    }}
+                  >
+                    Photo Gallery
+                  </h4>
+
+                  {expanded === "panel8" ? (
+                    <p className="myprofile-accordion-subheading">
+                      Drag and drop your photos to change the order.
+                    </p>
+                  ) : (
+                    <>
+                      {!expanded && (
+                        <PhotoPreview />
+                        // <PhotoGalleryTest
+                        //   vendorID={vendorID}
+                        //   maxPhotosToShow={3}
+                        // />
+                      )}
+                    </>
+                  )}
+                  {/* {saveClicked && defaultContent && !expanded === "panel8" ? (
+                    <>
+                      {" "}
+                      <PhotoGalleryTest vendorID={vendorID} />
+                    </>
+                  ) : ( expanded == "panel8") {
+                    <>
+                      <p className="myprofile-accordion-subheading">
+                        Drag and drop your photos to change the order.{" "}
+                      </p>{" "}
+                      <PhotoGalleryTest vendorID={vendorID} />
+                    </>
+
+                  }
+                    
+                  )} */}
+                </div>
+              </AccordionSummary>
+              <AccordionDetails
+                style={{
+                  paddingLeft:
+                    expanded === "panel8"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+              >
+                <div>
+                  <div className="myprofile-accordion-item-header">
+                    {/* <span className="myprofile-edit-button">Edit</span> */}
+                    <>
+                      {" "}
+                      <PhotoGalleryTest
+                        vendorID={vendorID}
+                        maxPhotosToShow={0}
+                      />
+                    </>
+                  </div>
+                </div>
+              </AccordionDetails>
+            </StyledAccordion>
+          </div>
+          {/* VIDEOS */}
+          <div>
+            <StyledAccordion
+              expanded={expanded === "panel9"}
+              onChange={(e, isExpanded) => handleChange(isExpanded, "panel9")}
+            >
+              <AccordionSummary
+                style={{
+                  paddingLeft:
+                    expanded === "panel9"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+                id="panel9-header"
+                aria-controls="panel9-content"
+                expandIcon={
+                  <Typography
+                    sx={{
+                      color: "black",
+                      fontFamily: "inherit",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {expanded === "panel9" ? (
+                      <RxTriangleUp size={30} color="#6cc2bc" />
+                    ) : (
+                      "Edit"
+                    )}
+                  </Typography>
+                }
+                sx={{
+                  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+                    transform: "rotate(0deg)",
+                    color: "black",
+                  },
+                }}
+              >
+                <div>
+                  <h4
+                    style={{
+                      fontWeight: expanded === "panel9" ? "bold" : "normal",
+                    }}
+                  >
+                    Videos
+                  </h4>
+                  {expanded === "panel9" ? (
+                    <p className="myprofile-accordion-subheading">
+                      Drag and drop your photos to change the order.
+                    </p>
+                  ) : (
+                    !expanded && <VideoPreview vendorID={vendorID} />
+                  )}
+                </div>
+              </AccordionSummary>
+              <AccordionDetails
+                style={{
+                  paddingLeft:
+                    expanded === "panel8"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+              >
+                <div>
+                  <div className="myprofile-accordion-item-header">
+                    <VideoGallery vendorID={vendorID} />
+                  </div>
+                </div>
+              </AccordionDetails>
+            </StyledAccordion>
+          </div>
+
+          {/* PHOTO GALLERY */}
+          {/* <h2 className="profile-listing-header">Photos/Videos</h2>
           <div className="myprofilePhotos-accordion-item-header">
             Photo Gallery
           </div>
@@ -1054,7 +1256,7 @@ const Profile = () => {
           </div>
           <br />
           <div className="myprofilePhotos-accordion-item-header">Videos</div>
-          <VideoGallery vendorID={vendorID} />
+          <VideoGallery vendorID={vendorID} /> */}
           {/* PRICING */}
           <div>
             {viewProfile ? (
@@ -1795,13 +1997,13 @@ const Profile = () => {
                 <h4 className="profile-listing-header">Q&A</h4>
                 {saveClicked && questionDisplay && !expanded ? (
                   <div className="whitespace-break-spaces mt-[10px]">
-                    {questionDisplay}
+                    {questionDisplay || formattedQandADisplay}
                   </div>
                 ) : expanded ||
                   (questionDisplay && questionDisplay.length > 0) ? null : (
                   <p className="myprofile-accordion-subheading">
-                    Add the most common Q&A your business is asked, this helps
-                    couples get to know you further.
+                    {formattedQandADisplay ||
+                      "Add the most common Q&A your business is asked, this helps couples get to know you further."}
                   </p>
                 )}
               </div>
@@ -1837,7 +2039,11 @@ const Profile = () => {
                               value={question.question}
                               onChange={(e) => {
                                 handleQandAWordCount(e.target.value);
-                                handleQuestionChange(e, question.id);
+                                handleQandAhandleChange(
+                                  e.target.value,
+                                  question.id,
+                                  "question"
+                                );
                               }}
                             />
                             {qandaWordCountError && (
@@ -1863,7 +2069,13 @@ const Profile = () => {
                           <textarea
                             className="answer-input-style"
                             value={question.answer}
-                            onChange={(e) => handleAnswerChange(e, question.id)}
+                            onChange={(e) =>
+                              handleQandAhandleChange(
+                                e.target.value,
+                                question.id,
+                                "answer"
+                              )
+                            }
                           />
                         </div>
                       </div>

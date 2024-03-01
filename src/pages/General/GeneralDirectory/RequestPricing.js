@@ -54,6 +54,7 @@ const RequestPricing = ({ business, locationOptions, servicesOptions }) => {
         <Button
           variant="contained"
           sx={{
+            fontFamily: "Manrope",
             boxShadow: "none",
             backgroundColor: "black",
             textTransform: "initial",

@@ -170,8 +170,8 @@ export async function delete_qandA(vendorID, qid) {
     MAIN_API["DELETE_QA"] + "/" + vendorID + "/" + qid + "/" + 1
   );
 }
-
-export async function view_QandA(id) {
+// view q and a
+export async function viewQandA(id) {
   return await apiService.apiCall(MAIN_API["VIEW_QA"] + "/" + id, "GET");
 }
 

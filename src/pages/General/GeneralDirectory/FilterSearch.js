@@ -12,8 +12,7 @@ import { BorderClear } from "@mui/icons-material";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import { withTheme } from "@mui/material/styles";
-import FilterListOutlinedIcon from "@mui/icons-material/FilterListOutlined";
+
 
 const ColorSearchButton = styled(Button)(({ theme }) => ({
   display: "flex", // Display the button when the screen size is 600px or larger
@@ -33,12 +32,12 @@ const AutoCompleteStyle = styled(Autocomplete)(({ theme }) => ({
     width: "230px",
     fontSize: "14px",
     fontWeight: "600",
-    fontFamily: "Raleway, sans-serif",
+    fontFamily: "Manrope, sans-serif",
   },
   "& .MuiFormLabel-root": {
     fontSize: "14px",
     fontWeight: "500",
-    fontFamily: "Raleway, sans-serif",
+    fontFamily: "Manrope, sans-serif",
     zIndex: "auto",
   },
   [theme.breakpoints.down("sm")]: {
@@ -166,7 +165,7 @@ const FilterSearch = ({ onCityCahnge, oncSubUrbanChange }) => {
               paddingBottom: "10px",
               fontSize: "14px",
               color: "#515151",
-              fontFamily: "Raleway",
+              fontFamily: "Manrope",
               fontWeight: "500",
               borderBottom: "1px solid #EFEFEF",
             }}
@@ -199,7 +198,7 @@ const FilterSearch = ({ onCityCahnge, oncSubUrbanChange }) => {
                   fontSize={14}
                   fontStyle="normal"
                   fontWeight="600"
-                  fontFamily="Raleway"
+                  fontFamily="Manrope"
                   p={1}
                 >
                   {params.group}
@@ -208,7 +207,7 @@ const FilterSearch = ({ onCityCahnge, oncSubUrbanChange }) => {
               <AccordionDetails
                 style={{
                   fontSize: "14px",
-                  fontFamily: "Raleway",
+                  fontFamily: "Manrope",
                   fontWeight: "500",
                 }}
               >
