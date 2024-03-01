@@ -198,7 +198,7 @@ export const coupleCategories = async (setBudget,setData,setUnpaidList) => {
       setUnpaidList(response.result.unpaid);
     } else {
       setData([]);
-    }
+    } 
   });
 };
 export const updateBudget = async (budget, setShowBudget,setEdit) => {
