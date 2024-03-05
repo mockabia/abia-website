@@ -85,9 +85,13 @@ export default function CouplePage(props) {
           </div>
           <div className="grid grid-cols-1 gap-[1rem] mt-[1rem]">
             {/* Category */}
-            <div onClick={() => toggleOpen()}>
-              <CoupleAddCategoryButton>Add category</CoupleAddCategoryButton>
+            <div className="flex items-center justify-between w-[350px]">
+              <div>0 booked vendors</div>
+              <div onClick={() => toggleOpen()}>
+                <CoupleAddCategoryButton>Add category</CoupleAddCategoryButton>
+              </div>
             </div>
+
             {/* Add category component */}
             {categoryOpen && (
               <AddCategory open={categoryOpen} setOpen={setCategoryOpen} />

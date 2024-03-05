@@ -1,3 +1,4 @@
+import axios from "axios";
 import * as apiService from "../api/apiServices";
 import * as apiUrls from "../api/apiUrls";
 import categories from "./json/couples-categories-edit.json";
@@ -107,3 +108,27 @@ export async function marketCategoryjson() {
   return vendorList;
   // return await apiService.apiCall(apiUrls.MARKETING_CATEGORY, "GET", postData);
 }
+
+export async function updateBookedStatus(categoryId, businessId) {
+  try {
+    // Fetch the category in the vendorList
+    const response = await axios.get("/vendorList"); // Assuming your endpoint is /vendorList
+    // Find the category in the fetched data
+    const category = response.data.result.find((cat) => cat.id === categoryId);
+    // Find the business within the category
+    const business = category.businesses.find((bus) => bus.id === businessId);
+    // Update the booked status to 1
+    if (business) {
+      business.booked = "1";
+    }
+    // Send a POST request to update the data
+    await axios.post("/updateVendorList", response.data); // Assuming your endpoint is /updateVendorList
+    console.log("Booked status updated successfully.");
+  } catch (error) {
+    console.error("Error updating booked status:", error.message);
+  }
+}
+
+// export async function coupleLogin(postData) {
+//   return await apiService.apiCall(MAIN_API["LOGIN"], "POST", postData);
+// }

@@ -74,7 +74,6 @@ const AddCategory = (props) => {
       phone: "",
       email: "",
       budget: "",
-      bboked: 0,
     }); // Reset to null, whnen a new category is selected
   };
 
@@ -93,23 +92,25 @@ const AddCategory = (props) => {
   };
 
   //   memoize the handleBusinessChange
-  const handleBudgetChange = useCallback(
-    (e) => {
-      const value = e.target.value;
-      setSelectedBusinessDetails((prevDetails) => ({
-        ...prevDetails,
-        budget: value,
-      }));
-    },
-    [] // Empty dependency array, as there are no external dependencies
-  );
+  const handleBudgetChange = useCallback((e) => {
+    const value = e.target.value;
+    setSelectedBusinessDetails((prevDetails) => ({
+      ...prevDetails,
+      budget: value,
+    }));
+  }, []);
 
-  const handleSubmit = () => {
-    console.log("Selected Business Details:", selectedBusinessDetails);
-    // Add your logic to save the details here
-  };
-  console.log("Selected:", selectedCategory);
-  console.log("Selected Business:", selectedBusinessDetails);
+ const handleSubmit = async () => {
+   try {
+     await servicesPage.updateBookedStatus(selectedCategory.id, selectedBusinessDetails.id);
+     console.log("Selected Business Details:", selectedBusinessDetails);
+     setOpen(false);
+   } catch (error) {
+     console.error("Error updating booked status:", error.message);
+   }
+ };
+  //   console.log("Selected:", selectedCategory);
+  //   console.log("Selected Business:", selectedBusinessDetails);
 
   return (
     <>
