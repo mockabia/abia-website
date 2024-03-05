@@ -74,7 +74,6 @@ export const logout = async (setLoginStatus,navigate) => {
 };
 export const coupleSignup = async (activeStep,setActiveStep,formValues, setErrors,navigate) => {
   if (customValidator.validateCoupleSignup(activeStep,formValues, setErrors)) {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
     if(activeStep==3){
       await servicesPage.coupleSignup(formValues).then(function (response) {
         if (response.statuscode == 200) {
@@ -88,6 +87,8 @@ export const coupleSignup = async (activeStep,setActiveStep,formValues, setError
           }
         }
       });
+    }else{
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
   }
 };
@@ -97,6 +98,21 @@ export const coupleLogin = async (formValues, setErrors,navigate) => {
       if (response.statuscode == 200) {
         const token = response.token;
         setLogin(token,navigate)
+      } else {
+        if (response.errors) {
+          setErrors(response.errors);
+        } else if (response.statusmessage) {
+          setErrors(response.statusmessage);
+        }
+      }
+    });
+  }
+};
+export const coupleForgot = async (formValues, setErrors,setOpen) => {
+  if (customValidator.validateCoupleForgot(formValues, setErrors)) {
+    await servicesPage.coupleForgot(formValues).then(function (response) {
+      if (response.statuscode == 200) {
+        setOpen(false);
       } else {
         if (response.errors) {
           setErrors(response.errors);

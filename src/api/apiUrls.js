@@ -81,7 +81,7 @@ export const BUSINESS_API = {
 export const COUPLE_API = {
   SIGNUP: `${baseUrl}WebManageWedding/0/3/1`,
   LOGIN: `${baseUrl}WebWeddingLogin`,
-  FORGOT: `${baseUrl}WebWeddingForgot`,
+  FORGOT: `${baseUrl}WebCoupleForgot`,
   LOGOUT: `${baseUrl}WebWeddingLogout`,
   REFRESH: `${baseUrl}couple-refresh`,
   FETCH: `${baseUrl}WebWeddingBridal`,

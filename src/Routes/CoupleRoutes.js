@@ -78,6 +78,7 @@ const CoupleRoutes = (props) => {
                 element={<LoadablePage page={routeMenus.pagename} {...props} pageData={routeMenus} />}
               />
             ))}
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
       </>
       ) : (
@@ -94,10 +95,10 @@ const CoupleRoutes = (props) => {
               />
 
             ))}
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
       </>
       )}
-      <Routes><Route path="*" element={<PageNotFound />} /></Routes>
     </>
   );
 };

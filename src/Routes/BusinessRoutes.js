@@ -54,16 +54,19 @@ const BusinessRoutes = (props) => {
     <>
         {!RoutesJS.hasVendorJWT() ? (
           <>
-            <LayoutGeneral {...props}>
               <Routes>
                 {loginMenu.map((routeMenus, i) => (
                   <Route
                     path={`/${routeMenus.url}`}
-                    element={<LoadablePage page={routeMenus.pagename} {...props} />}
+                    element={
+                      <LayoutGeneral {...props}>
+                        <LoadablePage page={routeMenus.pagename} {...props} />
+                      </LayoutGeneral>
+                    }
                   />
                 ))}
+              <Route path="*" element={<PageNotFound />} />
               </Routes>
-            </LayoutGeneral>
           </>
         ) : (
           <>
@@ -78,10 +81,10 @@ const BusinessRoutes = (props) => {
                   }
                 />
               ))}
+              <Route path="*" element={<PageNotFound />} />
             </Routes>
           </>
         )}
-        <Routes><Route path="*" element={<PageNotFound />} /></Routes>
     </>
   );
 };

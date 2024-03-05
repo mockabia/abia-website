@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  Modal,
-  TextField,
-} from "@mui/material";
+import {Box,Button,IconButton,InputAdornment,Modal,TextField,} from "@mui/material";
 import React from "react";
 import { CoupleCommonInput, ForgetBox } from "../../components/FormStyle";
 import { AiOutlineClose } from "react-icons/ai";
@@ -14,40 +7,27 @@ import { Stack } from "react-bootstrap";
 import { useState } from "react";
 import axios from "axios";
 import * as apiurls from "../../api/apiUrls";
+import * as CoupleJS from "./Couple";
 export const MAIN_API = apiurls.BUSINESS_API;
 
 const CoupleForgotPwd = () => {
-  const [open, setOpen] = React.useState(false);
-  const [username, setUsername] = useState("");
+  const [open, setOpen]             = React.useState(false);
+  const [username, setUsername]     = useState("");
   const [emailError, setEmailError] = useState("");
+  const [formValues, setFormValues] = useState({});
+  const [errors, setErrors]         = useState({});
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors)
+  };
   const handleSubmit = async () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!username.trim()) {
-      setEmailError("Email is required");
-      return;
-    }
-    if (!emailRegex.test(username)) {
-      setEmailError("Invalid email format");
-      return;
-    }
-    try {
-      const response = await axios.post(MAIN_API["FORGOT"], {
-        username: username,
-      });
-      if (response.status === 200) {
-        console.log("Password reset successful:", response.data);
-      } else {
-        console.log("Failed to reset password. Status code:", response.status);
-      }
-    } catch (error) {
-      console.error("Error resetting password:", error);
-    }
+    CoupleJS.coupleForgot(formValues, setErrors,setOpen)
   };
 
   return (
@@ -109,14 +89,17 @@ const CoupleForgotPwd = () => {
                     </InputAdornment>
                   ),
                 }}
-                value={username}
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                  setEmailError("");
-                }}
-                error={!!emailError}
-                helperText={emailError}
+                onChange={(e) =>
+                  handleInputChange(e)
+                }
+                error={!!errors.email}
+                helperText={errors.email}
               />
+              {typeof errors != 'object' && errors !== null ? (
+                  <div className="flex font-bold text-red-600 text-[12px] mb-2">
+                    <span dangerouslySetInnerHTML={{ __html: errors }} ></span>
+                  </div>
+                ) :''}
               <Button
                 // type="submit"
                 variant="contained"

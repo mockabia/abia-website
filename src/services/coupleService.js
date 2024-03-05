@@ -21,7 +21,7 @@ export async function refresh() {
   return await apiService.apiCall(MAIN_API["REFRESH"], "POST");
 }
 
-export async function forgot(postData) {
+export async function coupleForgot(postData) {
   return await apiService.apiCall(MAIN_API["FORGOT"], "POST", postData);
 }
 export async function coupleDetails(id) {

@@ -119,7 +119,7 @@ export default function CouplesSignUp() {
     }));
   }, [marketingSelect]);
   const handleMarketingChange = (e, index) => {
-    const value = options[index].value;
+    const value = marketingOptions[index].value;
     setMarketingSelect((prevMarketingSelect) => {
       if (prevMarketingSelect.includes(value)) {
         return prevMarketingSelect.filter((category) => category !== value);
@@ -127,7 +127,6 @@ export default function CouplesSignUp() {
         return [...prevMarketingSelect, value];
       }
     });
-    
   };
 
   const handleFormNext = () => {
