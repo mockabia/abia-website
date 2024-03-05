@@ -17,6 +17,8 @@ const ContentRoutes = (props) => {
     return import(`../pages/General/${props.page}`);
   }); */
 
+
+  
   return (
     
       <>

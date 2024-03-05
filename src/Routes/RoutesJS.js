@@ -184,3 +184,17 @@ export function vendorCheckLoginRedirect(url,loginMenu,loginedMenu,navigate) {
     navigate(window.HOME);
   }
 }
+export function check404Error(url,menu,setError) {
+  const found = menu.some(element => {
+    console.log(element.url+'==='+url)
+    if (element.url === url) {
+      return true;
+    }
+    return false;
+  });
+  if(!found){
+    setError(true);
+  }else{
+    setError(false);
+  }
+}
