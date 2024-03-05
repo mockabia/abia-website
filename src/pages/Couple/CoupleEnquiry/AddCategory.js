@@ -36,6 +36,8 @@ const customStyles = {
 const AddCategory = (props) => {
   const open = props.open;
   const setOpen = props.setOpen;
+  const onUpdateBusinessDetails = props.onUpdateBusinessDetails;
+  const [isMounted, setIsMounted] = useState(true);
   const [categoryList, setCategoryList] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedBusinessDetails, setSelectedBusinessDetails] = useState({
@@ -44,9 +46,10 @@ const AddCategory = (props) => {
     phone: "",
     email: "",
     budget: "",
-    bboked: 0,
+    booked: 0,
   });
   const [vendorDetail, setVendorDetail] = useState(false);
+  const [businessDetails, setBusinessDetails] = useState([]); // business detail array
 
   const closeDetailOpen = () => {
     setOpen(false);
@@ -100,17 +103,42 @@ const AddCategory = (props) => {
     }));
   }, []);
 
- const handleSubmit = async () => {
-   try {
-     await servicesPage.updateBookedStatus(selectedCategory.id, selectedBusinessDetails.id);
-     console.log("Selected Business Details:", selectedBusinessDetails);
-     setOpen(false);
-   } catch (error) {
-     console.error("Error updating booked status:", error.message);
-   }
- };
-  //   console.log("Selected:", selectedCategory);
-  //   console.log("Selected Business:", selectedBusinessDetails);
+  useEffect(() => {
+    console.log("Latest businessDetails state:", businessDetails);
+  }, [businessDetails]);
+
+  const handleSubmit = () => {
+    console.log("Inside handleSubmit");
+
+    const updatedBusinesses = [...businessDetails];
+    const businessIndex = updatedBusinesses.findIndex(
+      (business) => business.id === selectedBusinessDetails.id
+    );
+
+    if (businessIndex !== -1) {
+      // Update the existing business details in the array
+      updatedBusinesses[businessIndex] = {
+        id: selectedBusinessDetails.id,
+        business_name: selectedBusinessDetails.name,
+        booked_val: 1,
+        category_id: selectedCategory.id,
+        category_name: selectedCategory.title,
+      };
+    } else {
+      // Add a new business to the array
+      updatedBusinesses.push({
+        id: selectedBusinessDetails.id,
+        business_name: selectedBusinessDetails.name,
+        booked_val: 1,
+        category_id: selectedCategory.id,
+        category_name: selectedCategory.title,
+      });
+    }
+
+    console.log("Updated JSON Data:", updatedBusinesses);
+    setOpen(false);
+    onUpdateBusinessDetails(updatedBusinesses); // Callback to update parent component state
+  };
 
   return (
     <>
@@ -165,7 +193,7 @@ const AddCategory = (props) => {
                   name="business_name"
                   placeholder=""
                   type="select"
-                  sx={{ width: "100%", fontSize: "14px" }}
+                  style={{ width: "100%", fontSize: "14px" }}
                   styles={{ ...EnquirySelectStyle, ...customStyles }}
                   options={selectedCategory.businesses.map((business) => ({
                     value: business.id,
