@@ -9,12 +9,13 @@ import * as CoupleJS from "./Couple";
 
 const CoupleEnquiry = () => {
   const [submenuAnchorEl, setSubmenuAnchorEl] = useState({});
-  const [activeTab, setActiveTab]             = useState("Active");
-  const [data, setData]                       = useState([]);
+  const [activeTab, setActiveTab] = useState("Active");
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     CoupleJS.coupleEnquiries(setData);
   }, []);
+  console.log("Couple Enquiry:", data);
 
   const handleMenuClick = (mainId) => {
     setSubmenuAnchorEl({
@@ -48,16 +49,21 @@ const CoupleEnquiry = () => {
     },
   ];
 
-  
-
   return (
     <>
       {/* main menu */}
       <div className="w-[100%]">
-        <div className="main-menu-section  ">
+        <div className="main-menu-section">
           <ul className="enquiry-page-header ">
             {mainMenus.map((menuItem) => (
-              <li key={menuItem.id} className={menuItem.id=='2' ? 'underline decoration-4 decoration-[#6cc2bc]' : ''}>
+              <li
+                key={menuItem.id}
+                className={
+                  menuItem.id == "2"
+                    ? "underline decoration-4 decoration-[#6cc2bc]"
+                    : ""
+                }
+              >
                 <Link to={menuItem.link}>{menuItem.item}</Link>
               </li>
             ))}
@@ -94,14 +100,16 @@ const CoupleEnquiry = () => {
           {activeTab === "Active" && (
             <>
               {/*Active  Mobile */}
-              {data && (<RenderEnquiries data={data.all}/>)}
-              {/* Detail box  */} 
+              {data && <RenderEnquiries data={data.all} />}
+              {/* Detail box  */}
             </>
           )}
           {activeTab === "Archive" && (
-          <>
-          {data && (<RenderEnquiries archieved={true} data={data.archieved}/>)}
-          </>
+            <>
+              {data && (
+                <RenderEnquiries archieved={true} data={data.archieved} />
+              )}
+            </>
           )}
         </main>
       </div>
