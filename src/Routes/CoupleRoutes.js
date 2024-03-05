@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation,useNavigate } from "react-router-dom";
 import loadable from "@loadable/component";
 import LayoutCouple from "../layouts/Layout/LayoutCouple";
+import PageNotFound from "../pages/General/404Page";
 
 import * as RoutesJS from "./RoutesJS";
 
@@ -96,6 +97,7 @@ const CoupleRoutes = (props) => {
           </Routes>
       </>
       )}
+      <Routes><Route path="*" element={<PageNotFound />} /></Routes>
     </>
   );
 };

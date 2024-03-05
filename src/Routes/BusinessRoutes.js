@@ -3,6 +3,7 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import loadable from "@loadable/component";
 import LayoutVendor from "../layouts/Layout/LayoutVendor";
 import LayoutGeneral from "../layouts/Layout/LayoutGeneral";
+import PageNotFound from "../pages/General/404Page";
 
 import * as RoutesJS from "./RoutesJS";
 
@@ -80,6 +81,7 @@ const BusinessRoutes = (props) => {
             </Routes>
           </>
         )}
+        <Routes><Route path="*" element={<PageNotFound />} /></Routes>
     </>
   );
 };
