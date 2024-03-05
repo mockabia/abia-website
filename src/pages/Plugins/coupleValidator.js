@@ -41,13 +41,7 @@ export function validateName(name, errors) {
 export const validateCoupleLogin = (inputs, setInputsErrors) => {
   setInputsErrors({});
   let validate = true;
-  if (!inputs.email) {
-    validate = false;
-    setInputsErrors((values) => ({...values,["email"]: "Email is required"}));
-  } else if (!/\S+@\S+\.\S+/.test(inputs.email)) {
-    validate = false;
-    setInputsErrors((values) => ({...values,["email"]: "Invalid Email"}));
-  }
+  validate = validateEmail(inputs.email, 'email',setInputsErrors);
   // Validate Password
   if (!inputs.password) {
     validate = false;
@@ -56,6 +50,12 @@ export const validateCoupleLogin = (inputs, setInputsErrors) => {
     validate = false;
     setInputsErrors((values) => ({...values,["password"]: "Minimum 6 characters"}));
   }
+  return validate;
+};
+export const validateCoupleForgot = (inputs, setInputsErrors) => {
+  setInputsErrors({});
+  let validate = true;
+  validate = validateEmail(inputs.email, 'email',setInputsErrors);
   return validate;
 };
 export const validateCoupleSignup = (activeStep,inputs, setInputsErrors) => {

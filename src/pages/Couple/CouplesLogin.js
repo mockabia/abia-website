@@ -137,11 +137,11 @@ const CouplesLogin = (props) => {
                 }}
               ></Box>
 
-              {hasErrors && (
-                <div className="flex font-bold text-red-600 text-[12px]">
-                  {errors}
-                </div>
-              )}
+              {typeof errors != 'object' && errors !== null ? (
+                  <div className="flex font-bold text-red-600 text-[12px] mb-2">
+                    <span dangerouslySetInnerHTML={{ __html: errors }} ></span>
+                  </div>
+                ) :''}
 
               <button
                 onClick={handleSubmit}

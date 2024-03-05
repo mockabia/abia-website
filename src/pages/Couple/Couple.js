@@ -108,6 +108,21 @@ export const coupleLogin = async (formValues, setErrors,navigate) => {
     });
   }
 };
+export const coupleForgot = async (formValues, setErrors,setOpen) => {
+  if (customValidator.validateCoupleForgot(formValues, setErrors)) {
+    await servicesPage.coupleForgot(formValues).then(function (response) {
+      if (response.statuscode == 200) {
+        setOpen(false);
+      } else {
+        if (response.errors) {
+          setErrors(response.errors);
+        } else if (response.statusmessage) {
+          setErrors(response.statusmessage);
+        }
+      }
+    });
+  }
+};
 export const coupleDetails = async (from,setFormValues) => {
   let token       = localStorage.getItem("coupleToken");
   token           = JSON.parse(token);
