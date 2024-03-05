@@ -5,6 +5,7 @@ import loadable from "@loadable/component";
 import LayoutGeneral from "../layouts/Layout/LayoutGeneral";
 
 import Public from "../pages/General/Public";
+import PageNotFound from "../pages/General/404Page";
 
 const ContentRoutes = (props) => {
 
@@ -17,28 +18,31 @@ const ContentRoutes = (props) => {
   }); */
 
   return (
-    <LayoutGeneral {...props}>
+    
+      <>
       {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(props.publicMenu, null, 2)}</pre> */}
       {(props.showLoader !== undefined && props.showLoader != true) ?
-        <>
-          <Routes>
-            <Route path="/" element={<Public {...props} />} />
-            {props.publicMenu.map((routes, i) => (
-              <Route
-                path={`/${routes.url}`}
-                element={<LoadablePage page={routes.pagename} {...props} />}
-              />
-            ))}
-            {props.blogMenu.map((routes, i) => (
-              <Route
-                path={`/${routes.url}`}
-                element={<LoadablePage page={routes.pagename} {...props} />}
-              />
-            ))}
-          </Routes>
-        </> : ''
+        
+            <Routes>
+                <Route path="/" element={<LayoutGeneral {...props}><Public {...props} /></LayoutGeneral>} />
+                {props.publicMenu.map((routes, i) => (
+                  <Route
+                    path={`/${routes.url}`}
+                    element={<LayoutGeneral {...props}><LoadablePage page={routes.pagename} {...props} /></LayoutGeneral>}
+                  />
+                ))}
+                {props.blogMenu.map((routes, i) => (
+                  <Route
+                    path={`/${routes.url}`}
+                    element={<LayoutGeneral {...props}><LoadablePage page={routes.pagename} {...props} /></LayoutGeneral>}
+                  />
+                ))}
+                <Route path="*" element={<PageNotFound />} />
+            </Routes>
+        
+         : ''
       }
-    </LayoutGeneral>
+      </>
   );
 };
 export default ContentRoutes;
