@@ -6,7 +6,7 @@ import { ReactComponent as PlayButton } from "../../../icons/abia-play.svg";
 
 //IModal
 
-const VideoPreview = ({ vendorID }) => {
+const VideoPreview = ({ vendorID, maxtoShow }) => {
   const [videoURLs, setVideoURLs] = useState([]);
 
   useEffect(() => {
@@ -65,27 +65,28 @@ const VideoPreview = ({ vendorID }) => {
       <div className="video-gallery-container gap-4 relative">
         {/* Display */}
 
-        {Object.values(videoURLs).map((element, index) => (
-          <div
-            key={element.vgid}
-            id={element.vgid}
-            className="video-upload-preview "
-          >
-            {/* <div id={element.vgid} className="play-button">
+        {Object.values(videoURLs)
+          .slice(0, maxtoShow)
+          .map((element, index) => (
+            <div
+              key={element.vgid}
+              id={element.vgid}
+              className="video-upload-preview "
+            >
+              {/* <div id={element.vgid} className="play-button">
               <PlayButton />
             </div> */}
-            {/* <EmbeddedVideo video={element.video} /> */}
-            <div
-              dangerouslySetInnerHTML={{
-                __html: element.video.replace(
-                  "<iframe ",
-                  '<iframe width="100%" height="100%" '
-                ),
-              }}
-            />
-          </div>
-        ))}
-       
+              {/* <EmbeddedVideo video={element.video} /> */}
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: element.video.replace(
+                    "<iframe ",
+                    '<iframe width="100%" height="100%" '
+                  ),
+                }}
+              />
+            </div>
+          ))}
       </div>
     </div>
   );

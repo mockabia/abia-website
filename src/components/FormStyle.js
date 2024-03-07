@@ -1487,3 +1487,105 @@ export const PricingCheckbox = styled(Checkbox)({
     },
   },
 });
+
+// Couple Enquiry Button
+export const CoupleAddCategoryButton = styled(Button)(({ theme }) => ({
+  fontFamily: "Manrope",
+  textTransform: "initial",
+  color: "#515151", // Set text color to black
+  backgroundColor: "white", // Set background color to white
+  borderRadius: "50px",
+  border: "1px solid #515151",
+  maxWidth: "250px",
+  width: "160px",
+  height: "45px",
+  fontSize: "12px",
+  fontWeight: "600",
+  boxShadow: "none",
+  "&:hover": {
+    backgroundColor: "#000",
+    boxShadow: "none",
+    color: "white",
+  },
+  "&.Mui-selected": {
+    backgroundColor: "#000",
+    boxShadow: "none",
+    color: "white",
+  },
+}));
+
+//
+export const EnquirySelectStyle = {
+  control: (provided, state) => ({
+    ...provided,
+    fontFamily: "Manrope",
+    fontSize: "14px",
+    border: "1px solid #c3bebe",
+    boxShadow: "none",
+    marginTop: "8px",
+    borderRadius: "10px",
+    // background: "#fafafa",
+    height: "50px",
+    width: "90vw",
+    maxWidth: "100%",
+    "&:hover": {
+      border: "1px solid #c3bebe",
+    },
+    "@media (min-width: 551px)": {
+      width: "11rem",
+      maxWidth: "30rem",
+    },
+    "@media (min-width: 769px)": {
+      width: "11.5rem",
+      maxWidth: "30rem",
+    },
+    "@media (min-width: 1100px)": {
+      width: "18rem",
+      maxWidth: "30rem",
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    marginTop: "10px",
+    borderRadius: "20px",
+    padding: "15px",
+    border: "1px solid #c3bebe",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    fontSize: "14px",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    fontFamily: "Manrope",
+    fontSize: "14px",
+    backgroundColor: state.isSelected
+      ? "#e7f5f4"
+      : state.isFocused
+      ? "#e7f5f4"
+      : "white",
+    color: state.isSelected ? "black" : "inherit",
+    padding: "12px",
+  }),
+  indicatorSeparator: (defaultStyles) => {
+    return {
+      ...defaultStyles,
+      display: "none",
+    };
+  },
+  input: (provided) => ({
+    ...provided,
+    WebkitUserSelect: "none",
+    MozUserSelect: "none",
+    msUserSelect: "none",
+    userSelect: "none",
+    inputMode: "none",
+    tabIndex: "0",
+  }),
+  clearIndicator: () => ({
+    display: "none",
+  }),
+
+  multiValueRemove: (provided) => ({
+    ...provided,
+    display: "none",
+  }),
+};

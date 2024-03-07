@@ -1108,7 +1108,7 @@ const Profile = () => {
                   >
                     Photo Gallery
                   </h4>
-
+                  <br/>
                   {expanded === "panel8" ? (
                     <p className="myprofile-accordion-subheading">
                       Drag and drop your photos to change the order.
@@ -1116,7 +1116,7 @@ const Profile = () => {
                   ) : (
                     <>
                       {!expanded && (
-                        <PhotoPreview />
+                        <PhotoPreview maxPhotosToShow={4} />
                         // <PhotoGalleryTest
                         //   vendorID={vendorID}
                         //   maxPhotosToShow={3}
@@ -1220,7 +1220,9 @@ const Profile = () => {
                       Drag and drop your photos to change the order.
                     </p>
                   ) : (
-                    !expanded && <VideoPreview vendorID={vendorID} />
+                    !expanded && (
+                      <VideoPreview vendorID={vendorID} maxtoShow={4} />
+                    )
                   )}
                 </div>
               </AccordionSummary>

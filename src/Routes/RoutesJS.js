@@ -115,7 +115,7 @@ export const fetchCoupleRoutes = async (setCoupleMenu, setShowLoader) => {
       let thankyou = loginMenu[0].Sub_content.filter((subs) => {
         return subs.id == "6";
       });
-      
+      console.log("Menu list:", response.result);
       const associateMenu = response.result.filter((menus) => {
         return menus.id == "3";
       });
@@ -125,6 +125,10 @@ export const fetchCoupleRoutes = async (setCoupleMenu, setShowLoader) => {
       let chat = associateMenu[0].Sub_content.filter((subs) => {
         return subs.id == "13";
       });
+      //
+      const vendorEnquiry = response.result.filter((menus) => {
+        return menus.id == "6";
+      });
 
       window.CSIGNUP = process.env.REACT_APP_COUPLE_URL + "/" + signup[0].url;
       //window.CLOGIN = process.env.REACT_APP_COUPLE_URL + "/" + login[0].url;
@@ -132,24 +136,28 @@ export const fetchCoupleRoutes = async (setCoupleMenu, setShowLoader) => {
         process.env.REACT_APP_COUPLE_URL + "/" + dashboardMenu[0].url;
       window.CTHANKYOU =
         process.env.REACT_APP_COUPLE_URL + "/" + thankyou[0].url;
-      window.BOOKING =
-        process.env.REACT_APP_COUPLE_URL + "/" + booking[0].url;
-      window.CHAT =
-        process.env.REACT_APP_COUPLE_URL + "/" + chat[0].url;
-
+      window.BOOKING = process.env.REACT_APP_COUPLE_URL + "/" + booking[0].url;
+      window.CHAT = process.env.REACT_APP_COUPLE_URL + "/" + chat[0].url;
+      window.CVENQUIRY =
+        process.env.REACT_APP_COUPLE_URL + "/" + vendorEnquiry[0].url;
       setShowLoader(false);
     }
   });
 };
 
-export function coupleCheckLoginRedirect(url,loginMenu,loginedMenu,navigate) {
-  const isFoundInLoginmenu = loginMenu.some(element => {
+export function coupleCheckLoginRedirect(
+  url,
+  loginMenu,
+  loginedMenu,
+  navigate
+) {
+  const isFoundInLoginmenu = loginMenu.some((element) => {
     if (element.url === url) {
       return true;
     }
     return false;
   });
-  const isFoundInLoginedmenu = loginedMenu.some(element => {
+  const isFoundInLoginedmenu = loginedMenu.some((element) => {
     if (element.url === url) {
       return true;
     }
@@ -157,20 +165,25 @@ export function coupleCheckLoginRedirect(url,loginMenu,loginedMenu,navigate) {
   });
   if (isFoundInLoginmenu && hasCoupleJWT()) {
     navigate(window.CDASHBOARD);
-  }else if (isFoundInLoginedmenu && !hasCoupleJWT()) {
+  } else if (isFoundInLoginedmenu && !hasCoupleJWT()) {
     navigate(window.HOME);
-  }else if(hasVendorJWT()){
+  } else if (hasVendorJWT()) {
     navigate(window.HOME);
   }
 }
-export function vendorCheckLoginRedirect(url,loginMenu,loginedMenu,navigate) {
-  const isFoundInLoginmenu = loginMenu.some(element => {
+export function vendorCheckLoginRedirect(
+  url,
+  loginMenu,
+  loginedMenu,
+  navigate
+) {
+  const isFoundInLoginmenu = loginMenu.some((element) => {
     if (element.url === url) {
       return true;
     }
     return false;
   });
-  const isFoundInLoginedmenu = loginedMenu.some(element => {
+  const isFoundInLoginedmenu = loginedMenu.some((element) => {
     if (element.url === url) {
       return true;
     }
@@ -178,23 +191,9 @@ export function vendorCheckLoginRedirect(url,loginMenu,loginedMenu,navigate) {
   });
   if (isFoundInLoginmenu && hasVendorJWT()) {
     navigate(window.CDASHBOARD);
-  }else if (isFoundInLoginedmenu && !hasVendorJWT()) {
+  } else if (isFoundInLoginedmenu && !hasVendorJWT()) {
     navigate(window.HOME);
-  }else if(hasCoupleJWT()){
+  } else if (hasCoupleJWT()) {
     navigate(window.HOME);
-  }
-}
-export function check404Error(url,menu,setError) {
-  const found = menu.some(element => {
-    console.log(element.url+'==='+url)
-    if (element.url === url) {
-      return true;
-    }
-    return false;
-  });
-  if(!found){
-    setError(true);
-  }else{
-    setError(false);
   }
 }

@@ -1,5 +1,5 @@
 .pp-content {
-    height: 100vh;
+    height: auto;
     /* overflow: hidden; */
     /* display: flex; */
 }
@@ -42,7 +42,7 @@
 @media(min-width: 745px) {
 
     .pp-content {
-        height: 100vh;
+        height: auto;
         display: flex;
         flex-direction: column;
         justify-content: start;

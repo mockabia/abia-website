@@ -55,10 +55,10 @@ const PhotoPreview = ({ vendorID, maxPhotosToShow }) => {
   }, [modalIsOpen]);
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <div className="myprofile-photogallerytest">
         {/* uploaded image are preview images */}
-        {viewPhotoGallery.map((element, index) => (
+        {viewPhotoGallery.slice(0, maxPhotosToShow).map((element, index) => (
           <div key={element.pid} className="photopreview-wrapper">
             <div
               className="myprofile-photos-gallery"
@@ -80,4 +80,3 @@ const PhotoPreview = ({ vendorID, maxPhotosToShow }) => {
   );
 };
 export default PhotoPreview;
-// export default PhotoPreview

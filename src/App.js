@@ -22,14 +22,15 @@ import Payment from "./pages/General/Payments/Payment";
 import EditSubscription from "./pages/General/EditSubscription";
 import EditPayment from "./pages/General/Payments/EditPayment";
 import ExistingUserPayment from "./pages/General/Payments/ExistingUserPayment";
+import BusinessProfile1 from "./pages/Business/BusinessMyProfile/testing/BusinessProfile-1";
 
 const App = () => {
-  const [showLoader, setShowLoader]     = useState(false);
-  const [publicMenu, setPublicMenu]     = useState([]);
-  const [blogMenu, setBlogMenu]         = useState([]);
+  const [showLoader, setShowLoader] = useState(false);
+  const [publicMenu, setPublicMenu] = useState([]);
+  const [blogMenu, setBlogMenu] = useState([]);
   const [businessMenu, setBusinessMenu] = useState([]);
-  const [coupleMenu, setCoupleMenu]     = useState([]);
-  const [loginStatus, setLoginStatus]   = useState(true);
+  const [coupleMenu, setCoupleMenu] = useState([]);
+  const [loginStatus, setLoginStatus] = useState(true);
 
   useEffect(() => {
     RoutesJS.fetchContentRoutes(setPublicMenu, setBlogMenu);
@@ -48,7 +49,8 @@ const App = () => {
               showLoader={showLoader}
               setShowLoader={setShowLoader}
               menu={businessMenu}
-              setLoginStatus={setLoginStatus} loginStatus={loginStatus}
+              setLoginStatus={setLoginStatus}
+              loginStatus={loginStatus}
             />
           }
         />
@@ -59,7 +61,8 @@ const App = () => {
               showLoader={showLoader}
               setShowLoader={setShowLoader}
               menu={coupleMenu}
-              setLoginStatus={setLoginStatus} loginStatus={loginStatus}
+              setLoginStatus={setLoginStatus}
+              loginStatus={loginStatus}
             />
           }
         />
@@ -71,7 +74,8 @@ const App = () => {
               setShowLoader={setShowLoader}
               publicMenu={publicMenu}
               blogMenu={blogMenu}
-              setLoginStatus={setLoginStatus} loginStatus={loginStatus}
+              setLoginStatus={setLoginStatus}
+              loginStatus={loginStatus}
             />
           }
         />
@@ -93,8 +97,8 @@ const App = () => {
         <Route path="/edit-subscrption" element={<EditSubscription />} />
         <Route path="/edit-payment" element={<EditPayment />} />
         <Route path="/partnerhsip-payment" element={<ExistingUserPayment />} />
-
-        
+        {/* trest */}
+        <Route path="/testing" element={<BusinessProfile1 />} />
       </Routes>
     </>
   );
