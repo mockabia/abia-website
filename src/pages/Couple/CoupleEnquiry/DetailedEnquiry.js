@@ -8,42 +8,32 @@ import { Divider } from "@mui/material";
 import * as CoupleJS from "../Couple";
 
 function DetailedEnquiry(props) {
-    const enquiry                        = props.enquiry;
-    const open                           = props.open;
-    const setOpen                        = props.setOpen;
+  const enquiry = props.enquiry;
+  const open = props.open;
+  const setOpen = props.setOpen;
 
+  const closeDetailOpen = () => {
+    setOpen(false);
+  };
 
-    const closeDetailOpen = () => {
-        setOpen(false);
-    };
-    
-    const formatDollar = (value) => {
-        let dollar = '$ ' + new Intl.NumberFormat().format(value);
-        return dollar;
-    };
+  const formatDollar = (value) => {
+    let dollar = "$ " + new Intl.NumberFormat().format(value);
+    return dollar;
+  };
 
-    return (
-        <>
-        {open && (
-          <React.Fragment key={enquiry.id}>
-            <div className="inquiry-overlay">
-            <div
-              className="flex justify-end"
-              onClick={closeDetailOpen}
-            >
-              <AiOutlineClose
-                size={26}
-                className=" fixed cursor-pointer "
-              />
+  return (
+    <>
+      {open && (
+        <React.Fragment key={enquiry.id}>
+          <div className="inquiry-overlay">
+            <div className="flex justify-end" onClick={closeDetailOpen}>
+              <AiOutlineClose size={26} className=" fixed cursor-pointer " />
             </div>
 
             <div className="mt-[3rem]">
               {/* image section */}
               <div className="flex gap-[1rem]">
-                <img
-                  src={enquiry.imageUrl}
-                  className="enquiry2-vendor-image"
-                />
+                <img src={enquiry.imageUrl} className="enquiry2-vendor-image" />
                 <div className="flex flex-col gap-1">
                   <h1 className="text-[#000]">{enquiry.vname}</h1>
                   <div className="detailbox-subheader">
@@ -60,9 +50,7 @@ function DetailedEnquiry(props) {
               </div>
               {/* vendor listing */}
               <div className="flex items-center mt-[1rem]">
-                <h5 className="font-bold cursor-pointer">
-                  See their listing
-                </h5>
+                <h5 className="font-bold cursor-pointer">See their listing</h5>
                 <HiOutlineArrowSmRight
                   size={26}
                   color="#000"
@@ -110,8 +98,7 @@ function DetailedEnquiry(props) {
                         </td>
                         <td className="inquiry-td-style">
                           <h5>
-                            {enquiry.region},{" "}
-                            <span>{enquiry.state}</span>
+                            {enquiry.region}, <span>{enquiry.state}</span>
                           </h5>
                         </td>
                       </tr>
@@ -136,13 +123,13 @@ function DetailedEnquiry(props) {
                         <td className="inquiry-td-style">
                           <span className="text-[14px]">Up to </span>
                           <span className="font-change">
-                                {formatDollar(enquiry.budget)}
+                            {formatDollar(enquiry.budget)}
                           </span>{" "}
                         </td>
                         <td className="inquiry-td-style">
                           <span className="text-[14px]">Up to </span>
                           <span className="font-change">
-                                {formatDollar(enquiry.categoryBudget)}
+                            {formatDollar(enquiry.categoryBudget)}
                           </span>{" "}
                         </td>
                       </tr>
@@ -153,10 +140,10 @@ function DetailedEnquiry(props) {
               </div>
             </div>
           </div>
-          </React.Fragment>
-        )}
-      </>
-    );
-  }
-  
+        </React.Fragment>
+      )}
+    </>
+  );
+}
+
 export default DetailedEnquiry;

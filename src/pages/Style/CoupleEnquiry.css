@@ -1,7 +1,7 @@
 .enqquiry-page-container {
     /* padding: 1rem 0; */
     height: 100vh;
-  
+
 }
 
 .main-menu-section {
@@ -18,14 +18,16 @@
 }
 
 @media(min-width:550px) {
-.main-menu-section {
-    padding: 1rem;
+    .main-menu-section {
+        padding: 1rem;
+    }
 }
-}
+
 @media(min-width:1100px) {
     .main-menu-section {
         padding-left: 3rem;
     }
+
     .main-content {
         height: auto;
         padding-left: 3rem;
@@ -95,7 +97,7 @@
 }
 
 @media(min-width:1100px) {
-.padding-position {
+    .padding-position {
         padding: 1rem 1rem 1rem 4rem;
     }
 }
@@ -112,9 +114,11 @@
     /* padding: 1rem;
     padding-right: 2rem; */
 }
+
 .enquiry-table {
     width: 100%;
 }
+
 .enquiry-table th {
     text-align: left;
     padding: 1.5rem 0.5rem 1.5rem 1rem;
@@ -134,20 +138,23 @@
     height: 2rem;
     object-fit: contain;
 }
+
 .enquiry2-vendor-image {
     width: 3.5rem;
     height: 3.5rem;
     object-fit: contain;
 }
+
 .enquiry-status {
     display: flex;
     gap: 1rem;
 }
+
 .enquiry-status-mobile {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;  
+    gap: 1rem;
 }
 
 .enquiry-body-row td {
@@ -155,61 +162,58 @@
     border-bottom: 1px solid #b7b7b7;
 }
 
-.your-category-container {
+.your-inquiry-container {
     display: flex;
     flex-direction: column;
     margin-top: 3rem;
     gap: 1.5rem;
 }
 
-.your-category-container ul li {
+.your-inquiry-container ul li {
     list-style-type: square;
     margin-left: 18px;
-    
+
 }
-.your-category-container ul li::marker {
+
+.your-inquiry-container ul li::marker {
     color: #b7b7b7;
     font-size: 24px;
 }
 
 
-.your-category-table table {
+.your-inquiry-table table {
     width: 100%;
     text-align: left;
 }
 
-.your-category-table th {
+.your-inquiry-table th {
     width: 20%;
     text-align: left;
 }
 
-.your-category-table td {
+.your-inquiry-table td {
     font-weight: 600;
     color: #000;
     width: 10rem;
 }
 
-.your-category-table-2 table {
+.your-inquiry-table-2 table {
     width: 100%;
     text-align: left;
 }
 
-.your-category-table-2 th {
+.your-inquiry-table-2 th {
     width: 20%;
     text-align: left;
 }
 
-/* .your-category-table-2 td {
-    font-weight: 600;
-    color: #000;
-    width: 10rem;
-} */
 
 .category-td-style {
     width: 20%;
     font-weight: 600;
     color: #000;
 }
+
 .category-td-style-digit {
     width: 20%;
     font-weight: 600;
@@ -263,7 +267,8 @@
 .active-enquiry-desktop {
     display: none;
 }
-.active-enquiry-mobile{
+
+.active-enquiry-mobile {
     cursor: pointer;
     display: block;
     padding: 1rem;
@@ -273,23 +278,25 @@
 }
 
 
-   .coupleenq-input-style {
-       width: 62vw;
-       max-width: 100%;
-       height: 45px;
-       border-radius: 10px;
-       border: 1px solid #C3BEBE;
-       padding: 10px;
-       padding-left: 0.5rem;
-       margin-top: 5px;
-       cursor: pointer;
-   }
+.coupleenq-input-style {
+    width: 62vw;
+    max-width: 100%;
+    height: 45px;
+    border-radius: 10px;
+    border: 1px solid #C3BEBE;
+    padding: 10px;
+    padding-left: 0.5rem;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
 @media(min-width:1100px) {
     .active-enquiry-desktop {
         display: block;
         padding-left: 4rem;
     }
-    .active-enquiry-mobile{
+
+    .active-enquiry-mobile {
         display: none;
     }
 
@@ -326,7 +333,7 @@
 }
 
 .cancel-button:hover {
-   
+
     background-color: #000;
     color: #fff;
 }
@@ -372,16 +379,16 @@
 
 
 .booked-image-container {
-  display: none;
+    display: none;
 }
 
 .booked-image-container img {
-   display: none;
+    display: none;
 }
 
 
 @media(min-width:1100px) {
-.booking-cotainer {
+    .booking-cotainer {
         display: flex;
         flex-direction: row;
         gap: 1rem;
@@ -397,23 +404,24 @@
         flex-direction: column;
         gap: 1rem;
     }
-.booked-image-container {
-    display: block;
-    width: 100%;
-    border-radius: 18px;
-    overflow: hidden;
-    /* This ensures the image doesn't overflow the container */
-    height: 50%;
-    /* Adjust the desired height */
-}
 
-.booked-image-container img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* or "contain" depending on your preference */
-}
+    .booked-image-container {
+        display: block;
+        width: 100%;
+        border-radius: 18px;
+        overflow: hidden;
+        /* This ensures the image doesn't overflow the container */
+        height: 50%;
+        /* Adjust the desired height */
+    }
+
+    .booked-image-container img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* or "contain" depending on your preference */
+    }
 }
 
 /* Modal */
@@ -451,11 +459,55 @@
 
 
 @media(min-width:1100px) {
-.booked-modal-content {
-    width: 45vw;
+    .booked-modal-content {
+        width: 45vw;
+    }
+
+    .booked2-modal-content {
+        width: 37vw;
+    }
 }
 
-.booked2-modal-content {
-    width: 37vw;
+
+/* overlay */
+.inquiry-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: #fff;
+    color: #8E8E8E;
+    /* padding: 2rem 2.5rem 3rem 2.5rem; */
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
 }
+
+.inquiry-overlay::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 767px;
+    width: calc(100% - 400px);
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+ 
+}
+
+@media (min-width: 767px) {
+    .inquiry-overlay {
+        width: 450px;
+        right: 0;
+        left: unset;
+        padding: 1rem 1rem 3rem 2rem;
+    }
+
+    .inquiry-overlay::after {
+        left: unset;
+        right: 450px;
+        /* Set the width where the opaque area ends */
+    }
 }
