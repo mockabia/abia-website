@@ -360,7 +360,7 @@ export const autoCompleteVendorOnCategory = async (catId, setcatBusiness) => {
       if (response.statuscode == 200) {
         setcatBusiness(response.result);
       } else {
-        setData([]);
+        setcatBusiness([]);
       }
     });
 };
