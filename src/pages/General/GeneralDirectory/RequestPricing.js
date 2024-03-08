@@ -55,6 +55,7 @@ const RequestPricing = ({ business, locationOptions, servicesOptions }) => {
           variant="contained"
           sx={{
             fontFamily: "Manrope",
+            fontWeight: "600",
             boxShadow: "none",
             backgroundColor: "black",
             textTransform: "initial",

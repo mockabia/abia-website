@@ -34,7 +34,7 @@ const Public = () => {
   return (
     <div className="blog-background">
       <div className="mobile-content">
-        <div className="flex flex-col gap-[10px] mb-[1rem]">
+        <div className="flex flex-col gap-[10px] pb-[1rem] ">
           <h2 className="blog-main-header">{pageTitle}</h2>
           <div
             className="sub-description"
@@ -88,7 +88,7 @@ const Public = () => {
 
                   <div className="first-blog-content">
                     <div>
-                      <h2>{blog.title}</h2>
+                      <h1>{blog.title}</h1>
                       <p>{blog.short_bcomment}</p>
                     </div>
                     <div className="blog-read-more">
@@ -107,7 +107,7 @@ const Public = () => {
               <Link to={`/${blog.url}`} className="single-blog">
                 <div className="three-blog-content">
                   <img src={blog.pagephoto_val} alt={blog.pagephoto_val} />
-                  <div className="p-[1rem] flex flex-col gap-[8px">
+                  <div className="p-[1rem] flex flex-col gap-[12px]">
                     <h3>{blog.title}</h3>
                     <p>{blog.short_bcomment}</p>
                   </div>

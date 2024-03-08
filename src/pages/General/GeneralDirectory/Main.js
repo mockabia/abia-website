@@ -23,7 +23,7 @@ const Main = ({ onChangeCity, onChangeSubUrb }) => {
     <div className="main-section">
       <div className="directory-main-grid">
         <h1 className="main-content-header">
-          <span className="uppercase">{mainCity} </span> {""}WEDDING VENUES
+          <span>{mainCity} </span> {""}Wedding Venues
         </h1>
       </div>
       <p className="directory-main-grid main-content-desc">

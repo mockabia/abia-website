@@ -1526,22 +1526,15 @@ export const EnquirySelectStyle = {
     borderRadius: "10px",
     // background: "#fafafa",
     height: "50px",
-    width: "90vw",
+    width: "62vw",
     maxWidth: "100%",
     "&:hover": {
       border: "1px solid #c3bebe",
     },
-    "@media (min-width: 551px)": {
-      width: "11rem",
-      maxWidth: "30rem",
-    },
-    "@media (min-width: 769px)": {
-      width: "11.5rem",
-      maxWidth: "30rem",
-    },
+
     "@media (min-width: 1100px)": {
-      width: "18rem",
-      maxWidth: "30rem",
+      width: "30vw",
+      maxWidth: "30vw",
     },
   }),
   menu: (provided) => ({
