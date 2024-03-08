@@ -349,7 +349,7 @@ export const coupleBooking = async (setData, setCategoryList) => {
     }
   });
 };
-export const autoCompleteVendorOnCategory = async (catId, setcatBusiness) => {
+export const autoCompleteVendorOnCategory = async (catId, setAutocompleteVendors,setVendorModal) => {
   let token = localStorage.getItem("coupleToken");
   token = JSON.parse(token);
   let userSession = token && token.user ? token.user : null;
@@ -358,9 +358,29 @@ export const autoCompleteVendorOnCategory = async (catId, setcatBusiness) => {
     .autoCompleteVendorOnCategory(userId, catId)
     .then(function (response) {
       if (response.statuscode == 200) {
-        setcatBusiness(response.result);
+        setAutocompleteVendors(response.result);
+        setVendorModal(true);
       } else {
-        setcatBusiness([]);
+        setAutocompleteVendors([]);
+      }
+    });
+};
+export const addBooking = async (formValues,setErrors,setData,setOpen) => {
+  let token = localStorage.getItem("coupleToken");
+  token = JSON.parse(token);
+  let userSession = token && token.user ? token.user : null;
+  let userId = userSession && userSession.id ? userSession.id : null;
+  await servicesPage.addBooking(userId, formValues).then(function (response) {
+      if (response.statuscode == 200) {
+        setData([]);
+        setData(response.result);
+        setOpen(false);
+      } else {
+        if (response.errors) {
+          setErrors(response.errors);
+        } else if (response.statusmessage) {
+          setErrors(response.statusmessage);
+        }
       }
     });
 };

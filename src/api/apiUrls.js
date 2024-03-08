@@ -92,4 +92,7 @@ export const COUPLE_API = {
   CATEGORIES: `${baseUrl}view_Selcategories`,
   ADD_CATEGORIES: `${baseUrl}ManageSelcategories`,
   ENQUIRIES: `${baseUrl}ManageEnquiries`, 
+  BOOKINGS: `${baseUrl}ManageBookings`, 
+  AUTOCOMPLETE_VENDOR_CATEGORY: `${baseUrl}autocompleteVendorCategory`, 
+  ADD_BOOKING: `${baseUrl}add_booking`, 
 };
