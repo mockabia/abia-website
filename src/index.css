@@ -85,6 +85,10 @@ p {
   color: #8e8e8e;
 }
 
+.blog-background p {
+color: #222222;
+}
+
 label {
   font-size: 14px;
   font-weight: 600;
@@ -131,6 +135,7 @@ input[type=number] {
 :root {
   --search-icon-fill: #B7B7B7;
   --navbar-icon-fill: #B7B7B7;
+  --abia-color: #5a9d98;
 }
 
 @media (max-width: 768px) {

@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500&family=Playfair+Display:wght@500&display=swap');
 
 .directory-page-container {
-    background-color: #f2eeea;
+    background-color: #fff;
 }
-  .directory-page-container::after {
+  /* .directory-page-container::after {
       content: "";
       background-image: url(../../icons/ABIA-White-Logo.svg);
       background-repeat: no-repeat;
@@ -12,11 +12,10 @@
       position: absolute;
       top: 63%;
       left: 95%;
-      /* Background-position: */
       transform: translate(-50%, -50%) rotate(-90deg);
       height: 100vh;
       width: 100%;
-  }
+  } */
     .directory-breadcrumbs {
         display: block;
          background: #f5f5f5;
@@ -87,15 +86,15 @@
 
     .main-content-header {
        /* background-color: #873131; */
-        font-family: 'Playfair Display', serif;
+        font-family: 'Manrope',sans-serif;
         /* font-size: px; */
-        font-weight: 600;
+        font-weight: 800;
        grid-area: header;
     }
 
     .main-content-desc {
         color: #515151;
-        /* font-family: 'Playfair Display', serif; */
+        /* font-family: 'Manrope', serif; */
         font-weight: 500;
        grid-area: content;
        grid-column: 1/2;
@@ -209,8 +208,8 @@
     }
 
     .dircard-info>.header {
-        font-family: 'Playfair Display', serif;
-        font-family: 400;
+        font-family: 'Manrope',sans-serif;
+        font-weight: 600;
     }
 
     .request-pricing {

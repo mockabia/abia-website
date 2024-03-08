@@ -4,6 +4,8 @@ import * as apiUrls from "../api/apiUrls";
 import categories from "./json/couples-categories-edit.json";
 import enquiries from "./json/enquiry_list.json";
 import vendorList from "./json/vendor_categoryList.json";
+import booking from "./json/booking_list.json";
+import autoComplete from "./json/autoComplete_list.json";
 
 export const MAIN_API = apiUrls.COUPLE_API;
 export const CONTENTS_API = apiUrls.CONTENT_API;
@@ -78,6 +80,14 @@ export async function coupleEnquiries(id) {
   return enquiries;
   //return await apiService.apiCall(MAIN_API["ENQUIRIES"]+'/'+id, "GET");
 }
+export async function coupleBooking(id) {
+  return booking;
+  //return await apiService.apiCall(MAIN_API["ENQUIRIES"]+'/'+id, "GET");
+}
+export async function autoCompleteVendorOnCategory(id, catId) {
+  return autoComplete;
+  //return await apiService.apiCall(MAIN_API["ENQUIRIES"]+'/'+id+'/'+catId, "GET");
+}
 
 export async function stateDropdown(postData) {
   return await apiService.apiCall(apiUrls.STATE_DROPDOWN, "GET", postData);
@@ -109,7 +119,7 @@ export async function marketCategoryjson() {
   // return await apiService.apiCall(apiUrls.MARKETING_CATEGORY, "GET", postData);
 }
 
-
+// categoryBusinessList;
 
 // export async function coupleLogin(postData) {
 //   return await apiService.apiCall(MAIN_API["LOGIN"], "POST", postData);

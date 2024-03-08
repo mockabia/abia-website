@@ -77,7 +77,7 @@ const AddCategory = (props) => {
       phone: "",
       email: "",
       budget: "",
-    }); // Reset to null, whnen a new category is selected
+    });
   };
 
   const handleBusinessChange = (selectedOption) => {
@@ -104,42 +104,52 @@ const AddCategory = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("Latest businessDetails state:", businessDetails);
+    console.log("Updated businessDetails:", businessDetails);
   }, [businessDetails]);
 
   const handleSubmit = () => {
-    console.log("Inside handleSubmit");
+    if (selectedBusinessDetails.id) {
+      // If a business is selected
+      const updatedBusinesses = [...businessDetails];
+      const businessIndex = updatedBusinesses.findIndex(
+        (business) => business.id === selectedBusinessDetails.id
+      );
 
-    const updatedBusinesses = [...businessDetails];
-    const businessIndex = updatedBusinesses.findIndex(
-      (business) => business.id === selectedBusinessDetails.id
-    );
+      if (businessIndex !== -1) {
+        // Update the existing business details in the array
+        updatedBusinesses[businessIndex] = {
+          id: selectedBusinessDetails.id,
+          business_name: selectedBusinessDetails.name,
+          email: selectedBusinessDetails.email,
+          phone: selectedBusinessDetails.phone,
+          budget: selectedBusinessDetails.budget,
+          booked_val: 1,
+          category_id: selectedCategory.id,
+          category_name: selectedCategory.title,
+        };
+      } else {
+        // Add a new business to the array
+        updatedBusinesses.push({
+          id: selectedBusinessDetails.id,
+          business_name: selectedBusinessDetails.name,
+          email: selectedBusinessDetails.email,
+          phone: selectedBusinessDetails.phone,
+          budget: selectedBusinessDetails.budget,
+          booked_val: 1,
+          category_id: selectedCategory.id,
+          category_name: selectedCategory.title,
+        });
+      }
 
-    if (businessIndex !== -1) {
-      // Update the existing business details in the array
-      updatedBusinesses[businessIndex] = {
-        id: selectedBusinessDetails.id,
-        business_name: selectedBusinessDetails.name,
-        booked_val: 1,
-        category_id: selectedCategory.id,
-        category_name: selectedCategory.title,
-      };
+      console.log("Updated JSON Data:", updatedBusinesses);
+      setBusinessDetails(updatedBusinesses); // Update the state with the new businessDetails
+      setOpen(false);
+      onUpdateBusinessDetails(updatedBusinesses); // Callback to update parent component state
     } else {
-      // Add a new business to the array
-      updatedBusinesses.push({
-        id: selectedBusinessDetails.id,
-        business_name: selectedBusinessDetails.name,
-        booked_val: 1,
-        category_id: selectedCategory.id,
-        category_name: selectedCategory.title,
-      });
+      console.log("Please select a business before saving.");
     }
-
-    console.log("Updated JSON Data:", updatedBusinesses);
-    setOpen(false);
-    onUpdateBusinessDetails(updatedBusinesses); // Callback to update parent component state
   };
-
+  
   return (
     <>
       {open && (
@@ -200,12 +210,6 @@ const AddCategory = (props) => {
                     label: business.name,
                   }))}
                   onChange={handleBusinessChange}
-                  //   onChange={(selectedOptions) =>
-                  //     handleInputChangeVal("wedding_state", selectedOptions.url)
-                  //   }
-                  //   value={stateOptions.filter(
-                  //     (option) => option.url === formValues.wedding_state
-                  //   )}
                   components={{
                     Menu,
                     MultiValue,

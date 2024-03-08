@@ -53,8 +53,8 @@
       "id": 6,
       "title": "Venues",
        "businesses": [
-        { "id": 601, "name": "Grand Ballroom Estates", "phone": "123456", "email": "abc@gmail.com", "booked": "0", "imageUrl":"https://source.unsplash.com/800x600/?rustic-retreat" },
-        { "id": 602, "name": "Rustic Retreat Villas", "phone": "654321", "email": "def@gmail.com", "booked": "0", "imageUrl": "https://source.unsplash.com/800x600/?elegant-gardens" },
+        { "id": 601, "name": "Grand Ballroom Estates", "phone": "123456", "email": "abc@gmail.com", "booked": "0" },
+        { "id": 602, "name": "Rustic Retreat Villas", "phone": "654321", "email": "def@gmail.com", "booked": "0" },
         { "id": 603, "name": "Elegant Gardens Hall", "phone": "987654", "email": "ghi@gmail.com", "booked": "0" },
         { "id": 604, "name": "Urban Oasis Center", "phone": "123789", "email": "jkl@gmail.com", "booked": "0" },
         { "id": 605, "name": "Classic Charm Pavilion", "phone": "456789", "email": "mno@gmail.com", "booked": "0" },

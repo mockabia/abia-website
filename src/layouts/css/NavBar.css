@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500&family=Playfair+Display:wght@500&display=swap');
 
     .login-navbar-style {
-        background-color: #6cc2bc;
+        background-color: var(--abia-color);;
         display: flex;
         height: 70px;
         align-items: center;
@@ -58,7 +58,7 @@
 @media(min-width:1024px) {
 
     .login-navbar-style {
-        background-color: #6cc2bc;
+        background-color: var(--abia-color);;
         height: 70px;
         padding: 0px 50px;
     }
