@@ -41,14 +41,10 @@ export function validateName(name, errors) {
 export const validateCoupleLogin = (inputs, setInputsErrors) => {
   setInputsErrors({});
   let validate = true;
-  validate = validateEmail(inputs.email, 'email',setInputsErrors);
-  // Validate Password
-  if (!inputs.password) {
+  let validEmail     = validateEmail(inputs.email, 'email',setInputsErrors);
+  let validPassword  = validatePassword(inputs.password, 'password',setInputsErrors);
+  if(!validEmail || !validPassword){
     validate = false;
-    setInputsErrors((values) => ({...values,["password"]: "Password is required"}));
-  } else if (inputs.password.length < 6) {
-    validate = false;
-    setInputsErrors((values) => ({...values,["password"]: "Minimum 6 characters"}));
   }
   return validate;
 };
@@ -62,7 +58,7 @@ export const validateCoupleSignup = (activeStep,inputs, setInputsErrors) => {
   setInputsErrors({});
   let validate = true;
   if (activeStep === 0) {
-    if (inputs.bride_message===null) {
+    if (inputs.bride_message===null || inputs.bride_message===undefined) {
       validate = false;
       setInputsErrors((values) => ({...values,["bride_message"]: "Please Select an Option"}));
     }
@@ -84,19 +80,10 @@ export const validateCoupleSignup = (activeStep,inputs, setInputsErrors) => {
       setInputsErrors((values) => ({...values,["wedding_state"]: "State is required"}));
     }
   } else if (activeStep === 2) {
-    if (!inputs.email) {
+    let validEmail     = validateEmail(inputs.email, 'email',setInputsErrors);
+    let validPassword  = validatePassword(inputs.password, 'password',setInputsErrors);
+    if(!validEmail || !validPassword){
       validate = false;
-      setInputsErrors((values) => ({...values,["email"]: "Email is required"}));
-    } else if (!/\S+@\S+\.\S+/.test(inputs.email)) {
-      validate = false;
-      setInputsErrors((values) => ({...values,["email"]: "Invalid Email"}));
-    }
-    if (!inputs.password) {
-      validate = false;
-      setInputsErrors((values) => ({...values,["password"]: "Password is required"}));
-    } else if (inputs.password.length < 6) {
-      validate = false;
-      setInputsErrors((values) => ({...values,["password"]: "Minimum 6 characters"}));
     }
   }
   return validate;
@@ -116,7 +103,10 @@ export const validateCoupleContact = (inputs,setInputsErrors) => {
     validate = false;
     setInputsErrors((values) => ({...values,["phone"]: "Phone no: is required"}));
   }
-  validate = validateEmail(inputs.email, 'email',setInputsErrors);
+  let validEmail     = validateEmail(inputs.email, 'email',setInputsErrors);
+  if(!validEmail){
+    validate = false;
+  }
   return validate;
 };
 

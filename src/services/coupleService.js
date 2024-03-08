@@ -75,6 +75,13 @@ export async function updateBudgetCategory(id, postData) {
     postData
   );
 }
+export async function addBooking(id, postData) {
+  return await apiService.apiCall(
+    MAIN_API["ADD_BOOKING"] + "/" + id,
+    "POST",
+    postData
+  );
+}
 
 export async function coupleEnquiries(id) {
   return enquiries;
@@ -82,11 +89,11 @@ export async function coupleEnquiries(id) {
 }
 export async function coupleBooking(id) {
   return booking;
-  //return await apiService.apiCall(MAIN_API["ENQUIRIES"]+'/'+id, "GET");
+  //return await apiService.apiCall(MAIN_API["BOOKINGS"]+'/'+id, "GET");
 }
 export async function autoCompleteVendorOnCategory(id, catId) {
   return autoComplete;
-  //return await apiService.apiCall(MAIN_API["ENQUIRIES"]+'/'+id+'/'+catId, "GET");
+  //return await apiService.apiCall(MAIN_API["AUTOCOMPLETE_VENDOR_CATEGORY"]+'/'+id+'/'+catId, "GET");
 }
 
 export async function stateDropdown(postData) {
