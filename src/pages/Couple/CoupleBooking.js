@@ -14,7 +14,7 @@ import Modal from "@mui/material/Modal";
 import * as CoupleJS from "./Couple";
 import RenderBooking from "./CoupleBooking/RenderBooking";
 import Selectcategory from "./CoupleBooking/Selectcategory";
-import AddBusiness  from "./CoupleBooking/AddBusiness";
+import AddBusiness from "./CoupleBooking/AddBusiness";
 
 export default function CouplePage(props) {
   const location = useLocation();
@@ -27,15 +27,21 @@ export default function CouplePage(props) {
   const [email, setEmail] = useState("");
   const [business_name, setBusinessName] = useState("");
   //const [budget, setBudget] = useState("");
-  const [data, setData]                                 = useState([]);
-  const [autocompleteVendors, setAutocompleteVendors]   = useState({});
-  const [vendorModal, setVendorModal]                   = useState(false);
-  const [choosenCategory, setChoosenCategory]           = useState(0);
-  const [formValues, setFormValues]                     = useState({});
+  const [data, setData] = useState([]);
+  const [autocompleteVendors, setAutocompleteVendors] = useState({});
+  const [vendorModal, setVendorModal] = useState(false);
+  const [choosenCategory, setChoosenCategory] = useState(0);
+  const [formValues, setFormValues] = useState({});
 
   const url = location.pathname.split("/").pop();
   useEffect(() => {
-    if(choosenCategory>0){CoupleJS.autoCompleteVendorOnCategory(choosenCategory, setAutocompleteVendors,setVendorModal);}
+    if (choosenCategory > 0) {
+      CoupleJS.autoCompleteVendorOnCategory(
+        choosenCategory,
+        setAutocompleteVendors,
+        setVendorModal
+      );
+    }
   }, [choosenCategory]);
 
   /* useEffect(() => {
@@ -49,13 +55,9 @@ export default function CouplePage(props) {
     CoupleJS.coupleBooking(setData, setCategoryList);
   }, []);
 
-
-
   const toggleOpen = () => {
     setCategoryOpen(!categoryOpen);
   };
-
-  
 
   const mainMenus = [
     {
@@ -98,7 +100,7 @@ export default function CouplePage(props) {
       {/* <pre>{JSON.stringify(formValues, null, 2)}</pre> */}
       <React.Fragment>
         <div className="main-content">
-          <h2>{pageContent.title}</h2>
+          <h2>Booked vendors</h2>
           {/* info content */}
           <div className="">
             <p className="flex justify-start items-start gap-[0.5rem] mt-[0.5rem] mb-[0.5rem]">
@@ -116,19 +118,36 @@ export default function CouplePage(props) {
             </div>
             {/* Display businessDetails in Booking Card */}
             <div className="booking-cotainer">
-              <RenderBooking data={data} setFormValues={setFormValues} setChoosenCategory={setChoosenCategory} />
+              <RenderBooking
+                data={data}
+                setFormValues={setFormValues}
+                setChoosenCategory={setChoosenCategory}
+              />
             </div>
 
             {/* ADD CATEGORY  */}
-            <Selectcategory setData={setData} setChoosenCategory={setChoosenCategory} open={categoryOpen} setOpen={setCategoryOpen} categoryList={categoryList} />
-            
-          {/* VENDOR DETAIL */}
-          <AddBusiness open={vendorModal} setOpen={setVendorModal} setData={setData} 
-          formValues={formValues} setFormValues={setFormValues} autocompleteVendors={autocompleteVendors} />
+            <Selectcategory
+              setData={setData}
+              setChoosenCategory={setChoosenCategory}
+              open={categoryOpen}
+              setOpen={setCategoryOpen}
+              categoryList={categoryList}
+              setFormValues={setFormValues}
+            />
+
+            {/* VENDOR DETAIL */}
+            <AddBusiness
+              open={vendorModal}
+              setOpen={setVendorModal}
+              setData={setData}
+              formValues={formValues}
+              setFormValues={setFormValues}
+              autocompleteVendors={autocompleteVendors}
+              setChoosenCategory={setChoosenCategory}
+            />
           </div>
         </div>
       </React.Fragment>
     </section>
   );
 }
-

@@ -208,7 +208,6 @@
 }
 
 
-
 .category-td-style {
     width: 20%;
     font-weight: 600;
@@ -392,11 +391,11 @@
     .booking-cotainer {
         display: flex;
         flex-direction: row;
-        gap: 1rem;
+        gap: 3rem;
     }
 
     .booked-card {
-        width: 25vw;
+        width: 20vw;
         height: 20rem;
         background-color: #6cc2bc;
         border-radius: 18px;
