@@ -45,6 +45,12 @@ const RequestPricing = (props) => {
 
     useEffect(() => {
       setFormvalues(values => ({...values,['vid']: props.vid }))
+      let ctoken = localStorage.getItem("coupleToken");
+      if (ctoken !== undefined && ctoken !== "undefined" && ctoken !== null) {
+        ctoken = JSON.parse(ctoken);
+        let userSession = ctoken && ctoken.user ? ctoken.user : null;
+        setFormvalues(values => ({...values,['date_of_wedding']: userSession.date_of_wedding,['phone']: userSession.phone }))
+      }
     }, []);
 
     const handleInputChange = (e) => {
@@ -107,39 +113,55 @@ const RequestPricing = (props) => {
                   }
                 />
                 <Stack direction={isMobile ? "column" : "row"} spacing={1}>
+                  <RedditTextField
+                      label="Phone"
+                      name="phone"
+                      id="reddit-input"
+                      variant="filled"
+                      value={formvalues.phone}
+                      onChange={(e) =>
+                        handleInputChange(e)
+                      }
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <PhoneIcon
+                              fill="#949494"
+                              style={{
+                                width: "18px",
+                                height: "18px",
+                              }}
+                            />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                    {errors.phone !='' && (
+                      <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
+                        {errors.phone}
+                      </Typography>
+                    )}
+                  
                   {/* Wedding Budget */}
                   <RedditTextField
                     label="Budget"
                     name="budget"
                     id="reddit-input"
                     variant="filled"
+                    value={formvalues.budget}
                     onChange={(e) =>
                       handleInputChange(e)
                     }
                   />
-                  {/* Select Services */}
-                  <SelectTextField
-                    id="filled-select-services"
-                    name="category"
-                    select
-                    label="Wedding Service*"
-                    variant="filled"
-                    onChange={(e) =>
-                      handleInputChange(e)
-                    }
-                    SelectProps={{ IconComponent: () => null }}
-                  >
-                    {servicesOptions?.map((option) => {
-                        return (<MenuItem key={option.id} value={option.id}>
-                          {option.title}
-                        </MenuItem>)
-                    })}
-                  </SelectTextField>
-                  {errors.category !='' && (
-                    <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
-                      {errors.category}
-                    </Typography>
-                  )}
+                </Stack>
+                <Stack direction={isMobile ? "column" : "row"} spacing={2}>
+                  <DatePickerPublic name="date_of_wedding" 
+                    value={formvalues.budget} onChange={handleInputChangeVal} />
+                    {errors.date_of_wedding !='' && (
+                      <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
+                        {errors.date_of_wedding}
+                      </Typography>
+                    )}
                 </Stack>
               </Stack>
               <Stack>

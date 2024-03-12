@@ -86,9 +86,13 @@ export const validateSaveEnquiry = (inputs,setInputsErrors) => {
 export const validateCoupleSaveEnquiry = (inputs,setInputsErrors) => {
   setInputsErrors({});
   let validate = true;
-  if (!inputs.category) {
+  if (!inputs.phone) {
     validate = false;
-    setInputsErrors((values) => ({...values,["category"]: "Wedding Service is required"}));
+    setInputsErrors((values) => ({...values,["phone"]: "Phone is required"}));
+  }
+  if (!inputs.date_of_wedding) {
+    validate = false;
+    setInputsErrors((values) => ({...values,["date_of_wedding"]: "Wedding Date is required"}));
   }
   return validate;
 };
