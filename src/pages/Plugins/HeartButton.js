@@ -48,6 +48,11 @@ const HeartButton = ({ locationOptions }) => {
     };
   }, []);
 
+  const handleCheckBoxChange = (event) => {
+    const isChecked = event.target.checked;
+    alert(isChecked ? "checked!" : "unchecked");
+  };
+
   return (
     <div className="heartbutton-div" onClick={handleOpen}>
       <StyledHeartIcon className="heart-icon " />
@@ -209,7 +214,7 @@ const HeartButton = ({ locationOptions }) => {
                 {/* </div> */}
                 {/* Checkbox */}
                 <div className="flex justify-start items-center">
-                  <CheckBoxMui />
+                  <CheckBoxMui onChange={handleCheckBoxChange} />
                   <p className="text-[10px]">
                     I accept ABIA Weddings Australia's Terms of Use and PRivacy
                     Policy

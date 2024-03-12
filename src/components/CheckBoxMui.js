@@ -2,11 +2,12 @@ import * as React from "react";
 import Checkbox from "@mui/material/Checkbox";
 import { BpIcon, BpCheckedIcon } from "../components/FormStyle";
 
-export default function ControlledCheckbox() {
+export default function ControlledCheckbox(props) {
   const [checked, setChecked] = React.useState(true);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
+    props.onChange(event);
   };
 
   // Inspired by blueprintjs
