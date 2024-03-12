@@ -4,15 +4,20 @@ import { LuCheckCircle2 } from "react-icons/lu";
 import { Link } from "react-router-dom";
 
 function RenderBooking(props) {
-  const data                                        = props.data;
-  const setChoosenCategory                          = props.setChoosenCategory;
-  const setFormValues                               = props.setFormValues;
-  
+  const data = props.data;
+  const setChoosenCategory = props.setChoosenCategory;
+  const setFormValues = props.setFormValues;
 
   const handleEdit = (vendor) => {
-    setChoosenCategory(vendor.catId)
+    setChoosenCategory(vendor.catId);
     setFormValues({});
-    setFormValues(values => ({...values,['business_id']: vendor.vid,['phone']: vendor.phone,['email']: vendor.email,}))
+    setFormValues((values) => ({
+      ...values,
+      ["business_id"]: vendor.vid,
+      ["phone"]: vendor.phone,
+      ["email"]: vendor.email,
+      ["budget"]: vendor.budget,
+    }));
   };
 
   return (
