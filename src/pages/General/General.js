@@ -1,226 +1,83 @@
 import * as apiService from "../../api/apiServices";
 import * as reactUrls from "../../api/reactUrls";
-import * as servicesPage from "../../services/vendor/businessServices";
+import * as servicesPage from "../../services/generalServices";
 import * as customValidator from "../Plugins/customValidator";
+import * as customJS from "../../plugins/custom/custom";
+export { customJS };
 
-export const hasJWT = async (navigate) => {
-  let flag = false;
-  localStorage.getItem("vendorToken") ? (flag = true) : (flag = false);
-  if (flag == true) {
-    navigate(window.VDASHBOARD);
-  }
-};
-
-export const checkRememberMe = (setInputs) => {
-  setInputs({
-    ["username"]: localStorage.vusername,
-    ["password"]: localStorage.vpassword,
-    ["remember_me"]: localStorage.vremember_me,
+export const fetchState = async (setStateOptions) => {
+  await servicesPage.stateDropdown().then(function (response) {
+    if (response.statuscode === 200) {
+      setStateOptions(response.result);
+    }
   });
 };
+export const fetchDirectoryDropdowns = async (setServicesOptions,setLocationOptions,setStateOptions) => {
+  await servicesPage.fetchDirectoryDropdowns().then(function (response) {
+    if (response.statuscode === 200) {
+      setServicesOptions(response.result.services);
+      const formattedLocations1 = response.result.states.flatMap((location) =>
+        location.regions.map((regions) => ({
+          id: location.id,
+          state: location.state,
+          url: location.url,
+          regions: regions.region,
+          regionsUrl: regions.url,
+        }))
+      );
+      const formattedStates = response.result.states.map((state) => ({
+        id: state.id,
+        state: state.state,
+        url: state.url,
+      }));
+      setLocationOptions(formattedLocations1);
+      setStateOptions(formattedStates);
+    }
+  });
+};
+export const fetchVendorCategory = async (vid,setServicesOptions) => {
+  await servicesPage.fetchVendorCategory(vid).then(function (response) {
+    if (response.statuscode === 200) {
+      setServicesOptions(response.result.services);
+    }
+  });
+};
+
 export const handleChange = (e, setInputs, setInputsErrors) => {
   const name = e.target.name;
   const value = e.target.value;
   setInputs((values) => ({ ...values, [name]: value }));
   setInputsErrors({});
 };
-
-export const vendorLoginForm = async (e, inputs, setInputsErrors, navigate) => {
-  e.preventDefault();
-  let requestData = inputs;
-  if (customValidator.validateVendorLoginForm(inputs, setInputsErrors)) {
-    await servicesPage.login(requestData).then(function (response) {
-      if (response.statuscode == 200) {
-        const token = response.token;
-        // alert(token)
-        const userStatesData = response.result;
-        const statesLegnth = response.result.length;
-        console.log("State length:", statesLegnth);
-        console.log("State Listed:", userStatesData);
-        //setToken(token);
-        console.log(token);
-        //setUserStates(userStatesData);
-        //setApiRequestSuccess(true);
-
-        if (statesLegnth <= 1) {
-          localStorage.setItem("vendorToken", JSON.stringify(token));
-          localStorage.setItem("abiaType", "V");
-          let expiresInMS = token.expires_in;
-          let currentTime = new Date();
-          let expireTime = new Date(currentTime.getTime() + expiresInMS);
-
-          localStorage.setItem("vexpireTime", expireTime);
-          localStorage.removeItem("vusername");
-          localStorage.removeItem("vpassword");
-          localStorage.removeItem("vremember_me");
-          /* if (inputs.remember_me && inputs.remember_me !== "") {
-              localStorage.vusername     = inputs.username;
-              localStorage.vpassword     = inputs.password;
-              localStorage.vremember_me  = inputs.remember_me;
-            } */
-          apiService.setAuthToken(token);
-          navigate(window.VDASHBOARD);
-        } else {
-          navigate(window.VLOGIN_STATE, {
-            state: {
-              userStatesData,
-              token: token,
-              email: inputs.email,
-              password: inputs.password,
-            },
-          });
-        }
-      } else {
-        setInputsErrors(response.errors);
-      }
-    });
-  }
-};
-
-export const vendorLoginStateForm = async (e, inputs, navigate) => {
-  e.preventDefault();
-  let requestData = inputs;
-  await servicesPage.loginStates(requestData).then(function (response) {
-    console.log("Response:", response);
-    if (response.statuscode == 200) {
-      const token = response.token;
-
-      localStorage.setItem("vendorToken", JSON.stringify(token));
-      localStorage.setItem("abiaType", "V");
-      let expiresInMS = token.expires_in;
-      let currentTime = new Date();
-      let expireTime = new Date(currentTime.getTime() + expiresInMS);
-
-      localStorage.setItem("vexpireTime", expireTime);
-      localStorage.removeItem("vusername");
-      localStorage.removeItem("vpassword");
-      localStorage.removeItem("vremember_me");
-      /* if (inputs.remember_me && inputs.remember_me !== "") {
-            localStorage.vusername     = inputs.username;
-            localStorage.vpassword     = inputs.password;
-            localStorage.vremember_me  = inputs.remember_me;
-          } */
-      apiService.setAuthToken(token);
-      navigate(window.VDASHBOARD);
-      console.log("Navigating to dashboard");
+export const fetchDirectoryList = async (formValues,setData) => {
+  let token       = localStorage.getItem("coupleToken");
+  token           = JSON.parse(token);
+  let userSession = token && token.user ? token.user : null;
+  let userId      = userSession && userSession.id ? userSession.id : 0;
+  await servicesPage.fetchDirectoryList(userId,formValues).then(function (response) {
+    if (response.statuscode === 200) {
+      setData(response.result);
     }
   });
 };
-export const logout = async (navigate) => {
-  await servicesPage.logout().then(function (response) {
-    if (response) {
+export const saveFavourite = async (formValues,setErrors,setOpen) => {
+  let token = localStorage.getItem("coupleToken");
+  token = JSON.parse(token);
+  let userSession = token && token.user ? token.user : null;
+  let userId = userSession && userSession.id ? userSession.id : null;
+  await servicesPage.saveFavourite(userId, formValues).then(function (response) {
       if (response.statuscode == 200) {
-        apiService.setAuthToken(null);
-        localStorage.removeItem("vendorToken");
-        localStorage.removeItem("user");
-        navigate(window.HOME);
-      }
-    }
-  });
-};
-
-export const vendorForgot = async (e, inputs, setInputsErrors, navigate) => {
-  e.preventDefault();
-  let requestData = inputs;
-  if (customValidator.validateEmail) {
-    await servicesPage.forgot(requestData).then(function (response) {
-      if (response.statuscode == 200) {
-        const token = response.token;
-        const userStatesData = response.result;
-        const statesLegnth = response.result.length;
-        console.log("State length:", statesLegnth);
-        console.log("State Listed:", userStatesData);
-        //setToken(token);
-        console.log(token);
-        //setUserStates(userStatesData);
-        //setApiRequestSuccess(true);
-
-        if (statesLegnth == 1) {
-          localStorage.setItem("vendorToken", JSON.stringify(token));
-          let expiresInMS = token.expires_in;
-          let currentTime = new Date();
-          let expireTime = new Date(currentTime.getTime() + expiresInMS);
-
-          localStorage.setItem("vexpireTime", expireTime);
-          localStorage.removeItem("vusername");
-          localStorage.removeItem("vpassword");
-          localStorage.removeItem("vremember_me");
-          /* if (inputs.remember_me && inputs.remember_me !== "") {
-              localStorage.vusername     = inputs.username;
-              localStorage.vpassword     = inputs.password;
-              localStorage.vremember_me  = inputs.remember_me;
-            } */
-          apiService.setAuthToken(token);
-          navigate(window.VDASHBOARD);
-        } else {
-          navigate(window.VLOGIN_STATE, {
-            state: { userStatesData },
-          });
-        }
+        setOpen(false);
       } else {
-        setInputsErrors(response.errors);
+        if (response.errors) {
+          setErrors(response.errors);
+        } else if (response.statusmessage) {
+          setErrors(response.statusmessage);
+        }
       }
     });
-  }
 };
 
-// validateForm
-export const validateForm = (values) => {
-  let errors = {};
-  errors.email = customValidator.validateEmail(values.email);
-  errors.password = customValidator.validatePassword(values.password);
-  return errors;
-};
 
-// COUPLES
-// export const CoupleLoginForm = async (e, inputs, setInputsErrors, navigate) => {
-//   e.preventDefault();
-//   let requestData = inputs;
-//   if (customValidator.validateVendorLoginForm(inputs, setInputsErrors)) {
-//     await servicesPage.login(requestData).then(function (response) {
-//       if (response.statuscode == 200) {
-//         const token = response.token;
-//         // alert(token)
-//         const userStatesData = response.result;
-//         const statesLegnth = response.result.length;
-//         console.log("State length:", statesLegnth);
-//         console.log("State Listed:", userStatesData);
-//         //setToken(token);
-//         console.log(token);
-//         //setUserStates(userStatesData);
-//         //setApiRequestSuccess(true);
 
-//         if (statesLegnth <= 1) {
-//           localStorage.setItem("vendorToken", JSON.stringify(token));
-//           localStorage.setItem("abiaType", "V");
-//           let expiresInMS = token.expires_in;
-//           let currentTime = new Date();
-//           let expireTime = new Date(currentTime.getTime() + expiresInMS);
 
-//           localStorage.setItem("vexpireTime", expireTime);
-//           localStorage.removeItem("vusername");
-//           localStorage.removeItem("vpassword");
-//           localStorage.removeItem("vremember_me");
-//           /* if (inputs.remember_me && inputs.remember_me !== "") {
-//               localStorage.vusername     = inputs.username;
-//               localStorage.vpassword     = inputs.password;
-//               localStorage.vremember_me  = inputs.remember_me;
-//             } */
-//           apiService.setAuthToken(token);
-//           navigate(window.VDASHBOARD);
-//         } else {
-//           navigate(window.VLOGIN_STATE, {
-//             state: {
-//               userStatesData,
-//               token: token,
-//               email: inputs.email,
-//               password: inputs.password,
-//             },
-//           });
-//         }
-//       } else {
-//         setInputsErrors(response.errors);
-//       }
-//     });
-//   }
-// };

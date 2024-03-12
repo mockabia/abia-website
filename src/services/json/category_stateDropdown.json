@@ -1,0 +1,190 @@
+{
+    "result": {
+        "states": [
+            {
+                "id": "1",
+                "state": "NSW",
+                "url"  :"nsw",
+                "mainCity": "Sydney",
+                "regions": [
+                    {
+                        "region" : "Bondi Beach",
+                        "url"    : "bondi"
+                    },
+                    {
+                        "region" : "Manly",
+                        "url"    : "manly"
+                    },
+                    {
+                        "region" : "Parramatta",
+                        "url"    : "parramatta"
+                    }
+                ]
+              },
+              {
+                "id": "2",
+                "state": "VIC",
+                "url"  :"vic",
+                "mainCity": "Melbourne",
+                "regions": [
+                    {
+                        "region" : "Fitzroy",
+                        "url"    : "fitzroy"
+                    },
+                    {
+                        "region" : "Richmond",
+                        "url"    : "richmond"
+                    },
+                    {
+                        "region" : "Carlton",
+                        "url"    : "carlton"
+                    }
+                ]
+              },
+              {
+                "id": "3",
+                "state": "QLD",
+                "url"  :"qld",
+                "mainCity": "Brisbane",
+                "regions": [
+                    {
+                        "region" : "Gold Coast",
+                        "url"    : "gold-coast"
+                    },
+                    {
+                        "region" : "Sunshine Coast",
+                        "url"    : "sunshine-coast"
+                    },
+                    {
+                        "region" : "Logan",
+                        "url"    : "logan"
+                    }
+                ]
+              },
+              {
+                "id": "4",
+                "state": "WA",
+                "url"  :"wa",
+                "mainCity": "Perth",
+                "regions": [
+                    {
+                        "region" : "Fremantle",
+                        "url"    : "Fremantle"
+                    },
+                    {
+                        "region" : "Joondalup",
+                        "url"    : "sunshine-coast"
+                    },
+                    {
+                        "region" : "Rockingham",
+                        "url"    : "Rockingham"
+                    }
+                ]
+              },
+              {
+                "id": "5",
+                "state": "SA",
+                "url"  :"sa",
+                "mainCity": "Adelaide",
+                "regions": [
+                    {
+                        "region" : "Glenelg",
+                        "url"    : "glenelg"
+                    },
+                    {
+                        "region" : "Norwood",
+                        "url"    : "norwood"
+                    },
+                    {
+                        "region" : "Prospect",
+                        "url"    : "prospect"
+                    }
+                ]
+              },
+              {
+                "id": "6",
+                "state": "ACT",
+                "url"  :"act",
+                "mainCity": "Canberra",
+                "regions": [
+                    {
+                        "region" : "Belconnen",
+                        "url"    : "Belconnen"
+                    },
+                    {
+                        "region" : "Gungahlin",
+                        "url"    : "Gungahlin"
+                    },
+                    {
+                        "region" : "Tuggeranong",
+                        "url"    : "Tuggeranong"
+                    }
+                ]
+              },
+              {
+                "id": "7",
+                "state": "TAS",
+                "url"  :"tas",
+                "mainCity": "Hobart",
+                "regions": [
+                    {
+                        "region" : "Sandy",
+                        "url"    : "Sandy"
+                    },
+                    {
+                        "region" : "Glenorchy",
+                        "url"    : "Glenorchy"
+                    }
+                ]
+              },
+              {
+                "id": "8",
+                "state": "NT",
+                "url"  :"nt",
+                "mainCity": "Darwin",
+                "regions": [
+                    {
+                        "region" : "Palmerston",
+                        "url"    : "Palmerston"
+                    },
+                    {
+                        "region" : "Katherine",
+                        "url"    : "Katherine"
+                    },
+                    {
+                        "region" : "Casuarina",
+                        "url"    : "Casuarina"
+                    }
+                ]
+              }
+        ],
+        "services": [
+            {
+                "url":  "Wedding-Makeup",
+                "title": "Wedding Makeup"
+            },
+            {
+                "url": "Venues",
+                "title": "Venues"
+            },
+            {
+                "url": "Wedding-DJ",
+                "title": "Wedding DJ"
+            },
+            {
+                "url": "Dream-Wedding-Cake",
+                "title": "Dream Wedding Cake"
+            },
+            {
+                "url":  "Floral-Design",
+                "title": "Floral Design"
+            },
+            {
+                "url": "Wedding-Jewellery",
+                "title": "Wedding Jewellery"
+            }
+        ]
+    },
+    "statuscode": 200,
+    "message": "Successful Request"
+}

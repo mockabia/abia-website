@@ -1,0 +1,87 @@
+
+{
+  "result": [
+    {
+      "id": "1",
+      "vname": "Summergrove Estate",
+      "region": "Carold",
+      "state": "QLD",
+      "rating": "4",
+      "votes": "1000",
+      "special": "2",
+      "imgSrc":"https://abia.com.au/uploads/vportfolio/thumb/avalon-castle-cockatoo_230428050512.jpeg"
+    },
+    {
+      "id": "2",
+      "vname": "The Warehouse",
+      "region": "Fortitude Valley",
+      "state": "Queensland",
+      "rating": "4.5",
+      "votes": "214",
+      "special": "1",
+      "imgSrc":"https://abia.com.au/uploads/profile/thumb/the-warehouse-fortitude-valley_abia-daidbzcikbayaufa.jpeg"
+    },
+    {
+      "id": "3",
+      "vname": "Aberfeldy Farm & Barn",
+      "region": "Westbrook",
+      "state": "Queensland",
+      "rating": "3.5",
+      "votes": "584",
+      "special": "3",
+      "imgSrc":"https://abia.com.au/uploads/profile/thumb/aberfeldy-farm-barn-westbrook_230530120021.jpeg"
+    },
+    {
+      "id": "4",
+      "vname": "Summergrove Estate",
+      "region": "Carold",
+      "state": "QLD",
+      "rating": "4",
+      "votes": "1000",
+      "special": "2",
+      "imgSrc":"https://abia.com.au/uploads/vportfolio/thumb/avalon-castle-cockatoo_230428050512.jpeg"
+    },
+    {
+      "id": "5",
+      "vname": "Summergrove Estate",
+      "region": "Carold",
+      "state": "QLD",
+      "rating": "4",
+      "votes": "1000",
+      "special": "2",
+      "imgSrc":"https://abia.com.au/uploads/vportfolio/thumb/avalon-castle-cockatoo_230428050512.jpeg"
+    },
+    {
+      "id": "6",
+      "vname": "Summergrove Estate",
+      "region": "Carold",
+      "state": "QLD",
+      "rating": "4",
+      "votes": "1000",
+      "special": "2",
+      "imgSrc":"https://abia.com.au/uploads/vportfolio/thumb/avalon-castle-cockatoo_230428050512.jpeg"
+    },
+    {
+      "id": "7",
+      "vname": "Summergrove Estate",
+      "region": "Carold",
+      "state": "QLD",
+      "rating": "4",
+      "votes": "1000",
+      "special": "2",
+      "imgSrc":"https://abia.com.au/uploads/vportfolio/thumb/avalon-castle-cockatoo_230428050512.jpeg"
+    },
+    {
+      "id": "8",
+      "vname": "Summergrove Estate",
+      "region": "Carold",
+      "state": "QLD",
+      "rating": "4",
+      "votes": "1000",
+      "special": "2",
+      "imgSrc":"https://abia.com.au/uploads/vportfolio/thumb/avalon-castle-cockatoo_230428050512.jpeg"
+    }
+  ],
+  "statuscode": 200,
+  "message": "Successful Request"
+}

@@ -1,35 +1,32 @@
 import React, { useEffect } from "react";
 
-import BreadCrumbs from "./GeneralDirectory/BreadCrumbs";
+import SearchSection from "./Directory/SearchSection";
+import RenderList from "./Directory/RenderList";
 import Main from "./GeneralDirectory/Main";
 import Cards from "./GeneralDirectory/Cards";
 import CardGrid from "./GeneralDirectory/Cards";
 import { useState } from "react";
 import BottomFilter from "../../components/layouts/BottomFilter";
 import "../Style/GeneralDirectory.css";
+import * as GeneralJS from "./General";
 
 const Directory = () => {
-  const [mainCity, setMainCity] = useState(null);
-  const [suburb, setSubUrb] = useState(null);
 
-  // console.log("Index city:", mainCity);
-  const handleIndeCity = (newValue) => {
-    setMainCity(newValue);
-    // onChangeCityDir(newValue);
-  };
-  const handleIndexSubUrb = (newValue) => {
-    setSubUrb(newValue);
-    // onChangeSubUrbDir(newValue);
-  };
+  const [stateOptions, setStateOptions]       = useState([]);
+  const [formvalues, setFormvalues]           = useState({});
+  
+  useEffect(() => {
+    
+  }, []);
 
   return (
     <div className="directory-page-container">
-      <BreadCrumbs mainCity={mainCity} suburb={suburb} />
-      <Main
+      <SearchSection formvalues={formvalues} setFormvalues={setFormvalues} setStateOptions={setStateOptions}/>
+      {/* <Main
         onChangeCity={handleIndeCity}
         onChangeSubUrb={handleIndexSubUrb}
-      />
-      <CardGrid />
+      /> */}
+      <RenderList formvalues={formvalues} stateOptions={stateOptions}/>
       <BottomFilter />
     </div>
   );

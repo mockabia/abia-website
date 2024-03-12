@@ -1,4 +1,3 @@
-import axios from "axios";
 import * as apiService from "../api/apiServices";
 import * as apiUrls from "../api/apiUrls";
 import categories from "./json/couples-categories-edit.json";
