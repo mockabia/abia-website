@@ -178,11 +178,13 @@ export const PublicMessageInput = styled(TextField)(({ theme }) => ({
   },
 }));
 
-export function DatePickerPublic({ label, TextFieldProps }) {
+export function DatePickerPublic(props) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePickerStype
         label="Preferred Wedding Dates"
+        name={props.name || 'date'}
+        onChange={(date) => props.onChange(props.name, date)}
         slots={{
           textField: (params) => <DateTextField variant="filled" {...params} />,
         }}

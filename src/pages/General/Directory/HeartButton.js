@@ -3,6 +3,7 @@ import Modal from "@mui/material/Modal";
 import {Box,Stack,Button,IconButton,InputAdornment,MenuItem,} from "@mui/material";
 import {StyledHeartIcon,BoxStyle,RedditTextField,HeartIconTextField,SelectTextField,} from "../../../components/FormStyle";
 import { AiOutlineClose } from "react-icons/ai";
+import Typography from "@mui/material/Typography";
 import CheckBoxMui from "../../../components/CheckBoxMui";
 import { Link } from "react-router-dom";
 import { ReactComponent as UserIcons } from "../../../icons/contact topbar.svg";
@@ -25,14 +26,6 @@ const HeartButton = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleInputChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    GeneralJS.customJS.handleChange(name, value, setFormvalues, setErrors)
-  };
-  const handleInputChangeVal = (name, value) => {
-    GeneralJS.customJS.handleChange(name, value, setFormvalues, setErrors)
-  };
   useEffect(() => {
     setFormvalues(values => ({...values,['vid']: props.vid }))
     const handleResize = () => {
@@ -43,12 +36,37 @@ const HeartButton = (props) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  const handleSubmit = () => {
+  const saveFavourite = () => {
     GeneralJS.saveFavourite(formvalues,setErrors,setOpen);
   };
-  return (
-    <div className="heartbutton-div" onClick={handleOpen}>
-      <StyledHeartIcon className="heart-icon " />
+
+  const PublicHeart = () => {
+    
+    const [errors, setErrors]                   = React.useState({});
+    const [formvalues, setFormvalues]           = useState({});
+    const [passwordType, setPasswordType]       = useState("text");
+
+    useEffect(() => {
+      setFormvalues(values => ({...values,['vid']: props.vid }))
+    }, []);
+    
+    const handleInputChange = (e) => {
+      const name = e.target.name;
+      const value = e.target.value;
+      if(name=='password'){
+        setPasswordType("password")
+      }else{
+        setPasswordType("text")
+      }
+      GeneralJS.customJS.handleChange(name, value, setFormvalues, setErrors)
+    };
+    const handleInputChangeVal = (name, value) => {
+      GeneralJS.customJS.handleChange(name, value, setFormvalues, setErrors)
+    };
+    const handleSubmit = () => {
+      GeneralJS.saveFavourite(formvalues,setErrors,setOpen);
+    };
+    return (
       <Modal
         open={open}
         onClose={handleClose}
@@ -86,7 +104,7 @@ const HeartButton = (props) => {
                   label="Name and Surname"
                   id="reddit-input"
                   variant="filled"
-                  name="full_name"
+                  name="bride"
                   style={{ marginTop: 11 }}
                   onChange={(e) =>
                     handleInputChange(e)
@@ -105,6 +123,11 @@ const HeartButton = (props) => {
                     ),
                   }}
                 />
+                {errors.bride !='' && (
+                  <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
+                    {errors.bride}
+                  </Typography>
+                )}
                 <HeartIconTextField
                   label="Partner's Name*"
                   id="reddit-input"
@@ -128,6 +151,11 @@ const HeartButton = (props) => {
                     ),
                   }}
                 />
+                {errors.groom !='' && (
+                  <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
+                    {errors.groom}
+                  </Typography>
+                )}
                 <HeartIconTextField
                   label="Email*"
                   id="reddit-input"
@@ -151,13 +179,20 @@ const HeartButton = (props) => {
                     ),
                   }}
                 />
+                {errors.email !='' && (
+                  <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
+                    {errors.email}
+                  </Typography>
+                )}
                 <HeartIconTextField
                   label="Password*"
                   id="reddit-input"
-                  type="text"
                   variant="filled"
                   name="password"
                   style={{ marginTop: 11 }}
+                  type={passwordType}
+                  //onKeyUp={handleKeyPress}
+                  //onKeyDown={handleKeyPress}
                   onChange={(e) =>
                     handleInputChange(e)
                   }
@@ -175,6 +210,11 @@ const HeartButton = (props) => {
                     ),
                   }}
                 />
+                {errors.password !='' && (
+                  <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
+                    {errors.password}
+                  </Typography>
+                )}
                 <Stack direction={isMobile ? "column" : "row"} spacing={1}>
                   <SelectTextField
                     select
@@ -193,6 +233,11 @@ const HeartButton = (props) => {
                       </MenuItem>
                     ))}
                   </SelectTextField>
+                {errors.state !='' && (
+                  <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
+                    {errors.state}
+                  </Typography>
+                )}
                   {/* Phone */}
                   <RedditTextField
                     type="tel"
@@ -217,9 +262,19 @@ const HeartButton = (props) => {
                       ),
                     }}
                   />
+                  {errors.phone !='' && (
+                    <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
+                      {errors.phone}
+                    </Typography>
+                  )}
                 </Stack>
                 <div className="flex justify-start items-center">
-                  <CheckBoxMui />
+                  <CheckBoxMui name="agree" onChange={handleInputChangeVal}/>
+                {errors.agree !='' && (
+                  <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
+                    {errors.agree}
+                  </Typography>
+                )}
                   <p className="text-[10px]">
                     I accept ABIA Weddings Australia's Terms of Use and PRivacy
                     Policy
@@ -242,7 +297,7 @@ const HeartButton = (props) => {
                 <div className="flex justify-center">
                   <h5 className="font-bold">
                     Already have an account?{" "}
-                    <Link>
+                    <Link to={window.CLOGIN}>
                       <span className="font-bold text-[#6cc2bc]">Log in</span>
                     </Link>
                   </h5>
@@ -252,7 +307,22 @@ const HeartButton = (props) => {
           </form>
         </Box>
       </Modal>
-    </div>
+    )
+  }
+
+  return (
+    <>
+    {localStorage.getItem("coupleToken") ? (
+      <div className="heartbutton-div" onClick={saveFavourite}>
+        <StyledHeartIcon className="heart-icon " />
+      </div>
+    ) : (
+      <div className="heartbutton-div" onClick={handleOpen}>
+        <StyledHeartIcon className="heart-icon " />
+        <PublicHeart />
+      </div>
+    )}
+    </>
   );
 };
 

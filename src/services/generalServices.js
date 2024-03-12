@@ -1,10 +1,11 @@
 import * as apiService from "../api/apiServices";
 import * as apiUrls from "../api/apiUrls";
 import category_stateDropdown from "./json/category_stateDropdown.json";
+import vendor_category from "./json/vendor_category.json";
 import directoryList from "./json/directoryList.json";
 
 
-export const MAIN_API = apiUrls.COUPLE_API;
+export const MAIN_API = apiUrls.PUBLIC_API;
 
 export async function marketCategory(postData) {
     // return vendorList;
@@ -18,12 +19,12 @@ export async function fetchDirectoryDropdowns(postData) {
     //return await apiService.apiCall(MAIN_API["DIRECTORY_DROPDOWN"], "GET", postData);
 }
 export async function fetchVendorCategory(postData) {
-     return category_stateDropdown;
-    //return await apiService.apiCall(MAIN_API["DIRECTORY_DROPDOWN"], "GET", postData);
+     return vendor_category;
+    //return await apiService.apiCall(MAIN_API["VENDOR_CATEGORY_DROPDOWN"], "GET", postData);
 }
-export async function fetchDirectoryList(postData) {
+export async function fetchDirectoryList(id,postData) {
      return directoryList;
-    //return await apiService.apiCall(MAIN_API["DIRECTORY_LIST"], "GET", postData);
+    //return await apiService.apiCall(MAIN_API["DIRECTORY_LIST"] + "/" + id , "GET", postData);
 }
 export async function saveFavourite(id,postData) {
     return await apiService.apiCall(MAIN_API["SAVE_FAVOURITE"] + "/" + id ,"POST",postData)

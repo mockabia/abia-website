@@ -9,9 +9,7 @@ import RequestPricing from "./RequestPricing";
 import HeartButton from "./HeartButton";
 import * as GeneralJS from "../General";
 
-
-
-const SearchSection = (props) => {
+const RenderList = (props) => {
   const formvalues                      = props.formvalues;
   const stateOptions                    = props.stateOptions;
   const [data, setData]                 = useState([]);
@@ -20,13 +18,6 @@ const SearchSection = (props) => {
     GeneralJS.fetchDirectoryList(formvalues,setData);
   }, []);
 
-
-  const SearchFields = () => {
-    const mainCity = "";
-    return (
-        <></>
-    )
-  }
   return (
     <div className="cards-grid-container">
    {/*  <pre>{JSON.stringify(stateOptions, null, 2)}</pre> */}
@@ -77,4 +68,4 @@ const SearchSection = (props) => {
   );
 };
 
-export default SearchSection;
+export default RenderList;

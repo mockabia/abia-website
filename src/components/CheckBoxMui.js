@@ -1,13 +1,19 @@
-import * as React from "react";
+import React, { useEffect,useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import { BpIcon, BpCheckedIcon } from "../components/FormStyle";
 
 export default function ControlledCheckbox(props) {
   const [checked, setChecked] = React.useState(true);
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
-    props.onChange(event);
+  useEffect(() => {
+      setChecked(props.value=='1' ? true : false)
+  }, [props.value]);
+
+  const handleChange = (e) => {
+    const targetName  = e.target.name;
+    const targetValue = e.target.checked ? 1 : 0;
+    setChecked(e.target.checked);
+    props.onChange(targetName, targetValue);
   };
 
   // Inspired by blueprintjs
@@ -19,6 +25,7 @@ export default function ControlledCheckbox(props) {
           transform: "scale(1.5)",
         }}
         disableRipple
+        checked={checked}
         color="default"
         checkedIcon={<BpCheckedIcon />}
         icon={<BpIcon />}
@@ -30,6 +37,7 @@ export default function ControlledCheckbox(props) {
 
   return (
     <BpCheckbox
+      name={props.name || 'checkbox'}
       onChange={handleChange}
       inputProps={{ "aria-label": "controlled" }}
     />
