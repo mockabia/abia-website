@@ -129,7 +129,7 @@ const Payment = () => {
                 </button>
               </div>
             </div>
-            {/* Input Fields */}
+            {/* Input Fields */} 
             {/* Emal */}
             <PaymentInput
               name="email"
