@@ -96,3 +96,10 @@ export const COUPLE_API = {
   AUTOCOMPLETE_VENDOR_CATEGORY: `${baseUrl}autocompleteVendorCategory`, 
   ADD_BOOKING: `${baseUrl}add_booking`, 
 };
+export const PUBLIC_API = {
+  DIRECTORY_DROPDOWN      : `${baseUrl}Services_State`,
+  VENDOR_CATEGORY_DROPDOWN: `${baseUrl}Services_State`,
+  DIRECTORY_LIST          : `${baseUrl}DirectoryList`,
+  SAVE_FAVOURITE          : `${baseUrl}saveFavourite`,
+  SAVE_ENQUIRY            : `${baseUrl}saveEnquiry`,
+};

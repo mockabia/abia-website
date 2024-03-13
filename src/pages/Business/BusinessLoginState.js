@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Box, Stack } from "@mui/material";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import LayoutGeneral from "../../layouts/Layout/LayoutGeneral";
-import * as GeneralJS from "../General/General";
+import * as BusinessJS from "./Business";
 import "../Style/BusinessLoginState.css";
 
 const BusinessLoginState = () => {
@@ -26,7 +25,7 @@ const BusinessLoginState = () => {
     inputs["currenttocken"] = token;
     inputs["id"] = vid;
     inputs["state"] = state;
-    GeneralJS.vendorLoginStateForm(e, inputs, navigate);
+    BusinessJS.vendorLoginStateForm(e, inputs, navigate);
   };
 
   return (

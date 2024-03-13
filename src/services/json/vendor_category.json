@@ -1,0 +1,30 @@
+{
+    "result": [
+        {
+            "id":  "2",
+            "title": "Wedding Makeup"
+        },
+        {
+            "id": "5",
+            "title": "Venues"
+        },
+        {
+            "id": "8",
+            "title": "Wedding DJ"
+        },
+        {
+            "id": "45",
+            "title": "Dream Wedding Cake"
+        },
+        {
+            "id":  "63",
+            "title": "Floral Design"
+        },
+        {
+            "id": "23",
+            "title": "Wedding Jewellery"
+        }
+    ],
+    "statuscode": 200,
+    "message": "Successful Request"
+}

@@ -178,6 +178,34 @@ export const PublicMessageInput = styled(TextField)(({ theme }) => ({
   },
 }));
 
+// DIRECTORY
+// export function DatePickerPublic({ label, TextFieldProps }) {
+//   return (
+//     <LocalizationProvider dateAdapter={AdapterDateFns}>
+//       <DatePickerStype
+//         label="Preferred Wedding Dates"
+//         name={props.name || "date"}
+//         onChange={(date) => props.onChange(props.name, date)}
+//         slots={{
+//           textField: (params) => (
+//             <React.Fragment>
+//               <DateTextField
+//                 variant="outlined"
+//                 {...params}
+//                 // error={Boolean(dateError)}
+//               />
+//               {dateError && (
+//                 <Typography color="error" variant="caption" component="div">
+//                   {dateError}
+//                 </Typography>
+//               )}
+//             </React.Fragment>
+//           ),
+//         }}
+//       />
+//     </LocalizationProvider>
+//   );
+// }
 export function DatePickerPublic({
   name,
   label,
@@ -189,6 +217,7 @@ export function DatePickerPublic({
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePickerStype
+        // value={value}
         value={value ? new Date(value) : null}
         name={name}
         format="dd/MM/yyyy"
@@ -217,6 +246,7 @@ export function DatePickerPublic({
     </LocalizationProvider>
   );
 }
+
 // COUPLE SIGNUP
 export function DatePickerCouple({
   name,

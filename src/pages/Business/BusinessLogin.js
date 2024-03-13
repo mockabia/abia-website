@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import "../Style/BusinessLogin.css";
 import { Link, useNavigate } from "react-router-dom";
-import LayoutGeneral from "../../layouts/Layout/LayoutGeneral";
 import BusinessForgotPassword from "../General/BusinessForgotPassword";
-import * as GeneralJS from "../General/General";
+import * as BusinessJS from "./Business";
 import { IconButton, Stack } from "@mui/material";
 import {
   CoupleCommonInput,
@@ -39,18 +38,18 @@ const LoginPage = () => {
     }
   };
   useEffect(() => {
-    GeneralJS.hasJWT(navigate);
-    GeneralJS.checkRememberMe(setInputs);
+    BusinessJS.hasJWT(navigate);
+    BusinessJS.checkRememberMe(setInputs);
   }, []);
 
   const handleChange = (e) => {
-    GeneralJS.handleChange(e, setInputs, setInputsErrors);
+    BusinessJS.handleChange(e, setInputs, setInputsErrors);
     setShowVisibilityIcon(true);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    GeneralJS.vendorLoginForm(e, inputs, setInputsErrors, navigate);
+    BusinessJS.vendorLoginForm(e, inputs, setInputsErrors, navigate);
   };
 
   let isValidForm =
