@@ -2,9 +2,22 @@ import React, { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import "../../Style/GeneralDirectory.css";
 
-import {Box,Stack,Button,InputAdornment,IconButton,MenuItem,} from "@mui/material";
+import {
+  Box,
+  Stack,
+  Button,
+  InputAdornment,
+  IconButton,
+  MenuItem,
+} from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
-import {BoxStyle,RedditTextField,MultiTLinedTextField,ColorSubmitButton,SelectTextField,} from "../../../components/FormStyle";
+import {
+  BoxStyle,
+  RedditTextField,
+  MultiTLinedTextField,
+  ColorSubmitButton,
+  SelectTextField,
+} from "../../../components/FormStyle";
 import { ReactComponent as PhoneIcon } from "../../../icons/Phone-14.svg";
 import { ReactComponent as EmailIcon } from "../../../icons/email copy.svg";
 import { ReactComponent as UserIcons } from "../../../icons/contact topbar.svg";
@@ -13,10 +26,10 @@ import { DatePickerPublic } from "../../../components/DatepickerPublic";
 import * as GeneralJS from "../General";
 
 const RequestPricing = (props) => {
-  const [open, setOpen]                         = React.useState(false);
-  const [isMobile, setIsMobile]                 = useState(window.innerWidth <= 550);
-  const stateOptions                            = props.stateOptions;
-  const [servicesOptions, setServicesOptions]   = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 550);
+  const stateOptions = props.stateOptions;
+  const [servicesOptions, setServicesOptions] = useState([]);
 
   const businessCaps = props.vname.toUpperCase();
   const handleOpen = () => setOpen(true);
@@ -26,7 +39,7 @@ const RequestPricing = (props) => {
   };
 
   useEffect(() => {
-    GeneralJS.fetchVendorCategory(props.vid,setServicesOptions);
+    GeneralJS.fetchVendorCategory(props.vid, setServicesOptions);
   }, []);
 
   useEffect(() => {
@@ -40,29 +53,33 @@ const RequestPricing = (props) => {
     };
   }, []);
   const CoupleEnquiry = () => {
-    const [errors, setErrors]                     = React.useState({});
-    const [formvalues, setFormvalues]             = useState({});
+    const [errors, setErrors] = React.useState({});
+    const [formvalues, setFormvalues] = useState({});
 
     useEffect(() => {
-      setFormvalues(values => ({...values,['vid']: props.vid }))
+      setFormvalues((values) => ({ ...values, ["vid"]: props.vid }));
       let ctoken = localStorage.getItem("coupleToken");
       if (ctoken !== undefined && ctoken !== "undefined" && ctoken !== null) {
         ctoken = JSON.parse(ctoken);
         let userSession = ctoken && ctoken.user ? ctoken.user : null;
-        setFormvalues(values => ({...values,['date_of_wedding']: userSession.date_of_wedding,['phone']: userSession.phone }))
+        setFormvalues((values) => ({
+          ...values,
+          ["date_of_wedding"]: userSession.date_of_wedding,
+          ["phone"]: userSession.phone,
+        }));
       }
     }, []);
 
     const handleInputChange = (e) => {
       const name = e.target.name;
       const value = e.target.value;
-      GeneralJS.customJS.handleChange(name, value, setFormvalues, setErrors)
+      GeneralJS.customJS.handleChange(name, value, setFormvalues, setErrors);
     };
     const handleInputChangeVal = (name, value) => {
-      GeneralJS.customJS.handleChange(name, value, setFormvalues, setErrors)
+      GeneralJS.customJS.handleChange(name, value, setFormvalues, setErrors);
     };
     const handleSubmit = () => {
-      GeneralJS.saveEnquiry(formvalues,setErrors,setOpen);
+      GeneralJS.saveEnquiry(formvalues, setErrors, setOpen);
     };
     return (
       <Modal
@@ -108,40 +125,40 @@ const RequestPricing = (props) => {
                   multiline
                   rows={3}
                   variant="filled"
-                  onChange={(e) =>
-                    handleInputChange(e)
-                  }
+                  onChange={(e) => handleInputChange(e)}
                 />
                 <Stack direction={isMobile ? "column" : "row"} spacing={1}>
                   <RedditTextField
-                      label="Phone"
-                      name="phone"
-                      id="reddit-input"
-                      variant="filled"
-                      value={formvalues.phone}
-                      onChange={(e) =>
-                        handleInputChange(e)
-                      }
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <PhoneIcon
-                              fill="#949494"
-                              style={{
-                                width: "18px",
-                                height: "18px",
-                              }}
-                            />
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                    {errors.phone !='' && (
-                      <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
-                        {errors.phone}
-                      </Typography>
-                    )}
-                  
+                    label="Phone"
+                    name="phone"
+                    id="reddit-input"
+                    variant="filled"
+                    value={formvalues.phone}
+                    onChange={(e) => handleInputChange(e)}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <PhoneIcon
+                            fill="#949494"
+                            style={{
+                              width: "18px",
+                              height: "18px",
+                            }}
+                          />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  {errors.phone != "" && (
+                    <Typography
+                      color="red"
+                      fontFamily={"Raleway"}
+                      fontSize={12}
+                    >
+                      {errors.phone}
+                    </Typography>
+                  )}
+
                   {/* Wedding Budget */}
                   <RedditTextField
                     label="Budget"
@@ -149,19 +166,24 @@ const RequestPricing = (props) => {
                     id="reddit-input"
                     variant="filled"
                     value={formvalues.budget}
-                    onChange={(e) =>
-                      handleInputChange(e)
-                    }
+                    onChange={(e) => handleInputChange(e)}
                   />
                 </Stack>
                 <Stack direction={isMobile ? "column" : "row"} spacing={2}>
-                  <DatePickerPublic name="date_of_wedding" 
-                    value={formvalues.budget} onChange={handleInputChangeVal} />
-                    {errors.date_of_wedding !='' && (
-                      <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
-                        {errors.date_of_wedding}
-                      </Typography>
-                    )}
+                  <DatePickerPublic
+                    name="date_of_wedding"
+                    value={formvalues.date_of_wedding}
+                    onChange={handleInputChangeVal}
+                  />
+                  {errors.date_of_wedding != "" && (
+                    <Typography
+                      color="red"
+                      fontFamily={"Raleway"}
+                      fontSize={12}
+                    >
+                      {errors.date_of_wedding}
+                    </Typography>
+                  )}
                 </Stack>
               </Stack>
               <Stack>
@@ -180,26 +202,26 @@ const RequestPricing = (props) => {
           </form>
         </Box>
       </Modal>
-    )
-  }
+    );
+  };
   const PublicEnquiry = () => {
-    const [errors, setErrors]                     = React.useState({});
-    const [formvalues, setFormvalues]             = useState({});
+    const [errors, setErrors] = React.useState({});
+    const [formvalues, setFormvalues] = useState({});
 
     useEffect(() => {
-      setFormvalues(values => ({...values,['vid']: props.vid }))
+      setFormvalues((values) => ({ ...values, ["vid"]: props.vid }));
     }, []);
-    
+
     const handleInputChange = (e) => {
       const name = e.target.name;
       const value = e.target.value;
-      GeneralJS.customJS.handleChange(name, value, setFormvalues, setErrors)
+      GeneralJS.customJS.handleChange(name, value, setFormvalues, setErrors);
     };
     const handleInputChangeVal = (name, value) => {
-      GeneralJS.customJS.handleChange(name, value, setFormvalues, setErrors)
+      GeneralJS.customJS.handleChange(name, value, setFormvalues, setErrors);
     };
     const handleSubmit = () => {
-      GeneralJS.saveEnquiry(formvalues,setErrors,setOpen);
+      GeneralJS.saveEnquiry(formvalues, setErrors, setOpen);
     };
     return (
       <Modal
@@ -245,9 +267,7 @@ const RequestPricing = (props) => {
                   multiline
                   rows={3}
                   variant="filled"
-                  onChange={(e) =>
-                    handleInputChange(e)
-                  }
+                  onChange={(e) => handleInputChange(e)}
                 />
                 <Stack direction={isMobile ? "column" : "row"} spacing={1}>
                   {/*Name and Sruname */}
@@ -256,9 +276,7 @@ const RequestPricing = (props) => {
                     name="bride"
                     id="reddit-input"
                     variant="filled"
-                    onChange={(e) =>
-                      handleInputChange(e)
-                    }
+                    onChange={(e) => handleInputChange(e)}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -274,8 +292,12 @@ const RequestPricing = (props) => {
                       ),
                     }}
                   />
-                  {errors.bride !='' && (
-                    <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
+                  {errors.bride != "" && (
+                    <Typography
+                      color="red"
+                      fontFamily={"Raleway"}
+                      fontSize={12}
+                    >
                       {errors.bride}
                     </Typography>
                   )}
@@ -285,9 +307,7 @@ const RequestPricing = (props) => {
                     name="email"
                     id="reddit-input"
                     variant="filled"
-                    onChange={(e) =>
-                      handleInputChange(e)
-                    }
+                    onChange={(e) => handleInputChange(e)}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -302,8 +322,12 @@ const RequestPricing = (props) => {
                       ),
                     }}
                   />
-                  {errors.email !='' && (
-                    <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
+                  {errors.email != "" && (
+                    <Typography
+                      color="red"
+                      fontFamily={"Raleway"}
+                      fontSize={12}
+                    >
                       {errors.email}
                     </Typography>
                   )}
@@ -315,9 +339,7 @@ const RequestPricing = (props) => {
                     name="phone"
                     id="reddit-input"
                     variant="filled"
-                    onChange={(e) =>
-                      handleInputChange(e)
-                    }
+                    onChange={(e) => handleInputChange(e)}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -332,8 +354,12 @@ const RequestPricing = (props) => {
                       ),
                     }}
                   />
-                  {errors.phone !='' && (
-                    <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
+                  {errors.phone != "" && (
+                    <Typography
+                      color="red"
+                      fontFamily={"Raleway"}
+                      fontSize={12}
+                    >
                       {errors.phone}
                     </Typography>
                   )}
@@ -344,9 +370,7 @@ const RequestPricing = (props) => {
                     select
                     label="Wedding Location*"
                     variant="filled"
-                    onChange={(e) =>
-                      handleInputChange(e)
-                    }
+                    onChange={(e) => handleInputChange(e)}
                     SelectProps={{ IconComponent: () => null }}
                   >
                     {stateOptions.map((option) => (
@@ -355,20 +379,30 @@ const RequestPricing = (props) => {
                       </MenuItem>
                     ))}
                   </SelectTextField>
-                {errors.state !='' && (
-                  <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
-                    {errors.state}
-                  </Typography>
-                )}
+                  {errors.state != "" && (
+                    <Typography
+                      color="red"
+                      fontFamily={"Raleway"}
+                      fontSize={12}
+                    >
+                      {errors.state}
+                    </Typography>
+                  )}
                 </Stack>
 
                 <Stack direction={isMobile ? "column" : "row"} spacing={1}>
                   {/* Wedding Date */}
-                  <DatePickerPublic name="date_of_wedding"
-                  onChange={handleInputChangeVal}
+                  <DatePickerPublic
+                    name="date_of_wedding"
+                    value={formvalues.date_of_wedding}
+                    handleDateChange={handleInputChangeVal}
                   />
-                  {errors.date_of_wedding !='' && (
-                    <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
+                  {errors.date_of_wedding != "" && (
+                    <Typography
+                      color="red"
+                      fontFamily={"Raleway"}
+                      fontSize={12}
+                    >
                       {errors.date_of_wedding}
                     </Typography>
                   )}
@@ -379,22 +413,26 @@ const RequestPricing = (props) => {
                     select
                     label="Wedding Service*"
                     variant="filled"
-                    onChange={(e) =>
-                      handleInputChange(e)
-                    }
+                    onChange={(e) => handleInputChange(e)}
                     SelectProps={{ IconComponent: () => null }}
                   >
                     {servicesOptions?.map((option) => {
-                        return (<MenuItem key={option.id} value={option.id}>
+                      return (
+                        <MenuItem key={option.id} value={option.id}>
                           {option.title}
-                        </MenuItem>)
+                        </MenuItem>
+                      );
                     })}
                   </SelectTextField>
-                {errors.category !='' && (
-                  <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
-                    {errors.category}
-                  </Typography>
-                )}
+                  {errors.category != "" && (
+                    <Typography
+                      color="red"
+                      fontFamily={"Raleway"}
+                      fontSize={12}
+                    >
+                      {errors.category}
+                    </Typography>
+                  )}
                 </Stack>
               </Stack>
               <Stack>
@@ -413,8 +451,8 @@ const RequestPricing = (props) => {
           </form>
         </Box>
       </Modal>
-    )
-  }
+    );
+  };
   return (
     <div>
       <div className="request-pricing relative" onClick={handleOpen}>
@@ -438,11 +476,11 @@ const RequestPricing = (props) => {
           Request Pricing
         </Button>
       </div>
-        {localStorage.getItem("coupleToken") ? (
-          <CoupleEnquiry />
-        ) : (
-          <PublicEnquiry />
-        )}
+      {localStorage.getItem("coupleToken") ? (
+        <CoupleEnquiry />
+      ) : (
+        <PublicEnquiry />
+      )}
     </div>
   );
 };
