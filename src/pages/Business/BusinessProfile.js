@@ -1347,22 +1347,24 @@ const Profile = () => {
                               key={index}
                               className="flex flex-col gap-[1rem] "
                             >
+                              <p>
+                                You are responsible for updating your prices.
+                              </p>
                               <div
                                 style={{
                                   fontWeight: "600",
                                   color: "#515151",
-                                  textDecoration: "underline",
-                                  marginTop: "1rem",
+                                  marginTop: "0.5rem",
                                 }}
-                              >{`Category : ${category.CategoryName}`}</div>
-                              <div className="flex flex-col gap-[1rem]">
+                              >{`${category.CategoryName}`}</div>
+                              <div className="flex flex-col gap-[10px]">
                                 {category.Settings.map(
                                   (setting, settingIndex) => (
                                     <div key={settingIndex}>
                                       {setting.Amount > 0 && (
                                         <p
                                           style={{
-                                            fontWeight: "600",
+                                            fontWeight: "400",
                                             color: "#515151",
                                           }}
                                         >
@@ -1387,7 +1389,7 @@ const Profile = () => {
                       </>
                     ) : (
                       <p className="myprofile-accordion-subheading">
-                        Add your Pricing details here.
+                        Add your starting pricec. Not mandatory.
                       </p>
                     )}
                   </div>
@@ -1427,7 +1429,7 @@ const Profile = () => {
                                   {categorySettings.min_max == "1" ? (
                                     <>
                                       <div className="flex  gap-[1rem]">
-                                        <h5 className="font-semibold flex flex-col">
+                                        <h5 className="font-semibold flex flex-col w-[8rem] md:w-[14rem">
                                           {categorySettings.head_title}:
                                         </h5>
                                         <div className="flex gap-[1rem]">
@@ -1527,7 +1529,7 @@ const Profile = () => {
                                     <>
                                       {/* cocktail, price, seated, capacity */}
                                       <div className="flex justify-start items-center gap-[1rem]">
-                                        <h5 className="font-semibold flex flex-col w-[8rem]">
+                                        <h5 className="font-semibold flex flex-col w-[8rem] md:w-[14rem]">
                                           {categorySettings.head_title}
                                         </h5>
                                         <input
@@ -1576,11 +1578,10 @@ const Profile = () => {
                                     <>
                                       {/* Accomodation Availability */}
                                       <div className="flex gap-[1rem]">
-                                        <h5 className="font-semibold flex flex-col w-[8rem]">
+                                        <h5 className="font-semibold flex flex-col w-[8rem] md:w-[14rem]">
                                           {categorySettings.head_title}
                                         </h5>
                                         <div className="flex gap-[1rem]">
-                                          {/* price per head */}
                                           <button
                                             className="yes-check-button"
                                             // className={`yes-check-button ${
@@ -1622,29 +1623,6 @@ const Profile = () => {
                                             vcids={category.Categoryid}
                                             grpcid={categorySettings.grpcid}
                                             propsValue={true}
-                                            onClick={(e) => {
-                                              console.log(
-                                                "categorySettings.subtype_val:",
-                                                categorySettings.subtype_val
-                                              );
-                                              handlePricingInputChange(
-                                                "subtype_val",
-                                                1,
-                                                {
-                                                  catKey,
-                                                  setKey,
-                                                  categoryid:
-                                                    category.Categoryid,
-                                                  csid: categorySettings.csid,
-                                                  hid: categorySettings.hid,
-                                                  vcids: category.Categoryid,
-                                                  grpcid:
-                                                    categorySettings.grpcid,
-                                                  min_max:
-                                                    categorySettings.min_max,
-                                                }
-                                              );
-                                            }}
                                           >
                                             Yes
                                           </button>
@@ -1682,76 +1660,10 @@ const Profile = () => {
                                             vcids={category.Categoryid}
                                             grpcid={categorySettings.grpcid}
                                             propsValue={true}
-                                            onClick={(e) => {
-                                              // console.log(
-                                              //   "No categorySettings.subtype_val",
-                                              //   categorySettings.subtype_val
-                                              // );
-                                              handlePricingInputChange(
-                                                "subtype_val",
-                                                0,
-                                                {
-                                                  catKey,
-                                                  setKey,
-                                                  categoryid:
-                                                    category.Categoryid,
-                                                  csid: categorySettings.csid,
-                                                  hid: categorySettings.hid,
-                                                  vcids: category.Categoryid,
-                                                  grpcid:
-                                                    categorySettings.grpcid,
-                                                  min_max:
-                                                    categorySettings.min_max,
-                                                }
-                                              );
-                                            }}
                                           >
                                             No
                                           </button>
                                         </div>
-                                        {/* <PricingCheckbox
-                                          className="yes-button"
-                                          containerClass=""
-                                          label={categorySettings.head_title}
-                                          placeholder={
-                                            categorySettings.head_title
-                                          }
-                                          name="type_val"
-                                          value={
-                                            inputsPricing[catKey]
-                                              ? inputsPricing[catKey][
-                                                  "CategorySettings"
-                                                ][setKey]
-                                                ? inputsPricing[catKey][
-                                                    "CategorySettings"
-                                                  ][setKey]["type_val"]
-                                                : ""
-                                              : "" || categorySettings.type_val
-                                          }
-                                          catKey={catKey}
-                                          setKey={setKey}
-                                          categoryid={category.Categoryid}
-                                          csid={categorySettings.csid}
-                                          hid={categorySettings.hid}
-                                          vcids={category.Categoryid}
-                                          grpcid={categorySettings.grpcid}
-                                          propsValue={true}
-                                          onChange={(e) =>
-                                            handlePricingInputChange(
-                                              "subtype_val",
-                                              e.target.value ? 0 : 1,
-                                              {
-                                                catKey,
-                                                setKey,
-                                                categoryid: category.Categoryid,
-                                                csid: categorySettings.csid,
-                                                hid: categorySettings.hid,
-                                                vcids: category.Categoryid,
-                                                grpcid: categorySettings.grpcid,
-                                              }
-                                            )
-                                          }
-                                        /> */}
                                       </div>
                                     </>
                                   ) : (
@@ -1760,7 +1672,7 @@ const Profile = () => {
                                   {categorySettings.head_subtype === "1" ? (
                                     <>
                                       <div>
-                                        <h5 className="font-semibold flex flex-col w-[8rem]">
+                                        <h5 className="font-semibold flex flex-col w-[8rem] md:w-[14rem]">
                                           {categorySettings.head_subtitle}
                                         </h5>
                                         <input
@@ -1812,7 +1724,7 @@ const Profile = () => {
                                   ) : categorySettings.head_subtype === "2" ? (
                                     <>
                                       <div className="flex items-center gap-[1rem]">
-                                        <h5 className="font-semibold flex flex-col w-[8rem] ">
+                                        <h5 className="font-semibold flex flex-col w-[8rem] md:w-[14rem] ">
                                           {categorySettings.head_subtitle}{" "}
                                         </h5>
 
