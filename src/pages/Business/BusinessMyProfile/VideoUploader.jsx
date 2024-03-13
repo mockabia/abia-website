@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Modal, Button, Input, TextField, Textarea } from "@mui/material";
 import { ReactComponent as CloseButton } from "../../../icons/x-solid.svg";
+import PlayIcon from "../../../icons/abia-play.svg";
+
 import * as BusinessJs from "../Business";
 import "./VideoUploader.css";
 
 import { AiOutlineClose } from "react-icons/ai";
+import VideoModal from "./VideModal";
 
 //IModal
 
@@ -14,16 +17,13 @@ const VideoUploader = ({ vendorID }) => {
 
   //for onchange event
   const [videoURLs, setVideoURLs] = useState([]);
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const [selectedVideo, setSelectedVideo] = useState(null);
   //for submit events
   const [inputValue, setInputValue] = useState("");
   const [inputsErrors, setInputsErrors] = useState({});
   const [deleteVideo, setDeleteVideo] = useState("");
   const inputRef = useRef(null);
-  // drag and drop
-  // drag and drop
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragIndex, setDragIndex] = useState(-1);
-  const [dragOffset, setDragOffset] = useState(0);
 
   useEffect(() => {
     BusinessJs.V_viewVideoGallery(setVideoURLs, vendorID);
@@ -42,6 +42,7 @@ const VideoUploader = ({ vendorID }) => {
   const handleVideoChange = (e) => {
     setInputValue(e.target.value);
   };
+
   const handleVideoSubmit = (e) => {
     e.preventDefault();
     const videoUrl = inputValue;
@@ -73,76 +74,33 @@ const VideoUploader = ({ vendorID }) => {
     }
   };
 
-  // DRAG AND DROP
-  const startDrag = (index, event) => {
-    setDragIndex(index);
-    setDragOffset(event.clientX - event.target.getBoundingClientRect().left);
-    setIsDragging(true);
-  };
-  const onDragOver = (event) => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "move";
-  };
+  const getYoutubeThumbnailUrl = (videoUrl) => {
+    const videoIdMatch = videoUrl.match(
+      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+    );
+    const videoId = videoIdMatch ? videoIdMatch[1] : null;
 
-  // extraction info to be passed with the new update data
-  const extractImageProperties = (image) => {
-    const { title, detail, thumbUrl } = image;
-
-    return {
-      vid: vendorID,
-      tempphoto: {
-        imageUrl: thumbUrl, // or image.photo if needed
-        thumbUrl: thumbUrl,
-        iconUrl: thumbUrl, // or some other property
-      },
-      title,
-      detail,
-    };
-  };
-
-  const onDrop = (index, event) => {
-    event.preventDefault();
-    setIsDragging(false);
-
-    if (dragIndex !== -1) {
-      const fromIndex = dragIndex;
-      const toIndex = index;
-
-      // Rearrange the videos array
-      const movedVideo = videoURLs[fromIndex];
-      const updatedVideos = [...videoURLs];
-      updatedVideos.splice(fromIndex, 1);
-      updatedVideos.splice(toIndex, 0, movedVideo);
-
-      setVideoURLs(updatedVideos);
-      console.log("Updated videoURLs:", updatedVideos);
-
-      // Map properties and update API
-      const reorderedVideos = updatedVideos.map((video, idx) => {
-        return {
-          ...video,
-          position: idx + 1, // assuming position starts from 1
-        };
-      });
-      console.log("reorderedVideos:", reorderedVideos);
-
-      // Uncomment and modify this part according to your API
-      // BusinessJS.updateBusinessMyProfile(
-      //   reorderedVideos,
-      //   vendorID,
-      //   5,
-      //   setInputsErrors,
-      //   setVendorInputs
-      // );
+    if (videoId) {
+      const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+      // console.log("Thumbnail URL:", thumbnailUrl);
+      return thumbnailUrl;
     }
 
-    setDragIndex(-1);
+    return null;
   };
 
-  const onDragEnd = () => {
-    setIsDragging(false);
-    setDragIndex(-1);
+  // overlay
+  const playVideo = (video) => {
+    setSelectedVideo(video);
+    setVideoModalOpen(true);
+    // console.log(video);
   };
+
+  const closeOverlay = () => {
+    setSelectedVideo(null);
+    setVideoModalOpen(false);
+  };
+
   return (
     <div className="px-[1rem] md:px-[2rem] ">
       <div className="flex flex-col gap-[3rem]">
@@ -159,29 +117,42 @@ const VideoUploader = ({ vendorID }) => {
             </div>
           </label>
           {/* Display */}
-
           {videoURLs.map((element, index) => (
             <div
               key={element.vgid}
               id={element.vgid}
-              // className="video-upload-preview"
-              className={`video-upload-preview ${
-                isDragging && index === dragIndex ? "dragging" : ""
-              }`}
-              draggable="true"
-              onDragStart={(event) => startDrag(index, event)}
-              onDragOver={(event) => onDragOver(event)}
-              onDrop={(event) => onDrop(index, event)}
-              onDragEnd={onDragEnd}
+              className="video-upload-preview"
             >
+              <img
+                src={getYoutubeThumbnailUrl(element.video)}
+                alt={`Thumbnail for video ${element.vgid}`}
+                onClick={() => playVideo(element.video)}
+              />
               <div
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              >
+                <img
+                  src={PlayIcon}
+                  alt="Play Icon"
+                  style={{ width: "50px", height: "50px" }}
+                />
+              </div>
+
+              {/* <div
                 dangerouslySetInnerHTML={{
                   __html: element.video.replace(
                     "<iframe ",
                     '<iframe width="100%" height="100%" '
                   ),
                 }}
-              />
+              /> */}
+              {/* Render the video player in the overlay */}
+
               <div className="photopreview-desc">
                 <div className="photopreview-image-order">
                   <CloseButton
@@ -193,6 +164,12 @@ const VideoUploader = ({ vendorID }) => {
             </div>
           ))}
         </div>
+        {/* Render the VideoModal component */}
+        <VideoModal
+          open={videoModalOpen}
+          onClose={closeOverlay}
+          video={selectedVideo}
+        />
         {/* Submit and CAncel buttons */}
         <div className="myprofile-button-group-2 ">
           <button className="myprofile-cancel-button">Cancel</button>
@@ -233,7 +210,6 @@ const VideoUploader = ({ vendorID }) => {
               </div>
             </div>
           </form>
-          <div className=""></div>
         </div>
       </Modal>
     </div>

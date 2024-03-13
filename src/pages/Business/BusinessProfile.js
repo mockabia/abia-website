@@ -144,6 +144,309 @@ const Profile = () => {
   }, [viewProfile]);
   // console.log("Team owner detail:", viewProfile.team_owner_details);
 
+  // quick desc
+  const handleQuickTexChange = (e) => {
+    const inputText = e.target.value;
+    const currentWordCount = inputText.split(/\s+/).filter(Boolean).length;
+    if (currentWordCount <= 100) {
+      setQuickText(inputText);
+      setWordCount(currentWordCount);
+    }
+  };
+  const handleSubmit = () => {
+    // e.preventDefault();
+    setExpanded(false);
+    setSaveClicked(true);
+    //
+    const inputText = quickRef.current.value;
+
+    const formValues = {
+      vid: vendorID,
+      profile_short_desc: inputText,
+    };
+
+    BusinessJS.updateBusinessMyProfile(
+      formValues,
+      vendorID,
+      1,
+      setInputsErrors,
+      setVendorInputs
+    );
+  };
+
+  const handleCancel = () => {
+    setExpanded(false);
+    // setDraftText("");
+    setWordCount(0);
+  };
+
+  // FULL DESC
+
+  const updateStateAndAPI = useCallback((editorState) => {
+    let html = convertToHTML(editorState.getCurrentContent());
+    setConvertedContent(html);
+
+    const plainText = editorState.getCurrentContent().getPlainText();
+    const words = plainText.trim().split(/\s+/);
+    const count = words.length;
+    setFulldesccount(count);
+
+    // Use html directly instead of relying on state update
+    setFullText(<div dangerouslySetInnerHTML={createMarkup(html)} />);
+  }, []);
+
+  useEffect(() => {
+    updateStateAndAPI(editorState);
+  }, []);
+
+  function createMarkup(html) {
+    return {
+      __html: DOMPurify.sanitize(html),
+    };
+  }
+
+  const handleFullSubmit = (e) => {
+    e.preventDefault();
+    setExpanded(false);
+    setSaveClicked(true);
+
+    const formValues = {
+      vid: vendorID,
+      // profile_short_desc: previewListing.profile_short_desc,
+      profile_long_desc: convertedContent, // Include the full text in the formValues
+    };
+    // console.log("Formvalues from full desc:", formValues);
+    BusinessJS.updateBusinessMyProfile(
+      formValues,
+      vendorID,
+      1,
+      setInputsErrors,
+      setVendorInputs
+    );
+    // console.log("Full Text entered:", convertedContent);
+  };
+
+  //   /********Meet the Team ********* */
+  const handleOwnerTextChange = (e) => {
+    const inputText = e.target.value;
+    const currentWordCount = inputText.split(/\s+/).filter(Boolean).length;
+
+    if (currentWordCount <= 100) {
+      setOWnerText(inputText);
+      setWordCount(currentWordCount);
+    }
+  };
+
+  const handleOwnerRadioChange = (value) => {
+    setOwnerRadioOption(value);
+  };
+  useEffect(() => {
+    // console.log("Radio option:", ownerRadioOption);
+  }, [ownerRadioOption]);
+
+  const handleImageCrop = (images) => {
+    setImageTypes({
+      thumbUrl: images.thumbUrl,
+      iconUrl: images.iconUrl,
+      imageUrl: images.imageUrl,
+    });
+  };
+  const handleImageChange = (thumbUrl) => {
+    setCroppedImage(thumbUrl);
+  };
+
+  const handleOwnerSubmit = (e) => {
+    e.preventDefault();
+    setExpanded(false);
+    setSaveClicked(true);
+
+    setOwnerContent(ownerText);
+    const formValues = {
+      vid: vendorID,
+      tempphoto: {
+        imageUrl: imageTypes.imageUrl,
+        thumbUrl: croppedImage,
+        iconUrl: imageTypes.iconUrl,
+      },
+      team_owner_details: ownerText,
+      team_type: ownerRadioOption,
+    };
+
+    BusinessJS.updateBusinessMyProfile(
+      formValues,
+      vendorID,
+      2,
+      setInputsErrors,
+      setVendorInputs
+    );
+  };
+
+  /*******PACKAGES*******8 */
+  const handleFileChange = (e) => {
+    const fileInput = e.target;
+    if (fileInput.files.length > 0) {
+      const uploadedFile = fileInput.files[0];
+      setPfile(uploadedFile);
+      setUploadedFileName(uploadedFile.name);
+      setFileUploaded(true);
+    } else {
+      setFileUploaded(false);
+      setUploadedFileName("");
+    }
+  };
+
+  const handlePackageSubmit = () => {
+    setSaveClicked(true);
+
+    if (fileUploaded) {
+      setPackagesText("Package Updated: Yes");
+      const formValues = {
+        vid: vendorID,
+        package_file: pfile,
+      };
+      // console.log("Package section:", formValues);
+      BusinessJS.updateBusinessMyProfile_Package(
+        formValues,
+        vendorID,
+        6,
+        setInputsErrors,
+        setViewFile
+      );
+    } else {
+      setPackagesText("Package Updated: No");
+    }
+  };
+
+  const deletePackage = async () => {
+    await BusinessJS.V_deeletePackages(vendorID, setDelPackages);
+    console.log("Delete package:", deletePackage);
+    setFileUploaded(false);
+    setUploadedFileName("");
+  };
+  //*****Q and A ***********/
+  //*****Q and A ***********/
+  // view Q and A Record
+  useEffect(() => {
+    BusinessJS.viewqandaRecord(setViewQandA, vendorID).then(() => {
+      console.log("Q and A:", viewQandA);
+    });
+  }, [vendorID]);
+
+  // to update the question state from the backend data
+  useEffect(() => {
+    const newQuestions = viewQandA.map((question) => ({
+      id: question.qid,
+      question: question.question,
+      answer: question.answer,
+    }));
+    setQuestions(newQuestions);
+  }, [viewQandA]);
+
+  const handleQandAWordCount = (text) => {
+    const words = text.trim().split(/\s+/);
+    const count = words.length;
+    setQwordCount(count);
+
+    if (count > 50) {
+      setqandaWordCountError(true);
+    } else {
+      setqandaWordCountError(false);
+    }
+  };
+
+  const addQuestion = () => {
+    const newId = questions.length + 1;
+    setQuestions([...questions, { id: newId, question: "", answer: "" }]);
+  };
+
+  const handleQandAhandleChange = (value, questionId, field) => {
+    const updatedQuestions = questions.map((q) =>
+      q.id === questionId ? { ...q, [field]: value } : q
+    );
+    setQuestions(updatedQuestions);
+  };
+
+  // DELETE Q AND A
+  const handleRemoveQuestion = (questionId) => {
+    const updatedQuestions = questions.filter((q) => q.id !== questionId);
+    setQuestions(updatedQuestions);
+    handleRemoveQuestionFunction(questionId);
+  };
+  //
+  const handleRemoveQuestionFunction = (qid) => {
+    const updatedQuestions = questions.filter((q) => q.id !== qid);
+    setQuestions(updatedQuestions);
+    const formValues = updatedQuestions.map((question) => {
+      return {
+        qid: question.id,
+        vid: vendorID,
+        question: question.question,
+        answer: question.answer,
+      };
+    });
+    const formattedQuestions = formValues
+      .map(
+        (question) =>
+          `${question.qid}: ${question.question}\n${question.qid}: ${question.answer}`
+      )
+      .join("\n\n");
+    setQuestionDisplay([formattedQuestions]);
+    BusinessJS.V_deeleteQA(vendorID, qid, setDeleteQA);
+  };
+
+  // formted view Q and A to display
+  const formattedQandADisplay = viewQandA.map((question) => (
+    <React.Fragment key={question.qid}>
+      {`${question.qid}: ${question.question}`}
+      <br />
+      {`${question.qid}: ${question.answer}`}
+      <br />
+      <br />
+    </React.Fragment>
+  ));
+
+  const handleQuestionSubmit = async () => {
+    setExpanded(false);
+    setSaveClicked(true);
+    setQuestions(updateQanda);
+    // Check if any question or answer is not blank
+    const hasNonBlankQandA = questions.some(
+      (question) =>
+        question.question.trim() !== "" || question.answer.trim() !== ""
+    );
+
+    if (hasNonBlankQandA) {
+      // Build the formatted questionDisplay content
+      const formValues = questions.map((question) => {
+        return {
+          qid: question.id,
+          vid: vendorID,
+          question: question.question,
+          answer: question.answer,
+        };
+      });
+      BusinessJS.updateQandAProfile(
+        formValues,
+        vendorID,
+        7,
+        setInputsErrors,
+        setQuestionRes
+      );
+      // Format to Display in the Accordion Summary
+      const formattedQuestions = formValues
+        .map(
+          (question) =>
+            `${question.qid}: ${question.question}\n${question.qid}: ${question.answer}`
+        )
+        .join("\n\n");
+
+      setQuestionDisplay([formattedQuestions]);
+      // console.log("Display question :", {
+      //   formValues,
+      // });
+    }
+  };
+
   /*****Pricing  ***********/
   const handleDisplayChange = (categoryID, value) => {
     setIsActive((prevDisplayStates) => ({
@@ -266,11 +569,44 @@ const Profile = () => {
     );
   };
 
+  const formattedInclsuionsData =
+    viewProfile.inclusions &&
+    viewProfile.inclusions.map((inclusion) => {
+      const selectedValues = inclusion.values
+        .filter((value) => value.type_val === "1")
+        .map((value) => value.title)
+        .join(", ");
+
+      return `${inclusion.title}: ${selectedValues}`;
+    });
+
+  const formattedCategoryData =
+    viewProfile.Category &&
+    viewProfile.Category.map((category) => {
+      const formattedSettings =
+        category.CategorySettings &&
+        category.CategorySettings.map((setting) => {
+          const amount = setting.type_val;
+          const title = setting.head_title;
+          const subtitle = setting.head_subtitle ? "Yes" : "No";
+
+          return {
+            title,
+            Amount: amount,
+            ...(setting.head_subtitle && { Head_Subtitle: subtitle }),
+          };
+        });
+
+      return {
+        CategoryName: category.CategoryName,
+        Settings: formattedSettings || [], // Provide an empty array if Settings is undefined
+      };
+    });
+
   const skeletonLines = [
     { variant: "text", height: "1rem" },
     { variant: "rectangular", width: "100%", height: "5rem" },
   ];
-
   return (
     <div className="preview-listing-container">
       {/* <pre>{JSON.stringify(previewListing, null, 2)}</pre> */}
@@ -289,6 +625,662 @@ const Profile = () => {
       <br />
       <div>
         <div className="grid grid-cols-1">
+          {/* QUICK DESCRPTION */}
+          <div>
+            <StyledAccordion
+              expanded={expanded === "panel1"}
+              onChange={(e, isExpanded) => handleChange(isExpanded, "panel1")}
+            >
+              <AccordionSummary
+                style={{
+                  paddingLeft:
+                    expanded === "panel1"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                  paddingRight:
+                    expanded === "panel1"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "1rem",
+                }}
+                id="panel1-header"
+                aria-controls="panel1-content"
+                expandIcon={
+                  <Typography
+                    sx={{
+                      color: "black",
+                      fontFamily: "inherit",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {expanded === "panel1" ? (
+                      <RxTriangleUp size={30} color="#6cc2bc" />
+                    ) : (
+                      "Edit"
+                    )}
+                  </Typography>
+                }
+                sx={{
+                  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+                    transform: "rotate(0deg)",
+                    color: "black",
+                  },
+                }}
+              >
+                <div>
+                  <h4
+                    style={{
+                      fontWeight: expanded === "panel1" ? "bold" : "normal",
+                    }}
+                  >
+                    Quick Description
+                  </h4>
+                  {saveClicked &&
+                  vendorinputs.profile_short_desc &&
+                  !expanded === "panel1" ? (
+                    <p className="myprofile-accordion-subheading">
+                      {vendorinputs.profile_short_desc}
+                    </p>
+                  ) : expanded === "panel1" ? (
+                    <p className="myprofile-accordion-subheading">
+                      Display a quick summary of your business. Tip includes
+                      what your service is and your location.
+                    </p>
+                  ) : saveClicked && quickText ? (
+                    typeof quickText === "string" ? (
+                      <div>{quickText}</div>
+                    ) : (
+                      <p className="myprofile-accordion-subheading">
+                        {quickText}
+                      </p>
+                    )
+                  ) : (
+                    <p className="myprofile-accordion-subheading">
+                      {previewListing.profile_short_desc ||
+                        // <div
+                        //   dangerouslySetInnerHTML={{
+                        //     __html: previewListing.profile_long_desc,
+                        //   }}
+                        // />
+                        "Give couples a sense of what is included when they book [insert business name]. Include information such as locations, inclusions, starting prices etc."}
+                    </p>
+                  )}
+                </div>
+              </AccordionSummary>
+              <AccordionDetails
+                style={{
+                  paddingLeft:
+                    expanded === "panel1"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+              >
+                <div>
+                  <div className="myprofile-accordion-item-header"></div>
+                  <div className="mt-[0px]">
+                    <div className="profile-editor-position">
+                      <textarea
+                        ref={quickRef}
+                        name="profile_short_desc"
+                        id="text-area"
+                        // value={quickText}
+                        value={quickText || previewListing.profile_short_desc}
+                        onChange={handleQuickTexChange}
+                        className="myprofile-textarea-style"
+                      />
+
+                      <span className="text-[12px] mt-[5px]">
+                        {wordCount >= 100 ? (
+                          <p className="text-red-500 text-[12px] mt-2">
+                            Limit exceeded (100 words maximum)
+                          </p>
+                        ) : (
+                          `${wordCount}/100`
+                        )}
+                      </span>
+                      <div className="myprofile-button-group">
+                        <button
+                          className="myprofile-cancel-button"
+                          onClick={handleCancel}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="myprofile-save-button"
+                          onClick={handleSubmit}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </AccordionDetails>
+            </StyledAccordion>
+          </div>
+          {/* Full desc */}
+          <div>
+            <StyledAccordion
+              expanded={expanded === "panel2"}
+              onChange={(e, isExpanded) => handleChange(isExpanded, "panel2")}
+            >
+              <AccordionSummary
+                style={{
+                  paddingLeft:
+                    expanded === "panel2"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+                id="panel2-header"
+                aria-controls="panel2-content"
+                expandIcon={
+                  <Typography
+                    sx={{
+                      color: "black",
+                      fontFamily: "inherit",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {expanded === "panel2" ? (
+                      <RxTriangleUp size={30} color="#6cc2bc" />
+                    ) : (
+                      "Edit"
+                    )}
+                  </Typography>
+                }
+                sx={{
+                  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+                    transform: "rotate(0deg)",
+                    color: "black",
+                  },
+                }}
+              >
+                <div>
+                  {/* <h4 className="myprofile-heading-expand">Full Description</h4> */}
+                  <h4
+                    style={{
+                      fontWeight: expanded === "panel2" ? "bold" : "normal",
+                    }}
+                  >
+                    Full Description
+                  </h4>
+                  {saveClicked &&
+                  vendorinputs.profile_long_desc &&
+                  !expanded === "panel2" ? (
+                    <p className="myprofile-accordion-subheading">
+                      <div
+                        className="myprofile-accordion-subheading"
+                        dangerouslySetInnerHTML={{
+                          __html: vendorinputs.profile_long_desc,
+                        }}
+                      />
+                    </p>
+                  ) : expanded === "panel2" ? (
+                    <p className="myprofile-accordion-subheading">
+                      Give couples a sense of what is included when they book
+                      [insert business name]. Include information such as
+                      locations, inclusions, starting prices etc.
+                    </p>
+                  ) : saveClicked && fullText ? (
+                    typeof fullText === "string" ? (
+                      <div
+                        className="myprofile-accordion-subheading"
+                        dangerouslySetInnerHTML={{ __html: fullText }}
+                      />
+                    ) : (
+                      <p className="myprofile-accordion-subheading">
+                        {fullText}
+                      </p>
+                    )
+                  ) : (
+                    <p className="myprofile-accordion-subheading">
+                      {(
+                        <div
+                          className="myprofile-accordion-subheading"
+                          dangerouslySetInnerHTML={{
+                            __html: previewListing.profile_long_desc,
+                          }}
+                        />
+                      ) ||
+                        "Give couples a sense of what is included when they book [insert business name]. Include information such as locations, inclusions, starting prices etc."}
+                    </p>
+                  )}
+                </div>
+              </AccordionSummary>
+              <AccordionDetails
+                style={{
+                  paddingLeft:
+                    expanded === "panel2"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+              >
+                <div>
+                  <div className="myprofile-accordion-item-header"></div>
+                  {/* Editor */}
+                  <div>
+                    <div className="bprofile-editor-container">
+                      <Editor
+                        editorState={editorState}
+                        onEditorStateChange={setEditorState}
+                        toolbar={toolbarOptions}
+                      />
+                    </div>
+                    <div
+                      className="hidden"
+                      dangerouslySetInnerHTML={createMarkup(convertedContent)}
+                    />
+                    <span className="text-[12px] mt-[5px]">
+                      {fulldesccount >= 500 ? (
+                        <p className="text-red-500 text-[12px] mt-2">
+                          Limit exceeded (500 words maximum)
+                        </p>
+                      ) : (
+                        `${fulldesccount}/500`
+                      )}
+                    </span>
+                  </div>
+                  <div className="mt-[0px]">
+                    <div className="profile-editor-position">
+                      <div className="myprofile-button-group">
+                        <button
+                          className="myprofile-cancel-button"
+                          onClick={handleCancel}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="myprofile-save-button"
+                          onClick={handleFullSubmit}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </AccordionDetails>
+            </StyledAccordion>
+          </div>
+          {/* TEAM AND OWNER DETAILS*/}
+          <div>
+            <StyledAccordion
+              expanded={expanded === "panel3"}
+              onChange={(e, isExpanded) => handleChange(isExpanded, "panel3")}
+            >
+              <AccordionSummary
+                style={{
+                  paddingLeft:
+                    expanded === "panel3"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+                id="panel3-header"
+                aria-controls="panel3-content"
+                expandIcon={
+                  <Typography
+                    sx={{
+                      color: "black",
+                      fontFamily: "inherit",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {expanded === "panel3" ? (
+                      <RxTriangleUp size={30} color="#6cc2bc" />
+                    ) : (
+                      "Edit"
+                    )}
+                  </Typography>
+                }
+                sx={{
+                  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+                    transform: "rotate(0deg)",
+                    color: "black",
+                  },
+                }}
+              >
+                <div>
+                  <h4
+                    style={{
+                      fontWeight: expanded === "panel3" ? "bold" : "normal",
+                    }}
+                  >
+                    Meet the Owner/Team
+                  </h4>
+
+                  {saveClicked && defaultContent && !expanded === "panel3" ? (
+                    <>
+                      <p className="myprofile-accordion-subheading">
+                        {ownerContent}
+                      </p>
+                      <p className="myprofile-accordion-subheading">
+                        Type:{" "}
+                        {ownerRadioOption === 1 || viewProfile.team_type === 1
+                          ? "The Owner"
+                          : ownerRadioOption === 2 ||
+                            viewProfile.team_type === 2
+                          ? "The Team"
+                          : "Other Type"}
+                      </p>
+                    </>
+                  ) : (
+                    <p className="myprofile-accordion-subheading">
+                      {expanded === "panel3" ? (
+                        "Add a personal touch by letting couples get to know you, add a photo, and let us know if you are a team or owner."
+                      ) : (
+                        <>
+                          Type:{" "}
+                          {ownerRadioOption === 1 ||
+                          (viewProfile && viewProfile.team_type === 1)
+                            ? "The Owner"
+                            : ownerRadioOption === 2 ||
+                              (viewProfile && viewProfile.team_type === 2)
+                            ? "The Team"
+                            : "Other Type"}
+                          <br />
+                          <br />
+                          {defaultContent}
+                        </>
+                      )}
+                    </p>
+                  )}
+                </div>
+              </AccordionSummary>
+              <AccordionDetails
+                style={{
+                  paddingLeft:
+                    expanded === "panel3"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+              >
+                <div>
+                  <div className="myprofile-accordion-item-header">
+                    {/* <span className="myprofile-edit-button">Edit</span> */}
+                  </div>
+                  <div className="mt-[0px]">
+                    <div className="profile-editor-position">
+                      <textarea
+                        name="owner-desc"
+                        id="text-area"
+                        value={ownerText || viewProfile.team_owner_details}
+                        onChange={handleOwnerTextChange}
+                        className="myprofile-textarea-style"
+                      />
+
+                      <span className="text-[12px] mt-[5px]">
+                        {wordCount >= 100 ? (
+                          <p className="text-red-500 text-[12px] mt-2">
+                            Limit exceeded (100 words maximum)
+                          </p>
+                        ) : (
+                          `${wordCount}/100`
+                        )}
+                      </span>
+                      <div className="myprofile-radio-group">
+                        <div className="owner-radio-inputs mt-[15px] space-y-3 ">
+                          <h4 className="text-[#222222] font-semibold">
+                            Who are we getting to know?
+                          </h4>
+
+                          <div className="flex items-center ">
+                            <label className="space-x-2 flex items-center">
+                              <input
+                                type="radio"
+                                value="The Owner"
+                                checked={ownerRadioOption === 1}
+                                onChange={() => handleOwnerRadioChange(1)}
+                              />
+                              <span className="font-semibold">The Owner</span>
+                            </label>
+                          </div>
+
+                          <div>
+                            <label className="space-x-2 flex items-center">
+                              <input
+                                type="radio"
+                                value="The Team"
+                                checked={ownerRadioOption === 2}
+                                onChange={() => handleOwnerRadioChange(2)}
+                              />
+                              <span className="font-semibold">The Team</span>
+                            </label>
+                          </div>
+                        </div>
+                        <div className="mb-[2rem]">
+                          <Cropper
+                            onImageCrop={handleImageCrop}
+                            onChangeCrop={handleImageChange}
+                            defaultImage={ownerImage}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Submit and CAncel buttons */}
+                      <div className="myprofile-button-group-2 ">
+                        <button
+                          className="myprofile-cancel-button"
+                          onClick={handleCancel}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="myprofile-save-button"
+                          onClick={handleOwnerSubmit}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </AccordionDetails>
+            </StyledAccordion>
+          </div>
+
+          {/* PHOTOS AND VIDEOS */}
+          <h2 className="profile-listing-header">Photos/Videos</h2>
+          {/* Photos */}
+          <div>
+            <StyledAccordion
+              expanded={expanded === "panel8"}
+              onChange={(e, isExpanded) => handleChange(isExpanded, "panel8")}
+            >
+              <AccordionSummary
+                style={{
+                  paddingLeft:
+                    expanded === "panel8"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+                id="panel8-header"
+                aria-controls="panel8-content"
+                expandIcon={
+                  <Typography
+                    sx={{
+                      color: "black",
+                      fontFamily: "inherit",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {expanded === "panel8" ? (
+                      <RxTriangleUp size={30} color="#6cc2bc" />
+                    ) : (
+                      "Edit"
+                    )}
+                  </Typography>
+                }
+                sx={{
+                  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+                    transform: "rotate(0deg)",
+                    color: "black",
+                  },
+                }}
+              >
+                <div>
+                  <h4
+                    style={{
+                      fontWeight: expanded === "panel8" ? "bold" : "normal",
+                    }}
+                  >
+                    Photo Gallery
+                  </h4>
+                  <br />
+                  {expanded === "panel8" ? (
+                    <p className="myprofile-accordion-subheading">
+                      Drag and drop your photos to change the order.
+                    </p>
+                  ) : (
+                    <>
+                      {!expanded && (
+                        <PhotoPreview maxPhotosToShow={4} />
+                        // <PhotoGalleryTest
+                        //   vendorID={vendorID}
+                        //   maxPhotosToShow={3}
+                        // />
+                      )}
+                    </>
+                  )}
+                  {/* {saveClicked && defaultContent && !expanded === "panel8" ? (
+                    <>
+                      {" "}
+                      <PhotoGalleryTest vendorID={vendorID} />
+                    </>
+                  ) : ( expanded == "panel8") {
+                    <>
+                      <p className="myprofile-accordion-subheading">
+                        Drag and drop your photos to change the order.{" "}
+                      </p>{" "}
+                      <PhotoGalleryTest vendorID={vendorID} />
+                    </>
+
+                  }
+
+                  )} */}
+                </div>
+              </AccordionSummary>
+              <AccordionDetails
+                style={{
+                  paddingLeft:
+                    expanded === "panel8"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+              >
+                <div>
+                  <div className="myprofile-accordion-item-header">
+                    {/* <span className="myprofile-edit-button">Edit</span> */}
+                    <>
+                      {" "}
+                      <PhotoGalleryTest
+                        vendorID={vendorID}
+                        maxPhotosToShow={0}
+                      />
+                    </>
+                  </div>
+                </div>
+              </AccordionDetails>
+            </StyledAccordion>
+          </div>
+          {/* VIDEOS */}
+          <div>
+            <StyledAccordion
+              expanded={expanded === "panel9"}
+              onChange={(e, isExpanded) => handleChange(isExpanded, "panel9")}
+            >
+              <AccordionSummary
+                style={{
+                  paddingLeft:
+                    expanded === "panel9"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+                id="panel9-header"
+                aria-controls="panel9-content"
+                expandIcon={
+                  <Typography
+                    sx={{
+                      color: "black",
+                      fontFamily: "inherit",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {expanded === "panel9" ? (
+                      <RxTriangleUp size={30} color="#6cc2bc" />
+                    ) : (
+                      "Edit"
+                    )}
+                  </Typography>
+                }
+                sx={{
+                  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+                    transform: "rotate(0deg)",
+                    color: "black",
+                  },
+                }}
+              >
+                <div>
+                  <h4
+                    style={{
+                      fontWeight: expanded === "panel9" ? "bold" : "normal",
+                    }}
+                  >
+                    Videos
+                  </h4>
+                  {expanded === "panel9" ? (
+                    <p className="myprofile-accordion-subheading">
+                      Drag and drop your photos to change the order.
+                    </p>
+                  ) : (
+                    !expanded && (
+                      <VideoPreview vendorID={vendorID} maxtoShow={3} />
+                    )
+                  )}
+                </div>
+              </AccordionSummary>
+              <AccordionDetails
+                style={{
+                  paddingLeft:
+                    expanded === "panel8"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+              >
+                <div>
+                  <div className="myprofile-accordion-item-header">
+                    <VideoGallery vendorID={vendorID} />
+                  </div>
+                </div>
+              </AccordionDetails>
+            </StyledAccordion>
+          </div>
+
           {/* PRICING */}
           <div>
             {viewProfile ? (
@@ -331,10 +1323,73 @@ const Profile = () => {
                   }}
                 >
                   <div>
+                    {/* {!expanded ? (
+                      <>
+                        <p style={{ marginTop: "10px" }}>
+                          {formattedInclsuionsData.map(
+                            (formattedString, index) => (
+                              <div key={index}>{formattedString}</div>
+                            )
+                          )}
+                        </p>
+                      </>
+                    ) : (
+                      <p className="myprofile-accordion-subheading">
+                        Add Your Venue Inclusions
+                      </p>
+                    )} */}
                     <h4 className="profile-listing-header">Pricing</h4>
-                    <p className="myprofile-accordion-subheading">
-                      Display Price: {viewProfile.Category.CategorySettings}
-                    </p>
+                    {!expanded ? (
+                      <>
+                        <p className="myprofile-accordion-subheading ">
+                          {formattedCategoryData.map((category, index) => (
+                            <div
+                              key={index}
+                              className="flex flex-col gap-[1rem] "
+                            >
+                              <div
+                                style={{
+                                  fontWeight: "600",
+                                  color: "#515151",
+                                  textDecoration: "underline",
+                                  marginTop: "1rem",
+                                }}
+                              >{`Category : ${category.CategoryName}`}</div>
+                              <div className="flex flex-col gap-[1rem]">
+                                {category.Settings.map(
+                                  (setting, settingIndex) => (
+                                    <div key={settingIndex}>
+                                      {setting.Amount > 0 && (
+                                        <p
+                                          style={{
+                                            fontWeight: "600",
+                                            color: "#515151",
+                                          }}
+                                        >
+                                          {`${setting.title}:`} $
+                                          {setting.Amount}
+                                        </p>
+                                      )}
+                                      <div>
+                                        {` ${
+                                          setting.Head_Subtitle
+                                            ? `Display Price: ${setting.Head_Subtitle}`
+                                            : ""
+                                        }`}
+                                      </div>
+                                    </div>
+                                  )
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </p>
+                      </>
+                    ) : (
+                      <p className="myprofile-accordion-subheading">
+                        Add your Pricing details here.
+                      </p>
+                    )}
                   </div>
                 </AccordionSummary>
 
@@ -355,7 +1410,7 @@ const Profile = () => {
                           className="mt-[1rem] mb-[3rem]"
                           key={category.Categoryid}
                         >
-                          <div>
+                          <div className="flex flex-col gap-[1rem]">
                             <div className="pricing-category-label-section">
                               <span className="pricing-cate-label">
                                 {" "}
@@ -365,10 +1420,13 @@ const Profile = () => {
                             {/* Category fields */}
                             {category.CategorySettings.map(
                               (categorySettings, setKey) => (
-                                <div key={setKey} className="flex flex-col ">
+                                <div
+                                  key={setKey}
+                                  className="flex flex-col gap-[5px] "
+                                >
                                   {categorySettings.min_max == "1" ? (
                                     <>
-                                      <div className="flex  gap-[3rem]">
+                                      <div className="flex  gap-[1rem]">
                                         <h5 className="font-semibold flex flex-col">
                                           {categorySettings.head_title}:
                                         </h5>
@@ -377,7 +1435,7 @@ const Profile = () => {
                                             type="text"
                                             className="capacity-input-style"
                                             containerClass=""
-                                            placeholder={`${categorySettings.head_title} min`}
+                                            // placeholder={`${categorySettings.head_title} min`}
                                             name="type_val"
                                             value={
                                               inputsPricing[catKey]
@@ -421,7 +1479,7 @@ const Profile = () => {
                                             type="text"
                                             className="capacity-input-style"
                                             containerClass=""
-                                            placeholder={`${categorySettings.head_title} max`}
+                                            // placeholder={`${categorySettings.head_title} max`}
                                             name="subtype_val"
                                             value={
                                               inputsPricing[catKey]
@@ -467,8 +1525,9 @@ const Profile = () => {
                                   ) : categorySettings.head_titletype ===
                                     "1" ? (
                                     <>
-                                      <div className="flex  gap-[1rem]">
-                                        <h5 className="font-semibold flex flex-col">
+                                      {/* cocktail, price, seated, capacity */}
+                                      <div className="flex justify-start items-center gap-[1rem]">
+                                        <h5 className="font-semibold flex flex-col w-[8rem]">
                                           {categorySettings.head_title}
                                         </h5>
                                         <input
@@ -476,9 +1535,9 @@ const Profile = () => {
                                           className="capacity-input-style"
                                           containerClass=""
                                           label={categorySettings.head_title}
-                                          placeholder={
-                                            categorySettings.head_title
-                                          }
+                                          // placeholder={
+                                          //   categorySettings.head_title
+                                          // }
                                           name="type_val"
                                           value={
                                             inputsPricing[catKey]
@@ -515,11 +1574,142 @@ const Profile = () => {
                                   ) : categorySettings.head_titletype ===
                                     "2" ? (
                                     <>
-                                      <div>
-                                        <h5 className="font-semibold flex flex-col">
+                                      {/* Accomodation Availability */}
+                                      <div className="flex gap-[1rem]">
+                                        <h5 className="font-semibold flex flex-col w-[8rem]">
                                           {categorySettings.head_title}
                                         </h5>
-                                        <PricingCheckbox
+                                        <div className="flex gap-[1rem]">
+                                          {/* price per head */}
+                                          <button
+                                            className="yes-check-button"
+                                            // className={`yes-check-button ${
+                                            //   isActive[category.Categoryid] ===
+                                            //     1 ||
+                                            //   (categorySettings.subtype_val ===
+                                            //     "1" &&
+                                            //     categorySettings.min_max == "0")
+                                            //     ? "selected"
+                                            //     : ""
+                                            // }`}
+                                            label={
+                                              categorySettings.head_subtitle
+                                            }
+                                            placeholder={
+                                              categorySettings.head_subtitle
+                                            }
+                                            name="subtype_val"
+                                            value={
+                                              inputsPricing[catKey]
+                                                ? inputsPricing[catKey][
+                                                    "CategorySettings"
+                                                  ]
+                                                  ? inputsPricing[catKey][
+                                                      "CategorySettings"
+                                                    ][setKey]
+                                                    ? inputsPricing[catKey][
+                                                        "CategorySettings"
+                                                      ][setKey]["subtype_val"]
+                                                    : ""
+                                                  : ""
+                                                : ""
+                                            }
+                                            catKey={catKey}
+                                            setKey={setKey}
+                                            categoryid={category.Categoryid}
+                                            csid={categorySettings.csid}
+                                            hid={categorySettings.hid}
+                                            vcids={category.Categoryid}
+                                            grpcid={categorySettings.grpcid}
+                                            propsValue={true}
+                                            onClick={(e) => {
+                                              console.log(
+                                                "categorySettings.subtype_val:",
+                                                categorySettings.subtype_val
+                                              );
+                                              handlePricingInputChange(
+                                                "subtype_val",
+                                                1,
+                                                {
+                                                  catKey,
+                                                  setKey,
+                                                  categoryid:
+                                                    category.Categoryid,
+                                                  csid: categorySettings.csid,
+                                                  hid: categorySettings.hid,
+                                                  vcids: category.Categoryid,
+                                                  grpcid:
+                                                    categorySettings.grpcid,
+                                                  min_max:
+                                                    categorySettings.min_max,
+                                                }
+                                              );
+                                            }}
+                                          >
+                                            Yes
+                                          </button>
+                                          {/* No */}
+                                          <button
+                                            className="no-check-button"
+                                            containerClass=""
+                                            label={
+                                              categorySettings.head_subtitle
+                                            }
+                                            placeholder={
+                                              categorySettings.head_subtitle
+                                            }
+                                            name="subtype_val"
+                                            value={
+                                              inputsPricing[catKey]
+                                                ? inputsPricing[catKey][
+                                                    "CategorySettings"
+                                                  ]
+                                                  ? inputsPricing[catKey][
+                                                      "CategorySettings"
+                                                    ][setKey]
+                                                    ? inputsPricing[catKey][
+                                                        "CategorySettings"
+                                                      ][setKey]["subtype_val"]
+                                                    : ""
+                                                  : ""
+                                                : ""
+                                            }
+                                            catKey={catKey}
+                                            setKey={setKey}
+                                            categoryid={category.Categoryid}
+                                            csid={categorySettings.csid}
+                                            hid={categorySettings.hid}
+                                            vcids={category.Categoryid}
+                                            grpcid={categorySettings.grpcid}
+                                            propsValue={true}
+                                            onClick={(e) => {
+                                              // console.log(
+                                              //   "No categorySettings.subtype_val",
+                                              //   categorySettings.subtype_val
+                                              // );
+                                              handlePricingInputChange(
+                                                "subtype_val",
+                                                0,
+                                                {
+                                                  catKey,
+                                                  setKey,
+                                                  categoryid:
+                                                    category.Categoryid,
+                                                  csid: categorySettings.csid,
+                                                  hid: categorySettings.hid,
+                                                  vcids: category.Categoryid,
+                                                  grpcid:
+                                                    categorySettings.grpcid,
+                                                  min_max:
+                                                    categorySettings.min_max,
+                                                }
+                                              );
+                                            }}
+                                          >
+                                            No
+                                          </button>
+                                        </div>
+                                        {/* <PricingCheckbox
                                           className="yes-button"
                                           containerClass=""
                                           label={categorySettings.head_title}
@@ -561,7 +1751,7 @@ const Profile = () => {
                                               }
                                             )
                                           }
-                                        />
+                                        /> */}
                                       </div>
                                     </>
                                   ) : (
@@ -570,7 +1760,7 @@ const Profile = () => {
                                   {categorySettings.head_subtype === "1" ? (
                                     <>
                                       <div>
-                                        <h5 className="font-semibold flex flex-col">
+                                        <h5 className="font-semibold flex flex-col w-[8rem]">
                                           {categorySettings.head_subtitle}
                                         </h5>
                                         <input
@@ -621,128 +1811,148 @@ const Profile = () => {
                                     </>
                                   ) : categorySettings.head_subtype === "2" ? (
                                     <>
-                                      <div className="flex items-center gap-[1rem] my-[1rem]">
-                                        <h5 className="font-semibold flex flex-col">
+                                      <div className="flex items-center gap-[1rem]">
+                                        <h5 className="font-semibold flex flex-col w-[8rem] ">
                                           {categorySettings.head_subtitle}{" "}
                                         </h5>
-                                        {/* price per head */}
-                                        <button
-                                          className={`yes-check-button ${
-                                            isActive[category.Categoryid]
-                                              ? "selected"
-                                              : ""
-                                          }`}
-                                          containerClass=""
-                                          label={categorySettings.head_subtitle}
-                                          placeholder={
-                                            categorySettings.head_subtitle
-                                          }
-                                          name="subtype_val"
-                                          value={
-                                            inputsPricing[catKey]
-                                              ? inputsPricing[catKey][
-                                                  "CategorySettings"
-                                                ]
+
+                                        <div className="flex gap-[1rem]">
+                                          {/* price per head */}
+                                          <button
+                                            className={`yes-check-button ${
+                                              isActive[category.Categoryid] ===
+                                                1 ||
+                                              (categorySettings.subtype_val ===
+                                                "1" &&
+                                                categorySettings.min_max == "0")
+                                                ? "selected"
+                                                : ""
+                                            }`}
+                                            label={
+                                              categorySettings.head_subtitle
+                                            }
+                                            placeholder={
+                                              categorySettings.head_subtitle
+                                            }
+                                            name="subtype_val"
+                                            value={
+                                              inputsPricing[catKey]
                                                 ? inputsPricing[catKey][
                                                     "CategorySettings"
-                                                  ][setKey]
+                                                  ]
                                                   ? inputsPricing[catKey][
                                                       "CategorySettings"
-                                                    ][setKey]["subtype_val"]
+                                                    ][setKey]
+                                                    ? inputsPricing[catKey][
+                                                        "CategorySettings"
+                                                      ][setKey]["subtype_val"]
+                                                    : ""
                                                   : ""
                                                 : ""
-                                              : ""
-                                          }
-                                          catKey={catKey}
-                                          setKey={setKey}
-                                          categoryid={category.Categoryid}
-                                          csid={categorySettings.csid}
-                                          hid={categorySettings.hid}
-                                          vcids={category.Categoryid}
-                                          grpcid={categorySettings.grpcid}
-                                          propsValue={true}
-                                          onClick={(e) => {
-                                            console.log(
-                                              "categorySettings.subtype_val:",
-                                              categorySettings.subtype_val
-                                            );
-                                            handlePricingInputChange(
-                                              "subtype_val",
-                                              1,
-                                              {
-                                                catKey,
-                                                setKey,
-                                                categoryid: category.Categoryid,
-                                                csid: categorySettings.csid,
-                                                hid: categorySettings.hid,
-                                                vcids: category.Categoryid,
-                                                grpcid: categorySettings.grpcid,
-                                                min_max:
-                                                  categorySettings.min_max,
-                                              }
-                                            );
-                                          }}
-                                        >
-                                          Yes
-                                        </button>
-                                        {/* No */}
-                                        <button
-                                          className={`no-check-button ${
-                                            isActive[category.Categoryid] === 0
-                                              ? "selected"
-                                              : ""
-                                          }`}
-                                          containerClass=""
-                                          label={categorySettings.head_subtitle}
-                                          placeholder={
-                                            categorySettings.head_subtitle
-                                          }
-                                          name="subtype_val"
-                                          value={
-                                            inputsPricing[catKey]
-                                              ? inputsPricing[catKey][
-                                                  "CategorySettings"
-                                                ]
+                                            }
+                                            catKey={catKey}
+                                            setKey={setKey}
+                                            categoryid={category.Categoryid}
+                                            csid={categorySettings.csid}
+                                            hid={categorySettings.hid}
+                                            vcids={category.Categoryid}
+                                            grpcid={categorySettings.grpcid}
+                                            propsValue={true}
+                                            onClick={(e) => {
+                                              console.log(
+                                                "categorySettings.subtype_val:",
+                                                categorySettings.subtype_val
+                                              );
+                                              handlePricingInputChange(
+                                                "subtype_val",
+                                                1,
+                                                {
+                                                  catKey,
+                                                  setKey,
+                                                  categoryid:
+                                                    category.Categoryid,
+                                                  csid: categorySettings.csid,
+                                                  hid: categorySettings.hid,
+                                                  vcids: category.Categoryid,
+                                                  grpcid:
+                                                    categorySettings.grpcid,
+                                                  min_max:
+                                                    categorySettings.min_max,
+                                                }
+                                              );
+                                            }}
+                                          >
+                                            Yes
+                                          </button>
+                                          {/* No */}
+                                          <button
+                                            className={`no-check-button ${
+                                              isActive[category.Categoryid] ===
+                                                0 ||
+                                              (categorySettings.subtype_val ===
+                                                "0" &&
+                                                categorySettings.min_max == "0")
+                                                ? "selected"
+                                                : ""
+                                            }`}
+                                            containerClass=""
+                                            label={
+                                              categorySettings.head_subtitle
+                                            }
+                                            placeholder={
+                                              categorySettings.head_subtitle
+                                            }
+                                            name="subtype_val"
+                                            value={
+                                              inputsPricing[catKey]
                                                 ? inputsPricing[catKey][
                                                     "CategorySettings"
-                                                  ][setKey]
+                                                  ]
                                                   ? inputsPricing[catKey][
                                                       "CategorySettings"
-                                                    ][setKey]["subtype_val"]
+                                                    ][setKey]
+                                                    ? inputsPricing[catKey][
+                                                        "CategorySettings"
+                                                      ][setKey]["subtype_val"]
+                                                    : ""
                                                   : ""
                                                 : ""
-                                              : ""
-                                          }
-                                          catKey={catKey}
-                                          setKey={setKey}
-                                          categoryid={category.Categoryid}
-                                          csid={categorySettings.csid}
-                                          hid={categorySettings.hid}
-                                          vcids={category.Categoryid}
-                                          grpcid={categorySettings.grpcid}
-                                          propsValue={true}
-                                          onClick={(e) => {
-                                            console.log(
-                                              "category.Categoryid:",
-                                              category.Categoryid
-                                            );
-                                            handlePricingInputChange(
-                                              "subtype_val",
-                                              0,
-                                              {
-                                                catKey,
-                                                setKey,
-                                                categoryid: category.Categoryid,
-                                                csid: categorySettings.csid,
-                                                hid: categorySettings.hid,
-                                                vcids: category.Categoryid,
-                                                grpcid: categorySettings.grpcid,
-                                              }
-                                            );
-                                          }}
-                                        >
-                                          No
-                                        </button>
+                                            }
+                                            catKey={catKey}
+                                            setKey={setKey}
+                                            categoryid={category.Categoryid}
+                                            csid={categorySettings.csid}
+                                            hid={categorySettings.hid}
+                                            vcids={category.Categoryid}
+                                            grpcid={categorySettings.grpcid}
+                                            propsValue={true}
+                                            onClick={(e) => {
+                                              console.log(
+                                                "No categorySettings.subtype_val",
+                                                categorySettings.subtype_val
+                                              );
+                                              handlePricingInputChange(
+                                                "subtype_val",
+                                                0,
+                                                {
+                                                  catKey,
+                                                  setKey,
+                                                  categoryid:
+                                                    category.Categoryid,
+                                                  csid: categorySettings.csid,
+                                                  hid: categorySettings.hid,
+                                                  vcids: category.Categoryid,
+                                                  grpcid:
+                                                    categorySettings.grpcid,
+                                                  min_max:
+                                                    categorySettings.min_max,
+                                                }
+                                              );
+                                            }}
+                                          >
+                                            No
+                                          </button>
+                                        </div>
                                       </div>
                                     </>
                                   ) : (
@@ -829,21 +2039,15 @@ const Profile = () => {
                         <h4 className="profile-listing-header">
                           Venue Inclusions
                         </h4>
-                        {saveClicked && !expanded ? (
+                        {!expanded ? (
                           <>
-                            {Object.entries(selectedInclusions).map(
-                              ([inchid, data]) => (
-                                <p
-                                  key={inchid}
-                                  className="myprofile-accordion-subheading"
-                                >
-                                  {data.incTitle}:{" "}
-                                  {Object.values(data.selectedValues).join(
-                                    ", "
-                                  )}
-                                </p>
-                              )
-                            )}
+                            <p style={{ marginTop: "10px" }}>
+                              {formattedInclsuionsData.map(
+                                (formattedString, index) => (
+                                  <div key={index}>{formattedString}</div>
+                                )
+                              )}
+                            </p>
                           </>
                         ) : (
                           <p className="myprofile-accordion-subheading">
@@ -902,7 +2106,7 @@ const Profile = () => {
                                                     inclusion.inchid
                                                   ]?.selectedValues?.[
                                                     value.incid
-                                                  ]
+                                                  ] || value.type_val === "1"
                                                 }
                                                 onChange={(e) =>
                                                   handleInclusionChange(
@@ -953,6 +2157,293 @@ const Profile = () => {
                     <br />
                   </div>
                 ))}
+          </div>
+          {/* QandA */}
+          <StyledAccordion
+            expanded={expanded === "panel6"}
+            onChange={(e, isExpanded) => handleChange(isExpanded, "panel6")}
+          >
+            <AccordionSummary
+              style={{
+                borderTop: "none",
+                paddingLeft:
+                  expanded === "panel6"
+                    ? isScreenSizeAbove1250px
+                      ? "2rem"
+                      : "1rem"
+                    : "0",
+              }}
+              id="panel6-header"
+              aria-controls="panel6-content"
+              expandIcon={
+                <Typography
+                  sx={{
+                    color: "black",
+                    fontFamily: "inherit",
+                    fontSize: "14px",
+                    fontWeight: "600",
+                  }}
+                >
+                  {expanded === "panel6" ? (
+                    <RxTriangleUp size={30} color="#6cc2bc" />
+                  ) : (
+                    "Edit"
+                  )}
+                </Typography>
+              }
+              sx={{
+                "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+                  transform: "rotate(0deg)",
+                  color: "black",
+                },
+              }}
+            >
+              <div>
+                <h4 className="profile-listing-header">Q&A</h4>
+                {saveClicked && questionDisplay && !expanded ? (
+                  <div className="whitespace-break-spaces mt-[10px]">
+                    {questionDisplay || formattedQandADisplay}
+                  </div>
+                ) : expanded ||
+                  (questionDisplay && questionDisplay.length > 0) ? null : (
+                  <p className="myprofile-accordion-subheading">
+                    {formattedQandADisplay ||
+                      "Add the most common Q&A your business is asked, this helps couples get to know you further."}
+                  </p>
+                )}
+              </div>
+            </AccordionSummary>
+            <AccordionDetails
+              style={{
+                paddingLeft:
+                  expanded === "panel6"
+                    ? isScreenSizeAbove1250px
+                      ? "2rem"
+                      : "1rem"
+                    : "0",
+              }}
+            >
+              <div>
+                <div className="myprofile-accordion-item-header"></div>
+                <div className="mt-[0px]">
+                  <div className="QandA-panel-container">
+                    <p className="whitespace-break-spaces">
+                      Add up to 5 common questions [businessname] is asked.
+                    </p>
+                    {questions.map((question, index) => (
+                      <div key={question.id}>
+                        <div className="mt-[15px] space-y-1">
+                          <span className="font-semibold">
+                            Question ({index + 1})
+                          </span>
+                          <br />
+                          <div className="">
+                            <input
+                              className="question-input-style"
+                              placeholder="Maximum 50 characters"
+                              value={question.question}
+                              onChange={(e) => {
+                                handleQandAWordCount(e.target.value);
+                                handleQandAhandleChange(
+                                  e.target.value,
+                                  question.id,
+                                  "question"
+                                );
+                              }}
+                            />
+                            {qandaWordCountError && (
+                              <p className="error">Max word limit: 50 words</p>
+                            )}
+                            <div className="qandA-delete-button ">
+                              <button
+                                className="remove-question-button"
+                                onClick={() =>
+                                  handleRemoveQuestion(question.id)
+                                }
+                              >
+                                <DeleteForeverIcon />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="mt-[15px] space-y-1">
+                          <span className="font-semibold">
+                            Answer ({index + 1})
+                          </span>
+                          <br />
+                          <textarea
+                            className="answer-input-style"
+                            value={question.answer}
+                            onChange={(e) =>
+                              handleQandAhandleChange(
+                                e.target.value,
+                                question.id,
+                                "answer"
+                              )
+                            }
+                          />
+                        </div>
+                      </div>
+                    ))}
+
+                    <div className="myprofile-button-group relative">
+                      <button
+                        className="question-cancel-button"
+                        onClick={addQuestion}
+                      >
+                        Add a question
+                      </button>
+                      <button
+                        className="myprofile-save-button"
+                        onClick={handleQuestionSubmit}
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </AccordionDetails>
+          </StyledAccordion>
+          {/* PACKAGES */}
+          <div>
+            <StyledAccordion
+              expanded={expanded === "panel7"}
+              onChange={(e, isExpanded) => handleChange(isExpanded, "panel7")}
+            >
+              <AccordionSummary
+                style={{
+                  paddingLeft:
+                    expanded === "panel7"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+                id="panel7-header"
+                aria-controls="panel7-content"
+                expandIcon={
+                  <Typography
+                    sx={{
+                      color: "black",
+                      fontFamily: "inherit",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    {expanded === "panel7" ? (
+                      <RxTriangleUp size={30} color="#6cc2bc" />
+                    ) : (
+                      "Edit"
+                    )}
+                  </Typography>
+                }
+                sx={{
+                  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
+                    transform: "rotate(0deg)",
+                    color: "black",
+                  },
+                }}
+              >
+                <div>
+                  <h4 className="profile-listing-header">Packages</h4>
+
+                  <div className="myprofile-accordion-subheading-pricing">
+                    <>
+                      {packagesText || (
+                        <>
+                          {viewProfile.packageFile
+                            ? "Package Updated: Yes"
+                            : "Package Updated: No"}
+                        </>
+                      )}
+                      {/* {" "}
+                        {viewProfile.package_file ||
+                        (uploadedFileName && saveClicked)
+                          ? "Package Updated: Yes"
+                          : "Package Updated: No"} */}
+                    </>
+
+                    <br />
+                    <br />
+                  </div>
+                </div>
+              </AccordionSummary>
+              <AccordionDetails
+                style={{
+                  paddingLeft:
+                    expanded === "panel7"
+                      ? isScreenSizeAbove1250px
+                        ? "2rem"
+                        : "1rem"
+                      : "0",
+                }}
+              >
+                <div>
+                  <div className="myprofile-accordion-item-header">
+                    {/* <span className="myprofile-edit-button">Edit</span> */}
+                  </div>
+                  <div className="package-panel-container">
+                    <div>
+                      <span className="text-[14px] mt-[10px]">
+                        Add a PDF file, maximum 5MB. You are responsible to
+                        ensure the information in your PDF is up to date.
+                      </span>
+                    </div>
+                    <br />
+
+                    <div className="flex justify-start items-center gap-[1rem]">
+                      {viewProfile.package_file && (
+                        <>
+                          <label
+                            htmlFor="upload-files"
+                            className="text-[14px] cursor-pointer"
+                          >
+                            File Uploaded:{" "}
+                            {uploadedFileName || viewProfile.package_file}
+                          </label>
+                          <NavLink to={viewFile.packageFile} title="View">
+                            <HiOutlineViewfinderCircle size={24} />
+                          </NavLink>
+                          <button title="Delete" onClick={deletePackage}>
+                            <MdDelete size={24} />
+                          </button>
+                        </>
+                      )}
+                    </div>
+
+                    <div className="myprofile-button-group relative">
+                      <div className="">
+                        <div className="packages-upload-button ">
+                          <input
+                            type="file"
+                            id="upload-files"
+                            className="hidden"
+                            onChange={handleFileChange}
+                          />
+                          <label
+                            htmlFor="upload-files"
+                            className="text-[14px] cursor-pointer"
+                          >
+                            Upload{" "}
+                          </label>
+                          <span className="package-upload-icons">
+                            <BiUpload />
+                          </span>
+                        </div>
+                      </div>
+                      <button
+                        className="myprofile-save-button"
+                        onClick={handlePackageSubmit}
+                      >
+                        Save
+                      </button>
+                    </div>
+                    <div id="displayText"></div>
+                  </div>
+                </div>
+              </AccordionDetails>
+            </StyledAccordion>
           </div>
         </div>
       </div>

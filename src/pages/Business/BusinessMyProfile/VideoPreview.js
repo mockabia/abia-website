@@ -73,10 +73,6 @@ const VideoPreview = ({ vendorID, maxtoShow }) => {
               id={element.vgid}
               className="video-upload-preview "
             >
-              {/* <div id={element.vgid} className="play-button">
-              <PlayButton />
-            </div> */}
-              {/* <EmbeddedVideo video={element.video} /> */}
               <div
                 dangerouslySetInnerHTML={{
                   __html: element.video.replace(
@@ -85,8 +81,16 @@ const VideoPreview = ({ vendorID, maxtoShow }) => {
                   ),
                 }}
               />
+              {/* Conditionally render the "add video" button */}
             </div>
           ))}
+
+        {maxtoShow < 4 && (
+          <div className="video-upload-button">
+            <input id="video-upload-select" className="hidden" />
+            <span className="video-upload-text">add video</span>
+          </div>
+        )}
       </div>
     </div>
   );
