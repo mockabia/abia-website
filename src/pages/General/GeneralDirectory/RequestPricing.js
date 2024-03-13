@@ -25,9 +25,12 @@ import { ReactComponent as PhoneIcon } from "../../../icons/Phone-14.svg";
 import { ReactComponent as EmailIcon } from "../../../icons/email copy.svg";
 import { ReactComponent as UserIcons } from "../../../icons/contact topbar.svg";
 import { DatePickerPublic } from "../../../components/DatepickerPublic";
+import * as CoupleJS from "../../Couple/Couple";
 
 const RequestPricing = ({ business, locationOptions, servicesOptions }) => {
+  const [formValues, setFormValues] = useState({});
   const [open, setOpen] = React.useState(false);
+  const [errors, setErrors] = React.useState({});
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 550);
 
   const businessCaps = business.toUpperCase();
@@ -47,6 +50,10 @@ const RequestPricing = ({ business, locationOptions, servicesOptions }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const handleInputChangeVal = (name, value) => {
+    CoupleJS.customJS.handleChange(name, value, setFormValues, setErrors);
+  };
 
   return (
     <div>
@@ -192,7 +199,13 @@ const RequestPricing = ({ business, locationOptions, servicesOptions }) => {
 
                 <Stack direction={isMobile ? "column" : "row"} spacing={1}>
                   {/* Wedding Date */}
-                  <DatePickerPublic />
+                  <DatePickerPublic
+                    name="date_of_wedding"
+                    label="Wedding Date"
+                    handleDateChange={(date) =>
+                      handleInputChangeVal("date_of_wedding", date)
+                    }
+                  />
 
                   {/* Select Services */}
                   <SelectTextField
