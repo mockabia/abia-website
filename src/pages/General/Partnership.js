@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import LayoutGeneral from "../../layouts/Layout/LayoutGeneral";
 import "../Style/Partnership.css";
 import { FaCheck } from "react-icons/fa6";
-import { FaAnglesDown } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 const partnershipList = [
@@ -72,7 +70,6 @@ const Partnership = () => {
   };
 
   return (
-    <LayoutGeneral>
       <div className="h-screen pb-[10rem]">
         {/* toggle switch */}
         <h2 className="main-header">Partnetship Benefits</h2>
@@ -195,7 +192,6 @@ const Partnership = () => {
           </div>
         </main>
       </div>
-    </LayoutGeneral>
   );
 };
 
