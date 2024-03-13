@@ -178,13 +178,40 @@ export const PublicMessageInput = styled(TextField)(({ theme }) => ({
   },
 }));
 
-export function DatePickerPublic({ label, TextFieldProps }) {
+export function DatePickerPublic({
+  name,
+  label,
+  dateError,
+  handleDateChange,
+  checkboxChecked,
+  value,
+}) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePickerStype
-        label="Preferred Wedding Dates"
+        value={value ? new Date(value) : null}
+        name={name}
+        format="dd/MM/yyyy"
+        // label={label}
+        onChange={(date) => handleDateChange(date)}
+        // disabled="true"
+        disablePast
+        disabled={checkboxChecked}
         slots={{
-          textField: (params) => <DateTextField variant="filled" {...params} />,
+          textField: (params) => (
+            <React.Fragment>
+              <DateTextField
+                variant="outlined"
+                {...params}
+                // error={Boolean(dateError)}
+              />
+              {dateError && (
+                <Typography color="error" variant="caption" component="div">
+                  {dateError}
+                </Typography>
+              )}
+            </React.Fragment>
+          ),
         }}
       />
     </LocalizationProvider>

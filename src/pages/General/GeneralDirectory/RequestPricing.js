@@ -193,6 +193,7 @@ const RequestPricing = ({ business, locationOptions, servicesOptions }) => {
                 <Stack direction={isMobile ? "column" : "row"} spacing={1}>
                   {/* Wedding Date */}
                   <DatePickerPublic />
+
                   {/* Select Services */}
                   <SelectTextField
                     id="filled-select-services"
