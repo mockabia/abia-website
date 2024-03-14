@@ -90,10 +90,10 @@ export const COUPLE_API = {
   WEDDING_DETAILS: `${baseUrl}WebManageWedding`,
   SETTINGS: `${baseUrl}WebManageWedding`,
 
-  VIEW_CATEGORIES: `${baseUrl}view_Selcategories`,
-  UPDATE_BUDGET: `${baseUrl}Webaddupd_mybudget`,
-  ADD_CATEGORY: `${baseUrl}add_coupleCategories`,
-  UPDATE_CATEGORY: `${baseUrl}Webupdate_CategoryBudget`,
+  VIEW_CATEGORIES : `${baseUrl}view_Selcategories`,
+  UPDATE_BUDGET   : `${baseUrl}Webaddupd_mybudget`,
+  ADD_CATEGORY    : `${baseUrl}Webadd_coupleCategories`,
+  UPDATE_CATEGORY : `${baseUrl}Webupdate_CategoryBudget`,
 
   ENQUIRIES: `${baseUrl}ManageEnquiries`,
   BOOKINGS: `${baseUrl}ManageBookings`,

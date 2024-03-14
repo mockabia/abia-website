@@ -15,24 +15,19 @@ function AddNewCategory(props) {
     const [inputsErrors, setInputsErrors] = React.useState({});
 
     const handleChange = (e) => {
-      const name = e.target.name;
-      const value = e.target.value;
+      const name      = e.target.name;
+      const value     = e.target.value;
       let targetValue = e.target.checked ? value : '';
-      let targetValArray = (inputs[name] != undefined && inputs[name].length > 0) ? inputs[name].split(',') : Array();
       if (targetValue != '') {
-        targetValArray.push(targetValue);
+        setInputs(oldArray => [...oldArray, name]);
       } else {
-        const index = targetValArray.findIndex((vals) => vals === value);
-        targetValArray.splice(index, 1);
+        setInputs(inputs.filter(item => item !== name));
       }
-      targetValue = targetValArray.join();
-      setInputs(values => ({ ...values, [name]: targetValue }))
-    };
-
+    }
     const handleSaveCategory = async () => {
-      //setSavedCategories([...selectedCategory]);
-      //handleAddClose();
-      CoupleJS.addCategories(inputs,setInputsErrors,setData,setBudget,setUnpaidList,handleAddClose)
+      let requestData           = {};
+      requestData.categories    = inputs;
+      CoupleJS.addCategories(requestData,setInputsErrors,setData,setBudget,setUnpaidList,handleAddClose)
     };
     const handleAddClose = () => {
       setOpen(!open);
@@ -62,12 +57,11 @@ function AddNewCategory(props) {
                       control={
                         <CheckBoxStyle
                           size="medium"
-                          name={`servicesValue`}
-                          id={`servicesValue`}
+                          name={`${services.mcid}`}
                           value={services.mcid}
-                          checked={(inputs.servicesValue != undefined && inputs.servicesValue.length > 0) ?
-                            ((inputs.servicesValue.split(',').map(JSON.parse)).indexOf(services.mcid) != -1 ? 'checked' : '')
-                            : ''}
+                          /* checked={(inputs != undefined && inputs.length > 0) ?
+                            ((inputs.split(',').map(JSON.parse)).indexOf(services.mcid) != -1 ? 'checked' : '')
+                            : ''} */
                           onChange={(e) => handleChange(e)}
                         />
                       }
