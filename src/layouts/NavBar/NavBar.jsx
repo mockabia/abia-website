@@ -11,7 +11,7 @@ import SignUpDropDown from "../../components/Login and Signup/SignUpDropDown";
 import MenuItems from "../../components/Login and Signup/PublicMenuItems";
 import * as BusinessJS from "../../pages/Business/Business";
 import * as CoupleJS from "../../pages/Couple/Couple";
-import AbiaLogo from "../../abiaLogo";
+import {ReactComponent as AbiaLogo} from "../../icons/ABIA Weddings Australia.svg";
 import "../css/NavBar.css";
 
 import {

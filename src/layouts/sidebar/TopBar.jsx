@@ -18,8 +18,7 @@ import { ReactComponent as MyProfileICon } from "../../icons/my-profile.svg";
 import { ReactComponent as SettingsIcons } from "../../icons/settings.svg";
 import { RxTriangleDown, RxTriangleUp } from "react-icons/rx";
 import { ReactComponent as MenuIcon } from "../../icons/menuIcon.svg";
-import { ReactComponent as AbiaLogo } from "../../ABIA-White-Logo-gold-crown(1).svg";
-import AbiaLogo1 from "../../abiaLogo";
+import { ReactComponent as AbiaLogo } from "../../icons/ABIA Weddings Australia.svg";
 import * as BusinessJS from "../../pages/Business/Business";
 //components
 
@@ -74,7 +73,7 @@ const TopBar = (props) => {
     setMenuOpen(false);
   };
   const handleVendorLogout = () => {
-    BusinessJS.logout(props.setLoginStatus,navigate);
+    BusinessJS.logout(props.setLoginStatus, navigate);
   };
 
   const handleLogoClick = () => {
@@ -103,7 +102,7 @@ const TopBar = (props) => {
         onClick={handleLogoClick}
         className="relative w-[85px]  ml-[20px] md:hidden cursor-pointer"
       >
-        <AbiaLogo1 />
+        <AbiaLogo />
       </div>
 
       <div className=" flex mt-[14px] md:mt-0 ">

@@ -6,7 +6,7 @@ import "../css/Footer.css";
 import { ReactComponent as FBIcon } from "../../icons/facebook.svg";
 import { ReactComponent as InstaIcon } from "../../icons/instagram.svg";
 import { ReactComponent as PinterestIcon } from "../../icons/pinterest.svg";
-import AbiaLogo from "../../abiaLogo";
+import { ReactComponent as AbiaLogo} from "../../icons/ABIA Weddings Australia.svg";
 
 const Footer = (props) => {
   const [footerMenu, setFooterMenu] = useState([]);

@@ -64,6 +64,7 @@ export const BUSINESS_API = {
   SETTINGS3: `${baseUrl}WebBusinessSettings/{id}/3`,
   SETTINGS4: `${baseUrl}WebBusinessSettings/{id}/4`,
   SETTINGS5: `${baseUrl}WebBusinessSettings/{id}/5`,
+  SETTING6: `${baseUrl}WebBusinessSettings/{id}/6`,  // subscription
   MANAGE_WEDDING: `${baseUrl}WebManageWedding`,
   BUSINESSDESC: `${baseUrl}ManageprofileSettings`, // update
   BUSINESSDESCVIEW: `${baseUrl}Webview_VendorDescription`,
@@ -89,23 +90,23 @@ export const COUPLE_API = {
   WEDDING_DETAILS: `${baseUrl}WebManageWedding`,
   SETTINGS: `${baseUrl}WebManageWedding`,
 
-  VIEW_CATEGORIES : `${baseUrl}view_Selcategories`,
-  UPDATE_BUDGET   : `${baseUrl}Webaddupd_mybudget`,
-  ADD_CATEGORY    : `${baseUrl}add_coupleCategories`,
-  UPDATE_CATEGORY : `${baseUrl}Webupdate_CategoryBudget`,
+  VIEW_CATEGORIES: `${baseUrl}view_Selcategories`,
+  UPDATE_BUDGET: `${baseUrl}Webaddupd_mybudget`,
+  ADD_CATEGORY: `${baseUrl}add_coupleCategories`,
+  UPDATE_CATEGORY: `${baseUrl}Webupdate_CategoryBudget`,
 
-  ENQUIRIES: `${baseUrl}ManageEnquiries`, 
-  BOOKINGS: `${baseUrl}ManageBookings`, 
-  AUTOCOMPLETE_VENDOR_CATEGORY: `${baseUrl}autocompleteVendorCategory`, 
-  ADD_BOOKING: `${baseUrl}add_booking`, 
+  ENQUIRIES: `${baseUrl}ManageEnquiries`,
+  BOOKINGS: `${baseUrl}ManageBookings`,
+  AUTOCOMPLETE_VENDOR_CATEGORY: `${baseUrl}autocompleteVendorCategory`,
+  ADD_BOOKING: `${baseUrl}add_booking`,
 };
 export const PUBLIC_API = {
-  DIRECTORY_DROPDOWN      : `${baseUrl}Services_State`,
+  DIRECTORY_DROPDOWN: `${baseUrl}Services_State`,
   VENDOR_CATEGORY_DROPDOWN: `${baseUrl}Services_State`,
-  DIRECTORY_LIST          : `${baseUrl}DirectoryList`,
-  SAVE_FAVOURITE          : `${baseUrl}saveFavourite`,
-  SAVE_ENQUIRY            : `${baseUrl}saveEnquiry`,
+  DIRECTORY_LIST: `${baseUrl}DirectoryList`,
+  SAVE_FAVOURITE: `${baseUrl}saveFavourite`,
+  SAVE_ENQUIRY: `${baseUrl}saveEnquiry`,
 };
 export const STRIPE_API = {
-  "ADD_AMOUNT": `${baseUrl}Stripe_adminPayment`,
+  ADD_AMOUNT: `${baseUrl}Stripe_adminPayment`,
 };

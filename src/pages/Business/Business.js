@@ -293,6 +293,20 @@ export const updateBusiness = async (
     });
 };
 
+export const vendorSubs = async (setData) => {
+  let token = localStorage.getItem("coupleToken");
+  token = JSON.parse(token);
+  let userSession = token && token.user ? token.user : null;
+  let userId = userSession && userSession.id ? userSession.id : null;
+  await servicesPage.vendorSubscriptionDetail(userId).then(function (response) {
+    if (response.statuscode == 200) {
+      setData(response.result);
+    } else {
+      setData([]);
+    }
+  });
+};
+
 // **********BUSINESS - MY-PROFILE  *********/
 
 export const vendorView = async (setPreviewListing, vendorID, setDataSet) => {

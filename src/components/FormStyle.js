@@ -1582,3 +1582,39 @@ export const EnquirySelectStyle = {
     display: "none",
   }),
 };
+
+// Expiryinput
+export const Expiryinput = styled(TextField)(({ theme }) => ({
+  "& .MuiTextField-root": {
+    fontFamily: "Manrope",
+    height: "45px",
+    width: "16rem",
+    maxWidth: "100%",
+    boxShadow: "none",
+    borderRadius: "10px",
+    fontFamily: "Manrope",
+  },
+  "& .MuiOutlinedInput-root": {
+    borderRadius: "10px",
+    fontFamily: "Manrope",
+    backgroundColor: "#FAFAFA",
+    border: "1px solid #c3bebe",
+    fontSize: "14px",
+    width: "100%",
+    maxWidth: "100%",
+    "& > fieldset": { borderColor: "transparent" },
+    "&:hover fieldset": {
+      borderColor: "transparent",
+    },
+  },
+  "& .MuiFormHelperText-root": {
+    border: "none",
+    marginLeft: "0rem",
+  },
+  "& .Mui-focused": {
+    boxShadow: "0 0 0 1px #c3bebe",
+    "& .MuiOutlinedInput-notchedOutline": {
+      border: "none",
+    },
+  },
+}));

@@ -1,8 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import AbiaLogo from "../../../abiaLogo";
+import { ReactComponent as AbiaLogo } from "../../../icons/ABIA Weddings Australia.svg";
 import { ReactComponent as UserIcons } from "../../../icons/contact topbar.svg";
 import { ReactComponent as MenuIcon } from "../../../icons/menuIcon.svg";
-import {Divider,IconButton,InputAdornment,Stack,createTheme,useMediaQuery,} from "@mui/material";
+import {
+  Divider,
+  IconButton,
+  InputAdornment,
+  Stack,
+  createTheme,
+  useMediaQuery,
+} from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
@@ -10,17 +17,16 @@ import { AiOutlineClose } from "react-icons/ai";
 import "../../css/CoupleTopbar.css";
 import { SearchInputStyle } from "../../../components/FormStyle";
 import CoupleSideMenu from "../../sidebar/CoupleSideMenu";
-import { Link,NavLink,useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import * as CoupleJS from "../../../pages/Couple/Couple";
 
 const CoupleTopbar = (props) => {
-
-  let navigate                        = useNavigate();
+  let navigate = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false);
-  const [menuOpen, setMenuOpen]       = useState(false);
-  const [anchorEl, setAnchorEl]       = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [searchValue, setSearchValue] = useState("");
-  const [options, setOptions]         = useState([
+  const [options, setOptions] = useState([
     "Wedding Venues",
     "Wedding Dresses",
     "Celebrants",
@@ -42,12 +48,12 @@ const CoupleTopbar = (props) => {
     "Hair Stylist",
     "1st Night Honeymoon",
   ]);
-  const [searchOpen, setSearchOpen]   = useState(false);
-  const profileRef                    = useRef(null);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const profileRef = useRef(null);
 
-  const isMobile                      = useMediaQuery("(max-width:550px)");
-  const isTablet                      = useMediaQuery("(min-width:551px) and (max-width:800px)");
-  const isDesktop                     = useMediaQuery("(min-width:801px)");
+  const isMobile = useMediaQuery("(max-width:550px)");
+  const isTablet = useMediaQuery("(min-width:551px) and (max-width:800px)");
+  const isDesktop = useMediaQuery("(min-width:801px)");
   const [userProfile, setUserProfile] = useState({});
   useEffect(() => {
     let token = localStorage.getItem("coupleToken");
@@ -93,7 +99,7 @@ const CoupleTopbar = (props) => {
     setSearchValue(event.target.value);
   };
   const handleCoupleLogout = () => {
-    CoupleJS.logout(props.setLoginStatus,navigate);
+    CoupleJS.logout(props.setLoginStatus, navigate);
   };
 
   const filteredOptions = options.filter((option) =>
@@ -177,9 +183,11 @@ const CoupleTopbar = (props) => {
           </div>
           <div className="cursor-pointer">
             {" "}
-            <Link to={window.CHAT}><ChatBubbleOutlineOutlinedIcon
-              sx={{ fill: "var(--navbar-icon-fill)", size: "20px" }}
-            /></Link>
+            <Link to={window.CHAT}>
+              <ChatBubbleOutlineOutlinedIcon
+                sx={{ fill: "var(--navbar-icon-fill)", size: "20px" }}
+              />
+            </Link>
           </div>
           <div className="cursor-pointer">
             <NotificationsOutlinedIcon
@@ -202,7 +210,9 @@ const CoupleTopbar = (props) => {
             <div className="couple-dropdown arrow-top" ref={profileRef}>
               <ul className="">
                 <li className="px-4 cursor-pointer">
-                  <span className=" text-[14px] font-bold">{userProfile.bride}{" "}</span>
+                  <span className=" text-[14px] font-bold">
+                    {userProfile.bride}{" "}
+                  </span>
                   <br></br>
                   <span className="text-[12px]"> {userProfile.email} </span>
                 </li>
@@ -211,28 +221,28 @@ const CoupleTopbar = (props) => {
                   <>
                     {props.topMenu.map((topMenu, i) => (
                       <li className="px-4  text-[14px] cursor-pointer">
-                        <NavLink to={topMenu.url} > {topMenu.title} </NavLink>
+                        <NavLink to={topMenu.url}> {topMenu.title} </NavLink>
                       </li>
                     ))}
                   </>
                 )}
                 <Divider />
                 <li
-                  className="px-4 text-[14px] cursor-pointer flex items-center font-semibold" onClick={handleCoupleLogout}
+                  className="px-4 text-[14px] cursor-pointer flex items-center font-semibold"
+                  onClick={handleCoupleLogout}
                 >
                   <button>Log Out</button>
                 </li>
               </ul>
             </div>
           )}
-          
         </Stack>
       </div>
 
       {menuOpen && (
         <>
           <div className="couple-fullscreen-overlay md:hidden ">
-            <div >
+            <div>
               <div className="flex justify-between items-center m-[1rem]">
                 <div className="w-[6rem]">
                   <AbiaLogo alt="Abia-logo" />
@@ -257,11 +267,11 @@ const CoupleTopbar = (props) => {
 
 export default CoupleTopbar;
 
-
 {
   /* searchicon */
 }
-{/* <div className="mobile-search-icon" onClick={handleSearchIconClick}>
+{
+  /* <div className="mobile-search-icon" onClick={handleSearchIconClick}>
   <FiSearch color="#fff" size={20} />
 </div>;
 {
@@ -302,4 +312,5 @@ export default CoupleTopbar;
       </Popper>
     </ThemeProvider>
   );
-} */}
+} */
+}
