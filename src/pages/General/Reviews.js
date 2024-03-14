@@ -19,12 +19,15 @@ import { MdCheckCircleOutline } from "react-icons/md";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import * as BusinessJS from "../Business/Business";
 import { Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Reviews = () => {
   const [formValues, setFormValues] = useState({
     rating_email: "",
     wedding_date: null,
     service_category: [],
+    new_vendor: "",
+    new_vendor_service: [],
     review: [], // Initialize as an empty array
   });
   const [research, setResearch] = useState({
@@ -45,14 +48,18 @@ const Reviews = () => {
   const [services, setServices] = useState(""); // vendor service
   const [vendorList, setVendorList] = useState("");
   const [selectedServiceOptions, setSelectedServiceOptions] = useState([]);
+  const [selectedNewVendorServices, setSelectedNewVendorServices] = useState(
+    []
+  );
   const [selectedVendor, setSelectedVendor] = useState("");
   const [errors, setErrors] = React.useState({});
   const [researchErrors, setResearchErrors] = useState({});
-
+  const [stateList, setStateList] = useState([]);
 
   useEffect(() => {
     BusinessJS.fetchVServices(setServices);
     BusinessJS.fetchVendors(setVendorList);
+    BusinessJS.fetchState(setStateList);
   }, []);
 
   // console.log("Vendor list :", vendorList);
@@ -75,6 +82,46 @@ const Reviews = () => {
       setFormValues((prevFormValues) => ({
         ...prevFormValues,
         review: updatedReview,
+      }));
+    } else {
+      // Update the specific field within the selected service's review
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        review: prevFormValues.review.map((review, i) =>
+          i === index ? { ...review, [fieldName]: value } : review
+        ),
+      }));
+    }
+
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
+      [fieldName]: value,
+    }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [fieldName]: "", // Clear the error for the current field
+    }));
+  };
+
+  const handleNewVendorServiceChange = (fieldName, value, index) => {
+    if (fieldName === "new_vendor_service") {
+      setSelectedNewVendorServices(value);
+
+      // Update the review array with the selected services
+      const updatedReview_new = value.map((service) => ({
+        id: service.value,
+        product: "",
+        service: "",
+        attitude: "",
+        overall: "",
+        comment: "",
+        best_vendor: "0",
+      }));
+
+      setFormValues((prevFormValues) => ({
+        ...prevFormValues,
+        review: updatedReview_new,
       }));
     } else {
       // Update the specific field within the selected service's review
@@ -181,6 +228,11 @@ const Reviews = () => {
     setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: "" }));
   };
 
+  // Function to handle changes in the selected services for the new vendor
+  // const handleNewVendorServiceChange = (selectedOptions) => {
+  //   setSelectedNewVendorServices(selectedOptions);
+  // };
+
   // ... (previous code)
 
   const handleRatingsSubmit = () => {
@@ -198,6 +250,26 @@ const Reviews = () => {
       }));
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
       console.log("Form Values:", { updatedReview });
+    } else {
+      setErrors(validationErrors);
+    }
+  };
+
+  const handleNewVendorSubmit = () => {
+    const validationErrors = validateReviewFields();
+    if (Object.keys(validationErrors).length === 0) {
+      setErrors({});
+      const updatedReview = selectedNewVendorServices.map((option, index) => ({
+        id: option.value,
+        product: formValues.review[index].product || "",
+        service: formValues.review[index].service || "",
+        attitude: formValues.review[index].attitude || "",
+        overall: formValues.review[index].overall || "",
+        comment: formValues.review[index].comment || "",
+        best_vendor: formValues.review[index].best_vendor || "0",
+      }));
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      console.log("Form Values for new Vendor:", { updatedReview });
     } else {
       setErrors(validationErrors);
     }
@@ -226,6 +298,7 @@ const Reviews = () => {
     const validationErrors = validateResearchFields();
 
     if (Object.keys(validationErrors).length === 0) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
       // No validation errors, proceed with submission
       console.log("Research Data:", research);
     } else {
@@ -248,7 +321,7 @@ const Reviews = () => {
     }
 
     // Validate wedding state
-    if (!research.wedding_state.trim()) {
+    if (!research.wedding_state) {
       errors.wedding_state = "Please provide your wedding state.";
     }
 
@@ -265,9 +338,9 @@ const Reviews = () => {
   return (
     <div className="review-margin h-screen">
       {/* logo */}
-      <div className="abia-logo-section">
+      <Link to={"/"} className="abia-logo-section">
         <AbiaLogo />
-      </div>
+      </Link>
       {/* Review container */}
       {activeStep === 0 && (
         <div className="reviews-container-1">
@@ -503,7 +576,7 @@ const Reviews = () => {
               Back
             </button>
             {/* <RatingButton onClick={handleFormNext}>Next</RatingButton> */}
-            <RatingButton onClick={handleRatingsSubmit}>Submit</RatingButton>
+            <RatingButton onClick={handleNewVendorSubmit}>Submit</RatingButton>
 
             <button
               className="review-next-button invisible"
@@ -539,8 +612,9 @@ const Reviews = () => {
             <label>Find Businesses</label>
             <Select
               name="new_vendor"
-              placeholder="Find Businesses"
+              placeholder="Search Businesses"
               isMulti={false}
+              isSearchable={true}
               options={vendorList}
               value={selectedVendor}
               styles={{ ...RatingCustomStyle, ...reactSelectScroll }}
@@ -555,6 +629,7 @@ const Reviews = () => {
                 Menu,
                 MultiValue,
                 IndicatorSeparator: null,
+                DropdownIndicator: () => null,
 
                 Option: ({ innerProps, label, isSelected }) => (
                   <CheckboxOption
@@ -568,16 +643,19 @@ const Reviews = () => {
           </div>
 
           <Select
-            name="new_vendor-service"
+            name="new_vendor_service"
             placeholder="Select services to Rate"
-            isMulti={false}
+            isMulti={true}
             options={services}
-            // value={selected}
+            value={selectedNewVendorServices}
             styles={{ ...RatingCustomStyle, ...reactSelectScroll }}
             isClearable={false}
-            // onChange={(selectedOptions) =>
-            //   handleVendorChange("new_vendor", selectedOptions)
-            // }
+            onChange={(selectedOptions) =>
+              handleNewVendorServiceChange(
+                "new_vendor_service",
+                selectedOptions
+              )
+            }
             // isOptionDisabled={() => additionaCatSelect.length >= 4}
             closeMenuOnSelect={false}
             hideSelectedOptions={false}
@@ -595,6 +673,118 @@ const Reviews = () => {
               ),
             }}
           />
+
+          {/* SELECTED CATEGORY RATING SECTION */}
+          <div className="ratings-selected-category-section">
+            {selectedNewVendorServices.map((option, index) => (
+              <div
+                className="p-[1rem] flex flex-col gap-[1rem]"
+                key={option.value}
+              >
+                {/* Selected service */}
+                <div className="mx-auto">
+                  <h4 className="font-semibold">
+                    Rate your {option.label} Review Form
+                  </h4>
+                </div>
+                {/* Rating category fields */}
+                <div className="flex flex-col gap-[2rem]">
+                  <div className="rating-category-stack">
+                    <div className="rating-stack-1">
+                      <div className="flex flex-col gap-[5px]">
+                        <label className="text-center">
+                          Quality of Product
+                        </label>
+                        {/* onChange={(e) =>
+                handleInputChange("rating_email", e.target.value)
+              } */}
+                        <IndiRatingInput
+                          name="product"
+                          placeholder="/100"
+                          value={formValues.review[index].product}
+                          onChange={(e) =>
+                            handleInputChange("product", e.target.value, index)
+                          }
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-[5px]">
+                        <label className="text-center">
+                          Quality of Service
+                        </label>
+                        <IndiRatingInput
+                          name="service"
+                          placeholder="/100"
+                          value={formValues.review[index].service}
+                          onChange={(e) =>
+                            handleInputChange("service", e.target.value, index)
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    <div className="rating-stack-1">
+                      <div className="flex flex-col gap-[5px]">
+                        <label className="text-center">Attitude of Staff</label>
+                        <IndiRatingInput
+                          name="attitude"
+                          placeholder="/100"
+                          value={formValues.review[index].attitude}
+                          onChange={(e) =>
+                            handleInputChange("attitude", e.target.value, index)
+                          }
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-[5px]">
+                        <label className="text-center">Overall Value</label>
+                        <IndiRatingInput
+                          name="overall"
+                          placeholder="/100"
+                          value={formValues.review[index].overall}
+                          onChange={(e) =>
+                            handleInputChange("overall", e.target.value, index)
+                          }
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  {errors[`review_${index}`] && (
+                    <Typography color="error" variant="caption" component="div">
+                      {errors[`review_${index}`]}
+                    </Typography>
+                  )}
+                  {/* Text area */}
+                  <div className="flex flex-col gap-[5px] justify-center items-center">
+                    <textarea
+                      name="comment"
+                      className="rating-textarea"
+                      placeholder={`Write a review about the ${option.label} service`}
+                      value={formValues.review[index].comment}
+                      onChange={(e) =>
+                        handleInputChange("comment", e.target.value, index)
+                      }
+                    />
+                  </div>
+                </div>
+                {/* Best Vendor */}
+                <div className="mx-auto">
+                  <button
+                    name="best_vendor"
+                    onClick={() => handleBestVendorClick(index)}
+                    className="flex justify-center items-center gap-1"
+                  >
+                    {formValues.review[index].best_vendor === "1" ? (
+                      <IoMdCheckmarkCircle size={28} color="#6cc2bc" />
+                    ) : (
+                      <MdCheckCircleOutline size={28} color="#d7d7d7" />
+                    )}
+                    <p style={{ fontWeight: "500" }}>Best Vendor</p>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
 
           <br />
           <div className="flex justify-center items-center gap-[2rem]">
@@ -780,9 +970,7 @@ const Reviews = () => {
                 <label>Your Full Name</label>
                 <RatingInput
                   name="name"
-                  onChange={(e) =>
-                    handleResearchChange("season", e.target.value)
-                  }
+                  onChange={(e) => handleResearchChange("name", e.target.value)}
                 />
                 {researchErrors.name && (
                   <Typography color="error" variant="caption" component="div">
@@ -795,7 +983,7 @@ const Reviews = () => {
                 <RatingInput
                   name="pname"
                   onChange={(e) =>
-                    handleResearchChange("season", e.target.value)
+                    handleResearchChange("pname", e.target.value)
                   }
                 />
                 {researchErrors.pname && (
@@ -806,12 +994,41 @@ const Reviews = () => {
               </div>
               <div className="flex flex-col gap-[5px]">
                 <label>Wedding State</label>
-                <RatingInput
+                <Select
+                  name="wedding_state"
+                  // placeholder="Select services to Rate"
+                  isMulti={false}
+                  options={stateList}
+                  // value={selectedNewVendorServices}
+                  styles={{ ...RatingCustomStyle, ...reactSelectScroll }}
+                  isClearable={false}
+                  onChange={(selectedOptions) =>
+                    handleResearchChange("wedding_state", selectedOptions)
+                  }
+                  // isOptionDisabled={() => additionaCatSelect.length >= 4}
+                  closeMenuOnSelect={false}
+                  hideSelectedOptions={false}
+                  components={{
+                    Menu,
+                    MultiValue,
+                    IndicatorSeparator: null,
+                    DropdownIndicator: () => null,
+                    // Option: ({ innerProps, label, isSelected }) => (
+                    //   <CheckboxOption
+                    //     innerProps={innerProps}
+                    //     label={label}
+                    //     isSelected={isSelected}
+                    //   />
+                    // ),
+                  }}
+                />
+
+                {/* <RatingInput
                   name="wedding_state"
                   onChange={(e) =>
                     handleResearchChange("season", e.target.value)
                   }
-                />
+                /> */}
                 {researchErrors.wedding_state && (
                   <Typography color="error" variant="caption" component="div">
                     {researchErrors.wedding_state}
@@ -824,7 +1041,7 @@ const Reviews = () => {
                   name="phone"
                   type="tel"
                   onChange={(e) =>
-                    handleResearchChange("season", e.target.value)
+                    handleResearchChange("phone", e.target.value)
                   }
                 />
                 {researchErrors.phone && (
@@ -853,6 +1070,58 @@ const Reviews = () => {
           <diV className="pb-[2rem]">
             <h5>5 of 5</h5>
           </diV>
+        </div>
+      )}
+      {activeStep === 5 && (
+        <div className="thankyou-container">
+          <h1
+            style={{
+              fontFamily: "Playfair",
+              fontWeight: "400",
+              fontSize: "32px",
+            }}
+          >
+            Confirm Your Email
+          </h1>
+          <div className="flex flex-col items-center gap-[1rem] px-[1rem] md:px-[3rem] text-center">
+            <h4 style={{ lineHeight: "22px" }}>
+              Before we can post your review, we need your help verifying it!
+              We've just emailed <br /> {formValues.rating_email}{" "}
+            </h4>
+            <h4>
+              Simply click the linksent in the email to set your review live!
+            </h4>
+
+            <h4>
+              Didn't get an email?{" "}
+              <span className="abia-color font-[600]">Send again</span>{" "}
+            </h4>
+          </div>
+
+          <button onClick={handleFormNext} className="okay-button">
+            Okay !
+          </button>
+        </div>
+      )}
+      {activeStep === 6 && (
+        <div className="thankyou-container">
+          <h1
+            style={{
+              fontFamily: "Playfair",
+              fontWeight: "400",
+              fontSize: "32px",
+            }}
+          >
+            Thank you
+          </h1>
+          <div className="flex flex-col items-center gap-[1rem]">
+            <h4>Thank you for your feedback.</h4>
+            <p style={{ textAlign: "center" }}>
+              Wishing you a lifetime of love and happiness
+            </p>
+          </div>
+
+          <button className="okay-button">Okay !</button>
         </div>
       )}
     </div>

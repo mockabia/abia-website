@@ -8,6 +8,7 @@
   font-family: 'Manrope', sans-serif;
   font-size: 20px;
 } */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -136,6 +137,9 @@ input[type=number] {
   --search-icon-fill: #B7B7B7;
   --navbar-icon-fill: #B7B7B7;
   --abia-color: #5a9d98;
+  --grey-bg-color: #E0E6E2;
+  --black-button: #333333;
+  --white: #fff
 }
 
 @media (max-width: 768px) {
@@ -203,4 +207,8 @@ number {
   justify-content: center;
   align-items: center;
   font-size: 14px;
+}
+
+.abia-color {
+  color: #5a9d98;
 }
