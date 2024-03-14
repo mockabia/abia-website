@@ -39,8 +39,35 @@ function UpdateCategoryBudget(props) {
     setUnpaidValue(unpaidValue);
   }, [modalInputs.cost, modalInputs.paid]);
 
-  const modalHandleChange = (name, value) => {
+  /* const modalHandleChange = (name, value, max) => {
+    if(props.max!='' && props.max!=undefined){
+      let floatTargetVal = parseFloat(e.target.value);
+      floatTargetVal     = isNaN(floatTargetVal) ? 0 : floatTargetVal;
+      let floatMax       = parseFloat(props.max);
+      if(floatTargetVal <= floatMax){
+        targetValue = e.target.value;
+      }else{
+        return false;
+      }
+    }
     setModalInputs((values) => ({ ...values, [name]: value }));
+  }; */
+  const modalHandleChange = (e,props=null) => {
+    const name        = e.target.name;
+    let targetValue   = '';
+    if(props!=null && props.max!='' && props.max!=undefined){
+      let floatTargetVal = parseFloat(e.target.value);
+      floatTargetVal     = isNaN(floatTargetVal) ? 0 : floatTargetVal;
+      let floatMax       = parseFloat(props.max);
+      if(floatTargetVal <= floatMax){
+        targetValue = e.target.value;
+      }else{
+        return false;
+      }
+    }else{
+      targetValue = e.target.value;
+    }
+    CoupleJS.customJS.handleChange(name, targetValue, setModalInputs, setModalInputsErrors);
   };
 
   const formatCurrency = (value) => {
@@ -89,8 +116,9 @@ function UpdateCategoryBudget(props) {
           <h3>Cost:</h3>
           <BudgetInput
             type="number"
+            name="cost"
             value={modalInputs.cost || ""}
-            onChange={(e) => modalHandleChange("cost", e.target.value)}
+            onChange={(e) => modalHandleChange(e)}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">$</InputAdornment>
@@ -102,8 +130,9 @@ function UpdateCategoryBudget(props) {
           <h3>Paid:</h3>
           <BudgetInput
             type="number"
+            name="paid"
             value={modalInputs.paid || ""}
-            onChange={(e) => modalHandleChange("paid", e.target.value)}
+            onChange={(e) => modalHandleChange(e,{max:`${modalInputs.cost || ""}`})}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">$</InputAdornment>
@@ -124,6 +153,7 @@ function UpdateCategoryBudget(props) {
             <span>(optional)</span>
           </div>
           <textarea
+            name="notes"
             className="budgetdetail-notes-textarea"
             value={modalInputs.notes || ""}
             onChange={(e) => {
@@ -133,6 +163,7 @@ function UpdateCategoryBudget(props) {
               const count = words.length;
 
               setWordCount(count);
+              modalHandleChange(e)
             }}
           />
           <h5 className="word-count">{wordCount} / 200</h5>

@@ -59,7 +59,7 @@ export async function addCategories(id, postData) {
   return await apiService.apiCall(MAIN_API["ADD_CATEGORY"] + "/" + id + "/1","POST",postData);
 }
 export async function updateBudgetCategory(id, postData) {
-  return await apiService.apiCall(MAIN_API["UPDATE_CATEGORY"] + "/" + id + "/3/1","POST",postData);
+  return await apiService.apiCall(MAIN_API["UPDATE_CATEGORY"] + "/" + id + "/1","POST",postData);
 }
 
 
