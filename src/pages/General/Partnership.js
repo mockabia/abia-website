@@ -34,9 +34,9 @@ const featuredList = [
 ];
 
 const Partnership = () => {
-  const [mode, setMode] = useState(false);
-  const [show, setShow] = useState(false);
-  const [show2, setshow2] = useState(false);
+  const [mode, setMode]     = useState(false);
+  const [show, setShow]     = useState(false);
+  const [show2, setshow2]   = useState(false);
   const [visibleListItems, setVisibleListItems] = useState(
     partnershipList.slice(0, 4)
   );
@@ -67,6 +67,31 @@ const Partnership = () => {
     } else {
       setVisibleListItems_F(featuredList.slice(0, 4));
     }
+  };
+  const RedirectPayment = async (e) => {
+      let dataset                     = e.target.dataset;
+      let requestForm                 = {};
+      requestForm['stype']            = mode ? 1 : 0;
+      requestForm['mode']             = dataset.mode;
+      requestForm['amount']           = dataset.amount;
+      requestForm['ftype']            = dataset.ftype;
+      console.log(requestForm)
+      /* requestForm['vid']              = inputs.vid;
+      requestForm['stype']            = inputs.stype;
+      requestForm['ftype']            = inputs.ftype;
+
+      requestForm['amounttopay']      = inputs.amounttopay;
+      requestForm['payamount']        = inputs.amounttopay;
+      requestForm['setupfee']         = inputs.setupfee;
+      requestForm['partnertopay']     = inputs.partnertopay;
+      requestForm['paybyusing']       = inputs.paybyusing;
+      
+      navigate('/payment', {
+        state: {
+          request:requestForm,
+          paymentAPI: servicesPage.STRIPE_API['ADD_AMOUNT'],
+        },
+      }); */
   };
 
   return (
@@ -111,18 +136,13 @@ const Partnership = () => {
                     12 month minimum
                   </h5>
                 </div>
-                <Link
-                  to="/payments"
-                  state={{
-                    mode: mode ? "annually" : "monthly",
-                    amount: mode ? 499.0 : 41.99,
-                    type: "Partnership",
-                  }}
-                >
-                  <button className="partnership-apply-button">
-                    Apply Today
-                  </button>
-                </Link>
+                <button className="partnership-apply-button" 
+                  data-mode={mode ? "annually" : "monthly"}
+                  data-amount={mode ? 499.0 : 41.99}
+                  data-ftype={0}
+                  onClick={(e) => RedirectPayment(e)}>
+                  Apply Today
+                </button>
 
                 <div>
                   <ul>
@@ -162,18 +182,13 @@ const Partnership = () => {
                     12 month minimum
                   </h5>
                 </div>
-                <Link
-                  to="/payments"
-                  state={{
-                    mode: mode ? "annually" : "monthly",
-                    amount: mode ? 699.0 : 69.99,
-                    type: "Featured",
-                  }}
-                >
-                  <button className="partnership-apply-button">
-                    Apply Today
-                  </button>
-                </Link>
+                <button className="partnership-apply-button"
+                  data-mode={mode ? "annually" : "monthly"}
+                  data-amount={mode ? 699.0 : 69.99}
+                  data-ftype={1}
+                  onClick={(e) => RedirectPayment(e)}>
+                  Apply Today
+                </button>
                 <div>
                   <ul>
                     {visibleListItems_F.map((item, index) => (

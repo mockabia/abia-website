@@ -88,9 +88,12 @@ export const COUPLE_API = {
   CONTACT: `${baseUrl}WebManageWedding`,
   WEDDING_DETAILS: `${baseUrl}WebManageWedding`,
   SETTINGS: `${baseUrl}WebManageWedding`,
-  UPDATE_BUDGET: `${baseUrl}ManageSelcategories`,
-  CATEGORIES: `${baseUrl}view_Selcategories`,
-  ADD_CATEGORIES: `${baseUrl}ManageSelcategories`,
+
+  VIEW_CATEGORIES : `${baseUrl}view_Selcategories`,
+  UPDATE_BUDGET   : `${baseUrl}Webaddupd_mybudget`,
+  ADD_CATEGORY    : `${baseUrl}add_coupleCategories`,
+  UPDATE_CATEGORY : `${baseUrl}Webupdate_CategoryBudget`,
+
   ENQUIRIES: `${baseUrl}ManageEnquiries`, 
   BOOKINGS: `${baseUrl}ManageBookings`, 
   AUTOCOMPLETE_VENDOR_CATEGORY: `${baseUrl}autocompleteVendorCategory`, 
@@ -102,4 +105,7 @@ export const PUBLIC_API = {
   DIRECTORY_LIST          : `${baseUrl}DirectoryList`,
   SAVE_FAVOURITE          : `${baseUrl}saveFavourite`,
   SAVE_ENQUIRY            : `${baseUrl}saveEnquiry`,
+};
+export const STRIPE_API = {
+  "ADD_AMOUNT": `${baseUrl}Stripe_adminPayment`,
 };

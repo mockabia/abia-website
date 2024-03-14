@@ -1,7 +1,7 @@
 
 {
   "result": [
-    { "id": 101, "name": "Elegant Estates" },
+        { "id": 101, "name": "Elegant Estates","phone": "1234577", "email": "Gardens@gmail.com"  },
         { "id": 102, "name": "Grand Gardens", "phone": "1234577", "email": "Gardens@gmail.com" },
         { "id": 103, "name": "Enchanted Events" , "phone": "2354646", "email": "Events@gmail.com"},
         { "id": 104, "name": "Celestial Ceremonies", "phone": "3465757", "email": "Ceremonies@gmail.com" },

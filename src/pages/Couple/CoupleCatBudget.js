@@ -61,7 +61,8 @@ const CoupleCatBudget = (props) => {
         </div>
       </div>
       {/* Adding Marketing Category- Modal */}
-      <AddNewCategory services={data.services} open={addOpen} setOpen={setAddOpen} setData={setData} setBudget={setBudget} setUnpaidList={setUnpaidList}  />
+      <AddNewCategory data={data} open={addOpen} setOpen={setAddOpen} setData={setData} 
+          setBudget={setBudget} setUnpaidList={setUnpaidList} />
       <Divider />
       {/* Budget Summary */}
       <div className="budget-main-section">

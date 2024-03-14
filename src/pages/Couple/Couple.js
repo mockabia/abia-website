@@ -208,9 +208,7 @@ export const coupleSettings = async (formValues, setErrors, navigate) => {
     token = JSON.parse(token);
     let userSession = token && token.user ? token.user : null;
     let userId = userSession && userSession.id ? userSession.id : null;
-    await servicesPage
-      .coupleSettings(userId, formValues)
-      .then(function (response) {
+    await servicesPage.coupleSettings(userId, formValues).then(function (response) {
         if (response.statuscode == 200) {
         } else {
           if (response.errors) {
@@ -245,30 +243,19 @@ export const updateBudget = async (budget, setShowBudget, setEdit) => {
   let userId = userSession && userSession.id ? userSession.id : null;
   let requestData = {};
   requestData["budget"] = budget;
-  await servicesPage
-    .updateBudget(userId, requestData)
-    .then(function (response) {
+  await servicesPage.updateBudget(userId, requestData).then(function (response) {
       if (response.statuscode == 200) {
         setShowBudget(Number(response.budget));
         setEdit(false);
       }
     });
 };
-export const addCategories = async (
-  formValues,
-  setErrors,
-  setData,
-  setBudget,
-  setUnpaidList,
-  handleAddClose
-) => {
+export const addCategories = async (formValues,setErrors,setData,setBudget,setUnpaidList,handleAddClose) => {
   let token = localStorage.getItem("coupleToken");
   token = JSON.parse(token);
   let userSession = token && token.user ? token.user : null;
   let userId = userSession && userSession.id ? userSession.id : null;
-  await servicesPage
-    .addCategories(userId, formValues)
-    .then(function (response) {
+  await servicesPage.addCategories(userId, formValues).then(function (response) {
       if (response.statuscode == 200) {
         setData([]);
         setBudget(response.result.budget);
@@ -284,21 +271,12 @@ export const addCategories = async (
       }
     });
 };
-export const updateBudgetCategory = async (
-  formValues,
-  setErrors,
-  setData,
-  setBudget,
-  setUnpaidList,
-  closeBudget
-) => {
+export const updateBudgetCategory = async (formValues,setErrors,setData,setBudget,setUnpaidList,closeBudget) => {
   let token = localStorage.getItem("coupleToken");
   token = JSON.parse(token);
   let userSession = token && token.user ? token.user : null;
   let userId = userSession && userSession.id ? userSession.id : null;
-  await servicesPage
-    .updateBudgetCategory(userId, formValues)
-    .then(function (response) {
+  await servicesPage.updateBudgetCategory(userId, formValues).then(function (response) {
       if (response.statuscode == 200) {
         setData([]);
         setBudget(response.result.budget);
