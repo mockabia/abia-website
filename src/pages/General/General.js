@@ -5,6 +5,51 @@ import * as customValidator from "../Plugins/publicValidator";
 import * as customJS from "../../plugins/custom/custom";
 export { customJS };
 
+
+function urlFoundCategoryDirectory(url,serviceOptions){
+  let categoryFound = serviceOptions.filter(function (el) {
+    console.log(el.value+'=='+url)
+    return el.value === url;
+  });
+  return categoryFound;
+}
+function urlFoundLocationDirectory(url,serviceOptions){
+  let locationFound = serviceOptions.filter(function (el) {
+    console.log(el.regionsUrl+'=='+url)
+    return el.regionsUrl === url;
+  });
+  return locationFound;
+}
+function checkDirectoryUrl(pathname,serviceOptions,formattedLocations,setFormvalues){
+  let urlArray  = pathname.split("/");
+   urlArray     = urlArray.filter(function (el) {
+    return el != "";
+  });
+   if(urlArray.length==3){
+    setFormvalues(values => ({...values,['category']: urlArray[0],['state']: urlArray[1],['locations']: urlArray[2] }))
+   }else{
+      if(urlArray.length==2){
+        let url1 = urlArray[0];
+        let url2 = urlArray[1];
+        //let foundCategory   = urlFoundCategoryDirectory(url1,serviceOptions)
+        let foundLocations  = urlFoundLocationDirectory(url2,formattedLocations)
+        if(foundLocations.length>0){
+          setFormvalues(values => ({...values,['locations']: url2,['state']: url1,['category']: '' }))
+        }else{
+          setFormvalues(values => ({...values,['state']: url2,['category']: url1,['locations']: '' }))
+        }
+      }else{
+        let url1 = urlArray[0];
+        let foundCategory = urlFoundCategoryDirectory(url1,serviceOptions)
+        if(foundCategory.length>0){
+          setFormvalues(values => ({...values,['category']: url1,['state']: '',['locations']: '' }))
+        }else{
+          setFormvalues(values => ({...values,['state']: url1,['category']: '',['locations']: '' }))
+        }
+      }
+   }
+   setFormvalues(values => ({...values,['sort']: 'N' }))
+}
 export const fetchState = async (setStateOptions) => {
   await servicesPage.stateDropdown().then(function (response) {
     if (response.statuscode === 200) {
@@ -12,16 +57,17 @@ export const fetchState = async (setStateOptions) => {
     }
   });
 };
-export const fetchDirectoryDropdowns = async (setServicesOptions,setLocationOptions,setStateOptions) => {
+export const fetchDirectoryDropdowns = async (setServicesOptions,setLocationOptions,setStateOptions,pathname,setFormvalues) => {
   await servicesPage.fetchDirectoryDropdowns().then(function (response) {
     if (response.statuscode === 200) {
-      setServicesOptions(response.result.services);
-      const formattedLocations1 = response.result.states.flatMap((location) =>
+      let serviceOptions = response.result.services;
+      setServicesOptions(serviceOptions);
+      const formattedLocations = response.result.states.flatMap((location) =>
         location.regions.map((regions) => ({
           id: location.id,
-          state: location.state,
+          state: location.label,
           url: location.url,
-          regions: regions.region,
+          regions: regions.label,
           regionsUrl: regions.url,
         }))
       );
@@ -30,8 +76,9 @@ export const fetchDirectoryDropdowns = async (setServicesOptions,setLocationOpti
         state: state.state,
         url: state.url,
       }));
-      setLocationOptions(formattedLocations1);
+      setLocationOptions(formattedLocations);
       setStateOptions(formattedStates);
+      checkDirectoryUrl(pathname,serviceOptions,formattedLocations,setFormvalues)
     }
   });
 };
@@ -98,6 +145,17 @@ export const saveEnquiry = async (formValues,setErrors,setOpen) => {
       }
     });
   }
+};
+export const fetchPayment = async (formValues,setData) => {
+  let token       = localStorage.getItem("vendorToken");
+  token           = JSON.parse(token);
+  let userSession = token && token.user ? token.user : null;
+  let userId      = userSession && userSession.id ? userSession.id : 0;
+  await servicesPage.fetchDirectoryList(userId,formValues).then(function (response) {
+    if (response.statuscode === 200) {
+      setData(response.result);
+    }
+  });
 };
 
 

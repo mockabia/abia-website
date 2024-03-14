@@ -16,7 +16,7 @@ const RenderList = (props) => {
   
   useEffect(() => {
     GeneralJS.fetchDirectoryList(formvalues,setData);
-  }, []);
+  }, [formvalues.sort]);
 
   return (
     <div className="cards-grid-container">

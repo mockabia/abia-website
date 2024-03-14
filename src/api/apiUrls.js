@@ -101,11 +101,11 @@ export const COUPLE_API = {
   ADD_BOOKING: `${baseUrl}add_booking`,
 };
 export const PUBLIC_API = {
-  DIRECTORY_DROPDOWN: `${baseUrl}Services_State`,
+  DIRECTORY_DROPDOWN      : `${baseUrl}DirectorySearchDropdown`,
   VENDOR_CATEGORY_DROPDOWN: `${baseUrl}Services_State`,
-  DIRECTORY_LIST: `${baseUrl}DirectoryList`,
-  SAVE_FAVOURITE: `${baseUrl}saveFavourite`,
-  SAVE_ENQUIRY: `${baseUrl}saveEnquiry`,
+  DIRECTORY_LIST          : `${baseUrl}DirectoryList`,
+  SAVE_FAVOURITE          : `${baseUrl}saveFavourite`,
+  SAVE_ENQUIRY            : `${baseUrl}saveEnquiry`,
 };
 export const STRIPE_API = {
   ADD_AMOUNT: `${baseUrl}Stripe_adminPayment`,

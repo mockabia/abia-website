@@ -12,7 +12,7 @@ const Directory = () => {
   const [formvalues, setFormvalues]           = useState({});
   
   useEffect(() => {
-    setFormvalues(values => ({...values,['sort']: 'N' }))
+    //setFormvalues(values => ({...values,['sort']: 'N' }))
   }, []);
 
   return (
