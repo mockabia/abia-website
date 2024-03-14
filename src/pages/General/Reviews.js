@@ -20,6 +20,8 @@ import { IoMdCheckmarkCircle } from "react-icons/io";
 import * as BusinessJS from "../Business/Business";
 import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 const Reviews = () => {
   const [formValues, setFormValues] = useState({
@@ -47,6 +49,9 @@ const Reviews = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [services, setServices] = useState(""); // vendor service
   const [vendorList, setVendorList] = useState("");
+  // const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [newVendorServices, setNewVendorServices] = useState(false);
+
   const [selectedServiceOptions, setSelectedServiceOptions] = useState([]);
   const [selectedNewVendorServices, setSelectedNewVendorServices] = useState(
     []
@@ -147,6 +152,7 @@ const Reviews = () => {
   const handleVendorChange = (fieldName, value) => {
     if (fieldName === "new_vendor") {
       setSelectedVendor(value);
+      setNewVendorServices(!newVendorServices);
     }
   };
 
@@ -606,31 +612,53 @@ const Reviews = () => {
           </div>
           {/* Page 3 */}
           {/* input field */}
-
           {/*  */}
           <div className="flex flex-col gap-[5px]">
             <label>Find Businesses</label>
             <Select
               name="new_vendor"
               placeholder="Search Businesses"
-              isMulti={false}
               isSearchable={true}
               options={vendorList}
               value={selectedVendor}
               styles={{ ...RatingCustomStyle, ...reactSelectScroll }}
-              isClearable={false}
               onChange={(selectedOptions) =>
                 handleVendorChange("new_vendor", selectedOptions)
               }
               // isOptionDisabled={() => additionaCatSelect.length >= 4}
+              hideSelectedOptions={false}
+              filterOption={(option, inputValue) =>
+                option.label.toLowerCase().startsWith(inputValue.toLowerCase())
+              }
+              components={{
+                Menu,
+                MultiValue,
+                IndicatorSeparator: null,
+                DropdownIndicator: null,
+              }}
+            />
+          </div>
+          {newVendorServices && (
+            <Select
+              name="new_vendor_service"
+              placeholder="Select services to Rate"
+              isMulti={true}
+              options={services}
+              value={selectedNewVendorServices}
+              styles={{ ...RatingCustomStyle, ...reactSelectScroll }}
+              isClearable={false}
+              onChange={(selectedOptions) =>
+                handleNewVendorServiceChange(
+                  "new_vendor_service",
+                  selectedOptions
+                )
+              }
               closeMenuOnSelect={false}
               hideSelectedOptions={false}
               components={{
                 Menu,
                 MultiValue,
                 IndicatorSeparator: null,
-                DropdownIndicator: () => null,
-
                 Option: ({ innerProps, label, isSelected }) => (
                   <CheckboxOption
                     innerProps={innerProps}
@@ -640,40 +668,7 @@ const Reviews = () => {
                 ),
               }}
             />
-          </div>
-
-          <Select
-            name="new_vendor_service"
-            placeholder="Select services to Rate"
-            isMulti={true}
-            options={services}
-            value={selectedNewVendorServices}
-            styles={{ ...RatingCustomStyle, ...reactSelectScroll }}
-            isClearable={false}
-            onChange={(selectedOptions) =>
-              handleNewVendorServiceChange(
-                "new_vendor_service",
-                selectedOptions
-              )
-            }
-            // isOptionDisabled={() => additionaCatSelect.length >= 4}
-            closeMenuOnSelect={false}
-            hideSelectedOptions={false}
-            components={{
-              Menu,
-              MultiValue,
-              IndicatorSeparator: null,
-
-              Option: ({ innerProps, label, isSelected }) => (
-                <CheckboxOption
-                  innerProps={innerProps}
-                  label={label}
-                  isSelected={isSelected}
-                />
-              ),
-            }}
-          />
-
+          )}
           {/* SELECTED CATEGORY RATING SECTION */}
           <div className="ratings-selected-category-section">
             {selectedNewVendorServices.map((option, index) => (
@@ -785,7 +780,6 @@ const Reviews = () => {
               </div>
             ))}
           </div>
-
           <br />
           <div className="flex justify-center items-center gap-[2rem]">
             <button className="review-next-button" onClick={handleBack}>
@@ -798,7 +792,6 @@ const Reviews = () => {
               Skip
             </button>
           </div>
-
           <diV>
             <h5>3 of 5</h5>
           </diV>
@@ -996,18 +989,14 @@ const Reviews = () => {
                 <label>Wedding State</label>
                 <Select
                   name="wedding_state"
-                  // placeholder="Select services to Rate"
+                  placeholder=""
                   isMulti={false}
                   options={stateList}
                   // value={selectedNewVendorServices}
                   styles={{ ...RatingCustomStyle, ...reactSelectScroll }}
-                  isClearable={false}
                   onChange={(selectedOptions) =>
                     handleResearchChange("wedding_state", selectedOptions)
                   }
-                  // isOptionDisabled={() => additionaCatSelect.length >= 4}
-                  closeMenuOnSelect={false}
-                  hideSelectedOptions={false}
                   components={{
                     Menu,
                     MultiValue,

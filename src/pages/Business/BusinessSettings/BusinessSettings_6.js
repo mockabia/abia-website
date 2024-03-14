@@ -3,6 +3,8 @@ import { Button, Modal, Paper, Typography } from "@mui/material";
 import { Expiryinput, PaymentInput } from "../../../components/FormStyle";
 import MaskedInput from "react-text-mask";
 import * as BusinessJS from "../Business";
+import { AiOutlineClose } from "react-icons/ai";
+
 const BusinessSettings_6 = () => {
   const [vendorDetail, setVendorDetails] = useState({});
   const [formValues, setFormValues] = useState({
@@ -211,13 +213,19 @@ const BusinessSettings_6 = () => {
         <Paper
           sx={{
             position: "absolute",
-            width: { xs: "90vw", sm: "40vw" },
+            width: { xs: "90vw", sm: "35vw" },
             bgcolor: "background.paper",
             borderRadius: "16px",
             boxShadow: 24,
             p: 4,
           }}
         >
+          <div
+            className="flex justify-end cursor-pointer"
+            onClick={handleCancel}
+          >
+            <AiOutlineClose size={26} />
+          </div>
           <Typography
             id="modal-title"
             variant="h6"
@@ -261,13 +269,19 @@ const BusinessSettings_6 = () => {
         <Paper
           sx={{
             position: "absolute",
-            width: 500,
+            width: { xs: "90vw", sm: "35vw" },
             bgcolor: "background.paper",
             borderRadius: "16px",
             boxShadow: 24,
             p: 4,
           }}
         >
+          <div
+            className="flex justify-end cursor-pointer"
+            onClick={closeUpdatePaymentModal}
+          >
+            <AiOutlineClose size={26} />
+          </div>
           <Typography
             id="modal-title"
             variant="h6"
