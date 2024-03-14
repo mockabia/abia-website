@@ -75,6 +75,7 @@ const BusinessSettings_6 = () => {
               <label className="font-semibold">Card Number</label>
               <div>
                 <Expiryinput
+                  disabled
                   type="text"
                   name="card_number"
                   placeholder="XXXX XXXX XXXX XXXX"
@@ -124,6 +125,7 @@ const BusinessSettings_6 = () => {
                 <label className="font-semibold">Expiry</label>
                 <div>
                   <Expiryinput
+                    disabled
                     type="text"
                     name="expiry"
                     placeholder="MM/YY"
@@ -150,6 +152,7 @@ const BusinessSettings_6 = () => {
                 <label className="font-semibold">CCV</label>
                 <div>
                   <Expiryinput
+                    disabled
                     type="password"
                     placeholder="XXX"
                     name="ccv"
@@ -237,7 +240,7 @@ const BusinessSettings_6 = () => {
               className="cpp-cancel-button"
               onClick={handleCancelAndKeepActive}
             >
-              Keep Me Active
+              Keep me Active
             </button>
           </div>
         </Paper>
@@ -279,13 +282,40 @@ const BusinessSettings_6 = () => {
             <div className=" md:w-[25rem]">
               <label className="font-semibold">Card Number</label>
               <div>
-                <input
-                  type="number"
+                <Expiryinput
+                  type="text"
                   name="card_number"
                   placeholder="XXXX XXXX XXXX XXXX"
                   className="cancelsub-input-style2"
                   value={formValues.card_number}
                   onChange={handleChange}
+                  InputProps={{
+                    inputComponent: MaskedInput,
+                    inputProps: {
+                      mask: [
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        "-",
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        "-",
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        "-",
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                      ],
+                      guide: false,
+                    },
+                  }}
                 />
               </div>
             </div>
@@ -294,13 +324,21 @@ const BusinessSettings_6 = () => {
               <div className="">
                 <label className="font-semibold">Expiry</label>
                 <div>
-                  <input
+                  <Expiryinput
                     type="text"
                     name="expiry"
                     placeholder="MM/YY"
                     className="cancelsub-input-style"
                     value={formValues.expiry}
                     onChange={handleChange}
+                    InputProps={{
+                      inputComponent: MaskedInput,
+                      inputProps: {
+                        mask: [/\d/, /\d/, "/", /\d/, /\d/],
+                        guide: false,
+                      },
+                      placeholder: "MM/YY",
+                    }}
                   />
                 </div>
               </div>
@@ -308,13 +346,20 @@ const BusinessSettings_6 = () => {
               <div className="">
                 <label className="font-semibold">CCV</label>
                 <div>
-                  <input
-                    type="text"
+                  <Expiryinput
+                    type="password"
                     placeholder="XXX"
                     name="ccv"
                     className="cancelsub-input-style"
                     value={formValues.ccv}
                     onChange={handleChange}
+                    InputProps={{
+                      inputComponent: MaskedInput,
+                      inputProps: {
+                        mask: [/\d/, /\d/, /\d/],
+                        guide: false,
+                      },
+                    }}
                   />
                 </div>
               </div>

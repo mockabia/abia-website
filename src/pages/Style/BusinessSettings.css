@@ -51,7 +51,7 @@
 
 .business-down-aroww {
     position: absolute;
-    color: #6cc2bc;
+    color: var(--abia-color);
     margin-left: 68vw;
     transform: rotate(0deg);
     transition: transform 0.3s;
@@ -259,11 +259,11 @@
     cursor: pointer;
 }
 .basicinfo-submit-button:hover {
-    background-color: #6cc2bc;
+    background-color: var(--abia-color);
 }
 
 .basicinfo-submit-button.focused {
-    background-color: #6cc2bc;
+    background-color: var(--abia-color);
 }
 
 
@@ -388,7 +388,7 @@
     width: 150px;
     height: 50px;
     border-radius: 30px;
-    background-color: #6cc2bc;
+    background-color: var(--abia-color);
     color: white;
     font-size: 16px;
     font-weight: 700;
@@ -484,7 +484,7 @@
 
 /* When the checkbox is checked, add a 6cc2bc background */
 .label-checkbox input:checked~.checkbox-indicator {
-    background-color: #6cc2bc;
+    background-color: var(--abia-color);
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
