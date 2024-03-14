@@ -88,11 +88,11 @@ const App = () => {
         {/* test */}
         <Route path="/fonts" element={<BlogFonts />} />
         {/* Partnership */}
-        <Route path="/partnership-benefits" element={<Partnership />} />
+        {/* <Route path="/partnership-benefits0" element={<Partnership />} /> */}
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/public-profile" element={<PublicProfile />} />
         {/* Payment */}
-        <Route path="/payments" element={<Payment />} />
+        {/* <Route path="/payments0" element={<Payment />} /> */}
         {/* Cancel subscription */}
         <Route path="/edit-subscrption" element={<EditSubscription />} />
         <Route path="/edit-payment" element={<EditPayment />} />

@@ -5,7 +5,7 @@ import { Box, FormControlLabel, FormGroup, Grid, Modal, Stack, } from "@mui/mate
 import * as CoupleJS from "../Couple";
 
 function AddNewCategory(props) {
-    const services                        = props.services;
+    const services                        = props.data.moreservices;
     const setData                         = props.setData;
     const setBudget                       = props.setBudget;
     const setUnpaidList                   = props.setUnpaidList;
@@ -64,14 +64,14 @@ function AddNewCategory(props) {
                           size="medium"
                           name={`servicesValue`}
                           id={`servicesValue`}
-                          value={services.id}
+                          value={services.mcid}
                           checked={(inputs.servicesValue != undefined && inputs.servicesValue.length > 0) ?
-                            ((inputs.servicesValue.split(',').map(JSON.parse)).indexOf(services.id) != -1 ? 'checked' : '')
+                            ((inputs.servicesValue.split(',').map(JSON.parse)).indexOf(services.mcid) != -1 ? 'checked' : '')
                             : ''}
                           onChange={(e) => handleChange(e)}
                         />
                       }
-                      label={<CheckBoxTypo>{services.itemTitle}</CheckBoxTypo>}
+                      label={<CheckBoxTypo>{services.title}</CheckBoxTypo>}
                     />
                   </Grid>
                 )
