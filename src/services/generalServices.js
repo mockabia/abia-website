@@ -15,16 +15,14 @@ export async function stateDropdown(postData) {
     return await apiService.apiCall(apiUrls.STATE_DROPDOWN, "GET", postData);
 }
 export async function fetchDirectoryDropdowns(postData) {
-     return category_stateDropdown;
-    //return await apiService.apiCall(MAIN_API["DIRECTORY_DROPDOWN"], "GET", postData);
+     return await apiService.apiCall(MAIN_API["DIRECTORY_DROPDOWN"], "GET", postData);
 }
 export async function fetchVendorCategory(postData) {
      return vendor_category;
     //return await apiService.apiCall(MAIN_API["VENDOR_CATEGORY_DROPDOWN"], "GET", postData);
 }
 export async function fetchDirectoryList(id,postData) {
-     return directoryList;
-    //return await apiService.apiCall(MAIN_API["DIRECTORY_LIST"] + "/" + id , "GET", postData);
+    return await apiService.apiCall(MAIN_API["DIRECTORY_LIST"] + "/" + id , "POST", postData);
 }
 export async function saveFavourite(id,postData) {
     return await apiService.apiCall(MAIN_API["SAVE_FAVOURITE"] + "/" + id ,"POST",postData)

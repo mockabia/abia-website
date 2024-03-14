@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../Style/Partnership.css";
 import { FaCheck } from "react-icons/fa6";
 import { Link } from "react-router-dom";
@@ -43,6 +43,10 @@ const Partnership = () => {
   const [visibleListItems_F, setVisibleListItems_F] = useState(
     featuredList.slice(0, 4)
   );
+
+  useEffect(() => {
+    
+  }, []);
 
   const onClickHandler = () => {
     setMode(!mode);

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 //import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
@@ -17,7 +18,6 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import { ColorSortButton } from "../../../components/FormStyle";
 import "../../Style/GeneralDirectory.css";
 import * as GeneralJS from "../General";
-import { useNavigate } from "react-router-dom";
 
 function handleClick(event) {
   event.preventDefault();
@@ -73,11 +73,16 @@ const SearchSection = (props) => {
   const [locationOptions, setLocationOptions] = useState([]);
   const [servicesOptions, setServicesOptions] = useState([]);
   const [locationOpt, setLocationOpt]         = useState(false);
+  const location                              = useLocation();
+  const pathname                              = location.pathname;
   
   useEffect(() => {
-    GeneralJS.fetchDirectoryDropdowns(setServicesOptions,setLocationOptions,setStateOptions);
+    GeneralJS.fetchDirectoryDropdowns(setServicesOptions,setLocationOptions,setStateOptions,pathname,setFormvalues);
   }, []);
+ 
+  /* useEffect(() => {
 
+  }, [pathname]); */
   useEffect(() => {
     let locationOpt = locationOptions.length>0 && locationOptions.filter(
         (option) => {
@@ -98,7 +103,7 @@ const SearchSection = (props) => {
     GeneralJS.customJS.handleChange(name, value, setFormvalues, setErrors)
   };
   const handleSubmit = () => {
-    let newUrl = window.WEDDING_DIRECTORY;
+    let newUrl = '';
     if(formvalues.category!=undefined){
       newUrl += '/'+formvalues.category;
     }
@@ -199,7 +204,7 @@ const SearchSection = (props) => {
                         renderInput={(params) => <TextField {...params} label="Category" />}
                         value={formvalues.category}
                         onChange={(event, newValue) => {
-                            handleInputChangeVal('category',newValue.url)
+                            handleInputChangeVal('category',newValue.value)
                         }}
                         disableClearable={true}
                         renderOption={(props, option) => (
@@ -215,7 +220,7 @@ const SearchSection = (props) => {
                             borderBottom: "1px solid #EFEFEF",
                             }}
                         >
-                            {option.title}
+                            {option.label}
                         </div>
                         )}
                     />
@@ -226,7 +231,7 @@ const SearchSection = (props) => {
                         name="locations"
                         options={locationOptions}
                         groupBy={(option) => option.state}
-                        getOptionLabel={(option) => `${option.regions}, ${option.state}`}
+                        getOptionLabel={(option) => `${option.regions}, ${option.url}`}
                         PopperComponent={PopperMy}
                         renderInput={(params) => <TextField {...params} label="Location" />}
                         renderGroup={(params) => (
@@ -292,11 +297,11 @@ const SearchSection = (props) => {
             <div className="">
                 <h5 className="sort-header text-[10px] mb-[0.5rem]">Sort By</h5>
                 <div className="dir-sortfilter  text-[12px] space-x-3">
-                    <ColorSortButton variant="contained" onClick={(e) => { handleInputChangeVal('sort','R') }} >Recently Reviewed</ColorSortButton>
+                    <ColorSortButton variant="contained" onClick={(e) => { handleInputChangeVal('sort','R'); }} >Recently Reviewed</ColorSortButton>
                     <div style={{ margin: "5px" }} />
-                    <ColorSortButton variant="contained" onClick={(e) => { handleInputChangeVal('sort','N') }} >Most Reviewed</ColorSortButton>
+                    <ColorSortButton variant="contained" onClick={(e) => { handleInputChangeVal('sort','N'); }} >Most Reviewed</ColorSortButton>
                     <div style={{ margin: "5px" }} />
-                    <ColorSortButton variant="contained" onClick={(e) => { handleInputChangeVal('sort','A') }} >Most Awarded</ColorSortButton>
+                    <ColorSortButton variant="contained" onClick={(e) => { handleInputChangeVal('sort','A'); }} >Most Awarded</ColorSortButton>
                 </div>
                 </div>
             </div>
