@@ -146,14 +146,14 @@ export const saveEnquiry = async (formValues,setErrors,setOpen) => {
     });
   }
 };
-export const fetchPayment = async (formValues,setData) => {
+export const fetchPayment = async (setPaysettings) => {
   let token       = localStorage.getItem("vendorToken");
   token           = JSON.parse(token);
   let userSession = token && token.user ? token.user : null;
   let userId      = userSession && userSession.id ? userSession.id : 0;
-  await servicesPage.fetchDirectoryList(userId,formValues).then(function (response) {
+  await servicesPage.paySettings(userId).then(function (response) {
     if (response.statuscode === 200) {
-      setData(response.result);
+      setPaysettings(response.result);
     }
   });
 };
