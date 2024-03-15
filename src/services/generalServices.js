@@ -5,11 +5,15 @@ import vendor_category from "./json/vendor_category.json";
 import directoryList from "./json/directoryList.json";
 
 
-export const MAIN_API = apiUrls.PUBLIC_API;
+export const MAIN_API   = apiUrls.PUBLIC_API;
+export const STRIPE_API = apiUrls.STRIPE_API;
 
 export async function marketCategory(postData) {
     // return vendorList;
     return await apiService.apiCall(apiUrls.MARKETING_CATEGORY, "GET", postData);
+}
+export async function paySettings(id) {
+    return await apiService.apiCall(apiUrls.PAYSETTINGS, "GET");
 }
 export async function stateDropdown(postData) {
     return await apiService.apiCall(apiUrls.STATE_DROPDOWN, "GET", postData);

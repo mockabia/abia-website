@@ -29,6 +29,7 @@ export const VENDOR_DROPDOWN = `https://abia.abia-test.com/api/BusinessDropdown`
 export const STATE_VS_REGION_API = `${baseUrl}WebStateVsRegionDropdown`;
 export const ADDITIONAL_CATEGORY_DROPDOWN = `${baseUrl}WebAdditionalVCategoryDropdown`;
 export const MARKETING_CATEGORY = `${baseUrl}MarketingCategoryDropdown`;
+export const PAYSETTINGS        = `${baseUrl}View_PaySettingsRecord`;
 
 export const CONTENT_API = {
   HEADER_MENUS: `${baseUrl}WebCommonHeaderMenu`,
@@ -107,5 +108,6 @@ export const PUBLIC_API = {
   SAVE_ENQUIRY            : `${baseUrl}saveEnquiry`,
 };
 export const STRIPE_API = {
-  "ADD_AMOUNT": `${baseUrl}Stripe_adminPayment`,
+  "STRIPE_PUBLISHKEY": `${baseUrl}View_StripeURL`,
+  "PARTNERSHIP_PUBLIC": `${baseUrl}Stripe_adminPayment`,
 };

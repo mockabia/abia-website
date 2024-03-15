@@ -5,9 +5,10 @@ import { CheckBoxStyle2, PaymentInput } from "../../components/FormStyle";
 import { Checkbox, FormControlLabel } from "@mui/material";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { CiCreditCard2 } from "react-icons/ci";
+import StripePay from "./Stripe/StripePay";
 import * as GeneralJS from "./General";
 
-const Payment = () => {
+const Payment = (props) => {
   const navigate                                  = useNavigate();
   const location                                  = useLocation();
   const { mode, amount, type }                    = location.state || {};
@@ -16,15 +17,47 @@ const Payment = () => {
   const [errors, setErrors]                       = useState({});
   const [loading, setLoading]                     = useState(false);
   const [submissionMessage, setSubmissionMessage] = useState("");
+  const [paysettings, setPaysettings]             = useState({});
+  const [formvalues, setFormvalues]               = useState({});
+  const paymentuser                               = location.state.request;
+  const paymentAPI                                = location.state.paymentAPI;
 
   const handlePlanChange = (plan) => {
-    setSelectedPlan(plan);
+    setFormvalues((values) => ({ ...values, ['stype']: plan }));
   };
-
   useEffect(() => {
-    setSelectedPlan(mode === "annually" ? "annually" : "monthly");
-  }, [mode]);
+    GeneralJS.fetchPayment(setPaysettings)
+    setFormvalues((values) => ({ ...values,...paymentuser }));
+  }, []);
+  useEffect(() => {
+    let ftypeArray              = {}
+    ftypeArray[0]               = {}
+    ftypeArray[1]               = {}
+    if (formvalues.stype == "0") {
+      ftypeArray[0].setupfee    = paysettings.newregfees;
+      ftypeArray[0].amounttopay = paysettings.monthlyregfees;
+      ftypeArray[0].payamount   = paysettings.monthlyregfees;
+      ftypeArray[1].setupfee    = paysettings.newregfees;
+      ftypeArray[1].amounttopay = paysettings.monthlyfregfees;
+      ftypeArray[1].payamount   = paysettings.monthlyfregfees;
+    }else {
+      ftypeArray[0].setupfee    = paysettings.newregfees;
+      ftypeArray[0].amounttopay = paysettings.annualregfees;
+      ftypeArray[0].payamount   = paysettings.annualregfees;
+      ftypeArray[1].setupfee    = paysettings.newregfees;
+      ftypeArray[1].amounttopay = paysettings.annualfregfees;
+      ftypeArray[1].payamount   = paysettings.annualfregfees;
+    }
+    setFormvalues((values) => ({ ...values,...ftypeArray[formvalues.ftype] }));
+  }, [paysettings,formvalues.stype]);
 
+
+  const formatCurrency = (value) => {
+      if (value === undefined) {
+      return "";
+      }
+      return (Math.round(value * 100) / 100).toFixed(2);
+  };
   const handleInputChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -72,6 +105,8 @@ const Payment = () => {
 
   return (
       <div className="payment-box-container">
+        
+        <pre>{JSON.stringify(formvalues, null, 2)}</pre>
         {/* Payment input details */}
         {submissionMessage ? (
           <div className="payment-subscription-box">
@@ -116,14 +151,14 @@ const Payment = () => {
               {/* Plan buttons */}
               <div className="flex justify-normal gap-[1rem]">
                 <button
-                  className={selectedPlan === "monthly" ? "active" : ""}
-                  onClick={() => handlePlanChange("monthly")}
+                  className={formvalues.stype==0 ? "active" : ""}
+                  onClick={() => handlePlanChange(0)}
                 >
                   Monthly
                 </button>
                 <button
-                  className={selectedPlan === "annually" ? "active" : ""}
-                  onClick={() => handlePlanChange("annually")}
+                  className={formvalues.stype==1 ? "active" : ""}
+                  onClick={() => handlePlanChange(1)}
                 >
                   Annual
                 </button>
@@ -131,7 +166,11 @@ const Payment = () => {
             </div>
             {/* Input Fields */} 
             {/* Emal */}
-            <PaymentInput
+            {formvalues.payamount && (
+              <StripePay request={formvalues} paymentAPI={paymentAPI}/>
+            )}
+            
+            {/* <PaymentInput
               name="email"
               value={formValues.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
@@ -143,7 +182,6 @@ const Payment = () => {
             {errors.email && (
               <span className="error-message">{errors.email}</span>
             )}
-            {/* Name */}
             <PaymentInput
               name="contact_person"
               value={formValues.contact_person}
@@ -178,7 +216,6 @@ const Payment = () => {
                 <span className="error-message">{errors.card_number}</span>
               )}
             </div>
-            {/* Expiry */}
             <div className="flex gap-[1rem]">
               <div className="flex flex-col gap-[5px]">
                 <PaymentInput
@@ -216,7 +253,6 @@ const Payment = () => {
                 )}
               </div>
             </div>
-            {/* Checkbox */}
             <div>
               <FormControlLabel
                 value="end"
@@ -257,7 +293,6 @@ const Payment = () => {
                 <span className="error-message">{errors.condition}</span>
               )}
             </div>
-            {/* Pay buttons */}
             <div className="payments-pay-buttons flex justify-normal gap-[1rem]">
               <button className="button-1" onClick={handleSubmit}>
                 Pay
@@ -265,7 +300,7 @@ const Payment = () => {
               <button className="button-2" onClick={handleBack}>
                 Back
               </button>
-            </div>
+            </div> */}
           </div>
         )}
         {/* Payment Summary */}
@@ -273,30 +308,21 @@ const Payment = () => {
           <h3>Payment Summary</h3>
           <div className="flex justify-start items-center gap-[5px]">
             <h2>
-              $
-              {selectedPlan === "monthly"
-                ? type === "Partnership"
-                  ? 41.99
-                  : type === "Featured"
-                  ? 69.99
-                  : 0
-                : type === "Partnership"
-                ? 499.0
-                : type === "Featured"
-                ? 799.0
-                : amount}
+            ${formvalues && formatCurrency(formvalues.amounttopay)}
             </h2>
-            <h4>{selectedPlan === "monthly" ? "per month" : "per year"}</h4>
+            <h4>{formvalues.stype==0 ? "per month" : "per year"}</h4>
           </div>
           <h5>
-            {selectedPlan === "monthly"
-              ? "+ $10 for one-time setup fee $"
-              : "+ $10 for Setup Fee"}
+            {formvalues.stype==0 ?(
+              <span>+ ${formvalues && formvalues.setupfee} for one-time setup fee $</span>
+              ): (
+                <span>+ ${formvalues && formvalues.setupfee} for Setup Fee</span>
+              )}
           </h5>
           <div className="mt-[8px] flex flex-col gap-[8px]">
             <h3>Payment</h3>
             <h5>
-              {selectedPlan === "monthly"
+              {formvalues.stype==0
                 ? "Monthly (12 month minimum)"
                 : "Annual"}
             </h5>

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../Style/Partnership.css";
 import { FaCheck } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import * as servicesPage from "../../services/generalServices";
+import * as GeneralJS from "./General";
 
 const partnershipList = [
   "Public Listing on ABIA Directory",
@@ -34,9 +36,11 @@ const featuredList = [
 ];
 
 const Partnership = () => {
-  const [mode, setMode]     = useState(false);
-  const [show, setShow]     = useState(false);
-  const [show2, setshow2]   = useState(false);
+  const navigate                              = useNavigate();
+  const [show, setShow]                       = useState(false);
+  const [show2, setshow2]                     = useState(false);
+  const [paysettings, setPaysettings]         = useState({});
+  const [formvalues, setFormvalues]           = useState({});
   const [visibleListItems, setVisibleListItems] = useState(
     partnershipList.slice(0, 4)
   );
@@ -45,13 +49,40 @@ const Partnership = () => {
   );
 
   useEffect(() => {
-    
+    GeneralJS.fetchPayment(setPaysettings)
+    setFormvalues((values) => ({ ...values, ['stype']: 0 }));
   }, []);
+  
+  useEffect(() => {
+    let ftypeArray              = {}
+    ftypeArray[0]               = {}
+    ftypeArray[1]               = {}
+    if (formvalues.stype == "0") {
+      ftypeArray[0].setupfee    = paysettings.newregfees;
+      ftypeArray[0].amounttopay = paysettings.monthlyregfees;
+      ftypeArray[1].setupfee    = paysettings.newregfees;
+      ftypeArray[1].amounttopay = paysettings.monthlyfregfees;
+    }else {
+      ftypeArray[0].setupfee    = paysettings.newregfees;
+      ftypeArray[0].amounttopay = paysettings.annualregfees;
+      ftypeArray[1].setupfee    = paysettings.newregfees;
+      ftypeArray[1].amounttopay = paysettings.annualfregfees;
+    }
+    setFormvalues((values) => ({ ...values, ['ftypeArray']: ftypeArray }));
+  }, [paysettings,formvalues.stype]);
 
-  const onClickHandler = () => {
-    setMode(!mode);
+  const onClickHandler = (e) => {
+    let dataset             = e.target.dataset;
+    let currentValue        = dataset.value;
+    let stype               = currentValue==0 ? 1 : 0;
+    setFormvalues((values) => ({ ...values, ['stype']: stype }));
   };
-
+  const formatCurrency = (value) => {
+      if (value === undefined) {
+      return "";
+      }
+      return (Math.round(value * 100) / 100).toFixed(2);
+  };
   const handleOpen = () => {
     setShow(!show);
     if (!show) {
@@ -75,41 +106,37 @@ const Partnership = () => {
   const RedirectPayment = async (e) => {
       let dataset                     = e.target.dataset;
       let requestForm                 = {};
-      requestForm['stype']            = mode ? 1 : 0;
-      requestForm['mode']             = dataset.mode;
-      requestForm['amount']           = dataset.amount;
+      requestForm['stype']            = formvalues.stype;
       requestForm['ftype']            = dataset.ftype;
-      console.log(requestForm)
-      /* requestForm['vid']              = inputs.vid;
-      requestForm['stype']            = inputs.stype;
-      requestForm['ftype']            = inputs.ftype;
-
-      requestForm['amounttopay']      = inputs.amounttopay;
-      requestForm['payamount']        = inputs.amounttopay;
-      requestForm['setupfee']         = inputs.setupfee;
-      requestForm['partnertopay']     = inputs.partnertopay;
-      requestForm['paybyusing']       = inputs.paybyusing;
-      
-      navigate('/payment', {
+      requestForm['setupfee']         = formvalues.ftypeArray[dataset.ftype].setupfee;
+      requestForm['amounttopay']      = formvalues.ftypeArray[dataset.ftype].amounttopay;
+      requestForm['payamount']        = formvalues.ftypeArray[dataset.ftype].amounttopay;
+      navigate('/payments', {
         state: {
           request:requestForm,
-          paymentAPI: servicesPage.STRIPE_API['ADD_AMOUNT'],
+          paymentAPI: servicesPage.STRIPE_API['PARTNERSHIP_PUBLIC'],
         },
-      }); */
+      });
   };
 
   return (
       <div className="h-screen pb-[10rem]">
         {/* toggle switch */}
+        {/* <div style={{height:"200px",overflow:"scroll"}}>
+          <pre>{JSON.stringify(paysettings, null, 2)}</pre>
+        </div>
+        <div style={{height:"200px",overflow:"scroll"}}>
+          <pre>{JSON.stringify(formvalues['ftypeArray'], null, 2)}</pre>
+        </div> */}
         <h2 className="main-header">Partnetship Benefits</h2>
         <div className="toggle-div">
           <h5>Monthly</h5>
-          <button onClick={onClickHandler} className="toggle-switch">
+          <button onClick={(e) => onClickHandler(e)} data-value={formvalues.stype} className="toggle-switch">
             <div
               className="benefit-button"
               style={{
-                marginLeft: `${mode ? "36px" : "2px"}`,
-                background: `${mode ? "#fff" : "#fff"}`,
+                marginLeft: `${formvalues.stype==1 ? "36px" : "2px"}`,
+                background: `${formvalues.stype==1 ? "#fff" : "#fff"}`,
               }}
             />
           </button>
@@ -124,25 +151,23 @@ const Partnership = () => {
                 <div>
                   <span>
                     <span className="text-[30px] font-[600] font-change">
-                      {mode ? "$499.00" : "$41.99"}
+                      ${formvalues['ftypeArray'] && formatCurrency(formvalues['ftypeArray'][0].amounttopay)}
                     </span>{" "}
-                    {mode ? "/yearly" : "/month"}
+                    {formvalues['stype']==0 ? "/month" : "/yearly"}
                   </span>
                   <h5>
                     {" "}
-                    + <span className="font-change">$100.00 </span>Setup Fee{" "}
+                    + <span className="font-change">${formvalues['ftypeArray'] && formatCurrency(formvalues['ftypeArray'][0].setupfee)} </span>Setup Fee{" "}
                   </h5>
                 </div>
                 <div>
                   <span className="text-[30px] font-[600]">Partnership</span>
 
-                  <h5 style={{ visibility: mode ? "hidden" : "visible" }}>
+                  <h5 style={{ visibility: formvalues['stype']==0 ? "visible" : "hidden" }}>
                     12 month minimum
                   </h5>
                 </div>
-                <button className="partnership-apply-button" 
-                  data-mode={mode ? "annually" : "monthly"}
-                  data-amount={mode ? 499.0 : 41.99}
+                <button className="partnership-apply-button"
                   data-ftype={0}
                   onClick={(e) => RedirectPayment(e)}>
                   Apply Today
@@ -170,25 +195,23 @@ const Partnership = () => {
                 <div>
                   <span>
                     <span className="text-[30px] font-[600] font-change">
-                      {mode ? "$799.00" : "$69.99"}
+                    ${formvalues['ftypeArray'] && formatCurrency(formvalues['ftypeArray'][1].amounttopay)}
                     </span>{" "}
-                    {mode ? "/yearly" : "/month"}
+                    {formvalues['stype']==0 ? "/month" : "/yearly"}
                   </span>
                   <h5>
                     {" "}
-                    + <span className="font-change">$100.00 </span>Setup Fee{" "}
+                    + Featured + <span className="font-change">${formvalues['ftypeArray'] && formatCurrency(formvalues['ftypeArray'][1].setupfee)} </span>Setup Fee{" "}
                   </h5>
                 </div>
                 <div>
                   <span className="text-[30px] font-[600]">+ Featured</span>
 
-                  <h5 style={{ visibility: mode ? "hidden" : "visible" }}>
+                  <h5 style={{ visibility: formvalues['stype']==0 ? "visible" : "hidden" }}>
                     12 month minimum
                   </h5>
                 </div>
                 <button className="partnership-apply-button"
-                  data-mode={mode ? "annually" : "monthly"}
-                  data-amount={mode ? 699.0 : 69.99}
                   data-ftype={1}
                   onClick={(e) => RedirectPayment(e)}>
                   Apply Today
