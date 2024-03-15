@@ -90,7 +90,7 @@ const Sidebar = (props) => {
         variants={Nav_animation}
         initial={{ x: isTabletMid ? -250 : 0 }}
         animate={open ? "open" : "closed"}
-        className="fixed-sidebar bg-[#6cc2bc]  shadow-xl z-[999] max-w-[16rem]  w-[16rem]
+        className="fixed-sidebar bg-[#5a9d98]  shadow-xl z-[999] max-w-[16rem]  w-[16rem]
         overflow-hidden md:relative h-screen "
       >
         {/* <AbiaLogo /> */}

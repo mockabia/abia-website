@@ -58,7 +58,7 @@ export const BpIcon = styled("span")(({ theme }) => ({
 }));
 
 export const BpCheckedIcon = styled(BpIcon)({
-  backgroundColor: "#6cc2bc",
+  backgroundColor: "#5a9d98",
   backgroundImage:
     "linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))",
   "&:before": {
@@ -72,7 +72,7 @@ export const BpCheckedIcon = styled(BpIcon)({
     content: '""',
   },
   "input:hover ~ &": {
-    backgroundColor: "#6cc2bc",
+    backgroundColor: "#5a9d98",
   },
 });
 
@@ -314,7 +314,7 @@ export const MultiTLinedTextField = styled(TextField)(({ theme }) => ({
 export const ColorSubmitButton = styled(Button)(({ theme }) => ({
   height: "50px",
   color: "white",
-  backgroundColor: "#6cc2bc",
+  backgroundColor: "#5a9d98",
   textTransform: "capitalize",
   "&:hover": {
     backgroundColor: "black",
@@ -407,10 +407,10 @@ export const StepperStyle = styled(Stepper)(({ theme }) => ({
     // fill: "white",
   },
   "& .MuiSvgIcon-root.Mui-active": {
-    color: "#6cc2bc",
+    color: "#5a9d98",
   },
   "& .MuiSvgIcon-root.Mui-completed": {
-    color: "#6cc2bc",
+    color: "#5a9d98",
   },
   "& .MuiStepLabel-label": {
     fontFamily: "Manrope",
@@ -431,7 +431,7 @@ export const ButtonStyle = styled(Button)(({ theme, isActive }) => ({
   border: isActive ? "1px solid black" : "1px solid #B7B7B7",
   borderRadius: "1rem",
   width: "100%",
-  height: "3rem",
+  height: "2.5rem",
   padding: "28px",
   marginBottom: "1.5rem",
   backgroundColor: isActive ? "#f3f3f3" : "transparent",
@@ -459,10 +459,10 @@ export const NextButtonStyle = styled(Button)(({ theme }) => ({
   borderRadius: "2rem",
   width: "100%",
   height: "3.5rem",
-  backgroundColor: "#6cc2bc",
+  backgroundColor: "#5a9d98",
   border: "none",
   "&:hover": {
-    backgroundColor: "#6cc2bc",
+    backgroundColor: "#5a9d98",
     border: "none",
     // border: "1px solid black",
   },
@@ -502,7 +502,7 @@ export const CheckBoxStyle = styled(Checkbox)({
     color: "#d7d7d7",
   },
   "&.Mui-checked": {
-    color: "#6cc2bc",
+    color: "#5a9d98",
   },
   "& .MuiFormControlLabel-label": {
     fontFamily: "Manrope",
@@ -587,7 +587,7 @@ export const CLLoginStyle = styled(Button)(({ theme }) => ({
     border: "1px solid black",
   },
   "&:focus": {
-    backgroundColor: "#6cc2bc",
+    backgroundColor: "#5a9d98",
     border: "none",
   },
   "&. MuiSvgIcon": {
@@ -625,7 +625,7 @@ export const VendorLoginButton = styled(Button)(({ theme }) => ({
   fontFamily: "Manrope",
   textTransform: "initial",
   color: "#fff", // Set text color to black
-  backgroundColor: "#6cc2bc", // Set background color to white
+  backgroundColor: "#5a9d98", // Set background color to white
   borderRadius: "50px",
   maxWidth: "250px",
   width: "250px",
@@ -1093,9 +1093,9 @@ export const CoupleAddButton = styled(Button)(({ theme }) => ({
   fontFamily: "Manrope",
   textTransform: "initial",
   color: "white", // Set text color to black
-  backgroundColor: "#6cc2bc", // Set background color to white
+  backgroundColor: "#5a9d98", // Set background color to white
   borderRadius: "50px",
-  border: "1px solid #6cc2bc",
+  border: "1px solid #5a9d98",
   maxWidth: "6rem",
   width: "160px",
   height: "45px",
@@ -1141,10 +1141,10 @@ export const BudgetEditButton = styled(Button)(({ theme }) => ({
 export const CancelCoupleButton = styled(Button)(({ theme }) => ({
   fontFamily: "Manrope",
   textTransform: "initial",
-  color: "#6cc2bc", // Set text color to black
+  color: "#5a9d98", // Set text color to black
   backgroundColor: "white", // Set background color to white
   borderRadius: "50px",
-  border: "1px solid #6cc2bc",
+  border: "1px solid #5a9d98",
   maxWidth: "6rem",
   width: "160px",
   height: "45px",
@@ -1157,9 +1157,9 @@ export const BlackLargeButton = styled(Button)(({ theme }) => ({
   fontFamily: "Manrope",
   textTransform: "initial",
   color: "#fff", // Set text color to black
-  backgroundColor: "#6cc2bc", // Set background color to white
+  backgroundColor: "#5a9d98", // Set background color to white
   borderRadius: "50px",
-  border: "1px solid #6cc2bc",
+  border: "1px solid #5a9d98",
   maxWidth: "250px",
   width: "160px",
   height: "45px",
@@ -1177,9 +1177,9 @@ export const BlackSmallButton = styled(Button)(({ theme }) => ({
   fontFamily: "Manrope",
   textTransform: "initial",
   color: "#fff", // Set text color to black
-  backgroundColor: "#6cc2bc", // Set background color to white
+  backgroundColor: "#5a9d98", // Set background color to white
   borderRadius: "50px",
-  border: "1px solid #6cc2bc",
+  border: "1px solid #5a9d98",
   maxWidth: "250px",
   width: "5rem",
   height: "2rem",
@@ -1373,12 +1373,12 @@ export const RatingButton = styled(Button)(({ theme }) => ({
   width: "16rem",
   maxWidth: "100%",
   height: "40px",
-  backgroundColor: "#6cc2bc",
+  backgroundColor: "#5a9d98",
   color: "white",
   textTransform: "capitalize",
   border: "none",
   "&:hover": {
-    backgroundColor: "#6cc2bc",
+    backgroundColor: "#5a9d98",
     border: "none",
     // border: "1px solid black",
   },
@@ -1406,7 +1406,7 @@ export const reactSelectScroll = {
       height: "30px",
     },
     "&::-webkit-scrollbar-thumb": {
-      backgroundColor: "#6cc2bc", // Set the color of the scrollbar thumb
+      backgroundColor: "#5a9d98", // Set the color of the scrollbar thumb
     },
     "&::-webkit-scrollbar-track": {
       backgroundColor: "#f5f5f5", // Set the color of the scrollbar track
@@ -1588,7 +1588,7 @@ export const Expiryinput = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
     fontFamily: "Manrope",
     height: "45px",
-    width: "16rem",
+    // width: "16rem",
     maxWidth: "100%",
     boxShadow: "none",
     borderRadius: "10px",
@@ -1598,23 +1598,12 @@ export const Expiryinput = styled(TextField)(({ theme }) => ({
     borderRadius: "10px",
     fontFamily: "Manrope",
     backgroundColor: "#FAFAFA",
-    border: "1px solid #c3bebe",
     fontSize: "14px",
     width: "100%",
     maxWidth: "100%",
-    "& > fieldset": { borderColor: "transparent" },
-    "&:hover fieldset": {
-      borderColor: "transparent",
-    },
   },
   "& .MuiFormHelperText-root": {
     border: "none",
     marginLeft: "0rem",
-  },
-  "& .Mui-focused": {
-    boxShadow: "0 0 0 1px #c3bebe",
-    "& .MuiOutlinedInput-notchedOutline": {
-      border: "none",
-    },
   },
 }));

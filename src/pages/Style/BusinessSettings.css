@@ -571,9 +571,9 @@
 .modal-buttons {
     margin-top: 2rem;
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .settings-cancelpay-buttons {

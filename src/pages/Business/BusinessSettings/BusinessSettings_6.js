@@ -81,7 +81,8 @@ const BusinessSettings_6 = () => {
                   type="text"
                   name="card_number"
                   placeholder="XXXX XXXX XXXX XXXX"
-                  className="cancelsub-input-style2"
+                  style={{ width: "98%" }}
+                  // className="cancelsub-input-style2"
                   value={
                     formValues.card_number ||
                     (vendorDetail.subscription &&
@@ -131,7 +132,7 @@ const BusinessSettings_6 = () => {
                     type="text"
                     name="expiry"
                     placeholder="MM/YY"
-                    className="cancelsub-input-style"
+                    // className="cancelsub-input-style"
                     value={
                       formValues.expiry ||
                       (vendorDetail.subscription &&
@@ -158,7 +159,7 @@ const BusinessSettings_6 = () => {
                     type="password"
                     placeholder="XXX"
                     name="ccv"
-                    className="cancelsub-input-style"
+                    // className="cancelsub-input-style"
                     value={
                       formValues.ccv ||
                       (vendorDetail.subscription &&
@@ -241,14 +242,14 @@ const BusinessSettings_6 = () => {
             no longer be visible to the public on ABIA or Google.
           </Typography>
           <div className="modal-buttons">
-            <button className="cancel-button" onClick={handleCancel}>
-              Cancel
-            </button>
             <button
               className="cpp-cancel-button"
               onClick={handleCancelAndKeepActive}
             >
               Keep me Active
+            </button>
+            <button className="cancel-button" onClick={handleCancel}>
+              Cancel
             </button>
           </div>
         </Paper>
@@ -264,6 +265,7 @@ const BusinessSettings_6 = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          outline: "none",
         }}
       >
         <Paper
@@ -300,7 +302,8 @@ const BusinessSettings_6 = () => {
                   type="text"
                   name="card_number"
                   placeholder="XXXX XXXX XXXX XXXX"
-                  className="cancelsub-input-style2"
+                  style={{ width: "98%" }}
+                  // className="cancelsub-input-style2"
                   value={formValues.card_number}
                   onChange={handleChange}
                   InputProps={{
@@ -342,7 +345,7 @@ const BusinessSettings_6 = () => {
                     type="text"
                     name="expiry"
                     placeholder="MM/YY"
-                    className="cancelsub-input-style"
+                    // className="cancelsub-input-style"
                     value={formValues.expiry}
                     onChange={handleChange}
                     InputProps={{
@@ -364,7 +367,7 @@ const BusinessSettings_6 = () => {
                     type="password"
                     placeholder="XXX"
                     name="ccv"
-                    className="cancelsub-input-style"
+                    // className="cancelsub-input-style"
                     value={formValues.ccv}
                     onChange={handleChange}
                     InputProps={{

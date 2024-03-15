@@ -141,7 +141,7 @@ const CoupleTopbar = (props) => {
   };
   document.title = props.title;
   return (
-    <div className="gap-[4px] md:gap-0 bg-[#6cc2bc] md:bg-[#fff]  h-[6rem] fixed top-0 left-0 right-0 z-40 border-b border-[#6cc2bc] flex items-center justify-between p-4">
+    <div className="gap-[4px] md:gap-0 bg-[#5a9d98] md:bg-[#fff]  h-[6rem] fixed top-0 left-0 right-0 z-40 border-b border-[#6cc2bc] flex items-center justify-between p-4">
       <div className="flex justify-center items-center gap-1">
         <button className="md:hidden" onClick={toggleMenu}>
           <MenuIcon size={20} />
@@ -198,10 +198,10 @@ const CoupleTopbar = (props) => {
           {/* usericon */}
           <button className=" focus:outline-none" onClick={handleLogoClick}>
             <div className="relative ">
-              <div className="absolute inset-0  bg-[#6cc2bc] w-[10px] h-[10px] md:w-[40px] md:h-[40px] mt-[-9px] rounded-full"></div>
+              <div className="absolute inset-0  bg-[#5a9d98] w-[10px] h-[10px] md:w-[40px] md:h-[40px] mt-[-9px] rounded-full"></div>
               <UserIcons
                 fill="#fff"
-                className="w-[20px] relative z-10 md:text-[#6cc2bc] md:ml-[9.5px]  md:mr-10  "
+                className="w-[20px] relative z-10 md:text-[#5a9d98] md:ml-[9.5px]  md:mr-10  "
               />
             </div>
           </button>

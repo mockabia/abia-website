@@ -18,7 +18,7 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-color: #6cc2bc;
+    background-color: var(--abia-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,7 +115,7 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-color: #6cc2bc;
+    background-color: var(--abia-color);
     display: flex;
     justify-content: center;
     align-items: center;

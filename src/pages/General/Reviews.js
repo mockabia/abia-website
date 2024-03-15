@@ -621,6 +621,7 @@ const Reviews = () => {
               isSearchable={true}
               options={vendorList}
               value={selectedVendor}
+              openMenuOnClick={false}
               styles={{ ...RatingCustomStyle, ...reactSelectScroll }}
               onChange={(selectedOptions) =>
                 handleVendorChange("new_vendor", selectedOptions)
@@ -634,7 +635,19 @@ const Reviews = () => {
                 Menu,
                 MultiValue,
                 IndicatorSeparator: null,
-                DropdownIndicator: null,
+                DropdownIndicator: () => (
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faCaretDown}
+                      className="dropDown-position"
+                      style={{
+                        display: "none",
+                        color: "#6cc2bc",
+                        marginRight: "0.5rem",
+                      }}
+                    />
+                  </div>
+                ),
               }}
             />
           </div>

@@ -108,10 +108,10 @@ const TopBar = (props) => {
       <div className=" flex mt-[14px] md:mt-0 ">
         <button className="mr-4 focus:outline-none" onClick={toggleProfile}>
           <div className="relative ">
-            <div className="absolute inset-0  bg-[#6cc2bc] w-[10px] h-[10px] md:w-[40px] md:h-[40px] mt-[-9px] rounded-full"></div>
+            <div className="absolute inset-0  bg-[#5a9d98] w-[10px] h-[10px] md:w-[40px] md:h-[40px] mt-[-9px] rounded-full"></div>
             <UserIcons
               fill="#fff"
-              className="w-[22px] relative z-10 md:text-[#6cc2bc] ml-[8.5px]  md:mr-10  "
+              className="w-[22px] relative z-10 md:text-[#5a9d98] ml-[8.5px]  md:mr-10  "
             />
           </div>
         </button>

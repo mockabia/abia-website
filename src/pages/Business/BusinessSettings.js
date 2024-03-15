@@ -9,8 +9,10 @@ import { ReactComponent as BusinessEmail } from "../../icons/business-email (1).
 import { ReactComponent as USernamePasswordIcon } from "../../icons/ic-user-interface-password (1).svg";
 import { ReactComponent as CategoryIcon } from "../../icons/check-all (1).svg";
 import { ReactComponent as LocationIcon } from "../../icons/location (1).svg";
+import { ReactComponent as HeartIcon } from "../../icons/heart copy.svg";
 import { RxTriangleDown } from "react-icons/rx";
 import { FaHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa6";
 
 import {
   Accordion,
@@ -73,7 +75,7 @@ const BusinessSettings = (props) => {
     },
     {
       id: 6,
-      icon: <FaHeart />,
+      icon: <HeartIcon />,
       heading: "My Subscription",
       content: <Subscription />,
     },
