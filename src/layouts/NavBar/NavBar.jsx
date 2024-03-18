@@ -11,8 +11,8 @@ import SignUpDropDown from "../../components/Login and Signup/SignUpDropDown";
 import MenuItems from "../../components/Login and Signup/PublicMenuItems";
 import * as BusinessJS from "../../pages/Business/Business";
 import * as CoupleJS from "../../pages/Couple/Couple";
-import { ReactComponent as AbiaLogo } from "../../icons/ABIA Weddings Australia.svg";
-import AbiaLogo2 from "../../icons/ABIA Weddings Australia.svg";
+import { ReactComponent as AbiaLogo } from "../../icons/ABIA-Weddings-Australia.svg";
+import AbiaLogo2 from "../../icons/ABIA-Weddings-Australia.svg";
 
 import "../css/NavBar.css";
 
@@ -203,7 +203,7 @@ const NavBar = (props) => {
       {/* Mobile */}
       <div className="login-navbar-style relative">
         {/* Mboile */}
-        <div className="">
+        <div className="adjust-mobile-menuIcon">
           <MenuItems menuItems={menuItems} />
         </div>
         <div className="login-logo cursor-pointer" onClick={handleLogoClick}>
@@ -226,7 +226,7 @@ const NavBar = (props) => {
         >
           <AbiaLogo />
         </div> */}
-        <div className="navbar-header-display" ref={profileRef}>
+        <div className="navbar-header-display">
           <ul className="login-subheaders absolute ">
             {menuItems.map((menuItem, index) => (
               <li
@@ -297,7 +297,7 @@ const NavBar = (props) => {
           </div>
         </div>
         {/*Login and Signup group  */}
-        <div className="login-signup-group">
+        <div className="login-signup-group" ref={profileRef}>
           {Object.keys(userProfile).length > 0 &&
           userProfile &&
           userProfile.name != "" ? (

@@ -62,9 +62,9 @@
         align-items: center;
         width: 120px;
         height: 28px;
-        background-color: #c3e7e4;
+        /* background-color: #c3e7e4; */
         border-radius: 20px;
-        color: #000;
+        color: #fff;
         font-size: 14px;
         font-weight: 600;
         cursor: pointer;

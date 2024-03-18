@@ -3,7 +3,7 @@
     .login-navbar-style {
         background-color: var(--abia-color);;
         display: flex;
-        height: 80px;
+        height: 90px;
         align-items: center;
         justify-content: space-between;
         padding: 0 25px;
@@ -61,11 +61,15 @@
     display: none;
 }
 
+.adjust-mobile-menuIcon {
+    display: block;
+}
+
 @media(min-width:1024px) {
 
     .login-navbar-style {
         background-color: var(--abia-color);;
-        height: 80px;
+        height: 90px;
         padding: 0px 50px;
     }
     .login-logo {
@@ -136,6 +140,10 @@
 
     .navbar-header-display {
         display: block;
+    }
+    
+    .adjust-mobile-menuIcon {
+        display: none;
     }
 
 }

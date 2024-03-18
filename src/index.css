@@ -139,7 +139,9 @@ input[type=number] {
   --abia-color: #5a9d98;
   --grey-bg-color: #E0E6E2;
   --black-button: #333333;
-  --white: #fff
+  --white: #fff;
+  --footer-green: #D9E8E7;
+  --font-color: #515151
 }
 
 @media (max-width: 768px) {

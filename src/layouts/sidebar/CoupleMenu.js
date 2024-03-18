@@ -12,7 +12,7 @@ import SideMenu from "./SideMenu";
 
 //css
 import "./css/sideBar.css";
-import {ReactComponent as AbiaLogo} from "../../icons/ABIA Weddings Australia.svg";
+import {ReactComponent as AbiaLogo} from "../../icons/ABIA-Weddings-Australia.svg";
 import CoupleSideMenu from "./CoupleSideMenu";
 
 const CoupleMenu = (props) => {

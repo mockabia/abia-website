@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { ReactComponent as AbiaLogo } from "../../../icons/ABIA Weddings Australia.svg";
+import { ReactComponent as AbiaLogo } from "../../../icons/ABIA-Weddings-Australia.svg";
 import { ReactComponent as UserIcons } from "../../../icons/contact topbar.svg";
 import { ReactComponent as MenuIcon } from "../../../icons/menuIcon.svg";
 import {
