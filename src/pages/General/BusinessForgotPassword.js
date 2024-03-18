@@ -84,7 +84,7 @@ const ForgetPassword = () => {
   return (
     <div>
       <div onClick={handleOpen}>
-        <span>forgot password?</span>
+        <span>forgot ?</span>
       </div>
       <Modal
         open={open}

@@ -624,8 +624,9 @@ export const VendorLoginButton = styled(Button)(({ theme }) => ({
   margin: "auto",
   fontFamily: "Manrope",
   textTransform: "initial",
-  color: "#fff", // Set text color to black
-  backgroundColor: "#5a9d98", // Set background color to white
+  color: "#000", // Set text color to black
+  backgroundColor: "#FFF", // Set background color to white
+  border: "1px solid #000",
   borderRadius: "50px",
   maxWidth: "250px",
   width: "250px",
@@ -635,18 +636,18 @@ export const VendorLoginButton = styled(Button)(({ theme }) => ({
   boxShadow: "none",
   marginBottom: "1rem",
   "&:hover": {
-    backgroundColor: "#000",
+    backgroundColor: "var(--abia-color)",
     boxShadow: "none",
     color: "white",
   },
-  // "&.Mui-selected": {
-  //   backgroundColor: "#000",
-  //   boxShadow: "none",
-  //   color: "white",
-  // },
+
   "&.Mui-disabled": {
     backgroundColor: "grey", // Background color when disabled
     color: "white",
+  },
+  "@media (min-width: 1024px)": {
+    maxWidth: "350px", // Change maxWidth to 250px for screens above 1024px
+    width: "350px",
   },
 }));
 
@@ -945,7 +946,7 @@ export const CoupleCommonInput = styled(TextField)(({ theme }) => ({
     fontFamily: "Manrope",
     height: "45px",
     width: "100%",
-    maxWidth: "22rem",
+    // maxWidth: "22rem",
     boxShadow: "none",
     borderRadius: "10px",
     fontFamily: "Manrope",

@@ -62,23 +62,22 @@ const LoginPage = () => {
   );
 
   return (
-    <div className="login-main-container">
+    <div>
       <div className="login-vendorlogin-content relative">
         <div className="login-vendorlogin-box">
           <div className="flex flex-col justify-center items-center p-[20px] relative">
             {/* error message */}
-            <h1 className="login-loginbox-header">Login to ABIA</h1>
-
-            <form onSubmit={handleSubmit} className="mt-[20px] ">
+            <h1 className="login-loginbox-header">Vendor Login</h1>
+            
+            <form onSubmit={handleSubmit} className="lg:mt-[20px] ">
               <Stack spacing={2}>
                 {/* email */}
                 <div className="flex flex-col gap-[5px] ">
-                  {/* <label htmlFor="email" className=" text-[14px] font-bold">
+                  <label htmlFor="email" className=" text-[14px] font-bold">
                     Email
-                  </label> */}
+                  </label>
                   <CoupleCommonInput
                     name="email"
-                    placeholder="Email"
                     variant="outlined"
                     defaultValue={inputs.email}
                     onChange={handleChange}
@@ -92,13 +91,12 @@ const LoginPage = () => {
                 </div>
                 {/* Password */}
                 <div className="flex flex-col gap-[5px]">
-                  {/* <label htmlFor="password" className=" text-[14px] font-bold">
+                  <label htmlFor="password" className=" text-[14px] font-bold">
                     Password
-                  </label> */}
+                  </label>
                   <CoupleCommonInput
                     name="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Password"
                     variant="outlined"
                     defaultValue={inputs.password}
                     onChange={handleChange}
@@ -124,27 +122,17 @@ const LoginPage = () => {
                     </div>
                   )}
                 </div>
-                <div className="login-forgot-password">
-                  <BusinessForgotPassword />
-                </div>
                 <div className="flex flex-col ">
                   <VendorLoginButton disabled={!isValidForm} type="submit">
                     <span>Login</span>
                   </VendorLoginButton>
                 </div>
               </Stack>
-              <div className="flex justify-center">
-                <h6>
-                  Don't have an account?{" "}
-                  <Link to={window.VSIGNUP} className="font-[900] underline">
-                    {" "}
-                    <span className="cl-gap">q</span>Sign Up Now
-                  </Link>
-                </h6>
-              </div>
               {/*Forgot Password */}
             </form>
-
+            <div className="cursor-pointer text-[#6cc2bc] text-[14px] font-semibold flex justify-center items-center ">
+              <BusinessForgotPassword />
+            </div>
             {hasInputErrors && (
               <div className="flex font-bold text-red-600 text-[12px]">
                 {Object.values(inputsErrors).map((error, index) => (
@@ -155,100 +143,25 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-      {/* above 1024px */}
-      <div className="login-section-desktop">
-        <div className="flex justify-center items-center">
-          <div className="login-vendorlogin-box2">
-            <div className="flex flex-col justify-center items-center p-[20px] relative">
-              {/* error message */}
-              <h1 className="login-loginbox-header">Login to ABIA</h1>
-
-              <form onSubmit={handleSubmit} className="lg:mt-[20px] ">
-                <Stack spacing={2}>
-                  {/* email */}
-                  <div className="flex flex-col gap-[5px] ">
-                    {/* <label htmlFor="email" className=" text-[14px] font-bold">
-                    Email
-                  </label> */}
-                    <CoupleCommonInput
-                      name="email"
-                      placeholder="Email"
-                      variant="outlined"
-                      defaultValue={inputs.email}
-                      onChange={handleChange}
-                      autoCapitalize="off"
-                    />
-                    {inputsErrors.email && (
-                      <div className="flex font-bold text-red-400 text-[12px]">
-                        {inputsErrors.email}
-                      </div>
-                    )}
-                  </div>
-                  {/* Password */}
-                  <div className="flex flex-col gap-[5px]">
-                    {/* <label htmlFor="password" className=" text-[14px] font-bold">
-                    Password
-                  </label> */}
-                    <CoupleCommonInput
-                      name="password"
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Password"
-                      variant="outlined"
-                      defaultValue={inputs.password}
-                      onChange={handleChange}
-                      //onBlur={handleBlur}
-                      autoCapitalize="off"
-                      InputProps={{
-                        endAdornment: (
-                          <IconButton onClick={togglePasswordVisibility}>
-                            {showVisibilityIcon ? (
-                              showPassword ? (
-                                <VisibilityOffOutlinedIcon />
-                              ) : (
-                                <VisibilityOutlinedIcon />
-                              )
-                            ) : null}
-                          </IconButton>
-                        ),
-                      }}
-                    />
-                    {inputsErrors.password && (
-                      <div className="flex font-bold text-red-400 text-[12px]">
-                        {inputsErrors.password}
-                      </div>
-                    )}
-                  </div>
-                  <div className="login-forgot-password">
-                    <BusinessForgotPassword />
-                  </div>
-                  <div className="flex flex-col ">
-                    <VendorLoginButton disabled={!isValidForm} type="submit">
-                      <span>Login</span>
-                    </VendorLoginButton>
-                  </div>
-                </Stack>
-                <div className="flex justify-center">
-                  <h6>
-                    Don't have an account?{" "}
-                    <Link to={window.VSIGNUP} className="font-[900] underline">
-                      {" "}
-                      <span className="cl-gap">q</span>Sign Up Now
-                    </Link>
-                  </h6>
-                </div>
-                {/*Forgot Password */}
-              </form>
-
-              {hasInputErrors && (
-                <div className="flex font-bold text-red-600 text-[12px]">
-                  {Object.values(inputsErrors).map((error, index) => (
-                    <div key={index}>{error}</div>
-                  ))}
-                </div>
-              )}
-            </div>
+      <div className="login-community-content">
+        <h1 className="login-community-header">Join the ABIA Community </h1>
+        <span className="login-community-subcontent">
+          Elevate & promote your wedding brand by joining Australia's{" "}
+          <br className="login-content-adjust" />
+          Largest Wedding Review Platform & Industry Awards.{" "}
+        </span>
+        <div className="lg:block mt-[15px]"></div>
+        <div className="space-y-[35px]">
+          <p className="font-[700] text-[#222222] text-[14px]">
+            Don't have an ABIA's Vendor Account?
+          </p>
+          <div className="flex justify-center items-center">
+            <span></span>
+            <Link className="login-apply-button ">apply here</Link>
+            <span></span>
           </div>
         </div>
+        <br />
       </div>
     </div>
   );
