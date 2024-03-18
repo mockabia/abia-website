@@ -122,7 +122,12 @@ const PaymentForm = (props) => {
     }, []);
     return (
         <>
-            <PaymentInput name="email" value={fields.email} onChange={onChangeEvent}
+            <PaymentInput name="email" value={fields.email} 
+                onChange={(e) =>{
+                    //call api for email checking
+                    onChangeEventValue("email", e.target.value)
+                }}
+            //onChange={onChangeEvent}
                 InputProps={{
                     placeholder: "Email",
                     style: { color: "#000", fontWeight: "600" },
@@ -130,6 +135,19 @@ const PaymentForm = (props) => {
             />
             {error.email && (
               <span className="error-message">{error.email}</span>
+            )}
+            {fields.vid==0 && (
+                <>
+                    <PaymentInput name="state" value={fields.state} onChange={onChangeEvent}
+                        InputProps={{
+                            placeholder: "State",
+                            style: { color: "#000", fontWeight: "600" },
+                        }}
+                    />
+                    {error.state && (
+                    <span className="error-message">{error.state}</span>
+                    )}
+                </>
             )}
             <PaymentInput name="holdername" value={fields.holdername} onChange={onChangeEvent}
                 InputProps={{
