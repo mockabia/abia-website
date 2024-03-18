@@ -10,9 +10,9 @@ import {
     useStripe
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import * as apiService from "../../../api/apiServices";
-import * as apiUrls from "../../../api/apiUrls";
-import { CheckBoxStyle2, PaymentInput } from "../../../components/FormStyle";
+import * as apiService from "../../api/apiServices";
+import * as apiUrls from "../../api/apiUrls";
+import { CheckBoxStyle2, PaymentInput } from "../../components/FormStyle";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
 const publishKey = await apiService.apiCall(apiUrls.STRIPE_API.STRIPE_PUBLISHKEY, "GET").then(function (response) {
@@ -47,14 +47,15 @@ const PaymentForm = (props) => {
     const elements                  = useElements();
     let navigate                    = useNavigate();
     const location                  = useLocation();
-    const paymentuser               = props.request;
+    //const paymentuser               = props.request;
     const paymentAPI                = props.paymentAPI;
+    const setPaymentStatus          = props.setPaymentStatus;
     const [fields, setFields]       = useState({});
     const [error, setError]         = useState(false);
     const [success, setSuccess]     = useState(false);
     const handleSubmit = (stripe, elements) => async () => {
         //const cardElement = elements.getElement(CardElement);
-        console.log(validateForm(fields,setError))
+        //console.log(validateForm(fields,setError))
         if(validateForm(fields,setError)){
             const cardElement       = elements.getElement(CardNumberElement);
             const cardExpiryElement = elements.getElement(CardExpiryElement);
@@ -88,10 +89,10 @@ const PaymentForm = (props) => {
             console.log('[error]', error);
             setError(error.message)
         } else {
-            var totalResponse = {...paymentuser,'paymentMethod':paymentMethod,['stripeToken']:token,['tokenData']:tokenData};
-            await apiService.apiCall(paymentAPI+'/'+paymentuser.vid, "POST",totalResponse).then(function (response) {
+            var totalResponse = {...fields,'paymentMethod':paymentMethod,['stripeToken']:token,['tokenData']:tokenData};
+            await apiService.apiCall(paymentAPI+'/'+fields.vid, "POST",totalResponse).then(function (response) {
                 if (response.statuscode == 200) {
-                    navigate('/payment-success')
+                    setPaymentStatus(true)
                 }else{
                     setError(response.error)
                 }
@@ -116,9 +117,12 @@ const PaymentForm = (props) => {
     const onChangeEventValue = (name,value) => {
         setFields(values => ({ ...values, [name]: value }))
     };
+    useEffect(() => {
+        setFields((values) => ({ ...values,...props.request, ['condition']: 1 }));
+    }, []);
     return (
         <>
-            <PaymentInput name="email" onChange={onChangeEvent}
+            <PaymentInput name="email" value={fields.email} onChange={onChangeEvent}
                 InputProps={{
                     placeholder: "Email",
                     style: { color: "#000", fontWeight: "600" },
@@ -127,7 +131,7 @@ const PaymentForm = (props) => {
             {error.email && (
               <span className="error-message">{error.email}</span>
             )}
-            <PaymentInput name="holdername" onChange={onChangeEvent}
+            <PaymentInput name="holdername" value={fields.holdername} onChange={onChangeEvent}
                 InputProps={{
                     placeholder: "Cardholder Name",
                     style: { color: "#000", fontWeight: "600" },
@@ -154,7 +158,7 @@ const PaymentForm = (props) => {
                 control={
                   <CheckBoxStyle2
                     name="condition"
-                    //checked={formValues.condition}
+                    checked={fields.condition==1 ? true : false}
                     onChange={(e) =>
                         onChangeEventValue("condition", e.target.checked==1 ? 1: 0)
                     }

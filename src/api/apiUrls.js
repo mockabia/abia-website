@@ -109,5 +109,5 @@ export const PUBLIC_API = {
 };
 export const STRIPE_API = {
   "STRIPE_PUBLISHKEY": `${baseUrl}View_StripeURL`,
-  "PARTNERSHIP_PUBLIC": `${baseUrl}Stripe_adminPayment`,
+  "PARTNERSHIP_PUBLIC": `${baseUrl}WebStripe_Payment`,
 };

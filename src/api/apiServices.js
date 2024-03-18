@@ -35,18 +35,22 @@ export async function apiCall(url, method, data) {
       authorization: `Bearer ${accessToken}`,
     };
     if (userId && abiaType == "V") {
+      let memberType  = userSession.temp_member;
+      let memberClass = memberType=='1' ? 'V' : 'N';
       headers = {
         "Content-Type": "application/json",
         api_key: process.env.REACT_APP_API_KEY,
         authorization: `Bearer ${accessToken}`,
-        "X-Request-VID": userId,
+        "X-Request-ID": userId,
+        "X-Request-Class": memberClass,
       };
     } else {
       headers = {
         "Content-Type": "application/json",
         api_key: process.env.REACT_APP_API_KEY,
         authorization: `Bearer ${accessToken}`,
-        "X-Request-WID": userId,
+        "X-Request-ID": userId,
+        "X-Request-Class": 'C',
       };
     }
     // console.log(headers);
