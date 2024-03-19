@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import {
-    Elements,
-    CardElement,
-    useElements,
-    CardNumberElement,
-    CardExpiryElement,
-    CardCvcElement,
-    useStripe
-} from "@stripe/react-stripe-js";
+import { Elements, CardElement, useElements, CardNumberElement, CardExpiryElement, CardCvcElement,useStripe} from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import * as apiService from "../../api/apiServices";
 import * as apiUrls from "../../api/apiUrls";
 import { CheckBoxStyle2, PaymentInput } from "../../components/FormStyle";
-import { Checkbox, FormControlLabel } from "@mui/material";
+import { Checkbox, FormControlLabel } from "@mui/material";      
+import PaymentSelect from "../../components/input-fields/PaymentSelect";
 
 const publishKey = await apiService.apiCall(apiUrls.STRIPE_API.STRIPE_PUBLISHKEY, "GET").then(function (response) {
     if (response.statuscode == 200) {
@@ -148,19 +141,16 @@ const PaymentForm = (props) => {
             {error.email && (
               <span className="error-message">{error.email}</span>
             )}
-            <PaymentInput name="state" value={fields.state} onChange={onChangeEvent}
-                        InputProps={{
-                            placeholder: "State",
-                            style: { color: "#000", fontWeight: "600" },
-                        }}
-                    />
             {(fields.vid==0 && stateOptions.length>0) && (
                 <>
-                    <PaymentInput name="state" value={fields.state} onChange={onChangeEvent}
-                        InputProps={{
-                            placeholder: "State",
-                            style: { color: "#000", fontWeight: "600" },
-                        }}
+                    <PaymentSelect
+                        className="custom-select-dropdown"
+                        name="state"
+                        placeholder="State"
+                        type="select"
+                        sx={{ width: "100%", fontSize: "14px" }}
+                        options
+                        value
                     />
                     {error.state && (
                     <span className="error-message">{error.state}</span>
