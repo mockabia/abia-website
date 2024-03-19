@@ -108,6 +108,7 @@ export const PUBLIC_API = {
   DIRECTORY_LIST          : `${baseUrl}DirectoryList`,
   SAVE_FAVOURITE          : `${baseUrl}saveFavourite`,
   SAVE_ENQUIRY            : `${baseUrl}saveEnquiry`,
+  BUSINESS_DECODEID       : `${baseUrl}businessDecode`,
 };
 export const STRIPE_API = {
   "STRIPE_PUBLISHKEY": `${baseUrl}View_StripeURL`,

@@ -5,7 +5,7 @@ const Partnership = () => {
   
   return (
     <div className="partnership">
-      <AbiaMembershipoffers />
+      <AbiaMembershipoffers redirect={window.PUBLIC_PAYMENT}/>
     </div>
   );
 };

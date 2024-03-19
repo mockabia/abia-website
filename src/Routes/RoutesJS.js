@@ -9,7 +9,17 @@ export const fetchContentRoutes = async (setPublicMenu, setBlogMenu) => {
       const directoryMenu = response.result.filter((menus) => {
         return menus.id == "2";
       });
-      window.WEDDING_DIRECTORY = "/" + directoryMenu[0].url;
+      const publicPayment = response.result.filter((menus) => {
+        return menus.id == "17";
+      });
+      const editPayment = response.result.filter((menus) => {
+        return menus.id == "19";
+      });
+      //console.log(response.result)
+      window.WEDDING_DIRECTORY    = "/" + directoryMenu[0].url;
+      window.PUBLIC_PAYMENT       = "/" + publicPayment[0].url;
+      window.EDIT_PAYMENT         = "/" + editPayment[0].url;
+      window.PUBLIC_PAYMENT_PAGE  = publicPayment[0].pagename;
     }
     fetchBlogRoutes(setBlogMenu);
   });

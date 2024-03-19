@@ -17,41 +17,52 @@ const stripePromise = loadStripe(publishKey);
 let succesUrl       = window.location.origin+process.env.REACT_APP_URL+'payment-success';
 //let options = {};
 
-const validateForm = (fields,setError) => {
-    setError({});
-    let validate = true;
-    if(fields.holdername=='' || fields.holdername ==undefined || fields.holdername ==null){
-        validate = false;
-        setError((values) => ({...values,["holdername"]: "Card holder name is required"}));
-    }
-    if(fields.email=='' || fields.email ==undefined || fields.email ==null){
-        validate = false;
-        setError((values) => ({...values,["email"]: "Email is required"}));
-    }
-    if(fields.condition=='' || fields.condition ==undefined || fields.condition ==null || fields.condition ==0){
-        validate = false;
-        setError((values) => ({...values,["condition"]: "Please agree with terms and conditions"}));
-    }
-    return validate;
-}
+
 const PaymentForm = (props) => {
 
     const stripe                            = useStripe();
     const elements                          = useElements();
     let navigate                            = useNavigate();
     const location                          = useLocation();
-    //const paymentuser                       = props.request;
+    //const paymentuser                       = props.formvalues;
+    const payFrom                           = props.payFrom;
     const paymentAPI                        = props.paymentAPI;
     const setPaymentStatus                  = props.setPaymentStatus;
     const [stateOptions, setStateOptions]   = useState({});
-    const [fields, setFields]               = useState({});
+    //const [fields, setFields]               = useState({});
+    const formvalues                        = props.formvalues;
+    const setFormvalues                     = props.setFormvalues;
+    const setErrorOpen                      = props.setErrorOpen;
+    const setErrorMessage                   = props.setErrorMessage;
     const [error, setError]                 = useState(false);
     const [success, setSuccess]             = useState(false);
     
+    const validateForm = (formvalues,setError) => {
+        setError({});
+        let validate = true;
+        if(formvalues.holdername=='' || formvalues.holdername ==undefined || formvalues.holdername ==null){
+            validate = false;
+            setError((values) => ({...values,["holdername"]: "Card holder name is required"}));
+        }
+        if(formvalues.email=='' || formvalues.email ==undefined || formvalues.email ==null){
+            validate = false;
+            setError((values) => ({...values,["email"]: "Email is required"}));
+        }
+        if((formvalues.vid==0 && stateOptions.length>0) && (formvalues.state=='' || formvalues.state ==undefined || formvalues.state ==null)){
+            validate = false;
+            setError((values) => ({...values,["state"]: "State is required"}));
+        }
+        if(formvalues.condition=='' || formvalues.condition ==undefined || formvalues.condition ==null || formvalues.condition ==0){
+            validate = false;
+            setError((values) => ({...values,["condition"]: "Please agree with terms and conditions"}));
+        }
+        return validate;
+    }
+
     const handleSubmit = (stripe, elements) => async () => {
         //const cardElement = elements.getElement(CardElement);
-        //console.log(validateForm(fields,setError))
-        if(validateForm(fields,setError)){
+        //console.log(validateForm(formvalues,setError))
+        if(validateForm(formvalues,setError)){
             const cardElement       = elements.getElement(CardNumberElement);
             const cardExpiryElement = elements.getElement(CardExpiryElement);
             const cardCvcElement    = elements.getElement(CardCvcElement);
@@ -61,11 +72,11 @@ const PaymentForm = (props) => {
 
             let token       = '';
             let tokenData   = '';
-            stripe.createToken(cardElement, {name: fields.holdername})
+            stripe.createToken(cardElement, {name: formvalues.holdername})
             .then(function(response) {
                 token       = response.token.id;
                 tokenData   = response.token;
-                setSuccess('Token created successfully : '+ token)
+                //setSuccess('Token created successfully : '+ token)
                 paymentMethod(cardElement,token,tokenData);
             });
         }
@@ -75,8 +86,8 @@ const PaymentForm = (props) => {
             type: 'card',
             card:cardElement,
             billing_details: {
-                name: fields.holdername,
-                email: fields.email,
+                name: formvalues.holdername,
+                email: formvalues.email,
             },
         });
 
@@ -84,12 +95,13 @@ const PaymentForm = (props) => {
             console.log('[error]', error);
             setError(error.message)
         } else {
-            var totalResponse = {...fields,'paymentMethod':paymentMethod,['stripeToken']:token,['tokenData']:tokenData};
-            await apiService.apiCall(paymentAPI+'/'+fields.vid, "POST",totalResponse).then(function (response) {
+            var totalResponse = {...formvalues,'paymentMethod':paymentMethod,['stripeToken']:token,['tokenData']:tokenData};
+            await apiService.apiCall(paymentAPI+'/'+formvalues.vid+'/'+payFrom, "POST",totalResponse).then(function (response) {
                 if (response.statuscode == 200) {
-                    setPaymentStatus(true)
+                    setPaymentStatus(1)
                 }else{
-                    setError(response.error)
+                    setErrorOpen(true)
+                    setErrorMessage('Email not found')
                 }
             });
         }
@@ -107,32 +119,32 @@ const PaymentForm = (props) => {
     const onChangeEvent = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        setFields(values => ({ ...values, [name]: value }))
+        setError({})
+        setFormvalues(values => ({ ...values, [name]: value }))
     };
     const onChangeEventValue = (name,value) => {
-        setFields(values => ({ ...values, [name]: value }))
+        setError({})
+        setFormvalues(values => ({ ...values, [name]: value }))
     };
     const checkMultipleEmailAccounts = async (email) => {
-        let request         = {}
-        request['email']    = email;
-        await apiService.apiCall(apiUrls.BUSINESS_API.MULTIPLE_ACCOUNTS_EMAIL, "GET",request).then(function (response) {
+        await apiService.apiCall(apiUrls.BUSINESS_API.MULTIPLE_ACCOUNTS_EMAIL+'/'+email, "GET").then(function (response) {
             if (response.statuscode == 200) {
                 setStateOptions(response.result)
             }
         });
     };
     useEffect(() => {
-        setFields((values) => ({ ...values,...props.request, ['condition']: 1 }));
+        setFormvalues((values) => ({ ...values,['condition']: 1 }));
+        //setFormvalues((values) => ({ ...values,...props.request, ['condition']: 1 }));
     }, []);
     return (
         <>
-            <PaymentInput name="email" value={fields.email} 
+        {/* <pre>{JSON.stringify(props, null, 2)}</pre> */}
+            <PaymentInput name="email" value={formvalues.email} 
                 onChange={(e) =>{
-        //console.log(e.target.value)
                     checkMultipleEmailAccounts(e.target.value)
-                    //onChangeEventValue("email", e.target.value)
+                    onChangeEventValue("email", e.target.value)
                 }}
-            //onChange={onChangeEvent}
                 InputProps={{
                     placeholder: "Email",
                     style: { color: "#000", fontWeight: "600" },
@@ -141,7 +153,7 @@ const PaymentForm = (props) => {
             {error.email && (
               <span className="error-message">{error.email}</span>
             )}
-            {(fields.vid==0 && stateOptions.length>0) && (
+            {(formvalues.vid==0 && stateOptions.length>0) && (
                 <>
                     <PaymentSelect
                         className="custom-select-dropdown"
@@ -149,15 +161,22 @@ const PaymentForm = (props) => {
                         placeholder="State"
                         type="select"
                         sx={{ width: "100%", fontSize: "14px" }}
-                        options
-                        value
+                        options={stateOptions}
+                        value={
+                            stateOptions.length > 0 && stateOptions.filter((option) => {
+                                if (option.value == formvalues.state) {
+                                    return option;
+                                }
+                            })
+                        }
+                        onChange={(selectedOption) => onChangeEventValue("state", selectedOption.value) }
                     />
                     {error.state && (
                     <span className="error-message">{error.state}</span>
                     )}
                 </>
             )}
-            <PaymentInput name="holdername" value={fields.holdername} onChange={onChangeEvent}
+            <PaymentInput name="holdername" value={formvalues.holdername} onChange={onChangeEvent}
                 InputProps={{
                     placeholder: "Cardholder Name",
                     style: { color: "#000", fontWeight: "600" },
@@ -184,7 +203,7 @@ const PaymentForm = (props) => {
                 control={
                   <CheckBoxStyle2
                     name="condition"
-                    checked={fields.condition==1 ? true : false}
+                    checked={formvalues.condition==1 ? true : false}
                     onChange={(e) =>
                         onChangeEventValue("condition", e.target.checked==1 ? 1: 0)
                     }
@@ -232,9 +251,12 @@ const PaymentForm = (props) => {
               <button type="button" className="button-1" onClick={handleSubmit(stripe, elements)}>
                 Pay
               </button>
-              <button type="button" className="button-2" onClick={redirectBack}>
+              {payFrom!='3' && (
+                <button type="button" className="button-2" onClick={redirectBack}>
                 Back
               </button>
+              )}
+              
             </div>
         </>
     );
@@ -242,7 +264,7 @@ const PaymentForm = (props) => {
 
 const StripePaymentForm = (props) => {
     const location                  = useLocation();
-    const paymentuser               = props.request;
+    const paymentuser               = props.formvalues;
 
     let options = {
         mode: 'payment',

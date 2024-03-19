@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../Style/Payment.css";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Modal } from "@mui/material";
+import { ReactComponent as AbiaLogo } from "../../icons/abia-new-logo.svg";
 import StripePay from "./StripePay";
 import * as GeneralJS from "../General/General";
 
@@ -11,12 +13,15 @@ const Payment = (props) => {
   const [selectedPlan, setSelectedPlan]           = useState(mode === "annually" ? "annually" : "monthly");
   const [errors, setErrors]                       = useState({});
   const [loading, setLoading]                     = useState(false);
-  const [paymentStatus, setPaymentStatus]         = useState(false);
-  const rightPanel                                = props.rightPanel;
+  const [paymentStatus, setPaymentStatus]         = useState(0);
+  const [errorOpen, setErrorOpen]                 = useState(false);
+  const [errorMessage, setErrorMessage]           = useState(null);
+  const rightPanel                                = props.rightPanel || 0;
+  const payFrom                                   = props.payFrom;
   const [paysettings, setPaysettings]             = useState({});
   const [formvalues, setFormvalues]               = useState({});
-  const paymentuser                               = location.state.request;
-  const paymentAPI                                = location.state.paymentAPI;
+  const paymentuser                               = (payFrom!=3 && location.state!=undefined) ? location.state.request : props.formvalues;
+  const paymentAPI                                = (payFrom!=3&& location.state!=undefined) ? location.state.paymentAPI : props.paymentAPI;
 
   const handlePlanChange = (plan) => {
     setFormvalues((values) => ({ ...values, ['stype']: plan }));
@@ -59,28 +64,33 @@ const Payment = (props) => {
       }
       return (Math.round(value * 100) / 100).toFixed(2);
   };
+  const handleCloseModal = () => {
+    setErrorOpen(false);
+    setErrorMessage(null);
+  };
 
   return (
+      <>
       <div className="payment-box-container">
         
-        {/* <pre>{JSON.stringify(formvalues, null, 2)}</pre> */}
+        <pre>{JSON.stringify(formvalues, null, 2)}</pre>
         {/* Payment input details */}
-        {paymentStatus ? (
+        {paymentStatus==1 ? (
           <div className="payment-subscription-box">
             <h2>Successfully Completed</h2>
 
-            {paymentStatus === true && (
+            {paymentStatus == 1 && (
               <>
                 <h5>
-                  {formvalues.contact_person} is an active ABIA Industry Partner
+                  {formvalues.holdername} is an active ABIA Industry Partner
                 </h5>
                 <h5>
                   Please check you indox as we have resent your login details
                 </h5>
                 <div className="mt-[1rem]">
-                  <login className="payment-login-button">
+                  <Link className="payment-login-button" to={window.VLOGIN}>
                     Login to your ABIA account
-                  </login>
+                  </Link>
                 </div>
               </>
             )}
@@ -116,7 +126,9 @@ const Payment = (props) => {
             {/* Input Fields */} 
             {/* Emal */}
             {formvalues.payamount && (
-              <StripePay request={formvalues} paymentAPI={paymentAPI} setPaymentStatus={setPaymentStatus} />
+              <StripePay formvalues={formvalues} setFormvalues={setFormvalues} paymentAPI={paymentAPI} 
+              payFrom={payFrom} setErrorOpen={setErrorOpen} setErrorMessage={setErrorMessage} 
+              setPaymentStatus={setPaymentStatus} />
             )}
           </div>
         )}
@@ -147,7 +159,7 @@ const Payment = (props) => {
           </div>
           <div className="border-b-4 border-white mt-[10px]"></div>
           {/* Business details */}
-          {paymentStatus || rightPanel && (
+          {(paymentStatus==1 || rightPanel==1) && (
             <div className="mt-[8px] flex flex-col gap-[5px]">
               {formvalues.holdername && (
                 <>
@@ -183,6 +195,25 @@ const Payment = (props) => {
           )}
         </div>
       </div>
+      <Modal open={errorOpen} onClose={handleCloseModal}>
+        <div className="payment-modal-overlay">
+          <div className="payment-modal-content">
+            <div className="payment-logo-section">
+              <AbiaLogo />
+            </div>
+            <h2>Email not Found</h2>
+            <p
+              style={{ width: "30vw", textAlign: "center" }}
+              dangerouslySetInnerHTML={{ __html: errorMessage }}
+            />
+            <div className="abia-border"></div>
+            <button className="payment-close-button" onClick={handleCloseModal}>
+              Close
+            </button>
+          </div>
+        </div>
+      </Modal>
+      </>
   );
 };
 

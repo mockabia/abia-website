@@ -94,9 +94,9 @@ const App = () => {
         {/* Payment */}
         {/* <Route path="/payments0" element={<Payment />} /> */}
         {/* Cancel subscription */}
-        <Route path="/edit-subscrption" element={<EditSubscription />} />
+        {/* <Route path="/edit-subscrption" element={<EditSubscription />} />
         <Route path="/edit-payment" element={<EditPayment />} />
-        <Route path="/partnerhsip-payment" element={<ExistingUserPayment />} />
+        <Route path="/partnerhsip-payment" element={<ExistingUserPayment />} /> */}
         {/* trest */}
         <Route path="/testing" element={<BusinessProfile1 />} />
       </Routes>
