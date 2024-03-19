@@ -73,7 +73,7 @@ const Payment = (props) => {
       <>
       <div className="payment-box-container">
         
-        <pre>{JSON.stringify(formvalues, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(formvalues, null, 2)}</pre> */}
         {/* Payment input details */}
         {paymentStatus==1 ? (
           <div className="payment-subscription-box">
