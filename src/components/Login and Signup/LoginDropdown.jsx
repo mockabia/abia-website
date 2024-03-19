@@ -54,13 +54,14 @@ const LoginDropdown = () => {
               <Link to={window.VLOGIN}>Vendor</Link>
             </li>
             <li className="loginnav-menu-item">
-              <div onClick={handleLoginOpen}>Couple</div>
+              {/* <div onClick={handleLoginOpen}>Couple</div> */}
+              <Link to="/wedding/login">Couple</Link>
             </li>
           </ul>
         </div>
       )}
 
-      <CouplesLogin modalOpen={loginOpen} setModalOpen={setLoginOpen} />
+      {/* <CouplesLogin modalOpen={loginOpen} setModalOpen={setLoginOpen} /> */}
     </div>
   );
 };

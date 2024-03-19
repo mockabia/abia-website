@@ -636,9 +636,9 @@ export const VendorLoginButton = styled(Button)(({ theme }) => ({
   boxShadow: "none",
   marginBottom: "1rem",
   "&:hover": {
-    backgroundColor: "var(--abia-color)",
+    // backgroundColor: "var(--abia-color)",
+    backgroundColor: "white",
     boxShadow: "none",
-    color: "white",
   },
 
   "&.Mui-disabled": {
