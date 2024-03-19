@@ -65,9 +65,8 @@
 
 
 .login-loginbox-header {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 500;
+font-family: 'Manrope', sans-serif;
+    font-weight: 600;
     margin-top: 10px;
 }
 
@@ -149,9 +148,9 @@
 
   
    .login-loginbox-header {
-       font-family: 'Playfair Display', serif;
+       font-family: 'Manrope', sans-serif;
        font-size: 30px;
-       font-weight: 500;
+       font-weight: 600;
        margin-top: 10px;
    }
 
@@ -162,9 +161,20 @@
     }
 
 .login-vendorlogin-content {
-    border-top-right-radius: 42%;
+    width: 80%;
+    border-top-right-radius: 40%;
     border-bottom-right-radius: 50%;
+    background-image: url(../../images/abia-vendor-login-2.webp) ;
+    /* background-size: cover; */
+    background-size: 175%;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 } 
+
+
+
 
