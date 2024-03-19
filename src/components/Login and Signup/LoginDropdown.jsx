@@ -45,7 +45,7 @@ const LoginDropdown = () => {
         Login
       </button>
       {open && (
-        <div className="login-dropdown-menu">
+        <div className="login-dropdown-menu arrow-top">
           <ul>
             <li
               className="loginnav-menu-item"
