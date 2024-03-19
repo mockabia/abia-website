@@ -43,16 +43,18 @@ const validateForm = (fields,setError) => {
 }
 const PaymentForm = (props) => {
 
-    const stripe                    = useStripe();
-    const elements                  = useElements();
-    let navigate                    = useNavigate();
-    const location                  = useLocation();
-    //const paymentuser               = props.request;
-    const paymentAPI                = props.paymentAPI;
-    const setPaymentStatus          = props.setPaymentStatus;
-    const [fields, setFields]       = useState({});
-    const [error, setError]         = useState(false);
-    const [success, setSuccess]     = useState(false);
+    const stripe                            = useStripe();
+    const elements                          = useElements();
+    let navigate                            = useNavigate();
+    const location                          = useLocation();
+    //const paymentuser                       = props.request;
+    const paymentAPI                        = props.paymentAPI;
+    const setPaymentStatus                  = props.setPaymentStatus;
+    const [stateOptions, setStateOptions]   = useState({});
+    const [fields, setFields]               = useState({});
+    const [error, setError]                 = useState(false);
+    const [success, setSuccess]             = useState(false);
+    
     const handleSubmit = (stripe, elements) => async () => {
         //const cardElement = elements.getElement(CardElement);
         //console.log(validateForm(fields,setError))
@@ -117,6 +119,15 @@ const PaymentForm = (props) => {
     const onChangeEventValue = (name,value) => {
         setFields(values => ({ ...values, [name]: value }))
     };
+    const checkMultipleEmailAccounts = async (email) => {
+        let request         = {}
+        request['email']    = email;
+        await apiService.apiCall(apiUrls.BUSINESS_API.MULTIPLE_ACCOUNTS_EMAIL, "GET",request).then(function (response) {
+            if (response.statuscode == 200) {
+                setStateOptions(response.result)
+            }
+        });
+    };
     useEffect(() => {
         setFields((values) => ({ ...values,...props.request, ['condition']: 1 }));
     }, []);
@@ -124,8 +135,9 @@ const PaymentForm = (props) => {
         <>
             <PaymentInput name="email" value={fields.email} 
                 onChange={(e) =>{
-                    //call api for email checking
-                    onChangeEventValue("email", e.target.value)
+        //console.log(e.target.value)
+                    checkMultipleEmailAccounts(e.target.value)
+                    //onChangeEventValue("email", e.target.value)
                 }}
             //onChange={onChangeEvent}
                 InputProps={{
@@ -136,7 +148,13 @@ const PaymentForm = (props) => {
             {error.email && (
               <span className="error-message">{error.email}</span>
             )}
-            {fields.vid==0 && (
+            <PaymentInput name="state" value={fields.state} onChange={onChangeEvent}
+                        InputProps={{
+                            placeholder: "State",
+                            style: { color: "#000", fontWeight: "600" },
+                        }}
+                    />
+            {(fields.vid==0 && stateOptions.length>0) && (
                 <>
                     <PaymentInput name="state" value={fields.state} onChange={onChangeEvent}
                         InputProps={{
