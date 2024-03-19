@@ -148,6 +148,12 @@ const PaymentForm = (props) => {
             {error.email && (
               <span className="error-message">{error.email}</span>
             )}
+            <PaymentInput name="state" value={fields.state} onChange={onChangeEvent}
+                        InputProps={{
+                            placeholder: "State",
+                            style: { color: "#000", fontWeight: "600" },
+                        }}
+                    />
             {(fields.vid==0 && stateOptions.length>0) && (
                 <>
                     <PaymentInput name="state" value={fields.state} onChange={onChangeEvent}
