@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../Style/Reviews.css";
-import { ReactComponent as AbiaLogo } from "../../icons/ABIA-Weddings-Australia.svg";
+import { ReactComponent as AbiaLogo } from "../../icons/abia-new-logo.svg";
 import {
   IndiRatingInput,
   MoreSelectedBadge,

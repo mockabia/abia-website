@@ -3,6 +3,7 @@ import * as apiService from "../../api/apiServices";
 import * as reactUrls from "../../api/reactUrls";
 import * as servicesPage from "../../services/vendor/businessServices";
 import * as customValidator from "../Plugins/customValidator";
+import { AltRoute } from "@mui/icons-material";
 
 export const hasJWT = async (navigate) => {
   let flag = false;
@@ -100,13 +101,14 @@ export const vendorLoginStateForm = async (e, inputs, navigate) => {
     }
   });
 };
-export const logout = async (navigate) => {
+export const logout = async (setLoginStatus, navigate) => {
   await servicesPage.logout().then(function (response) {
     if (response) {
       if (response.statuscode == 200) {
         apiService.setAuthToken(null);
         localStorage.removeItem("vendorToken");
         localStorage.removeItem("user");
+        setLoginStatus(false);
         navigate(window.HOME);
       }
     }

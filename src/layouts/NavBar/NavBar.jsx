@@ -11,8 +11,8 @@ import SignUpDropDown from "../../components/Login and Signup/SignUpDropDown";
 import MenuItems from "../../components/Login and Signup/PublicMenuItems";
 import * as BusinessJS from "../../pages/Business/Business";
 import * as CoupleJS from "../../pages/Couple/Couple";
-import { ReactComponent as AbiaLogo } from "../../icons/ABIA-Weddings-Australia.svg";
-import AbiaLogo2 from "../../icons/ABIA-Weddings-Australia.svg";
+import { ReactComponent as AbiaLogo } from "../../icons/abia-new-logo.svg";
+import AbiaLogo2 from "../../icons/abia-new-logo.svg";
 
 import "../css/NavBar.css";
 
@@ -215,17 +215,17 @@ const NavBar = (props) => {
 
         {/* Subheaders */}
 
-        <img
+        {/* <img
           src={AbiaLogo2}
           className="abia-logo-desktop"
           onClick={handleLogoClick}
-        />
-        {/* <div
+        /> */}
+        <div
           className="abia-logo-desktop cursor-pointer"
           onClick={handleLogoClick}
         >
           <AbiaLogo />
-        </div> */}
+        </div>
         <div className="navbar-header-display">
           <ul className="login-subheaders absolute ">
             {menuItems.map((menuItem, index) => (

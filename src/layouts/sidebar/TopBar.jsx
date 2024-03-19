@@ -18,8 +18,8 @@ import { ReactComponent as MyProfileICon } from "../../icons/my-profile.svg";
 import { ReactComponent as SettingsIcons } from "../../icons/settings.svg";
 import { RxTriangleDown, RxTriangleUp } from "react-icons/rx";
 import { ReactComponent as MenuIcon } from "../../icons/menuIcon.svg";
-// import { ReactComponent as AbiaLogo } from "../../icons/ABIA Weddings Australia.svg";
-import AbiaLogo from "../../icons/ABIA-Weddings-Australia.svg";
+import { ReactComponent as AbiaLogo } from "../../icons/abia-new-logo.svg";
+// import AbiaLogo from "../../icons/abia-new-logo.svg";
 import * as BusinessJS from "../../pages/Business/Business";
 //components
 
@@ -87,7 +87,7 @@ const TopBar = (props) => {
   return (
     <div
       ref={profileRef}
-      className="bg-[#6cc2bc]  md:bg-[#fff] h-[6rem]  flex items-center justify-between fixed top-0 left-0 right-0 z-40 border-b border-[#6cc2bc] "
+      className="bg-[#5a9d98]  md:bg-[#fff] h-[6rem]  flex items-center justify-between fixed top-0 left-0 right-0 z-40 border-b border-[#5a9d98] "
     >
       {!isMobile && (
         <div className="">
@@ -109,10 +109,10 @@ const TopBar = (props) => {
       <div className=" flex mt-[14px] md:mt-0 ">
         <button className="mr-4 focus:outline-none" onClick={toggleProfile}>
           <div className="relative ">
-            <div className="absolute inset-0  bg-[#6cc2bc] w-[10px] h-[10px] md:w-[40px] md:h-[40px] mt-[-9px] rounded-full"></div>
+            <div className="absolute inset-0  bg-[#5a9d98] w-[10px] h-[10px] md:w-[40px] md:h-[40px] mt-[-9px] rounded-full"></div>
             <UserIcons
               fill="#fff"
-              className="w-[22px] relative z-10 md:text-[#6cc2bc] ml-[8.5px]  md:mr-10  "
+              className="w-[22px] relative z-10 md:text-[#5a9d98] ml-[8.5px]  md:mr-10  "
             />
           </div>
         </button>

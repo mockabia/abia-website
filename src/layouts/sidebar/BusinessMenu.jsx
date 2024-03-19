@@ -12,7 +12,7 @@ import SideMenu from "./SideMenu";
 
 //css
 import "./css/sideBar.css";
-import { ReactComponent as AbiaLogo } from "../../icons/ABIA-Weddings-Australia.svg";
+import { ReactComponent as AbiaLogo } from "../../icons/abia-new-logo.svg";
 
 const Sidebar = (props) => {
   let isTabletMid = useMediaQuery({ query: "(max-width: 768px)" });
