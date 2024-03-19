@@ -1,9 +1,13 @@
-.main-header {
+.partnership .partnership-header {
     font-family: 'Playfair Display', serif;
     font-size: 30px;
     font-weight: 500;
     text-align: center;
     margin: 2rem 0 ;
+}
+
+.upgradeDiv .partnership-header {
+    margin: 2rem 1rem;
 }
 
 .toggle-switch {
@@ -46,7 +50,7 @@
 
 }
 @media(min-width:650px) {
-.partnership-main {
+.partnership .partnership-main {
         display: grid;
         grid-template-columns: repeat(2, minmax(18rem, 1fr));
         gap: 1rem;
@@ -56,6 +60,16 @@
     }
 }
 
+@media(min-width:768px) {
+    .upgradeDiv .partnership-main {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(18rem, 1fr));
+        gap: 1rem;
+        width: 38rem;
+        margin: 0 1rem;
+
+    }
+}
 
 
 
@@ -75,7 +89,7 @@
 }
 
 @media(min-width:1250px) {
-.partnership-info-box {
+.partnership .partnership-info-box {
     width: 22rem;
     /* height: 25rem; */
     height: auto;
@@ -88,7 +102,7 @@
     justify-content: space-between;
     grid-column: 1 / -1;
 }
-.partnership-main {
+.partnership .partnership-main {
     display: grid;
     grid-template-columns: repeat(2, minmax(22rem, 1fr));
     gap: 1rem;
@@ -97,7 +111,53 @@
 
 }
 }
+@media (min-width:1024px) {
+    .upgradeDiv .toggle-div {
+         width: 42rem;
+     }
+    .upgradeDiv .partnership-header {
+        /* font-family: 'Playfair Display', serif; */
+        /* font-size: 22px;
+    font-weight: 500; */
+        margin: 2rem 2rem;
+    }
 
+    .upgradeDiv .partnership-main {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(18rem, 1fr));
+        gap: 1rem;
+        width: 38rem;
+        margin: 0 2rem;
+
+    }
+}
+@media(min-width:1250px) {
+    .upgradeDiv .toggle-div{
+        width: 48rem;
+    }
+    .upgradeDiv .partnership-info-box {
+        width: 22rem;
+        /* height: 25rem; */
+        height: auto;
+        min-height: 20rem;
+        border: 1px solid #b7b7b7;
+        border-radius: 20px;
+        padding: 2rem 2rem 1rem 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        grid-column: 1 / -1;
+    }
+
+    .upgradeDiv .partnership-main {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(22rem, 1fr));
+        gap: 1rem;
+        width: 45rem;
+        /* margin: 0 auto; */
+
+    }
+}
 
 .listing-div {
     width: 18rem;
