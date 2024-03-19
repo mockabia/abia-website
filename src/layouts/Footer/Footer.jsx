@@ -5,8 +5,12 @@ import "../css/Footer.css";
 
 import { ReactComponent as FBIcon } from "../../icons/facebook.svg";
 import { ReactComponent as InstaIcon } from "../../icons/instagram.svg";
+import { FaFacebookF } from "react-icons/fa";
+import { RiInstagramFill } from "react-icons/ri";
+
 import { ReactComponent as PinterestIcon } from "../../icons/pinterest.svg";
-import AbiaLogo from "../../abiaLogo";
+import { ReactComponent as AbiaLogo } from "../../icons/abia-new-logo.svg";
+// import AbiaLogo2 from "../../icons/abia-new-logo.svg";
 
 const Footer = (props) => {
   const [footerMenu, setFooterMenu] = useState([]);
@@ -14,6 +18,7 @@ const Footer = (props) => {
   useEffect(() => {
     fetchCommonPageMenu();
   }, []);
+
   const fetchCommonPageMenu = async () => {
     await servicesPage.fetchFooterMenus().then(function (response) {
       if (response.statuscode == 200) {
@@ -23,6 +28,8 @@ const Footer = (props) => {
     });
   };
 
+  console.log("Footer menu:", footerMenu);
+
   const handleLogoClick = () => {
     navigate("/");
   };
@@ -30,43 +37,41 @@ const Footer = (props) => {
   return (
     <div className={`${props.showLoader ? "" : ""} bg-[#000]  `}>
       <div className="footer-container">
+        {/* Logo */}
         <div className="footer-logo" onClick={handleLogoClick}>
-          <div className="logo-adjust cursor-pointer">
-            <AbiaLogo />
-          </div>
+          <AbiaLogo />
+          {/* <img src={AbiaLogo2} className="logo-adjust cursor-pointer" /> */}
         </div>
-        <div className="footerMenus">
-          <ul>
+        {/* Menus */}
+        <div>
+          <ul className="footneru-section">
             {footerMenu.map((FooterMenu, i) => (
               //{Object.values(footerMenu).map((FooterMenu, i) => (
-              <li className="footer-text">
-                <NavLink to={`/${FooterMenu.url}`}>{FooterMenu.title} </NavLink>
+              <li>
+                <NavLink
+                  to={`/${FooterMenu.url}`}
+                  style={{ textTransform: "capitalize", fontSize: "14px" }}
+                >
+                  {FooterMenu.title.toLowerCase()}{" "}
+                </NavLink>
               </li>
             ))}
           </ul>
         </div>
-
+        {/* social media and copyuright */}
         <div className="footer-social-icon">
-          <a href="https://www.facebook.com/" alt="">
-            <FBIcon className="w-[40px]" />
-          </a>
-          <a href="https://www.instagram.com/" alt="">
-            <InstaIcon className="w-[40px]" />
-          </a>
-          <a href="https://www.pinterest.com/" alt="">
-            <PinterestIcon className="w-[40px]" />
-          </a>
-        </div>
-        <div className="footer-copyright lg:hidden">
-          <span className="text-[#fff] ">
+          <div className="flex gap-[1rem]">
+            <a href="https://www.facebook.com/" alt="">
+              <FaFacebookF size={22} />
+            </a>
+            <a href="https://www.instagram.com/" alt="">
+              <RiInstagramFill size={22} />
+            </a>
+          </div>
+          <div className="footer-copyright">
             Copyright 2023 ABIA Weddings Australia. All rights reserved.
-          </span>
+          </div>
         </div>
-      </div>
-      <div className="footer-copyright-desktop">
-        <span className="text-[#fff]">
-          Copyright 2023 ABIA Weddings Australia. All rights reserved.
-        </span>
       </div>
     </div>
   );

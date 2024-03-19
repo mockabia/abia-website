@@ -7,7 +7,7 @@ import { Checkbox, FormControlLabel, Modal } from "@mui/material";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { CiCreditCard2 } from "react-icons/ci";
 import { WidthFull } from "@mui/icons-material";
-import AbiaLogo from "../../../abiaLogo";
+import { ReactComponent as AbiaLogo } from "../../../icons/abia-new-logo.svg";
 
 const dbEmails = [
   { email: "email1@example.com", name: "John Doe" },

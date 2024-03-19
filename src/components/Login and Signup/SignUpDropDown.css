@@ -14,10 +14,9 @@
 }
 
 .navbar-signup-button.active {
-    color: #bebebe;
-    background-color: #fff;
+    color: #FFF;
+    background-color: #000;
     border-radius: 10px 10px 0 0;
-    border: 1px solid #bebebe;
     border-bottom: none;
 
 }
@@ -37,10 +36,10 @@
 
 .signup-dropdown-menu {
     position: absolute;
-    background-color: #fff;
+    background-color: #000;
+    color: #fff;
     width: 120px;
     border-radius: 0 0 10px 10px;
-    border: 1px solid #bebebe;
     border-top: none;
     cursor: pointer;
     z-index: 1;

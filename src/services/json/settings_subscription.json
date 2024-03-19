@@ -1,0 +1,14 @@
+{
+    "result": {
+        "subscription": {
+            "vid": "18",
+            "name": "My Vendor",
+            "card_number": "1234567891011121",
+            "expiry":"1122",
+            "ccv":"911"
+        }
+       
+    },
+    "statuscode": 200,
+    "message": "Successful Request"
+}

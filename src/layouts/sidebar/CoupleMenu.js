@@ -12,7 +12,7 @@ import SideMenu from "./SideMenu";
 
 //css
 import "./css/sideBar.css";
-import AbiaLogo from "../../abiaLogo";
+import {ReactComponent as AbiaLogo} from "../../icons/abia-new-logo.svg";
 import CoupleSideMenu from "./CoupleSideMenu";
 
 const CoupleMenu = (props) => {
@@ -91,7 +91,7 @@ const CoupleMenu = (props) => {
         variants={Nav_animation}
         initial={{ x: isTabletMid ? -250 : 0 }}
         animate={open ? "open" : "closed"}
-        className="fixed-sidebar bg-[#6cc2bc]  shadow-xl z-[999] max-w-[16rem]  w-[16rem]
+        className="fixed-sidebar bg-[#5a9d98]  shadow-xl z-[999] max-w-[16rem]  w-[16rem]
         overflow-hidden md:relative h-screen "
       >
         {/* <AbiaLogo /> */}

@@ -1,5 +1,6 @@
 import * as apiService from "../../api/apiServices";
 import * as apiUrls from "../../api/apiUrls";
+import subscription from "../json/settings_subscription.json"
 
 export const IMAGE_FOLDER = "";
 export const PREFIX = "abia_business-";
@@ -52,6 +53,11 @@ export async function update_settings(settings, postData) {
     "POST",
     postData
   );
+}
+
+export async function vendorSubscriptionDetail(id) {
+  return subscription;
+  //return await apiService.apiCall(MAIN_API["ENQUIRIES"]+'/'+id, "GET");
 }
 
 export async function business_signup(postData) {

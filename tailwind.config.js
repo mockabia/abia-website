@@ -4,6 +4,9 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,svg  }"],
   theme: {
     extend: {
+      colors: {
+        "abia-color": "var(--abia-color)",
+      },
       fontFamily: {
         raleway: ["Raleway", "sans-serif"],
         source: ["Source Sans 3", "sans-serif"],

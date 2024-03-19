@@ -15,17 +15,17 @@
 
 .sidebarMenuItem:hover{
 color: #fff;
-    background-color: #339890;
+    background-color: var(--abia-color);
     /* font-size: 16px; */
 }
 
 .sidebarMenuItem.active {
-   color: #6cc2bc;
+   color: var(--abia-color);
     background-color: #f4f5f6;
 }
 
 .sidebarMenuItem.active .fill-current {
-    fill: #6cc2bc;
+    fill: var(--abia-color);
 }
 
 .sidemenuwithSub {
@@ -40,17 +40,17 @@ color: #fff;
 }
 .sidemenuwithSub:hover {
     color: #fff;
-    background-color: #339890;
+    background-color: var(--abia-color);
     /* font-size: 16px; */
 }
 
 .sidemenuwithSub.active {
-    color: #6cc2bc;
+    color: var(--abia-color);
     background-color: #f4f5f6;
 }
 
 .sidemenuwithSub.active .fill-current {
-    fill: #6cc2bc;
+    fill: var(--abia-color);
 }
 
 /*****************Sub menu ***************/
@@ -69,7 +69,7 @@ color: #fff;
 
 .sublink:hover {
     color: #fff;
-    background-color: #339890;
+    background-color: var(--abia-color);
     border-left: 4px solid #e8cf82;
     /* font-size: 15px;
     font-weight: 500; */
@@ -77,7 +77,7 @@ color: #fff;
 
 .sublink.active {
 
-    color: #6cc2bc;
+    color: var(--abia-color);
     background-color: #f4f5f6;
     font-weight: 400;
     font-size: 14px;
@@ -140,19 +140,18 @@ color: #fff;
 
 /* promotions */
 .link.active .cls-1{
-    fill:#6cc2bc
+    fill:var(--abia-color)
 }
 
 /*enquiry icon  */
 .link.active .st0 {
-    fill: #6cc2bc;
+    fill: var(--abia-color);
 }
 
 
 
 .fixed-sidebar {
     position: fixed;
-    
 }
 
 

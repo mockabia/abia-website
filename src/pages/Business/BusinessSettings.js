@@ -9,7 +9,11 @@ import { ReactComponent as BusinessEmail } from "../../icons/business-email (1).
 import { ReactComponent as USernamePasswordIcon } from "../../icons/ic-user-interface-password (1).svg";
 import { ReactComponent as CategoryIcon } from "../../icons/check-all (1).svg";
 import { ReactComponent as LocationIcon } from "../../icons/location (1).svg";
+import { ReactComponent as HeartIcon } from "../../icons/heart copy.svg";
 import { RxTriangleDown } from "react-icons/rx";
+import { FaHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa6";
+
 import {
   Accordion,
   AccordionItem,
@@ -22,6 +26,7 @@ import UsernamePassword from "./BusinessSettings/BusinessSettings_3";
 import ContactDetails from "./BusinessSettings/BusinessSettings_2";
 import Category from "./BusinessSettings/BusinessSettings_4";
 import MyLocation from "./BusinessSettings/BusinessSettings_5";
+import Subscription from "./BusinessSettings/BusinessSettings_6";
 
 const BusinessSettings = (props) => {
   let navigate = useNavigate();
@@ -67,6 +72,12 @@ const BusinessSettings = (props) => {
       icon: <LocationIcon />,
       heading: "My Locations",
       content: <MyLocation vendorDetails={inputs} />,
+    },
+    {
+      id: 6,
+      icon: <HeartIcon />,
+      heading: "My Subscription",
+      content: <Subscription />,
     },
   ];
 

@@ -5,7 +5,7 @@
 .abia-logo-section {
     border: 1px solid #d7d7d7;
     border-radius: 50%;
-    background-color: #6cc2bc;
+    background-color: var(--abia-color);
     width: 75px;
     height: 75px;
     padding: 10px;
@@ -129,7 +129,7 @@
 }
 
 .ratings-selected-category-section::-webkit-scrollbar-thumb {
-    background-color: #6cc2bc;
+    background-color: var(--abia-color);
 }
 
 .ratings-selected-category-section::-webkit-scrollbar-track {
@@ -149,4 +149,39 @@
         justify-content: center;
         align-items: center;
     }
+}
+
+
+.thankyou-container {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    background-color: var(--grey-bg-color);
+    border-radius: 12px;
+    width: 300px;
+    padding: 4rem 0 4rem 0;
+}
+
+@media(min-width:600px) {
+.thankyou-container {
+    width: 450px;
+}
+
+}
+@media(min-width:1023px) {
+    .thankyou-container {
+        width: 550px;
+    }
+
+}
+
+.okay-button {
+    width: 10rem;
+    padding: 8px;
+    background-color: var(--black-button);
+    color: var(--white);
+    border-radius: 4px;
 }
