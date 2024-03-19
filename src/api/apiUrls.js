@@ -77,7 +77,7 @@ export const BUSINESS_API = {
   DELETE_QA: `${baseUrl}Webdelete_QuestionAnsRecord`,
   VIEW_QA: `${baseUrl}WebView_QuestionAnsRecord`,
   BUSINESSSERVICES_DROPDOWN: `${baseUrl}WebBusinessServicesDropdown`,
-  MULTIPLE_ACCOUNTS_EMAIL: `${baseUrl}WebMultipleEmailAccount`,
+  MULTIPLE_ACCOUNTS_EMAIL: `${baseUrl}AllBusinessStateDropdown`,
 };
 
 export const COUPLE_API = {
