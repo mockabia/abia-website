@@ -140,7 +140,7 @@ const PaymentForm = (props) => {
     return (
         <>
         {/* <pre>{JSON.stringify(props, null, 2)}</pre> */}
-            <PaymentInput name="email" value={formvalues.email} 
+            <PaymentInput name="email" value={formvalues.email} disabled={payFrom==3 ? 'disabled' : '' }
                 onChange={(e) =>{
                     checkMultipleEmailAccounts(e.target.value)
                     onChangeEventValue("email", e.target.value)
@@ -176,7 +176,7 @@ const PaymentForm = (props) => {
                     )}
                 </>
             )}
-            <PaymentInput name="holdername" value={formvalues.holdername} onChange={onChangeEvent}
+            <PaymentInput name="holdername" value={formvalues.holdername} onChange={onChangeEvent} disabled={payFrom==3 ? 'disabled' : '' }
                 InputProps={{
                     placeholder: "Cardholder Name",
                     style: { color: "#000", fontWeight: "600" },
