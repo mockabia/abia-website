@@ -16,6 +16,7 @@ import BlogSlide from "./BlogSlide";
 const PublicProfile = () => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [truncatedDescription, setTruncatedDescription] = useState("");
+  // const [vendorData, setVendorData] = useState(null);
 
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
@@ -47,7 +48,7 @@ const PublicProfile = () => {
         <div>
           <div
             dangerouslySetInnerHTML={{
-              __html: vendorData.vendor.full_desc.substring(0, 200) + "...",
+              __html: vendorData.vendor.full_desc.substring(0, 300) + "...",
             }}
           />
           <button className="text-[14px] font-bold" onClick={toggleDescription}>
@@ -160,6 +161,15 @@ const PublicProfile = () => {
         },
         {
           id: 3,
+          title: "Best 14 Wedding Ceremony Venues in Victoria",
+          pagephoto_val:
+            "https://abia.abia-test.com//blog/thumb/best-wedding-ceremony-venues-in-melbourne-geelong-mornington-peninsula-victoria4031.webp",
+          main_url:
+            "best-wedding-ceremony-venues-in-melbourne-geelong-mornington-peninsula-victoria",
+          url: "wedding-blog/best-wedding-ceremony-venues-in-melbourne-geelong-mornington-peninsula-victoria",
+        },
+        {
+          id: 4,
           title: "Best 14 Wedding Ceremony Venues in Victoria",
           pagephoto_val:
             "https://abia.abia-test.com//blog/thumb/best-wedding-ceremony-venues-in-melbourne-geelong-mornington-peninsula-victoria4031.webp",
@@ -302,13 +312,18 @@ const PublicProfile = () => {
                   <AwardSlide awards={vendorData.vendor.awards} />
                 </div>
               </div>
+              <br />
+              <div className="pp-sperator"></div>
               {/* BLOGS */}
               <div>
                 <div>
-                  <BlogSlide awards={vendorData.vendor.awards} />
+                  <BlogSlide blogs={vendorData.vendor.blogs} />
                 </div>
               </div>
+              <br />
+              <div className="pp-sperator"></div>
             </div>
+            {/* MESSAGE ENQUIRY */}
             <div className="pp-message-enq">
               <PublicEnquiry />
             </div>

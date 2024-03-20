@@ -3,7 +3,7 @@ import "../../Style/PublicProfile.css";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
-const BlogSlide = ({ awards }) => {
+const BlogSlide = ({ blogs }) => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const containerRef = useRef();
 
@@ -20,10 +20,10 @@ const BlogSlide = ({ awards }) => {
       <div className="pp-header-section w-[90%]">
         <h2>ABIA Awards</h2>
         <div className="flex gap-[8px]">
-          <div className="pp-scroll-button" onClick={() => handleScroll(-200)}>
+          <div className="pp-scroll-button" onClick={() => handleScroll(-400)}>
             <MdKeyboardArrowLeft size={20} />
           </div>
-          <div className="pp-scroll-button" onClick={() => handleScroll(200)}>
+          <div className="pp-scroll-button" onClick={() => handleScroll(400)}>
             <MdKeyboardArrowRight size={20} />
           </div>
         </div>
@@ -39,16 +39,18 @@ const BlogSlide = ({ awards }) => {
       >
         <div className="pp-awards-cotnainer w-[1200px] ">
           {/* Render awards using the passed data */}
-          {awards.map((award) => (
-            <div key={award.id} className="pp-award-box">
+          {blogs.map((blog) => (
+            <div key={blog.id} className="pp-blog-box">
               <img
-                src={award.awardurl}
-                alt={award.award_name}
-                className="w-[5rem]"
+                src={blog.pagephoto_val}
+                alt={blog.award_name}
+                className="pp-blog-image"
               />
+              <div className="pp-blog-title">{blog.title}</div>
+
               <div className="flex flex-col gap-[5px]">
-                <h7 style={{ fontWeight: 600 }}>{award.award_category}</h7>
-                <h7 style={{ fontWeight: 600 }}>{award.award_name}</h7>
+                {/* <h7 style={{ fontWeight: 600 }}>{award.award_category}</h7>
+                <h7 style={{ fontWeight: 600 }}>{award.award_name}</h7> */}
               </div>
 
               {/* Add more elements based on your award data */}

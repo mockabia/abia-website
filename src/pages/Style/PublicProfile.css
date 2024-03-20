@@ -311,3 +311,39 @@
     background-color: #000;
 
 }
+
+/* BLOGS */
+
+.pp-blogs-cotnainer {
+    display: flex;
+    gap: 5px;
+    overflow: hidden;
+}
+
+.pp-blog-box {
+    position: relative;
+    border: 1px solid #d7d7d7;
+    width: 18rem;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.pp-blog-image {
+    border-radius: 16px;
+}
+
+.pp-blog-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    height: 4rem;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
