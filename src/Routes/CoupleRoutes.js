@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation,useNavigate } from "react-router-dom";
 import loadable from "@loadable/component";
+import LayoutGeneral from "../layouts/Layout/LayoutGeneral";
 import LayoutCouple from "../layouts/Layout/LayoutCouple";
 import PageNotFound from "../pages/General/404Page";
 
@@ -28,6 +29,7 @@ const CoupleRoutes = (props) => {
       let topMenuIds  = [7,8,9];
       let leftMenuIds = [7,8,9];
       props.menu.map(function (MainMenu, i) {
+          console.log(MainMenu)
         if (MainMenu.Sub_content.length <= 0) {
           let newArray1 = [];
           newArray1['url']      = MainMenu.url;
@@ -56,6 +58,7 @@ const CoupleRoutes = (props) => {
               setLeftMenu(oldArray => [...oldArray, newArray1]);
             }
             if (MainMenu.id == '1') {
+              newArray1['header']    = (SubMenu.id=='1' ? 0 : 1);
               setLoginMenu(oldArray => [...oldArray, newArray1]);
             } else {
               setLoginedMenu(oldArray => [...oldArray, newArray1]);
@@ -73,10 +76,21 @@ const CoupleRoutes = (props) => {
       <>
           <Routes>
             {loginMenu.map((routeMenus, i) => (
-              <Route
-                path={`/${routeMenus.url}`}
-                element={<LoadablePage page={routeMenus.pagename} {...props} pageData={routeMenus} />}
-              />
+              routeMenus.header==1 ? (
+                <Route
+                  path={`/${routeMenus.url}`}
+                  element={
+                    <LayoutGeneral {...props}>
+                      <LoadablePage page={routeMenus.pagename} {...props} pageData={routeMenus} />
+                    </LayoutGeneral>
+                  }
+                />
+              ) : (
+                <Route
+                  path={`/${routeMenus.url}`}
+                  element={<LoadablePage page={routeMenus.pagename} {...props} pageData={routeMenus} />}
+                />
+              )
             ))}
             <Route path="*" element={<PageNotFound />} />
           </Routes>
