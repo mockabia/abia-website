@@ -6,7 +6,6 @@ import * as BusinessJS from "./Business";
 import { IconButton, Stack } from "@mui/material";
 import {
   CoupleCommonInput,
-  VLTextField,
   VendorLoginButton,
 } from "../../components/FormStyle";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
@@ -19,10 +18,7 @@ const LoginPage = () => {
   const [inputsErrors, setInputsErrors] = useState({});
   const [showVisibilityIcon, setShowVisibilityIcon] = useState(false);
 
-  // const togglePasswordVisibility = (e) => {
-  //   e.preventDefault();
-  //   setShowPassword(!showPassword);
-  // };
+ 
   const togglePasswordVisibility = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword);
@@ -67,7 +63,9 @@ const LoginPage = () => {
         <div className="login-vendorlogin-box">
           <div className="flex flex-col justify-center items-center p-[20px] relative">
             {/* error message */}
-            <h1 className="login-loginbox-header">Login to ABIA</h1>
+            <h1 className="login-loginbox-header">
+              Login <span className="playfair">to ABIA</span>
+            </h1>
 
             <form onSubmit={handleSubmit} className="mt-[20px] ">
               <Stack spacing={2}>
@@ -161,7 +159,10 @@ const LoginPage = () => {
           <div className="login-vendorlogin-box2">
             <div className="flex flex-col justify-center items-center p-[20px] relative">
               {/* error message */}
-              <h1 className="login-loginbox-header">Login to ABIA</h1>
+              <h1 className="login-loginbox-header">
+                {" "}
+                Login <span className="playfair">to ABIA</span>
+              </h1>
 
               <form onSubmit={handleSubmit} className="lg:mt-[20px] ">
                 <Stack spacing={2}>
@@ -232,7 +233,7 @@ const LoginPage = () => {
                     Don't have an account?{" "}
                     <Link to={window.VSIGNUP} className="font-[900] underline">
                       {" "}
-                      <span className="cl-gap">q</span>Sign Up Now
+                      <span className="cl-gap"></span>Sign Up Now
                     </Link>
                   </h6>
                 </div>

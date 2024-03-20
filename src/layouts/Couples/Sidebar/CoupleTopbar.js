@@ -9,6 +9,7 @@ import {
   Stack,
   createTheme,
   useMediaQuery,
+  MenuItem,
 } from "@mui/material";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
@@ -19,6 +20,8 @@ import { SearchInputStyle } from "../../../components/FormStyle";
 import CoupleSideMenu from "../../sidebar/CoupleSideMenu";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import * as CoupleJS from "../../../pages/Couple/Couple";
+import * as servicesPage from "../../../services/contentServices";
+import { RxTriangleDown, RxTriangleUp } from "react-icons/rx";
 
 const CoupleTopbar = (props) => {
   let navigate = useNavigate();
@@ -50,6 +53,9 @@ const CoupleTopbar = (props) => {
   ]);
   const [searchOpen, setSearchOpen] = useState(false);
   const profileRef = useRef(null);
+  const [menuItems, setMenuItems] = useState([]);
+  const [menuAnchorEl, setMenuAnchorEl] = useState({});
+  const menuList = useRef(null);
 
   const isMobile = useMediaQuery("(max-width:550px)");
   const isTablet = useMediaQuery("(min-width:551px) and (max-width:800px)");
@@ -140,19 +146,111 @@ const CoupleTopbar = (props) => {
     setMenuOpen(!menuOpen);
   };
   document.title = props.title;
+
+  // General menus
+  const fetchHeaderMenus = () => {
+    servicesPage.fetchHeaderMenus().then(function (response) {
+      if (response.statuscode == 200) {
+        setMenuItems(response.result);
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchHeaderMenus();
+  }, []);
+  console.log("Menus in Couple Dash:", menuItems);
+
+  const handleMenuClick = (mainId) => {
+    setMenuAnchorEl({
+      [mainId]: !menuAnchorEl[mainId],
+      //[mainId]: true
+    });
+  };
+
+  const handleMenuClose = (event) => {
+    //if (profileRef.current && !profileRef.current.contains(event.target)) {
+    setMenuAnchorEl({});
+    //}
+  };
   return (
     <div className="gap-[4px] md:gap-0 bg-[#5a9d98] md:bg-[#fff]  h-[6rem] fixed top-0 left-0 right-0 z-40 border-b border-[#6cc2bc] flex items-center justify-between p-4">
       <div className="flex justify-center items-center gap-1">
         <button className="md:hidden" onClick={toggleMenu}>
           <MenuIcon size={20} />
         </button>
-        <div className="relative lg:ml-[19rem] cursor-pointer ">
+        <div className="relative lg:ml-[19rem] gen-header-visible cursor-pointer">
+          <ul className="general-subheaders absolute ">
+            {menuItems.map((menuItem, index) => (
+              <li
+                className={`nav-menu-list ${
+                  menuItem.Sub_content.length > 0 ? "MainwithSub" : "MainOnly"
+                } `}
+                key={index}
+                ref={menuList}
+              >
+                {menuItem.Sub_content.length > 0 ? (
+                  <div>
+                    <span
+                      className="flex MainwithSub"
+                      onClick={() => handleMenuClick(menuItem.id)}
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      {menuItem.title.toLowerCase()}
+                      {menuAnchorEl[menuItem.id] ? (
+                        <RxTriangleUp className="hidden" size={25} />
+                      ) : (
+                        <RxTriangleDown className="hidden" size={25} />
+                      )}
+                    </span>
+
+                    {menuAnchorEl[menuItem.id] && (
+                      <ul
+                        className={`subMenu ${
+                          menuAnchorEl[menuItem.id] ? "block" : "hidden"
+                        } `}
+                      >
+                        {menuItem.Sub_content.map((subMenuItem, subIndex) => (
+                          <MenuItem
+                            key={subIndex}
+                            sx={{
+                              borderBottom: "1px solid #D0D0D0",
+                              textTransform: "capitalize",
+                              color: "#000",
+                            }}
+                          >
+                            <Link
+                              className="subMenu-link"
+                              to={`/${subMenuItem.url}`}
+                              // onClick={handleMenuClose}
+                            >
+                              {subMenuItem.title.toLowerCase()}
+                            </Link>
+                          </MenuItem>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    to={`/${menuItem.main_url}`}
+                    style={{ textTransform: "capitalize" }}
+                  >
+                    {menuItem.title.toLowerCase()}
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* <div className="relative lg:ml-[19rem] cursor-pointer ">
           {props.title ? (
             <h3 className="title-topbar">{props.title}</h3>
           ) : (
             <AbiaLogo alt="Abia-logo" />
           )}
-        </div>
+        </div> */}
       </div>
 
       {/* <h1 className="title-topbar">{title}</h1> */}
@@ -255,7 +353,7 @@ const CoupleTopbar = (props) => {
                 </div>
               </div>
               <ul className="mt-[50px] flex flex-col sm:justify-center  sm:mr-[85px] ">
-                <CoupleSideMenu />
+                <CoupleSideMenu {...props} />
               </ul>
             </div>
           </div>

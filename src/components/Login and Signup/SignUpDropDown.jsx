@@ -54,7 +54,7 @@ const SignUpDropDown = () => {
         Sign Up
       </button>
       {open && (
-        <div className="signup-dropdown-menu">
+        <div className="signup-dropdown-menu arrow-top">
           <ul>
             {menuItem.map((item) => (
               <li className="signupnav-menu-item" key={item}>

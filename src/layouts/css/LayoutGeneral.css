@@ -1,0 +1,4 @@
+.custom-scrollbar {
+    overflow: auto;
+    scrollbar-width: none;
+}

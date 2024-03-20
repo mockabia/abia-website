@@ -137,370 +137,363 @@ export default function CouplesSignUp() {
     <div>
       <form>
         {/* Page One */}
-        
-          <section className="couples-singup-container">
-            <div className="couples-signup-image">
-              <div className={`cs-image-container ${imageClass} `}></div>
-            </div>
-            {activeStep !== 0 && (
-               <div className="cs-back-button" onClick={handleBack}>
-                  <ArrowBackIcon />
-                  <p className="text-[12px] text-black font-[800]">Back</p>
-                </div> 
-            )}
-            
-            <div className="cs-close-icon" onClick={handleClosePage}>
-              <CloseIcon />
-            </div>
-            <Box
-              component="form"
-              sx={{ width: "100%" }}
-              className="cs-signup-form"
-            >
-              <StepperStyle activeStep={activeStep}>
-                {steps.map((label, index) => {
-                  const stepProps = {};
-                  const labelProps = {};
 
-                  if (isStepSkipped(index)) {
-                    stepProps.completed = false;
-                  }
-                  return (
-                    <Step sx={{ color: "red" }} key={label} {...stepProps}>
-                      <StepLabel {...labelProps}>{label}</StepLabel>
-                    </Step>
-                  );
-                })}
-              </StepperStyle>
-              {/* <pre>{JSON.stringify(formValues, null, 2)}</pre> */}
-              <React.Fragment>
+        <section className="couples-singup-container">
+          <div className="couples-signup-image">
+            <div className={`cs-image-container ${imageClass} `}></div>
+          </div>
+          {activeStep !== 0 && (
+            <div className="cs-back-button" onClick={handleBack}>
+              <ArrowBackIcon />
+              <p className="text-[12px] text-black font-[800]">Back</p>
+            </div>
+          )}
+
+          <div className="cs-close-icon" onClick={handleClosePage}>
+            <CloseIcon />
+          </div>
+          <Box
+            component="form"
+            sx={{ width: "100%" }}
+            className="cs-signup-form"
+          >
+            <StepperStyle activeStep={activeStep}>
+              {steps.map((label, index) => {
+                const stepProps = {};
+                const labelProps = {};
+
+                if (isStepSkipped(index)) {
+                  stepProps.completed = false;
+                }
+                return (
+                  <Step sx={{ color: "red" }} key={label} {...stepProps}>
+                    <StepLabel {...labelProps}>{label}</StepLabel>
+                  </Step>
+                );
+              })}
+            </StepperStyle>
+            {/* <pre>{JSON.stringify(formValues, null, 2)}</pre> */}
+            <React.Fragment>
               {activeStep === 0 && (
                 <>
-                <div>
-                  <h1 className="cs-signup-header">
-                    Congratulations! How can we help plan your big day?
-                  </h1>
-                </div>
-                {/* Option buttons */}
-                {/* 1 */}
-                {/* <pre>{JSON.stringify(selectedOption, null, 2)}</pre> */}
-                {options.map((option, index) => (
-                  <div key={index}>
-                    <ButtonStyle
-                      variant="outlined"
-                      startIcon={option.icon}
-                      onClick={() => handleOptionClick(index)}
-                      isActive={index === selectedOption}
-                    >
-                      <LeftAlignedTypography>
-                        {option.label}
-                      </LeftAlignedTypography>
-                    </ButtonStyle>
+                  <div>
+                    <h1 className="cs-signup-header">
+                      Congratulations! How can we help plan your big day?
+                    </h1>
                   </div>
-                ))}
+                  {/* Option buttons */}
+                  {/* 1 */}
+                  {/* <pre>{JSON.stringify(selectedOption, null, 2)}</pre> */}
+                  {options.map((option, index) => (
+                    <div key={index}>
+                      <ButtonStyle
+                        variant="outlined"
+                        startIcon={option.icon}
+                        onClick={() => handleOptionClick(index)}
+                        isActive={index === selectedOption}
+                      >
+                        <LeftAlignedTypography>
+                          {option.label}
+                        </LeftAlignedTypography>
+                      </ButtonStyle>
+                    </div>
+                  ))}
 
-                {errors.bride_message !='' && (
-                  <Typography color="red" fontFamily={"Raleway"} fontSize={12}>
-                    {errors.bride_message}
-                  </Typography>
-                )}
+                  {errors.bride_message != "" && (
+                    <Typography
+                      color="red"
+                      fontFamily={"Raleway"}
+                      fontSize={12}
+                    >
+                      {errors.bride_message}
+                    </Typography>
+                  )}
                 </>
               )}
               {activeStep === 1 && (
                 <>
-                <div className="cs-inputfield-cotainer">
-                  <div>
-                    <h1 className="cs-signup-header">
-                      {" "}
-                      It’s nice to meet you.{" "}
-                    </h1>
-                  </div>
-                  <Box className="cs-textfield-flex">
+                  <div className="cs-inputfield-cotainer">
                     <div>
-                      <label>
-                        Full Name<span className="star">*</span>
-                      </label>
-                      <CSTextfield
-                        name="bride"
-                        className="cs-textfield"
-                        id="demo-helper-text-aligned"
-                        value={formValues.bride}
-                        onChange={(e) =>
-                          handleInputChange(e)
-                        }
-                      // error={errors.bride}
-                      />
-                      {errors.bride && (
-                        <Typography
-                          color="error"
-                          variant="caption"
-                          component="div"
-                        >
-                          {errors.bride}
-                        </Typography>
-                      )}
+                      <h1 className="cs-signup-header">
+                        {" "}
+                        It’s nice to meet you.{" "}
+                      </h1>
                     </div>
-
-                    <div>
-                      <label>
-                        Partner's Name<span className="star">*</span>
-                      </label>
-                      <CSTextfield
-                        name="groom"
-                        className="cs-textfield"
-                        id="demo-helper-text-aligned"
-                        value={formValues.groom}
-                        onChange={(e) =>
-                          handleInputChange(e)
-                        }
-                      />
-                      {errors.groom && (
-                        <Typography
-                          color="error"
-                          variant="caption"
-                          component="div"
-                        >
-                          {errors.groom}
-                        </Typography>
-                      )}
-                    </div>
-                  </Box>
-                  <br />
-                  <Box className="cs-textfield-flex">
-                    <div className="flex flex-col gap-[5px]">
-                      <label>
-                        Preferred Wedding Date<span className="star">*</span>
-                      </label>
-                      {/* {!checkboxChecked && ( */}
-                      <DatePickerCouple
-                        name="date_of_wedding"
-                        label="Preferred Wedding Date"
-                        value={formValues.date_of_wedding}
-                        dateError={checkboxChecked ? "" : errors.date_of_wedding}
-                        handleDateChange={(date) => 
-                          handleInputChangeVal('date_of_wedding', date)
-                        }
-                        checkboxChecked={checkboxChecked}
-                      />
-                    </div>
-
-                    {/* )} */}
-
-                    <FormControlLabel
-                      value={formValues.wedding}
-                      control={
-                        <CheckBoxStyle
-                          name="wedding"
-                          checked={formValues.wedding=='1' ? false : true}
-                          onChange={(e) => 
-                            handleInputChangeVal('wedding', e.target.checked ? 0 : 1)
-                          }
-                          inputProps={{ "aria-label": "controlled" }}
-                          sx={{
-                            "&.Mui-checked": {
-                              color: "#0e0e0e",
-                            },
-                          }}
+                    <Box className="cs-textfield-flex">
+                      <div>
+                        <label>
+                          Full Name<span className="star">*</span>
+                        </label>
+                        <CSTextfield
+                          name="bride"
+                          className="cs-textfield"
+                          id="demo-helper-text-aligned"
+                          value={formValues.bride}
+                          onChange={(e) => handleInputChange(e)}
+                          // error={errors.bride}
                         />
-                      }
-                      label={
-                        <span style={{ fontFamily: "raleway" }}>
-                          We're still deciding
-                        </span>
-                      }
-                      labelPlacement="end"
-                    />
-                  </Box>
-                  <br />
-                  <Box>
-                    <label>
-                      Wedding State<span className="star">*</span>
-                    </label>
-                    <CSTextfield
-                      select
-                      name="wedding_state"
-                      className="cs-textfield-2"
-                      id="reddit-input"
-                      SelectProps={{ IconComponent: () => null }}
-                      onChange={(e) =>
-                        handleInputChange(e)
-                      }
-                      value={formValues.wedding_state}
-                    >
-                      
-                      {location.map((option) => (
-                        <MenuItem
-                          key={option.value}
-                          value={option.url}
-                          style={CSmenuItemStyle}
-                        >
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </CSTextfield>
-                    {errors.wedding_state && (
-                      <Typography
-                        color="error"
-                        variant="caption"
-                        component="div"
+                        {errors.bride && (
+                          <Typography
+                            color="error"
+                            variant="caption"
+                            component="div"
+                          >
+                            {errors.bride}
+                          </Typography>
+                        )}
+                      </div>
+
+                      <div>
+                        <label>
+                          Partner's Name<span className="star">*</span>
+                        </label>
+                        <CSTextfield
+                          name="groom"
+                          className="cs-textfield"
+                          id="demo-helper-text-aligned"
+                          value={formValues.groom}
+                          onChange={(e) => handleInputChange(e)}
+                        />
+                        {errors.groom && (
+                          <Typography
+                            color="error"
+                            variant="caption"
+                            component="div"
+                          >
+                            {errors.groom}
+                          </Typography>
+                        )}
+                      </div>
+                    </Box>
+                    <br />
+                    <Box className="cs-textfield-flex">
+                      <div className="flex flex-col gap-[5px]">
+                        <label>
+                          Preferred Wedding Date<span className="star">*</span>
+                        </label>
+                        {/* {!checkboxChecked && ( */}
+                        <DatePickerCouple
+                          name="date_of_wedding"
+                          label="Preferred Wedding Date"
+                          value={formValues.date_of_wedding}
+                          dateError={
+                            checkboxChecked ? "" : errors.date_of_wedding
+                          }
+                          handleDateChange={(date) =>
+                            handleInputChangeVal("date_of_wedding", date)
+                          }
+                          checkboxChecked={checkboxChecked}
+                        />
+                      </div>
+
+                      {/* )} */}
+
+                      <FormControlLabel
+                        value={formValues.wedding}
+                        control={
+                          <CheckBoxStyle
+                            name="wedding"
+                            checked={formValues.wedding == "1" ? false : true}
+                            onChange={(e) =>
+                              handleInputChangeVal(
+                                "wedding",
+                                e.target.checked ? 0 : 1
+                              )
+                            }
+                            inputProps={{ "aria-label": "controlled" }}
+                            sx={{
+                              "&.Mui-checked": {
+                                color: "#0e0e0e",
+                              },
+                            }}
+                          />
+                        }
+                        label={
+                          <span style={{ fontFamily: "raleway" }}>
+                            We're still deciding
+                          </span>
+                        }
+                        labelPlacement="end"
+                      />
+                    </Box>
+                    <br />
+                    <Box>
+                      <label>
+                        Wedding State<span className="star">*</span>
+                      </label>
+                      <CSTextfield
+                        select
+                        name="wedding_state"
+                        className="cs-textfield-2"
+                        id="reddit-input"
+                        SelectProps={{ IconComponent: () => null }}
+                        onChange={(e) => handleInputChange(e)}
+                        value={formValues.wedding_state}
                       >
-                        {errors.wedding_state}
-                      </Typography>
-                    )}
-                  </Box>
-                </div>
+                        {location.map((option) => (
+                          <MenuItem
+                            key={option.value}
+                            value={option.url}
+                            style={CSmenuItemStyle}
+                          >
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </CSTextfield>
+                      {errors.wedding_state && (
+                        <Typography
+                          color="error"
+                          variant="caption"
+                          component="div"
+                        >
+                          {errors.wedding_state}
+                        </Typography>
+                      )}
+                    </Box>
+                  </div>
                 </>
               )}
               {activeStep === 2 && (
                 <>
-                <div>
-                  <h1 className="cs-signup-header">
-                    Let’s save your details for next time!
-                  </h1>
-                </div>
-                <Stack spacing={3}>
                   <div>
-                    <label>
-                      Email<span className="star">*</span>
-                    </label>
-                    <CSTextfield
-                      name="email"
-                      type="email"
-                      className="cs-textfield-2"
-                      id="demo-helper-text-aligned"
-                      value={formValues.email}
-                      onChange={(e) =>
-                        handleInputChange(e)
-                      }
-                    />
-                    {errors.email && (
-                      <Typography
-                        color="error"
-                        variant="caption"
-                        component="div"
-                      >
-                        {errors.email}
-                      </Typography>
-                    )}
+                    <h1 className="cs-signup-header">
+                      Let’s save your details for next time!
+                    </h1>
                   </div>
-                  <div>
-                    <label>
-                      Password<span className="star">*</span>
-                    </label>
-                    <CSTextfield
-                      name="password"
-                      type="password"
-                      className="cs-textfield-2"
-                      id="demo-helper-text-aligned"
-                      value={formValues.password}
-                      onChange={(e) =>
-                        handleInputChange(e)
-                      }
-                    />
-                    {errors.password && (
-                      <Typography
-                        color="error"
-                        variant="caption"
-                        component="div"
-                      >
-                        {errors.password}
-                      </Typography>
-                    )}
-                  </div>
-                </Stack>
+                  <Stack spacing={3}>
+                    <div>
+                      <label>
+                        Email<span className="star">*</span>
+                      </label>
+                      <CSTextfield
+                        name="email"
+                        type="email"
+                        className="cs-textfield-2"
+                        id="demo-helper-text-aligned"
+                        value={formValues.email}
+                        onChange={(e) => handleInputChange(e)}
+                      />
+                      {errors.email && (
+                        <Typography
+                          color="error"
+                          variant="caption"
+                          component="div"
+                        >
+                          {errors.email}
+                        </Typography>
+                      )}
+                    </div>
+                    <div>
+                      <label>
+                        Password<span className="star">*</span>
+                      </label>
+                      <CSTextfield
+                        name="password"
+                        type="password"
+                        className="cs-textfield-2"
+                        id="demo-helper-text-aligned"
+                        value={formValues.password}
+                        onChange={(e) => handleInputChange(e)}
+                      />
+                      {errors.password && (
+                        <Typography
+                          color="error"
+                          variant="caption"
+                          component="div"
+                        >
+                          {errors.password}
+                        </Typography>
+                      )}
+                    </div>
+                  </Stack>
                 </>
               )}
               {activeStep === 3 && (
                 <>
-                <div>
-                  <h1 className="cs-signup-header">
-                    Help us build our dream wedding team.
-                  </h1>
-                </div>
-                <Stack spacing={3}>
-                  <FormControl>
-                    <FormGroup
-                      sx={{
-                        width: {
-                          xs: "100%",
-                          md: "31rem",
-                        },
-                        padding: "0",
-                      }}
-                    >
-                      {marketingOptions.map((option, index) => (
-                        <FormControlLabel
-                          style={{
-                            margin: "0",
-                          }}
-                          control={
-                            <CheckBoxStyle
-                              value={option.value}
-                              checked={marketingSelect[option.value]}
-                              onChange={(e) => handleMarketingChange(e, index)}
-                            />
-                          }
-                          label={
-                            <Typography
-                              sx={{
-                                whiteSpace: "normal",
-                                fontFamily: "Raleway",
-                                fontSize: "14px",
-                              }}
-                            >
-                              {option.label}
-                            </Typography>
-                          }
-                        />
-                      ))}
-                    </FormGroup>
-                  </FormControl>
-                </Stack>
+                  <div>
+                    <h1 className="cs-signup-header">
+                      Help us build our dream wedding team.
+                    </h1>
+                  </div>
+                  <Stack spacing={3}>
+                    <FormControl>
+                      <FormGroup
+                        sx={{
+                          width: {
+                            xs: "100%",
+                            md: "31rem",
+                          },
+                          padding: "0",
+                        }}
+                      >
+                        {marketingOptions.map((option, index) => (
+                          <FormControlLabel
+                            style={{
+                              margin: "0",
+                            }}
+                            control={
+                              <CheckBoxStyle
+                                value={option.value}
+                                checked={marketingSelect[option.value]}
+                                onChange={(e) =>
+                                  handleMarketingChange(e, index)
+                                }
+                              />
+                            }
+                            label={
+                              <Typography
+                                sx={{
+                                  whiteSpace: "normal",
+                                  fontFamily: "Raleway",
+                                  fontSize: "14px",
+                                }}
+                              >
+                                {option.label}
+                              </Typography>
+                            }
+                          />
+                        ))}
+                      </FormGroup>
+                    </FormControl>
+                  </Stack>
                 </>
               )}
-                
-                
-                
 
+              <br />
+              {/* Next */}
+              <NextButtonStyle
+                variant="outlined"
+                className="cs-button-text-position"
+                onClick={handleFormNext}
+              >
+                <span className="cs-next-button">Next</span>
+              </NextButtonStyle>
+              <br />
+              <div className="flex justify-center">
+                <h5 className="text-[12px]">
+                  Already have an account?{" "}
+                  <span onClick={() => setLoginOpen(true)}>
+                    <Link to={window.CLOGIN} className="font-bold text-[#6cc2bc]">Log in</Link>
+                  </span>
+                </h5>
+              </div>
 
-
-
-                <br />
-                {/* Next */}
-                <NextButtonStyle
-                  variant="outlined"
-                  className="cs-button-text-position"
-                  onClick={handleFormNext}
-                >
-                  <span className="cs-next-button">Next</span>
-                </NextButtonStyle>
-                <br />
-                <div className="flex justify-center">
-                  <h5 className="text-[12px]">
-                    Already have an account?{" "}
-                    <span onClick={() => setLoginOpen(true)}>
-                      <span className="font-bold text-[#6cc2bc]">Log in</span>
-                    </span>
-                  </h5>
-                </div>
-
-                <div className="privacy-section ">
-                  <h5 className="text-[12px]">
-                    By creating your ABIA's account you agree to our{" "}
-                    <Link>
-                      <span className="cs-text-highlight">Terms of use</span>
-                    </Link>{" "}
-                    and{" "}
-                    <Link>
-                      <span className="cs-text-highlight">Privacy policy</span>
-                    </Link>
-                    .
-                  </h5>
-                </div>
-              </React.Fragment>
-            </Box>
-          </section>
-          <CouplesLogin modalOpen={loginOpen} setModalOpen={setLoginOpen} />
+              <div className="privacy-section ">
+                <h5 className="text-[12px]">
+                  By creating your ABIA's account you agree to our{" "}
+                  <Link>
+                    <span className="cs-text-highlight">Terms of use</span>
+                  </Link>{" "}
+                  and{" "}
+                  <Link>
+                    <span className="cs-text-highlight">Privacy policy</span>
+                  </Link>
+                  .
+                </h5>
+              </div>
+            </React.Fragment>
+          </Box>
+        </section>
       </form>
     </div>
   );

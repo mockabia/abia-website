@@ -1,11 +1,11 @@
-.navbar-login-button.active {
+/* .navbar-login-button.active {
     color: #bebebe;
     background-color: #fff;
     border-radius: 10px 10px 0 0;
     border: 1px solid #bebebe;
     border-bottom: none;
 
-}
+} */
 
 
 .navbar-login-box {
@@ -24,11 +24,25 @@
     position: absolute;
     background-color: #fff;
     width: 120px;
-    border-radius: 0 0 10px 10px;
+    border-radius:10px;
     border: 1px solid #bebebe;
-    border-top: none;
     cursor: pointer;
     z-index: 1;
+}
+
+.login-dropdown-menu.arrow-top {
+    margin-top: 8px;
+}
+.login-dropdown-menu.arrow-top:after {
+    content: " ";
+    position: absolute;
+    right: 40px;
+    top: -12px;
+    border-top: none;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    border-bottom: 14px solid rgb(255, 255, 255);
+
 }
 
 .loginnav-menu-item {
@@ -40,6 +54,7 @@
 }
 
 .loginnav-menu-item:hover {
+    border-radius: 10px;
     background-color: #c3e7e4;
 }
 

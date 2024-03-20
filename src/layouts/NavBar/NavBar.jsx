@@ -245,9 +245,9 @@ const NavBar = (props) => {
                     >
                       {menuItem.title.toLowerCase()}
                       {menuAnchorEl[menuItem.id] ? (
-                        <RxTriangleUp className="" size={25} />
+                        <RxTriangleUp className="hidden" size={25} />
                       ) : (
-                        <RxTriangleDown className="" size={25} />
+                        <RxTriangleDown className="hidden" size={25} />
                       )}
                     </span>
 
@@ -290,14 +290,15 @@ const NavBar = (props) => {
             ))}
           </ul>
         </div>
-        {/* Search */}
-        <div className="navbar-mobile-align">
-          <div className="flex justify-center items-center">
-            <UseAutocomplete />
-          </div>
-        </div>
-        {/*Login and Signup group  */}
+
+        {/*search , Login and Signup group  */}
         <div className="login-signup-group" ref={profileRef}>
+          {/* Search */}
+          <div className="navbar-mobile-align">
+            <div className="flex justify-center items-center">
+              <UseAutocomplete />
+            </div>
+          </div>
           {Object.keys(userProfile).length > 0 &&
           userProfile &&
           userProfile.name != "" ? (

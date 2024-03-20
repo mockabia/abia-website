@@ -1,6 +1,188 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500&family=Playfair+Display:wght@500&display=swap');
 
-.cl-container {
+
+
+.login-vendorlogin-content {
+    height: 100vh;
+    width: 100%;
+    background-image: url(../../images/abia-vendor-login-2.webp);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.login-vendorlogin-box {
+
+    position: relative;
+    width: 320px;
+    height: 375px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 15px;
+}
+
+/* flex flex-col justify-center items-center p-[20px] relative */
+
+.login-input-style {
+    position: absolute;
+    width: 100% !important;
+    max-width: 16rem;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #c3bebe;
+    cursor: pointer;
+    padding-left: 10px;
+    font-size: 14px;
+}
+
+.login-login-button {
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 260px;
+    height: 35px;
+    border-radius: 30px;
+    background-color: #6cc2bc;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    margin-top: 4rem;
+    outline: none;
+}
+
+
+
+.login-loginbox-header {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: #000;
+    color: #fff;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+}
+
+.instructions>svg {
+    margin-right: 0.25rem;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+
+.login-section-desktop {
+    display: none;
+}
+
+
+.login-forgot-password {
+    cursor: pointer;
+    display: flex;
+    color: var(--abia-color);
+    font-size: 14px;
+    justify-content: end;
+    align-items: end;
+    font-weight: 600;
+}
+
+@media(min-width:768px) {
+    .login-content-adjust {
+        display: inline-block;
+    }
+
+
+}
+
+@media(min-width:1024px) {
+    .login-main-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-main-container.login-section-desktop {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    .login-vendorlogin-box {
+        display: none;
+    }
+
+    .login-vendorlogin-box2 {
+        /* display: none; */
+        position: relative;
+        width: 320px;
+        height: 375px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 15px;
+    }
+
+
+    .login-loginbox-header {
+        font-family: 'Manrope', sans-serif;
+        font-size: 30px;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+
+    .login-section-desktop {
+        display: block;
+        width: 70vw;
+
+    }
+
+    .login-vendorlogin-content {
+        width: 80%;
+        border-top-right-radius: 40%;
+        border-bottom-right-radius: 50%;
+        background-image: url(../../images/abia-vendor-login-2.webp);
+        background-size: cover;
+        /* background-size: 100%; */
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+}
+
+
+
+.playfair {
+    font-family: "Playfair, sans-serif";
+    font-style: italic;
+    font-weight: 400 !important;
+}
+
+/* .cl-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,18 +191,6 @@
     background-repeat: no-repeat;
     height: 100vh;
 }
-
-/* @media(min-width:1023px) {
-.cl-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        height: 100vh;
-    }
-} */
 
 
 @media (min-width: 1023px) {
@@ -33,7 +203,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* align-items: center; */
     gap: 5px;
 }
 
@@ -116,4 +285,4 @@
 .clogin-margin-auto {
     margin-top: 10px;
     text-align: center;
-}
+} */

@@ -177,4 +177,8 @@ font-family: 'Manrope', sans-serif;
 
 
 
-
+.playfair {
+    font-family: "Playfair, sans-serif";
+    font-style: italic;
+    font-weight: 400 !important;
+}

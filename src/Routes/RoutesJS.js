@@ -1,6 +1,6 @@
 import * as servicesPage from "../services/contentServices";
-/* public routes */
 
+/* public routes */
 export const fetchContentRoutes = async (setPublicMenu, setBlogMenu) => {
   window.HOME = process.env.REACT_APP_URL;
   await servicesPage.fetchContentRoutes().then(function (response) {

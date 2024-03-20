@@ -13,13 +13,13 @@
         font-weight: 600;
 }
 
-.navbar-signup-button.active {
+/* .navbar-signup-button.active {
     color: #FFF;
     background-color: #000;
     border-radius: 10px 10px 0 0;
     border-bottom: none;
 
-}
+} */
 
 
 .navbar-signup-box {
@@ -39,10 +39,27 @@
     background-color: #000;
     color: #fff;
     width: 120px;
-    border-radius: 0 0 10px 10px;
+    border-radius:10px;
     border-top: none;
     cursor: pointer;
     z-index: 1;
+}
+
+.signup-dropdown-menu.arrow-top {
+    margin-top: 8px;
+    background-color: #000;
+}
+
+.signup-dropdown-menu.arrow-top:after {
+    content: " ";
+    position: absolute;
+    right: 10px;
+    top: -12px;
+    border-top: none;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    border-bottom: 14px solid #000;
+
 }
 
 .signupnav-menu-item {
@@ -54,7 +71,9 @@
 }
 
 .signupnav-menu-item:hover {
+    border-radius: 10px;
     background-color: #c3e7e4;
+    color: #000;
 }
 
 .signupnav-menu-item:nth-child(2):hover {
