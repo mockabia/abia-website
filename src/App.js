@@ -16,7 +16,6 @@ import EditSubscription from "./pages/General/EditSubscription";
 import EditPayment from "./pages/General/Payments/EditPayment";
 import ExistingUserPayment from "./pages/General/Payments/ExistingUserPayment";
 import BusinessProfile1 from "./pages/Business/BusinessMyProfile/testing/BusinessProfile-1";
-import CouplesLogin from "./pages/Couple/CouplesLogin";
 
 const App = () => {
   const [showLoader, setShowLoader] = useState(false);
@@ -88,8 +87,6 @@ const App = () => {
         <Route path="/partnerhsip-payment" element={<ExistingUserPayment />} />
         {/* trest */}
         <Route path="/testing" element={<BusinessProfile1 />} />
-        {/* Coupleslogin New design */}
-        <Route path="/wedding/login" element={<CouplesLogin/>} />
       </Routes>
     </>
   );

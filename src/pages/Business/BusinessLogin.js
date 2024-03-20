@@ -233,7 +233,7 @@ const LoginPage = () => {
                     Don't have an account?{" "}
                     <Link to={window.VSIGNUP} className="font-[900] underline">
                       {" "}
-                      <span className="cl-gap">q</span>Sign Up Now
+                      <span className="cl-gap"></span>Sign Up Now
                     </Link>
                   </h6>
                 </div>

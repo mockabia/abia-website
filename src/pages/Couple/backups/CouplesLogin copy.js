@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "../Style/CouplesLogin.css";
+// import "../Style/CouplesLogin.css";
 import Modal from "@mui/material/Modal";
 import { Box, IconButton } from "@mui/material";
-import { CoupleCommonInput, CouplesLoginBox, StyledIconButton } from "../../components/FormStyle";
+import { CoupleCommonInput, CouplesLoginBox, StyledIconButton } from "../../../components/FormStyle";
 import { AiOutlineClose } from "react-icons/ai";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { useState } from "react";
-import CoupleForgotPwd from "./CoupleForgotPwd";
-import * as CoupleJS from "./Couple";
-
+import CoupleForgotPwd from "../CoupleForgotPwd";
+import * as CoupleJS from "../Couple";
 
 const style = {
   position: "absolute",

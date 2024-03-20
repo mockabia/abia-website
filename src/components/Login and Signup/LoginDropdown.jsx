@@ -55,7 +55,7 @@ const LoginDropdown = () => {
             </li>
             <li className="loginnav-menu-item">
               {/* <div onClick={handleLoginOpen}>Couple</div> */}
-              <Link to="/wedding/login">Couple</Link>
+              <Link to={window.CLOGIN}>Couple</Link>
             </li>
           </ul>
         </div>
