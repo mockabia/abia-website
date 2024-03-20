@@ -121,11 +121,12 @@ const AbiaMembershipoffers = (props) => {
       requestForm['amounttopay']      = formvalues.ftypeArray[dataset.ftype].amounttopay;
       requestForm['payamount']        = formvalues.ftypeArray[dataset.ftype].amounttopay;
 
-      let redirectUrl = '/payments';
+      /* let redirectUrl = '/payments';
       if(vid>0){
         redirectUrl = window.PAY;
       }
-
+ */
+      let redirectUrl = props.redirect;
       navigate(redirectUrl, {
         state: {
           request:requestForm,

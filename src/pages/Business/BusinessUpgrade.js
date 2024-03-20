@@ -4,7 +4,7 @@ import AbiaMembershipoffers from "../Stripe/AbiaMembershipoffers";
 const BusinessUpgrade = () => {
   return (
       <div className="upgradeDiv">
-        <AbiaMembershipoffers  />
+        <AbiaMembershipoffers  redirect={window.PAY} />
       </div>
   );
 };

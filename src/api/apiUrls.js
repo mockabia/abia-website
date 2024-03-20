@@ -78,7 +78,7 @@ export const BUSINESS_API = {
   DELETE_QA: `${baseUrl}Webdelete_QuestionAnsRecord`,
   VIEW_QA: `${baseUrl}WebView_QuestionAnsRecord`,
   BUSINESSSERVICES_DROPDOWN: `${baseUrl}WebBusinessServicesDropdown`,
-  MULTIPLE_ACCOUNTS_EMAIL: `${baseUrl}WebMultipleEmailAccount`,
+  MULTIPLE_ACCOUNTS_EMAIL: `${baseUrl}AllBusinessStateDropdown`,
 };
 
 export const COUPLE_API = {
@@ -108,8 +108,10 @@ export const PUBLIC_API = {
   DIRECTORY_LIST          : `${baseUrl}DirectoryList`,
   SAVE_FAVOURITE          : `${baseUrl}saveFavourite`,
   SAVE_ENQUIRY            : `${baseUrl}saveEnquiry`,
+  BUSINESS_DECODEID       : `${baseUrl}businessDecode`,
 };
 export const STRIPE_API = {
-  "STRIPE_PUBLISHKEY": `${baseUrl}View_StripeURL`,
-  "PARTNERSHIP_PUBLIC": `${baseUrl}WebStripe_Payment`,
+  "STRIPE_PUBLISHKEY"   : `${baseUrl}View_StripeURL`,
+  "PARTNERSHIP_PUBLIC"  : `${baseUrl}WebStripe_Payment`,
+  "UPDATE_CARD_DETAILS" : `${baseUrl}WebStripe_Update`,
 };

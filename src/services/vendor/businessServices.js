@@ -3,8 +3,9 @@ import * as apiUrls from "../../api/apiUrls";
 import subscription from "../json/settings_subscription.json";
 
 export const IMAGE_FOLDER = "";
-export const PREFIX = "abia_business-";
-export const MAIN_API = apiUrls.BUSINESS_API;
+export const PREFIX       = "abia_business-";
+export const MAIN_API     = apiUrls.BUSINESS_API;
+export const STRIPE_API   = apiUrls.STRIPE_API;
 
 export async function storeData(postData) {
   return await apiService.apiCall(MAIN_API["STORE"], "POST", postData);
@@ -54,6 +55,11 @@ export async function update_settings(settings, postData) {
     postData
   );
 }
+
+/* export async function vendorSubscriptionDetail(id) {
+  return subscription;
+  //return await apiService.apiCall(MAIN_API["ENQUIRIES"]+'/'+id, "GET");
+} */
 
 export async function business_signup(postData) {
   return await apiService.apiCall(

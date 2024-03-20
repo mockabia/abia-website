@@ -233,7 +233,7 @@ const CouplesLogin = (props) => {
                 <div className="flex justify-center">
                   <h6>
                     Don't have an account?{" "}
-                    <Link to={window.VSIGNUP} className="font-[900] underline">
+                    <Link to={window.CSIGNUP} className="font-[900] underline">
                       {" "}
                       <span className="cl-gap">q</span>Sign Up Now
                     </Link>

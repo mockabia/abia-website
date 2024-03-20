@@ -4,70 +4,67 @@ import { Expiryinput, PaymentInput } from "../../../components/FormStyle";
 import MaskedInput from "react-text-mask";
 import * as BusinessJS from "../Business";
 import { AiOutlineClose } from "react-icons/ai";
+import * as servicesPage from "../../../services/vendor/businessServices";
+import StripePayUpdate from "../../Stripe/StripePayUpdate";
 
-const BusinessSettings_6 = () => {
-  const [vendorDetail, setVendorDetails] = useState({});
-  const [formValues, setFormValues] = useState({
-    card_number: "",
-    expiry: "",
-    ccv: "",
-  });
-  const [isUpdatePaymentModalOpen, setUpdatePaymentModalOpen] = useState(false);
-  const [isModalOpen, setModalOpen] = useState(false);
+const BusinessSettings_6 = (props) => {
+  const [formvalues, setFormvalues]             = useState({});
+  const [paymentStatus, setPaymentStatus]       = useState(0);
+  const [updateModal, setUpdateModal]           = useState(false);
+  const [cancelModal, setCancelModal]           = useState(false);
 
   useEffect(() => {
-    BusinessJS.vendorSubs(setVendorDetails);
+    console.log()
+    //BusinessJS.vendorSubs(setFormvalues);
   }, []);
+  useEffect(() => {
+    let vendorDetail = props.vendorDetails;
+    /* setFormvalues((values) => ({...values,["vid"]: vendorDetail.id,["mem_card_no"]: vendorDetail.mem_card_no,["mem_card_expiry"]: vendorDetail.mem_card_expiry,
+      ["email"]: vendorDetail.email,["holdername"]: vendorDetail.contact_person,
+      ["mem_stype"]: vendorDetail.mem_stype,["mem_ftype"]: vendorDetail.mem_ftype,
+      ["payamount"]: vendorDetail.mem_amount})); */
+      setFormvalues((values) => ({...values,["vid"]: "100",["mem_card_no"]: "42424242424242424242",["mem_card_expiry"]: vendorDetail.mem_card_expiry,
+      ["email"]: vendorDetail.email,["holdername"]: vendorDetail.contact_person,
+      ["mem_stype"]: vendorDetail.mem_stype,["mem_ftype"]: vendorDetail.mem_ftype,
+      ["payamount"]: 300}));
+  }, [props.vendorDetails]);
 
-  console.log("Subscription:", vendorDetail.subscription);
-  // Update modal
-  const openUpdatePaymentModal = () => {
-    setUpdatePaymentModalOpen(true);
+  const openUpdateModal = () => {
+    setUpdateModal(true);
   };
 
-  const closeUpdatePaymentModal = () => {
-    setUpdatePaymentModalOpen(false);
+  const closeUpdateModal = () => {
+    setUpdateModal(false);
   };
   const handleUpdatePaymentSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Values:", formValues);
-    // Add logic to save payment details
-    closeUpdatePaymentModal(); // Close the modal after saving
+    closeUpdateModal(); // Close the modal after saving
   };
 
-  const openModal = () => {
-    setModalOpen(true);
+  const openCancelModal = () => {
+    setCancelModal(true);
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
+  const closeCancelModal = () => {
+    setCancelModal(false);
   };
 
   const handleCancel = () => {
-    // Handle cancel logic
-    closeModal();
+    //api for cancel stripe
+    closeCancelModal();
   };
 
   const handleCancelAndKeepActive = () => {
     // Handle cancel and keep me active logic
-    closeModal();
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
+    closeCancelModal();
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Values:", formValues);
   };
   return (
     <div>
       <div className="basic-info-container">
-        <span onClick={openUpdatePaymentModal} className="subs-update-header">
+        <span onClick={openUpdateModal} className="subs-update-header">
           Update Payment Details
         </span>
         <div className="mt-[20px]">
@@ -83,12 +80,7 @@ const BusinessSettings_6 = () => {
                   placeholder="XXXX XXXX XXXX XXXX"
                   style={{ width: "98%" }}
                   // className="cancelsub-input-style2"
-                  value={
-                    formValues.card_number ||
-                    (vendorDetail.subscription &&
-                      vendorDetail.subscription.card_number)
-                  }
-                  onChange={handleChange}
+                  value={formvalues.mem_card_no}
                   InputProps={{
                     inputComponent: MaskedInput,
                     inputProps: {
@@ -133,12 +125,7 @@ const BusinessSettings_6 = () => {
                     name="expiry"
                     placeholder="MM/YY"
                     // className="cancelsub-input-style"
-                    value={
-                      formValues.expiry ||
-                      (vendorDetail.subscription &&
-                        vendorDetail.subscription.expiry)
-                    }
-                    onChange={handleChange}
+                    value={formvalues.mem_card_expiry}
                     InputProps={{
                       inputComponent: MaskedInput,
                       inputProps: {
@@ -160,12 +147,7 @@ const BusinessSettings_6 = () => {
                     placeholder="XXX"
                     name="ccv"
                     // className="cancelsub-input-style"
-                    value={
-                      formValues.ccv ||
-                      (vendorDetail.subscription &&
-                        vendorDetail.subscription.ccv)
-                    }
-                    onChange={handleChange}
+                    value={formvalues.ccv}
                     InputProps={{
                       inputComponent: MaskedInput,
                       inputProps: {
@@ -191,7 +173,7 @@ const BusinessSettings_6 = () => {
               </div>
               {/* Cancel */}
               <div className="text-center">
-                <button className="cancel-pr-button" onClick={openModal}>
+                <button className="cancel-pr-button" onClick={openCancelModal}>
                   Cancel Partnership & Reviews
                 </button>
               </div>
@@ -201,8 +183,8 @@ const BusinessSettings_6 = () => {
       </div>
       {/*Cancel Modal */}
       <Modal
-        open={isModalOpen}
-        onClose={closeModal}
+        open={cancelModal}
+        onClose={closeCancelModal}
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
         style={{
@@ -248,7 +230,7 @@ const BusinessSettings_6 = () => {
             >
               Keep me Active
             </button>
-            <button className="cancel-button" onClick={handleCancel}>
+            <button type="button" className="cancel-button" onClick={handleCancel}>
               Cancel
             </button>
           </div>
@@ -257,8 +239,8 @@ const BusinessSettings_6 = () => {
 
       {/* Modal for updating payment details */}
       <Modal
-        open={isUpdatePaymentModalOpen}
-        onClose={closeUpdatePaymentModal}
+        open={updateModal}
+        onClose={closeUpdateModal}
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
         style={{
@@ -280,7 +262,7 @@ const BusinessSettings_6 = () => {
         >
           <div
             className="flex justify-end cursor-pointer"
-            onClick={closeUpdatePaymentModal}
+            onClick={closeUpdateModal}
           >
             <AiOutlineClose size={26} />
           </div>
@@ -295,96 +277,8 @@ const BusinessSettings_6 = () => {
             Update Payment Details
           </Typography>
           <form className="space-y-7" onSubmit={handleUpdatePaymentSubmit}>
-            <div className=" md:w-[25rem]">
-              <label className="font-semibold">Card Number</label>
-              <div>
-                <Expiryinput
-                  type="text"
-                  name="card_number"
-                  placeholder="XXXX XXXX XXXX XXXX"
-                  style={{ width: "98%" }}
-                  // className="cancelsub-input-style2"
-                  value={formValues.card_number}
-                  onChange={handleChange}
-                  InputProps={{
-                    inputComponent: MaskedInput,
-                    inputProps: {
-                      mask: [
-                        /\d/,
-                        /\d/,
-                        /\d/,
-                        /\d/,
-                        "-",
-                        /\d/,
-                        /\d/,
-                        /\d/,
-                        /\d/,
-                        "-",
-                        /\d/,
-                        /\d/,
-                        /\d/,
-                        /\d/,
-                        "-",
-                        /\d/,
-                        /\d/,
-                        /\d/,
-                        /\d/,
-                      ],
-                      guide: false,
-                    },
-                  }}
-                />
-              </div>
-            </div>
-            <div className=" lg:w-[26rem] flex gap-[1rem]">
-              {/* Expiry */}
-              <div className="">
-                <label className="font-semibold">Expiry</label>
-                <div>
-                  <Expiryinput
-                    type="text"
-                    name="expiry"
-                    placeholder="MM/YY"
-                    // className="cancelsub-input-style"
-                    value={formValues.expiry}
-                    onChange={handleChange}
-                    InputProps={{
-                      inputComponent: MaskedInput,
-                      inputProps: {
-                        mask: [/\d/, /\d/, "/", /\d/, /\d/],
-                        guide: false,
-                      },
-                      placeholder: "MM/YY",
-                    }}
-                  />
-                </div>
-              </div>
-              {/* CCV */}
-              <div className="">
-                <label className="font-semibold">CCV</label>
-                <div>
-                  <Expiryinput
-                    type="password"
-                    placeholder="XXX"
-                    name="ccv"
-                    // className="cancelsub-input-style"
-                    value={formValues.ccv}
-                    onChange={handleChange}
-                    InputProps={{
-                      inputComponent: MaskedInput,
-                      inputProps: {
-                        mask: [/\d/, /\d/, /\d/],
-                        guide: false,
-                      },
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-            {/* Submit */}
-            <div className="basicinfo-submit-button" onSubmit={handleSubmit}>
-              <button>Save</button>
-            </div>
+          <StripePayUpdate formvalues={formvalues} setFormvalues={setFormvalues}
+              paymentAPI={servicesPage.STRIPE_API['UPDATE_CARD_DETAILS']} setPaymentStatus={setPaymentStatus} setUpdateModal={setUpdateModal} />
           </form>
         </Paper>
       </Modal>

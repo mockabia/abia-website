@@ -295,7 +295,7 @@ export const updateBusiness = async (
     });
 };
 
-export const vendorSubs = async (setData) => {
+/* export const vendorSubs = async (setData) => {
   let token = localStorage.getItem("coupleToken");
   token = JSON.parse(token);
   let userSession = token && token.user ? token.user : null;
@@ -307,7 +307,7 @@ export const vendorSubs = async (setData) => {
       setData([]);
     }
   });
-};
+}; */
 
 
 
