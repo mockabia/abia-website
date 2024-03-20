@@ -77,7 +77,7 @@ const BusinessSettings = (props) => {
       id: 6,
       icon: <HeartIcon />,
       heading: "My Subscription",
-      content: <Subscription />,
+      content: <Subscription vendorDetails={inputs} />,
     },
   ];
 

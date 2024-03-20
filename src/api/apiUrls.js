@@ -111,6 +111,7 @@ export const PUBLIC_API = {
   BUSINESS_DECODEID       : `${baseUrl}businessDecode`,
 };
 export const STRIPE_API = {
-  "STRIPE_PUBLISHKEY": `${baseUrl}View_StripeURL`,
-  "PARTNERSHIP_PUBLIC": `${baseUrl}WebStripe_Payment`,
+  "STRIPE_PUBLISHKEY"   : `${baseUrl}View_StripeURL`,
+  "PARTNERSHIP_PUBLIC"  : `${baseUrl}WebStripe_Payment`,
+  "UPDATE_CARD_DETAILS" : `${baseUrl}WebStripe_Update`,
 };
