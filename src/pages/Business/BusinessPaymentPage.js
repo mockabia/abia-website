@@ -16,7 +16,7 @@ const BusinessPaymentPage = (props) => {
   
   return (
       <div className="payment">
-        <AbiaPayment formvalues={formvalues} rightPanel={1} payFrom={0}/>
+        <AbiaPayment formvalues={formvalues} rightPanel={1} payFrom={1}/>
       </div>
   );
 };

@@ -189,10 +189,6 @@ export async function vendor_services() {
 export async function list_vendors() {
   return await apiService.apiCall(apiUrls.VENDOR_DROPDOWN, "GET");
 }
-
-// subscription
-export async function vendorSubscriptionDetail(id) {
-  return subscription;
-  //return await apiService.apiCall(MAIN_API["ENQUIRIES"]+'/'+id, "GET");
+export async function cancelSubscription(vid, postData) {
+  return await apiService.apiCall(STRIPE_API["CANCEL_SUBSCRIPTION"] + "/" + vid,"POST",postData);
 }
-

@@ -68,7 +68,7 @@ const PaymentForm = (props) => {
             setError(error.message)
         } else {
             var totalResponse = {...paymentuser,'paymentMethod':paymentMethod,['stripeToken']:token,['tokenData']:tokenData};
-            await apiService.apiCall(paymentAPI+'/'+paymentuser.vid, "POST",totalResponse).then(function (response) {
+            await apiService.apiCall(paymentAPI+'/'+paymentuser.vid+'/5', "POST",totalResponse).then(function (response) {
                 if (response.statuscode == 200) {
                     setFormvalues((values) => ({...values,["vid"]: response.result.id,["mem_card_no"]: response.result.mem_card_no,["mem_card_expiry"]: response.result.mem_card_expiry,
                             ["email"]: response.result.email,["holdername"]: response.result.contact_person,

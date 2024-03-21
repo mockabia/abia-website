@@ -114,4 +114,5 @@ export const STRIPE_API = {
   "STRIPE_PUBLISHKEY"   : `${baseUrl}View_StripeURL`,
   "PARTNERSHIP_PUBLIC"  : `${baseUrl}WebStripe_Payment`,
   "UPDATE_CARD_DETAILS" : `${baseUrl}WebStripe_Update`,
+  "CANCEL_SUBSCRIPTION" : `${baseUrl}WebStripe_Update`,
 };
