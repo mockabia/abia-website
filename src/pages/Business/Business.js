@@ -564,3 +564,14 @@ export const cancelSubscription = async (formvalues,setCancelModal) => {
       } */
     });
 };
+export const fetchPayment = async (setPaysettings) => {
+  let token       = localStorage.getItem("vendorToken");
+  token           = JSON.parse(token);
+  let userSession = token && token.user ? token.user : null;
+  let userId      = userSession && userSession.id ? userSession.id : 0;
+  await servicesPage.paySettings(userId).then(function (response) {
+    if (response.statuscode === 200) {
+      setPaysettings(response.result);
+    }
+  });
+};

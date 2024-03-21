@@ -4,9 +4,6 @@ import { Elements, CardElement, useElements, CardNumberElement, CardExpiryElemen
 import { loadStripe } from "@stripe/stripe-js";
 import * as apiService from "../../api/apiServices";
 import * as apiUrls from "../../api/apiUrls";
-import { CheckBoxStyle2, PaymentInput } from "../../components/FormStyle";
-import { Checkbox, FormControlLabel } from "@mui/material";      
-import PaymentSelect from "../../components/input-fields/PaymentSelect";
 
 const publishKey = await apiService.apiCall(apiUrls.STRIPE_API.STRIPE_PUBLISHKEY, "GET").then(function (response) {
     if (response.statuscode == 200) {
@@ -33,6 +30,12 @@ const PaymentForm = (props) => {
     const setErrorMessage                   = props.setErrorMessage;
     const [error, setError]                 = useState(false);
     const [success, setSuccess]             = useState(false);
+
+    /* useEffect(() => {
+        if(paymentuser.payamount<100){
+            setError('Amount must be greater than 100')
+        }
+      }, [paymentuser.payamount]); */
 
     const handleSubmit = (stripe, elements) => async () => {
         //const cardElement = elements.getElement(CardElement);
@@ -78,7 +81,7 @@ const PaymentForm = (props) => {
                     setUpdateModal(false)
                 }else{
                     setErrorOpen(true)
-                    setErrorMessage('Email not found')
+                    setErrorMessage(response.error_message)
                 }
             });
         }
@@ -96,7 +99,7 @@ const PaymentForm = (props) => {
 
     return (
         <>
-        <pre>{JSON.stringify(paymentuser, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(paymentuser, null, 2)}</pre> */}
             <div class="form-group has-feedback">
                 <label for="inputEmail3" class="control-label">Card Number</label>
                 <CardNumberElement onChange={cardOnChange}/>

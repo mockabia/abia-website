@@ -41,18 +41,18 @@ const Payment = (props) => {
     ftypeArray[1]               = {}
     if (formvalues.stype == "0") {
       ftypeArray[0].setupfee    = paysettings.newregfees;
-      ftypeArray[0].amounttopay = paysettings.monthlyregfees;
-      ftypeArray[0].payamount   = paysettings.monthlyregfees;
-      ftypeArray[1].setupfee    = paysettings.newregfees;
-      ftypeArray[1].amounttopay = paysettings.monthlyfregfees;
-      ftypeArray[1].payamount   = paysettings.monthlyfregfees;
-    }else {
-      ftypeArray[0].setupfee    = paysettings.newregfees;
-      ftypeArray[0].amounttopay = paysettings.annualregfees;
-      ftypeArray[0].payamount   = paysettings.annualregfees;
-      ftypeArray[1].setupfee    = paysettings.newregfees;
-      ftypeArray[1].amounttopay = paysettings.annualfregfees;
-      ftypeArray[1].payamount   = paysettings.annualfregfees;
+        ftypeArray[0].amounttopay = paysettings.monthlyregfees;
+        ftypeArray[0].payamount   = parseFloat(paysettings.newregfees) + parseFloat(paysettings.monthlyregfees);
+        ftypeArray[1].setupfee    = paysettings.newregfees;
+        ftypeArray[1].amounttopay = paysettings.monthlyfregfees;
+        ftypeArray[1].payamount   = parseFloat(paysettings.newregfees) + parseFloat(paysettings.monthlyfregfees);
+      }else {
+        ftypeArray[0].setupfee    = paysettings.newregfees;
+        ftypeArray[0].amounttopay = paysettings.annualregfees;
+        ftypeArray[0].payamount   = parseFloat(paysettings.newregfees) + parseFloat(paysettings.annualregfees);
+        ftypeArray[1].setupfee    = paysettings.newregfees;
+        ftypeArray[1].amounttopay = paysettings.annualfregfees;
+        ftypeArray[1].payamount   = parseFloat(paysettings.newregfees) + parseFloat(paysettings.annualfregfees);
     }
     setFormvalues((values) => ({ ...values,...ftypeArray[formvalues.ftype] }));
   }, [paysettings,formvalues.stype]);
@@ -201,7 +201,7 @@ const Payment = (props) => {
             <div className="payment-logo-section">
               <AbiaLogo />
             </div>
-            <h2>Email not Found</h2>
+           {/*  <h2>Email not Found</h2> */}
             <p
               style={{ width: "30vw", textAlign: "center" }}
               dangerouslySetInnerHTML={{ __html: errorMessage }}
