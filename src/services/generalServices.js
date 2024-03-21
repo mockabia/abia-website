@@ -43,13 +43,7 @@ export async function saveFavourite(id, postData) {
     postData
   );
 }
-export async function saveEnquiry(id, postData) {
-  return await apiService.apiCall(
-    MAIN_API["SAVE_ENQUIRY"] + "/" + id,
-    "POST",
-    postData
-  );
-}
+
 
 //business profile
 export async function businessProfileView(id) {
