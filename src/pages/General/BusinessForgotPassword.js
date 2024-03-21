@@ -82,7 +82,7 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div>
+    <div className="-mt-[12px]">
       <div onClick={handleOpen}>
         <span>forgot ?</span>
       </div>

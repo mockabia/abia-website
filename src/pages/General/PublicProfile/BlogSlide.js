@@ -18,7 +18,7 @@ const BlogSlide = ({ blogs }) => {
     <div className="flex flex-col gap-[1rem]">
       {/* Header Section */}
       <div className="pp-header-section w-[90%]">
-        <h2>ABIA Awards</h2>
+        <h2>Featured in</h2>
         <div className="flex gap-[8px]">
           <div className="pp-scroll-button" onClick={() => handleScroll(-400)}>
             <MdKeyboardArrowLeft size={20} />

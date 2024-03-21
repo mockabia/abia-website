@@ -215,16 +215,12 @@ const NavBar = (props) => {
 
         {/* Subheaders */}
 
-        {/* <img
-          src={AbiaLogo2}
-          className="abia-logo-desktop"
-          onClick={handleLogoClick}
-        /> */}
         <div
           className="abia-logo-desktop cursor-pointer"
           onClick={handleLogoClick}
         >
-          <AbiaLogo />
+          <img src={AbiaLogo2} onClick={handleLogoClick} />
+          {/* <AbiaLogo /> */}
         </div>
         <div className="navbar-header-display">
           <ul className="login-subheaders absolute ">

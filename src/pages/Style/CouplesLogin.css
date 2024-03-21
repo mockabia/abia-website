@@ -5,12 +5,12 @@
 .login-couple-content {
     height: 100vh;
     width: 100%;
-    background-image: url(../../images/couple-login-page-image.webp);
+    /* background-image: url(../../images/couple-login-page-image.webp); */
     background-size: cover;
     background-position: center;
     display: flex;
+    align-items: center;
     justify-content: center;
-    padding-top: 5rem;
 }
 
 

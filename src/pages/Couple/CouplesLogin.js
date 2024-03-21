@@ -55,9 +55,8 @@ const CouplesLogin = (props) => {
   };
 
   let isValidForm =
-    Object.values(errors || "").filter(
-      (error) => typeof error !== "undefined"
-    ).length === 0;
+    Object.values(errors || "").filter((error) => typeof error !== "undefined")
+      .length === 0;
 
   const hasInputErrors = Object.values(errors).some(
     (error) => typeof error !== "undefined"
@@ -81,6 +80,7 @@ const CouplesLogin = (props) => {
                     Email
                   </label> */}
                   <CoupleCommonInput
+                    placeholder="Email"
                     variant="outlined"
                     name="email"
                     type="text"
@@ -98,6 +98,7 @@ const CouplesLogin = (props) => {
                     Password
                   </label> */}
                   <CoupleCommonInput
+                    placeholder="Password"
                     variant="outlined"
                     name="password"
                     type={passwordType}
@@ -175,6 +176,7 @@ const CouplesLogin = (props) => {
                     Email
                   </label> */}
                     <CoupleCommonInput
+                      placeholder="Email"
                       variant="outlined"
                       name="email"
                       type="text"
@@ -192,6 +194,7 @@ const CouplesLogin = (props) => {
                     Password
                   </label> */}
                     <CoupleCommonInput
+                      placeholder="Password"
                       variant="outlined"
                       name="password"
                       type={passwordType}
@@ -222,7 +225,7 @@ const CouplesLogin = (props) => {
                     )}
                   </div>
                   <div className="login-forgot-password">
-                    <BusinessForgotPassword />
+                    <CoupleForgotPwd />
                   </div>
                   <div className="flex flex-col ">
                     <VendorLoginButton disabled={!isValidForm} type="submit">

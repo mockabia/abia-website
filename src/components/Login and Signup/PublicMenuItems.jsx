@@ -121,9 +121,9 @@ const MenuItems = (props) => {
                 >
                   Vendor
                 </Link>
-                <div className="mobile-menu-option" onClick={handleModalOpen}>
+                <Link to={window.CLOGIN} className="mobile-menu-option">
                   Couple
-                </div>
+                </Link>
               </AccordionDetails>
             </Accordion>
             <Accordion
@@ -149,14 +149,14 @@ const MenuItems = (props) => {
             </Accordion>
           </div>
 
-          <Box sx={style}>
+          {/* <Box sx={style}>
             <CouplesLogin
               modalOpen={modalOpen}
               setModalOpen={seetModalOpen}
               handleClosePage={handleModalClose}
             />
-            {/* <CouplesLogin modalOpen={loginOpen} setModalOpen={setLoginOpen} /> */}
-          </Box>
+            <CouplesLogin modalOpen={loginOpen} setModalOpen={setLoginOpen} />
+          </Box> */}
         </div>
       </Menu>
     </div>

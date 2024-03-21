@@ -31,10 +31,10 @@ const CoupleForgotPwd = () => {
   };
 
   return (
-    <div>
+    <div className="-mt-[10px]">
       <div onClick={handleOpen}>
         <span className="text-[14px] font-semibold cursor-pointer">
-          Forgot Password ?
+         forgot ?
         </span>
       </div>
       <Modal

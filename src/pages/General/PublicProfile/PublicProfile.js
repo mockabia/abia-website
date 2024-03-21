@@ -10,6 +10,7 @@ import { FaTiktok } from "react-icons/fa";
 import AwardSlide from "./AwardSlide";
 import PublicEnquiry from "./PublicEnquiry";
 import BlogSlide from "./BlogSlide";
+import ReviewsReply from "./ReviewsReply";
 // import LeftFeather from "../../../icons/feather-right.jpg";
 // import RightFeather from "../../../icons/feather-left.jpg";
 
@@ -64,6 +65,7 @@ const PublicProfile = () => {
       id: 1,
       name: "Zonzo Estate",
       partner_type: "Gold Partner",
+      logo: "https://scontent.fccj6-1.fna.fbcdn.net/v/t39.30808-6/327265908_913673846733991_4430403031133714382_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=kOVGirOe2LwAX8iPBvA&_nc_ht=scontent.fccj6-1.fna&oh=00_AfDYBmkcudcRfPNPbQxrV0S-rvGB7u_GDOoPxVf4w4MnvA&oe=6601DC68",
       ratings: {
         average: 4.9,
         total: 100,
@@ -180,7 +182,7 @@ const PublicProfile = () => {
       ],
       reviews: [
         {
-          vid: 1,
+          id: 1,
           couples_name: "Kaila & Joeff",
           couple_img_val:
             "https://abia.abia-test.com//blog/thumb/newimagecheck1383.webp",
@@ -188,6 +190,18 @@ const PublicProfile = () => {
           category: "Wedding Styling",
           review_content:
             "Testing if Cloudland Weddings will receive verification email.",
+          reply:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        },
+        {
+          id: 2,
+          couples_name: "Emily & Nicole",
+          couple_img_val: "",
+          submitted_date: "01/01/2024",
+          category: "Wedding Styling",
+          review_content:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+          reply: "Reply 2",
         },
       ],
     },
@@ -334,6 +348,15 @@ const PublicProfile = () => {
               </div>
               <br />
               <div className="pp-sperator"></div>
+              {/* REVIEWS */}
+              <div>
+                <div>
+                  <ReviewsReply
+                    reviews={vendorData.vendor.reviews}
+                    vendorData={vendorData}
+                  />
+                </div>
+              </div>
             </div>
             {/* MESSAGE ENQUIRY */}
             <div className="pp-message-enq">
