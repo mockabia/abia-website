@@ -236,7 +236,7 @@ export const coupleCategories = async (setBudget, setData, setUnpaidList) => {
     }
   });
 };
-export const updateBudget = async (budget, setShowBudget, setEdit) => {
+export const updateBudget = async (budget, setData, setBudget,showHideBudgetField) => {
   let token = localStorage.getItem("coupleToken");
   token = JSON.parse(token);
   let userSession = token && token.user ? token.user : null;
@@ -245,8 +245,9 @@ export const updateBudget = async (budget, setShowBudget, setEdit) => {
   requestData["budget"] = budget;
   await servicesPage.updateBudget(userId, requestData).then(function (response) {
       if (response.statuscode == 200) {
-        setShowBudget(Number(response.budget));
-        setEdit(false);
+        setData(values => ({...values, ['budget']: response.result.budget,}))
+        setBudget(Number(response.result.budget))
+        showHideBudgetField()
       }
     });
 };

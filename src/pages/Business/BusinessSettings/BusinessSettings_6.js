@@ -19,10 +19,18 @@ const BusinessSettings_6 = (props) => {
   }, []);
   useEffect(() => {
     let vendorDetail = props.vendorDetails;
-    setFormvalues((values) => ({...values,["vid"]: vendorDetail.id,["subscr_id"]: vendorDetail.subscr_id,["mem_card_no"]: vendorDetail.mem_card_no,["mem_card_expiry"]: vendorDetail.mem_card_expiry,
-      ["email"]: vendorDetail.email,["holdername"]: vendorDetail.contact_person,
-      ["mem_stype"]: vendorDetail.mem_stype,["mem_ftype"]: vendorDetail.mem_ftype,
-      ["payamount"]: vendorDetail.mem_amount}));
+    if(vendorDetail.SubscriptionsDetails!=""){
+      setFormvalues((values) => ({...values,["vid"]: vendorDetail.id,
+      ["subscr_id"]: vendorDetail.SubscriptionsDetails.subscr_id,
+      ["stripe_subscription_id"]: vendorDetail.SubscriptionsDetails.stripe_subscription_id,
+      ["stripe_customer_id"]: vendorDetail.SubscriptionsDetails.stripe_customer_id,
+      ["card_no"]: vendorDetail.SubscriptionsDetails.last4,
+      ["card_expiry"]: vendorDetail.SubscriptionsDetails.exp_month+'/'+vendorDetail.SubscriptionsDetails.exp_year,
+        ["email"]: vendorDetail.email,["holdername"]: vendorDetail.contact_person,
+        ["mem_stype"]: vendorDetail.mem_stype,["mem_ftype"]: vendorDetail.mem_ftype,
+        ["payamount"]: vendorDetail.mem_amount}));
+    }
+    
   }, [props.vendorDetails]);
 
   const openUpdateModal = () => {

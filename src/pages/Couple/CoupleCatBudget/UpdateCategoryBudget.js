@@ -55,7 +55,7 @@ function UpdateCategoryBudget(props) {
   const modalHandleChange = (e,props=null) => {
     const name        = e.target.name;
     let targetValue   = '';
-    if(props!=null && props.max!='' && props.max!=undefined){
+    if(props!=null && props.max!=undefined){
       let floatTargetVal = parseFloat(e.target.value);
       floatTargetVal     = isNaN(floatTargetVal) ? 0 : floatTargetVal;
       let floatMax       = parseFloat(props.max);

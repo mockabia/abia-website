@@ -96,6 +96,7 @@ const PaymentForm = (props) => {
             setError(error.message)
         } else {
             var totalResponse = {...formvalues,'paymentMethod':paymentMethod,['stripeToken']:token,['tokenData']:tokenData};
+            console.log(formvalues)
             await apiService.apiCall(paymentAPI+'/'+formvalues.vid+'/'+payFrom, "POST",totalResponse).then(function (response) {
                 if (response.statuscode == 200) {
                     setPaymentStatus(1)
@@ -176,7 +177,11 @@ const PaymentForm = (props) => {
                     )}
                 </>
             )}
-            <PaymentInput name="holdername" value={formvalues.holdername} onChange={onChangeEvent} disabled={payFrom==3 ? 'disabled' : '' }
+            <PaymentInput name="holdername" value={formvalues.holdername} disabled={payFrom==3 ? 'disabled' : '' }
+                onChange={(e) => {
+                    onChangeEventValue("holdername", e.target.value)
+                    onChangeEventValue("name", e.target.value)
+                }}
                 InputProps={{
                     placeholder: "Cardholder Name",
                     style: { color: "#000", fontWeight: "600" },
