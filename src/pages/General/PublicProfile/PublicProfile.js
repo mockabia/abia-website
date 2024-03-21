@@ -178,6 +178,18 @@ const PublicProfile = () => {
           url: "wedding-blog/best-wedding-ceremony-venues-in-melbourne-geelong-mornington-peninsula-victoria",
         },
       ],
+      reviews: [
+        {
+          vid: 1,
+          couples_name: "Kaila & Joeff",
+          couple_img_val:
+            "https://abia.abia-test.com//blog/thumb/newimagecheck1383.webp",
+          submitted_date: "01/01/2024",
+          category: "Wedding Styling",
+          review_content:
+            "Testing if Cloudland Weddings will receive verification email.",
+        },
+      ],
     },
   };
 
