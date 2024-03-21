@@ -18,7 +18,6 @@ const CoupleCatBudget = (props) => {
   const [unpaidList, setUnpaidList]             = useState([]);
   const [addOpen, setAddOpen]                   = useState(false);
   const [showBudget, setShowBudget]             = useState("");
-  const [edit, setEdit]                         = useState(false);
   const [showBudgetField, setShowBudgetField]   = useState(false);
 
   useEffect(() => {
@@ -29,7 +28,7 @@ const CoupleCatBudget = (props) => {
 
   //  Block 1
   const saveBudget = () => {
-    CoupleJS.updateBudget(budget,setShowBudget,setEdit);
+    CoupleJS.updateBudget(budget, setData, setBudget,showHideBudgetField);
   };
 
   const showHideBudgetField = () => {
