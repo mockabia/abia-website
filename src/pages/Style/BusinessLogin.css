@@ -161,8 +161,8 @@ font-family: 'Manrope', sans-serif;
     }
 
 .login-vendorlogin-content {
-    width: 80%;
-    border-top-right-radius: 40%;
+    width: 60%;
+    border-top-right-radius: 51%;
     border-bottom-right-radius: 50%;
     background-image: url(../../images/abia-vendor-login-2.webp) ;
     background-size: cover;

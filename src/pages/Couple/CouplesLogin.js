@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import "../Style/BusinessLogin.css";
+import "../Style/CouplesLogin.css";
 import { Link, useNavigate } from "react-router-dom";
 import BusinessForgotPassword from "../General/BusinessForgotPassword";
 import * as CoupleJS from "./Couple";
@@ -65,7 +65,7 @@ const CouplesLogin = (props) => {
 
   return (
     <div className="login-main-container">
-      <div className="login-vendorlogin-content relative">
+      <div className="login-couple-content relative">
         <div className="login-vendorlogin-box">
           <div className="flex flex-col justify-center items-center p-[20px] relative">
             {/* error message */}

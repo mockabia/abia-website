@@ -2,10 +2,10 @@
 
 
 
-.login-vendorlogin-content {
+.login-couple-content {
     height: 100vh;
     width: 100%;
-    background-image: url(../../images/abia-vendor-login-2.webp);
+    background-image: url(../../images/couple-login-page-image.webp);
     background-size: cover;
     background-position: center;
     display: flex;
@@ -159,11 +159,11 @@
 
     }
 
-    .login-vendorlogin-content {
-        width: 80%;
-        border-top-right-radius: 40%;
+    .login-couple-content {
+        width: 60%;
+        border-top-right-radius: 51%;
         border-bottom-right-radius: 50%;
-        background-image: url(../../images/abia-vendor-login-2.webp);
+        background-image: url(../../images/couple-login-page-image.webp);
         background-size: cover;
         /* background-size: 100%; */
         background-position: center;
