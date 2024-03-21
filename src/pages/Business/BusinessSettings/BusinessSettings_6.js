@@ -92,14 +92,8 @@ const BusinessSettings_6 = (props) => {
     setCancelModal(false);
   };
 
-  const handleCancel = () => {
-    //api for cancel stripe
+  const cancelSubscription = () => {
     BusinessJS.cancelSubscription(formvalues,setCancelModal)
-  };
-
-  const handleCancelAndKeepActive = () => {
-    // Handle cancel and keep me active logic
-    closeCancelModal();
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -248,7 +242,7 @@ const BusinessSettings_6 = (props) => {
         >
           <div
             className="flex justify-end cursor-pointer"
-            onClick={handleCancel}
+            onClick={closeCancelModal}
           >
             <AiOutlineClose size={26} />
           </div>
@@ -269,11 +263,11 @@ const BusinessSettings_6 = (props) => {
           <div className="modal-buttons">
             <button
               className="cpp-cancel-button"
-              onClick={handleCancelAndKeepActive}
+              onClick={closeCancelModal}
             >
               Keep me Active
             </button>
-            <button type="button" className="cancel-button" onClick={handleCancel}>
+            <button type="button" className="cancel-button" onClick={cancelSubscription}>
               Cancel
             </button>
           </div>
