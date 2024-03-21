@@ -551,3 +551,16 @@ export const fetchVendors = async (setServices) => {
     }
   });
 };
+export const cancelSubscription = async (formvalues,setCancelModal) => {
+  await servicesPage.cancelSubscription(formvalues.vid, formvalues).then(function (response) {
+      if (response.statuscode == 200) {
+        setCancelModal(false)
+      } /* else {
+        if (response.errors) {
+          setInputsErrors(response.errors);
+        } else if (response.statusmessage) {
+          setInputsErrors(response.statusmessage);
+        }
+      } */
+    });
+};

@@ -19,14 +19,10 @@ const BusinessSettings_6 = (props) => {
   }, []);
   useEffect(() => {
     let vendorDetail = props.vendorDetails;
-    /* setFormvalues((values) => ({...values,["vid"]: vendorDetail.id,["mem_card_no"]: vendorDetail.mem_card_no,["mem_card_expiry"]: vendorDetail.mem_card_expiry,
+    setFormvalues((values) => ({...values,["vid"]: vendorDetail.id,["subscr_id"]: vendorDetail.subscr_id,["mem_card_no"]: vendorDetail.mem_card_no,["mem_card_expiry"]: vendorDetail.mem_card_expiry,
       ["email"]: vendorDetail.email,["holdername"]: vendorDetail.contact_person,
       ["mem_stype"]: vendorDetail.mem_stype,["mem_ftype"]: vendorDetail.mem_ftype,
-      ["payamount"]: vendorDetail.mem_amount})); */
-      setFormvalues((values) => ({...values,["vid"]: "100",["mem_card_no"]: "42424242424242424242",["mem_card_expiry"]: vendorDetail.mem_card_expiry,
-      ["email"]: vendorDetail.email,["holdername"]: vendorDetail.contact_person,
-      ["mem_stype"]: vendorDetail.mem_stype,["mem_ftype"]: vendorDetail.mem_ftype,
-      ["payamount"]: 300}));
+      ["payamount"]: vendorDetail.mem_amount}));
   }, [props.vendorDetails]);
 
   const openUpdateModal = () => {
@@ -51,7 +47,7 @@ const BusinessSettings_6 = (props) => {
 
   const handleCancel = () => {
     //api for cancel stripe
-    closeCancelModal();
+    BusinessJS.cancelSubscription(formvalues,setCancelModal)
   };
 
   const handleCancelAndKeepActive = () => {
