@@ -164,7 +164,7 @@ const AbiaMembershipoffers = (props) => {
 
   return (
       <div className="h-screen pb-[10rem]">
-        <pre>{JSON.stringify(formvalues, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(formvalues, null, 2)}</pre> */}
         {/* toggle switch */}
         {/* <div style={{height:"200px",overflow:"scroll"}}>
           <pre>{JSON.stringify(paysettings, null, 2)}</pre>
