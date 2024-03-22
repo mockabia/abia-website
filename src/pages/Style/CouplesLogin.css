@@ -20,6 +20,7 @@
     width: 320px;
     height: 375px;
     background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #d7d7d7;
     border-radius: 30px;
     display: flex;
     align-items: center;
@@ -163,7 +164,7 @@
         width: 60%;
         border-top-right-radius: 51%;
         border-bottom-right-radius: 50%;
-        background-image: url(../../images/couple-login-page-image.webp);
+        background-image: url(../../images/Couple-Login-Page-_image_.webp);
         background-size: cover;
         /* background-size: 100%; */
         background-position: center;
