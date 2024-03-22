@@ -115,11 +115,12 @@ const AbiaMembershipoffers = (props) => {
       let dataset                     = e.target.dataset;
       let requestForm                 = {};
       requestForm['vid']              = vid;
+      requestForm['paybyusing']       = 1; // from front end
       requestForm['stype']            = formvalues.stype;
       requestForm['ftype']            = dataset.ftype;
       requestForm['setupfee']         = formvalues.ftypeArray[dataset.ftype].setupfee;
       requestForm['amounttopay']      = formvalues.ftypeArray[dataset.ftype].amounttopay;
-      requestForm['payamount']        = formvalues.ftypeArray[dataset.ftype].amounttopay;
+      requestForm['payamount']        = parseFloat(formvalues.ftypeArray[dataset.ftype].setupfee) + parseFloat(formvalues.ftypeArray[dataset.ftype].amounttopay);
 
       /* let redirectUrl = '/payments';
       if(vid>0){

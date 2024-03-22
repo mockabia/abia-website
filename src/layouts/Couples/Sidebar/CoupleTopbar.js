@@ -159,7 +159,6 @@ const CoupleTopbar = (props) => {
   useEffect(() => {
     fetchHeaderMenus();
   }, []);
-  console.log("Menus in Couple Dash:", menuItems);
 
   const handleMenuClick = (mainId) => {
     setMenuAnchorEl({

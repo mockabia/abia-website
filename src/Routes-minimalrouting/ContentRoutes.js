@@ -6,6 +6,7 @@ import LayoutGeneral from "../layouts/Layout/LayoutGeneral";
 
 import Public from "../pages/General/Public";
 import PageNotFound from "../pages/General/404Page";
+import * as RoutesJS from "./RoutesJS";
 
 const ContentRoutes = (props) => {
 
@@ -16,7 +17,12 @@ const ContentRoutes = (props) => {
     alert(props.page)
     return import(`../pages/General/${props.page}`);
   }); */
+  const [publicMenu, setPublicMenu] = useState([]);
+  const [blogMenu, setBlogMenu] = useState([]);
 
+  useEffect(() => {
+    RoutesJS.fetchContentRoutes(setPublicMenu, setBlogMenu);
+  }, []);
 
   
   return (
@@ -27,22 +33,19 @@ const ContentRoutes = (props) => {
         
             <Routes>
                 <Route path="/" element={<LayoutGeneral {...props}><Public {...props} /></LayoutGeneral>} />
-                {props.publicMenu.map((routes, i) => (
+                {publicMenu.map((routes, i) => (
                   <Route
                     path={`/${routes.url}`}
                     element={<LayoutGeneral {...props}><LoadablePage page={routes.pagename} {...props} /></LayoutGeneral>}
                   />
                 ))}
-                {props.blogMenu.map((routes, i) => (
+                {blogMenu.map((routes, i) => (
                   <Route
                     path={`/${routes.url}`}
                     element={<LayoutGeneral {...props}><LoadablePage page={routes.pagename} {...props} /></LayoutGeneral>}
                   />
                 ))}
                 <Route path={`${window.PUBLIC_PAYMENT}/:id`}
-                    element={<LayoutGeneral {...props}><LoadablePage page={window.PUBLIC_PAYMENT_PAGE} {...props} /></LayoutGeneral>}
-                 />
-                <Route path={`${window.OFFER_PAYMENT}/:id`}
                     element={<LayoutGeneral {...props}><LoadablePage page={window.PUBLIC_PAYMENT_PAGE} {...props} /></LayoutGeneral>}
                  />
                 <Route path="*" element={<PageNotFound />} />

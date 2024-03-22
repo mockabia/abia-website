@@ -192,3 +192,6 @@ export async function list_vendors() {
 export async function cancelSubscription(vid, postData) {
   return await apiService.apiCall(STRIPE_API["CANCEL_SUBSCRIPTION"] + "/" + vid,"POST",postData);
 }
+export async function paySettings(id) {
+    return await apiService.apiCall(apiUrls.PAYSETTINGS, "GET");
+}

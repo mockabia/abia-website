@@ -96,13 +96,12 @@ const PaymentForm = (props) => {
             setError(error.message)
         } else {
             var totalResponse = {...formvalues,'paymentMethod':paymentMethod,['stripeToken']:token,['tokenData']:tokenData};
-            console.log(formvalues)
             await apiService.apiCall(paymentAPI+'/'+formvalues.vid+'/'+payFrom, "POST",totalResponse).then(function (response) {
                 if (response.statuscode == 200) {
                     setPaymentStatus(1)
                 }else{
                     setErrorOpen(true)
-                    setErrorMessage('Email not found')
+                    setErrorMessage(response.error_message)
                 }
             });
         }
@@ -140,7 +139,7 @@ const PaymentForm = (props) => {
     }, []);
     return (
         <>
-        {/* <pre>{JSON.stringify(props, null, 2)}</pre> */}
+        <pre>{JSON.stringify(formvalues, null, 2)}</pre>
             <PaymentInput name="email" value={formvalues.email} disabled={payFrom==3 ? 'disabled' : '' }
                 onChange={(e) =>{
                     checkMultipleEmailAccounts(e.target.value)

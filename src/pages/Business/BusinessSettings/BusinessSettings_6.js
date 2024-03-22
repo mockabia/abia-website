@@ -12,22 +12,62 @@ const BusinessSettings_6 = (props) => {
   const [paymentStatus, setPaymentStatus]       = useState(0);
   const [updateModal, setUpdateModal]           = useState(false);
   const [cancelModal, setCancelModal]           = useState(false);
+  const [paysettings, setPaysettings]           = useState({});
+  const [payFrom, setPayFrom]                   = useState(5);
+
+  /* useEffect(() => {
+    console.log(formvalues)
+  }, [formvalues]); */
+  useEffect(() => {
+    BusinessJS.fetchPayment(setPaysettings)
+  }, []);
 
   useEffect(() => {
-    console.log()
-    //BusinessJS.vendorSubs(setFormvalues);
-  }, []);
+      let ftypeArray              = {}
+      ftypeArray[0]               = {}
+      ftypeArray[1]               = {}
+      if (formvalues.stype == "0") {
+        ftypeArray[0].setupfee    = paysettings.newregfees;
+        ftypeArray[0].amounttopay = paysettings.monthlyregfees;
+        ftypeArray[0].payamount   = parseFloat(paysettings.newregfees) + parseFloat(paysettings.monthlyregfees);
+        ftypeArray[1].setupfee    = paysettings.newregfees;
+        ftypeArray[1].amounttopay = paysettings.monthlyfregfees;
+        ftypeArray[1].payamount   = parseFloat(paysettings.newregfees) + parseFloat(paysettings.monthlyfregfees);
+      }else {
+        ftypeArray[0].setupfee    = paysettings.newregfees;
+        ftypeArray[0].amounttopay = paysettings.annualregfees;
+        ftypeArray[0].payamount   = parseFloat(paysettings.newregfees) + parseFloat(paysettings.annualregfees);
+        ftypeArray[1].setupfee    = paysettings.newregfees;
+        ftypeArray[1].amounttopay = paysettings.annualfregfees;
+        ftypeArray[1].payamount   = parseFloat(paysettings.newregfees) + parseFloat(paysettings.annualfregfees);
+      }
+      setFormvalues((values) => ({...values,...ftypeArray[formvalues.ftype]}));
+    }, [paysettings,formvalues.stype]);
+
   useEffect(() => {
     let vendorDetail = props.vendorDetails;
     if(vendorDetail.SubscriptionsDetails!=""){
+      let last4       = vendorDetail.SubscriptionsDetails.last4;
+      let exp_month   = vendorDetail.SubscriptionsDetails.exp_month;
+      let exp_year    = vendorDetail.SubscriptionsDetails.exp_year;
+      let card_no     = "";
+      let expiry      = "";
+      let starno      = 12; //16-4
+      for(let i=0; i<=starno; i++){
+        card_no += "*";
+      }
+      card_no         = card_no+last4;
+      expiry          = ((exp_month<10 ? "0" : "") + exp_month.slice(-2))+'/'+exp_year.slice(-2)
+
       setFormvalues((values) => ({...values,["vid"]: vendorDetail.id,
-      ["subscr_id"]: vendorDetail.SubscriptionsDetails.subscr_id,
-      ["stripe_subscription_id"]: vendorDetail.SubscriptionsDetails.stripe_subscription_id,
-      ["stripe_customer_id"]: vendorDetail.SubscriptionsDetails.stripe_customer_id,
-      ["card_no"]: vendorDetail.SubscriptionsDetails.last4,
-      ["card_expiry"]: vendorDetail.SubscriptionsDetails.exp_month+'/'+vendorDetail.SubscriptionsDetails.exp_year,
+        ["subscr_id"]: vendorDetail.SubscriptionsDetails.subscr_id,
+        ["stripe_subscription_id"]: vendorDetail.SubscriptionsDetails.stripe_subscription_id,
+        ["stripe_customer_id"]: vendorDetail.SubscriptionsDetails.stripe_customer_id,
+        ["card_no"]: card_no,
+        ["card_expiry"]: expiry,
+        ["card_ccv"]: "***",
         ["email"]: vendorDetail.email,["holdername"]: vendorDetail.contact_person,
-        ["mem_stype"]: vendorDetail.mem_stype,["mem_ftype"]: vendorDetail.mem_ftype,
+        ["stype"]: vendorDetail.mem_stype,["ftype"]: vendorDetail.mem_ftype,
         ["payamount"]: vendorDetail.mem_amount}));
     }
     
@@ -53,14 +93,8 @@ const BusinessSettings_6 = (props) => {
     setCancelModal(false);
   };
 
-  const handleCancel = () => {
-    //api for cancel stripe
+  const cancelSubscription = () => {
     BusinessJS.cancelSubscription(formvalues,setCancelModal)
-  };
-
-  const handleCancelAndKeepActive = () => {
-    // Handle cancel and keep me active logic
-    closeCancelModal();
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -84,8 +118,8 @@ const BusinessSettings_6 = (props) => {
                   placeholder="XXXX XXXX XXXX XXXX"
                   style={{ width: "98%" }}
                   // className="cancelsub-input-style2"
-                  value={formvalues.mem_card_no}
-                  InputProps={{
+                  value={formvalues.card_no}
+/*                   InputProps={{
                     inputComponent: MaskedInput,
                     inputProps: {
                       mask: [
@@ -111,7 +145,7 @@ const BusinessSettings_6 = (props) => {
                       ],
                       guide: false,
                     },
-                  }}
+                  }} */
                 />
                 {/* <p className="text-[12px] text-red-500 font-semibold mt-1">
                   {errors.name?.message}
@@ -129,7 +163,7 @@ const BusinessSettings_6 = (props) => {
                     name="expiry"
                     placeholder="MM/YY"
                     // className="cancelsub-input-style"
-                    value={formvalues.mem_card_expiry}
+                    value={formvalues.card_expiry}
                     InputProps={{
                       inputComponent: MaskedInput,
                       inputProps: {
@@ -151,14 +185,14 @@ const BusinessSettings_6 = (props) => {
                     placeholder="XXX"
                     name="ccv"
                     // className="cancelsub-input-style"
-                    value={formvalues.ccv}
-                    InputProps={{
+                    value={formvalues.card_ccv}
+                    /* InputProps={{
                       inputComponent: MaskedInput,
                       inputProps: {
                         mask: [/\d/, /\d/, /\d/],
                         guide: false,
                       },
-                    }}
+                    }} */
                   />
                 </div>
               </div>
@@ -209,7 +243,7 @@ const BusinessSettings_6 = (props) => {
         >
           <div
             className="flex justify-end cursor-pointer"
-            onClick={handleCancel}
+            onClick={closeCancelModal}
           >
             <AiOutlineClose size={26} />
           </div>
@@ -230,11 +264,11 @@ const BusinessSettings_6 = (props) => {
           <div className="modal-buttons">
             <button
               className="cpp-cancel-button"
-              onClick={handleCancelAndKeepActive}
+              onClick={closeCancelModal}
             >
               Keep me Active
             </button>
-            <button type="button" className="cancel-button" onClick={handleCancel}>
+            <button type="button" className="cancel-button" onClick={cancelSubscription}>
               Cancel
             </button>
           </div>
@@ -282,7 +316,8 @@ const BusinessSettings_6 = (props) => {
           </Typography>
           <form className="space-y-7" onSubmit={handleUpdatePaymentSubmit}>
           <StripePayUpdate formvalues={formvalues} setFormvalues={setFormvalues}
-              paymentAPI={servicesPage.STRIPE_API['UPDATE_CARD_DETAILS']} setPaymentStatus={setPaymentStatus} setUpdateModal={setUpdateModal} />
+              paymentAPI={servicesPage.STRIPE_API['UPDATE_CARD_DETAILS']} setPaymentStatus={setPaymentStatus} 
+              payFrom={payFrom} setUpdateModal={setUpdateModal} />
           </form>
         </Paper>
       </Modal>
