@@ -115,6 +115,7 @@ const AbiaMembershipoffers = (props) => {
       let dataset                     = e.target.dataset;
       let requestForm                 = {};
       requestForm['vid']              = vid;
+      requestForm['paybyusing']       = 1; // from front end
       requestForm['stype']            = formvalues.stype;
       requestForm['ftype']            = dataset.ftype;
       requestForm['setupfee']         = formvalues.ftypeArray[dataset.ftype].setupfee;

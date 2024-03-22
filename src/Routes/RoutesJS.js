@@ -15,10 +15,14 @@ export const fetchContentRoutes = async (setPublicMenu, setBlogMenu) => {
       const editPayment = response.result.filter((menus) => {
         return menus.id == "19";
       });
-      //console.log(response.result)
+      const offerSubscription = response.result.filter((menus) => {
+        return menus.id == "20";
+      });
+      console.log(response.result)
       window.WEDDING_DIRECTORY    = "/" + directoryMenu[0].url;
       window.PUBLIC_PAYMENT       = "/" + publicPayment[0].url;
       window.EDIT_PAYMENT         = "/" + editPayment[0].url;
+      window.OFFER_PAYMENT        = "/" + offerSubscription[0].url;
       window.PUBLIC_PAYMENT_PAGE  = publicPayment[0].pagename;
     }
     fetchBlogRoutes(setBlogMenu);

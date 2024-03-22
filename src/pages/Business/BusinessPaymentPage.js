@@ -9,9 +9,9 @@ const BusinessPaymentPage = (props) => {
     let token       = localStorage.getItem("vendorToken");
     token           = JSON.parse(token);
     let userSession = token && token.user ? token.user : null;
-    setFormvalues((values) => ({ ...values, ['name']: userSession.name, ['holdername']: userSession.name, ['email']: userSession.email, 
-    ['contact_person']: userSession.contact_person ,['phone']: userSession.phone,
-    ['state']: userSession.state }));
+    setFormvalues((values) => ({ ...values, ['name']: userSession.name, ['holdername']: userSession.name, 
+          ['email']: userSession.email, ['contact_person']: userSession.contact_person ,
+          ['phone']: userSession.phone,['paybyusing']: 1,['state']: userSession.state }));
   }, []);
   
   return (

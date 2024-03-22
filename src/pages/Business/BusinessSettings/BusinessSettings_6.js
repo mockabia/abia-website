@@ -13,6 +13,7 @@ const BusinessSettings_6 = (props) => {
   const [updateModal, setUpdateModal]           = useState(false);
   const [cancelModal, setCancelModal]           = useState(false);
   const [paysettings, setPaysettings]           = useState({});
+  const [payFrom, setPayFrom]                   = useState(5);
 
   /* useEffect(() => {
     console.log(formvalues)
@@ -315,7 +316,8 @@ const BusinessSettings_6 = (props) => {
           </Typography>
           <form className="space-y-7" onSubmit={handleUpdatePaymentSubmit}>
           <StripePayUpdate formvalues={formvalues} setFormvalues={setFormvalues}
-              paymentAPI={servicesPage.STRIPE_API['UPDATE_CARD_DETAILS']} setPaymentStatus={setPaymentStatus} setUpdateModal={setUpdateModal} />
+              paymentAPI={servicesPage.STRIPE_API['UPDATE_CARD_DETAILS']} setPaymentStatus={setPaymentStatus} 
+              payFrom={payFrom} setUpdateModal={setUpdateModal} />
           </form>
         </Paper>
       </Modal>

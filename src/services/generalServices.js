@@ -34,6 +34,9 @@ export async function saveFavourite(id,postData) {
 export async function saveEnquiry(id,postData) {
     return await apiService.apiCall(MAIN_API["SAVE_ENQUIRY"] + "/" + id ,"POST",postData)
 }
-export async function businessFromDecodeId(decodeId) {
-    return await apiService.apiCall(MAIN_API["BUSINESS_DECODEID"] + "/" + decodeId ,"GET")
+export async function fetchFindPaydecode(decodeId) {
+    return await apiService.apiCall(MAIN_API["BUSINESS_PAYDECODE"] + "/" + decodeId ,"GET")
+}
+export async function fetchFindOfferdecode(decodeId) {
+    return await apiService.apiCall(MAIN_API["BUSINESS_OFFERDECODE"] + "/" + decodeId ,"GET")
 }

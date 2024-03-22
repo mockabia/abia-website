@@ -157,15 +157,29 @@ export const fetchPayment = async (setPaysettings) => {
     }
   });
 };
-export const fetchBusinessFromDecodeId = async (decodeId,setFormvalues) => {
+export const fetchFindPaydecode = async (decodeId,setFormvalues) => {
   /* setFormvalues((values) => ({ ...values,['ftype']: "1",['stype']: "1", ['vid']: "101", ['holdername']: "test ", ['email']: "test@test.com", 
     ['contact_person']: "test contact" ,['phone']: "634634636",
     ['state']: "QLD"})); */
-  await servicesPage.businessFromDecodeId(decodeId).then(function (response) {
+  await servicesPage.fetchFindPaydecode(decodeId).then(function (response) {
     if (response.statuscode === 200) {
-      setFormvalues((values) => ({ ...values, ['ftype']: response.result.ftype,['stype']: response.result.stype, ['vid']: response.result.vid, ['holdername']: response.result.name, ['email']: response.result.email, 
-    ['contact_person']: response.result.contact_person ,['phone']: response.result.phone,
-    ['state']: response.result.state }));
+      setFormvalues((values) => ({ ...values, ['ftype']: response.result.ftype,['stype']: response.result.stype, 
+        ['vid']: response.result.vid, ['holdername']: response.result.name,['name']: response.result.name,
+        ['email']: response.result.email, ['contact_person']: response.result.contact_person ,
+        ['phone']: response.result.phone, ['state']: response.result.state, ['paybyusing']: 1 }));
+    }
+  });
+};
+export const fetchFindOfferdecode = async (decodeId,setFormvalues) => {
+  /* setFormvalues((values) => ({ ...values,['ftype']: "1",['stype']: "1", ['vid']: "101", ['holdername']: "test ", ['email']: "test@test.com", 
+    ['contact_person']: "test contact" ,['phone']: "634634636",
+    ['state']: "QLD"})); */
+  await servicesPage.fetchFindOfferdecode(decodeId).then(function (response) {
+    if (response.statuscode === 200) {
+      setFormvalues((values) => ({ ...values, ['ftype']: response.result.ftype,['stype']: response.result.stype, 
+        ['vid']: response.result.vid, ['holdername']: response.result.name,['name']: response.result.name,
+        ['email']: response.result.email, ['contact_person']: response.result.contact_person ,
+        ['phone']: response.result.phone, ['state']: response.result.state, ['paybyusing']: 1 }));
     }
   });
 };

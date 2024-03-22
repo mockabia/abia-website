@@ -42,6 +42,9 @@ const ContentRoutes = (props) => {
                 <Route path={`${window.PUBLIC_PAYMENT}/:id`}
                     element={<LayoutGeneral {...props}><LoadablePage page={window.PUBLIC_PAYMENT_PAGE} {...props} /></LayoutGeneral>}
                  />
+                <Route path={`${window.OFFER_PAYMENT}/:id`}
+                    element={<LayoutGeneral {...props}><LoadablePage page={window.PUBLIC_PAYMENT_PAGE} {...props} /></LayoutGeneral>}
+                 />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
         

@@ -6,16 +6,24 @@ import AbiaPayment from "../Stripe/AbiaPayment";
 
 const Payment = (props) => {
   const location                        = useLocation();
-  const decodeId                        = location.pathname.split("/").pop();
+  //const decodeId                        = location.pathname.split("/").pop();
   const [formvalues, setFormvalues]     = useState({});
   const [payFrom, setPayFrom]           = useState(1);
   const [rightPanel, setRightPanel]     = useState(0);
   const paymentAPI                      = servicesPage.STRIPE_API['PARTNERSHIP_PUBLIC'];
 
   useEffect(() => {
-    if(decodeId!=window.PUBLIC_PAYMENT.replace('/', '')){
-      GeneralJS.fetchBusinessFromDecodeId(decodeId,setFormvalues);
+    let urls      = location.pathname.split('/').slice(-2);
+    let decodeId  = urls[0] !="" ? urls[1] : "";
+    let url       = urls[0];
+
+    if(decodeId!="" && url==window.PUBLIC_PAYMENT.replace('/', '')){
+      GeneralJS.fetchFindPaydecode(decodeId,setFormvalues);
       setPayFrom(3)
+      setRightPanel(1)
+    }else if(decodeId!="" && decodeId!=window.OFFER_PAYMENT.replace('/', '')){
+      GeneralJS.fetchFindOfferdecode(decodeId,setFormvalues);
+      setPayFrom(4)
       setRightPanel(1)
     }
   }, []);
