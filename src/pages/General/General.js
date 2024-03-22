@@ -236,12 +236,12 @@ export const businessProfile = async (setVendorData) => {
   token = JSON.parse(token);
   let userSession = token && token.user ? token.user : null;
   let userId = userSession && userSession.id ? userSession.id : null;
-  /* await servicesPage.businessProfileView(userId).then(function (response) {
+  await servicesPage.businessProfileView(userId).then(function (response) {
     if (response.statuscode == 200) {
       console.log("Business data;", response.result)
       setVendorData(response.result);
     } else {
       setVendorData([]);
     }
-  }); */
+  });
 };

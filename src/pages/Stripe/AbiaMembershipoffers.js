@@ -52,12 +52,18 @@ const AbiaMembershipoffers = (props) => {
     let urls      = location.pathname.split('/').slice(-2);
     let decodeId  = urls[0] !="" ? urls[1] : "";
     let url       = urls[0];
-    if(decodeId!="" && url==window.OFFER_SUBSCRIPTION.replace('/', '')){
-      GeneralJS.fetchFindOfferdecode(decodeId,setPaysettings,setFormvalues);
-    }else{
+    if(props.logined!=undefined){
       GeneralJS.fetchPayment(setPaysettings)
       setFormvalues((values) => ({ ...values, ['stype']: 0 }));
+    }else{
+      if(decodeId!="" && url==window.OFFER_SUBSCRIPTION.replace('/', '')){
+        GeneralJS.fetchFindOfferdecode(decodeId,setPaysettings,setFormvalues);
+      }else{
+        GeneralJS.fetchPayment(setPaysettings)
+        setFormvalues((values) => ({ ...values, ['stype']: 0 }));
+      }
     }
+    
   }, []);
   
   useEffect(() => {
