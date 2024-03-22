@@ -6,7 +6,7 @@
 .login-vendorlogin-content {
     height: 100vh;
     width: 100%;
-    background-image: url(../../images/abia-vendor-login-2.webp) ;
+    /* background-image: url(../../images/abia-vendor-login-2.webp) ; */
     background-size: cover;
     background-position: center;
     display: flex;
@@ -21,12 +21,14 @@
     width: 320px;
     height: 375px;
     background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #d7d7d7;
     border-radius: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     padding: 15px;
+    margin-top: -6rem;
 }
 
 /* flex flex-col justify-center items-center p-[20px] relative */
@@ -103,6 +105,7 @@ font-family: 'Manrope', sans-serif;
     justify-content: end;
     align-items: end;
     font-weight: 600;
+
 }
 
 @media(min-width:768px) {
@@ -161,8 +164,8 @@ font-family: 'Manrope', sans-serif;
     }
 
 .login-vendorlogin-content {
-    width: 80%;
-    border-top-right-radius: 40%;
+    width: 60%;
+    border-top-right-radius: 51%;
     border-bottom-right-radius: 50%;
     background-image: url(../../images/abia-vendor-login-2.webp) ;
     background-size: cover;

@@ -10,7 +10,7 @@ import { RiInstagramFill } from "react-icons/ri";
 
 import { ReactComponent as PinterestIcon } from "../../icons/pinterest.svg";
 import { ReactComponent as AbiaLogo } from "../../icons/abia-new-logo.svg";
-// import AbiaLogo2 from "../../icons/abia-new-logo.svg";
+import AbiaLogo2 from "../../icons/abia-new-logo.svg";
 
 const Footer = (props) => {
   const [footerMenu, setFooterMenu] = useState([]);
@@ -39,8 +39,8 @@ const Footer = (props) => {
       <div className="footer-container">
         {/* Logo */}
         <div className="footer-logo" onClick={handleLogoClick}>
-          <AbiaLogo />
-          {/* <img src={AbiaLogo2} className="logo-adjust cursor-pointer" /> */}
+          {/* <AbiaLogo /> */}
+          <img src={AbiaLogo2} className="logo-adjust cursor-pointer" />
         </div>
         {/* Menus */}
         <div>

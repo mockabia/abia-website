@@ -1,0 +1,111 @@
+
+{
+  "result": {
+    "vendor": {
+        "id": 1,
+        "name": "Zonzo Estate- Updated",
+        "partner_type": "Gold Partner",
+        "ratings": {
+        "average": 4.9,
+        "total": 100
+        },
+        "reviews_count": "998",
+        "awards_count": "60",
+        "full_desc": "<div><h2 style=`marginBottom:1rem;`>Text Header</h2><br/><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer semper sapien libero, a posuere erat bibendum sodales. Etiam rutrum dui a sem dapibus, elementum maximus mi ultricies. Vivamus id interdum dui. Nulla vel ornare massa. Aliquam venenatis nisl nisl, eu feugiat elit viverra a. Proin viverra aliquet diam at lobortis. Fusce dapibus semper viverra. Ut nec varius magna. Suspendisse a sapien maximus, dictum augue in, accumsan mauris. Aliquam vehicula viverra magna, eu elementum ante convallis ut. Nulla velit mi, iaculis in est eget, varius sollicitudin nunc. Sed in risus iaculis mi finibus volutpat id in mauris. Nam dictum erat et.</p></div>",
+        "profile-image": "https://abia.com.au/uploads/vcoverimage/thumb_zonzo-estate-yarra-glen_2203020113541.jpeg",
+        "imagesa_videos": [
+        {
+            "id": 1,
+            "type": "image",
+            "url": "https://abia.com.au/uploads/vportfolio/thumb/zonzo-estate-yarra-glen_2203021146265.jpeg"
+        },
+        {
+            "id": 2,
+            "type": "image",
+            "url": "https://abia.com.au/uploads/vportfolio/thumb/zonzo-estate-yarra-glen_2203021206165.jpeg"
+        },
+        {
+            "id": 3,
+            "type": "image",
+            "url": "https://abia.com.au/uploads/vportfolio/thumb/zonzo-estate-yarra-glen_2203021157381.jpeg"
+        },
+        {
+            "id": 4,
+            "type": "video",
+            "url": "https://www.youtube.com/embed/tEHNeM3DCm0?si=q52_crluKLbv7uw0",
+            "thumbUrl": "https://img.youtube.com/vi/tEHNeM3DCm0/maxresdefault.jpg"
+        }
+        ],
+        "awards": [
+        {
+            "id": 1,
+            "awardurl": "https://abia.com.au/images/abia-award-badge_FINALIST.svg",
+            "award_name": "2023 Finalist (VIC)",
+            "award_category": "Function Coordinator",
+            "award_voting": "99.52%"
+        },
+        {
+            "id": 2,
+            "awardurl": "https://abia.com.au/images/abia-award-badge_WINNER.svg",
+            "award_name": "2023 Winner (VIC)",
+            "award_category": "Restaurant Reception",
+            "award_voting": "99.85%"
+        },
+        {
+            "id": 3,
+            "awardurl": "https://abia.com.au/images/abia-award-badge_NATIONAL.svg",
+            "award_name": "2023 Top 10 (NATIONAL)",
+            "award_category": "Function Coordinato",
+            "award_voting": ""
+        },
+        {
+            "id": 4,
+            "awardurl": "https://abia.com.au/images/abia-award-badge_NATIONAL.svg",
+            "award_name": "2023 Top 10 (NATIONAL)",
+            "award_category": "Function Coordinato",
+            "award_voting": ""
+        },
+        {
+            "id": 5,
+            "awardurl": "https://abia.com.au/images/abia-award-badge_NATIONAL.svg",
+            "award_name": "2023 Top 10 (NATIONAL)",
+            "award_category": "Function Coordinato",
+            "award_voting": ""
+        },
+        {
+            "id": 6,
+            "awardurl": "https://abia.com.au/images/abia-award-badge_NATIONAL.svg",
+            "award_name": "2023 Top 10 (NATIONAL)",
+            "award_category": "Function Coordinato",
+            "award_voting": ""
+        }
+        ],
+        "blogs": [
+        {
+            "id": 1,
+            "title": "Best 26 Celebrants of Queensland",
+            "pagephoto_val": "https://abia.abia-test.com//blog/thumb/newimagecheck1383.webp",
+            "main_url": "newimagecheck",
+            "url": "wedding-blog/newimagecheck"
+        },
+        {
+            "id": 2,
+            "title": "Best Rustic & Country Wedding Venues in Australia",
+            "pagephoto_val": "https://abia.abia-test.com//blog/thumb/best-rustic-country-weddings-venues-in-australia3250.webp",
+            "main_url": "best-rustic-country-weddings-venues-in-australia",
+            "url": "wedding-blog/best-rustic-country-weddings-venues-in-australia"
+        },
+       
+         {
+            "id": 4,
+            "title": "Wedding Wisdom",
+            "pagephoto_val": "https://abia.abia-test.com//blog/thumb/saxymozz-we…usic-saxophone-player-melbourne-victoria1276.webp",
+            "main_url": "best-wedding-ceremony-venues-in-melbourne-geelong-mornington-peninsula-victoria",
+            "url": "wedding-blog/best-wedding-ceremony-venues-in-melbourne-geelong-mornington-peninsula-victoria"
+        }
+        ]
+    }
+  },
+  "statuscode": 200,
+  "message": "Successful Request"
+}

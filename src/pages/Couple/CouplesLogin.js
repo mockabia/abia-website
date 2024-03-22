@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import "../Style/BusinessLogin.css";
+import "../Style/CouplesLogin.css";
 import { Link, useNavigate } from "react-router-dom";
 import BusinessForgotPassword from "../General/BusinessForgotPassword";
 import * as CoupleJS from "./Couple";
@@ -55,9 +55,8 @@ const CouplesLogin = (props) => {
   };
 
   let isValidForm =
-    Object.values(errors || "").filter(
-      (error) => typeof error !== "undefined"
-    ).length === 0;
+    Object.values(errors || "").filter((error) => typeof error !== "undefined")
+      .length === 0;
 
   const hasInputErrors = Object.values(errors).some(
     (error) => typeof error !== "undefined"
@@ -65,7 +64,7 @@ const CouplesLogin = (props) => {
 
   return (
     <div className="login-main-container">
-      <div className="login-vendorlogin-content relative">
+      <div className="login-couple-content relative">
         <div className="login-vendorlogin-box">
           <div className="flex flex-col justify-center items-center p-[20px] relative">
             {/* error message */}
@@ -81,6 +80,7 @@ const CouplesLogin = (props) => {
                     Email
                   </label> */}
                   <CoupleCommonInput
+                    placeholder="Email"
                     variant="outlined"
                     name="email"
                     type="text"
@@ -98,6 +98,7 @@ const CouplesLogin = (props) => {
                     Password
                   </label> */}
                   <CoupleCommonInput
+                    placeholder="Password"
                     variant="outlined"
                     name="password"
                     type={passwordType}
@@ -175,6 +176,7 @@ const CouplesLogin = (props) => {
                     Email
                   </label> */}
                     <CoupleCommonInput
+                      placeholder="Email"
                       variant="outlined"
                       name="email"
                       type="text"
@@ -192,6 +194,7 @@ const CouplesLogin = (props) => {
                     Password
                   </label> */}
                     <CoupleCommonInput
+                      placeholder="Password"
                       variant="outlined"
                       name="password"
                       type={passwordType}
@@ -222,7 +225,7 @@ const CouplesLogin = (props) => {
                     )}
                   </div>
                   <div className="login-forgot-password">
-                    <BusinessForgotPassword />
+                    <CoupleForgotPwd />
                   </div>
                   <div className="flex flex-col ">
                     <VendorLoginButton disabled={!isValidForm} type="submit">

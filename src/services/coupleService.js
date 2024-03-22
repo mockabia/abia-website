@@ -50,21 +50,39 @@ export async function coupleSettings(id, postData) {
   );
 }
 export async function coupleCategories(id) {
-  return await apiService.apiCall(MAIN_API["VIEW_CATEGORIES"]+'/'+id, "GET");
+  return await apiService.apiCall(
+    MAIN_API["VIEW_CATEGORIES"] + "/" + id,
+    "GET"
+  );
 }
 export async function updateBudget(id, postData) {
-  return await apiService.apiCall(MAIN_API["UPDATE_BUDGET"] + "/" + id + "/1","POST",postData);
+  return await apiService.apiCall(
+    MAIN_API["UPDATE_BUDGET"] + "/" + id + "/1",
+    "POST",
+    postData
+  );
 }
 export async function addCategories(id, postData) {
-  return await apiService.apiCall(MAIN_API["ADD_CATEGORY"] + "/" + id + "/1","POST",postData);
+  return await apiService.apiCall(
+    MAIN_API["ADD_CATEGORY"] + "/" + id + "/1",
+    "POST",
+    postData
+  );
 }
 export async function updateBudgetCategory(id, postData) {
-  return await apiService.apiCall(MAIN_API["UPDATE_CATEGORY"] + "/" + id + "/1","POST",postData);
+  return await apiService.apiCall(
+    MAIN_API["UPDATE_CATEGORY"] + "/" + id + "/1",
+    "POST",
+    postData
+  );
 }
 
-
 export async function addBooking(id, postData) {
-  return await apiService.apiCall(MAIN_API["ADD_BOOKING"] + "/" + id,"POST",postData);
+  return await apiService.apiCall(
+    MAIN_API["ADD_BOOKING"] + "/" + id,
+    "POST",
+    postData
+  );
 }
 export async function coupleEnquiries(id) {
   return enquiries;

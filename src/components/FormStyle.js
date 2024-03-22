@@ -626,7 +626,7 @@ export const VendorLoginButton = styled(Button)(({ theme }) => ({
   textTransform: "initial",
   color: "#000", // Set text color to black
   backgroundColor: "#FFF", // Set background color to white
-  border: "1px solid #000",
+  border: "2px solid #000",
   borderRadius: "50px",
   maxWidth: "250px",
   width: "250px",

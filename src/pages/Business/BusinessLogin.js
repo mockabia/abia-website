@@ -18,7 +18,6 @@ const LoginPage = () => {
   const [inputsErrors, setInputsErrors] = useState({});
   const [showVisibilityIcon, setShowVisibilityIcon] = useState(false);
 
- 
   const togglePasswordVisibility = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword);
@@ -122,12 +121,12 @@ const LoginPage = () => {
                     </div>
                   )}
                 </div>
-                <div className="login-forgot-password">
+                <div className="login-forgot-password ">
                   <BusinessForgotPassword />
                 </div>
                 <div className="flex flex-col ">
                   <VendorLoginButton disabled={!isValidForm} type="submit">
-                    <span>Login</span>
+                    <span>Sign in</span>
                   </VendorLoginButton>
                 </div>
               </Stack>
@@ -136,7 +135,7 @@ const LoginPage = () => {
                   Don't have an account?{" "}
                   <Link to={window.VSIGNUP} className="font-[900] underline">
                     {" "}
-                    <span className="cl-gap">q</span>Sign Up Now
+                    <span className="cl-gap"></span>Sign Up Now
                   </Link>
                 </h6>
               </div>

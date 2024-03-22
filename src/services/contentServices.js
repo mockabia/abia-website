@@ -34,3 +34,4 @@ export async function fetchBlogs(url) {
 export async function fetchBlogDetail(url) {
   return await apiService.apiCall(MAIN_API["BLOG_DETAIL"] + "/" + url, "GET");
 }
+

@@ -1,6 +1,6 @@
 import * as apiService from "../../api/apiServices";
 import * as apiUrls from "../../api/apiUrls";
-import subscription from "../json/settings_subscription.json"
+import subscription from "../json/settings_subscription.json";
 
 export const IMAGE_FOLDER = "";
 export const PREFIX       = "abia_business-";
