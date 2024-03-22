@@ -122,8 +122,10 @@ export const ForgetBox = {
   border: "1px solid #949494",
   borderRadius: "1rem",
   padding: "3rem",
-  "@media (max-width: 1024px)": {
+  outline: "none",
+  "@media (max-width: 1025px)": {
     width: "20rem",
+    padding: "2rem",
   },
 };
 
@@ -138,7 +140,7 @@ export const RedditTextField = styled(TextField)(({ theme }) => ({
 
   "& .MuiFormLabel-root": {
     fontSize: "14px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
   },
   "& .MuiFilledInput-root": {
     overflow: "hidden",
@@ -185,7 +187,7 @@ export const SelectTextField = styled(TextField)(({ theme }) => ({
 
   "& .MuiFormLabel-root": {
     fontSize: "14px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
   },
   "& .MuiFilledInput-root": {
     overflow: "hidden",
@@ -229,7 +231,7 @@ export const DateTextField = styled(TextField)(({ theme }) => ({
 
   "& .MuiFormLabel-root": {
     fontSize: "14px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
   },
   "& .MuiFilledInput-root": {
     overflow: "hidden",
@@ -267,7 +269,7 @@ export const HeartIconTextField = styled(TextField)(({ theme }) => ({
   },
   "& .MuiFormLabel-root": {
     fontSize: "14px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
   },
   "& .MuiFilledInput-root": {
     overflow: "hidden",
@@ -307,7 +309,7 @@ export const MultiTLinedTextField = styled(TextField)(({ theme }) => ({
   },
   "& .MuiFormLabel-root": {
     fontSize: "14px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
   },
 }));
 
@@ -322,7 +324,7 @@ export const ColorSubmitButton = styled(Button)(({ theme }) => ({
 }));
 
 export const ColorSortButton = styled(Button)(({ theme }) => ({
-  fontFamily: "Manrope",
+  fontFamily: "Manrope, sans-serif",
   textTransform: "initial",
   color: "#515151", // Set text color to black
   backgroundColor: "white", // Set background color to white
@@ -413,7 +415,7 @@ export const StepperStyle = styled(Stepper)(({ theme }) => ({
     color: "#5a9d98",
   },
   "& .MuiStepLabel-label": {
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
   },
   [`@media (max-width: 550px)`]: {
     "& .MuiStepLabel-root": {
@@ -483,14 +485,14 @@ export const LeftAlignedTypography = styled(Typography)({
   fontSize: "14px",
   textAlign: "left",
   paddingLeft: "1rem",
-  fontFamily: "Manrope",
+  fontFamily: "Manrope, sans-serif",
   textTransform: "initial",
   fontWeight: "600",
 });
 
 export const CheckBoxTypo = styled(Typography)({
   fontSize: "16px",
-  fontFamily: "Manrope",
+  fontFamily: "Manrope, sans-serif",
   color: "#0e0e0e",
   fontWeight: "600",
   whiteSpace: "normal",
@@ -505,24 +507,24 @@ export const CheckBoxStyle = styled(Checkbox)({
     color: "#5a9d98",
   },
   "& .MuiFormControlLabel-label": {
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
   },
 });
 
 export const CSTextfield = styled(TextField)({
   "& .MuiTextField-root": {
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     height: "45px",
     width: "100%",
     maxWidth: "100%",
     boxShadow: "none",
     borderRadius: "10px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     // border: "1px solid #c3bebe",
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     width: "100%",
     maxWidth: "100%",
     fontSize: "14px",
@@ -542,7 +544,7 @@ export const CSTextfield = styled(TextField)({
     },
   },
   "& .MuiFormLabel-root ": {
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
   },
 });
 
@@ -606,7 +608,7 @@ export const VLTextField = styled(TextField)(({ theme }) => ({
     background: "#fafafa",
     cursor: "pointer",
     fontSize: "14px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     outline: "none",
   },
 
@@ -622,7 +624,7 @@ export const VendorLoginButton = styled(Button)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "center",
   margin: "auto",
-  fontFamily: "Manrope",
+  fontFamily: "Manrope, sans-serif",
   textTransform: "initial",
   color: "#000", // Set text color to black
   backgroundColor: "#FFF", // Set background color to white
@@ -662,7 +664,7 @@ export const NavMenuStyle = styled(Button)(({ theme }) => ({
 
 export const CSmenuItemStyle = {
   fontWeight: "500",
-  fontFamily: "Manrope",
+  fontFamily: "Manrope, sans-serif",
   fontSize: "14px",
 
   // Add other styles as needed
@@ -737,7 +739,7 @@ export const customSelectStyles2 = {
     ...provided,
     border: "1px solid #c3bebe",
     boxShadow: "none",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     fontSize: "14px",
     color: "#575757",
     fontWeight: "400",
@@ -864,7 +866,7 @@ export const CoupleInput = styled(TextField)(({ theme }) => ({
     marginTop: theme.spacing(1),
   },
   "& .MuiTextField-root": {
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     height: "45px",
     width: "100%",
     maxWidth: "22rem",
@@ -874,7 +876,7 @@ export const CoupleInput = styled(TextField)(({ theme }) => ({
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     fontSize: "14px",
     width: "100%",
     "& > fieldset": { borderColor: "#c3bebe" },
@@ -908,7 +910,7 @@ export const TextAreaInput = styled(TextField)(({ theme }) => ({
     marginTop: theme.spacing(1),
   },
   "& .MuiTextField-root": {
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     height: "45px",
     width: "100%",
     maxWidth: "22rem",
@@ -918,7 +920,7 @@ export const TextAreaInput = styled(TextField)(({ theme }) => ({
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     fontSize: "14px",
     width: "100%",
     "& > fieldset": { borderColor: "#c3bebe" },
@@ -943,22 +945,27 @@ export const TextAreaInput = styled(TextField)(({ theme }) => ({
 
 export const CoupleCommonInput = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     height: "45px",
     width: "100%",
     // maxWidth: "22rem",
     boxShadow: "none",
     borderRadius: "10px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     // border: "1px solid #c3bebe",
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     fontSize: "14px",
     "& > fieldset": { borderColor: "#c3bebe" },
     "&:hover fieldset": {
       borderColor: "#c3bebe",
+    },
+    "& input::placeholder": {
+      color: "#000 !important",
+      fontFamily: "Manrope, sans-serif",
+      fontSize: "12px",
     },
   },
   "& .MuiFormHelperText-root": {
@@ -976,7 +983,7 @@ export const CoupleCommonInput = styled(TextField)(({ theme }) => ({
 // search field
 export const SearchInputStyle = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     boxShadow: "none",
     border: "1px solid #B7B7B7",
   },
@@ -985,7 +992,7 @@ export const SearchInputStyle = styled(TextField)(({ theme }) => ({
     maxWidth: "100%",
     height: "2.7rem",
     borderRadius: "1.5rem",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     "& > fieldset": { borderColor: "#B7B7B7" },
     "&:hover fieldset": {
       borderColor: "#B7B7B7", // Set the same color as normal state to prevent the black border during hovering
@@ -1019,7 +1026,7 @@ export const MuiBoxStyles = {
 export const CoupleSelectStyle = {
   control: (provided, state) => ({
     ...provided,
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     fontSize: "14px",
     border: "1px solid #c3bebe",
     boxShadow: "none",
@@ -1091,7 +1098,7 @@ export const CoupleSelectStyle = {
 
 // BUDGET
 export const CoupleAddButton = styled(Button)(({ theme }) => ({
-  fontFamily: "Manrope",
+  fontFamily: "Manrope, sans-serif",
   textTransform: "initial",
   color: "white", // Set text color to black
   backgroundColor: "#5a9d98", // Set background color to white
@@ -1116,7 +1123,7 @@ export const CoupleAddButton = styled(Button)(({ theme }) => ({
 }));
 
 export const BudgetEditButton = styled(Button)(({ theme }) => ({
-  fontFamily: "Manrope",
+  fontFamily: "Manrope, sans-serif",
   textTransform: "initial",
   color: "white", // Set text color to black
   backgroundColor: "#000", // Set background color to white
@@ -1140,7 +1147,7 @@ export const BudgetEditButton = styled(Button)(({ theme }) => ({
   },
 }));
 export const CancelCoupleButton = styled(Button)(({ theme }) => ({
-  fontFamily: "Manrope",
+  fontFamily: "Manrope, sans-serif",
   textTransform: "initial",
   color: "#5a9d98", // Set text color to black
   backgroundColor: "white", // Set background color to white
@@ -1155,7 +1162,7 @@ export const CancelCoupleButton = styled(Button)(({ theme }) => ({
 }));
 
 export const BlackLargeButton = styled(Button)(({ theme }) => ({
-  fontFamily: "Manrope",
+  fontFamily: "Manrope, sans-serif",
   textTransform: "initial",
   color: "#fff", // Set text color to black
   backgroundColor: "#5a9d98", // Set background color to white
@@ -1175,7 +1182,7 @@ export const BlackLargeButton = styled(Button)(({ theme }) => ({
 }));
 
 export const BlackSmallButton = styled(Button)(({ theme }) => ({
-  fontFamily: "Manrope",
+  fontFamily: "Manrope, sans-serif",
   textTransform: "initial",
   color: "#fff", // Set text color to black
   backgroundColor: "#5a9d98", // Set background color to white
@@ -1196,12 +1203,12 @@ export const BlackSmallButton = styled(Button)(({ theme }) => ({
 
 export const BudgetInput = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     width: "100%",
     maxWidth: "22rem",
     boxShadow: "none",
     borderRadius: "10px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     // border: "1px solid #c3bebe",
   },
   "& .MuiOutlinedInput-root": {
@@ -1229,18 +1236,18 @@ export const BudgetInput = styled(TextField)(({ theme }) => ({
 // RATING AND REVIEW IPUT
 export const RatingInput = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     height: "45px",
     width: "16rem",
     maxWidth: "100%",
     boxShadow: "none",
     borderRadius: "10px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     // border: "1px solid #c3bebe",
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     fontSize: "14px",
     width: "16rem",
     maxWidth: "100%",
@@ -1263,20 +1270,20 @@ export const RatingInput = styled(TextField)(({ theme }) => ({
 
 export const IndiRatingInput = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     height: "45px",
     // width: "16rem",
     width: "100%",
     maxWidth: "100%",
     boxShadow: "none",
     borderRadius: "10px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     textAlign: "center",
     // border: "1px solid #c3bebe",
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     fontSize: "14px",
     width: "7rem",
     maxWidth: "100%",
@@ -1422,17 +1429,17 @@ export const reactSelectScroll = {
 // PAYMENTS INPUT
 export const PaymentInput = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     height: "45px",
     width: "16rem",
     maxWidth: "100%",
     boxShadow: "none",
     borderRadius: "10px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     backgroundColor: "#f5f5f5",
     fontSize: "14px",
     width: "100%",
@@ -1464,7 +1471,7 @@ export const CheckBoxStyle2 = styled(Checkbox)({
     backgroundColor: "#515151", // Set background color to black when checked
   },
   "& .MuiFormControlLabel-label": {
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
   },
 });
 
@@ -1491,7 +1498,7 @@ export const PricingCheckbox = styled(Checkbox)({
 
 // Couple Enquiry Button
 export const CoupleAddCategoryButton = styled(Button)(({ theme }) => ({
-  fontFamily: "Manrope",
+  fontFamily: "Manrope, sans-serif",
   textTransform: "initial",
   color: "#515151", // Set text color to black
   backgroundColor: "white", // Set background color to white
@@ -1519,7 +1526,7 @@ export const CoupleAddCategoryButton = styled(Button)(({ theme }) => ({
 export const EnquirySelectStyle = {
   control: (provided, state) => ({
     ...provided,
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     fontSize: "14px",
     border: "1px solid #c3bebe",
     boxShadow: "none",
@@ -1549,7 +1556,7 @@ export const EnquirySelectStyle = {
   }),
   option: (provided, state) => ({
     ...provided,
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     fontSize: "14px",
     backgroundColor: state.isSelected
       ? "#e7f5f4"
@@ -1587,17 +1594,17 @@ export const EnquirySelectStyle = {
 // Expiryinput
 export const Expiryinput = styled(TextField)(({ theme }) => ({
   "& .MuiTextField-root": {
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     height: "45px",
     // width: "16rem",
     maxWidth: "100%",
     boxShadow: "none",
     borderRadius: "10px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
   },
   "& .MuiOutlinedInput-root": {
     borderRadius: "10px",
-    fontFamily: "Manrope",
+    fontFamily: "Manrope, sans-serif",
     backgroundColor: "#FAFAFA",
     fontSize: "14px",
     width: "100%",

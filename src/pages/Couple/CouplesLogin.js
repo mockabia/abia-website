@@ -147,13 +147,13 @@ const CouplesLogin = (props) => {
               {/*Forgot Password */}
             </form>
 
-            {hasInputErrors && (
+            {/* {hasInputErrors && (
               <div className="flex font-bold text-red-600 text-[12px]">
                 {Object.values(errors).map((error, index) => (
                   <div key={index}>{error}</div>
                 ))}
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>
@@ -245,13 +245,13 @@ const CouplesLogin = (props) => {
                 {/*Forgot Password */}
               </form>
 
-              {hasInputErrors && (
+              {/* {hasInputErrors && (
                 <div className="flex font-bold text-red-600 text-[12px]">
                   {Object.values(errors).map((error, index) => (
                     <div key={index}>{error}</div>
                   ))}
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>

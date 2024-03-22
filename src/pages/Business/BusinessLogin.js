@@ -80,6 +80,16 @@ const LoginPage = () => {
                     defaultValue={inputs.email}
                     onChange={handleChange}
                     autoCapitalize="off"
+                    InputProps={{
+                      inputProps: {
+                        style: {
+                          fontFamily: "Manrope, sans-serif",
+                          fontSize: "12px",
+                          fontWeight: "400",
+                          color: "#000",
+                        },
+                      },
+                    }}
                   />
                   {inputsErrors.email && (
                     <div className="flex font-bold text-red-400 text-[12px]">
@@ -113,6 +123,14 @@ const LoginPage = () => {
                           ) : null}
                         </IconButton>
                       ),
+                      inputProps: {
+                        style: {
+                          fontFamily: "Manrope, sans-serif",
+                          fontSize: "12px",
+                          fontWeight: "400",
+                          color: "#000",
+                        },
+                      },
                     }}
                   />
                   {inputsErrors.password && (
@@ -142,13 +160,13 @@ const LoginPage = () => {
               {/*Forgot Password */}
             </form>
 
-            {hasInputErrors && (
+            {/* {hasInputErrors && (
               <div className="flex font-bold text-red-600 text-[12px]">
                 {Object.values(inputsErrors).map((error, index) => (
                   <div key={index}>{error}</div>
                 ))}
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>
@@ -177,6 +195,16 @@ const LoginPage = () => {
                       defaultValue={inputs.email}
                       onChange={handleChange}
                       autoCapitalize="off"
+                      InputProps={{
+                        inputProps: {
+                          style: {
+                            fontFamily: "Manrope, sans-serif",
+                            fontSize: "12px",
+                            fontWeight: "400",
+                            color: "#000",
+                          },
+                        },
+                      }}
                     />
                     {inputsErrors.email && (
                       <div className="flex font-bold text-red-400 text-[12px]">
@@ -210,6 +238,14 @@ const LoginPage = () => {
                             ) : null}
                           </IconButton>
                         ),
+                        inputProps: {
+                          style: {
+                            fontFamily: "Manrope, sans-serif",
+                            fontSize: "12px",
+                            fontWeight: "400",
+                            color: "#000",
+                          },
+                        },
                       }}
                     />
                     {inputsErrors.password && (
@@ -239,13 +275,13 @@ const LoginPage = () => {
                 {/*Forgot Password */}
               </form>
 
-              {hasInputErrors && (
+              {/* {hasInputErrors && (
                 <div className="flex font-bold text-red-600 text-[12px]">
                   {Object.values(inputsErrors).map((error, index) => (
                     <div key={index}>{error}</div>
                   ))}
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>

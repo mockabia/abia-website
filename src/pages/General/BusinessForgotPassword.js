@@ -7,7 +7,11 @@ import {
   TextField,
 } from "@mui/material";
 import React from "react";
-import { ForgetBox } from "../../components/FormStyle";
+import {
+  CoupleCommonInput,
+  ForgetBox,
+  VendorLoginButton,
+} from "../../components/FormStyle";
 import { AiOutlineClose } from "react-icons/ai";
 import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
 import { Stack } from "react-bootstrap";
@@ -117,10 +121,12 @@ const ForgetPassword = () => {
           </Box>
           {isSubmitted && responseMessage ? (
             <div>
-              <h3 className="flex justify-center items-center">Success!</h3>
-              <p className="flex flex-col justify-start md:justify-center items-center">
+              <h3 className="flex justify-center items-center mb-[0.5rem]">
+                Success!
+              </h3>
+              <p className="flex flex-col justify-start md:justify-center items-center gap-[0.5rem]">
                 <h4>{responseMessage}</h4>
-                <p>
+                <p className="text-center">
                   Please check your email:{" "}
                   <span style={{ color: "#6cc2bc", fontWeight: "600" }}>
                     {responseEmail}
@@ -129,14 +135,14 @@ const ForgetPassword = () => {
               </p>
             </div>
           ) : (
-            <form>
-              <h3 className="flex justify-center">Forgot Password. ?</h3>
-              <p className="flex justify-center">
+            <form className="flex flex-col gap-[1rem] lg:w-[22rem]">
+              <h3 className="flex justify-start">Forgot Password ?</h3>
+              {/* <p className="flex justify-center">
                 You can reset your password here.
-              </p>
-              <div className="mt-[1rem]">
-                <TextField
-                  label="Enter your Email"
+              </p> */}
+              <div className="flex flex-col gap-[1rem] ">
+                <CoupleCommonInput
+                  placeholder="Enter your Email"
                   id="email"
                   name="email"
                   value={inputs.email}
@@ -145,37 +151,29 @@ const ForgetPassword = () => {
                   helperText={inputsErrors.password}
                   sx={{ width: "100%" }}
                   InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <UserIcons
-                          fill="#949494"
-                          style={{
-                            width: "18px",
-                            height: "18px",
-                          }}
-                        />
-                      </InputAdornment>
-                    ),
+                    inputProps: {
+                      style: {
+                        fontFamily: "Manrope, sans-serif",
+                        fontSize: "12px",
+                        fontWeight: "400",
+                        color: "#000",
+                      },
+                    },
                   }}
                 />
                 {errors.email && (
                   <p className="error-message">{errors.email}</p>
                 )}
-                <Button
-                  // type="submit"
-                  variant="contained"
-                  style={{
-                    backgroundColor: "#6cc2bc",
-                    color: "#ffffff",
-                    height: "40px",
-                    textTransform: "capitalize",
-                    width: "100%",
-                    marginTop: "1rem",
-                  }}
-                  onClick={handleSubmit}
-                >
-                  Submit
-                </Button>
+                {/* Submit button */}
+                <div>
+                  <VendorLoginButton
+                    // type="submit"
+
+                    onClick={handleSubmit}
+                  >
+                    Submit
+                  </VendorLoginButton>
+                </div>
               </div>
             </form>
           )}

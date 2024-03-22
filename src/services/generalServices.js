@@ -49,6 +49,7 @@ export async function businessProfileView(id) {
   return businessProfile;
   //return await apiService.apiCall(MAIN_API["ENQUIRIES"]+'/'+id, "GET");
 }
+
 export async function saveEnquiry(id, postData) {
   return await apiService.apiCall(
     MAIN_API["SAVE_ENQUIRY"] + "/" + id,
