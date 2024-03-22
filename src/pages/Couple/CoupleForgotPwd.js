@@ -95,7 +95,7 @@ const CoupleForgotPwd = () => {
   };
 
   return (
-    <div className="-mt-[10px]">
+    <div className="-mt-[14px]">
       <div onClick={handleOpen}>
         <span className="text-[14px] font-semibold cursor-pointer">
           forgot ?
@@ -146,7 +146,7 @@ const CoupleForgotPwd = () => {
               </p>
             </div>
           ) : (
-            <form>
+            <form className="flex flex-col gap-[1rem] lg:w-[22rem]">
               <h3 className="form-header">Forgot Password ?</h3>
               <div className="flex flex-col gap-[1rem] mt-[1rem]">
                 <CoupleCommonInput

@@ -131,7 +131,7 @@ const CouplesLogin = (props) => {
                 </div>
                 <div className="flex flex-col ">
                   <VendorLoginButton disabled={!isValidForm} type="submit">
-                    <span>Login</span>
+                    <span>Sign in</span>
                   </VendorLoginButton>
                 </div>
               </Stack>
@@ -229,7 +229,7 @@ const CouplesLogin = (props) => {
                   </div>
                   <div className="flex flex-col ">
                     <VendorLoginButton disabled={!isValidForm} type="submit">
-                      <span>Login</span>
+                      <span>Sign in</span>
                     </VendorLoginButton>
                   </div>
                 </Stack>
@@ -238,7 +238,7 @@ const CouplesLogin = (props) => {
                     Don't have an account?{" "}
                     <Link to={window.CSIGNUP} className="font-[900] underline">
                       {" "}
-                      <span className="cl-gap">q</span>Sign Up Now
+                      <span className="cl-gap"></span>Sign Up Now
                     </Link>
                   </h6>
                 </div>

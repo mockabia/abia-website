@@ -259,7 +259,7 @@ const LoginPage = () => {
                   </div>
                   <div className="flex flex-col ">
                     <VendorLoginButton disabled={!isValidForm} type="submit">
-                      <span>Login</span>
+                      <span>Sign in</span>
                     </VendorLoginButton>
                   </div>
                 </Stack>
