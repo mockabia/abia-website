@@ -3,6 +3,7 @@ import * as apiUrls from "../api/apiUrls";
 import category_stateDropdown from "./json/category_stateDropdown.json";
 import vendor_category from "./json/vendor_category.json";
 import directoryList from "./json/directoryList.json";
+import businessProfile from "../services/json/business_profile_detail.json";
 
 
 export const MAIN_API   = apiUrls.PUBLIC_API;
@@ -39,4 +40,8 @@ export async function fetchFindPaydecode(decodeId) {
 }
 export async function fetchFindOfferdecode(decodeId) {
     return await apiService.apiCall(MAIN_API["BUSINESS_OFFERDECODE"] + "/" + decodeId ,"GET")
+}
+export async function businessProfileView(id) {
+  return businessProfile;
+  //return await apiService.apiCall(MAIN_API["ENQUIRIES"]+'/'+id, "GET");
 }
