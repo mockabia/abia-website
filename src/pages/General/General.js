@@ -196,39 +196,37 @@ export const saveEnquiry = async (formValues, setErrors, setOpen) => {
   }
 };
 export const fetchPayment = async (setPaysettings) => {
-  let token = localStorage.getItem("vendorToken");
-  token = JSON.parse(token);
-  let userSession = token && token.user ? token.user : null;
-  let userId = userSession && userSession.id ? userSession.id : 0;
-  await servicesPage.paySettings(userId).then(function (response) {
+  await servicesPage.paySettings().then(function (response) {
     if (response.statuscode === 200) {
       setPaysettings(response.result);
     }
   });
 };
 export const fetchFindPaydecode = async (decodeId,setFormvalues) => {
-  /* setFormvalues((values) => ({ ...values,['ftype']: "1",['stype']: "1", ['vid']: "101", ['holdername']: "test ", ['email']: "test@test.com", 
-    ['contact_person']: "test contact" ,['phone']: "634634636",
-    ['state']: "QLD"})); */
   await servicesPage.fetchFindPaydecode(decodeId).then(function (response) {
     if (response.statuscode === 200) {
-      setFormvalues((values) => ({ ...values, ['ftype']: response.result.ftype,['stype']: response.result.stype, 
+      setFormvalues((values) => ({ ...values, ['ftype']: response.result.mem_ftype,['stype']: response.result.mem_stype, 
         ['vid']: response.result.vid, ['holdername']: response.result.name,['name']: response.result.name,
         ['email']: response.result.email, ['contact_person']: response.result.contact_person ,
         ['phone']: response.result.phone, ['state']: response.result.state, ['paybyusing']: 1 }));
     }
   });
 };
-export const fetchFindOfferdecode = async (decodeId,setFormvalues) => {
-  /* setFormvalues((values) => ({ ...values,['ftype']: "1",['stype']: "1", ['vid']: "101", ['holdername']: "test ", ['email']: "test@test.com", 
-    ['contact_person']: "test contact" ,['phone']: "634634636",
-    ['state']: "QLD"})); */
+export const fetchFindOfferdecode = async (decodeId,setPaysettings,setFormvalues) => {
   await servicesPage.fetchFindOfferdecode(decodeId).then(function (response) {
     if (response.statuscode === 200) {
-      setFormvalues((values) => ({ ...values, ['ftype']: response.result.ftype,['stype']: response.result.stype, 
-        ['vid']: response.result.vid, ['holdername']: response.result.name,['name']: response.result.name,
-        ['email']: response.result.email, ['contact_person']: response.result.contact_person ,
-        ['phone']: response.result.phone, ['state']: response.result.state, ['paybyusing']: 1 }));
+      setFormvalues((values) => ({ ...values, ['ftype']: response.result.Vendor.mem_ftype,['stype']: response.result.Vendor.mem_stype, 
+        ['vid']: response.result.Vendor.id, ['holdername']: response.result.Vendor.name,['name']: response.result.Vendor.name,
+        ['email']: response.result.Vendor.email, ['contact_person']: response.result.Vendor.contact_person ,
+        ['phone']: response.result.Vendor.phone, ['state']: response.result.Vendor.state, ['paybyusing']: 1 }));
+      setPaysettings((values) => ({ ...values, ...response.result.Offer}));
+    }
+  });
+};
+export const fetchFindOfferdecodePayment = async (decodeId,setPaysettings) => {
+  await servicesPage.fetchFindOfferdecode(decodeId).then(function (response) {
+    if (response.statuscode === 200) {
+      setPaysettings((values) => ({ ...values, ...response.result.Offer}));
     }
   });
 };

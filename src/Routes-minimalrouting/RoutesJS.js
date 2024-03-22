@@ -10,20 +10,30 @@ export const fetchContentRoutes = async (setPublicMenu, setBlogMenu) => {
         return menus.id == "2";
       });
       const publicPayment = response.result.filter((menus) => {
-        return menus.id == "17";
+        return menus.id == "35";
       });
       const editPayment = response.result.filter((menus) => {
-        return menus.id == "19";
+        return menus.id == "37";
+      });
+      const addNewCard = response.result.filter((menus) => {
+        return menus.id == "38";
       });
       const offerSubscription = response.result.filter((menus) => {
-        return menus.id == "20";
+        return menus.id == "39";
       });
-      console.log(response.result)
+      const offerPayment = response.result.filter((menus) => {
+        return menus.id == "40";
+      });
+      //console.log(response.result)
       window.WEDDING_DIRECTORY    = "/" + directoryMenu[0].url;
       window.PUBLIC_PAYMENT       = "/" + publicPayment[0].url;
       window.EDIT_PAYMENT         = "/" + editPayment[0].url;
-      window.OFFER_PAYMENT        = "/" + offerSubscription[0].url;
-      window.PUBLIC_PAYMENT_PAGE  = publicPayment[0].pagename;
+      window.ADD_NEWCARD          = "/" + addNewCard[0].url;
+      window.OFFER_SUBSCRIPTION   = "/" + offerSubscription[0].url;
+      window.OFFER_PAYMENT        = "/" + offerPayment[0].url;
+      window.PUBLIC_PAYMENT_PAGE      = publicPayment[0].pagename;
+      window.OFFER_SUBSCRIPTION_PAGE  = offerSubscription[0].pagename;
+      window.OFFER_PAYMENT_PAGE       = offerPayment[0].pagename;
     }
     fetchBlogRoutes(setBlogMenu);
   });

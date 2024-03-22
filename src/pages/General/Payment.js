@@ -21,8 +21,12 @@ const Payment = (props) => {
       GeneralJS.fetchFindPaydecode(decodeId,setFormvalues);
       setPayFrom(3)
       setRightPanel(1)
-    }else if(decodeId!="" && decodeId!=window.OFFER_PAYMENT.replace('/', '')){
-      GeneralJS.fetchFindOfferdecode(decodeId,setFormvalues);
+    }else if(decodeId!="" && url==window.ADD_NEWCARD.replace('/', '')){
+      GeneralJS.fetchFindPaydecode(decodeId,setFormvalues);
+      setPayFrom(6)
+      setRightPanel(1)
+    }else if(decodeId!="" && url==window.OFFER_PAYMENT.replace('/', '')){
+      //GeneralJS.fetchFindOfferdecode(decodeId,setFormvalues);
       setPayFrom(4)
       setRightPanel(1)
     }

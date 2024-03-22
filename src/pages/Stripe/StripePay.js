@@ -139,8 +139,8 @@ const PaymentForm = (props) => {
     }, []);
     return (
         <>
-        <pre>{JSON.stringify(formvalues, null, 2)}</pre>
-            <PaymentInput name="email" value={formvalues.email} disabled={payFrom==3 ? 'disabled' : '' }
+        {/* <pre>{JSON.stringify(formvalues, null, 2)}</pre> */}
+            <PaymentInput name="email" value={formvalues.email} disabled={(payFrom==3 || payFrom==4 || payFrom==6) ? 'disabled' : '' }
                 onChange={(e) =>{
                     checkMultipleEmailAccounts(e.target.value)
                     onChangeEventValue("email", e.target.value)
@@ -176,7 +176,7 @@ const PaymentForm = (props) => {
                     )}
                 </>
             )}
-            <PaymentInput name="holdername" value={formvalues.holdername} disabled={payFrom==3 ? 'disabled' : '' }
+            <PaymentInput name="holdername" value={formvalues.holdername} disabled={(payFrom==3 || payFrom==4 || payFrom==6) ? 'disabled' : '' }
                 onChange={(e) => {
                     onChangeEventValue("holdername", e.target.value)
                     onChangeEventValue("name", e.target.value)
@@ -255,7 +255,7 @@ const PaymentForm = (props) => {
               <button type="button" className="button-1" onClick={handleSubmit(stripe, elements)}>
                 Pay
               </button>
-              {payFrom!='3' && (
+              {(payFrom!=3 && payFrom!=6) && (
                 <button type="button" className="button-2" onClick={redirectBack}>
                 Back
               </button>
