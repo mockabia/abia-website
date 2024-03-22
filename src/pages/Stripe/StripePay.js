@@ -139,7 +139,7 @@ const PaymentForm = (props) => {
     }, []);
     return (
         <>
-        <pre>{JSON.stringify(formvalues, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(formvalues, null, 2)}</pre> */}
             <PaymentInput name="email" value={formvalues.email} disabled={payFrom==3 ? 'disabled' : '' }
                 onChange={(e) =>{
                     checkMultipleEmailAccounts(e.target.value)
