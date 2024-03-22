@@ -31,7 +31,14 @@ const Payment = (props) => {
   }, [props.formvalues]);
 
   useEffect(() => {
-    GeneralJS.fetchPayment(setPaysettings)
+    let urls      = location.pathname.split('/').slice(-2);
+    let decodeId  = urls[0] !="" ? urls[1] : "";
+    let url       = urls[0];
+    if(decodeId!="" && url==window.OFFER_PAYMENT.replace('/', '')){
+      GeneralJS.fetchFindOfferdecodePayment(decodeId,setPaysettings);
+    }else{
+      GeneralJS.fetchPayment(setPaysettings)
+    }
     setFormvalues((values) => ({ ...values,...paymentuser }));
   }, []);
   
@@ -39,6 +46,7 @@ const Payment = (props) => {
     let ftypeArray              = {}
     ftypeArray[0]               = {}
     ftypeArray[1]               = {}
+
     if (formvalues.stype == "0") {
       ftypeArray[0].setupfee    = paysettings.newregfees;
         ftypeArray[0].amounttopay = paysettings.monthlyregfees;
@@ -104,25 +112,28 @@ const Payment = (props) => {
               </div>
             </div>
             {/* Sub head section */}
-            <div>
-              <h4>Activate’s ABIA {type} Benefits</h4>
-              <h5 className="mt-[5px] mb-[8px]">Choose Your Plan:</h5>
-              {/* Plan buttons */}
-              <div className="flex justify-normal gap-[1rem]">
-                <button
-                  className={formvalues.stype==0 ? "active" : ""}
-                  onClick={() => handlePlanChange(0)}
-                >
-                  Monthly
-                </button>
-                <button
-                  className={formvalues.stype==1 ? "active" : ""}
-                  onClick={() => handlePlanChange(1)}
-                >
-                  Annual
-                </button>
+            {payFrom!='5' && (
+              <div>
+                <h4>Activate’s ABIA {type} Benefits</h4>
+                <h5 className="mt-[5px] mb-[8px]">Choose Your Plan:</h5>
+                {/* Plan buttons */}
+                <div className="flex justify-normal gap-[1rem]">
+                  <button
+                    className={formvalues.stype==0 ? "active" : ""}
+                    onClick={() => handlePlanChange(0)}
+                  >
+                    Monthly
+                  </button>
+                  <button
+                    className={formvalues.stype==1 ? "active" : ""}
+                    onClick={() => handlePlanChange(1)}
+                  >
+                    Annual
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
+            
             {/* Input Fields */} 
             {/* Emal */}
             {formvalues.payamount && (

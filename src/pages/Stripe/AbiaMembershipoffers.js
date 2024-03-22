@@ -37,6 +37,7 @@ const featuredList = [
 
 const AbiaMembershipoffers = (props) => {
   const navigate                              = useNavigate();
+  const location                              = useLocation();
   const [show, setShow]                       = useState(false);
   const [show2, setshow2]                     = useState(false);
   const [paysettings, setPaysettings]         = useState({});
@@ -47,10 +48,16 @@ const AbiaMembershipoffers = (props) => {
   const [visibleListItems_F, setVisibleListItems_F] = useState(
     featuredList.slice(0, 4)
   );
-
   useEffect(() => {
-    GeneralJS.fetchPayment(setPaysettings)
-    setFormvalues((values) => ({ ...values, ['stype']: 0 }));
+    let urls      = location.pathname.split('/').slice(-2);
+    let decodeId  = urls[0] !="" ? urls[1] : "";
+    let url       = urls[0];
+    if(decodeId!="" && url==window.OFFER_SUBSCRIPTION.replace('/', '')){
+      GeneralJS.fetchFindOfferdecode(decodeId,setPaysettings,setFormvalues);
+    }else{
+      GeneralJS.fetchPayment(setPaysettings)
+      setFormvalues((values) => ({ ...values, ['stype']: 0 }));
+    }
   }, []);
   
   useEffect(() => {
@@ -59,16 +66,24 @@ const AbiaMembershipoffers = (props) => {
     ftypeArray[1]               = {}
     if (formvalues.stype == "0") {
       ftypeArray[0].setupfee    = paysettings.newregfees;
-      ftypeArray[0].amounttopay = paysettings.monthlyregfees;
-      ftypeArray[1].setupfee    = paysettings.newregfees;
-      ftypeArray[1].amounttopay = paysettings.monthlyfregfees;
-    }else {
-      ftypeArray[0].setupfee    = paysettings.newregfees;
-      ftypeArray[0].amounttopay = paysettings.annualregfees;
-      ftypeArray[1].setupfee    = paysettings.newregfees;
-      ftypeArray[1].amounttopay = paysettings.annualfregfees;
+        ftypeArray[0].amounttopay = paysettings.monthlyregfees;
+        ftypeArray[0].payamount   = parseFloat(paysettings.newregfees) + parseFloat(paysettings.monthlyregfees);
+        ftypeArray[1].setupfee    = paysettings.newregfees;
+        ftypeArray[1].amounttopay = paysettings.monthlyfregfees;
+        ftypeArray[1].payamount   = parseFloat(paysettings.newregfees) + parseFloat(paysettings.monthlyfregfees);
+      }else {
+        ftypeArray[0].setupfee    = paysettings.newregfees;
+        ftypeArray[0].amounttopay = paysettings.annualregfees;
+        ftypeArray[0].payamount   = parseFloat(paysettings.newregfees) + parseFloat(paysettings.annualregfees);
+        ftypeArray[1].setupfee    = paysettings.newregfees;
+        ftypeArray[1].amounttopay = paysettings.annualfregfees;
+        ftypeArray[1].payamount   = parseFloat(paysettings.newregfees) + parseFloat(paysettings.annualfregfees);
+    }
+    if(formvalues.ftype!=undefined){
+      setFormvalues((values) => ({ ...values,...ftypeArray[formvalues.ftype] }));
     }
     setFormvalues((values) => ({ ...values, ['ftypeArray']: ftypeArray }));
+
   }, [paysettings,formvalues.stype]);
 
   const onClickHandler = (e) => {
@@ -105,18 +120,29 @@ const AbiaMembershipoffers = (props) => {
   };
   const RedirectPayment = async (e) => {
 
-      let token       = localStorage.getItem("vendorToken");
+      /* let token       = localStorage.getItem("vendorToken");
       token           = JSON.parse(token);
       let userSession = token && token.user ? token.user : null;
-      let vid         = userSession && userSession.id ? userSession.id : 0;
+      let vid         = userSession && userSession.id ? userSession.id : 0; */
 
 
 
       let dataset                     = e.target.dataset;
       let requestForm                 = {};
-      requestForm['vid']              = vid;
+      if(formvalues.vid!=undefined){
+        requestForm['vid']              = formvalues.vid;
+      }
+      if(formvalues.stype!=undefined){
+        requestForm['stype']              = formvalues.stype;
+      }
+      if(formvalues.email!=undefined){
+        requestForm['email']              = formvalues.email;
+      }
+      if(formvalues.name!=undefined){
+        requestForm['name']              = formvalues.name;
+        requestForm['holdername']        = formvalues.name;
+      }
       requestForm['paybyusing']       = 1; // from front end
-      requestForm['stype']            = formvalues.stype;
       requestForm['ftype']            = dataset.ftype;
       requestForm['setupfee']         = formvalues.ftypeArray[dataset.ftype].setupfee;
       requestForm['amounttopay']      = formvalues.ftypeArray[dataset.ftype].amounttopay;
@@ -138,6 +164,7 @@ const AbiaMembershipoffers = (props) => {
 
   return (
       <div className="h-screen pb-[10rem]">
+        <pre>{JSON.stringify(formvalues, null, 2)}</pre>
         {/* toggle switch */}
         {/* <div style={{height:"200px",overflow:"scroll"}}>
           <pre>{JSON.stringify(paysettings, null, 2)}</pre>
