@@ -1,20 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./MenuItems.css";
-
+import { ReactComponent as UserIcons } from "../../icons/contact topbar.svg";
 import { slide as Menu } from "react-burger-menu";
-import { Link } from "react-router-dom";
-import LoginDropdown from "./LoginDropdown";
-import SignUpDropDown from "./SignUpDropDown";
-import AbiaLogo from "../../logo.png";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { AiFillCaretDown } from "react-icons/ai";
-import Modal from "@mui/material/Modal";
-import styled from "@emotion/styled";
-import CouplesLogin from "../../pages/Couple/CouplesLogin";
-import { Box } from "@mui/material";
+import { AiOutlineClose } from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom";
+import * as BusinessJS from "../../pages/Business/Business";
+import * as CoupleJS from "../../pages/Couple/Couple";
+
+import { ReactComponent as AbiaLogo } from "../../icons/abia-new-logo.svg";
 
 const style = {
   position: "absolute",
@@ -24,10 +17,79 @@ const style = {
   width: 450,
 };
 
+// close button change of Burger menu
+const CustomCloseIcon = () => {
+  return <AiOutlineClose style={{ color: "#8e8e8e", fontSize: "24px" }} />;
+};
+
 const MenuItems = (props) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [expandedItem, setExpandedItem] = useState(null);
   const [modalOpen, seetModalOpen] = useState(false);
+  const [loginDropdownOpen, setLoginDropdownOpen] = useState(false);
+  const [signupDropdownOpen, setSignupDropdownOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState({});
+  const navigate = useNavigate();
+  // useEffect(() => {
+  //   const handleOutsideClick = (event) => {
+  //     if (profileRef.current && !profileRef.current.contains(event.target)) {
+  //       setProfileOpen(false);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handleOutsideClick);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleOutsideClick);
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    let vtoken = localStorage.getItem("vendorToken");
+    let ctoken = localStorage.getItem("coupleToken");
+    if (vtoken !== undefined && vtoken !== "undefined" && vtoken !== null) {
+      vtoken = JSON.parse(vtoken);
+      let userSession = vtoken && vtoken.user ? vtoken.user : null;
+      setUserProfile(userSession);
+    } else if (
+      ctoken !== undefined &&
+      ctoken !== "undefined" &&
+      ctoken !== null
+    ) {
+      ctoken = JSON.parse(ctoken);
+      let userSession = ctoken && ctoken.user ? ctoken.user : null;
+      setUserProfile(userSession);
+    } else {
+      setUserProfile({});
+    }
+  }, [props.loginStatus]);
+
+  const toggleProfile = () => {
+    setProfileOpen(!profileOpen);
+  };
+  const handleVendorLogout = () => {
+    BusinessJS.logout(props.setLoginStatus, navigate);
+  };
+  const handleCoupleLogout = () => {
+    CoupleJS.logout(props.setLoginStatus, navigate);
+  };
+
+  // Login and signup dropdowns
+  const toggleLoginDropdown = () => {
+    setLoginDropdownOpen(!loginDropdownOpen);
+  };
+
+  const toggleSignupDropdown = () => {
+    setSignupDropdownOpen(!signupDropdownOpen);
+  };
+
+  const handleItemClick = (index) => {
+    // Toggle the expanded state for the clicked menu item
+    if (expandedItem === index) {
+      setExpandedItem(null); // Collapse if already expanded
+    } else {
+      setExpandedItem(index); // Expand if collapsed
+    }
+  };
 
   const handleModalOpen = () => {
     seetModalOpen(true);
@@ -49,114 +111,189 @@ const MenuItems = (props) => {
 
   return (
     <div className="">
-      <Menu isOpen={menuOpen} onStateChange={handleStateChange}>
-        <div className="block w-[085px]">
-          <div className="mobile-menu-logo">
-            <img src={AbiaLogo} alt="logo" />
+      <Menu
+        isOpen={menuOpen}
+        onStateChange={handleStateChange}
+        customCrossIcon={<CustomCloseIcon />}
+      >
+        {/* Logo and Menu */}
+        <div className="pb-[1rem] border-b-2">
+          <div className="flex flex-col gap-[2rem]">
+            <div className="mobile-menu-logo pb-[1rem] border-b-2 ">
+              <AbiaLogo width="100%" />
+              <hr />
+            </div>
+
+            <div className="">
+              <ul className="flex flex-col gap-[1rem]">
+                {props.menuItems.map((menuItem, index) => (
+                  <React.Fragment key={index}>
+                    {menuItem.Sub_content.length > 0 ? (
+                      <div
+                        onClick={() => handleItemClick(index)}
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        {menuItem.title.toLowerCase()}
+                      </div>
+                    ) : (
+                      <Link
+                        to={`/${menuItem.main_url}`}
+                        // onClick={() => handleItemClick(index)}
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        {menuItem.title.toLowerCase()}
+                      </Link>
+                    )}
+                    {menuItem.Sub_content.length > 0 &&
+                      expandedItem === index && (
+                        <div>
+                          {menuItem.Sub_content.map((subMenuItem, subIndex) => (
+                            <Link
+                              key={subIndex}
+                              onClick={closeMenu}
+                              className="mobile-menu-item submenu-item border-b-2"
+                              to={`/${
+                                menuItem.main_url.endsWith("0")
+                                  ? menuItem.main_url.slice(0, -1)
+                                  : menuItem.main_url
+                              }/${subMenuItem.sub_url}`}
+                            >
+                              {subMenuItem.title}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                  </React.Fragment>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
+
         <div className="flex flex-col justify-center">
-          <div className="mt-[25px] mb-[140px]">
-            {props.menuItems.map((menuItem, index) => (
-              <React.Fragment key={index}>
-                {menuItem.Sub_content.length > 0 ? (
-                  <Accordion
-                    expanded={expandedItem === index}
-                    onChange={() => handleAccordionChange(index)}
-                    className="customAccordionPaper"
-                  >
-                    <AccordionSummary
-                      expandIcon={<AiFillCaretDown className="ml-2" />}
-                      aria-controls={`panel${index + 1}-content`}
-                      id={`panel${index + 1}-header`}
-                    >
-                      {menuItem.title}
-                    </AccordionSummary>
-                    <AccordionDetails className="pl-[1rem]">
-                      {menuItem.Sub_content.map((subMenuItem, subIndex) => (
-                        <Link
-                          key={subIndex}
-                          onClick={closeMenu}
-                          className="mobile-menu-item submenu-item border-b-2"
-                          to={`/${
-                            menuItem.main_url.endsWith("0")
-                              ? menuItem.main_url.slice(0, -1)
-                              : menuItem.main_url
-                          }/${subMenuItem.sub_url}`}
-                        >
-                          {subMenuItem.title}
-                        </Link>
-                      ))}
-                    </AccordionDetails>
-                  </Accordion>
-                ) : (
-                  <Link
-                    onClick={closeMenu}
-                    className="mobile-menu-item"
-                    to={`/${menuItem.main_url}`}
-                  >
-                    {menuItem.title}
-                  </Link>
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-
           {/* LOGIN AND SIGNUP */}
-          <hr />
-          <div className="mt-[25px]">
-            <Accordion
-              className="customAccordionPaper"
-              expanded={expandedItem === "login"}
-              onChange={() => handleAccordionChange("login")}
-            >
-              <AccordionSummary>
-                <span className="mobile-menu-login">Login</span>
-              </AccordionSummary>
-              <AccordionDetails className="mobile-menu-accordionPanel">
-                <Link
-                  to={window.VLOGIN}
-                  onClick={closeMenu}
-                  className="mobile-menu-option"
+          {Object.keys(userProfile).length > 0 &&
+          userProfile &&
+          userProfile.name != "" ? (
+            <>
+              <div className="flex gap-2 mb-[1rem]">
+                {/* Usericon ubtton */}
+                <button
+                  className="mr-4 focus:outline-none"
+                  onClick={toggleProfile}
                 >
-                  Vendor
-                </Link>
-                <Link to={window.CLOGIN} className="mobile-menu-option">
-                  Couple
-                </Link>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-              className="customAccordionPaper"
-              expanded={expandedItem === "signup"}
-              onChange={() => handleAccordionChange("signup")}
-            >
-              <AccordionSummary>
-                <span className="mobile-menu-signup">Sign Up</span>
-              </AccordionSummary>
-              <AccordionDetails className="mobile-menu-accordionPanel">
-                <Link
-                  to={window.VSIGNUP}
-                  className="mobile-menu-option"
-                  onClick={closeMenu}
+                  <div className="relative ">
+                    <div className="absolute inset-0  bg-[#5a9d98] w-[40px] h-[40px]  mt-[-9px] rounded-full"></div>
+                    <UserIcons
+                      fill="#fff"
+                      className="w-[22px] relative z-10 md:text-[#6cc2bc] ml-[8.5px]  "
+                    />
+                  </div>
+                </button>
+                <h4>
+                  {" "}
+                  {localStorage.getItem("vendorToken")
+                    ? userProfile.name
+                    : userProfile.bride}{" "}
+                </h4>
+              </div>
+              <div>
+                {localStorage.getItem("vendorToken") ? (
+                  <>
+                    <div className="flex flex-col gap-[1rem]">
+                      <Link to={`${window.VDASHBOARD}`}>
+                        <h4>Move to Dashboard</h4>
+                      </Link>
+                      <hr />
+                      <h4
+                        onClick={handleVendorLogout}
+                        style={{ fontWeight: "600" }}
+                      >
+                        <button>Log Out</button>
+                      </h4>
+                    </div>
+                  </>
+                ) : localStorage.getItem("coupleToken") ? (
+                  <>
+                    <div className="flex flex-col gap-[1rem]">
+                      <Link to={`${window.CDASHBOARD}`}>
+                        <h4>Move to Dashboard</h4>
+                      </Link>
+                      <hr />
+                      <h4
+                        onClick={handleCoupleLogout}
+                        style={{ fontWeight: "600" }}
+                      >
+                        <button>Log Out</button>
+                      </h4>
+                    </div>
+                    {/* <Link to={`${window.CDASHBOARD}`}>
+                      <li className="">DASHBOARD</li>
+                    </Link>
+                    <li className="" onClick={handleCoupleLogout}>
+                      <button>Log Out</button>
+                    </li> */}
+                  </>
+                ) : (
+                  ""
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Login and Signup section */}
+              <div className="flex flex-col gap-[1rem] mt-[25px]">
+                <div
+                  className="mobile-menu-login"
+                  onClick={toggleLoginDropdown}
                 >
-                  Vendor
-                </Link>
-                <Link to={window.CSIGNUP} className="mobile-menu-option">
-                  Couple
-                </Link>
-              </AccordionDetails>
-            </Accordion>
-          </div>
-
-          {/* <Box sx={style}>
-            <CouplesLogin
-              modalOpen={modalOpen}
-              setModalOpen={seetModalOpen}
-              handleClosePage={handleModalClose}
-            />
-            <CouplesLogin modalOpen={loginOpen} setModalOpen={setLoginOpen} />
-          </Box> */}
+                  Login
+                </div>
+                {loginDropdownOpen && (
+                  <ul className="mobile-menu-dropdown">
+                    <li>
+                      <Link
+                        to={window.VLOGIN}
+                        onClick={closeMenu}
+                        className="mobile-menu-option"
+                      >
+                        Vendor
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={window.CLOGIN} className="mobile-menu-option">
+                        Couple
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+                <div
+                  className="mobile-menu-signup"
+                  onClick={toggleSignupDropdown}
+                >
+                  Sign Up
+                </div>
+                {signupDropdownOpen && (
+                  <ul className="mobile-menu-dropdown">
+                    <li>
+                      <Link
+                        to={window.VSIGNUP}
+                        onClick={closeMenu}
+                        className="mobile-menu-option"
+                      >
+                        Vendor
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={window.CSIGNUP} className="mobile-menu-option">
+                        Couple
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </Menu>
     </div>
@@ -164,3 +301,34 @@ const MenuItems = (props) => {
 };
 
 export default MenuItems;
+
+//  <ul className="flex flex-col gap-[1rem]">
+//    {props.menuItems.map((menuItem, index) => (
+//      <React.Fragment key={index}>
+//        <div
+//          onClick={() => handleItemClick(index)}
+//          style={{ textTransform: "capitalize" }}
+//        >
+//          {menuItem.title.toLowerCase()}
+//        </div>
+//        {expandedItem === index && (
+//          <div>
+//            {menuItem.Sub_content.map((subMenuItem, subIndex) => (
+//              <Link
+//                key={subIndex}
+//                onClick={closeMenu}
+//                className="mobile-menu-item submenu-item border-b-2"
+//                to={`/${
+//                  menuItem.main_url.endsWith("0")
+//                    ? menuItem.main_url.slice(0, -1)
+//                    : menuItem.main_url
+//                }/${subMenuItem.sub_url}`}
+//              >
+//                {subMenuItem.title}
+//              </Link>
+//            ))}
+//          </div>
+//        )}
+//      </React.Fragment>
+//    ))}
+//  </ul>;
