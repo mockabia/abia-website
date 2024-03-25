@@ -206,7 +206,7 @@ export const fetchFindPaydecode = async (decodeId,setFormvalues) => {
   await servicesPage.fetchFindPaydecode(decodeId).then(function (response) {
     if (response.statuscode === 200) {
       setFormvalues((values) => ({ ...values, ['ftype']: response.result.mem_ftype,['stype']: response.result.mem_stype, 
-        ['vid']: response.result.vid, ['holdername']: response.result.name,['name']: response.result.name,
+        ['vid']: response.result.business_id, ['holdername']: response.result.name,['name']: response.result.name,
         ['email']: response.result.email, ['contact_person']: response.result.contact_person ,
         ['phone']: response.result.phone, ['state']: response.result.state, ['paybyusing']: 1 }));
     }
@@ -216,7 +216,7 @@ export const fetchFindOfferdecode = async (decodeId,setPaysettings,setFormvalues
   await servicesPage.fetchFindOfferdecode(decodeId).then(function (response) {
     if (response.statuscode === 200) {
       setFormvalues((values) => ({ ...values, ['ftype']: response.result.Vendor.mem_ftype,['stype']: response.result.Vendor.mem_stype, 
-        ['vid']: response.result.Vendor.id, ['holdername']: response.result.Vendor.name,['name']: response.result.Vendor.name,
+        ['vid']: response.result.Vendor.business_id, ['holdername']: response.result.Vendor.name,['name']: response.result.Vendor.name,
         ['email']: response.result.Vendor.email, ['contact_person']: response.result.Vendor.contact_person ,
         ['phone']: response.result.Vendor.phone, ['state']: response.result.Vendor.state, ['paybyusing']: 1 }));
       setPaysettings((values) => ({ ...values, ...response.result.Offer}));
