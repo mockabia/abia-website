@@ -405,3 +405,30 @@
     padding: 1rem;
     border-radius: 16px;
 }
+
+/* OFFERS */
+
+.pp-offer-box {
+    position: relative;
+    width: 19rem;
+    height: 11rem;
+    background-color: var(--footer-green);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+ .pp-offer-icon {
+     position: absolute;
+     left: 3%;
+     top: -74%;
+     width: 500px;
+     transform: rotate(-90deg);
+ }
+
+ .pp-offer-content {
+    width: 90%;
+
+ }
