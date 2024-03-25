@@ -1,35 +1,43 @@
 import React, { useRef, useState } from "react";
 import "../../Style/PublicProfile.css";
-import { MdKeyboardArrowLeft } from "react-icons/md";
-import { MdKeyboardArrowRight } from "react-icons/md";
-import { ReactComponent as AbiaWhiteLogo } from "../../../icons/ABIA-White-Logo.svg";
-import { Link } from "react-router-dom";
+import { FaAngleDown } from "react-icons/fa6";
+import { FaChevronUp } from "react-icons/fa";
 
-const FaqSection = ({ offers }) => {
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const containerRef = useRef();
-  const [showOfferDetail, setShowOfferDetail] = useState({});
+const FaqSection = ({ faqs }) => {
+  const [activeAccordion, setActiveAccordion] = useState(null);
+  const Accordion = ({ id, title, content }) => {
+    const isActive = id === activeAccordion;
 
-  // Function to toggle showing offer details
-  const toggleOfferDetail = (id) => {
-    setShowOfferDetail((prevState) => ({
-      ...prevState,
-      [id]: !prevState[id],
-    }));
+    const toggleAccordion = () => {
+      setActiveAccordion(isActive ? null : id);
+    };
+
+    return (
+      <div className="pp-accordion-item">
+        <div className="pp-accordion-title" onClick={toggleAccordion}>
+          {isActive ? <FaChevronUp /> : <FaAngleDown />}
+          <div>{title}</div>
+        </div>
+        {isActive && <div className="pp-accordion-content">{content}</div>}
+      </div>
+    );
   };
 
-  // Function to handle scrolling when the button is clicked
-  const handleScroll = (scrollAmount) => {
-    const newScrollPosition = scrollPosition + scrollAmount;
-    setScrollPosition(newScrollPosition);
-    // Access the container element and set its scrollLeft property
-    containerRef.current.scrollLeft = newScrollPosition;
-  };
   return (
     <div className="flex flex-col gap-[1rem]">
       {/* Header Section */}
       <div className="pp-header-section w-[90%]">
         <h2>Frequently Asked Question</h2>
+      </div>
+      <div>
+        {faqs.map((faq) => (
+          <Accordion
+            key={faq.id}
+            id={faq.id}
+            title={faq.question}
+            content={faq.answer}
+          />
+        ))}
       </div>
     </div>
   );

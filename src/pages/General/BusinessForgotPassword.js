@@ -35,8 +35,14 @@ const ForgetPassword = () => {
 
   const handleClose = () => {
     setOpen(false);
-    setInputs({});
+    setInputs({
+      email: "",
+    });
     setInputsErrors({});
+    setErrors({});
+    setIsSubmitted(false);
+    setResponseMessage("");
+    setResponseEmail("");
   };
 
   const handleChange = (e) => {
@@ -141,29 +147,32 @@ const ForgetPassword = () => {
                 You can reset your password here.
               </p> */}
               <div className="flex flex-col gap-[1rem] ">
-                <CoupleCommonInput
-                  placeholder="Enter your Email"
-                  id="email"
-                  name="email"
-                  value={inputs.email}
-                  onChange={handleChange}
-                  error={inputsErrors.email ? true : false}
-                  helperText={inputsErrors.password}
-                  sx={{ width: "100%" }}
-                  InputProps={{
-                    inputProps: {
-                      style: {
-                        fontFamily: "Manrope, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "400",
-                        color: "#000",
+                <div className="flex flex-col gap-[5px]">
+                  <CoupleCommonInput
+                    placeholder="Enter your Email"
+                    id="email"
+                    name="email"
+                    value={inputs.email}
+                    onChange={handleChange}
+                    error={inputsErrors.email ? true : false}
+                    helperText={inputsErrors.password}
+                    sx={{ width: "100%" }}
+                    InputProps={{
+                      inputProps: {
+                        style: {
+                          fontFamily: "Manrope, sans-serif",
+                          fontSize: "12px",
+                          fontWeight: "400",
+                          color: "#000",
+                        },
                       },
-                    },
-                  }}
-                />
-                {errors.email && (
-                  <p className="error-message">{errors.email}</p>
-                )}
+                    }}
+                  />
+                  {errors.email && (
+                    <p className="error-message">{errors.email}</p>
+                  )}
+                </div>
+
                 {/* Submit button */}
                 <div>
                   <VendorLoginButton

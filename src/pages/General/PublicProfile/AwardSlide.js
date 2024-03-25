@@ -20,10 +20,10 @@ const AwardSlide = ({ awards }) => {
       <div className="pp-header-section w-[90%]">
         <h2>ABIA Awards</h2>
         <div className="flex gap-[8px]">
-          <div className="pp-scroll-button" onClick={() => handleScroll(-200)}>
+          <div className="pp-scroll-button" onClick={() => handleScroll(-100)}>
             <MdKeyboardArrowLeft size={20} />
           </div>
-          <div className="pp-scroll-button" onClick={() => handleScroll(200)}>
+          <div className="pp-scroll-button" onClick={() => handleScroll(100)}>
             <MdKeyboardArrowRight size={20} />
           </div>
         </div>
@@ -38,7 +38,6 @@ const AwardSlide = ({ awards }) => {
         }}
       >
         <div className="pp-awards-cotnainer w-[1200px] ">
-          {/* Render awards using the passed data */}
           {awards.map((award) => (
             <div key={award.id} className="pp-award-box">
               <img
@@ -50,8 +49,6 @@ const AwardSlide = ({ awards }) => {
                 <h7 style={{ fontWeight: 600 }}>{award.award_category}</h7>
                 <h7 style={{ fontWeight: 600 }}>{award.award_name}</h7>
               </div>
-
-              {/* Add more elements based on your award data */}
             </div>
           ))}
         </div>

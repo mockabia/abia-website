@@ -146,34 +146,35 @@ const CoupleForgotPwd = () => {
               </p>
             </div>
           ) : (
-            <form className="flex flex-col gap-[1rem] lg:w-[22rem]">
+            <form className="flex flex-col lg:w-[22rem]">
               <h3 className="form-header">Forgot Password ?</h3>
               <div className="flex flex-col gap-[1rem] mt-[1rem]">
-                <CoupleCommonInput
-                  placeholder="Enter your Email"
-                  id="email"
-                  name="email"
-                  value={inputs.email}
-                  onChange={handleChange}
-                  error={inputsErrors.email ? true : false}
-                  helperText={inputsErrors.password}
-                  sx={{ width: "100%" }}
-                  InputProps={{
-                    inputProps: {
-                      style: {
-                        fontFamily: "Manrope, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: "400",
-                        color: "#000",
+                <div className="flex flex-col gap-[5px]">
+                  <CoupleCommonInput
+                    placeholder="Enter your Email"
+                    id="email"
+                    name="email"
+                    value={inputs.email}
+                    onChange={handleChange}
+                    error={inputsErrors.email ? true : false}
+                    helperText={inputsErrors.password}
+                    sx={{ width: "100%" }}
+                    InputProps={{
+                      inputProps: {
+                        style: {
+                          fontFamily: "Manrope, sans-serif",
+                          fontSize: "12px",
+                          fontWeight: "400",
+                          color: "#000",
+                        },
                       },
-                    },
-                  }}
-                />
-                {errors.email && (
-                  <div className="flex font-bold text-red-600 text-[12px] mb-2">
-                    {errors.email}
-                  </div>
-                )}
+                    }}
+                  />
+                  {errors.email && (
+                    <div className="error-message">{errors.email}</div>
+                  )}
+                </div>
+
                 <div>
                   <VendorLoginButton onClick={handleSubmit}>
                     Submit

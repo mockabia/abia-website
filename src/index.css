@@ -141,7 +141,8 @@ input[type=number] {
   --black-button: #333333;
   --white: #fff;
   --footer-green: #D9E8E7;
-  --font-color: #515151
+  --font-color: #515151;
+  --offercard-green:#c7e9e6
 }
 
 @media (max-width: 768px) {
