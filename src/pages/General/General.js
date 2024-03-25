@@ -44,6 +44,7 @@ function checkDirectoryUrl(pathname,serviceOptions,formattedLocations,setFormval
               ["locations"]: url2,
               ["state"]: url1,
               ["category"]: "",
+              ["businessname"]: "",
             }));
           } else {
             setFormvalues((values) => ({
@@ -51,6 +52,7 @@ function checkDirectoryUrl(pathname,serviceOptions,formattedLocations,setFormval
               ["state"]: url2,
               ["category"]: url1,
               ["locations"]: "",
+              ["businessname"]: "",
             }));
           }
         } else {
@@ -62,6 +64,7 @@ function checkDirectoryUrl(pathname,serviceOptions,formattedLocations,setFormval
               ["category"]: url1,
               ["state"]: "",
               ["locations"]: "",
+              ["businessname"]: "",
             }));
           } else {
             setFormvalues((values) => ({
@@ -69,6 +72,7 @@ function checkDirectoryUrl(pathname,serviceOptions,formattedLocations,setFormval
               ["state"]: url1,
               ["category"]: "",
               ["locations"]: "",
+              ["businessname"]: "",
             }));
           }
         }
