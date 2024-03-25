@@ -195,16 +195,6 @@ const LoginPage = () => {
                       defaultValue={inputs.email}
                       onChange={handleChange}
                       autoCapitalize="off"
-                      InputProps={{
-                        inputProps: {
-                          style: {
-                            fontFamily: "Manrope, sans-serif",
-                            fontSize: "12px",
-                            fontWeight: "400",
-                            color: "#000",
-                          },
-                        },
-                      }}
                     />
                     {inputsErrors.email && (
                       <div className="flex font-bold text-red-400 text-[12px]">

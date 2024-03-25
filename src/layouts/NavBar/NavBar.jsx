@@ -204,7 +204,7 @@ const NavBar = (props) => {
       <div className="login-navbar-style relative">
         {/* Mboile */}
         <div className="adjust-mobile-menuIcon">
-          <MenuItems menuItems={menuItems} />
+          <MenuItems menuItems={menuItems}  />
         </div>
         <div className="login-logo cursor-pointer" onClick={handleLogoClick}>
           <AbiaLogo />
@@ -312,7 +312,7 @@ const NavBar = (props) => {
                 </div>
               </button>
               {profileOpen && (
-                <div className="dash-dropdown arrow-top highZIndex">
+                <div className="dash-dropdown-1 arrow-top-1 highZIndex">
                   <ul className="">
                     <li className="px-4 cursor-pointer">
                       <span className=" text-[17px] font-bold">

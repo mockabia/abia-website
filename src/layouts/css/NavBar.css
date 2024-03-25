@@ -175,3 +175,60 @@
     font-family: "Manrope";
     font-size: 16px;
 }
+
+
+/*USER PROFILE*/
+.dash-dropdown-1 {
+    position: absolute;
+    right: 0;
+    margin-top: 15px;
+    margin-right: 60px;
+    width: 200px;
+    height: auto;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px #bebebe
+}
+
+.dash-dropdown-1.arrow-top-1 {
+    margin-top: 15rem;
+}
+
+.dash-dropdown-1.arrow-top-1:after {
+    content: " ";
+    position: absolute;
+    right: 40px;
+    top: -12px;
+    border-top: none;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    border-bottom: 14px solid rgb(255, 255, 255);
+
+}
+
+.dash-dropdown-1 li {
+    padding: 9px 16px;
+    cursor: pointer;
+}
+
+.dash-dropdown-1 li:hover:nth-child(1) {
+    background-color: #f2f0f0;
+    border-radius: 20px 20px 0px 0px;
+}
+
+.dash-dropdown-1 li:hover:nth-child(2) {
+    background-color: #f2f0f0;
+}
+
+.dash-dropdown-1 li:hover:nth-child(3) {
+    background-color: #f2f0f0;
+    border-radius: 0px 0px 20px 20px;
+}
+
+.dash-dropdown-1 li:nth-child(3) {
+    border-top: 1px solid #aeb0b0;
+}
+
+.dash-dropdown-1 li:nth-child(1) {
+    border-bottom: 1px solid #aeb0b0;
+}
