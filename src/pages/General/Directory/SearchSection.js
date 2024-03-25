@@ -87,13 +87,14 @@ const SearchSection = (props) => {
   useEffect(() => {
     let locationOpt = locationOptions.length>0 && locationOptions.filter(
         (option) => {
-          if(option.url === formvalues.state && option.regionsUrl === formvalues.locations){
+          if(option.url === formvalues.state && (option.regionsUrl === formvalues.locations || formvalues.locations==null)){
             return option;
           }
         }
     )
     setLocationOpt(locationOpt[0])
   }, [formvalues.locations]);
+
   useEffect(() => {
     let categoryOpt = servicesOptions.length>0 && servicesOptions.filter(
         (option) => {
@@ -115,10 +116,10 @@ const SearchSection = (props) => {
   };
   const handleSubmit = () => {
     let newUrl = '';
-    if(formvalues.category!=undefined){
+    if(formvalues.category!=undefined && formvalues.category!=""){
       newUrl += '/'+formvalues.category;
     }
-    if(formvalues.state!=undefined){
+    if(formvalues.state!=undefined && formvalues.state!=""){
       newUrl += '/'+formvalues.state;
     }
     if(formvalues.locations!=undefined && formvalues.locations!=""){
@@ -214,16 +215,13 @@ const SearchSection = (props) => {
                         options={servicesOptions}
                         PopperComponent={PopperMy}
                         renderInput={(params) => <TextField {...params} label="Category" />}
-                        //value={formvalues.category}
-                        /* value={servicesOptions.filter(
-                          (option) => {
-                            if(option.value === formvalues.category){
-                              console.log(option.label)
-                              return option.value;
-                            }
-                          }
-                        )} */
                         value={categoryOpt}
+                        onKeyDown={(event) => {
+                          handleInputChangeVal('category',null)
+                        }}
+                        onKeyUp={(event) => {
+                          handleInputChangeVal('category',null)
+                        }}
                         onChange={(event, newValue) => {
                             handleInputChangeVal('category',newValue.value)
                         }}
@@ -302,7 +300,16 @@ const SearchSection = (props) => {
                         </Box>
                         )}
                         value={locationOpt}
+                        onKeyDown={(event) => {
+                          handleInputChangeVal('state',null)
+                          handleInputChangeVal('locations',null )
+                        }}
+                        onKeyUp={(event) => {
+                          handleInputChangeVal('state',null)
+                          handleInputChangeVal('locations',null)
+                        }}
                         onChange={(event, newValue) => {
+                          console.log('clearing')
                           handleInputChangeVal('state',newValue.url)
                           handleInputChangeVal('locations',newValue.regionsUrl)
                         }}
@@ -318,11 +325,11 @@ const SearchSection = (props) => {
             <div className="">
                 <h5 className="sort-header text-[10px] mb-[0.5rem]">Sort By</h5>
                 <div className="dir-sortfilter  text-[12px] space-x-3">
-                    <ColorSortButton variant="contained" onClick={(e) => { handleInputChangeVal('sort','R'); }} >Recently Reviewed</ColorSortButton>
+                    <ColorSortButton className={formvalues.sort=='R' && `activeSort`} variant="contained" onClick={(e) => { handleInputChangeVal('sort','R'); }} >Recently Reviewed</ColorSortButton>
                     <div style={{ margin: "5px" }} />
-                    <ColorSortButton variant="contained" onClick={(e) => { handleInputChangeVal('sort','N'); }} >Most Reviewed</ColorSortButton>
+                    <ColorSortButton className={formvalues.sort=='N' && `activeSort`}  variant="contained" onClick={(e) => { handleInputChangeVal('sort','N'); }} >Most Reviewed</ColorSortButton>
                     <div style={{ margin: "5px" }} />
-                    <ColorSortButton variant="contained" onClick={(e) => { handleInputChangeVal('sort','A'); }} >Most Awarded</ColorSortButton>
+                    <ColorSortButton className={formvalues.sort=='A' && `activeSort`}  variant="contained" onClick={(e) => { handleInputChangeVal('sort','A'); }} >Most Awarded</ColorSortButton>
                 </div>
                 </div>
             </div>

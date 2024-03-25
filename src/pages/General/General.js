@@ -23,8 +23,8 @@ function checkDirectoryUrl(pathname,serviceOptions,formattedLocations,setFormval
     return el != "";
   });
 
-  setFormvalues((values) => ({ ...values, ["category"]: "" , ["state"]: "" , ["locations"]: "" , 
-              ["businessname"]: "", ["sort"]: "N" }));
+  setFormvalues((values) => ({ ...values, ["category"]: null , ["state"]: null , ["locations"]: null , 
+              ["businessname"]: null, ["sort"]: "N" }));
   if(urlArray[0]!=window.WEDDING_DIRECTORY. replace("/","")){
       if (urlArray.length == 3) {
         setFormvalues((values) => ({
@@ -32,7 +32,7 @@ function checkDirectoryUrl(pathname,serviceOptions,formattedLocations,setFormval
           ["category"]: urlArray[0],
           ["state"]: urlArray[1],
           ["locations"]: urlArray[2],
-          ["businessname"]: "",
+          ["businessname"]: null,
         }));
       } else {
         if (urlArray.length == 2) {
@@ -45,16 +45,16 @@ function checkDirectoryUrl(pathname,serviceOptions,formattedLocations,setFormval
               ...values,
               ["locations"]: url2,
               ["state"]: url1,
-              ["category"]: "",
-              ["businessname"]: "",
+              ["category"]: null,
+              ["businessname"]: null,
             }));
           } else {
             setFormvalues((values) => ({
               ...values,
               ["state"]: url2,
               ["category"]: url1,
-              ["locations"]: "",
-              ["businessname"]: "",
+              ["locations"]: null,
+              ["businessname"]: null,
             }));
           }
         } else {
@@ -64,17 +64,17 @@ function checkDirectoryUrl(pathname,serviceOptions,formattedLocations,setFormval
             setFormvalues((values) => ({
               ...values,
               ["category"]: url1,
-              ["state"]: "",
-              ["locations"]: "",
-              ["businessname"]: "",
+              ["state"]: null,
+              ["locations"]: null,
+              ["businessname"]: null,
             }));
           } else {
             setFormvalues((values) => ({
               ...values,
               ["state"]: url1,
-              ["category"]: "",
-              ["locations"]: "",
-              ["businessname"]: "",
+              ["category"]: null,
+              ["locations"]: null,
+              ["businessname"]: null,
             }));
           }
         }
