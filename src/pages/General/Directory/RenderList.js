@@ -24,25 +24,25 @@ const RenderList = (props) => {
         {data?.map((card,i) => {
             
             const isPlural                        = card.special !== (0 || 1);
-            const formattedVotes                  = card.votes.toLocaleString();
+            const formattedVotes                  = card.recomCount.toLocaleString();
 
             return (
                 <div className=" relative">
-                    <HeartButton stateOptions={stateOptions} vid={card.id}/>
+                    <HeartButton stateOptions={stateOptions} vid={card.businessid}/>
                     <img src={card.imgSrc} className="dircard-image" />
                     <div className="dircard-info  space-y-[5px]">
-                        <h5 className="direcard-location text-[#8e8e8e]">{card.region},{card.state}</h5>
+                        <h5 className="direcard-location text-[#8e8e8e]">{card.suburb},{card.state}</h5>
                         <h2 className="header font-[500]">{card.vname}</h2>
 
                         {/* Rating info */}
                         <ThemeProvider theme={RatingComponent}>
                         <div className="rating-ifno-div space-x-2">
-                            <h5 className="font-semibold text-[16px] ">{card.rating}</h5>
+                            <h5 className="font-semibold text-[16px] ">{card.StarRating}</h5>
                             <Rating
                             name="half-rating-read"
                             size="medium"
                             precision={0.25}
-                            value={card.rating}
+                            value={card.StarRating}
                             readOnly
                             />
                             <span className="text-[#8e8e8e]  ">({formattedVotes})</span>
@@ -59,7 +59,7 @@ const RenderList = (props) => {
                             </span>
                         </div>
                         </div>
-                        <RequestPricing stateOptions={stateOptions} vid={card.id} vname={card.vname} />
+                        <RequestPricing stateOptions={stateOptions} vid={card.businessid} vname={card.vname} />
                     </div>
                     </div>
             );

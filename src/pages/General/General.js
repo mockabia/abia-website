@@ -23,14 +23,16 @@ function checkDirectoryUrl(pathname,serviceOptions,formattedLocations,setFormval
     return el != "";
   });
 
+  setFormvalues((values) => ({ ...values, ["category"]: "" , ["state"]: "" , ["locations"]: "" , 
+              ["businessname"]: "", ["sort"]: "N" }));
   if(urlArray[0]!=window.WEDDING_DIRECTORY. replace("/","")){
-    console.log('insude')
       if (urlArray.length == 3) {
         setFormvalues((values) => ({
           ...values,
           ["category"]: urlArray[0],
           ["state"]: urlArray[1],
           ["locations"]: urlArray[2],
+          ["businessname"]: "",
         }));
       } else {
         if (urlArray.length == 2) {
@@ -78,7 +80,6 @@ function checkDirectoryUrl(pathname,serviceOptions,formattedLocations,setFormval
         }
       }
   }
-  setFormvalues((values) => ({ ...values, ["sort"]: "N" }));
 }
 export const fetchState = async (setStateOptions) => {
   await servicesPage.stateDropdown().then(function (response) {
@@ -104,7 +105,7 @@ export const fetchDirectoryDropdowns = async (
           state: location.label,
           url: location.url,
           regions: regions.label,
-          regionsUrl: regions.url,
+          regionsUrl: (location.url!=regions.url ? regions.url : ''),
         }))
       );
       const formattedStates = response.result.states.map((state) => ({
@@ -146,7 +147,7 @@ export const fetchDirectoryList = async (formValues, setData) => {
     .fetchDirectoryList(userId, formValues)
     .then(function (response) {
       if (response.statuscode === 200) {
-        setData(response.result);
+        setData(response.result.partner_result);
       }
     });
 };

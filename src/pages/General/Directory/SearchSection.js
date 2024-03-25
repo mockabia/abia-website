@@ -73,6 +73,7 @@ const SearchSection = (props) => {
   const [locationOptions, setLocationOptions] = useState([]);
   const [servicesOptions, setServicesOptions] = useState([]);
   const [locationOpt, setLocationOpt]         = useState(false);
+  const [categoryOpt, setCategoryOpt]         = useState(false);
   const location                              = useLocation();
   const pathname                              = location.pathname;
   
@@ -86,13 +87,23 @@ const SearchSection = (props) => {
   useEffect(() => {
     let locationOpt = locationOptions.length>0 && locationOptions.filter(
         (option) => {
-          if(option.regionsUrl === formvalues.locations){
+          if(option.url === formvalues.state && option.regionsUrl === formvalues.locations){
             return option;
           }
         }
     )
     setLocationOpt(locationOpt[0])
   }, [formvalues.locations]);
+  useEffect(() => {
+    let categoryOpt = servicesOptions.length>0 && servicesOptions.filter(
+        (option) => {
+          if(option.value === formvalues.category){
+            return option;
+          }
+        }
+    )
+    setCategoryOpt(categoryOpt[0])
+  }, [formvalues.category]);
 
   const handleInputChange = (e) => {
     const name = e.target.name;
@@ -110,7 +121,7 @@ const SearchSection = (props) => {
     if(formvalues.state!=undefined){
       newUrl += '/'+formvalues.state;
     }
-    if(formvalues.locations!=undefined){
+    if(formvalues.locations!=undefined && formvalues.locations!=""){
       newUrl += '/'+formvalues.locations;
     }
     navigate(newUrl)
@@ -194,6 +205,7 @@ const SearchSection = (props) => {
                 your site-visit.{" "}
             </p>
             <div className="directory-main-grid filter-section">
+            {/* <pre>{JSON.stringify(formvalues, null, 2)}</pre> */}
                 <div className="dirmain-search-button ">
                     <AutoCompleteStyle
                         disablePortal
@@ -202,7 +214,16 @@ const SearchSection = (props) => {
                         options={servicesOptions}
                         PopperComponent={PopperMy}
                         renderInput={(params) => <TextField {...params} label="Category" />}
-                        value={formvalues.category}
+                        //value={formvalues.category}
+                        /* value={servicesOptions.filter(
+                          (option) => {
+                            if(option.value === formvalues.category){
+                              console.log(option.label)
+                              return option.value;
+                            }
+                          }
+                        )} */
+                        value={categoryOpt}
                         onChange={(event, newValue) => {
                             handleInputChangeVal('category',newValue.value)
                         }}
@@ -282,8 +303,8 @@ const SearchSection = (props) => {
                         )}
                         value={locationOpt}
                         onChange={(event, newValue) => {
-                            handleInputChangeVal('state',newValue.url)
-                            handleInputChangeVal('locations',newValue.regionsUrl)
+                          handleInputChangeVal('state',newValue.url)
+                          handleInputChangeVal('locations',newValue.regionsUrl)
                         }}
                         disableClearable={true}
                     />
