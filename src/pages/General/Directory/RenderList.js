@@ -29,7 +29,7 @@ const RenderList = (props) => {
             return (
                 <div className=" relative">
                     <HeartButton stateOptions={stateOptions} vid={card.businessid}/>
-                    <img src={card.imgSrc} className="dircard-image" />
+                    <img src={card.imageUrl} className="dircard-image" />
                     <div className="dircard-info  space-y-[5px]">
                         <h5 className="direcard-location text-[#8e8e8e]">{card.suburb},{card.state}</h5>
                         <h2 className="header font-[500]">{card.vname}</h2>
