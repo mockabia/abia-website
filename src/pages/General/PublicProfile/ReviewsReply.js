@@ -63,7 +63,7 @@ const ReviewsReply = ({ reviews, vendorData }) => {
       <div className="pp-header-section w-[90%]">
         <h2>ABIA Wedding Reviews</h2>
       </div>
-      <div style={{ width: "87%" }}>
+      <div className="lg:w-[87%]">
         {reviews.slice(0, 3).map((review) => (
           <ReviewCard
             key={review.id}

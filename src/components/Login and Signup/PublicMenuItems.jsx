@@ -117,7 +117,7 @@ const MenuItems = (props) => {
         customCrossIcon={<CustomCloseIcon />}
       >
         {/* Logo and Menu */}
-        <div className="pb-[1rem] border-b-2">
+        <div className="pb-[1rem]">
           <div className="flex flex-col gap-[2rem]">
             <div className="mobile-menu-logo pb-[1rem] border-b-2 ">
               <AbiaLogo width="100%" />
@@ -151,7 +151,7 @@ const MenuItems = (props) => {
                             <Link
                               key={subIndex}
                               onClick={closeMenu}
-                              className="mobile-menu-item submenu-item border-b-2"
+                              className="mobile-menu-item submenu-item"
                               to={`/${
                                 menuItem.main_url.endsWith("0")
                                   ? menuItem.main_url.slice(0, -1)

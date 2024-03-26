@@ -204,7 +204,7 @@ const NavBar = (props) => {
       <div className="login-navbar-style relative">
         {/* Mboile */}
         <div className="adjust-mobile-menuIcon">
-          <MenuItems menuItems={menuItems}  />
+          <MenuItems menuItems={menuItems} />
         </div>
         <div className="login-logo cursor-pointer" onClick={handleLogoClick}>
           <AbiaLogo />
@@ -214,7 +214,6 @@ const NavBar = (props) => {
         </div>
 
         {/* Subheaders */}
-
         <div
           className="abia-logo-desktop cursor-pointer"
           onClick={handleLogoClick}
@@ -257,7 +256,7 @@ const NavBar = (props) => {
                           <MenuItem
                             key={subIndex}
                             sx={{
-                              borderBottom: "1px solid #D0D0D0",
+                              // borderBottom: "1px solid #D0D0D0",
                               textTransform: "capitalize",
                               color: "#000",
                             }}

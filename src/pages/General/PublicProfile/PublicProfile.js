@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import LayoutGeneral from "../../../layouts/Layout/LayoutGeneral";
 import "../../Style/PublicProfile.css";
 import MainImage from "./MainImage";
@@ -13,6 +13,8 @@ import BlogSlide from "./BlogSlide";
 import ReviewsReply from "./ReviewsReply";
 import OffersSlide from "./OffersSlide";
 import FaqSection from "./FaqSection";
+import MobEnquiry from "./MobEnquiry";
+// import MeetTeam from "./MeetTeam";
 // import LeftFeather from "../../../icons/feather-right.jpg";
 // import RightFeather from "../../../icons/feather-left.jpg";
 
@@ -20,6 +22,15 @@ const PublicProfile = () => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [truncatedDescription, setTruncatedDescription] = useState("");
   // const [vendorData, setVendorData] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
@@ -68,6 +79,8 @@ const PublicProfile = () => {
       name: "Zonzo Estate",
       partner_type: "Gold Partner",
       logo: "https://scontent.fccj6-1.fna.fbcdn.net/v/t39.30808-6/327265908_913673846733991_4430403031133714382_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=kOVGirOe2LwAX8iPBvA&_nc_ht=scontent.fccj6-1.fna&oh=00_AfDYBmkcudcRfPNPbQxrV0S-rvGB7u_GDOoPxVf4w4MnvA&oe=6601DC68",
+      team_desc:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
       ratings: {
         average: 4.9,
         total: 100,
@@ -226,7 +239,46 @@ const PublicProfile = () => {
             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
         },
       ],
+      faq: [
+        {
+          id: 1,
+          question: "Question 1",
+          answer: "Answer 1",
+        },
+        {
+          id: 2,
+          question: "Question 2",
+          answer: "Answer 2",
+        },
+        {
+          id: 3,
+          question: "Question 3",
+          answer: "Answer 3",
+        },
+        {
+          id: 4,
+          question: "Question 4",
+          answer: "Answer 4",
+        },
+        {
+          id: 5,
+          question: "Question 5",
+          answer: "Answer 5",
+        },
+      ],
     },
+  };
+
+  // Refs for scrolling to sections
+  const aboutRef = useRef(null);
+  const awardsRef = useRef(null);
+  const reviewsRef = useRef(null);
+  const faqRef = useRef(null);
+  const specialRef = useRef(null);
+
+  // Function to scroll to a specific section
+  const scrollToSection = (ref) => {
+    ref.current.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -342,25 +394,28 @@ const PublicProfile = () => {
               {/* NAVIGATION MENU */}
               <div className="pp-nav-border flex justify-between">
                 <ul className="pp-nav-list ">
-                  <li>About</li>
-                  <li>Awards</li>
-                  <li>Reviews</li>
+                  <li onClick={() => scrollToSection(aboutRef)}>About</li>
+                  <li onClick={() => scrollToSection(awardsRef)}>Awards</li>
+                  <li onClick={() => scrollToSection(reviewsRef)}>Reviews</li>
                   <li>Photos + Videos</li>
-                  <li>Special</li>
-                  <li>FAQs</li>
+                  <li onClick={() => scrollToSection(specialRef)}>Special</li>
+                  <li onClick={() => scrollToSection(faqRef)}>FAQs</li>
+                  {/* <li>FAQs</li> */}
                 </ul>
                 <div></div>
               </div>
               {/* ABOUT US */}
-              <div className="w-[80%]"> {renderDescription()}</div>
+              <div ref={aboutRef} className="w-[92vw] md:w-[75vw] lg:w-[80%] ">
+                {/* w-[80%] */} {renderDescription()}
+              </div>
               <div className="pp-sperator"></div>
               {/* AWARDS */}
               <div>
-                <div>
+                <div ref={awardsRef} className="pp-award-screen-adj">
                   <AwardSlide awards={vendorData.vendor.awards} />
                 </div>
               </div>
-              <br />
+              {/* <br /> */}
               <div className="pp-sperator"></div>
               {/* BLOGS */}
               <div>
@@ -368,40 +423,63 @@ const PublicProfile = () => {
                   <BlogSlide blogs={vendorData.vendor.blogs} />
                 </div>
               </div>
-              <br />
+              {/* <br /> */}
               <div className="pp-sperator"></div>
               {/* REVIEWS */}
               <div>
-                <div>
+                <div
+                  ref={reviewsRef}
+                  className="w-[92vw]  md:w-[75vw] lg:w-[80%]"
+                >
                   <ReviewsReply
                     reviews={vendorData.vendor.reviews}
                     vendorData={vendorData}
                   />
                 </div>
               </div>
-              <br />
+              {/* <br /> */}
               <div className="pp-sperator"></div>
               {/* OFFERS */}
               <div>
-                <div>
+                <div ref={specialRef}>
                   <OffersSlide offers={vendorData.vendor.offers} />
                 </div>
               </div>
-              <br />
+              {/* <br /> */}
               <div className="pp-sperator"></div>
               {/* FAQ */}
               <div>
-                <div>
-                  <FaqSection/>
-                  {/* <OffersSlide offers={vendorData.vendor.offers} /> */}
+                <div ref={faqRef}>
+                  <FaqSection faqs={vendorData.vendor.faq} />
+                </div>
+              </div>
+              {/* <br /> */}
+              {/* MEET THE tEAM */}
+              <div className="w-[92vw] md:w-[75vw] lg:w-[87%]">
+                <div className="pp-meet-team">
+                  <img
+                    src={vendorData.vendor.logo}
+                    alt={vendorData.vendor.name}
+                    className="pp-meet-vendor-logo"
+                  />
+                  <div className="flex flex-col gap-[1rem]">
+                    <h2>Meet the Team</h2>
+                    <p>{vendorData.vendor.team_desc}</p>
+                  </div>
                 </div>
               </div>
               <br />
               <div className="pp-sperator"></div>
             </div>
+
             {/* MESSAGE ENQUIRY */}
-            <div className="pp-message-enq">
+            <div className="pp-message-enq ">
               <PublicEnquiry />
+            </div>
+            {/* in mobile  */}
+            <div className="mob-message-enq" onClick={handleOpenModal}>
+              <h4 style={{ color: "#fff", fontWeight: "600" }}>Send Enquiry</h4>
+              <MobEnquiry open={openModal} onClose={handleCloseModal} />
             </div>
           </div>
         </div>
