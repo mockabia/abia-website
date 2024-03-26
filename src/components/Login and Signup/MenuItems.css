@@ -58,7 +58,7 @@
 }
 
 .bm-item-list {
-    height: 90vh;
+    height: 90vh !important;
     color: #b8b7ad;
     display: flex;
     flex-direction: column;

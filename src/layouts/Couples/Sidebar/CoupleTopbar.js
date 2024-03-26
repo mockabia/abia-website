@@ -351,7 +351,7 @@ const CoupleTopbar = (props) => {
                   <AiOutlineClose size={22} className=" ml-[5px] fixed " />
                 </div>
               </div>
-              <ul className="mt-[50px] flex flex-col sm:justify-center  sm:mr-[85px] ">
+              <ul className="mt-[50px] flex flex-col sm:justify-center sm:mr-[85px] border-b pb-4 border-white">
                 <CoupleSideMenu {...props} />
               </ul>
             </div>
