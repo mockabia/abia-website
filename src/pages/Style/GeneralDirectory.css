@@ -260,6 +260,11 @@
         display: flex;
         justify-content: center;
     }
+    .activeSort{
+        background-color: #000;
+        box-shadow: none;
+        color: white;
+    }
 
 
 @media screen and (min-width: 1024px) {

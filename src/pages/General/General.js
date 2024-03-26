@@ -7,77 +7,79 @@ export { customJS };
 
 function urlFoundCategoryDirectory(url, serviceOptions) {
   let categoryFound = serviceOptions.filter(function (el) {
-    console.log(el.value + "==" + url);
     return el.value === url;
   });
   return categoryFound;
 }
 function urlFoundLocationDirectory(url, serviceOptions) {
   let locationFound = serviceOptions.filter(function (el) {
-    console.log(el.regionsUrl + "==" + url);
     return el.regionsUrl === url;
   });
   return locationFound;
 }
-function checkDirectoryUrl(
-  pathname,
-  serviceOptions,
-  formattedLocations,
-  setFormvalues
-) {
+function checkDirectoryUrl(pathname,serviceOptions,formattedLocations,setFormvalues) {
   let urlArray = pathname.split("/");
   urlArray = urlArray.filter(function (el) {
     return el != "";
   });
-  if (urlArray.length == 3) {
-    setFormvalues((values) => ({
-      ...values,
-      ["category"]: urlArray[0],
-      ["state"]: urlArray[1],
-      ["locations"]: urlArray[2],
-    }));
-  } else {
-    if (urlArray.length == 2) {
-      let url1 = urlArray[0];
-      let url2 = urlArray[1];
-      //let foundCategory   = urlFoundCategoryDirectory(url1,serviceOptions)
-      let foundLocations = urlFoundLocationDirectory(url2, formattedLocations);
-      if (foundLocations.length > 0) {
+
+  setFormvalues((values) => ({ ...values, ["category"]: null , ["state"]: null , ["locations"]: null , 
+              ["businessname"]: null, ["sort"]: "N" }));
+  if(urlArray[0]!=window.WEDDING_DIRECTORY. replace("/","")){
+      if (urlArray.length == 3) {
         setFormvalues((values) => ({
           ...values,
-          ["locations"]: url2,
-          ["state"]: url1,
-          ["category"]: "",
+          ["category"]: urlArray[0],
+          ["state"]: urlArray[1],
+          ["locations"]: urlArray[2],
+          ["businessname"]: null,
         }));
       } else {
-        setFormvalues((values) => ({
-          ...values,
-          ["state"]: url2,
-          ["category"]: url1,
-          ["locations"]: "",
-        }));
+        if (urlArray.length == 2) {
+          let url1 = urlArray[0];
+          let url2 = urlArray[1];
+          //let foundCategory   = urlFoundCategoryDirectory(url1,serviceOptions)
+          let foundLocations = urlFoundLocationDirectory(url2, formattedLocations);
+          if (foundLocations.length > 0) {
+            setFormvalues((values) => ({
+              ...values,
+              ["locations"]: url2,
+              ["state"]: url1,
+              ["category"]: null,
+              ["businessname"]: null,
+            }));
+          } else {
+            setFormvalues((values) => ({
+              ...values,
+              ["state"]: url2,
+              ["category"]: url1,
+              ["locations"]: null,
+              ["businessname"]: null,
+            }));
+          }
+        } else {
+          let url1 = urlArray[0];
+          let foundCategory = urlFoundCategoryDirectory(url1, serviceOptions);
+          if (foundCategory.length > 0) {
+            setFormvalues((values) => ({
+              ...values,
+              ["category"]: url1,
+              ["state"]: null,
+              ["locations"]: null,
+              ["businessname"]: null,
+            }));
+          } else {
+            setFormvalues((values) => ({
+              ...values,
+              ["state"]: url1,
+              ["category"]: null,
+              ["locations"]: null,
+              ["businessname"]: null,
+            }));
+          }
+        }
       }
-    } else {
-      let url1 = urlArray[0];
-      let foundCategory = urlFoundCategoryDirectory(url1, serviceOptions);
-      if (foundCategory.length > 0) {
-        setFormvalues((values) => ({
-          ...values,
-          ["category"]: url1,
-          ["state"]: "",
-          ["locations"]: "",
-        }));
-      } else {
-        setFormvalues((values) => ({
-          ...values,
-          ["state"]: url1,
-          ["category"]: "",
-          ["locations"]: "",
-        }));
-      }
-    }
   }
-  setFormvalues((values) => ({ ...values, ["sort"]: "N" }));
 }
 export const fetchState = async (setStateOptions) => {
   await servicesPage.stateDropdown().then(function (response) {
@@ -103,7 +105,7 @@ export const fetchDirectoryDropdowns = async (
           state: location.label,
           url: location.url,
           regions: regions.label,
-          regionsUrl: regions.url,
+          regionsUrl: (location.url!=regions.url ? regions.url : ''),
         }))
       );
       const formattedStates = response.result.states.map((state) => ({
@@ -145,7 +147,7 @@ export const fetchDirectoryList = async (formValues, setData) => {
     .fetchDirectoryList(userId, formValues)
     .then(function (response) {
       if (response.statuscode === 200) {
-        setData(response.result);
+        setData(response.result.partner_result);
       }
     });
 };
