@@ -207,7 +207,8 @@ const NavBar = (props) => {
           <MenuItems menuItems={menuItems} />
         </div>
         <div className="login-logo cursor-pointer" onClick={handleLogoClick}>
-          <AbiaLogo />
+          <img src={AbiaLogo2} onClick={handleLogoClick} />
+          {/* <AbiaLogo /> */}
         </div>
         <div className="search-icon-responsive" onClick={handleSearchIconClick}>
           <FiSearch color="#fff" size={26} />

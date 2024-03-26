@@ -59,7 +59,7 @@ export default function CouplesSignUp() {
     CoupleJS.fetchMarketingCategory(setMarketingOptions);
     // setIsOptionSelected(true);
   }, []);
-  
+  console.log("Marketing category:", marketingOptions)
   useEffect(() => {
     let imageClass = 'cs-image-container-3';
     if(activeStep==0){
