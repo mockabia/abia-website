@@ -76,8 +76,8 @@ const App = () => {
         {/* test */}
         <Route path="/fonts" element={<BlogFonts />} />
         {/* Partnership */}
-        {/* <Route path="/partnership-benefits0" element={<Partnership />} /> */}
-        <Route path="/reviews" element={<Reviews />} />
+        {/* <Route path="/partnership-benefits0" element={<Partnership />} />
+        <Route path="/reviews" element={<Reviews />} /> */}
         <Route path="/public-profile" element={<PublicProfile />} />
         {/* Payment */}
         {/* <Route path="/payments0" element={<Payment />} /> */}
