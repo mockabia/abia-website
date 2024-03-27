@@ -82,8 +82,9 @@ export const coupleSignup = async (
     if (activeStep == 3) {
       await servicesPage.coupleSignup(formValues).then(function (response) {
         if (response.statuscode == 200) {
-          const token = response.token;
-          setLogin(token, navigate);
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+          //const token = response.token;
+          //setLogin(token, navigate);
         } else {
           if (response.errors) {
             setErrors(response.errors);

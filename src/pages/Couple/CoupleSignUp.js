@@ -142,7 +142,7 @@ export default function CouplesSignUp() {
           <div className="couples-signup-image">
             <div className={`cs-image-container ${imageClass} `}></div>
           </div>
-          {activeStep !== 0 && (
+          {(activeStep !== 0 && activeStep<4)  && (
             <div className="cs-back-button" onClick={handleBack}>
               <ArrowBackIcon />
               <p className="text-[12px] text-black font-[800]">Back</p>
@@ -157,21 +157,23 @@ export default function CouplesSignUp() {
             sx={{ width: "100%" }}
             className="cs-signup-form"
           >
-            <StepperStyle activeStep={activeStep}>
-              {steps.map((label, index) => {
-                const stepProps = {};
-                const labelProps = {};
-
-                if (isStepSkipped(index)) {
-                  stepProps.completed = false;
-                }
-                return (
-                  <Step sx={{ color: "red" }} key={label} {...stepProps}>
-                    <StepLabel {...labelProps}>{label}</StepLabel>
-                  </Step>
-                );
-              })}
-            </StepperStyle>
+            {activeStep != 4 && (
+                <StepperStyle activeStep={activeStep}>
+                  {steps.map((label, index) => {
+                    const stepProps = {};
+                    const labelProps = {};
+    
+                    if (isStepSkipped(index)) {
+                      stepProps.completed = false;
+                    }
+                    return (
+                      <Step sx={{ color: "red" }} key={label} {...stepProps}>
+                        <StepLabel {...labelProps}>{label}</StepLabel>
+                      </Step>
+                    );
+                  })}
+                </StepperStyle>
+            )}
             {/* <pre>{JSON.stringify(formValues, null, 2)}</pre> */}
             <React.Fragment>
               {activeStep === 0 && (
@@ -458,16 +460,43 @@ export default function CouplesSignUp() {
                   </Stack>
                 </>
               )}
-
+              {activeStep === 4 && (
+                      <div className="thankyou-container">
+                        <h1
+                          style={{
+                            fontFamily: "Playfair",
+                            fontWeight: "400",
+                            fontSize: "32px",
+                          }}
+                        >
+                          Thank You For Joining
+                        </h1>
+                        <div className="flex flex-col items-center gap-[1rem] px-[1rem] md:px-[3rem] text-center">
+                          <h4 style={{ lineHeight: "22px" }}>
+                          Thank you for having the confidence in ABIA to help you design your dream wedding day. 
+                          </h4>
+                          <h4>
+                          To connect you with the best wedding vendors, please activate your account by opening an email we have sent to your inbox/junkmail. Click the Verify button to start planning with great ease!
+                          </h4>
+                        </div>
+                      </div>
+                    )}
               <br />
               {/* Next */}
-              <NextButtonStyle
-                variant="outlined"
-                className="cs-button-text-position"
-                onClick={handleFormNext}
-              >
-                <span className="cs-next-button">Next</span>
-              </NextButtonStyle>
+              {typeof errors != 'object' && errors !== null ? (
+                  <div className="error">
+                    <p dangerouslySetInnerHTML={{ __html: errors }} ></p>
+                  </div>
+                ) :''}
+              {activeStep != 4 && (
+                <NextButtonStyle
+                  variant="outlined"
+                  className="cs-button-text-position"
+                  onClick={handleFormNext}
+                >
+                  <span className="cs-next-button">Next</span>
+                </NextButtonStyle>
+              )}
               <br />
               <div className="flex justify-center">
                 <h5 className="text-[12px]">
