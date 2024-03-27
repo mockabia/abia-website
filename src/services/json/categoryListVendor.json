@@ -1,0 +1,19 @@
+{
+    "result": [
+      {
+          "value":  1,
+          "title": "Wedding Makeup"
+      },
+      {
+          "value": 2,
+          "title": "Venues"
+      },
+      {
+          "value": 3,
+          "title": "Wedding DJ"
+      }
+    ],
+    "statuscode": 200,
+    "message": "Successful Request"
+  }
+  

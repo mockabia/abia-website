@@ -5,6 +5,7 @@ import enquiries from "./json/enquiry_list.json";
 import vendorList from "./json/vendor_categoryList.json";
 import booking from "./json/booking_list.json";
 import autoComplete from "./json/autoComplete_list.json";
+import categoryListVendor from "./json/categoryListVendor.json";
 
 export const MAIN_API = apiUrls.COUPLE_API;
 export const CONTENTS_API = apiUrls.CONTENT_API;
@@ -103,7 +104,7 @@ export async function stateDropdown(postData) {
 
 export async function marketCategory(postData) {
   // return vendorList;
-  return await apiService.apiCall(apiUrls.MARKETING_CATEGORY, "GET", postData);
+  return await apiService.apiCall(MAIN_API["SIGNUP_CATEGORY"]+'/8', "GET", postData);
 }
 
 // STATE + REGION
@@ -132,3 +133,11 @@ export async function marketCategoryjson() {
 // export async function coupleLogin(postData) {
 //   return await apiService.apiCall(MAIN_API["LOGIN"], "POST", postData);
 // }
+export async function vendor_services(vid) {
+  return categoryListVendor;
+  //return await apiService.apiCall(MAIN_API["SERVICES_OF_VENDORS"]+'/'+vid, "GET");
+}
+export async function autoCompleteVendor() {
+  return autoComplete;
+  // return await apiService.apiCall(MAIN_API["REVIEW_VENDORLIST"], "GET");
+}

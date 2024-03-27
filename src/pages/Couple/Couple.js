@@ -363,3 +363,54 @@ export const addBooking = async (formValues,setErrors,setData,setOpen) => {
       }
     });
 };
+export const coupleReview = async (activeStep,setActiveStep,formValues,setErrors,navigate) => {
+  if (customValidator.validateCoupleReviews(activeStep, formValues, setErrors)) {
+    if (activeStep == 4) {
+      /* await servicesPage.coupleReview(formValues).then(function (response) {
+        if (response.statuscode == 200) {
+        } else {
+          if (response.errors) {
+            setErrors(response.errors);
+          } else if (response.statusmessage) {
+            setErrors(response.statusmessage);
+          }
+        }
+      }); */
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
+  }
+};
+export const fetchBride = async (decodeId,setFormValues,setServices) => {
+  await servicesPage.vendor_services(decodeId).then(function (response) {
+    if (response.statuscode === 200) {
+      setFormValues((values) => ({
+          ...values,
+          ["bride"]: response.result.bride,
+          ["email"]: response.result.email,
+          ["date_of_wedding"]: response.result.date_of_wedding
+        }));
+        setServices(response.result.setServices);
+    }
+  });
+};
+export const fetchVServices = async (vid,setServices) => {alert(vid)
+  await servicesPage.vendor_services(vid).then(function (response) {
+    if (response.statuscode === 200) {
+      setServices(response.result);
+    }
+  });
+};
+export const autoCompleteVendor = async (setVendorList) => {
+  await servicesPage.autoCompleteVendor().then(function (response) {
+    if (response.statuscode === 200) {
+      const vendors = response.result.map((vendor) => ({
+        value: vendor.id,
+        label: vendor.name,
+        phone: vendor.phone,
+        email: vendor.email,
+      }));
+      setVendorList(vendors);
+    }
+  });
+};

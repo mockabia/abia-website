@@ -162,3 +162,31 @@ export const validateCoupleSettings = (inputs,setInputsErrors) => {
   }
   return validate;
 };
+export const validateCoupleReviews = (activeStep,inputs, setInputsErrors) => {
+  setInputsErrors({});
+  let validate = true;
+  if (activeStep === 0) {
+    let validEmail     = validateEmail(inputs.rating_email, 'rating_email',setInputsErrors);
+    if(!validEmail){
+      validate = false;
+    }
+    if (!inputs.date_of_wedding) {
+      validate = false;
+      setInputsErrors((values) => ({...values,["date_of_wedding"]: "Date is required"}));
+    }
+    if (!inputs.service_category ||inputs.service_category.length === 0) {
+      validate = false;
+      setInputsErrors((values) => ({...values,["service_category"]: "Please select Wedding Services."}));
+    }
+  } else if (activeStep === 1) {
+    inputs.review.forEach((review, index) => {
+      if (!review.quality_of_product || !review.quality_of_service || !review.value_for_money || !review.attitude_of_staff) {
+        validate = false;
+        setInputsErrors((values) => ({...values,[`review_${index}`]: "Please provide the Quality of Product, Quality of Service, Attitude of Staff & Overall Value."}));
+      }
+    });
+  } else if (activeStep === 2) {
+    
+  }
+  return validate;
+};
