@@ -27,8 +27,9 @@ const BusinessRoutes = (props) => {
       props.menu.map(function (MainMenu, i) {
         if (MainMenu.Sub_content.length <= 0) {
           let newArray1 = [];
-          newArray1['url'] = MainMenu.url;
+          newArray1['url']      = MainMenu.url;
           newArray1['pagename'] = MainMenu.pagename;
+          newArray1['title']    = MainMenu.title;
           if (MainMenu.id == '1') {
             setLoginMenu(oldArray => [...oldArray, newArray1]);
           } else {
@@ -37,8 +38,10 @@ const BusinessRoutes = (props) => {
         } else {
           MainMenu.Sub_content.map(function (SubMenu, i) {
             let newArray1 = [];
-            newArray1['url'] = SubMenu.url;
+            newArray1['id']       = SubMenu.id;
+            newArray1['url']      = SubMenu.url;
             newArray1['pagename'] = SubMenu.pagename;
+            newArray1['title']    = SubMenu.title;
             if (MainMenu.id == '1') {
               setLoginMenu(oldArray => [...oldArray, newArray1]);
             } else {

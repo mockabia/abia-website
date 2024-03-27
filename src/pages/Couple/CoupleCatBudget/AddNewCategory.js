@@ -57,10 +57,10 @@ function AddNewCategory(props) {
                       control={
                         <CheckBoxStyle
                           size="medium"
-                          name={`${services.omcid}`}
-                          value={services.omcid}
+                          name={`${services.ocid}`}
+                          value={services.ocid}
                           /* checked={(inputs != undefined && inputs.length > 0) ?
-                            ((inputs.split(',').map(JSON.parse)).indexOf(services.omcid) != -1 ? 'checked' : '')
+                            ((inputs.split(',').map(JSON.parse)).indexOf(services.ocid) != -1 ? 'checked' : '')
                             : ''} */
                           onChange={(e) => handleChange(e)}
                         />

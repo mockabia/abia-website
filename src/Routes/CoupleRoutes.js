@@ -20,6 +20,7 @@ const CoupleRoutes = (props) => {
   const LoadablePage = loadable((props) => 
     import(`../pages/Couple/${props.page}`)
   );
+
   useEffect(() => {
     RoutesJS.coupleCheckLoginRedirect(url,loginMenu,loginedMenu,navigate)
   }, [url,loginMenu]);
@@ -29,7 +30,6 @@ const CoupleRoutes = (props) => {
       let topMenuIds  = [7,8,9];
       let leftMenuIds = [7,8,9];
       props.menu.map(function (MainMenu, i) {
-          console.log(MainMenu)
         if (MainMenu.Sub_content.length <= 0) {
           let newArray1 = [];
           newArray1['url']      = MainMenu.url;
@@ -45,6 +45,7 @@ const CoupleRoutes = (props) => {
           setLeftMenu([])
           MainMenu.Sub_content.map(function (SubMenu, i) {
             let newArray1 = [];
+            newArray1['id']      = SubMenu.id;
             newArray1['url']      = SubMenu.url;
             newArray1['pagename'] = SubMenu.pagename;
             newArray1['title']    = SubMenu.title;
@@ -57,12 +58,19 @@ const CoupleRoutes = (props) => {
               newArray1['leftMenuShow'] = true;
               setLeftMenu(oldArray => [...oldArray, newArray1]);
             }
-            if (MainMenu.id == '1') {
-              newArray1['header']    = (SubMenu.id=='1' ? 0 : 1);
+            if(SubMenu.id=='14'){
+              //newArray1['header']    = 1;
               setLoginMenu(oldArray => [...oldArray, newArray1]);
-            } else {
               setLoginedMenu(oldArray => [...oldArray, newArray1]);
+            }else{
+              if (MainMenu.id == '1') {
+                newArray1['header']    = (SubMenu.id=='1' ? 0 : 1);
+                setLoginMenu(oldArray => [...oldArray, newArray1]);
+              } else {
+                setLoginedMenu(oldArray => [...oldArray, newArray1]);
+              }
             }
+            
           })
         }
       })
@@ -71,14 +79,14 @@ const CoupleRoutes = (props) => {
 
   return (
     <>
-      {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(routeMenu, null, 2)}</pre>  */}
+      {/* <pre style={{fontSize: "xx-small", }}>{JSON.stringify(loginMenu, null, 2)}</pre>  */}
       {!RoutesJS.hasCoupleJWT() ? (
       <>
           <Routes>
             {loginMenu.map((routeMenus, i) => (
               routeMenus.header==1 ? (
                 <Route
-                  path={`/${routeMenus.url}`}
+                  path={routeMenus.id=='14' ? `/${routeMenus.url}/:id` : `/${routeMenus.url}`}
                   element={
                     <LayoutGeneral {...props}>
                       <LoadablePage page={routeMenus.pagename} {...props} pageData={routeMenus} />
@@ -87,7 +95,7 @@ const CoupleRoutes = (props) => {
                 />
               ) : (
                 <Route
-                  path={`/${routeMenus.url}`}
+                  path={routeMenus.id=='14' ? `/${routeMenus.url}/:id` : `/${routeMenus.url}`}
                   element={<LoadablePage page={routeMenus.pagename} {...props} pageData={routeMenus} />}
                 />
               )
@@ -99,15 +107,21 @@ const CoupleRoutes = (props) => {
       <>
           <Routes>
             {loginedMenu.map((routeMenus, i) => (
-              <Route
-                path={`/${routeMenus.url}`}
-                element={
-                  <LayoutCouple {...props} mainMenuID={mainMenuID} title={routeMenus.title} topMenu={topMenu} leftMenu={leftMenu} leftMenuShow={routeMenus.leftMenuShow}>
-                    <LoadablePage page={routeMenus.pagename} {...props} pageData={routeMenus}/>
-                  </LayoutCouple>
-                  }
-              />
-
+              routeMenus.id==14 ? (
+                <Route
+                  path={routeMenus.id=='14' ? `/${routeMenus.url}/:id` : `/${routeMenus.url}`}
+                  element={<LoadablePage page={routeMenus.pagename} {...props} pageData={routeMenus} />}
+                />
+              ) : (
+                <Route
+                  path={`/${routeMenus.url}`}
+                  element={
+                    <LayoutCouple {...props} mainMenuID={mainMenuID} title={routeMenus.title} topMenu={topMenu} leftMenu={leftMenu} leftMenuShow={routeMenus.leftMenuShow}>
+                      <LoadablePage page={routeMenus.pagename} {...props} pageData={routeMenus}/>
+                    </LayoutCouple>
+                    }
+                />
+              )
             ))}
             <Route path="*" element={<PageNotFound />} />
           </Routes>

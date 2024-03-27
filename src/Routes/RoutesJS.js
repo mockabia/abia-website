@@ -1,5 +1,27 @@
 import * as servicesPage from "../services/contentServices";
+import * as apiService from "../api/apiServices";
 
+export const logoutIfCompletely = async (setLoginStatus) => {
+  let vtoken = localStorage.getItem("vendorToken");
+  let ctoken = localStorage.getItem("coupleToken");
+  if (vtoken !== undefined && vtoken !== "undefined" && vtoken !== null) {
+    apiService.setAuthToken(null);
+    localStorage.removeItem("coupleToken");
+    localStorage.removeItem("user");
+    setLoginStatus(true);
+  } else if ( ctoken !== undefined && ctoken !== "undefined" && ctoken !== null ) {
+    apiService.setAuthToken(null);
+    localStorage.removeItem("vendorToken");
+    localStorage.removeItem("user");
+    setLoginStatus(true);
+  } else {
+    apiService.setAuthToken(null);
+    localStorage.removeItem("vendorToken");
+    localStorage.removeItem("coupleToken");
+    localStorage.removeItem("user");
+    setLoginStatus(true);
+  }
+}
 /* public routes */
 export const fetchContentRoutes = async (setPublicMenu, setBlogMenu) => {
   window.HOME = process.env.REACT_APP_URL;
@@ -138,7 +160,7 @@ export const fetchCoupleRoutes = async (setCoupleMenu, setShowLoader) => {
       let thankyou = loginMenu[0].Sub_content.filter((subs) => {
         return subs.id == "6";
       });
-      console.log("Menu list:", response.result);
+      //console.log("Menu list:", response.result);
       const associateMenu = response.result.filter((menus) => {
         return menus.id == "3";
       });
@@ -148,21 +170,23 @@ export const fetchCoupleRoutes = async (setCoupleMenu, setShowLoader) => {
       let chat = associateMenu[0].Sub_content.filter((subs) => {
         return subs.id == "13";
       });
+      let review = associateMenu[0].Sub_content.filter((subs) => {
+        return subs.id == "14";
+      });
       //
       const vendorEnquiry = response.result.filter((menus) => {
         return menus.id == "6";
       });
 
-      window.CSIGNUP = process.env.REACT_APP_COUPLE_URL + "/" + signup[0].url;
-      window.CLOGIN = process.env.REACT_APP_COUPLE_URL + "/" + login[0].url;
-      window.CDASHBOARD =
-        process.env.REACT_APP_COUPLE_URL + "/" + dashboardMenu[0].url;
-      window.CTHANKYOU =
-        process.env.REACT_APP_COUPLE_URL + "/" + thankyou[0].url;
-      window.BOOKING = process.env.REACT_APP_COUPLE_URL + "/" + booking[0].url;
-      window.CHAT = process.env.REACT_APP_COUPLE_URL + "/" + chat[0].url;
-      window.CVENQUIRY =
-        process.env.REACT_APP_COUPLE_URL + "/" + vendorEnquiry[0].url;
+      window.CSIGNUP      = process.env.REACT_APP_COUPLE_URL + "/" + signup[0].url;
+      window.CLOGIN       = process.env.REACT_APP_COUPLE_URL + "/" + login[0].url;
+      window.CDASHBOARD   = process.env.REACT_APP_COUPLE_URL + "/" + dashboardMenu[0].url;
+      window.CTHANKYOU    = process.env.REACT_APP_COUPLE_URL + "/" + thankyou[0].url;
+      window.BOOKING      = process.env.REACT_APP_COUPLE_URL + "/" + booking[0].url;
+      window.CHAT         = process.env.REACT_APP_COUPLE_URL + "/" + chat[0].url;
+      window.REVIEW       = process.env.REACT_APP_COUPLE_URL + "/" + review[0].url;
+      window.REVIEW_PAGE  = review[0].pagename;
+      window.CVENQUIRY    = process.env.REACT_APP_COUPLE_URL + "/" + vendorEnquiry[0].url;
       setShowLoader(false);
     }
   });
@@ -175,7 +199,7 @@ export function coupleCheckLoginRedirect(
   navigate
 ) {
   const isFoundInLoginmenu = loginMenu.some((element) => {
-    if (element.url === url) {
+    if (element.id!='14' && element.url === url) {
       return true;
     }
     return false;
@@ -213,7 +237,7 @@ export function vendorCheckLoginRedirect(
     return false;
   });
   if (isFoundInLoginmenu && hasVendorJWT()) {
-    navigate(window.CDASHBOARD);
+    navigate(window.VDASHBOARD);
   } else if (isFoundInLoginedmenu && !hasVendorJWT()) {
     navigate(window.HOME);
   } else if (hasCoupleJWT()) {

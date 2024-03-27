@@ -82,25 +82,30 @@ export const BUSINESS_API = {
 };
 
 export const COUPLE_API = {
-  SIGNUP: `${baseUrl}WebManageWedding/0/3/1`,
-  LOGIN: `${baseUrl}WebWeddingLogin`,
-  FORGOT: `${baseUrl}WebCoupleForgot`,
-  LOGOUT: `${baseUrl}WebWeddingLogout`,
-  REFRESH: `${baseUrl}couple-refresh`,
-  FETCH: `${baseUrl}WebWeddingBridal`,
-  CONTACT: `${baseUrl}WebManageWedding`,
-  WEDDING_DETAILS: `${baseUrl}WebManageWedding`,
-  SETTINGS: `${baseUrl}WebManageWedding`,
+  SIGNUP          : `${baseUrl}WebManageWedding/0/3/1`,
+  LOGIN           : `${baseUrl}WebWeddingLogin`,
+  FORGOT          : `${baseUrl}WebCoupleForgot`,
+  LOGOUT          : `${baseUrl}WebWeddingLogout`,
+  REFRESH         : `${baseUrl}couple-refresh`,
+  FETCH           : `${baseUrl}WebWeddingBridal`,
+  SIGNUP_CATEGORY : `${baseUrl}Signup_CategoryOrder`,
+
+  CONTACT         : `${baseUrl}WebManageWedding`,
+  WEDDING_DETAILS : `${baseUrl}WebManageWedding`,
+  SETTINGS        : `${baseUrl}WebManageWedding`,
 
   VIEW_CATEGORIES : `${baseUrl}view_Selcategories`,
   UPDATE_BUDGET   : `${baseUrl}Webaddupd_mybudget`,
   ADD_CATEGORY    : `${baseUrl}Webadd_coupleCategories`,
   UPDATE_CATEGORY : `${baseUrl}Webupdate_CategoryBudget`,
 
-  ENQUIRIES: `${baseUrl}ManageEnquiries`,
-  BOOKINGS: `${baseUrl}ManageBookings`,
+  ENQUIRIES                   : `${baseUrl}ManageEnquiries`,
+  BOOKINGS                    : `${baseUrl}ManageBookings`,
   AUTOCOMPLETE_VENDOR_CATEGORY: `${baseUrl}autocompleteVendorCategory`,
-  ADD_BOOKING: `${baseUrl}add_booking`,
+  ADD_BOOKING                 : `${baseUrl}add_booking`,
+
+  SERVICES_OF_VENDORS         : `${baseUrl}vendorServices`,
+  REVIEW_VENDORLIST           : `${baseUrl}autocCompleteVendor`,
 };
 export const PUBLIC_API = {
   DIRECTORY_DROPDOWN      : `${baseUrl}DirectorySearchDropdown`,

@@ -50,7 +50,7 @@ export async function apiCall(url, method, data) {
         api_key: process.env.REACT_APP_API_KEY,
         authorization: `Bearer ${accessToken}`,
         "X-Request-ID": userId,
-        "X-Request-Class": 'C',
+        "X-Request-Class": userId!=null ? 'C' : null,
       };
     }
     // console.log(headers);

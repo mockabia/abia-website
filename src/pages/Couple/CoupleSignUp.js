@@ -93,7 +93,7 @@ export default function CouplesSignUp() {
     setFormValues((prevFormValues) => ({
       ...prevFormValues,
       bride_message: selectedOption,
-      marketing_category: marketingSelect,
+      directory_category: marketingSelect,
     }));
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -115,7 +115,7 @@ export default function CouplesSignUp() {
   useEffect(() => {
     setFormValues((values) => ({
       ...values,
-      marketing_category: Object.values(marketingSelect),
+      directory_category: Object.values(marketingSelect),
     }));
   }, [marketingSelect]);
   const handleMarketingChange = (e, index) => {
