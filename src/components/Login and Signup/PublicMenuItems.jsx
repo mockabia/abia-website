@@ -126,45 +126,48 @@ const MenuItems = (props) => {
 
             <div className="">
               <ul className="flex flex-col gap-[1rem]">
-                {props.menuItems.map((menuItem, index) => (
-                  <React.Fragment key={index}>
-                    {menuItem.Sub_content.length > 0 ? (
-                      <div
-                        onClick={() => handleItemClick(index)}
-                        style={{ textTransform: "capitalize" }}
-                      >
-                        {menuItem.title.toLowerCase()}
-                      </div>
-                    ) : (
-                      <Link
-                        to={`/${menuItem.main_url}`}
-                        // onClick={() => handleItemClick(index)}
-                        style={{ textTransform: "capitalize" }}
-                      >
-                        {menuItem.title.toLowerCase()}
-                      </Link>
-                    )}
-                    {menuItem.Sub_content.length > 0 &&
-                      expandedItem === index && (
-                        <div>
-                          {menuItem.Sub_content.map((subMenuItem, subIndex) => (
-                            <Link
-                              key={subIndex}
-                              onClick={closeMenu}
-                              className="mobile-menu-item submenu-item"
-                              to={`/${
-                                menuItem.main_url.endsWith("0")
-                                  ? menuItem.main_url.slice(0, -1)
-                                  : menuItem.main_url
-                              }/${subMenuItem.sub_url}`}
-                            >
-                              {subMenuItem.title}
-                            </Link>
-                          ))}
+                {props.menuItems &&
+                  props.menuItems.map((menuItem, index) => (
+                    <React.Fragment key={index}>
+                      {menuItem.Sub_content.length > 0 ? (
+                        <div
+                          onClick={() => handleItemClick(index)}
+                          style={{ textTransform: "capitalize" }}
+                        >
+                          {menuItem.title.toLowerCase()}
                         </div>
+                      ) : (
+                        <Link
+                          to={`/${menuItem.main_url}`}
+                          // onClick={() => handleItemClick(index)}
+                          style={{ textTransform: "capitalize" }}
+                        >
+                          {menuItem.title.toLowerCase()}
+                        </Link>
                       )}
-                  </React.Fragment>
-                ))}
+                      {menuItem.Sub_content.length > 0 &&
+                        expandedItem === index && (
+                          <div>
+                            {menuItem.Sub_content.map(
+                              (subMenuItem, subIndex) => (
+                                <Link
+                                  key={subIndex}
+                                  onClick={closeMenu}
+                                  className="mobile-menu-item submenu-item"
+                                  to={`/${
+                                    menuItem.main_url.endsWith("0")
+                                      ? menuItem.main_url.slice(0, -1)
+                                      : menuItem.main_url
+                                  }/${subMenuItem.sub_url}`}
+                                >
+                                  {subMenuItem.title}
+                                </Link>
+                              )
+                            )}
+                          </div>
+                        )}
+                    </React.Fragment>
+                  ))}
               </ul>
             </div>
           </div>

@@ -1,35 +1,40 @@
 import React from "react";
 import { Modal, Box, TextField, Button } from "@mui/material";
+import {
+  CoupleCommonInput,
+  VendorLoginButton,
+} from "../../../components/FormStyle";
+import { PublicProfileDate } from "../../../components/DatepickerPublic";
+import { IoClose } from "react-icons/io5";
+import "../../Style/PublicProfile.css";
 
 const MobEnquiry = ({ open, onClose }) => {
+  const handleClose = () => {
+    console.log("Closing Modal");
+    onClose();
+  };
+
   return (
     <Modal
       open={open}
-      onClose={onClose}
+      onClose={handleClose}
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
     >
-      <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: 400,
-          bgcolor: "background.paper",
-          boxShadow: 24,
-          p: 4,
-        }}
-      >
-        <h2 id="modal-title">Message Vendor</h2>
-        <TextField fullWidth label="Name" variant="outlined" margin="normal" />
-        <TextField fullWidth label="Email" variant="outlined" margin="normal" />
-        <TextField fullWidth label="Phone" variant="outlined" margin="normal" />
-        <textarea placeholder="Write your message" className="pp-textarea" />
-        <Button variant="contained" onClick={onClose}>
-          Send
-        </Button>
-      </Box>
+      <div className="mob-pp-enquiry-box">
+        <div className="flex justify-end cursor-pointer" onClick={handleClose}>
+          <IoClose size={26} />
+        </div>
+        <h2 id="modal-title" style={{ textAlign: "center" }}>
+          Message Vendor
+        </h2>
+        <input placeholder="Name" className="pp-input-message" />
+        <input placeholder="Email" className="pp-input-message" />
+        <input placeholder="Phone" className="pp-input-message" />
+        <PublicProfileDate />
+        <textarea placeholder="wrtie your message" className="pp-textarea" />
+        <VendorLoginButton>Send</VendorLoginButton>
+      </div>
     </Modal>
   );
 };

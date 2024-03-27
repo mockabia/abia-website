@@ -20,10 +20,10 @@ const AwardSlide = ({ awards }) => {
       <div className="pp-header-section w-[90%]">
         <h2>ABIA Awards</h2>
         <div className="flex gap-[8px]">
-          <div className="pp-scroll-button" onClick={() => handleScroll(-100)}>
+          <div className="pp-scroll-button" onClick={() => handleScroll(-200)}>
             <MdKeyboardArrowLeft size={20} />
           </div>
-          <div className="pp-scroll-button" onClick={() => handleScroll(100)}>
+          <div className="pp-scroll-button" onClick={() => handleScroll(200)}>
             <MdKeyboardArrowRight size={20} />
           </div>
         </div>

@@ -22,6 +22,8 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import * as CoupleJS from "../../../pages/Couple/Couple";
 import * as servicesPage from "../../../services/contentServices";
 import { RxTriangleDown, RxTriangleUp } from "react-icons/rx";
+import MenuItems from "../../../components/Login and Signup/PublicMenuItems";
+import PublicMenu from "../../../components/Login and Signup/PublicMenu";
 
 const CoupleTopbar = (props) => {
   let navigate = useNavigate();
@@ -353,6 +355,10 @@ const CoupleTopbar = (props) => {
               </div>
               <ul className="mt-[50px] flex flex-col sm:justify-center sm:mr-[85px] border-b pb-4 border-white">
                 <CoupleSideMenu {...props} />
+              </ul>
+
+              <ul>
+                <PublicMenu servicesPage={servicesPage} />
               </ul>
             </div>
           </div>
