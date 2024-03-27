@@ -85,7 +85,7 @@
 //       id: 1,
 //       name: "Zonzo Estate",
 //       partner_type: "Gold Partner",
-//       logo: "https://scontent.fccj6-1.fna.fbcdn.net/v/t39.30808-6/327265908_913673846733991_4430403031133714382_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=kOVGirOe2LwAX8iPBvA&_nc_ht=scontent.fccj6-1.fna&oh=00_AfDYBmkcudcRfPNPbQxrV0S-rvGB7u_GDOoPxVf4w4MnvA&oe=6601DC68",
+//       logo: "https://pbs.twimg.com/profile_images/671119938271088640/jHLUjWWl_400x400.jpg",
 //       team_desc:
 //         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
 //       ratings: {
@@ -121,8 +121,31 @@
 //           url: "https://www.youtube.com/embed/tEHNeM3DCm0?si=q52_crluKLbv7uw0",
 //           thumbUrl: "https://img.youtube.com/vi/tEHNeM3DCm0/maxresdefault.jpg",
 //         },
+//         {
+//           id: 5,
+//           type: "video",
+//           url: "https://www.youtube.com/embed/tEHNeM3DCm0?si=q52_crluKLbv7uw0",
+//           thumbUrl: "https://img.youtube.com/vi/tEHNeM3DCm0/maxresdefault.jpg",
+//         },
+//         {
+//           id: 6,
+//           type: "image",
+//           url: "https://abia.com.au/uploads/vportfolio/thumb/zonzo-estate-yarra-glen_2203021146265.jpeg",
+//         },
+//         {
+//           id: 7,
+//           type: "image",
+//           url: "https://abia.com.au/uploads/vcoverimage/thumb_zonzo-estate-yarra-glen_2203020113541.jpeg",
+//         },
 //       ],
 //       awards: [
+//         {
+//           id: 1,
+//           awardurl: "https://abia.com.au/images/abia-award-badge_FINALIST.svg",
+//           award_name: "2023 Finalist (VIC)",
+//           award_category: "Function Coordinator",
+//           award_voting: "99.52%",
+//         },
 //         {
 //           id: 1,
 //           awardurl: "https://abia.com.au/images/abia-award-badge_FINALIST.svg",
@@ -146,20 +169,6 @@
 //         },
 //         {
 //           id: 4,
-//           awardurl: "https://abia.com.au/images/abia-award-badge_NATIONAL.svg",
-//           award_name: "2023 Top 10 (NATIONAL)",
-//           award_category: "Function Coordinato",
-//           award_voting: "",
-//         },
-//         {
-//           id: 5,
-//           awardurl: "https://abia.com.au/images/abia-award-badge_NATIONAL.svg",
-//           award_name: "2023 Top 10 (NATIONAL)",
-//           award_category: "Function Coordinato",
-//           award_voting: "",
-//         },
-//         {
-//           id: 6,
 //           awardurl: "https://abia.com.au/images/abia-award-badge_NATIONAL.svg",
 //           award_name: "2023 Top 10 (NATIONAL)",
 //           award_category: "Function Coordinato",
@@ -436,7 +445,7 @@
 //               <div>
 //                 <div
 //                   ref={reviewsRef}
-//                   className="w-[92vw]  md:w-[75vw] lg:w-[80%]"
+//                   className="w-[92vw]  md:w-[75vw] lg:w-[87%]"
 //                 >
 //                   <ReviewsReply
 //                     reviews={vendorData.vendor.reviews}
