@@ -20,10 +20,10 @@ const BlogSlide = ({ blogs }) => {
       <div className="pp-header-section w-[90%]">
         <h2>Featured in</h2>
         <div className="flex gap-[8px]">
-          <div className="pp-scroll-button" onClick={() => handleScroll(-200)}>
+          <div className="pp-scroll-button" onClick={() => handleScroll(-400)}>
             <MdKeyboardArrowLeft size={20} />
           </div>
-          <div className="pp-scroll-button" onClick={() => handleScroll(200)}>
+          <div className="pp-scroll-button" onClick={() => handleScroll(400)}>
             <MdKeyboardArrowRight size={20} />
           </div>
         </div>

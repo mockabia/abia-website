@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import LayoutGeneral from "../../../layouts/Layout/LayoutGeneral";
+import { Modal } from "@mui/material";
 import "../../Style/PublicProfile.css";
 import MainImage from "./MainImage";
 import { ReactComponent as LeftFeather } from "../../../icons/feather2-left.svg";
@@ -13,10 +14,14 @@ import BlogSlide from "./BlogSlide";
 import ReviewsReply from "./ReviewsReply";
 import OffersSlide from "./OffersSlide";
 import FaqSection from "./FaqSection";
-import MobEnquiry from "./MobEnquiry";
+// import MobEnquiry from "./MobEnquiry";
+import { PublicProfileDate } from "../../../components/DatepickerPublic";
+import { IoClose } from "react-icons/io5";
+import { VendorLoginButton } from "../../../components/FormStyle";
 // import MeetTeam from "./MeetTeam";
 // import LeftFeather from "../../../icons/feather-right.jpg";
 // import RightFeather from "../../../icons/feather-left.jpg";
+
 
 const PublicProfile = () => {
   const [showFullDescription, setShowFullDescription] = useState(false);
@@ -25,12 +30,15 @@ const PublicProfile = () => {
   const [openModal, setOpenModal] = useState(false);
 
   const handleOpenModal = () => {
+    // console.log("Opening modal...");
     setOpenModal(true);
   };
 
   const handleCloseModal = () => {
-    setOpenModal(false);
+    // console.log("Closing modal...");
+    setOpenModal(!openModal);
   };
+  console.log("openModal after closing:", openModal);
 
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
@@ -114,8 +122,31 @@ const PublicProfile = () => {
           url: "https://www.youtube.com/embed/tEHNeM3DCm0?si=q52_crluKLbv7uw0",
           thumbUrl: "https://img.youtube.com/vi/tEHNeM3DCm0/maxresdefault.jpg",
         },
+        {
+          id: 5,
+          type: "video",
+          url: "https://www.youtube.com/embed/tEHNeM3DCm0?si=q52_crluKLbv7uw0",
+          thumbUrl: "https://img.youtube.com/vi/tEHNeM3DCm0/maxresdefault.jpg",
+        },
+        {
+          id: 6,
+          type: "image",
+          url: "https://abia.com.au/uploads/vportfolio/thumb/zonzo-estate-yarra-glen_2203021146265.jpeg",
+        },
+        {
+          id: 7,
+          type: "image",
+          url: "https://abia.com.au/uploads/vcoverimage/thumb_zonzo-estate-yarra-glen_2203020113541.jpeg",
+        },
       ],
       awards: [
+        {
+          id: 1,
+          awardurl: "https://abia.com.au/images/abia-award-badge_FINALIST.svg",
+          award_name: "2023 Finalist (VIC)",
+          award_category: "Function Coordinator",
+          award_voting: "99.52%",
+        },
         {
           id: 1,
           awardurl: "https://abia.com.au/images/abia-award-badge_FINALIST.svg",
@@ -139,20 +170,6 @@ const PublicProfile = () => {
         },
         {
           id: 4,
-          awardurl: "https://abia.com.au/images/abia-award-badge_NATIONAL.svg",
-          award_name: "2023 Top 10 (NATIONAL)",
-          award_category: "Function Coordinato",
-          award_voting: "",
-        },
-        {
-          id: 5,
-          awardurl: "https://abia.com.au/images/abia-award-badge_NATIONAL.svg",
-          award_name: "2023 Top 10 (NATIONAL)",
-          award_category: "Function Coordinato",
-          award_voting: "",
-        },
-        {
-          id: 6,
           awardurl: "https://abia.com.au/images/abia-award-badge_NATIONAL.svg",
           award_name: "2023 Top 10 (NATIONAL)",
           award_category: "Function Coordinato",
@@ -429,7 +446,7 @@ const PublicProfile = () => {
               <div>
                 <div
                   ref={reviewsRef}
-                  className="w-[92vw]  md:w-[75vw] lg:w-[80%]"
+                  className="w-[92vw]  md:w-[75vw] lg:w-[87%]"
                 >
                   <ReviewsReply
                     reviews={vendorData.vendor.reviews}
@@ -479,7 +496,38 @@ const PublicProfile = () => {
             {/* in mobile  */}
             <div className="mob-message-enq" onClick={handleOpenModal}>
               <h4 style={{ color: "#fff", fontWeight: "600" }}>Send Enquiry</h4>
-              <MobEnquiry open={openModal} onClose={handleCloseModal} />
+              {openModal && (
+                <Modal
+                  open={openModal}
+                  onClose={handleCloseModal}
+                  aria-labelledby="modal-title"
+                  aria-describedby="modal-description"
+                >
+                  <div className="mob-pp-enquiry-box">
+                    <div
+                      className="flex justify-end cursor-pointer"
+                      onClick={() => {
+                        console.log("Close button clicked");
+                        handleCloseModal();
+                      }}
+                    >
+                      <IoClose size={26} />
+                    </div>
+                    <h2 id="modal-title" style={{ textAlign: "center" }}>
+                      Message Vendor
+                    </h2>
+                    <input placeholder="Name" className="pp-input-message" />
+                    <input placeholder="Email" className="pp-input-message" />
+                    <input placeholder="Phone" className="pp-input-message" />
+                    <PublicProfileDate />
+                    <textarea
+                      placeholder="wrtie your message"
+                      className="pp-textarea"
+                    />
+                    <VendorLoginButton>Send</VendorLoginButton>
+                  </div>
+                </Modal>
+              )}
             </div>
           </div>
         </div>

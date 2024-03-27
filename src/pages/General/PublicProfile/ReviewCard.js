@@ -45,11 +45,11 @@ const ReviewCard = ({
       {/* Category and Review section */}
       <div className="flex flex-col justify-start items-start gap-[5px]">
         <h5 style={{ fontWeight: "600" }}>Review for {review.category}</h5>
-        <h5>
+        <p>
           {showReview[review.id]
             ? review.review_content
             : truncateContent(review.review_content, 50)}
-        </h5>
+        </p>
         {truncateContent(review.review_content, 50) !==
           review.review_content && (
           <button
